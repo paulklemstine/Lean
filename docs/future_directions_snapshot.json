@@ -1770,6 +1770,25 @@
     "ambition_level": "grand_challenge",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# The Cubic Relation Construction: A Theorem Set, with Negative Results Proved\n\n**Round 48 consolidation. 2026-10-01.** This document states what is *proved* about the\ncubic relation construction `N = m³ − c`, `l(m) = L·m + K`, `g(x) = v²x² − 2uvx − 2u²`.\n\n**No new factoring method is claimed.** The construction is a disguised Fermat-with-multiplier\nmethod and its cost is exponential in the bit length. What follows is the theorem set, most of\nit negative, each result tied to the evidence that supports it and to the three companion\nissues (#516 minimax saddle, #517 irreducibility, #518 supply-as-rank).\n\n---\n\n## 1. Correctness\n\n**Theorem 1 (identity).** In `Z[x,c,u,v]`:\n`g(x)² − l(x) = (x³ − c)(v⁴x − 4uv³)`.\n*Machine-checked*: `CubicSquares.g_sq_sub_ell`. Note `x³ − c` is **not** `x³ + c`; the sign\nis load-bearing and is the source of §5.2.\n\n**Theorem 2 (correctness).** If `m³ ≡ c (mod N)`, then `g(m)² ≡ l(m) (mod N)`; and if\n`l(m) = w²` with `g(m) ≢ ±w`, then `gcd(g(m) − w, N)` is a proper divisor.\n*Machine-checked*: `CubicRing.toZMod_g_sq`, `CubicSquares.factor_of_relation`.\n\n**Theorem 3 (splitting criterion).** For `N = pq`, `gcd(a−b,N)` is proper **iff** exactly one\nof `p,q` divides `a−b`. Quadratic residuosity plays **no role**. *Machine-checked*:\n`CubicSquares.split_iff`.\n\n**Corollary 3.1 (the Legendre test is void).** The often-proposed test \"`w` is a non-square\nmod one prime and a square mod the other\" cannot be evaluated without already knowing `p,q`,\nand measured mixed-Legendre relations split 161/190 = 85% versus 146/184 = 79% for the rest —\nconsistent with chance. **Any instrument using a Legendre gate instead of `gcd` measures\nnothing.** We built exactly such an instrument and drew three false conclusions from it (§5).\n\n---\n\n## 2. Structural theorems\n\n**Theorem 4 (Fermat-with-multiplier).** Substituting `c = m³ − kN`:\n`l(m) = g(m)² − kNs` with `s = v³(mv − 4u)`. Hence a relation is exactly\n`(g−w)(g+w) = kNs`.\n**Consequence:** the construction supplies no information unavailable to Fermat's method.\nIts family floor is `N^{1/3}` (Lehman), with `N^{1/4}` from rho/SQUFOF.\n\n**Theorem 5 (deterministic splitting).** If `k>0`, `s>0`, `l(m)=w²`, `w≥0`, and\n`0 < g(m) < N/2`, then `gcd(g(m) − w, N)` is a proper divisor. *Machine-checked*:\n`CubicSquares.relation_always_splits`. Since `w² = g² − kNs < g²`, we get `w < g`, hence\n`0 < g−w < N` and `0 < g+w < 2g < N`. This explains the high success rate: it is not luck.\n\n**Theorem 6 (decoy locus).** If `u = −t` and `v³c = 8t³`, then `l(x) = 36t⁴` for **all** `x`.\n*Machine-checked*: `CubicSquares.ell_decoy`, plus `MinDeg.decoy_iff_constant_residual`\nshowing these are the **complete** constant-residual locus, not an ad-hoc family.\n\n**Theorem 7 (below-cube-root trap).** If `m³ = c` in `Z` then `l(m) = g(m)²`, so every\n`w` with `w² = l(m)` is `±g(m)`, and such relations never split. *Machine-checked*:\n`CubicSquares.below_cube_root_trivial`. **Consequence:** for `m³ ≤ N` the scan is vacuous;\nit must start at `⌈N^{1/3}⌉ + 1`.\n\n**Theorem 8 (scaling symmetry).** `g_{u,v}(λm) = g_{u,λv}(m)` and\n`l_{λ³c,u,v}(λm) = l_{c,u,λv}(m)`.\n\n---\n\n## 3. The general cubic — and what it does *not* buy\n\n**Theorem 9 (the cone).** For monic `f = X³ + pX² + qX + r` with `f(m) ≡ 0 (mod N)` and\n`g = e + bX + aX²`, polynomial division gives `g² = Qf + (Am² + Bm + C)`, and the square\ncondition is the **single** equation\n`A = b² − 2abp + a²(p² − q) + 2ae = 0`,\nwith the 2-parameter rational solution set `(a,b,e) = λ(s², s²p + 2st, (s²q − 4t²)/2)`.\n*Machine-checked*: `MinDeg.B_on_cone`, `bracket_is_s4_f`; verified symbolically and on\n20,000 random instances. At `p=q=0` it returns the original `(v², −2uv, −2u²)`.\n\n**Theorem 10 (why degree 3 is unique).** The locus of `[g] ∈ P^{d−1}` with `deg g = d−1` and\n`deg(g² mod f) ≤ 1` is the complete intersection of `d−2` quadrics, of genus\n`g_d = 1 + 2^{d−3}(d−4)` — giving **1, 5, 17, 49** for `d = 4,5,6,7`.\n**Hence `d = 3` (genus 0) is the only degree admitting a rational parametrisation**, and by\nFaltings the higher-degree loci are finite, so they carry no supply.\n\n**Theorem 11 (relation locus).** With `t = u/v`, `l(m) = v⁴·A(t)` for\n`A(t) = 4t⁴ + 8mt³ − 4ct + mc`; so `l(m) = w² ⟺ A(t) = (w/v²)²` and the locus is the\ndouble cover `{(t,y) : y² = A(t)}`, **genus 1** by Riemann–Hurwitz with 4 branch points.\nIts discriminant is `−110592·c²(c − m³)²`, so **`c = m³` is exactly the singular locus** —\nthe below-cube-root trap and the decoy locus are the discriminant-zero stratum.\n*Machine-checked*: `MinDeg.bracket_is_s4_f` (`B = −s⁴f(2t/s)`).\n\n**Theorem 12 (no congruence to sieve).** Live-ness is `M = (u−v)(u+v)` with `M = 4abN`, a\n**divisor-balance condition on `k` alone**. It is exact over `Z`, hence **vacuous modulo every\nprime**. Confirmed against the source: `grep -c screen` = **0** in Harvey 2020. Any sieve\naimed at `(a,b)` has nothing to filter on.\n\n**Theorem 13 (the filter costs more than the test).** Live-ness is one `isqrt`. Measured\nspeed-up of sieving versus exhaustive: **0.20×, 0.039×, 0.0033×** at `B = 11, 101, 2000` —\ni.e. **5× to 303× slower**, exactly `1/π(B)`. A sieve can only pay when the filter is\ncheaper than the test it screens.\n\n**Corollary 13.1 (Remark 3.4 closed negatively).** Harvey's √-sieve on the `(a,b)` grid\ncannot deliver `N^{1/6}`: by Theorems 12–13 there is nothing to sieve and screening is\ncounterproductive. Independently, Lemma 3.3's hypothesis `(N/r)^{1/2} ≤ p` forces a\nsmall-factor search of cost `(N/r)^{1/2}`, which at `r = N^{1/3}` **exceeds** the `N^{1/5}`\nbeing targeted. **The deterministic factoring bound stands at `N^{1/5}`.** No obstruction to\n`N^{1/5−ε}` is known; what is now excluded is the *obvious* route.\n\n---\n\n## 4. Cost statements\n\n**Theorem 14 (box supply).** `E[#relations] = C·N^{-1/6}` exactly, zero sampling error, RMS\n0.0008 octaves over 64–256 bits — but only for the **box** population (c in a 16-value pool).\nA scanned instance's rate is **47×–326× lower** at 24–32 bits, and grows worse with size.\n\n**Theorem 15 (no selector bill).** `c_max` appears **zero** times in the scanner. Measured\nusable-`m` density = **1.0000** over 30,000 consecutive `m`. The `N/(2c_max)` scan cost is a\ncorrect theorem about *generic*-NFS small-norm selection and does not apply here.\n\n**Theorem 16 (θ, canonical V).** `θ = log₂|V| / log₂N` measured on the canonical\n`V = balanced_pmqr(−c, m)`: **1.102, 1.030, 0.970, 0.918, 0.895** at 32/40/48/56/64 bits.\nNot a constant. The cost constant is `c = √(2θ) = 1.34–1.48`, i.e. **between Dixon's `√2`\nand the quadratic sieve's `1.0`**, trending toward QS with size and **not crossing it**.\n\n**Theorem 17 (special-N advantage has no region).** Below `log₂|c|/log₂N = 1/3` the special\nand generic base-`m` cubics are **the same polynomial** (ratio 1.00 over nine cells); above it\nthe special form is strictly worse (2.4× at 0.35, 222× at 0.75). **There is no size regime in\nwhich hunting small cube residues pays.**\n\n**Theorem 18 (obstruction is identically zero).** `l(α) = g(α)²` holds elementwise in\n`Z[α]`, so ideal parity is trivially even, the square-root ideal is principal and the unit is\nliterally 1. **No class-group method can buy anything here.**\n\n---\n\n## 5. Instrument defects — a reproducible failure mode\n\nThese are recorded because each produced a *false conclusion about factoring* before being\ncaught. All are exact-arithmetic errors over the wrong object, not numerical noise.\n\n**5.1 A smoothness test written as a primality idiom.** `E8.is_smooth()` used\n`if p*p > rest: break`. That tests whether `rest` is prime, not whether it is smooth; it\nrejects every number whose largest prime factor lies in `(√V, B₀]`. Exhaustively against\nground truth on all **199,998** integers in `[2,200000)` at `B₀ = 2000`: the correct gate has\n**0 errors**, this one has **110,312**.\n\n**5.2 A sign convention.** `balanced_pmqr(−c, m)` is required (`f(m) = m³ − c ≡ 0`);\n`balanced_pmqr(+c, m)` measures a polynomial with **no root at the scan point**, producing\n**0 verified factors against 23, 15, 5, 6** on the same instances.\n\n**5.3 A gate that cannot be evaluated.** Using a Legendre test instead of `gcd` (Corollary\n3.1) returned **supply = 0** on instances that demonstrably factor.\n\n**5.4 A non-terminating `while`.** `while vp(a4,p) ≥ 4 and vp(a6,p) ≥ 6: u *= p` never\nterminates: once `u > p`, `a4 // u⁴` is inexact, so the valuation test on the original `a4`\nstays `≥ 4` forever. Ten consecutive diagnoses blamed PARI, `SIGALRM`, and process isolation\nbefore a per-stage timing bill named the function.\n\n**5.5 The general failure mode.** *A control that reports only a failure count cannot\ndistinguish \"no failures\" from \"no trials.\"* Every false conclusion above returned a plausible\nsmall number — usually **zero** — and was reported with increasing confidence. The remedy that\nworked, each time: **state the population beside the rate, and re-derive one sample by hand\nagainst a verified instrument.** The instrument already existed in every case; a new one was\nwritten instead.\n\n---\n\n## 6. Open\n\nSupply as a Mordell–Weil rank question on `E: y² = x³ − 3888cm·X + 46656c(c+m³)` (#518) is\n**untested**: the descent fails on models above ~10¹⁰ digits and the high-supply instances are\ntoo sparse at reachable sizes to stratify. The reduced curve `y² = x³ − 243x + 2` has\n**rank 1** (two independent methods), which is *not* evidence for the mechanism, since those\ninstances lie on the decoy locus where `m³ = c` and `N = 0`.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5120",
+    "lineage_refs": [],
+    "priority_score": 1000.0,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-10-03T02:25:10.032916+00:00",
+    "title": "FACT cubic-theorems — CONSOLIDATED THEOREM SET for the m^3-c relation construction: 18 results, 3 Lean-checked, most NEGATIVE"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domain_bridges": [
       "Pythagorean <-> Physics"
@@ -4668,25 +4687,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "f81db42e",
-    "description": "## FACT round-35 #2 — UNIVERSAL-S3-FIFTH (paper 123)\n\n**Verdict name: FIVE-FIELDS-ONE-LAW.**\n\nA fifth independent S3 cubic — x3-4x+1 (disc = 229 prime) — confirms the type-channel law:\nI(p mod 229; T) = 1.0078, z=+263 (massive signal at conductor).\n\nFIVE-FIELDS-ONE-LAW: five independent S3 fields, five distinct discriminants, one universal result.\nNow 455 experiments. Assessment v233. Paper 123.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3522",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T23:39:20.833492+00:00",
-    "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "152d60cd",
     "description": "Round-37 #1 (exp 464, assessment v238). First test of the hint programme's size axis.\n\n**SIZE-STABLE-PLATEAU**: hint value I((p mod m*, q mod m*); labels) − I(N mod m*; labels) is size-stable to ≤5.3% across factor sizes k=14→22 (a 16,384-fold span); abelian dials ≤1.6%, with abelian residual entropy EXACTLY 0 at every size (labels are residue functions there).\n\nHint table (bits): S3@31: 0.5584/0.5425/0.5415 (k=14/18/22); C3@7: 0.9115/0.9140/0.9169; D4@8: 1.0540/1.0536/1.0507; C5@11: 0.9030/0.9190/0.9268.\n\n**POOL-FLOOR EXCEPTION**: S3@k=10 reads 0.7423 vs plateau ~0.55 — diagnosed as prime-identity leakage through the pair-residue channel (75-prime pool = 2.5 primes/class; pair residue partially identifies the prime, which determines its type). Not a size law.\n\n**Which-factor wall held at all 16 dial×size cells** (max |z| = 1.55 vs conditional orientation-permutation null). Instrument lesson: the naive unconditional wall test would have falsely cried violation at |z| up to 4.7 — the conditional instrument holding (N mod m*, unordered pair) fixed was required.\n\nDecides: hint values transfer across factor sizes wherever the pool resolves the conductor's classes (observed floor ~30 primes/class) — every extrapolation of the hint programme from toy scale is safe. Barriers 2/5/8 re-verified along a new axis.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp464_hint_size.py, seed 20260821, n=15k semiprimes/cell, runtime 11.8 s.",
     "domain_bridges": [],
@@ -4706,7 +4706,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "602d68e3",
     "description": "## FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL (paper 128)\n\n**Verdict name: RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE.**\n\nRamified primes add negligible info: x2-3 ramified {2,3} gives I=1.0020 all vs 1.0000 unramified only.\n+0.002 bits from including two ramified primes out of thousands. Exclusion fully justified.\nNow 460 experiments. Assessment v237. Paper 128.\n",
     "domain_bridges": [],
     "domains": [
@@ -4718,7 +4718,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T01:10:29.772175+00:00",
     "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
   },
@@ -51248,6 +51248,71 @@
     "status": "available",
     "timestamp": "2026-10-02T19:57:19.214712+00:00",
     "title": "Four-Thirds Limit of the Two-Power Semiprime Channel"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Combinatorics.S3TypeChannelLaw",
+      "Shared.CyclicTypeChannel"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The exact value of the S3 type channel is one bit, so empirical excesses such as 1.0078 should be explained entirely by finite-sample plug-in bias. This gives a quantitative prediction of the excess as a function of the conductor and the number of primes.\n\nFor an S3 field of prime conductor D, E[I_hat_N] = 1 + (D-1)/(4 N ln 2) + O(N^-2) over the first N primes.\n\nCompute I_hat_N for N up to 10^6 primes for the five fields and regress the excess on 1/N.\n\nThe reported z-scores must be recomputed against a null of 1 bit; the 'massive signal' is the proved sign bit.\n\nThere is extra arithmetic dependence not captured by the Chebotarev fibre-product model (e.g. Chebyshev-type biases).",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5117",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Second-order Taylor expansion of the plug-in entropy under multinomial sampling with the proved exact cell probabilities.",
+    "research_mode": "team",
+    "source_exp_id": "f81db42e",
+    "status": "available",
+    "timestamp": "2026-10-03T02:24:36.973226+00:00",
+    "title": "Miller-Madow Bias Law for the Type Channel"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Combinatorics.S3CubicConductor229"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Lift the disc-229 Frobenius argument to every depressed cubic over ZMod p. This gives a single catalog theorem linking root counts to the quadratic character of the discriminant, and so covers all five fields at once.\n\nFor a, b in ZMod p with D = -4a^3-27b^2 nonzero: x^3+ax+b has exactly one root iff D is a non-square; otherwise it has 0 or 3 roots.\n\nFormalize by replacing 229 with D in two_root_relations, disc_eq_sq, isSquare_of_root_in_ext and exists_second_root.\n\nThe conductor law holds uniformly for every S3 cubic with fundamental discriminant, via quadratic reciprocity.\n\nImpossible classically. A failure would indicate a formalization gap, e.g. in characteristic 2 or 3.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5118",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Frobenius has no fixed root, so it acts as a 3-cycle and fixes the Vandermonde product; then use the prime-field characterization x^p = x.",
+    "research_mode": "team",
+    "source_exp_id": "f81db42e",
+    "status": "available",
+    "timestamp": "2026-10-03T02:24:37.456574+00:00",
+    "title": "General Stickelberger Parity Theorem for Cubics"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Combinatorics.S3CubicConductor229"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Remove the two excluded primes from the proved conductor law. The prime 2 should be governed by the Kronecker symbol (229/2) = -1, and the ramified prime 229 by a double root.\n\nx^3-4x+1 has exactly one root mod 2 (Kronecker (229/2) = -1), and modulo 229 it has exactly two distinct roots, one of them double.\n\nDecide both facts in ZMod 2 and ZMod 229; formalize the Kronecker-symbol variant of existsUnique_root_iff_conductor.\n\nThe type-sign coupling holds at every prime once the Legendre symbol is replaced by the Kronecker symbol.\n\nThe sign law needs a genuine exception at p = 2.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5119",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Characteristic 2 needs an Artin-Schreier replacement for the discriminant argument; p = 229 follows from the residual identity disc = (16-3r^2)(3r^2-4)^2.",
+    "research_mode": "team",
+    "source_exp_id": "f81db42e",
+    "status": "available",
+    "timestamp": "2026-10-03T02:24:38.093947+00:00",
+    "title": "Kronecker Extension of the Conductor Law to p = 2"
   },
   {
     "ambition_level": "extension",

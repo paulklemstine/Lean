@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "ad3686b6",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — comonotone repair distance (Bridges thread, cycle v19c)\n\n## What this cycle settled\n\nWorking over `Catalog.UniformDial` (`Combinatorics.UniformDialDrawInvariance`,\n`Combinatorics",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 82,
-      "timestamp": "2026-09-10T17:41:24",
-      "title": "Comonotone Repair Distance"
-    },
-    {
       "cycle_id": "0e02e0b5",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — Singmaster multiplicity thread\n\n## What the thread has established\n\nSix sorry-free files of developed theory, all verified, and depending only on the standard\nfoundational axioms",
@@ -499,19 +489,19 @@
       "theorem_count": 43,
       "timestamp": "2026-10-02T19:57:32",
       "title": "FACT round-35 #3 — THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
+    },
+    {
+      "cycle_id": "f81db42e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — after FIVE-FIELDS-ONE-LAW (paper 123)\n\n## What this cycle established (all in Lean, 0 sorries)\n\n* **The law is exact, and it is a theorem about the model, not about the five fiel",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 44,
+      "timestamp": "2026-10-03T02:24:52",
+      "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "7af52a9c",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — after C4 (classification of the ternary Pythagorean trees)\n\n## What this cycle established\n\nWorking with the node set `N = {1 ≤ n < m, gcd(m,n) = 1, m+n odd}` and root `(2,1)`, a",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-08-25T20:47:31",
-      "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagorean trees"
-    },
     {
       "cycle_id": "acd2f64e",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 43,
       "timestamp": "2026-10-02T19:57:32",
       "title": "FACT round-35 #3 — THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
+    },
+    {
+      "cycle_id": "f81db42e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — after FIVE-FIELDS-ONE-LAW (paper 123)\n\n## What this cycle established (all in Lean, 0 sorries)\n\n* **The law is exact, and it is a theorem about the model, not about the five fiel",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 44,
+      "timestamp": "2026-10-03T02:24:52",
+      "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "587eb79b",
-      "domain": "Computation",
-      "name": "applies",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "587eb79b",
-      "domain": "Computation",
-      "name": "is",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "643f7ea2",
-      "domain": "Bridges",
-      "name": "H_pair_swap",
-      "quality": 0.82
-    },
     {
       "cycle_id": "643f7ea2",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "uEnt_comp_of_uniform",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "f81db42e",
+      "domain": "Combinatorics",
+      "name": "two_root_relations",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f81db42e",
+      "domain": "Combinatorics",
+      "name": "third_root",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f81db42e",
+      "domain": "Combinatorics",
+      "name": "disc_eq_sq",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-02T19:57:32",
+  "last_updated": "2026-10-03T02:24:52",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "4467887a",
-        "quality": 0.85,
-        "theorems": 87,
-        "title": "FACT round-70 #2 — ENERGY-ASCENT: a magnitude channel sees the Berggren branch l"
-      },
-      {
         "cycle_id": "108711a9",
         "quality": 0.82,
         "theorems": 70,
@@ -3265,6 +3259,12 @@
         "quality": 0.83,
         "theorems": 596,
         "title": "FACT round-26 #1 — CONVERSE-COST-CURVE: the empirical barrier-4 across the witne"
+      },
+      {
+        "cycle_id": "f81db42e",
+        "quality": 0.72,
+        "theorems": 44,
+        "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
       }
     ],
     "Computation": [

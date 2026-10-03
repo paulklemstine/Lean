@@ -1306,6 +1306,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# The Cubic Relation Construction: A Theorem Set, with Negative Results Proved\n\n**Round 48 consolidation. 2026-10-01.** This document states what is *proved* about the\ncubic relation construction `N = m\u00b3 \u2212 c`, `l(m) = L\u00b7m + K`, `g(x) = v\u00b2x\u00b2 \u2212 2uvx \u2212 2u\u00b2`.\n\n**No new factoring method is claimed.** The construction is a disguised Fermat-with-multiplier\nmethod and its cost is exponential in the bit length. What follows is the theorem set, most of\nit negative, each result tied to the evidence that supports it and to the three companion\nissues (#516 minimax saddle, #517 irreducibility, #518 supply-as-rank).\n\n---\n\n## 1. Correctness\n\n**Theorem 1 (identity).** In `Z[x,c,u,v]`:\n`g(x)\u00b2 \u2212 l(x) = (x\u00b3 \u2212 c)(v\u2074x \u2212 4uv\u00b3)`.\n*Machine-checked*: `CubicSquares.g_sq_sub_ell`. Note `x\u00b3 \u2212 c` is **not** `x\u00b3 + c`; the sign\nis load-bearing and is the source of \u00a75.2.\n\n**Theorem 2 (correctness).** If `m\u00b3 \u2261 c (mod N)`, then `g(m)\u00b2 \u2261 l(m) (mod N)`; and if\n`l(m) = w\u00b2` with `g(m) \u2262 \u00b1w`, then `gcd(g(m) \u2212 w, N)` is a proper divisor.\n*Machine-checked*: `CubicRing.toZMod_g_sq`, `CubicSquares.factor_of_relation`.\n\n**Theorem 3 (splitting criterion).** For `N = pq`, `gcd(a\u2212b,N)` is proper **iff** exactly one\nof `p,q` divides `a\u2212b`. Quadratic residuosity plays **no role**. *Machine-checked*:\n`CubicSquares.split_iff`.\n\n**Corollary 3.1 (the Legendre test is void).** The often-proposed test \"`w` is a non-square\nmod one prime and a square mod the other\" cannot be evaluated without already knowing `p,q`,\nand measured mixed-Legendre relations split 161/190 = 85% versus 146/184 = 79% for the rest \u2014\nconsistent with chance. **Any instrument using a Legendre gate instead of `gcd` measures\nnothing.** We built exactly such an instrument and drew three false conclusions from it (\u00a75).\n\n---\n\n## 2. Structural theorems\n\n**Theorem 4 (Fermat-with-multiplier).** Substituting `c = m\u00b3 \u2212 kN`:\n`l(m) = g(m)\u00b2 \u2212 kNs` with `s = v\u00b3(mv \u2212 4u)`. Hence a relation is exactly\n`(g\u2212w)(g+w) = kNs`.\n**Consequence:** the construction supplies no information unavailable to Fermat's method.\nIts family floor is `N^{1/3}` (Lehman), with `N^{1/4}` from rho/SQUFOF.\n\n**Theorem 5 (deterministic splitting).** If `k>0`, `s>0`, `l(m)=w\u00b2`, `w\u22650`, and\n`0 < g(m) < N/2`, then `gcd(g(m) \u2212 w, N)` is a proper divisor. *Machine-checked*:\n`CubicSquares.relation_always_splits`. Since `w\u00b2 = g\u00b2 \u2212 kNs < g\u00b2`, we get `w < g`, hence\n`0 < g\u2212w < N` and `0 < g+w < 2g < N`. This explains the high success rate: it is not luck.\n\n**Theorem 6 (decoy locus).** If `u = \u2212t` and `v\u00b3c = 8t\u00b3`, then `l(x) = 36t\u2074` for **all** `x`.\n*Machine-checked*: `CubicSquares.ell_decoy`, plus `MinDeg.decoy_iff_constant_residual`\nshowing these are the **complete** constant-residual locus, not an ad-hoc family.\n\n**Theorem 7 (below-cube-root trap).** If `m\u00b3 = c` in `Z` then `l(m) = g(m)\u00b2`, so every\n`w` with `w\u00b2 = l(m)` is `\u00b1g(m)`, and such relations never split. *Machine-checked*:\n`CubicSquares.below_cube_root_trivial`. **Consequence:** for `m\u00b3 \u2264 N` the scan is vacuous;\nit must start at `\u2308N^{1/3}\u2309 + 1`.\n\n**Theorem 8 (scaling symmetry).** `g_{u,v}(\u03bbm) = g_{u,\u03bbv}(m)` and\n`l_{\u03bb\u00b3c,u,v}(\u03bbm) = l_{c,u,\u03bbv}(m)`.\n\n---\n\n## 3. The general cubic \u2014 and what it does *not* buy\n\n**Theorem 9 (the cone).** For monic `f = X\u00b3 + pX\u00b2 + qX + r` with `f(m) \u2261 0 (mod N)` and\n`g = e + bX + aX\u00b2`, polynomial division gives `g\u00b2 = Qf + (Am\u00b2 + Bm + C)`, and the square\ncondition is the **single** equation\n`A = b\u00b2 \u2212 2abp + a\u00b2(p\u00b2 \u2212 q) + 2ae = 0`,\nwith the 2-parameter rational solution set `(a,b,e) = \u03bb(s\u00b2, s\u00b2p + 2st, (s\u00b2q \u2212 4t\u00b2)/2)`.\n*Machine-checked*: `MinDeg.B_on_cone`, `bracket_is_s4_f`; verified symbolically and on\n20,000 random instances. At `p=q=0` it returns the original `(v\u00b2, \u22122uv, \u22122u\u00b2)`.\n\n**Theorem 10 (why degree 3 is unique).** The locus of `[g] \u2208 P^{d\u22121}` with `deg g = d\u22121` and\n`deg(g\u00b2 mod f) \u2264 1` is the complete intersection of `d\u22122` quadrics, of genus\n`g_d = 1 + 2^{d\u22123}(d\u22124)` \u2014 giving **1, 5, 17, 49** for `d = 4,5,6,7`.\n**Hence `d = 3` (genus 0) is the only degree admitting a rational parametrisation**, and by\nFaltings the higher-degree loci are finite, so they carry no supply.\n\n**Theorem 11 (relation locus).** With `t = u/v`, `l(m) = v\u2074\u00b7A(t)` for\n`A(t) = 4t\u2074 + 8mt\u00b3 \u2212 4ct + mc`; so `l(m) = w\u00b2 \u27fa A(t) = (w/v\u00b2)\u00b2` and the locus is the\ndouble cover `{(t,y) : y\u00b2 = A(t)}`, **genus 1** by Riemann\u2013Hurwitz with 4 branch points.\nIts discriminant is `\u2212110592\u00b7c\u00b2(c \u2212 m\u00b3)\u00b2`, so **`c = m\u00b3` is exactly the singular locus** \u2014\nthe below-cube-root trap and the decoy locus are the discriminant-zero stratum.\n*Machine-checked*: `MinDeg.bracket_is_s4_f` (`B = \u2212s\u2074f(2t/s)`).\n\n**Theorem 12 (no congruence to sieve).** Live-ness is `M = (u\u2212v)(u+v)` with `M = 4abN`, a\n**divisor-balance condition on `k` alone**. It is exact over `Z`, hence **vacuous modulo every\nprime**. Confirmed against the source: `grep -c screen` = **0** in Harvey 2020. Any sieve\naimed at `(a,b)` has nothing to filter on.\n\n**Theorem 13 (the filter costs more than the test).** Live-ness is one `isqrt`. Measured\nspeed-up of sieving versus exhaustive: **0.20\u00d7, 0.039\u00d7, 0.0033\u00d7** at `B = 11, 101, 2000` \u2014\ni.e. **5\u00d7 to 303\u00d7 slower**, exactly `1/\u03c0(B)`. A sieve can only pay when the filter is\ncheaper than the test it screens.\n\n**Corollary 13.1 (Remark 3.4 closed negatively).** Harvey's \u221a-sieve on the `(a,b)` grid\ncannot deliver `N^{1/6}`: by Theorems 12\u201313 there is nothing to sieve and screening is\ncounterproductive. Independently, Lemma 3.3's hypothesis `(N/r)^{1/2} \u2264 p` forces a\nsmall-factor search of cost `(N/r)^{1/2}`, which at `r = N^{1/3}` **exceeds** the `N^{1/5}`\nbeing targeted. **The deterministic factoring bound stands at `N^{1/5}`.** No obstruction to\n`N^{1/5\u2212\u03b5}` is known; what is now excluded is the *obvious* route.\n\n---\n\n## 4. Cost statements\n\n**Theorem 14 (box supply).** `E[#relations] = C\u00b7N^{-1/6}` exactly, zero sampling error, RMS\n0.0008 octaves over 64\u2013256 bits \u2014 but only for the **box** population (c in a 16-value pool).\nA scanned instance's rate is **47\u00d7\u2013326\u00d7 lower** at 24\u201332 bits, and grows worse with size.\n\n**Theorem 15 (no selector bill).** `c_max` appears **zero** times in the scanner. Measured\nusable-`m` density = **1.0000** over 30,000 consecutive `m`. The `N/(2c_max)` scan cost is a\ncorrect theorem about *generic*-NFS small-norm selection and does not apply here.\n\n**Theorem 16 (\u03b8, canonical V).** `\u03b8 = log\u2082|V| / log\u2082N` measured on the canonical\n`V = balanced_pmqr(\u2212c, m)`: **1.102, 1.030, 0.970, 0.918, 0.895** at 32/40/48/56/64 bits.\nNot a constant. The cost constant is `c = \u221a(2\u03b8) = 1.34\u20131.48`, i.e. **between Dixon's `\u221a2`\nand the quadratic sieve's `1.0`**, trending toward QS with size and **not crossing it**.\n\n**Theorem 17 (special-N advantage has no region).** Below `log\u2082|c|/log\u2082N = 1/3` the special\nand generic base-`m` cubics are **the same polynomial** (ratio 1.00 over nine cells); above it\nthe special form is strictly worse (2.4\u00d7 at 0.35, 222\u00d7 at 0.75). **There is no size regime in\nwhich hunting small cube residues pays.**\n\n**Theorem 18 (obstruction is identically zero).** `l(\u03b1) = g(\u03b1)\u00b2` holds elementwise in\n`Z[\u03b1]`, so ideal parity is trivially even, the square-root ideal is principal and the unit is\nliterally 1. **No class-group method can buy anything here.**\n\n---\n\n## 5. Instrument defects \u2014 a reproducible failure mode\n\nThese are recorded because each produced a *false conclusion about factoring* before being\ncaught. All are exact-arithmetic errors over the wrong object, not numerical noise.\n\n**5.1 A smoothness test written as a primality idiom.** `E8.is_smooth()` used\n`if p*p > rest: break`. That tests whether `rest` is prime, not whether it is smooth; it\nrejects every number whose largest prime factor lies in `(\u221aV, B\u2080]`. Exhaustively against\nground truth on all **199,998** integers in `[2,200000)` at `B\u2080 = 2000`: the correct gate has\n**0 errors**, this one has **110,312**.\n\n**5.2 A sign convention.** `balanced_pmqr(\u2212c, m)` is required (`f(m) = m\u00b3 \u2212 c \u2261 0`);\n`balanced_pmqr(+c, m)` measures a polynomial with **no root at the scan point**, producing\n**0 verified factors against 23, 15, 5, 6** on the same instances.\n\n**5.3 A gate that cannot be evaluated.** Using a Legendre test instead of `gcd` (Corollary\n3.1) returned **supply = 0** on instances that demonstrably factor.\n\n**5.4 A non-terminating `while`.** `while vp(a4,p) \u2265 4 and vp(a6,p) \u2265 6: u *= p` never\nterminates: once `u > p`, `a4 // u\u2074` is inexact, so the valuation test on the original `a4`\nstays `\u2265 4` forever. Ten consecutive diagnoses blamed PARI, `SIGALRM`, and process isolation\nbefore a per-stage timing bill named the function.\n\n**5.5 The general failure mode.** *A control that reports only a failure count cannot\ndistinguish \"no failures\" from \"no trials.\"* Every false conclusion above returned a plausible\nsmall number \u2014 usually **zero** \u2014 and was reported with increasing confidence. The remedy that\nworked, each time: **state the population beside the rate, and re-derive one sample by hand\nagainst a verified instrument.** The instrument already existed in every case; a new one was\nwritten instead.\n\n---\n\n## 6. Open\n\nSupply as a Mordell\u2013Weil rank question on `E: y\u00b2 = x\u00b3 \u2212 3888cm\u00b7X + 46656c(c+m\u00b3)` (#518) is\n**untested**: the descent fails on models above ~10\u00b9\u2070 digits and the high-supply instances are\ntoo sparse at reachable sizes to stratify. The reduced curve `y\u00b2 = x\u00b3 \u2212 243x + 2` has\n**rank 1** (two independent methods), which is *not* evidence for the mechanism, since those\ninstances lie on the decoy locus where `m\u00b3 = c` and `N = 0`.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5120",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-10-03T02:25:10.032916+00:00",
+    "title": "FACT cubic-theorems \u2014 CONSOLIDATED THEOREM SET for the m^3-c relation construction: 18 results, 3 Lean-checked, most NEGATIVE"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -3441,21 +3455,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "f81db42e",
-    "description": "## FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH (paper 123)\n\n**Verdict name: FIVE-FIELDS-ONE-LAW.**\n\nA fifth independent S3 cubic \u2014 x3-4x+1 (disc = 229 prime) \u2014 confirms the type-channel law:\nI(p mod 229; T) = 1.0078, z=+263 (massive signal at conductor).\n\nFIVE-FIELDS-ONE-LAW: five independent S3 fields, five distinct discriminants, one universal result.\nNow 455 experiments. Assessment v233. Paper 123.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3522",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T23:39:20.833492+00:00",
-    "title": "FACT round-35 #2 \u2014 UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
-  },
-  {
     "consumed_by_exp_id": "152d60cd",
     "description": "Round-37 #1 (exp 464, assessment v238). First test of the hint programme's size axis.\n\n**SIZE-STABLE-PLATEAU**: hint value I((p mod m*, q mod m*); labels) \u2212 I(N mod m*; labels) is size-stable to \u22645.3% across factor sizes k=14\u219222 (a 16,384-fold span); abelian dials \u22641.6%, with abelian residual entropy EXACTLY 0 at every size (labels are residue functions there).\n\nHint table (bits): S3@31: 0.5584/0.5425/0.5415 (k=14/18/22); C3@7: 0.9115/0.9140/0.9169; D4@8: 1.0540/1.0536/1.0507; C5@11: 0.9030/0.9190/0.9268.\n\n**POOL-FLOOR EXCEPTION**: S3@k=10 reads 0.7423 vs plateau ~0.55 \u2014 diagnosed as prime-identity leakage through the pair-residue channel (75-prime pool = 2.5 primes/class; pair residue partially identifies the prime, which determines its type). Not a size law.\n\n**Which-factor wall held at all 16 dial\u00d7size cells** (max |z| = 1.55 vs conditional orientation-permutation null). Instrument lesson: the naive unconditional wall test would have falsely cried violation at |z| up to 4.7 \u2014 the conditional instrument holding (N mod m*, unordered pair) fixed was required.\n\nDecides: hint values transfer across factor sizes wherever the pool resolves the conductor's classes (observed floor ~30 primes/class) \u2014 every extrapolation of the hint programme from toy scale is safe. Barriers 2/5/8 re-verified along a new axis.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp464_hint_size.py, seed 20260821, n=15k semiprimes/cell, runtime 11.8 s.",
     "domains": [
@@ -3471,16 +3470,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-37 #1 \u2014 HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "602d68e3",
     "description": "## FACT round-36 #1 \u2014 RAMIFIED-TYPE-CHANNEL (paper 128)\n\n**Verdict name: RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE.**\n\nRamified primes add negligible info: x2-3 ramified {2,3} gives I=1.0020 all vs 1.0000 unramified only.\n+0.002 bits from including two ramified primes out of thousands. Exclusion fully justified.\nNow 460 experiments. Assessment v237. Paper 128.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3529",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T01:10:29.772175+00:00",
     "title": "FACT round-36 #1 \u2014 RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
   },
@@ -35525,6 +35525,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-02T19:57:19.214712+00:00",
     "title": "Four-Thirds Limit of the Two-Power Semiprime Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact value of the S3 type channel is one bit, so empirical excesses such as 1.0078 should be explained entirely by finite-sample plug-in bias. This gives a quantitative prediction of the excess as a function of the conductor and the number of primes.\n\nFor an S3 field of prime conductor D, E[I_hat_N] = 1 + (D-1)/(4 N ln 2) + O(N^-2) over the first N primes.\n\nCompute I_hat_N for N up to 10^6 primes for the five fields and regress the excess on 1/N.\n\nThe reported z-scores must be recomputed against a null of 1 bit; the 'massive signal' is the proved sign bit.\n\nThere is extra arithmetic dependence not captured by the Chebotarev fibre-product model (e.g. Chebyshev-type biases).",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5117",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f81db42e",
+    "status": "available",
+    "timestamp": "2026-10-03T02:24:36.973226+00:00",
+    "title": "Miller-Madow Bias Law for the Type Channel"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Lift the disc-229 Frobenius argument to every depressed cubic over ZMod p. This gives a single catalog theorem linking root counts to the quadratic character of the discriminant, and so covers all five fields at once.\n\nFor a, b in ZMod p with D = -4a^3-27b^2 nonzero: x^3+ax+b has exactly one root iff D is a non-square; otherwise it has 0 or 3 roots.\n\nFormalize by replacing 229 with D in two_root_relations, disc_eq_sq, isSquare_of_root_in_ext and exists_second_root.\n\nThe conductor law holds uniformly for every S3 cubic with fundamental discriminant, via quadratic reciprocity.\n\nImpossible classically. A failure would indicate a formalization gap, e.g. in characteristic 2 or 3.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5118",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f81db42e",
+    "status": "available",
+    "timestamp": "2026-10-03T02:24:37.456574+00:00",
+    "title": "General Stickelberger Parity Theorem for Cubics"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Remove the two excluded primes from the proved conductor law. The prime 2 should be governed by the Kronecker symbol (229/2) = -1, and the ramified prime 229 by a double root.\n\nx^3-4x+1 has exactly one root mod 2 (Kronecker (229/2) = -1), and modulo 229 it has exactly two distinct roots, one of them double.\n\nDecide both facts in ZMod 2 and ZMod 229; formalize the Kronecker-symbol variant of existsUnique_root_iff_conductor.\n\nThe type-sign coupling holds at every prime once the Legendre symbol is replaced by the Kronecker symbol.\n\nThe sign law needs a genuine exception at p = 2.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5119",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f81db42e",
+    "status": "available",
+    "timestamp": "2026-10-03T02:24:38.093947+00:00",
+    "title": "Kronecker Extension of the Conductor Law to p = 2"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-10-02T19:57:19Z",
-  "count": 191,
+  "archived_at": "2026-10-03T02:24:38Z",
+  "count": 192,
   "directions": [
     {
       "id": "fd_3695",
@@ -7573,6 +7573,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 217
+    },
+    {
+      "id": "fd_3522",
+      "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)",
+      "description": "## FACT round-35 #2 — UNIVERSAL-S3-FIFTH (paper 123)\n\n**Verdict name: FIVE-FIELDS-ONE-LAW.**\n\nA fifth independent S3 cubic — x3-4x+1 (disc = 229 prime) — confirms the type-channel law:\nI(p mod 229; T) = 1.0078, z=+263 (massive signal at conductor).\n\nFIVE-FIELDS-ONE-LAW: five independent S3 fields, five distinct discriminants, one universal result.\nNow 455 experiments. Assessment v233. Paper 123.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "f81db42e",
+      "timestamp": "2026-08-21T23:39:20.833492+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-02T02:21:32.414976+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 216
     }
   ]
 }
