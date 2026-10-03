@@ -1,6 +1,6 @@
 # Choosing `b` Well
 
-## Parameter optimisation in the multiplicative-relations factoring method: a 186× cost reduction, and what a metric choice is worth
+## Parameter optimisation in the multiplicative-relations factoring method: an 81× cost reduction, and what a metric choice is worth
 
 **Round 48 · 2026-10-03 · Sixth in the series, companion to #525**
 
@@ -13,9 +13,15 @@ gathered before linear algebra — that round 48 measured but never tuned. We sw
 systematically, and the results are of two kinds: one large and practical, one methodological
 and sharper.
 
-**Practical.** The cost of finding a factor falls by up to **186×** against the round-48
+**Practical.** The cost of finding a factor falls by up to **81×** against the round-48
 baseline (2.22×10⁵ → **2,724** exponentiations per factor at `n ≈ 2³⁰`), by combining three
-independent settings. More usefully than the number itself, **three independent objectives —
+independent settings.
+
+> **⚠️ Corrected 2026-10-03 (adversarial audit).** This figure was previously published as
+> **186×**, which **fails this paper's own table**: `2.22×10⁵ / 2,724 = 81.5`. Reaching 186 would
+> require a baseline of `5.07×10⁵` that appears nowhere in the paper. **81× is the number this
+> table supports.** The `68×` quoted for the `b`-tuning row alone (`2.22×10⁵/3,269 = 67.9`) is
+> correct — the jump from 68 to 186 was a baseline switch, not a gain. More usefully than the number itself, **three independent objectives —
 exponentiations, total operations, and wall clock — converge on `b ≈ 26–52` at 2³⁰**, and the
 optimum **moves with `n`** under all three (26 → 52 in wall clock between 2³⁰ and 2⁴⁰).
 
@@ -82,7 +88,7 @@ Independent corroboration: a separate axis derived `b ≈ 36` at 2³⁰ analytic
 `Ψ`, against our measured 40; and the optimal-sampler axis (§6) reaches the same 26–52 window.
 **Three routes, built from different data, converge.**
 
-## 4. Result — 186× against the baseline
+## 4. Result — 81× against the baseline (was published as 186×)
 
 At `n ≈ 2³⁰`, exponentiations per successful factor:
 
@@ -90,7 +96,7 @@ At `n ≈ 2³⁰`, exponentiations per successful factor:
 |---|---|---|
 | baseline (`b=6, c=10`) | 2.22 × 10⁵ | — |
 | best `b` under OBJ-1 | **3,269** | **68×** |
-| **best `b` + `c=1` + Jacobi filter on `g`** | **2,724** | **186×** |
+| **best `b` + `c=1` + Jacobi filter on `g`** | **2,724** | **81×** *(2.22e5/2724 = 81.5)* |
 
 Under the operations objective the best is 1.83 × 10⁵ from 3.55 × 10⁶ — **19.4×**.
 
@@ -110,7 +116,7 @@ survives being priced honestly.
 **But ~90% of the original figure was a pricing error**, not a mechanism: the round-48
 comparison counted a `pow` at one unit while ignoring the `b`-dependent smoothness reductions
 per candidate. What remains is a genuine **candidate-count** effect, **orthogonal to stride** —
-so the two improvements compose rather than compete, which is what the 186× figure reflects.
+so the two improvements compose rather than compete, which is what the combined figure reflects.
 
 ## 6. ⚠️ Two of our own predictions falsified, and one mechanism retired as an artefact
 
@@ -118,10 +124,14 @@ so the two improvements compose rather than compete, which is what the 186× fig
 `b`. It **increases**.
 
 **And the cause is an invalid null — mine.** A parallel axis established that at `u ∈ [5,8]`
-the exact `Ψ` is **8.46× `ρ`**, so **every `meas/ρ` ratio at `u ∈ [5,8]` here was scoring against
-a known-invalid reference.** Applying the correction predicts a ratio of ≈0.118; the measured
-cells give 0.090 and 0.148 — consistent. So the striking *low* ratios at small `b` were
-substantially the artefact.
+`Ψ` and `ρ` were **not comparable quantities**, so **every `meas/ρ` ratio at `u ∈ [5,8]` here
+was scoring against a null of the wrong functional form.** The `8.46×` figure once attached to
+this discussion is itself superseded twice over and is **not** the correction: `Ψ/ρ` depends on
+`x`, not on `u` alone; measured at `B=256, x=4×10⁶` the ratio is **2.06**, and for fixed `B` the
+ratio **diverges** because `Ψ(B,x)/x → e^{−γ}/ln B > 0` while `ρ → 0` (see
+`Papers/a_square_minus_a_cube_divides_twice.md` §6.2). **Consequence for this paper: none of
+the COST figures are affected — every cost uses measured `exp/rel`. Only the `meas/ρ`
+*diagnostics* are void, and they were never load-bearing.**
 
 **No cost number is affected**: every cost in this paper uses **measured** `exp/rel`, never `ρ`.
 That is why the conclusions survive while the diagnostic ratios do not.
