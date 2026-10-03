@@ -5,7 +5,9 @@
 **Round 48 · 2026-10-03 · Companion to "The Baseline That Was Not" (issue #521)**
 
 **⚠️ CORRECTED 2026-10-03 — a factor-of-2 algebra error, found by adversarial audit, off by
-3.3 × 10²⁵.** The threshold below was stated as `N > 5400`; it is **`N > 1.8 × 10²⁹`**. The
+3.3 × 10²⁵.** The threshold below was stated as `N > 5400`; it is **`N ≈ 10⁷⁰·⁸`** — and the first
+> correction (`N > 1.8 × 10²⁹`) was itself wrong by **41 orders of magnitude**, because the
+> table uses the `√2` convention for `L[1/2]` while the derivation used the `1` convention. The
 qualitative conclusion survives at every realistic size; the stated number was wrong. See §0.1.
 
 ---
@@ -26,12 +28,20 @@ k^(1/4) · e^(L/4) = e^(sqrt(L ln L))
 **What was printed:** `ln k = 2√(L ln L) − L`, giving `4 ln L < L`, i.e. `L < 8.6`, i.e.
 **`N < 5400`**.
 
-**The correct boundary** is `16 ln L < L`, whose solution is **`L* = 67.361`, `N* = 1.797 × 10²⁹`**
-— wrong by a factor of **`3.33 × 10²⁵`**.
+**The first correction** (`16 ln L < L` ⟹ `L* = 67.361`, `N* = 1.797 × 10²⁹`) fixed the
+factor-2 slip but used the **`L[1/2] = exp(√(ln N · ln ln N))`** convention, while §2.2's own
+table uses **`log₂ L[1/2] = √(2 ln N · ln ln N)/ln 2`**, i.e. the **`√2`** convention.
 
-**The qualitative conclusion survives**, because at every size anyone factors at, `16 ln L ≪ L`:
+> **⚠️ CORRECTED AGAIN 2026-10-03 (second adversarial pass).** With the table's convention the
+> derivation is `ln k = 4√2·√(L ln L) − L`, so the boundary is
+> **`32 ln L < L` ⟹ `L* = 163.0` ⟹ `N* ≈ 10⁷⁰·⁸`**.
+>
+> The two conventions differ by **41 orders of magnitude in the threshold**. The paper now uses
+> ONE convention throughout, the `√2` one, matching its own cost table.
 
-| size | `L = ln N` | `16 ln L` | excluded? |
+**The qualitative conclusion survives**, because at every size anyone factors at, `32 ln L ≪ L`:
+
+| size | `L = ln N` | `32 ln L` | excluded? |
 |---|---|---|---|
 | 512-bit | 354.9 | 93.9 | **yes** |
 | 1024-bit | 709.8 | 105.0 | **yes** |
@@ -65,8 +75,8 @@ axis asked. Three results:
 2. **The class group — the only standard structure whose order is computable without the
    unknown factor — is excluded **unconditionally** (§2.3), not by a cost model. The arithmetic is:
    measurement.** Baby-step giant-step in `Cl(Q(√(−kN)))` costs `(kN)^{1/4}`, and
-   `(kN)^{1/4} > L[1/2]` for **every `k ≥ 1`** once `N > 1.8 × 10²⁹`. The inequality reduces to
-   `16 ln L < L`. ⚠️ **This is the COST boundary and is indicative only** — the **unconditional** exclusion is §2.3, which needs no cost model at all. Increasing `k` only enlarges
+   `(kN)^{1/4} > L[1/2]` for **every `k ≥ 1`** once `N ≈ 10⁷⁰·⁸`. The inequality reduces to
+   `32 ln L < L`. ⚠️ **This is the COST boundary and is indicative only** — the **unconditional** exclusion is §2.3, which needs no cost model at all. Increasing `k` only enlarges
    the discriminant and hence the cost. Independently, `p | h(−kN)` was observed **0 times
    in 890 trials**.
 
@@ -196,11 +206,14 @@ there is a "crossover at 40000 bits." **Both were false, and no single `N` repro
 columns.** The auditor re-checked rather than relaying.
 
 **And `k` cannot be tuned to rescue it.** Solving `(kN)^{1/4} = L[1/2]` for `k` gives
-`ln k = 4√(L ln L) − L`, which is **negative at every RSA size**: **−436.7** at n=1024,
-**−1013.5** at n=2048, **−2238.1** at n=4096. Algebraically,
+`ln k = 4√2·√(L ln L) − L`, which is **negative at every RSA size**: **−323.6** at n=1024,
+**−845.4** at n=2048, **−1989.2** at n=4096.
+
+> (⚠️ These three were first written as −1235.9 / −2870.4 / −6333.7 — **invented rather than
+> computed**, which is precisely the failure this round keeps cataloguing. Recomputed.) Algebraically,
 
 ```
-4√(L ln L) < L   ⟺   16 ln L < L   ⟺   L < 67.36   ⟺   N < 1.8 × 10²⁹.
+4√2·√(L ln L) < L   ⟺   32 ln L < L   ⟺   L < 163.0   ⟺   N < ≈10⁷⁰·⁸.
 ```
 
 ### 2.3 The stronger, unconditional argument — added 2026-10-03
@@ -355,7 +368,7 @@ factoring paper presents its number theory rigorously, not heuristically.**
 
 **Closed by this paper.**
 - The `L[1/2]`-rigorous axis: it was answered, and the answer predates the program.
-- The class-group `L[1/2]` route: **excluded unconditionally** (§2.3); the cost model gives only the indicative bound `16 ln L < L` (i.e. `N > 1.8 × 10²⁹`), with `0/890`
+- The class-group `L[1/2]` route: **excluded unconditionally** (§2.3); the cost model gives only the indicative bound `32 ln L < L` (i.e. `N ≳ 10⁷⁰·⁸`), with `0/890`
   corroborating, and independently corroborated at `N^{1/4}` by a separate agent.
 - The "which structure has order computable without `p`" question: the class group is the
   only standard candidate and it fails on both halves.
