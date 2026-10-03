@@ -88,19 +88,20 @@ Dickman model predicts* is not sampling the population; it is exploiting a degen
 At `n ≈ 2⁴⁰` with the factor base actually used, `u ≈ 5–8`. **Dickman `ρ(u)` is not a valid
 null.** The exact smooth-number count `Ψ` exceeds `ρ` substantially.
 
-**⚠️ CORRECTION 2026-10-03, second pass.** The first version gave the excess as **8.46x** and
-attributed it to the `u ≈ 5–8` regime specifically, citing `C_fixed.txt`. **That is wrong in
-both magnitude and regime.** A later direct measurement (`factor-scratch/r49exp/nfs_e2e/`) at
-**NFS operating points** gives exact `Ψ / ρ`:
+**⚠️ CORRECTION 2026-10-03, second and third pass.** The first version gave the excess as
+**8.46x**; a second gave **13.9x at `u=3` rising to 1244x at `u=5`**. **Both are wrong, and
+the quantity is not well-formed.** `Ψ(B,x)/ρ(u)` depends on `x`, not on `u` alone.
 
-| u | exact Psi / rho |
-|---|---|
-| 3 | **13.9x** |
-| 5 | **1244x** |
+Measured directly: `Ψ(256, 4×10⁶)/4×10⁶ = 0.1004` against `ρ ≈ 0.0486` — ratio **2.06**.
 
-**So `rho` is worse at NFS operating points (`u ~ 3-5`) than in the `u ~ 5-8` regime quoted
-before.** The error was mine: I generalised an 8.46x figure measured in one regime and implied
-it was regime-specific when it is not.
+**The correct statement.** For fixed `B`, `Ψ(B,x)/x → e^{−γ}/ln B`, a **positive constant**,
+while `ρ(log x/log B) → 0`. **The ratio DIVERGES.** Dickman `ρ` is not an approximation to
+`Ψ/B` here; it is the **wrong functional form**, decaying to zero where the truth is constant.
+
+**So `ρ` is unusable as a null for uniform integers in principle, not merely in degree.**
+
+*The third pass failed because the second was accepted on trust. Every "correction" to a
+number I have not measured is another thing to get wrong.*
 
 **Effect on this paper's conclusions: none.** Every rate here is against **exact `Psi`**, never
 `rho`; the verified log in `factor-scratch/r52/exp/smooth/C_fixed.txt` shows the sampler was

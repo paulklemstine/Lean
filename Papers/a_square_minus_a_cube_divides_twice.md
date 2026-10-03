@@ -347,10 +347,28 @@ without dividing the two myself. The observed and expected fractions were both r
 throughout; only the multiple was wrong.
    `k = 2` carries 23–53%; `k = 1` is a loss; `k = 5` is a small reproducible loss.
 
-**Correction to this paper's own §3-adjacent tooling.** Dickman `ρ` is worse at NFS operating
-points than previously recorded: exact `Ψ/ρ` is **13.9× at `u = 3` rising to 1244× at
-`u = 5`** — the earlier "8.46× at `u ∈ [5,8]`" was both too small and in the wrong regime.
-Any null at an NFS operating point must use exact `Ψ`.
+**⚠️ CORRECTION 2026-10-03 (second adversarial pass).** An earlier version of this section
+stated `Ψ/ρ` is "**13.9× at `u = 3` rising to 1244× at `u = 5`**". **That is wrong**, and the
+figure is not even well-formed — `Ψ(B,x)/ρ(u)` depends on `x`, not on `u` alone.
+
+Measured directly: `Ψ(256, 4×10⁶)/4×10⁶ = 0.1004` against `ρ ≈ 0.0486`, a ratio of **2.06**,
+not 13.9. (Cross-check: 89.96% of integers below `X` are not 256-smooth, against Mertens'
+`1 − e^{−γ}/ln 256 = 0.8987`.)
+
+**The correct statement is qualitative, and stronger.** For fixed `B`,
+
+> **`Ψ(B,x)/x → e^{−γ}/ln B` — a positive constant — while `ρ(log x / log B) → 0`. So the ratio
+> `Ψ/ρ` DIVERGES; it is not a number that can be quoted at a given `u`.**
+
+**Why this matters:** Dickman `ρ` is not merely inaccurate for uniform integers, it is the
+wrong *functional form* — it decays to zero where the true density is constant. **Any null at
+an NFS operating point must use exact `Ψ`, or Monte Carlo. `ρ` is unusable there in principle,
+not merely in degree.**
+
+*And a related defect in the shared harness: `_shared/dickman.py` is valid only for `u ≤ 5` and
+saturates above it (see `notes/LL_dickman_harness_broken.md`). It was distributed across the
+round as "the validated instrument"; its self-test probed only `u ≤ 4.2`, the one region where
+it works.*
 
 *Scope, declared:* measured at **one value scale**; replication at 2⁴⁸/2⁶⁰ is the open check.
 
