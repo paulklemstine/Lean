@@ -197,15 +197,15 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 | Class-group walk as `L[1/2]` | **CLOSED (structural)** | `Cl(O_D) mod p` trivial; walk is SQUOF at `N^{1/4}` |
 | Rigorous `L[1/2]` | **ALREADY KNOWN** | Shoup Thm 15.6, unconditional since ~2009 |
 | "Structure with order computable without `p`" | **CLOSED (structural)** | `16 ln L < L` ⟺ `N > 1.8 × 10²⁹` (corrected by adversarial audit; the paper had a factor-2 algebra error giving `N < 5400`, wrong by 3.3 × 10²⁵); 0/890 divisibility |
-| Function fields / tori / Jacobians | **CLOSED (exactly)** | `reach_p = L[1/2]`: the useful bit `(D/p)` is the factorization bit; `(D/n)` carries **zero** bits about it (102 vs 105 of 207) |
+| Function fields / tori / Jacobians | **CLOSED as an L[1/2] route; NOT closed as a factorer** | `reach_p = L[1/2]`: `(D/p)` is the factorization bit, `(D/n)` carries zero bits about it. ⚠️ `E_funcfield.md:358` calls the `D=u²−1` torus **"a genuine factoring method (12/12 splits, 1.5× cheaper than GMP-ECM's ladder)"** — the census previously said CLOSED where the note says the opposite. The `reach_p` figure **needs Lenstra's heuristic** (flagged, unmarked here before), and the field-vs-number-field asymmetry rests on **Lenstra–Pomerance 1992, which the note's author states he has not read** — "the synthesis is mine" |
 | Towers (level-raising to hit smooth orders) | **CLOSED** | a loss, not a knob: 3.18×/5.74×/8.54× at k=2/3/4, and the degree depends on the unknown `p` |
 | NFS smoothness uniformity | **DEVIATION FOUND (positive)** | `P(p^k | a²−b³)/p^k = 2−1/p` for odd `p`, **2 ≤ k ≤ 5** (departs at k=6) — the heuristic is **pessimistic**. **The 25–38% collection-cost figure is WITHDRAWN by audit: never measured end-to-end** |
 | Unconditional superpolynomial lower bound | **NONE in any model** | classical *and* quantum; all such bounds are oracle bounds |
 | Jacobi-symbol graph spectral invariant | **CLOSED (restatement)** | `p+q = N+1−2·deg` is exact, but `deg = φ(N)/2` and φ is polylog-equivalent to factoring |
 | Projective point count over `Z/NZ` | **EQUIVALENT to factoring** | both directions, no slack (arXiv:1911.11004 p.3); affine twists sum to `4N`, a tautology |
-| Cross-discipline sweep (7 fields) | **CLOSED** | K-theory, Tate modules, theta, Brauer, information-theoretic — all fail one of the three requirements |
-| Partial-information factoring below ½ the bits of p | **CLOSED — measured to the bit** | **31 unknown bits WORKS, 32 FAILS** at N=2¹²⁸: `X = N^{1/4}` exactly. Nothing tested beat ½: algebraic relation makes it *worse* (`N^{1/4}→N^{1/2}`); known-`d` needs ~100% of d's bits |
-| GNFS constant via BKZ past LLL | **CLOSED — provably nothing** | **40/40 relation lattices give LLL/SVP = 1.0000000000 exactly.** The rows have near-disjoint small-prime supports, so they are nearly orthogonal *before* reduction — LLL is already optimal, so **no block size can buy anything** |
+| Cross-discipline sweep (7 fields) | **MOSTLY CLOSED; field 6 is OPEN** | K-theory, Tate modules, theta, Brauer, information-theoretic all fail. ⚠️ `H_crossdiscipline.md:317` calls field 6 (Jacobi graph) **"the round's only genuinely live lead"** — marking the sweep CLOSED was **status inflation**. Also: "φ is polylog-equivalent to factoring", the load-bearing step of that row, is **asserted with no proof or citation** |
+| Partial-information factoring below ½ the bits of p | **31/32 boundary MEASURED; axis NOT closed** | **31 unknown bits WORKS, 32 FAILS** at N=2¹²⁸: `X = N^{1/4}` exactly. Nothing tested beat ½. ⚠️ `D_partialinfo.md:196-224` lists **five unmeasured dimensions** including **no multivariate/Herrmann–May construction built at all** and multiplier-`u` not implemented. The earlier bare "CLOSED" overstated it |
+| GNFS constant via BKZ past LLL | **no gain found; "provably nothing" WITHDRAWN** | 40/40 give LLL/SVP = 1.0000000000 on the *certified* lattices. ⚠️ But the census's **mechanism sentence is not measured and the note's own control contradicts it**: `I_constant.md:26` records LLL/SVP ∈ [1.000, **1.149**] and S4b finds LLL **strictly suboptimal 1/60**. Also **Montgomery normalisation is absent — 0/40 rows m-divisible** (`I_constant.md:139-143`, "a real gap I flag rather than claim"). Honest status: **no constant improvement demonstrated on the lattices tested** |
 
 ### The constant axis, settled by an exact computation rather than a comparison
 
@@ -249,6 +249,34 @@ tuning results reported as results is how this program has destroyed itself befo
 The second live question is the **decay curve**: does 75% hold at 2^60, or is it already
 collapsing? The regime analysis predicts a collapse eventually; whether it has begun by 2^60
 is measurable and would be the honest answer to "does this work at RSA scale?"
+
+---
+
+## ■ PROVENANCE WARNING — read this before trusting any row above
+
+**This census has been audited by an agent that did not write it
+(`notes/Y_adversary_papers.md`), and the audit's central finding is about THIS FILE, not about
+the mathematics:**
+
+> **No census row is wholly untraceable. The failure mode is that the reason column is STRONGER
+> than the evidence beneath it, and the census systematically DROPS the caveats its own notes
+> attach.**
+
+Six rows have been corrected above for exactly this. The general rule:
+
+> **A table row propagates; prose caveats do not. If the status word in the table is stronger
+> than the status word in the note, the table is wrong.**
+
+Corrections applied from that audit:
+| row | was | now |
+|---|---|---|
+| BKZ / LLL | "CLOSED — provably nothing" | **withdrawn**; no gain demonstrated on the lattices tested; note's own control gives LLL/SVP up to **1.149** and finds LLL suboptimal 1/60; Montgomery normalisation absent (0/40 rows m-divisible) |
+| Function fields | "CLOSED (exactly)" | closed as an `L[1/2]` route but **NOT closed as a factorer** — the note calls the `u²−1` torus **"a genuine factoring method (12/12 splits, 1.5× cheaper than GMP-ECM)"** |
+| Cross-discipline | "CLOSED" | **field 6 is OPEN**; the note calls it "the round's only genuinely live lead" |
+| Partial information | "CLOSED" | **axis NOT closed**; the note lists five unmeasured dimensions |
+| Supply audit | filed under round 48 | **actually round 49**; scripts in `r49/exp/supply/`, note `S_supply.md` — previously absent from this census's own FILES list |
+
+**Standing obligation:** if a row here contradicts its note, **the note wins.**
 
 ---
 
@@ -308,7 +336,9 @@ Three defects in its own harness, each caught by a gate before measurement: a QR
 (`b == p-1` for `b == q-1`) that **the mandatory control caught at 0/9101**.
 
 **Unchanged from round 47:** NFS relation geometry, Harvey `N^{1/5}`, Umans–Wang, Lecerf
-bivariate, auxiliary information, classical-deterministic. Nothing here disturbs them.
+bivariate, auxiliary information, classical-deterministic. ⚠️ **"Nothing here disturbs
+them" is an ASSERTION by this census, not a verified result** — the audit flagged that no
+inherited row was independently re-checked against its source.
 
 **Still open:** NFS at `L[1/3]` — where the heuristic actually lives. Nothing in round 48
 touches it.
@@ -538,4 +568,6 @@ Full table and the CRT ground-truth recipe: `notes/T_pari_ellcard_hazard.md`.
 `A3_phantoms`, `F_rigorous`, `G_adversary`, `H_crossdiscipline`, `M_forensics`,
 `P_citation_propagation`, `Q_vacuous_measurement`, `R1_lower_algebraic`, `R1_lower_quantum`,
 `THEOREM_ordercert`, `ZERO_shared_harness`.
+**Also (round-49 provenance, see warning above):** `S_supply`, `B_groups`, `D_partialinfo`, `O_e6c_recheck`, `U_stange_improve`, `Y_adversary_papers`.
+Scripts: `r49/exp/supply/` (supply audit), `r48/exp/stange/` (method), `r51/exp/audit2/` (the adversarial audit).
 `_shared/` — `dickman.py` (the instrument).
