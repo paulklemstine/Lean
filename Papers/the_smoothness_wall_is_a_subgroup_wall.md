@@ -1,6 +1,6 @@
 # The Smoothness Wall Is a Subgroup Wall
 
-## A rigorous `L[1/2]` already exists, the class group is structurally excluded, and the real heuristic problem is NFS
+## A rigorous `L[1/2]` already exists, the class group is excluded unconditionally (§2.3), and the real heuristic problem is NFS
 
 **Round 48 · 2026-10-03 · Companion to "The Baseline That Was Not" (issue #521)**
 
@@ -63,10 +63,10 @@ axis asked. Three results:
    **The heuristic exponent is NFS at `L[1/3]`, not ECM at `L[1/2]`.**
 
 2. **The class group — the only standard structure whose order is computable without the
-   unknown factor — is structurally excluded, by an algebraic argument rather than a
+   unknown factor — is excluded **unconditionally** (§2.3), not by a cost model. The arithmetic is:
    measurement.** Baby-step giant-step in `Cl(Q(√(−kN)))` costs `(kN)^{1/4}`, and
    `(kN)^{1/4} > L[1/2]` for **every `k ≥ 1`** once `N > 1.8 × 10²⁹`. The inequality reduces to
-   `16 ln L < L`. This is not "unlikely"; it is **impossible**, and increasing `k` only enlarges
+   `16 ln L < L`. ⚠️ **This is the COST boundary and is indicative only** — the **unconditional** exclusion is §2.3, which needs no cost model at all. Increasing `k` only enlarges
    the discriminant and hence the cost. Independently, `p | h(−kN)` was observed **0 times
    in 890 trials**.
 
@@ -143,7 +143,7 @@ read from a page image.**
 
 ---
 
-## 2. The class group is structurally excluded — a proof, not a measurement
+## 2. The class group is excluded — but the cost argument below is only INDICATIVE
 
 `Cl(Q(√(−kN)))` has a genuine and unusual property: its order `h(−kN)` is computable
 **exactly, with no knowledge of `p`** (PARI `qfbclassno`; Schoof in `poly(log|D|)`). It is
@@ -229,7 +229,7 @@ that the divisibility fires often — that agent's hits were all at `N = 143`, w
 The auditor validated `qfbclassno` 20/20 against brute force before trusting either number.
 
 **Even `k = 1` is too slow past a few thousand, and increasing `k` only enlarges `D = −kN`,
-hence `h`, hence the cost.** The class group is *structurally excluded*, not merely unlikely —
+hence `h`, hence the cost.** The class group is **excluded unconditionally** (§2.3), not merely unlikely —
 a categorically different status from every other closure in this program's census.
 
 ### 2.3 Independent corroboration
@@ -355,7 +355,7 @@ factoring paper presents its number theory rigorously, not heuristically.**
 
 **Closed by this paper.**
 - The `L[1/2]`-rigorous axis: it was answered, and the answer predates the program.
-- The class-group `L[1/2]` route: structurally excluded by `16 ln L < L` (i.e. `N > 1.8 × 10²⁹`), with `0/890`
+- The class-group `L[1/2]` route: **excluded unconditionally** (§2.3); the cost model gives only the indicative bound `16 ln L < L` (i.e. `N > 1.8 × 10²⁹`), with `0/890`
   corroborating, and independently corroborated at `N^{1/4}` by a separate agent.
 - The "which structure has order computable without `p`" question: the class group is the
   only standard candidate and it fails on both halves.
