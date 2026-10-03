@@ -290,13 +290,23 @@ attributable to the excess.**
 
 **The measurement** (3,149,886 candidates per arm, 4 replicates, seeds in the note):
 
-| u | cost-per-relation ratio (TRUE/NULL) |
-|---|---|
-| 3.00 | **0.859** [0.851, 0.867] |
-| 3.60 | 0.726 |
-| 4.00 | **0.640** [0.623, 0.657] |
-| 5.14 | 0.361 |
-| 6.00 | 0.220 |
+| u | cost-per-relation ratio (TRUE/NULL) | reduction |
+|---|---|---|
+| 3.00 | **0.859** [0.851, 0.867] | 14.1% |
+| 3.60 | 0.726 | 27.4% |
+| 4.00 | **0.640** [0.623, 0.657] | 36.0% |
+| **4.50** | **0.5085** | **49.2%** ← largest in the table |
+| 5.14 | 0.361 | 63.9% |
+| 6.00 | 0.220 | 78.0% |
+
+⚠️ **Corrected 2026-10-03 (adversarial audit MAT-3).** An earlier version of this table
+**omitted `u = 4.50`, the largest reduction in it**, and quoted sub-ranges that excluded the
+extreme operating points. Full ranges, not the flattering ones:
+- gain at `k ≥ 6`: **37.0%–53.4%** (not "37–40%")
+- gain at `k = 2`: **10.2%–53.2%** (not "23–53%")
+
+The selection was not deliberate but it was selective, and the reader could not see the
+omitted rows.
 
 **The gain SURVIVES sieving — the audit's "every net gain < 1" is false.** Among pre-sieve
 survivors the ratio is unchanged (1.706 vs 1.687 over all candidates at `u = 4`), and 12–16 of
@@ -310,12 +320,31 @@ survivors the ratio is unchanged (1.706 vs 1.687 over all candidates at `u = 4`)
 
 **And two qualifications the paper must carry:**
 
-1. **It is not an implementable speedup.** There is no decision to take: no sub-box beats the
-   free global rate. It is a measured property of the value distribution, not an available
-   constant.
+1. **It IS localisable — which makes it a better result than first reported, and makes one of
+   this section's earlier claims wrong.**
+
+   ⚠️ **Corrected 2026-10-03 (adversarial audit MAT-2).** An earlier version said *"no sub-box
+   beats the free global rate"* while bolding that the gain survives sieving — **the two are not
+   jointly satisfiable**, and by the source's own criterion the second is the truth:
+
+   | u | best mod-4 sub-box | global | beats by |
+   |---|---|---|---|
+   | 6.00 | 28.40 | 5.02 | **5.65×** |
+   | 3.00 | 2.60 | 1.27 | **2.04×** |
+
+   The maximum sub-box beats the global rate at **every** operating point, 12–16 of 16 mod-4 and
+   7–9 of 9 mod-3 cells exceeding 1. **So the excess is LOCALISABLE and a sieve could be aimed
+   at it.** The earlier "not an implementable speedup" was wrong, and it understated the result.
 2. **~2/5 of the gain is the trivially-divisible subspace, not the advertised `2 − 1/p`
    effect.** About 37–40% sits at `k ≥ 6`, and 58.6% of *those* relations satisfy the
-   zero-zero configuration (`p³ | a`, `p² | b`) against 3.6% expected — **18.8× enriched**.
+   zero-zero configuration (`p³ | a`, `p² | b`): observed **1694/2889 = 58.64%**, expected
+**103.09 hits = 3.57%**, so the enrichment is **16.4×**.
+
+⚠️ **Corrected 2026-10-03 (adversarial audit MAT-1).** This was published as **18.8×**, which
+is `58.6/3.6 = 16.28` with the arithmetic done wrong — and 18.8 is unreachable from the source
+data *or* from the paper's own printed figures. I took the number from an agent's report
+without dividing the two myself. The observed and expected fractions were both right
+throughout; only the multiple was wrong.
    `k = 2` carries 23–53%; `k = 1` is a loss; `k = 5` is a small reproducible loss.
 
 **Correction to this paper's own §3-adjacent tooling.** Dickman `ρ` is worse at NFS operating
