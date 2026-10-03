@@ -4,9 +4,54 @@
 
 **Round 48 · 2026-10-03 · Companion to "The Baseline That Was Not" (issue #521)**
 
+**⚠️ CORRECTED 2026-10-03 — a factor-of-2 algebra error, found by adversarial audit, off by
+3.3 × 10²⁵.** The threshold below was stated as `N > 5400`; it is **`N > 1.8 × 10²⁹`**. The
+qualitative conclusion survives at every realistic size; the stated number was wrong. See §0.1.
+
 ---
 
-## Abstract
+## 0.1 CORRECTION — the exclusion threshold, off by 25 orders of magnitude
+
+An adversarial audit of this paper (which I did not write) found a **factor-of-2 error** in
+§2.2. I have verified it and it is mine.
+
+The derivation is `(kN)^{1/4} = L[1/2]` with `L = ln N`:
+
+```
+k^(1/4) · e^(L/4) = e^(sqrt(L ln L))
+   (1/4) ln k + L/4 = sqrt(L ln L)
+        ln k = 4 sqrt(L ln L) − L          ← the factor is 4; the paper printed 2
+```
+
+**What was printed:** `ln k = 2√(L ln L) − L`, giving `4 ln L < L`, i.e. `L < 8.6`, i.e.
+**`N < 5400`**.
+
+**The correct boundary** is `16 ln L < L`, whose solution is **`L* = 67.361`, `N* = 1.797 × 10²⁹`**
+— wrong by a factor of **`3.33 × 10²⁵`**.
+
+**The qualitative conclusion survives**, because at every size anyone factors at, `16 ln L ≪ L`:
+
+| size | `L = ln N` | `16 ln L` | excluded? |
+|---|---|---|---|
+| 512-bit | 354.9 | 93.9 | **yes** |
+| 1024-bit | 709.8 | 105.0 | **yes** |
+| 2048-bit (RSA) | 1419.6 | 116.1 | **yes** |
+| 4096-bit | 2839.1 | 127.2 | **yes** |
+
+So the class group remains excluded at RSA scale, and `k = 1` remains too slow there. **What was
+wrong was the number and, with it, any claim that the exclusion is universal or that `N < 5400`
+is a meaningful frontier.** It is a cost-model statement, not a theorem, and the audit is right
+that "structurally excluded / impossible" overstated it.
+
+Two further audit findings on this paper, recorded and accepted:
+- **Both `L`-columns of the §2.2 cost table were wrong, and `L[1/3] > L[1/2]` was printed** — an
+  inequality that is never true. The corrected ordering is `L[1/3] < L[1/2] < N^{1/4}`, so the
+  class-group walk is worse than both.
+- **The paper's own §3 refutes its §2.2.** ECM beats `√p` with `L[1/2]` using exactly a
+  smoothness argument over a group order that is a random number; if that transferred to
+  `Cl(O_D)`, the exclusion would fail. The exclusion holds only because `Cl(O_D)` mod `p` is
+  **trivial** (§3.4) — so the cost argument is not the load-bearing one, and should not have been
+  presented as if it were.
 
 A 48-round factoring program dispatched an axis to find *"an unconditional `L[1/2]`, or a
 rigorous `L[1/3]`."* Both premises are wrong, and correcting them resolves more than the
@@ -20,8 +65,8 @@ axis asked. Three results:
 2. **The class group — the only standard structure whose order is computable without the
    unknown factor — is structurally excluded, by an algebraic argument rather than a
    measurement.** Baby-step giant-step in `Cl(Q(√(−kN)))` costs `(kN)^{1/4}`, and
-   `(kN)^{1/4} > L[1/2]` for **every `k ≥ 1`** once `N > 5400`. The inequality reduces to
-   `L < 8.6`. This is not "unlikely"; it is **impossible**, and increasing `k` only enlarges
+   `(kN)^{1/4} > L[1/2]` for **every `k ≥ 1`** once `N > 1.8 × 10²⁹`. The inequality reduces to
+   `16 ln L < L`. This is not "unlikely"; it is **impossible**, and increasing `k` only enlarges
    the discriminant and hence the cost. Independently, `p | h(−kN)` was observed **0 times
    in 890 trials**.
 
@@ -137,11 +182,11 @@ is `N^{1/4}`. All columns `log₂`:
 | 16384 | 4096.00 | 234.90 | 276.52 | **3861.10** | **3819.48** |
 
 **And `k` cannot be tuned to rescue it.** Solving `(kN)^{1/4} = L[1/2]` for `k` gives
-`ln k = 2√(L ln L) − L`, which is **negative at every RSA size**: −573 at n=1024, −1217 at
+`ln k = 4√(L ln L) − L`, which is **negative at every RSA size**: −573 at n=1024, −1217 at
 n=2048, −2539 at n=4096. Algebraically,
 
 ```
-2√(L ln L) < L   ⟺   4 ln L < L   ⟺   L < 8.6   ⟺   N < 5400.
+4√(L ln L) < L   ⟺   16 ln L < L   ⟺   L < 67.36   ⟺   N < 1.8 × 10²⁹.
 ```
 
 **Even `k = 1` is too slow past a few thousand, and increasing `k` only enlarges `D = −kN`,
@@ -271,7 +316,7 @@ factoring paper presents its number theory rigorously, not heuristically.**
 
 **Closed by this paper.**
 - The `L[1/2]`-rigorous axis: it was answered, and the answer predates the program.
-- The class-group `L[1/2]` route: structurally excluded by `L < 8.6`, with `0/890`
+- The class-group `L[1/2]` route: structurally excluded by `16 ln L < L` (i.e. `N > 1.8 × 10²⁹`), with `0/890`
   corroborating, and independently corroborated at `N^{1/4}` by a separate agent.
 - The "which structure has order computable without `p`" question: the class group is the
   only standard candidate and it fails on both halves.

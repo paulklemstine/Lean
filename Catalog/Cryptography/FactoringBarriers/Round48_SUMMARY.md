@@ -55,7 +55,7 @@ carried for years**, one corrected retraction of the program's last live lead, a
    The class group is the only standard candidate and fails twice:
    - `p | h(−kN)` observed **0/890** across `k ≤ 4096`;
    - and BSGS costs `(kN)^{1/4}`, where `(kN)^{1/4} > L[1/2]` for **every `k ≥ 1`** once
-     `N > 5400`. The inequality reduces to `2√(L ln L) < L ⟺ 4 ln L < L ⟺ L < 8.6`.
+     `N > 1.8 × 10²⁹`. The inequality reduces to `4√(L ln L) < L ⟺ 16 ln L < L ⟺ L < 67.36` (corrected by audit: the paper had a factor-2 error giving `N < 5400`, wrong by 3.3 × 10²⁵).
      Increasing `k` only enlarges `D`, hence `h`, hence the cost.
 
    **Structurally excluded, not merely unlikely** — a categorically different status from
@@ -196,10 +196,10 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 | Class-group smoothness lottery | **CLOSED ×3** | self-referential baseline; half-bit artifact; parity mismatch |
 | Class-group walk as `L[1/2]` | **CLOSED (structural)** | `Cl(O_D) mod p` trivial; walk is SQUOF at `N^{1/4}` |
 | Rigorous `L[1/2]` | **ALREADY KNOWN** | Shoup Thm 15.6, unconditional since ~2009 |
-| "Structure with order computable without `p`" | **CLOSED (structural)** | `L < 8.6 ⟺ N < 5400`; 0/890 divisibility |
+| "Structure with order computable without `p`" | **CLOSED (structural)** | `16 ln L < L` ⟺ `N > 1.8 × 10²⁹` (corrected by adversarial audit; the paper had a factor-2 algebra error giving `N < 5400`, wrong by 3.3 × 10²⁵); 0/890 divisibility |
 | Function fields / tori / Jacobians | **CLOSED (exactly)** | `reach_p = L[1/2]`: the useful bit `(D/p)` is the factorization bit; `(D/n)` carries **zero** bits about it (102 vs 105 of 207) |
 | Towers (level-raising to hit smooth orders) | **CLOSED** | a loss, not a knob: 3.18×/5.74×/8.54× at k=2/3/4, and the degree depends on the unknown `p` |
-| NFS smoothness uniformity | **DEVIATION FOUND (positive)** | `P(p^k | a²−b³) = (2p−1)/p^k` for odd `p`, `k ≥ 2` — the heuristic is **pessimistic**. 25–38% of collection cost; no exponent change |
+| NFS smoothness uniformity | **DEVIATION FOUND (positive)** | `P(p^k | a²−b³)/p^k = 2−1/p` for odd `p`, **2 ≤ k ≤ 5** (departs at k=6) — the heuristic is **pessimistic**. **The 25–38% collection-cost figure is WITHDRAWN by audit: never measured end-to-end** |
 | Unconditional superpolynomial lower bound | **NONE in any model** | classical *and* quantum; all such bounds are oracle bounds |
 | Jacobi-symbol graph spectral invariant | **CLOSED (restatement)** | `p+q = N+1−2·deg` is exact, but `deg = φ(N)/2` and φ is polylog-equivalent to factoring |
 | Projective point count over `Z/NZ` | **EQUIVALENT to factoring** | both directions, no slack (arXiv:1911.11004 p.3); affine twists sum to `4N`, a tautology |
@@ -460,7 +460,7 @@ used.** After parity matching, `Cl(√−D)` shows **+0.0499 (+3.4σ)** over a s
 > different populations and must not do so.
 
 **But it still fails, structurally rather than numerically.** `Cl(O_D) mod p` is trivial, so the
-walk degenerates to SQUFOF at `N^(1/4) > L[1/2]` for every `k ≥ 1` once `N > 5400`. **A family
+walk degenerates to SQUFOF at `N^(1/4) > L[1/2]` for every `k ≥ 1` once `N > 1.8 × 10²⁹`. **A family
 can win on smoothness and still lose.**
 
 That is the axis's real lesson, stated by the survey and worth keeping:

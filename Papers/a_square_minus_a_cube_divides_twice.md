@@ -185,12 +185,14 @@ The generalization worth carrying:
 
 ## 6. What this is worth — the honest accounting
 
-The direction is favourable: NFS relation values are smoother than the uniform model says, so
-the heuristic is *pessimistic* about NFS. Measured end-to-end by the round-48 smoothness axis,
-the effect is a **25–38% reduction in relation-collection cost** at the operating point
-`u ≈ 3`.
+**⚠️ CORRECTED 2026-10-03 — the original version claimed a "25–38% reduction in
+relation-collection cost, measured end-to-end." That was wrong on three counts, per adversarial
+audit, and the claim is WITHDRAWN. See §6.1.**
 
-It is **not** more than that:
+The direction is favourable: NFS relation values are smoother than the uniform model says, so
+the heuristic is *pessimistic* about NFS.
+
+**What survives:**
 
 - **The `L[1/3]` exponent is untouched.** A constant-factor change in smoothness probability
   shifts the prefactor, not the exponent of `L`.
@@ -199,12 +201,48 @@ It is **not** more than that:
   independent of `N`), not by the smoothness rate.
 - **The extrapolation is a model, not a measurement.** All data is at `N ≈ 10^8` and
   `u ≤ 4`; NFS runs at `u ≈ 3–5`. A previous round chased an apparent `N`-dependence through
-  four iterations and it was truncation, not physics. The `u`-extrapolation remains unverified.
+  four iterations and it was truncation, not physics.
 - **The bias does not concentrate.** It buys extra powers of a handful of primes while losing
   `1/p` of the box for every other prime, so no sieveable sub-box captures a net gain.
 
-A constant-factor improvement of 25–38% in one stage is worth having and worth publishing. It
-is not a breakthrough, and we will not describe it as one.
+**What does NOT survive — and this is the honest bottom line of this paper: the quantitative
+payoff is UNMEASURED.** The valuation law (§2, verified exhaustively) is a fact. What it is
+worth in wall-clock is not established, and no one has demonstrated it can be cashed.
+
+---
+
+## 6.1 CORRECTION — the 25–38% payoff is withdrawn
+
+The first version of this paper stated:
+
+> *"Measured end-to-end by the round-48 smoothness axis, the effect is a **25–38% reduction in
+> relation-collection cost** at the operating point `u ≈ 3`."*
+
+**Withdrawn.** Adversarial audit found it fails on three independent counts, and I agree with
+all three:
+
+1. **It was never measured end-to-end.** No run in this program propagated the valuation excess
+   through a relation-collection pipeline and timed it. The figure is an *interpolation* from a
+   smoothness rate, not a measurement of a collection step.
+2. **It does not follow from `δ`.** The excess is a per-prime-power divisibility ratio; turning
+   that into a fraction of *collection* cost requires a model of how the sieve actually spends
+   work, which was never supplied. The round-48 smoothness axis labelled its own number **"the
+   naive reading"** — and the first version of this paper promoted it to "measured end-to-end."
+3. **The program's own data suggests it cannot be cashed.** The bias does not concentrate into
+   a sieveable sub-box (every net gain `< 1`): it buys extra powers of a few primes while losing
+   `1/p` of the box for every other prime. If the gain cannot be localised, the sieve does not
+   collect it.
+
+**This is the failure mode the round has been cataloguing all day, applied to my own paper:** a
+number inherited from an agent, re-labelled with a stronger word than its source used, and
+published. The audit is right, and the correct statement is the shorter one:
+
+> **The valuation law is established. Its cost consequence is not. Establishing it requires an
+> end-to-end collection measurement in which the sieved-box structure is preserved.**
+
+Until that exists, **this paper's contribution is a distributional fact about NFS values and
+nothing more.** It is still, as far as I can tell, not in the standard references — but a fact
+without a measured payoff should be presented as a fact, not dressed as an improvement.
 
 ## 7. Related corrections this round
 
