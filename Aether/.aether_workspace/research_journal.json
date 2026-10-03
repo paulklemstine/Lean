@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5c4155a3",
-      "domain": "Bridges",
-      "key_insight": "",
-      "quality_score": 0.70417,
-      "sorry_count": 0,
-      "theorem_count": 42,
-      "timestamp": "2026-09-11T05:13:36",
-      "title": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The"
-    },
-    {
       "cycle_id": "63101e70",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — plateau identifiability and the cost of a ladder\n\n## What this cycle settled\n\n1. **Exact `m`-rung identifiability** (`plateauSet_prefix_eq_Icc`).  Measuring a prefix\n   `p 0, …,",
@@ -499,19 +489,19 @@
       "theorem_count": 24,
       "timestamp": "2026-10-03T17:55:06",
       "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
+    },
+    {
+      "cycle_id": "152d60cd",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — HINT-SIZE-SCALING (round 37 #1)\n\n## What this cycle proved\n\nResults are in `Catalog/Logic/HintSizeScaling.lean` and `Catalog/Logic/HintSizeScalingInstances.lean`.\n\n* **Size-stabi",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-10-03T21:10:48",
+      "title": "FACT round-37 #1 — HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e645a8ec",
-      "domain": "Probability",
-      "key_insight": "# Future directions after exp 580 / paper 230 (round-80 #2)\n\nThe formal cycle established four things: (i) the occupancy table of a scan is\na rate layer times a positional layer, and \"no interaction\"",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-08-25T23:40:18",
-      "title": "FACT round-80 #2 — POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS — hit-rich vs hit-poor posi"
-    },
     {
       "cycle_id": "0dec095c",
       "domain": "Novelty",
@@ -2501,15 +2491,19 @@
       "theorem_count": 24,
       "timestamp": "2026-10-03T17:55:06",
       "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
+    },
+    {
+      "cycle_id": "152d60cd",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — HINT-SIZE-SCALING (round 37 #1)\n\n## What this cycle proved\n\nResults are in `Catalog/Logic/HintSizeScaling.lean` and `Catalog/Logic/HintSizeScalingInstances.lean`.\n\n* **Size-stabi",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-10-03T21:10:48",
+      "title": "FACT round-37 #1 — HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "61cd19b1",
-      "domain": "Pythagorean",
-      "name": "cubeCount_eq_card",
-      "quality": 0.8
-    },
     {
       "cycle_id": "900e5fcb",
       "domain": "Algebra",
@@ -2803,9 +2797,15 @@
       "domain": "Probability",
       "name": "lam_pair",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "152d60cd",
+      "domain": "Logic",
+      "name": "about",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-10-03T17:55:06",
+  "last_updated": "2026-10-03T21:10:48",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "3cb644d1",
-        "quality": 0.82,
-        "theorems": 86,
-        "title": "The Tree as a Solvable Model of the abc Conjecture — The Exact Quality Spectrum "
-      },
-      {
         "cycle_id": "eb2ba545",
         "quality": 0.85,
         "theorems": 65,
@@ -3513,6 +3507,12 @@
         "quality": 0.78,
         "theorems": 54,
         "title": "FACT round-45 #2 — U-HARDEN: the u-sensitivity is mostly intrinsic, partly resol"
+      },
+      {
+        "cycle_id": "152d60cd",
+        "quality": 0.8,
+        "theorems": 81,
+        "title": "FACT round-37 #1 — HINT-SIZE-SCALING: hint value is size-stable across a 16,384x"
       }
     ],
     "MachineLearning": [
