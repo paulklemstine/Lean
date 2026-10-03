@@ -204,6 +204,37 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 | Jacobi-symbol graph spectral invariant | **CLOSED (restatement)** | `p+q = N+1−2·deg` is exact, but `deg = φ(N)/2` and φ is polylog-equivalent to factoring |
 | Projective point count over `Z/NZ` | **EQUIVALENT to factoring** | both directions, no slack (arXiv:1911.11004 p.3); affine twists sum to `4N`, a tautology |
 | Cross-discipline sweep (7 fields) | **CLOSED** | K-theory, Tate modules, theta, Brauer, information-theoretic — all fail one of the three requirements |
+| GNFS constant via BKZ past LLL | **CLOSED — provably nothing** | **40/40 relation lattices give LLL/SVP = 1.0000000000 exactly.** The rows have near-disjoint small-prime supports, so they are nearly orthogonal *before* reduction — LLL is already optimal, so **no block size can buy anything** |
+
+### The constant axis, settled by an exact computation rather than a comparison
+
+The constant-factor axis built **genuine** GNFS relation lattices (7-dimensional, from real
+2-D sieved relations with `p | a−bθ` iff `a ≡ b·α mod p`) — small enough to run a **certified
+exact-SVP enumerator** on them. That makes the experiment *definitive* rather than comparative:
+`LLL(b₁)/exact_SVP(b₁)` is the entire prize available to **any** block size.
+
+> **40/40 lattices: ratio = 1.0000000000.** Best β over β = 2…7: **1.0000000000×**.
+
+Mechanism: the lattice basis vectors have near-disjoint small-prime supports, so the rows are
+nearly orthogonal *before* reduction. **LLL is already at its optimum, and better reduction
+cannot help.**
+
+This is the correct way to run a negative in this program: not "BKZ did not beat LLL" but
+"the exact optimum equals LLL's output, so no β exists that could." 119 configurations were
+attempted; the 40 that admitted a certified exact SVP were used, and **the other 79 were
+discarded rather than silently approximated.**
+
+The ceiling is doubly low: sieve-then-reduce costs **1172×** (3214 ms vs 2.7 ms), and the
+relation-lattice dimension is **constant in `N`** (7 at 32 through 70 bits), so Montgomery's
+`O(n²)` linear-algebra term does not grow with the modulus. **The constant was never where the
+time is.**
+
+**One positive from the same axis, and it overturns the obvious heuristic:** minimising
+coefficient mass is the **wrong** objective for choosing the polynomial `f`. At fixed `N` the
+*largest*-mass polynomial (11616) yielded the **most** relations (1090) and the smallest
+(6820) the fewest (292) — anti-correlated. And a bad `f` does not cost a constant, it costs
+everything: naive and narrow-search polynomials produced **zero** relations at `y = 5000`,
+box 1500; only a wide (±6%) `m`-search found usable ones.
 
 ### The live thread this round opens
 
