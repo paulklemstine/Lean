@@ -205,7 +205,8 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 | Unconditional superpolynomial lower bound | **NONE in any model** | classical *and* quantum; all such bounds are oracle bounds |
 | Jacobi-symbol graph spectral invariant | **CLOSED (restatement)** | `p+q = N+1−2·deg` is exact, but `deg = φ(N)/2` and φ is polylog-equivalent to factoring |
 | Projective point count over `Z/NZ` | **EQUIVALENT to factoring** | both directions, no slack (arXiv:1911.11004 p.3); affine twists sum to `4N`, a tautology |
-| Cross-discipline sweep (7 fields) | **MOSTLY CLOSED; field 6 is OPEN** | K-theory, Tate modules, theta, Brauer, information-theoretic all fail. ⚠️ `H_crossdiscipline.md:317` calls field 6 (Jacobi graph) **"the round's only genuinely live lead"** — marking the sweep CLOSED was **status inflation**. Also: "φ is polylog-equivalent to factoring", the load-bearing step of that row, is **asserted with no proof or citation** |
+| Cross-discipline sweep (7 fields) | **CLOSED (field 6 now too — see below)** | K-theory, Tate modules, theta, Brauer, information-theoretic all fail |
+| **Jacobi-symbol graph degree** (was "the round's only genuinely live lead") | **CLOSED — verified by the coordinator** | `deg = φ(N)/2` and `p+q = N+1−2·deg`, so the degree reveals a factor **exactly**. Closed on four independent grounds: the count factorises to exactly `φ(N)/2` (a restatement); `Σₓ (x/N) = 0` identically so **no partial-information channel exists at all**; the Ihara zeta does not even apply for `N ≡ 3 (mod 4)` (**half of all RSA moduli** — the graph is directed with complex eigenvalues); and `deg = φ(N)/2` needs `N` squarefree. **Zero literature on arXiv AND on IACR eprint.** The census's old closure rested on "φ is polylog-equivalent to factoring", **asserted with no proof or citation** — that was the actual gap, and it is now closed by argument rather than by assertion |
 | Partial-information factoring below ½ the bits of p | **MEASURED *and PROVED OPTIMAL*** | Our measurement: **31 unknown bits WORKS, 32 FAILS** at N=2¹²⁸ — `X = N^{1/4}` exactly. ⚠️ **Upgraded by a literature sweep, and VERIFIED BY ME from arXiv (2016-05-25).**
 **arXiv:1605.08065** — Chinburg, Hemenway, Heninger, Scherr, *"Cryptographic applications of capacity theory: On the optimality of Coppersmith's method for univariate polynomials."* Abstract, verbatim:
 
@@ -577,6 +578,43 @@ stated.
   **insufficient**; the +0.050 residual is one scale, unreplicated.
 
 ---
+
+## ■ The Jacobi-degree lead, closed — and the coordinator's correction to the agent's own reasoning
+
+The agent's four kills stand: the count factorises to exactly `φ(N)/2`; `Σₓ (x/N) = 0`
+identically so no partial-information route exists; the Ihara zeta does not apply for
+`N ≡ 3 (mod 4)` (half of RSA moduli); `deg = φ(N)/2` needs `N` squarefree.
+
+**⚠️ But the agent's central quantitative claim is FALSE and I checked it.** It asserts
+`k* > n²` for *every* prime pair, argued from "`ε* < ½` always". That is a non-sequitur —
+`ε* < ½` gives `k* > 4`, not `k* > n²`. Measured:
+
+| n | p,q | g | k\* | n² | `k\* > n²`? |
+|---|---|---|---|---|---|
+| 10,403 | 101,103 | 2 | 7.5×10⁴ | 1.1×10⁸ | **no** |
+| 10⁶,063 | 10007,10009 | 2 | 7.1×10⁸ | 1.0×10¹⁶ | **no** |
+
+**And the honest reading is the opposite of the agent's conclusion in the regime that
+matters.** Comparing `k\*` against **enumeration** (Θ(n)) rather than against `n²`:
+
+| n | g | k\* | k\* > n? |
+|---|---|---|---|
+| 10,403 (close) | 2 | 7.5×10⁴ | **yes** — sampling loses to enumeration |
+| 10¹² (random-ish) | 30 | 1.8×10¹⁰ | **no** — sampling BEATS enumeration |
+
+So for typical semiprimes sampling the degree *does* beat naive enumeration. **It still
+loses, decisively, against factoring itself:** at `n = 10¹²`, `k\* ≈ 1.8×10¹⁰` against Pollard
+rho's `n^(1/4) ≈ 10³` — **seven orders of magnitude worse.**
+
+**The correct closure is therefore stronger than the agent's, and on the right ground: the
+estimator is worse than the best known factoring algorithm, not merely worse than
+enumeration.** The agent also noted the close-prime regime is Fermat's, where sampling loses by
+28–48 orders — so the one regime where sampling is relatively strongest is the one already
+solved by a better method.
+
+**Both my brief's bound (`ε < (p−q)²/8`) and the agent's replacement were loose; the agent
+measured the correct `ε\*` by bisection to 7.8×10⁻⁶ relative.** And my second test (`k\* vs n²`)
+was itself a bad comparison, which is why the ledger records the correct one.
 
 ## ■ ⚠️ TOOL HAZARD — PARI `ellcard` is wrong on composite moduli
 
