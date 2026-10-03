@@ -3485,16 +3485,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-36 #1 \u2014 RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9b17c9d6",
     "description": "## FACT round-35 #9 \u2014 BIQUADRATIC-TYPE-CHANNEL (paper 127)\n\n**Verdict name: THE-BIQUADRATIC-IS-FULLY-PINNED.**\n\nBiquadratic Q(sqrt2,sqrt3) via x4-10x2+1 (V4, conductor 24): only TWO types.\nH(T) = 0.8074 bits. I(p mod 24; T) = H(T) EXACTLY (full pinning).\nSemiprime pair 0.2909; which-factor 0.0001.\n\nNow 459 experiments. Assessment v236. Paper 127.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3530",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T01:10:29.773427+00:00",
     "title": "FACT round-35 #9 \u2014 BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
   },
