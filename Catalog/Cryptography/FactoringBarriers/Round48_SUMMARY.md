@@ -22,15 +22,20 @@ extends the round-47 census (`Round47_SUMMARY.md`).
 >   better.) The only lever that closes the gap is **Gordon 1993 / NFS relation-finding**, which
 >   works to **551 bits** — but that is the known `L[1/3]` algorithm re-derived, wearing Stange's
 >   linear-algebra and gcd phases. **Not a factoring advance.**
-> - **The load-bearing conclusion: the relation-finding is where all the difficulty lives. The
->   construction 48 rounds attacked is the EASY half.**
+> - **There is no correctness floor on `b` at all.** Measured: **`b_min = 3` at every modulus
+>   tested.** `b_needed` overstated the smallest usable `b` by **17–30×**; it is a runtime
+>   argmin, not a condition. What fails at small `b` is cost (`7.3 × 10⁵` trials per relation at
+>   `b = 3`), not correctness. **Paper #528.**
+> - **The load-bearing conclusion: the relation-finding is where all the difficulty lives — 95%
+>   of the phase. The construction 48 rounds attacked is 5%, the EASY half.**
 
-> ## TWO GENUINE POSITIVES — both PROVED, not measured
+> ## THREE POSITIVES — all PROVED or exactly derived, not estimated
 >
 > | paper | result |
 > |---|---|
 > | **#525** | The stride relation-finder **attains the unconditional lower bound** `(b+c)/Ψ(n,BB)` multiplications per factor **with equality** — 54.78× fewer modular multiplications. **Optimal, not merely better.** Beating it would require violating the equidistribution conjecture for `{g^x mod n}`. |
-> | **#527** | Shoup's **unconditional** factoring bound `2√2 → 2`, proved. The `c=2` square is removable (Thm 15.1's `u log log x` vs the sharp `u log u`); the `a=2` square is forced by counting. **Optimal within this shape:** `√2` needs ECM, whose `√2` is a heuristic — **there is no proved unconditional `√2`.** |
+> | **#528** | `20/27` **derived exactly** (to −1.7 × 10⁻¹⁸ in rational arithmetic) as `P(v₂(ord_p g) ≠ v₂(ord_q g))` over the joint law of `s = v₂(p−1)`; and **no correctness floor on `b`** (`b_min = 3`) |
+| **#527** | Shoup's **unconditional** factoring bound `2√2 → 2`, proved. The `c=2` square is removable (Thm 15.1's `u log log x` vs the sharp `u log u`); the `a=2` square is forced by counting. **Optimal within this shape:** `√2` needs ECM, whose `√2` is a heuristic — **there is no proved unconditional `√2`.** |
 
 **Read this page, not the logs.** Round 48 produced: **one working factoring construction**,
 **two proved positives**, a set of closures with *stated reasons*, **two corrections of false
