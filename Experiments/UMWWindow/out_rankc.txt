@@ -1,0 +1,9 @@
+Rank-c GAP counterexample search, strict budget M=exp(n^gamma).
+coverage = # of i in [2,n] dividing some nonzero difference.
+
+n = 800
+  rank c=2: g=0.360(e=0.180):  308/799 ( 38%)   g=0.399(e=0.200):  453/799 ( 56%)
+  rank c=3: g=0.360(e=0.180):  257/799 ( 32%)   g=0.399(e=0.200):  412/799 ( 51%)
+  rank c=4: g=0.360(e=0.180):  301/799 ( 37%)   g=0.399(e=0.200):  274/799 ( 34%)
+  rank c=6: g=0.360(e=0.180):  269/799 ( 33%)   g=0.399(e=0.200):  281/799 ( 35%)
+
