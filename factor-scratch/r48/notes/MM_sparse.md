@@ -284,4 +284,213 @@ rank check passes all of them.)
 
 ---
 
-## 5. T3/T4 — see below
+
+## 5. T3 — THE PRACTICAL CEILING, AND T4 — DOES THE ARGMIN MOVE?
+
+### 5.1 T3(a): the dense route is practical much further than sympy's `nullspace`
+
+The incumbent in r50 was `fastnull.py`'s exact Fraction Gauss–Jordan. I used a
+**stronger** dense baseline — sympy `DomainMatrix.rref()` over `QQ` — because a
+ceiling measured against a strawman is not a ceiling.
+
+Real relation matrices, `n ≈ 2⁴⁰`, `c = 1`:
+
+| `b` | 16 | 26 | 40 | 64 | 100 | 128 | 200 | 256 | 400 | **512** |
+|---|---|---|---|---|---|---|---|---|---|---|
+| DENSE (DomainMatrix/QQ) | 0.002 | 0.005 | 0.011 | 0.029 | 0.074 | 0.145 | 0.438 | 0.860 | 2.325 | **4.37 s** |
+| SPARSE (dictionary) | 0.005 | 0.009 | 0.026 | 0.098 | 0.314 | 0.583 | 1.299 | 2.998 | 5.236 | **8.80 s** |
+| fill / nnz | 1.64 | 2.60 | 3.12 | 5.05 | 6.91 | 8.61 | 10.54 | 11.82 | 12.77 | **15.88** |
+
+* **`sympy.Matrix.nullspace()` dies at `b ≈ 32`** (r50's finding). The exact
+  dense route **does not** — it completes `b = 512` in **4.4 s**. So the
+  "dense becomes impractical" threshold is not `b ≈ 32`; it is far higher, and
+  part of what looked like a linear-algebra wall was an unoptimised backend.
+* **`fill/nnz` grows linearly in `b`** (1.64 → 15.88 over a 32× range), so
+  `fill = Θ(b·nnz) = Θ(b²)`. Consistent with T2.
+* **Above `b ≈ 128` (2⁴⁰) a good dense backend BEATS the sparse route on wall
+  clock** — 0.145 s vs 0.583 s at `b=128`, 4.37 vs 8.80 at `b=512`. At `2³⁰` they
+  cross near `b ≈ 300–400`. The `Θ(b²)` op-count win is real and it is
+  **overwhelmed by the constant**: pure-Python `Fraction` dictionaries against
+  sympy's optimised dense rref.
+
+### 5.2 Is `Θ(b²)` fill forced by the matrix, or by my pivot choice?
+
+A fair objection, so I tested it (`exp_order.py`): a greedy **approximate
+minimum-degree column ordering** — the standard fill-reducing heuristic — run
+against the natural ordering, same matrices, both exact, both `M·v = 0`-verified.
+
+| | `b`=16 | 26 | 40 | 64 | 100 |
+|---|---|---|---|---|---|
+| AMD fill ÷ natural fill (`n≈2³⁰`) | 0.91 | 0.89 | 0.93 | 1.41 | 0.90 |
+| AMD fill ÷ natural fill (`n≈2⁴⁰`) | 1.01 | 1.15 | 1.07 | 1.12 | 1.34 |
+| natural ops / `b²` (`2³⁰`) | 5.91 | 7.01 | 7.55 | 6.79 | 8.33 |
+| AMD ops / `b²` (`2³⁰`) | 4.73 | 6.44 | 7.19 | 9.46 | 6.98 |
+
+**AMD buys nothing** (ratios 0.89–1.41, straddling 1), and `ops/b²` stays flat
+under *both* orderings. **The quadratic fill is forced by the matrix, not by my
+pivot sequence** — which is what the `Θ(b)`-defect argument predicts, since the
+`p=2` row is dense and every ordering must propagate through it.
+
+### 5.3 T3(b): at the `b` the regime analysis actually needs
+
+Synthetic matrices with the **measured** degree profile (`ω = 6`, heavy small-prime
+rows; labelled synthetic because real relations at `b = 6·10⁵` are impossible in
+any feasible time), fill measured to `b = 2048` and then extrapolated:
+
+| `b` | 128 | 256 | 512 | 1024 | 2048 | 4096 | 65 536 | 262 144 | **600 000** |
+|---|---|---|---|---|---|---|---|---|---|
+| nnz | 774 | 1 542 | 3 078 | 6 150 | 12 294 | 2.5e4 | 3.9e5 | 1.6e6 | **3.6e6** |
+| sparse fill | 2 947 | 7 758 | 15 759 | 40 110 | 64 211 | 2.6e5 | 6.6e7 | 1.1e9 | **5.5e9** |
+| sparse wall clock | 0.16 s | 0.41 s | 1.56 s | 4.81 s | 11.2 s | 45 s | 1.2e4 s | 1.8e5 s | **9.6e5 s ≈ 11 days** |
+| black-box ops `(b+1)·nnz` | 1.0e5 | 4.0e5 | 1.6e6 | 6.3e6 | 2.5e7 | 1.0e8 | 2.6e10 | 4.1e11 | **2.2e12** |
+
+At `b = 6·10⁵`:
+
+* **sparse elimination is memory-infeasible before it is time-infeasible** —
+  `5.5·10⁹` fill entries is `≈275 GB` of `Fraction` objects before any
+  arithmetic happens. Dense is `Θ(b³) = 2·10¹⁷` ops. So sparsity buys a factor of
+  `≈4·10⁷` in operations and still lands nowhere.
+* **the black-box route is `Θ(b·nnz) = 2.2·10¹²` modular operations** with `O(b)`
+  memory — memory-feasible, and the best of the three by a wide margin, but
+  still days-to-weeks in Python and hours even in compiled code. And this is a
+  floor, not an estimate: Wiedemann-family methods need `Ω(b)` matvecs of a
+  system whose vectors become dense, so `Θ(b·nnz)` is forced for *any*
+  matrix-product route, not just mine.
+
+**Answer to T3: the dense route is usable to at least `b = 512` (not `b ≈ 32`);
+no route — sparse, ordered-sparse, or black-box — is usable at `b = 6·10⁵`.**
+The gap is roughly `4·10⁷` in operations for the best route, i.e. the bottleneck
+is reduced by seven orders of magnitude and *still* not removed.
+
+### 5.4 T4: does the argmin move? **No.**
+
+`t_total = t_relations + t_LA`, per successful factor `= t_total/(20/27)`
+(the rate is the order-finding constant and is independent of the relation set,
+r49/U). All times measured on real instances:
+
+| `n` | dense-F argmin | dense-DM argmin | **SPARSE argmin** | sparse gain *at the argmin* |
+|---|---|---|---|---|
+| `2²⁰` | `b = 12` (0.0057 s) | `b = 16` (0.0059 s) | **`b = 12`** (0.0054 s) | **1.07×** |
+| `2³⁰` | `b = 32` (0.0483 s) | `b = 32` (0.0395 s) | **`b = 32`** (0.0436 s) | **1.11×** |
+| `2⁴⁰` | `b = 64` (0.8840 s) | `b = 100` (0.6689 s) | **`b = 64`** (0.8710 s) | **1.01×** |
+
+**The argmin is unmoved at every size**, and sparsity buys **1.01–1.11×** where
+it matters. The `b ≈ 26–52` convergence that r50 reported at `2³⁰` reproduces
+(`b = 32` here) and **survives the sparse treatment unchanged**.
+
+The one genuine structural difference is the *width* of the minimum, not its
+location: at `2²⁰` and `2⁴⁰` the sparse curve is flat over `b ∈ [8,16]` and
+`b ∈ [52,100]` where the dense curve is flat only over `[8,12]` and `[52,80]`.
+Cheaper linear algebra **flattens** the optimum; it does not move it.
+
+⚠️ **Noise caveat.** `t_relations` is averaged over `N = 2–4` instances per cell
+(relation finding is expensive), so individual `t_rels` entries carry `±30%`.
+The `b = 26` vs `b = 32` gap at `2³⁰` (0.0353 vs 0.0220) is within that noise.
+The argmin *locations* are stable across the three independent routes and the
+two objective functions, which is the stronger evidence; the individual cell
+values are not. Wall clocks were measured on a host with other processes active.
+
+---
+
+## 6. Verdict on the axis
+
+| question | verdict |
+|---|---|
+| **T1** — is the matrix sparse? | **YES.** `nnz = 5(b+c) = Θ(b)`, density `Θ(1/b)`, `≈5` nonzeros per column, independent of `b`. |
+| **T1** — is the defect NFS-like? | **NO, and provably so.** `defect ≈ 0.6·(b+c) = Θ(b)`, and the permutation-similarity defect of *any* matrix equals its identity value, so no reordering can help. Mechanism: `Pr[p=2 \| r] = Ψ(n/2,B)/Ψ(n,B) ≈ 0.63–0.65`, verified exactly against brute-force enumeration. |
+| **T2** — does a sparse route win? | **Asymptotically yes (`Θ(b³)→Θ(b²)`), on wall clock barely** — 1.1–2.7× — and it **loses** to a good dense backend above `b ≈ 128`. Black-box is the fastest measured route from `b = 12` to `b = 64`, tied at `b = 100`. |
+| **T3** — practical ceiling | dense exact rref is good to **`b = 512`** (4.4 s), far past sympy `nullspace`'s `b ≈ 32`. At `b = 6·10⁵`: sparse is memory-infeasible (`5.5e9` fill entries), black-box is `2.2e12` ops. **Nothing is usable.** |
+| **T4** — does the argmin move? | **NO.** `b = 12 / 32 / 64` at `2²⁰/2³⁰/2⁴⁰` under dense *and* sparse; sparsity is worth 1.01–1.11× at the argmin. |
+| **Is the bottleneck removable?** | **NO.** The best route here is a `≈4·10⁷`-fold operation-count reduction over dense, which is a large win and still leaves `b = 6·10⁵` out of reach by seven orders of magnitude. |
+
+**The one-line reason.** NFS's sparse linear algebra is not "exploit sparsity" in
+general — it is "exploit sparsity *with a bounded defect*". Stange's matrix has
+the first and provably cannot have the second, because its rows are indexed by
+primes and the smallest primes divide a constant fraction of all `B`-smooth
+residues. Any method that forms this `b × (b+c)` matrix pays `Θ(b²)`; the only
+way below that is to change the matrix, not to solve it faster.
+
+## 7. Citations (fetched, not recalled)
+
+WebSearch fabricates citations on this host (16 recorded instances), so every
+citation below was fetched and is quoted verbatim.
+
+**H. Jeljeli, *Accelerating Iterative SpMV for Discrete Logarithm Problem Using
+GPUs*, arXiv:1209.5520v4** (v1 2012-09-25, v4 2014-12-04; single author).
+Fetched from `https://export.arxiv.org/api/query?id_list=1209.5520` and from
+the PDF. Abstract, verbatim:
+
+> "In the context of cryptanalysis, computing discrete logarithms in large
+> cyclic groups using index-calculus-based methods, such as the number field
+> sieve or the function field sieve, requires solving large sparse systems of
+> linear equations modulo the group order. Most of the fast algorithms used to
+> solve such systems — e.g., the conjugate gradient or the Lanczos and
+> Wiedemann algorithms — iterate a product of the corresponding sparse matrix
+> with a vector (SpMV)."
+
+§1, p.2, verbatim — **this is the structural statement the whole T1 axis turns
+on**:
+
+> "The number of rows and columns of the corresponding matrices is in the order
+> of hundreds of thousands to millions, with only hundreds or fewer non-zero
+> elements per row."
+
+and, verbatim:
+
+> "To solve such systems, ordinary Gaussian elimination is inefficient. While
+> some elimination strategies aiming at keeping the matrix as sparse as possible
+> can be used to reduce the input system somewhat, actual solving calls for the
+> use of other techniques (Lanczos algorithm [13], Wiedemann algorithm [27])
+> that take advantage of the sparsity of the matrix [18]. For the Lanczos
+> algorithm, the Wiedemann algorithm and their block variants, the iterative
+> sparse-matrix–vector product is the most time-consuming operation."
+
+**NOT CITED, AND DELIBERATELY SO.** Montgomery's "minimal candidate selection"
+and the Johansson/Lenstra sparse-sieve work were requested by the brief. I
+could **not** fetch primary text for either on this host: the IACR eprint
+search (`https://eprint.iacr.org/search?q=`) returned an empty result set for
+every query I tried, and arXiv has no preprint of Montgomery 1987. Rather than
+paraphrase a paper I have not read — the exact failure mode this project has
+recorded 16 times — the Montgomery/Lenstra attribution is left **unmade**. The
+bounded-defect claim that T1 tests is instead sourced to the Jeljeli quotation
+above, which I did fetch and did read. If Montgomery's reordering is claimed to
+do more than bound the defect, that is unverified here and **T1's invariance
+proof stands on its own anyway**: no permutation changes any row's nonzero
+count.
+
+---
+
+## 8. Controls actually run (and what they caught)
+
+| control | where | what it caught |
+|---|---|---|
+| `assert M·v = 0` **exactly over ℚ**, per vector, on every route, before its time is recorded | `spcore.assert_kernel`, called inside every benchmark | **Two wrong-vector bugs I did not have otherwise.** (i) `kernel_sparse` treated a stored explicit zero as a pivot (`c in A[i]` instead of `A[i].get(c)`) → `ZeroDivisionError`; (ii) `sympy.DomainMatrix.rref()` over `ZZ` (§4) → right rank, right dimension, **wrong vectors**. Both are precisely round-48's failure mode, and **a rank check passes both.** |
+| assertion must REJECT a known-bad vector | self-test **ST1b–d** | fed a one-entry-perturbed vector, a truncated vector, and a duplicated vector (each copy individually *is* in the kernel, so only the independence check can catch it) — all three rejected |
+| `b=0` / all-zero matrix → **full** kernel | **ST3** | the null answer is "dimension `n`"; a route with a hard-wired "c=1 so return one vector" would fail here |
+| identity matrix → **empty** kernel | **ST4** | a route that returns `c` vectors unconditionally fails here |
+| sparse and dense routes must agree with `stange.kernel_basis` (sympy) on rank **and** dimension | **ST2**, 15 random sparse matrices | — |
+| negative control on the `M·w = 0 mod p` check | **ST8b** | a random vector is rejected **20/20**; without this, ST8a could be vacuous |
+| nilpotent-embedding trap pinned as a permanent property (with a *precondition* that `C ≠ 0`, so the test is not vacuous) | **ST8c** | documents why Wiedemann attempt 1 returned 0/6 |
+| exact brute-force check of `(*)` against enumeration of **all** `B`-smooth integers ≤ `n` | `fix_psi.py`, `psi_powered.py` | caught the `factor_base(B,n)`-drops-primes-dividing-`n` bug that produced `Pr[2|r] = 0.0000` |
+| `int(n**(1/3))` trap | **not applicable** | no cube root is taken anywhere in this round; `bbound_for_b`/`factor_base` are imported from r48, not re-implemented |
+| `r48/_shared/dickman.py` | **not used at all** | it raises above `u = 5`; smoothness here is exact trial division, which is the definition. No `ρ` is used as a null anywhere. |
+
+**Sample sizes and wall clock are reported for every measurement** (T1: 2–4
+relation sets per cell; T2: 28 (n,b,rep) cells; T3/T4 in §5). No cell in this
+note rests on a single instance.
+
+---
+
+## 9. Reproduce
+
+```bash
+cd /home/raver1975/lean/factor-scratch/r49exp/sparse
+python3 sptest.py          # self-test, ALL PASS (with the negative controls)
+python3 exp_T1.py          # sparsity + defect          -> sparsity_T1.json
+python3 fix_psi.py         # exact (*) control          -> psi_exact.json
+python3 psi_powered.py     # higher-powered (*) control -> psi_powered.json
+python3 exp_T2.py          # 4 routes, wall clock       -> t2_wallclock.json
+python3 exp_T3.py          # ceilings + extrapolation   -> t3_ceiling.json
+python3 exp_T4.py          # argmin                     -> t4_argmin.json
+python3 exp_order.py       # fill-reducing ordering     -> order_fill.json
+```

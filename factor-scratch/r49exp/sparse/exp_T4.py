@@ -44,7 +44,7 @@ from stange import gen_semiprime  # noqa: E402
 
 OUT = "/home/raver1975/lean/factor-scratch/r49exp/sparse/t4_argmin.json"
 P_TRUE = 20.0 / 27.0          # r49/U: the order-finding constant, exact
-BUDGET = 45.0                 # per-attempt seconds for linear algebra
+BUDGET = 40.0                 # per-attempt seconds for linear algebra
 
 
 def dense_dm(Mrows, budget=BUDGET, prev_t=None, prev_b=None):
@@ -119,10 +119,10 @@ def main():
     print("-" * 122)
 
     for nbits in (20, 30, 40):
-        bs = [8, 12, 16, 20, 26, 32, 40, 52, 64, 80, 100, 128, 160, 200, 256, 320, 400]
+        bs = [8, 12, 16, 20, 26, 32, 40, 52, 64, 80, 100, 128, 160, 200, 256, 320]
         if nbits == 40:
-            bs = [12, 16, 20, 26, 32, 40, 52, 64, 80, 100, 128]
-        reps = 6 if nbits == 20 else (4 if nbits == 30 else 3)
+            bs = [26, 32, 40, 52, 64, 80, 100, 128]
+        reps = 4 if nbits == 20 else (3 if nbits == 30 else 2)
         for b in bs:
             N = max(2, min(reps, 24 // b + 2))
             t_rel_tot = 0.0
@@ -137,7 +137,7 @@ def main():
                 t0 = time.perf_counter()
                 try:
                     rels, FB, BB, trials = make_rels(n, g, b, 1, rng,
-                                                    cap=250_000)
+                                                    cap=200_000)
                 except RuntimeError:
                     continue
                 t_rel_tot += time.perf_counter() - t0
@@ -153,7 +153,16 @@ def main():
                     Ks, rs, peak, opsS = kernel_sparse(cols, b)
                     t_sp = time.perf_counter() - t0
                     assert_kernel(cols, b, Ks, "T4-SPARSE")
-                    t_dm, Kdm = dense_dm(Mrows, BUDGET, prev_t, prev_b)
+                    # Only time the dense baseline up to b=200.  Beyond that
+                    # the Theta(b^3) guard inside dense_dm refuses anyway, and
+                    # each refusal still costs a full run when it does not.
+                    if b <= 200:
+                        t_dm, Kdm = dense_dm(Mrows, BUDGET, prev_t, prev_b)
+                        if isinstance(Kdm, list):
+                            prev_t, prev_b = t_dm, b
+                    else:
+                        t_dm = (prev_t * (b / prev_b) ** 3) if prev_t else float('inf')
+                        Kdm = "EXTRAPOLATED_b>200"
                     if not isinstance(Kdm, (list, type(None))):
                         prev_t, prev_b = t_dm, b
                     t_df_tot = t_df

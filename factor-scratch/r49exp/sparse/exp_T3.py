@@ -45,7 +45,7 @@ from spcore import (  # noqa: E402
 from stange import gen_semiprime  # noqa: E402
 
 OUT = "/home/raver1975/lean/factor-scratch/r49exp/sparse/t3_ceiling.json"
-BUDGET = 90.0          # seconds per attempt; past this we declare impractical
+BUDGET = 40.0          # seconds per attempt; past this we declare impractical
 
 
 def dense_dm(Mrows, budget=BUDGET, prev_t=None, prev_b=None):
@@ -154,6 +154,29 @@ def main():
     print("T3  THE DENSE CEILING, THE SPARSE FILL, AND EXTRAPOLATION")
     print("=" * 108)
 
+    print("--- (C) does the SYNTHETIC generator reproduce the REAL degree profile? ---")
+    print(f"{'source':>10} {'b':>6} {'nnz/col':>9} {'coldeg_max':>12} "
+          f"{'rowdeg_max':>11} {'rowdeg_max/ncols':>18} {'active_rows':>12}")
+    reals = [r for r in res["real"] if r["nbits"] == 30]
+    for r in sorted(reals, key=lambda x: x["b"])[:6]:
+        nc = r["ncols"]
+        print(f"{'REAL':>10} {r['b']:>6} {r['omega_mean']:>9.2f} "
+              f"{'':>12} {r['defect']:>11} {r['defect']/nc:>18.4f} {'':>12}")
+    cal = []
+    for r in sorted(reals, key=lambda x: x["b"])[:6]:
+        b, nc, om = r["b"], r["ncols"], r["omega_mean"]
+        cols = synth_matrix(b, nc, int(round(om)), seed=b)
+        st = incidence_stats(cols, b)
+        print(f"{'SYNTH':>10} {b:>6} {st['nnz_per_col_mean']:>9.2f} "
+              f"{st['coldeg_max']:>12} {st['rowdeg_max']:>11} "
+              f"{st['rowdeg_max']/nc:>18.4f} {st['active_rows']:>12}")
+        cal.append({"b": b, "real_defect_frac": r["defect"] / r["ncols"],
+                    "synth_defect_frac": st["rowdeg_max"] / nc,
+                    "real_omega": om, "synth_omega": st["nnz_per_col_mean"]})
+    res["calibration"] = cal
+
+    # -------------------------------------------------------- (C) extrapolate
+
     # ---------------------------------------------------------------- (A)+(B)
     print()
     print("--- (A,B) REAL relation matrices: dense (sympy DomainMatrix, the")
@@ -162,7 +185,7 @@ def main():
           f"{'fill_peak':>11} {'fill/nnz':>9} {'fill/(b*nc)':>11} {'verdict':>12}")
     for nbits in (20, 30, 40):
         prev_t = prev_b = None
-        for b in (16, 26, 40, 64, 100, 128, 200, 256, 400, 512, 800, 1024):
+        for b in (16, 26, 40, 64, 100, 128, 200, 256, 400, 512):
             rng = random.Random(4_100_000 + 17 * b + 91 * nbits)
             n, p, q = gen_semiprime(nbits, rng)
             g = rand_g(n, rng)
@@ -207,30 +230,6 @@ def main():
             if t_s > BUDGET:
                 break
 
-    # ------------------------------------------------------------ (C) calib
-    print()
-    print("--- (C) does the SYNTHETIC generator reproduce the REAL degree profile? ---")
-    print(f"{'source':>10} {'b':>6} {'nnz/col':>9} {'coldeg_max':>12} "
-          f"{'rowdeg_max':>11} {'rowdeg_max/ncols':>18} {'active_rows':>12}")
-    reals = [r for r in res["real"] if r["nbits"] == 30]
-    for r in sorted(reals, key=lambda x: x["b"])[:6]:
-        nc = r["ncols"]
-        print(f"{'REAL':>10} {r['b']:>6} {r['omega_mean']:>9.2f} "
-              f"{'':>12} {r['defect']:>11} {r['defect']/nc:>18.4f} {'':>12}")
-    cal = []
-    for r in sorted(reals, key=lambda x: x["b"])[:6]:
-        b, nc, om = r["b"], r["ncols"], r["omega_mean"]
-        cols = synth_matrix(b, nc, int(round(om)), seed=b)
-        st = incidence_stats(cols, b)
-        print(f"{'SYNTH':>10} {b:>6} {st['nnz_per_col_mean']:>9.2f} "
-              f"{st['coldeg_max']:>12} {st['rowdeg_max']:>11} "
-              f"{st['rowdeg_max']/nc:>18.4f} {st['active_rows']:>12}")
-        cal.append({"b": b, "real_defect_frac": r["defect"] / r["ncols"],
-                    "synth_defect_frac": st["rowdeg_max"] / nc,
-                    "real_omega": om, "synth_omega": st["nnz_per_col_mean"]})
-    res["calibration"] = cal
-
-    # -------------------------------------------------------- (C) extrapolate
     print()
     print("--- (C) SYNTHETIC EXTRAPOLATION to the sizes the regime analysis needs ---")
     print("    (synthetic, matched degree profile; NOT real relations -- the")
@@ -241,7 +240,7 @@ def main():
     # b ~ 4096 here.  Beyond that the fill is EXTRAPOLATED from the measured
     # points and labelled as such -- running it at b = 6e5 is a 1e11-op job.
     prev = None
-    for b in (128, 256, 512, 1024, 2048, 4096):
+    for b in (128, 256, 512, 1024, 2048):
         nc = b + 1
         om = 6
         cols = synth_matrix(b, nc, om, seed=b * 7 + 1)
@@ -262,7 +261,7 @@ def main():
             "ops_sparse": ops, "rank": rank, "measured": True,
         })
     pb, pfill, pt = prev
-    for b in (8192, 16384, 65536, 262144, 600000):
+    for b in (4096, 16384, 65536, 262144, 600000):
         nc = b + 1
         fill = pfill * (b / pb) ** 2          # Theta(b^2), established above
         t_s = pt * (b / pb) ** 2
