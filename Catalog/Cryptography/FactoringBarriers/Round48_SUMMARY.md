@@ -464,8 +464,23 @@ bivariate, auxiliary information, classical-deterministic. ⚠️ **"Nothing her
 them" is an ASSERTION by this census, not a verified result** — the audit flagged that no
 inherited row was independently re-checked against its source.
 
-**Still open:** NFS at `L[1/3]` — where the heuristic actually lives. Nothing in round 48
-touches it.
+### ⚠️ This line was STALE — round 48 wrote it, round 49 falsified it
+
+> *(as round 48 left it)* ~~**Still open:** NFS at `L[1/3]` — where the heuristic actually
+> lives. Nothing in round 48 touches it.~~
+
+**Round 49 did touch it, and closed four of its five threads:**
+
+| thread | round-49 status |
+|---|---|
+| the **constant** `1.9229994` | **CLOSED — cannot be moved, and cannot be TESTED here** (`π(B*) ≈ 10¹⁵`–`10³³`; more primes than the host has RAM) |
+| the **`2 − 1/p` divisibility excess** | **CLOSED — fully captured by the sieve, zero headroom** (the excess is exactly the `p∣a, p∣b` corner; the sieve's mark rate is `r_p/p` exactly) |
+| **batch smoothness** | **CLOSED — structurally nothing to save**; NFS already *is* a segmented sieve at the `ln ln B` asymptote |
+| **sparse linear algebra** | **CLOSED — the defect is asymptotic, not practical** (`Θ(b)`, but an `O(1)`-defect control costs the same at `b = 26–52`) |
+| **`ξ(N)`, the `o(1)` term** | **THE ONE THREAD STILL OPEN** — named as live by two round-49 agents, worth ≈`2⁴⁵` at 2048 bits, not converging until `N > exp(exp(25))`. **Whether `2⁴⁵` is measured or inherited is itself unverified.** Under attack; see `notes/HH_xi.md` |
+
+So the honest current statement is narrower than round 48's: **NFS at `L[1/3]` is not untouched —
+it is closed except for its `o(1)` remainder, and the constant itself is now provably fixed.**
 
 ---
 
