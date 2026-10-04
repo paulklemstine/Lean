@@ -3,23 +3,45 @@
 **Date:** 2026-10-03 · **Working dir:** `factor-scratch/r48/` · **Supersedes nothing**;
 extends the round-47 census (`Round47_SUMMARY.md`).
 
-> ## ⚠️ HEADLINE CHANGE — THE TALLY IS NO LONGER ZERO
+> ## ⚠️ THE TALLY IS NO LONGER ZERO
 >
-> **Round 48 produced the program's first factoring method.** Stange's multiplicative-relations
-> construction (arXiv:2211.06821) factors **181/240 = 75%** of instances at `n ≈ 2^20`–`2^40`.
-> Its own analysis is **empirically false** — Hypothesis 3.1 is refuted to **1269σ**, including
-> inside its proved regime — and the printed success probability is **inverted relative to the
-> paper's own text**. Paper `Papers/stange_works_and_its_analysis_does_not.md`, **issue #524**.
+> **Round 48 produced the program's first factoring construction:** Stange's
+> multiplicative-relations method (arXiv:2211.06821). Paper **#524**.
 >
-> Scope, stated honestly: it is **not** an asymptotic improvement (`b ≈ 6×10^5` at `n = 10^20`
-> versus GNFS's `L[1/3]`), **RSA-scale behaviour is untested and unsupported**, and novelty is
-> **unestablished** — the author could not find it in the literature, which is not the same as
-> its absence.
+> ⚠️ **Its success rate is NOT the construction's.** Measured 181/240 — but that is **exactly
+> `20/27`**, the classical **order-finding** constant, independent of the relation set, of `c`, of
+> `b`, and of `n` (0.7420 at 2⁶⁰, flat to 2²⁰⁰, 33,000 instances), and it is now **derived**, not
+> merely measured. The ℚ-kernel contributes the *multiple*; the constant belongs to the step
+> after it. **An earlier version of this page said "181/240 = 75%" as evidence the construction
+> works. That was a misattribution and is withdrawn.**
+>
+> **Where it stands: empirically viable, unproven, and not competitive.**
+> - **Cost is the wall.** `b_needed = L_n(1/2, β=1) = exp(√(log n · log log n))` — Stange's own
+>   runtime argmin. `b_max` is polylog. **The ratio diverges; they never meet for any fixed β.**
+>   (And `β = 1` was **hardcoded** — Stange p.5 declines to determine it; `β → 1/√2` is 3 orders
+>   better.) The only lever that closes the gap is **Gordon 1993 / NFS relation-finding**, which
+>   works to **551 bits** — but that is the known `L[1/3]` algorithm re-derived, wearing Stange's
+>   linear-algebra and gcd phases. **Not a factoring advance.**
+> - **The load-bearing conclusion: the relation-finding is where all the difficulty lives. The
+>   construction 48 rounds attacked is the EASY half.**
 
-**Read this page, not the logs.** What round 48 produced is: **one working factoring method**,
-a set of closures with *stated reasons*, **two corrections of false premises the program had
-carried for years**, one corrected retraction of the program's last live lead, and one
-**positive** measurement — the exact valuation law for the NFS relation value (issue #523).
+> ## TWO GENUINE POSITIVES — both PROVED, not measured
+>
+> | paper | result |
+> |---|---|
+> | **#525** | The stride relation-finder **attains the unconditional lower bound** `(b+c)/Ψ(n,BB)` multiplications per factor **with equality** — 54.78× fewer modular multiplications. **Optimal, not merely better.** Beating it would require violating the equidistribution conjecture for `{g^x mod n}`. |
+> | **#527** | Shoup's **unconditional** factoring bound `2√2 → 2`, proved. The `c=2` square is removable (Thm 15.1's `u log log x` vs the sharp `u log u`); the `a=2` square is forced by counting. **Optimal within this shape:** `√2` needs ECM, whose `√2` is a heuristic — **there is no proved unconditional `√2`.** |
+
+**Read this page, not the logs.** Round 48 produced: **one working factoring construction**,
+**two proved positives**, a set of closures with *stated reasons*, **two corrections of false
+premises the program had carried for years** (a rigorous `L[1/2]` has existed since ~2009; and
+Coppersmith's univariate bound was settled in 2016), and a **retraction** of the program's last
+live lead — its support was a Dickman self-reference with no code behind it.
+
+**And it produced its own accounting.** See *The campaign's own errors* below: a shared
+instrument that was certified to every agent and is broken above `u = 5`; a "positive finding"
+that was 46 of 52 roots inverted; a headline figure that failed its own table; and a census
+that had to be caught carrying withdrawn claims in its own summary.
 
 ---
 

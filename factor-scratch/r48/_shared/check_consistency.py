@@ -156,6 +156,69 @@ def check_orphans(root: Path) -> list[str]:
     return out
 
 
+# Fourth class -- and the one that motivated the other three. It is also the
+# WEAKEST of the four: it can only test for phrasing, never for meaning, and
+# it produced two false positives on its first run for exactly that reason.
+# A checker that cannot tell "absent" from "said differently" is a checker
+# you will eventually stop reading. The first three
+# track specific patterns in the BODY of each file. This one asks whether the
+# file's own SUMMARY is still true of its body. The census headline kept
+# asserting "181/240 = 75%" as evidence the construction works, and "Two
+# papers, two issues", long after both had been corrected -- while every
+# targeted pattern below reported CLEAN.
+#
+# Because the defect was in the framing rather than in any figure, no amount of
+# grepping for retired numbers would find it. The general form: an index that
+# has been appended to for a day will describe its own contents in the past
+# tense unless something forces it to be rewritten.
+SUMMARY_BLOCK = "Round 48 — Summary and Census"
+
+
+def check_summary_current(root: Path) -> list[str]:
+    """The census's own headline must describe what the body now says.
+
+    NOTE ON LOGIC, after getting it backwards once: these are REQUIRED
+    patterns. Report when one is ABSENT. An earlier version reported when
+    one was PRESENT -- so it flagged the very fix it was written to verify,
+    and the manual check against a known-true headline is what caught it.
+    """
+    out: list[str] = []
+    path = root / CENSUS
+    if not path.exists():
+        return out
+    text = path.read_text(encoding="utf-8", errors="replace")
+    head = text.split("## ■ DELIVERED")[0]
+
+    # ABSENT-when-stale: the headline asserts a retired framing.
+    STALE_IF_PRESENT = [
+        ("headline asserts a bare 75% with no attribution caveat",
+         r"\*\*181/240\s*=\s*75%\*\*"),
+        ("headline still says 'Two papers, two issues'", r"Two papers, two issues"),
+        ("headline counts only ONE positive result",
+         r"one \*\*positive\*\* measurement"),
+    ]
+    for label, pattern in STALE_IF_PRESENT:
+        if re.search(pattern, head, re.I):
+            out.append(f"{CENSUS}: STALE HEADLINE -- {label}")
+
+    # REQUIRED: the headline must carry these, or it under-sells the round.
+    REQUIRED = [
+        ("the 20/27 attribution caveat (it is the ORDER constant, not the construction's)",
+         r"20/27"),
+        ("both proved positives (#525 and #527)", r"#525.*#527|#527.*#525"),
+        # NOTE: this is the weakest of the four passes. It tests PHRASING,
+        # not meaning -- the first version flagged a headline that already
+        # carried the distinction in the words "the ratio diverges; they never
+        # meet". Accept any phrasing that asserts the substance.
+        ("the guarantee-vs-method distinction (cost walls the method, not the guarantee)",
+         r"GUARANTEE|guarantee, not the method|ratio diverges|never meet"),
+        ("the derivation status of b_needed", r"argmin"),
+    ]
+    for label, pattern in REQUIRED:
+        if not re.search(pattern, head, re.I | re.S):
+            out.append(f"{CENSUS}: HEADLINE MISSING -- {label}")
+    return out
+
 def main() -> int:
     root = Path(sys.argv[1] if len(sys.argv) > 1 else "/home/raver1975/lean")
     live: list[str] = []
@@ -190,17 +253,19 @@ def main() -> int:
 
     status_live = check_status(root)
     orphan_live = check_orphans(root)
+    summary_live = check_summary_current(root)
 
     print("=" * 72)
-    print("CONSISTENCY CHECK — stale figures, superseded status words, AND orphaned claims")
+    print("CONSISTENCY CHECK — figures, status words, orphaned claims, AND a stale headline")
     print("=" * 72)
     print(f"  scanned {seen_targets}/{len(TARGETS)} files, "
           f"{len(STALE_FIGURES)} tracked figures")
     live.extend(status_live)
     live.extend(orphan_live)
+    live.extend(summary_live)
     if not live:
         print("\n  CLEAN — no stale figure, no superseded status word, no orphaned\n"
-              "  claim; every paper and headline finding is present in the index.\n")
+              "  claim, and the index's own headline still describes its contents.\n")
         return 0
     print(f"\n  {len(live)} LIVE stale figure(s):\n")
     for item in live:
