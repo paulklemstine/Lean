@@ -1,10 +1,19 @@
-KNOWN-ROOT VALIDATION (a correct lattice must return >0):
-linear f=x-x0:
-  N=24b X=64: m=1,t=3:0  m=2,t=4:0  m=3,t=6:0
-  N=32b X=128: m=1,t=3:0  m=2,t=4:0  m=3,t=6:0  m=4,t=8:0
-quadratic f=(x-x0)(x-x1):
-  N=24b X=64: m=1,t=4:0  m=2,t=6:0  m=3,t=8:0
-  N=32b X=256: m=2,t=6:0  m=3,t=8:0  m=4,t=10:0
+VALIDATION 1: recover planted small roots of f=x-x0 (deg 1,2), N~2^64.
+  X=2^10: x0=832 recovered=True
+  X=2^12: x0=1464 recovered=True
+  X=2^14: x0=9935 recovered=True
+  deg2 f=(x-x0)(x-x1):
+  X=2^10: both roots recovered=True
+  X=2^11: both roots recovered=True
 
-RESULT: all zeros => construction NOT validated (see docstring).
-No quantitative claim is made; the multivariate sub-N^(1/4) gap stays open.
+VALIDATION 2: REAL factoring N=pq from k MSBs of p -- the n/4 wall.
+the empirical success threshold sits AT n/4 (within ~1 bit):
+  n=48 (n/4=12): k=10:-  k=11:Y  k=12:Y  k=13:Y
+  n=64 (n/4=16): k=14:-  k=15:-  k=16:-  k=17:Y
+  n=80 (n/4=20): k=18:-  k=19:-  k=20:Y  k=21:Y
+
+CONCLUSION: the univariate Coppersmith lattice is VALIDATED (recovers
+planted roots and factors real semiprimes) and its empirical known-bits
+threshold sits AT n/4 within ~1 bit, matching Coppersmith/CHHS theory.
+This is the validated primitive required before any multivariate
+(bivariate) threshold claim. No complexity improvement is claimed.
