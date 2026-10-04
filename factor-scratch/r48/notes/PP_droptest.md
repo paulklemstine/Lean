@@ -369,10 +369,15 @@ sampler, i.e. exactly the failure mode the brief warns about.
 
 The control run on the **phase** (does the linear-algebra/gcd step produce a
 nonzero `G`?), each rate against its own cell's mean `p_split`. **The two `b=32`
-rows in the first table are the SAME cell from two independent samples**, which
+rows below are the SAME cell from two independent samples**, which
 is why their mean `p_split` differs — 0.684 and 0.769 for the same `b`, purely
 from which moduli were drawn. **That variation is itself the point:** the
 baseline for this statistic moves by **0.085** on sampling alone.
+
+| `n` | `b` | `N` | nonzero `G` | rate | 95% CI | mean `p_split` | **excess** | `p_split` range |
+|---|---|---|---|---|---|---|---|---|
+| 2³⁰ | 32 | 20 | 20 | 1.0000 | [0.839, 1.000] | 0.6842 | **+0.3158** | **[0.500, 0.988]** |
+| 2³⁰ | 32 | 24 | 24 | 1.0000 | — | 0.7693 | **+0.2307** | **[0.500, 0.998]** |
 
 **The `b = 52` cell, once it ran** (`exp_2adic_b52.py`, `N = 12`) completed
 after I replaced one library call — see the note on backends below:
@@ -393,11 +398,6 @@ reported excess between **+0.225** (per-cell mean) and **+0.259** (`20/27`).
 > cell from *timeout* to **0.1 s per modulus**. **A >10⁴× speed gap, on the same
 > mathematics, from a backend swap alone** — which is §2.1's finding biting the
 > experiment that was trying to measure it.
-
-| `n` | `b` | `N` | nonzero `G` | rate | 95% CI | mean `p_split` | **excess** | `p_split` range |
-|---|---|---|---|---|---|---|---|---|
-| 2³⁰ | 32 | 20 | 20 | 1.0000 | [0.839, 1.000] | 0.6842 | **+0.3158** | **[0.500, 0.988]** |
-| 2³⁰ | 32 | 24 | 24 | 1.0000 | — | 0.7693 | **+0.2307** | **[0.500, 0.998]** |
 
 Three readings, and the last one is the important one:
 
