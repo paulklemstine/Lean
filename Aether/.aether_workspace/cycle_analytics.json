@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-03T21:10:50.696393+00:00",
+  "last_updated": "2026-10-04T05:45:09.058141+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -77037,6 +77037,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-03T21:10:50.307064+00:00",
       "title": "FACT round-37 #1 \u2014 HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Novelty",
+      "duration_seconds": 20930.925840616226,
+      "end_time": 1791092681.2033865,
+      "files_integrated": 4,
+      "job_id": "9b17c9d6",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1791071750.277546,
+      "strategy_count": 0,
+      "theorem_count": 56,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 48,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-04T05:45:08.686342+00:00",
+      "title": "FACT round-35 #9 \u2014 BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
     }
   ]
 }

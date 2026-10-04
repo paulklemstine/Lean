@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "63101e70",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — plateau identifiability and the cost of a ladder\n\n## What this cycle settled\n\n1. **Exact `m`-rung identifiability** (`plateauSet_prefix_eq_Icc`).  Measuring a prefix\n   `p 0, …,",
-      "quality_score": 0.81,
-      "sorry_count": 0,
-      "theorem_count": 38,
-      "timestamp": "2026-09-11T14:00:37",
-      "title": "Rung Budget for Plateau Identification"
-    },
-    {
       "cycle_id": "e0933184",
       "domain": "Computation",
       "key_insight": "# Future directions: beyond the sub-quadratic root law\n\nFour research cycles closed the conjecture that motivated this project — the\nper-candidate batching cost `A/k + c + q(k^(μ−1) − 1)` has, for eve",
@@ -499,19 +489,19 @@
       "theorem_count": 81,
       "timestamp": "2026-10-03T21:10:48",
       "title": "FACT round-37 #1 — HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
+    },
+    {
+      "cycle_id": "9b17c9d6",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after THE-BIQUADRATIC-IS-FULLY-PINNED (paper 127)\n\n## What this cycle established (all in Lean, 0 sorries)\n\n* Over **any** field with `2 ≠ 0`, the biquadratic quartic `B_{a,b} =",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-10-04T05:45:08",
+      "title": "FACT round-35 #9 — BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0dec095c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — the shape/leakage frontier\n\nThe work delivered in this cycle settles, as theorems, the three inferential steps that the\nabsolute-shape closure rested on:\n\n1. **Nonlinearity ⇏ mod",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-08-25T23:40:36",
-      "title": "FACT round-82 #2 — SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES — LRT stat=100.6 df=3 p=1.17e-21"
-    },
     {
       "cycle_id": "7b0f4515",
       "domain": "Probability",
@@ -2501,27 +2491,19 @@
       "theorem_count": 81,
       "timestamp": "2026-10-03T21:10:48",
       "title": "FACT round-37 #1 — HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
+    },
+    {
+      "cycle_id": "9b17c9d6",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after THE-BIQUADRATIC-IS-FULLY-PINNED (paper 127)\n\n## What this cycle established (all in Lean, 0 sorries)\n\n* Over **any** field with `2 ≠ 0`, the biquadratic quartic `B_{a,b} =",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 56,
+      "timestamp": "2026-10-04T05:45:08",
+      "title": "FACT round-35 #9 — BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "900e5fcb",
-      "domain": "Algebra",
-      "name": "in",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "79072e03",
-      "domain": "Computation",
-      "name": "about",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "79072e03",
-      "domain": "Computation",
-      "name": "eq_of_close_rat",
-      "quality": 0.82
-    },
     {
       "cycle_id": "79072e03",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "about",
       "quality": 0.8
+    },
+    {
+      "cycle_id": "9b17c9d6",
+      "domain": "Novelty",
+      "name": "prime_mod24_mem",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9b17c9d6",
+      "domain": "Novelty",
+      "name": "classEntropy_eq",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9b17c9d6",
+      "domain": "Novelty",
+      "name": "logb_two_three_gt",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-03T21:10:48",
+  "last_updated": "2026-10-04T05:45:08",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "3831c02e",
-        "quality": 0.78,
-        "theorems": 63,
-        "title": "FACT round-45 #1 — U35-LOCALIZED: above the floor everywhere, degrades everywher"
-      },
-      {
         "cycle_id": "b3a54ad0",
         "quality": 0.82,
         "theorems": 84,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 43,
         "title": "FACT round-35 #3 — THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder ("
+      },
+      {
+        "cycle_id": "9b17c9d6",
+        "quality": 0.72,
+        "theorems": 56,
+        "title": "FACT round-35 #9 — BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
       }
     ],
     "NumberTheory": [
