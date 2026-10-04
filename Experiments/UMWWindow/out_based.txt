@@ -1,0 +1,19 @@
+Base-d deterministic finish (Pomykala-Jurkiewicz arXiv:2503.00950).
+Reproduces the paper's mechanism: separated orders + base-d decoding.
+
+paper example: N=3839985129719, d=2^7*3^7=279936
+  factor(N)? [(1959583, 1959593), (1959593, 1959583)]
+
+Synthetic separated-order tests (the finish recovers p,q deterministically):
+  N=516188579129 dp=72 dq=432 v2sep=True -> recovered=True
+  N=505358469643 dp=54 dq=216 v2sep=True -> recovered=True
+  N=642899504413 dp=36 dq=432 v2sep=True -> recovered=True
+  N=512094735653 dp=18 dq=48 v2sep=True -> recovered=True
+  N=1061663322011 dp=144 dq=54 v2sep=True -> recovered=True
+  N=476171280127 dp=216 dq=108 v2sep=True -> recovered=True
+
+=> base-d finish VERIFIED on synthetic instances (the mechanism works).
+   Its practical value depends on finding separated t-smooth orders, which
+   is exactly the ECM-family search the paper prices at L(sqrt2) -- WORSE
+   than the L(1/2) frontier. So it is a genuine NEW deterministic
+   MECHANISM but not a complexity improvement.
