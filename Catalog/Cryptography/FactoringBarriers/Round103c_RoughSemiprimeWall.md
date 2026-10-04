@@ -1,5 +1,15 @@
 # Round 103c — the rough-semiprime wall: a second, independent route to γ ≥ 1/2
 
+> ⚠️ **REASONING CORRECTED in round 105 (`Round105_SemiprimeWallAudit.md`).** The
+> *conclusion* `γ ≥ 1/2` below is CORRECT and stands, but the *premise* it used —
+> "each rough semiprime needs its own difference" — is **false** (one difference
+> containing `p,q,r,s` covers six semiprimes). The correct argument is a
+> **pair-covering design**: blocks of `k ~ n^γ/ln n` primes must cover all
+> `C(v,2)` pairs of `v ~ n/ln n` primes, needing `(v/k)² = n^{2−2γ}` blocks vs
+> budget `n^{2γ}` ⟹ `γ ≥ 1/2`. Same number, sound reason. Read §2/§3 below for
+> the semiprime-count argument **as it stood** (useful for the mechanism, but not
+> the proof).
+
 **2026-10-04. No exponent beaten. This round follows round 103b's obstruction to
 a unification result: a completely different argument (rough-semiprime packing)
 independently recovers the SAME γ ≥ 1/2 barrier as the round-96b birthday

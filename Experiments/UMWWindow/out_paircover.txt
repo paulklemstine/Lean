@@ -1,0 +1,11 @@
+Pair-covering (Schonheim) obstruction: blocks (v/k)^2 vs budget n^(2g).
+g | (v/k)^2 needed | n^(2g) budget | feasible
+  0.3600 | 2.291e+15 | 4.365e+08 | False
+  0.4000 | 2.512e+14 | 3.981e+09 | False
+  0.4500 | 1.585e+13 | 6.310e+10 | False
+  0.4999 | 1.006e+12 | 9.945e+11 | False
+  0.5000 | 1.000e+12 | 1.000e+12 | True
+  0.5500 | 6.310e+10 | 1.585e+13 | True
+
+Feasibility iff 2g >= 2-2g, i.e. g >= 1/2. Same wall as r103c,
+ correct reason (pair-covering design, not one-block-per-semiprime).
