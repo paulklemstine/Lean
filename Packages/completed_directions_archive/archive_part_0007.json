@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-10-04T15:54:37Z",
-  "count": 196,
+  "archived_at": "2026-10-04T22:31:47Z",
+  "count": 197,
   "directions": [
     {
       "id": "fd_3695",
@@ -7773,6 +7773,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 222
+    },
+    {
+      "id": "fd_3543",
+      "title": "FACT round-37 #3 — POSTERIOR-FILTER: real filter equals sham — battery capacity converts to zero factoring utility (paper 131)",
+      "description": "Round-37 #3 (exp 461, assessment v240). THE DECISIVE UTILITY EXPERIMENT for the battery/type-channel programme.\n\n**REAL-FILTER-EQUALS-SHAM**: a Bayesian candidate filter built from the exact type-channel posterior is indistinguishable from a same-size coin-flip keep-set at every dial (d2 1 bit, d3, d5, bat2, bat4 3.49 bits): max |real − sham| = 0.0075 vs batch SD 0.0073. The ρ-grid shows the (apparent) gain is a function of keep-rate alone, indifferent to which classes are kept.\n\nHonest accounting: with each membership test priced at one division-equivalent on every candidate ≤ √N, EVERY filter — real or sham — runs at ~0.50x: a net 2x loss. No-fallback failure rates = 1/n exactly.\n\nMechanism: barrier 2 made algorithmic — the marginal posterior over the target's residue is flat no matter what N reveals about the joint, so posterior capacity cannot reweight candidates. 3.49 bits of measured battery capacity ride channels orthogonal to ordering decisions. Pre-stated 4/3x refuted (companion theory paper: under complete-procedure accounting the sharp cap is 1x).\n\nLedger (9 catches): two substantive cost-accounting bugs produced spurious >1.5x speedups — caught by SHAM CO-INFLATION + derivation; dummy dial v1 leaked 1 bit by reading its random table through the factors (not N-computable) — rebuilt public.\n\nDecides: type-channel/battery capacity has exactly zero conversion into trial-division speedup. The utility question opened by paper 98 is CLOSED quantitatively.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp461_posterior_filter.py (script + result.json), seed 20260821, 20k semiprimes/cell x 5 batches.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "38666d07",
+      "timestamp": "2026-08-22T01:52:37.376267+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.62,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-04T05:45:43.376084+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 227
     }
   ]
 }
