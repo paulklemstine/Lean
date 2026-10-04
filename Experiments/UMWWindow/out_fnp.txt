@@ -1,0 +1,13 @@
+IFP exact 2-modulus lattice (Feng-Nitaj-Pan / May-Ritzenhofen).
+Threshold gamma > 4*alpha*(1-sqrt(alpha)), alpha+gamma<=1.
+
+  alpha=0.25 gamma=0.2: threshold gamma>0.500 -> predicted no
+  alpha=0.25 gamma=0.3: threshold gamma>0.500 -> predicted no
+  alpha=0.25 gamma=0.4: threshold gamma>0.500 -> predicted no
+  alpha=0.25 gamma=0.5: threshold gamma>0.500 -> predicted no
+
+Building a full synthetic LSB instance and running the lattice:
+    N1=3418914107 tbits=12: built+LLL-reduced 15 rows x 25 cols; gamma=0.4 vs threshold 0.274 -> above
+    (lattice BUILDS and reduces; end-to-end q2 recovery needs the
+     Groebner step of the paper, not implemented here -- NOT claimed.)
+
