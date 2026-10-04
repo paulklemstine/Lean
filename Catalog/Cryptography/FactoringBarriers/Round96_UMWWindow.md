@@ -1,5 +1,15 @@
 # Round 96 — the UMW window: where a rank-2 divisor cover would have to live
 
+> ⚠️ **SUPERSEDED IN PART by `Round96b_BirthdayObstruction.md`.** §4 of this
+> note ("random rank-2 covers land at 1/4 … a no-free-lunch measurement") was
+> tested at `n = 100`, which is **below the super-quadratic crossover** for
+> every `γ` in the window, and the "witness" that reached 99% at `γ=0.36`
+> escaped the magnitude budget. Read that section together with round 96b: the
+> `1/4` number is *directionally* right but its *mechanism* is the birthday
+> obstruction (random covers provably fail for `γ<1/2`), and it does **not**
+> close the window. **§2 (the window `[1/3,2/5)` and its slack) and §3 (the
+> counting wall) are unaffected and stand.**
+
 **2026-10-04. Round 96 produced NO new factoring algorithm and NO exponent
 improvement.** It did four things: it fixed the frontier against the primary
 sources, it located the *exact* parameter window in which a construction would

@@ -1,0 +1,19 @@
+=== PART A: birthday obstruction -- random covers die for gamma<1/2 ===
+  gamma=0.360 exp=0.180 covered-frac(n=200,800,3000)=0.421,0.354,0.290  n^(2g-1)@3000~0.106
+  gamma=0.399 exp=0.200 covered-frac(n=200,800,3000)=0.539,0.478,0.416  n^(2g-1)@3000~0.198
+  gamma=0.450 exp=0.225 covered-frac(n=200,800,3000)=0.726,0.687,0.643  n^(2g-1)@3000~0.449
+  gamma=0.500 exp=0.250 covered-frac(n=200,800,3000)=0.874,0.837,0.848  n^(2g-1)@3000~1.000
+  gamma=0.550 exp=0.275 covered-frac(n=200,800,3000)=0.922,0.965,0.973  n^(2g-1)@3000~1.000
+  -> covered fraction DECAYS with n and vanishes for gamma<1/2 (=exponent 1/4).
+
+=== PART B: GAP search, STRICT budget M=exp(n^gamma), n=800 ===
+  gamma=0.360 exp=0.180 M=    65816 cov mean= 400.8 max= 799/800 ( 50% mean)
+  gamma=0.380 exp=0.190 M=   321773 cov mean= 372.0 max= 451/800 ( 46% mean)
+  gamma=0.390 exp=0.195 M=   773201 cov mean= 388.5 max= 483/800 ( 48% mean)
+  gamma=0.399 exp=0.200 M=  1792315 cov mean= 389.4 max= 524/800 ( 48% mean)
+  gamma=0.420 exp=0.210 M= 15698207 cov mean= 493.1 max= 585/800 ( 61% mean)
+  gamma=0.450 exp=0.225 M=621962191 cov mean= 546.5 max= 640/800 ( 68% mean)
+
+CONCLUSION: random/aligned-by-luck covers cannot enter gamma<0.4.
+A beating cover must be DELIBERATELY aligned mod each i -- the exact
+content of the Umans-Wang GAP-structure hypothesis. UNRESOLVED here.
