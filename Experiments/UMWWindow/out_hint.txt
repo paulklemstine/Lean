@@ -1,0 +1,8 @@
+IFP HINT attack: partial hint + Coppersmith lattice recovers p1.
+f(j)=q10 + 2^v*j =0 mod p1; Coppersmith root < N^(1/4) => recover j.
+
+  p1_bits=40 alpha=24 v=20: X=2^4 coppersmith(cond 4<n/4=16)=True recovered 0/4
+  p1_bits=40 alpha=24 v=16: X=2^8 coppersmith(cond 8<n/4=16)=True recovered 0/4
+  p1_bits=48 alpha=24 v=20: X=2^4 coppersmith(cond 4<n/4=18)=True recovered 0/4
+  p1_bits=48 alpha=24 v=16: X=2^8 coppersmith(cond 8<n/4=18)=True recovered 0/4
+  p1_bits=56 alpha=24 v=24: X=2^0 coppersmith(cond 0<n/4=20)=True recovered 4/4
