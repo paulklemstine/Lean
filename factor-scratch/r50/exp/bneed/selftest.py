@@ -396,6 +396,35 @@ except SystemExit as e:
 
 print()
 print("=" * 78)
+print("T13: the from-scratch Dickman rho -- validated, and it CORRECTS my prose")
+print("=" * 78)
+import mpmath as mp        # noqa: E402
+import cost_curve          # noqa: E402
+R, M = cost_curve.dickman_rho(9.0, M=60000)
+for u, want in cost_curve.RHO_PUBLISHED.items():
+    got = R[int(round(u * M))]
+    rel = abs(got - mp.mpf(want)) / mp.mpf(want)
+    check(f"rho({u}) matches the published value", rel < mp.mpf("2e-3"),
+          f"got {mp.nstr(got, 9)} want {want}  rel {float(rel):.2e}")
+check("rho is strictly DECREASING on [1, 9]",
+      all(R[int(round(u * M))] > R[int(round((u + 1) * M))]
+          for u in range(1, 9)))
+check("rho(1) = 1 exactly (its defining condition)",
+      abs(R[M] - 1) < mp.mpf("1e-20"), f"{mp.nstr(R[M], 12)}")
+# THE CORRECTION.  I had written that u^u "overshoots the true cost by up to
+# 6.2e7".  That is FALSE as an explanation: u^u and 1/rho(u) agree to within a
+# factor ~2 over the whole range.  Check it, so the note cannot repeat it.
+ratios = [float(u ** u * R[int(round(u * M))]) for u in (3.0, 4.0, 5.0, 6.0, 7.0, 8.0)]
+check("u^u is within a factor 3 of 1/rho(u) for u in [3,8]  <-- CORRECTION",
+      all(0.3 < r < 3.0 for r in ratios),
+      "u^u*rho(u) = " + ", ".join(f"{r:.2f}" for r in ratios))
+print("    So 'u^u overshoots the cost by 1e6' is WRONG and must not be")
+print("    repeated.  The measured overshoot at b = 3 is real, but it is a")
+print("    failure of BOTH asymptotics outside their regime, not a defect")
+print("    peculiar to u^u.")
+
+print()
+print("=" * 78)
 print(f"RESULT: {NPASS} PASS, {NFAIL} FAIL")
 print("=" * 78)
 sys.exit(1 if NFAIL else 0)

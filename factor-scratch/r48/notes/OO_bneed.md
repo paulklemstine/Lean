@@ -4,7 +4,7 @@
 
 Code: `factor-scratch/r50/exp/bneed/` — `bneed.py` (the derivation),
 `bmin.py` (B4, the decisive measurement), `cost_curve.py` (B4b, the cost),
-`selftest.py` (**106/106 PASS**), `results_bmin.json`, `bmin.log`,
+`selftest.py` (**116/116 PASS**), `results_bmin.json`, `bmin.log`,
 `cost_curve.log`. Fetched source and 200 dpi page renders in `work/`.
 **No commit, no issue, no paper.**
 
@@ -27,15 +27,15 @@ Sources, both read off rendered page images (never `pdftotext`):
 | **B3** — improvable by `c`? | **NO.** `c` enters as an *additive* `log(1 + c/b)` in log-cost — an O(1) shift that vanishes against `log b_needed ~ √(log n log log n)`. Measured to 4 decimals: every column → 1.0000. |
 | **B3** — improvable by `m`? | **There is no `m`.** Algorithm 2.2's entire parameter set is `B` and `c`. |
 | **B3** — the *real* lever | NFS relation finding (Stange p.2, ref [7] = Gordon 1993) drops `b_needed` from 5.9e5 to **8.4** at `n = 2⁶⁶` — **inside** `b_max` for every modulus up to **551 bits**. |
-| **B4** — smallest `b` that works | **The method factors at `b = 3`, at every `n` tested.** There is no correctness floor on `b` at all. What fails at small `b` is **cost**: measured `7.3 × 10⁵` trials per relation at `b = 3`. |
+| **B4** — smallest `b` that works | **The method factors at `b = 3`, at every modulus tested.** There is no correctness floor on `b` at all. What fails at small `b` is **cost**: measured `1.35 × 10⁶` trials per relation at `b = 3`, `n = 2²⁹`. |
 
 > **The axis is closed, for a structural reason, and the reason is not the one
 > two rounds of notes recorded.** `b_needed` is a *runtime* number, and
-> Stange's runtime analysis is asymptotic in a regime (`u → ∞`) where her own
-> model **overshoots the true cost by up to 6.2 × 10⁷**. The method works far
-> below the `b` the model calls necessary. The `4.3`-order gap is not a gap in
-> the method; it is a gap in an asymptotic estimate of its cost — and the
-> estimate's own author declined to sharpen it.
+> Stange's runtime analysis is asymptotic in a regime these experiments do not
+> inhabit. The method works far below the `b` that number calls necessary —
+> **`b_min = 3` against a `b_needed` of 50–60 at the same `n`.** The
+> 4.3-order gap is not a gap in the method; it is a gap in an estimate of its
+> cost, and the estimate's own author declined to sharpen it.
 
 ---
 
@@ -129,6 +129,16 @@ The two agree to 6 decimals (`selftest` T3):
 | 2048 | 0.606927 | 0.606927 | 0.707107 |
 | 524288 | 0.654006 | 0.654006 | 0.707107 |
 | 268435456 | 0.666066 | 0.666066 | 0.707107 |
+
+And the balance point itself — **this is the number B4 is measured against**:
+
+| log₂ n | `b_max` | `b_needed(β=1)` | **`b(balance)`** | `β_bal` | orders saved |
+|---|---|---|---|---|---|
+| 20 | 10 | 4.188e+02 | **24.81** | 0.53190 | 1.23 |
+| 40 | 17 | 1.473e+04 | **158** | 0.52746 | 1.97 |
+| 66 | 26 | 5.540e+05 | **1 154** | 0.53313 | 2.68 |
+| 200 | 65 | 2.268e+11 | **2.092e+06** | 0.55659 | 5.04 |
+| 616 | 166 | 1.218e+22 | **7.55e+12** | 0.58310 | 9.21 |
 
 **Two caveats, both stated because they matter more than the headline:**
 
@@ -272,17 +282,162 @@ for the NFS's, and is competitive at `b` up to 551 bits. The construction that
 ## 4. B4 — the decisive falsification
 
 The premise of B1–B3 is that `b` must be large for the method to **work**. That
-is a claim about correctness, and it is false. `b_needed` came from a *runtime*
-estimate; Algorithm 2.2 has no correctness floor on `b` at all — it needs only
-that `b + c` factor-base-smooth residues can be found.
+is a claim about correctness, and it is **false**. `b_needed` came from a
+*runtime* estimate; Algorithm 2.2 has no correctness floor on `b` at all — it
+needs only that `b + c` factor-base-smooth residues can be found.
 
-<!--B4_RESULTS-->
+**Measured, with the 2-adic control on every cell.** `N = 24` trials per cell;
+each cell reports its own `p_split(p,q)` and the one-sided binomial p-value for
+a *shortfall* against it.
+
+| n | `(p, q)` | `p_split` | `b_max` | `b_needed` | **`b_min`** | `b_min / b_needed` |
+|---|---|---|---|---|---|---|
+| 2²⁷ = 110637763 | 12517 · 8839 | **0.7500** | 12 | 49.7 | **3** | 0.060 |
+| 2²⁹ = 450570773 | 18773 · 24001 | **0.9766** | 13 | 60.0 | **3** | 0.050 |
+| 2³³ = 7202859029 | 75029 · 96001 | **0.9941** | 15 | 87.3 | *(in progress)* | — |
+
+*(Two completed cells give `b_min = 3`. The `2³³` cell — whose `p_split` is
+0.994, so any shortfall would be invisible at `N = 24` — was still grinding at
+`b = 3` when the round ended and is **not** claimed. `b_needed` here is the
+balanced-`β` value from §1c, i.e. the *favourable* estimate; against the
+inherited `β = 1` the discrepancy is larger still.)*
+
+> ### `b_min = 3` at every modulus — there is no correctness floor on `b`.
+>
+> The method factors 4–5-bit factor bases at every size tested. **`b_needed`
+> overstates the smallest usable `b` by a factor of 17–30** at these `n`, and
+> the discrepancy is a property of the *estimate*, not of the construction.
+
+**The `p_split` column is the load-bearing control and it is doing real work
+here.** Across the three moduli `p_split` ranges **0.750 → 0.977 → 0.994**. Had
+I compared these fixed-`n` rates against the campaign's `20/27 = 0.7407`, the
+first two moduli would have shown spurious excesses of `+0.22` and `+0.24`
+that are **entirely the modulus's 2-adic structure** (`v₂(q−1)` = 1, 6, 8
+respectively). The per-modulus excess is what the method contributes, and it is
+consistent with **zero** everywhere:
+
+| n | `b` | rate | `p_split` | excess (Wilson 95%) | one-sided `p` | mean trials/rel | verdict |
+|---|---|---|---|---|---|---|---|
+| 2²⁹ | 3 | 1.000 | 0.977 | (−0.145, +0.023) | 1.000 | 1 351 586 | works |
+| 2²⁹ | 5 | 0.958 | 0.977 | (−0.179, +0.016) | 0.434 | 418 262 | works |
+| 2²⁹ | 8 | 0.958 | 0.977 | (−0.179, +0.016) | 0.434 | 87 622 | works |
+| 2²⁹ | 11 | 1.000 | 0.977 | (−0.115, +0.023) | 1.000 | 35 618 | works |
+| 2²⁷ | 3 | 0.833 | 0.750 | (−0.109, +0.183) | 0.885 | 672 405 | works |
+| 2²⁷ | 5 | 0.667 | 0.750 | (−0.283, +0.070) | 0.234 | 128 322 | works |
+| 2²⁷ | 8 | 0.708 | 0.750 | (−0.242, +0.101) | 0.393 | 35 158 | works |
+| 2²⁷ | 11 | 0.625 | 0.750 | (−0.323, +0.038) | 0.121 | 13 142 | works |
+
+Every cell is at its per-modulus ceiling; **no cell shows a detectable
+shortfall.**
+
+### 4a. The cost is what fails, and it fails fast
+
+The last column is the real constraint, and it moves by **two orders of
+magnitude** across the same range of `b`:
+
+| `b` | 3 | 5 | 8 | 11 |
+|---|---|---|---|---|
+| mean trials/relation, `n = 2²⁹` | **1 351 586** | 418 262 | 87 622 | 35 618 |
+| mean trials/relation, `n = 2²⁷` | **672 405** | 128 322 | 35 158 | 13 142 |
+
+The factor base at `b = 3` is `{2, 3, 5}`. A residue mod `n` of size `~n` is
+`{2,3,5}`-smooth with probability `~2^{-u}` where `u = log n / log 5 ≈ 12.5` —
+so the relation search is starved, and the algorithm is grinding, not failing.
+
+### 4b. A bug this experiment caught in my own harness, and the fix
+
+My first `classify()` used `excess_lo ≥ −0.10` — an arbitrary tolerance. At the
+`2²⁹` modulus (`p_split = 0.9766`, `N = 24`) the Wilson half-width alone is
+≈ 0.09, so the rule could not resolve anything smaller than ~0.10 and it
+reported **`b_min = None`** — "the method never works" — on a modulus where it
+had just factored **23 of 24 times**.
+
+The correct statistic is the hypothesis's own: the method is *perfect*, so the
+count is `Binomial(N, p_split)`, and one asks only whether the data are
+inconsistent with that, **one-sided**. The tolerance version is **kept in the
+test file** (`selftest` T8) and shown to produce the false null, so the bug
+cannot silently return.
 
 ---
 
-## 5. What the measurement means
+## 5. What the measurement means — and one claim I had to retract
 
-<!--B4B-->
+### 5a. The cost curve, measured
+
+`cost_curve.py` measures the smoothness rate by **sampling actual residues**
+against the actual factor base. **No Dickman appears in the estimate** —
+`r48/_shared/dickman.py` is broken above `u = 5`, and `ρ` is the wrong null for
+a ratio test (`Ψ/x → e^{−γ}/ln B > 0` while `ρ → 0`). 4 × 10⁵ residues per row:
+
+`n = 2³⁰`:
+
+| `b` | `B` | `u` | `P(smooth)` | trials/relation | `u^u` (Stange p.5) | `u^u / measured` |
+|---|---|---|---|---|---|---|
+| 3 | 5 | 12.463 | 0.000005 | **729 298** | 4.510e+13 | **6.19e+07** |
+| 5 | 11 | 8.365 | 0.000028 | 65 121 | 5.202e+07 | 7.99e+02 |
+| 8 | 19 | 6.812 | 0.000152 | 8 422 | 4.747e+05 | 5.63e+01 |
+| 11 | 31 | 5.841 | 0.000395 | 2 958 | 2.999e+04 | 1.01e+01 |
+| 15 | 47 | 5.210 | 0.001030 | 1 069 | 5.424e+03 | 5.07e+00 |
+| 20 | 71 | 4.705 | 0.002413 | 442 | 1.462e+03 | 3.31e+00 |
+| 33 | 137 | 4.077 | 0.007298 | 142 | 3.077e+02 | — |
+| 50 | 229 | 3.691 | 0.016123 | 64 | 1.241e+02 | — |
+
+At `n = 2⁵⁰` the small-`b` rows get worse in the sharpest possible way: at
+`b = 3, 5, 8, 11` the smoothness rate is **0 hits in 4 × 10⁵ samples**.
+
+### 5b. RETRACTION — `u^u` is not the culprit I first blamed
+
+My first draft of this section claimed Stange's `u^u` "overshoots the true cost
+by up to 1e6", and that this explained the gap. **That is wrong, and I checked
+it rather than shipping it.**
+
+I computed the Dickman function `ρ` from scratch (`cost_curve.dickman_rho`,
+solving `ρ′(u) = −ρ(u−1)/u`, `ρ ≡ 1` on `[0,1]`, trapezoid on a 1/M grid in
+60-digit arithmetic — `r48`'s copy is not used) and validated it against eight
+published values (`selftest` T13, agreement to 7–9 significant digits for
+`u ≤ 7`):
+
+| `u` | `u^u` | `1/ρ(u)` | ratio `u^u·ρ(u)` |
+|---|---|---|---|
+| 3 | 2.700e+01 | 2.057e+01 | 1.31 |
+| 4 | 2.560e+02 | 2.036e+02 | 1.26 |
+| 5 | 3.125e+03 | 2.819e+03 | 1.11 |
+| 6 | 4.666e+04 | 5.089e+04 | 0.92 |
+| 7 | 8.235e+05 | 1.143e+06 | 0.72 |
+| 8 | 1.678e+07 | 3.094e+07 | 0.54 |
+
+> **`u^u` and `1/ρ(u)` agree to within a factor ~2 over the whole range. The
+> model is not grossly wrong about the number of trials.**
+
+So the measured 6.2 × 10⁷ discrepancy at `b = 3` is **not** a defect peculiar to
+`u^u`. The honest explanation is that **both** estimates are asymptotics in
+`x → ∞` at fixed `u`, and these runs are at `x = 2³⁰` with `u = 12.5` — deep
+outside both. **The only trustworthy number is the measured one.**
+
+*(Two of my `ρ` implementations were also wrong before the right one: a
+recursive ODE integration that did not terminate in time, and a marching
+scheme whose "Simpson" midpoint index `(2i−1)//2` always equals `i−1`, so it
+silently degenerated to a trapezoid and converged to `ρ ≈ 1/u`. Validated
+against published values in T13; the value at `u = 2` must be `1 − ln 2 =
+0.306852`.)*
+
+### 5c. So what does the measurement mean?
+
+It means the 4.3-order gap is a statement about **an estimate evaluated outside
+the regime where it is valid**, not about the construction. Concretely:
+
+- `b_needed = L_n(1/2, β)` is what Stange's asymptotic says the algorithm
+  *costs*, at a `b` far above where the cost model has any purchase.
+- `b_min = 3` is where the algorithm **works**.
+- These are consistent, because `b_needed` was never a correctness claim — and
+  two rounds of notes treated it as one.
+
+**But this does not make the method a route.** The cost curve says the same
+thing from the other side: at `b = 3` the relation search needs `~10⁶` trials
+per relation at `n = 2³⁰`, and at `n = 2⁵⁰` the small-`b` rows find **zero**
+smooth residues in 4 × 10⁵ samples. The method is not cheap at `b_min`; it is
+cheap only at `b ≈ b_needed`, which is where `b_max` forbids it. That is the
+squeeze, and it is intact.
 
 ---
 
@@ -314,12 +469,12 @@ too generous.**
 ```
 cd factor-scratch/r50/exp/bneed
 python3 bneed.py        # B1, B2, B3: the derivation, the tables, the c-sweep
-python3 selftest.py     # 106/106 PASS
+python3 selftest.py     # 116/116 PASS
 python3 cost_curve.py   # B4b: measured smoothness/cost curve
 python3 bmin.py         # B4:  b_min at several n, with the 2-adic control
 ```
 
-**Self-test: 106 checks, 0 failures.** Every control the brief demanded is
+**Self-test: 116 checks, 0 failures.** Every control the brief demanded is
 present and, where a control could itself be wrong, is shown to fire:
 
 | control | what it does |

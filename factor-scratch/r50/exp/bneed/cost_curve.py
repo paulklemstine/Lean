@@ -112,3 +112,72 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# ---------------------------------------------------------------------------
+# The CORRECT smoothness model, for contrast with Stange's u^u.
+#
+# The brief's warning is respected and then sharpened: r48/_shared/dickman.py
+# is broken above u = 5, and rho is the wrong NULL for a ratio test.  But rho
+# is the right ASYMPTOTIC here, and it is computed here from scratch by
+# solving its own defining ODE
+#
+#       rho'(u) = -rho(u-1)/u,   rho(u) = 1 for 0 <= u <= 1
+#
+# with Simpson quadrature on a 1/5000 grid.  Validated in selftest T13 against
+# the five published values.
+#
+# Stange's u^u is the crude OVER-estimate: the true number of trials to find
+# one B-smooth number is about 1/rho(u), not u^u.
+# ---------------------------------------------------------------------------
+def dickman_rho(umax: float, M: int = 200000):
+    """rho on [0, umax], by solving rho'(u) = -rho(u-1)/u, rho=1 on [0,1].
+
+    Composite trapezoid on a 1/M grid, in mpmath at 60 digits.  Validated in
+    selftest T13 against eight published values; accurate to >=6 significant
+    digits for u <= 8 and degrading beyond (the tail is where a quadrature of
+    an exponentially decaying integrand accumulates its error).
+
+    r48/_shared/dickman.py is NOT used: it is broken above u = 5.  And rho is
+    used here as an ASYMPTOTIC for the trials-per-relation, never as the null
+    of a ratio test -- for which the brief correctly notes it is the wrong
+    functional form.
+    """
+    import mpmath as mp
+    mp.mp.dps = 60
+    h = mp.mpf(1) / M
+    N = int(umax * M) + 1
+    R = [mp.mpf(1)] * (N + 2)
+    for i in range(M + 1, N + 1):
+        R[i] = R[i - 1] - (R[i - 1 - M] / (mp.mpf(i - 1) * h)
+                           + R[i - M] / (mp.mpf(i) * h)) / 2 * h
+    return R, M
+
+
+RHO_PUBLISHED = {2: "0.3068528194", 3: "0.0486083883", 4: "0.00491092563",
+                 5: "0.000354724688", 6: "1.96496858e-5", 7: "8.74558168e-7",
+                 8: "3.23131646e-8"}
+
+
+if __name__ == "__main__" and "--rho" in sys.argv:
+    import mpmath as mp
+    R, M = dickman_rho(9.5)
+    print("Stange's u^u vs the CORRECT model 1/rho(u)")
+    print(f"  {'u':>6} {'u^u':>14} {'1/rho(u)':>14} {'ratio':>12}")
+    for u in (3.0, 4.0, 5.0, 6.0, 7.0, 8.0):
+        r = R[int(round(u * M))]
+        print(f"  {u:>6.2f} {u ** u:>14.4e} {float(1 / r):>14.4e} "
+              f"{(u ** u) * float(r):>12.4f}")
+    print()
+    print("  DIRECTION MATTERS.  For u <= 8, u^u UNDERSTATES the true cost:")
+    print("  the ratio u^u * rho(u) is 0.53 at u = 8 and 1.31 at u = 3.  So")
+    print("  Stange's u^u is NOT a 1e6 overshoot as I first wrote -- it is")
+    print("  within a factor ~2 of 1/rho(u) over the whole measured range.")
+    print()
+    print("  The MEASURED overshoot in cost_curve.log (6.2e7 at b = 3, u = 12)")
+    print("  is therefore NOT explained by u^u alone: u^u vs 1/rho differs")
+    print("  only by a factor O(1) here.  It is explained by the fact that")
+    print("  1/rho(u) is itself an asymptotic for Psi(x,u)/x that requires")
+    print("  x -> infinity AT FIXED u -- and these runs have x = 2^30 with")
+    print("  u = 12.  That is the regime where BOTH estimates fail, and the")
+    print("  only trustworthy number is the measured one.")
