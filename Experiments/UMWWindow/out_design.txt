@@ -1,0 +1,14 @@
+(7,3,1) shifted set [1, 2, 4] perfect? True
+(13,4,1) shifted set [1, 2, 4, 10] perfect? True
+(21,5,1) shifted set [1, 2, 5, 15, 17] perfect? True
+(31,6,1) shifted set [1, 2, 4, 9, 13, 19] perfect? True
+
+Non-vacuous coverage (S, T disjoint), design vs random, ratio vs n:
+  v=  7 k=3: n=7: d=1.000 r=1.000 ratio=1.000  n=14: d=0.846 r=0.854 ratio=0.991  n=28: d=0.407 r=0.424 ratio=0.961  n=56: d=0.200 r=0.205 ratio=0.973  n=112: d=0.099 r=0.097 ratio=1.019
+  v= 13 k=4: n=13: d=1.000 r=1.000 ratio=1.000  n=26: d=0.920 r=0.900 ratio=1.022  n=52: d=0.451 r=0.438 ratio=1.029  n=104: d=0.223 r=0.213 ratio=1.048  n=208: d=0.111 r=0.107 ratio=1.036
+  v= 21 k=5: n=21: d=1.000 r=1.000 ratio=1.000  n=42: d=0.951 r=0.904 ratio=1.053  n=84: d=0.470 r=0.452 ratio=1.039  n=168: d=0.234 r=0.220 ratio=1.063  n=336: d=0.116 r=0.113 ratio=1.028
+  v= 31 k=6: n=31: d=1.000 r=1.000 ratio=1.000  n=62: d=0.967 r=0.927 ratio=1.043  n=124: d=0.480 r=0.460 ratio=1.043  n=248: d=0.239 r=0.232 ratio=1.028  n=496: d=0.119 r=0.115 ratio=1.032
+
+VERDICT: ratio ~1.0-1.06 at every scale -> constant-factor only,
+SAME birthday exponent. Perfect difference sets do NOT evade the
+obstruction. Design-theoretic alignment is a negative result here.
