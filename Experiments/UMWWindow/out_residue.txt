@@ -1,0 +1,29 @@
+ResiduePartialFactor: deterministic factorisation from p mod M.
+Threshold: success iff x=(p-a)/M < N^(1/4)  <=>  M >~ N^(1/4).
+
+N=14221821504537242969 (64 bits), N^(1/4)~2^16=65536, p=3626764237
+  y= 8 M=         210 (log2 M~  7.7) x=17270305 (>=16) pred=no  factored=no 
+  y=12 M=        2310 (log2 M~ 11.2) x= 1570027 (>=16) pred=no  factored=no 
+  y=16 M=       30030 (log2 M~ 14.9) x=  120771 (>=16) pred=no  factored=no 
+  y=20 M=     9699690 (log2 M~ 23.2) x=     373 (<16) pred=YES factored=YES
+  y=24 M=   223092870 (log2 M~ 27.7) x=      16 (<16) pred=YES factored=YES
+  y=28 M=   223092870 (log2 M~ 27.7) x=      16 (<16) pred=YES factored=YES
+
+N=52136431973160333327849993089 (96 bits), N^(1/4)~2^24=16777216, p=243560906775059
+  y= 8 M=         210 (log2 M~  7.7) x=1159813841785 (>=24) pred=no  factored=no 
+  y=12 M=        2310 (log2 M~ 11.2) x=105437621980 (>=24) pred=no  factored=no 
+  y=16 M=       30030 (log2 M~ 14.9) x=8110586306 (>=24) pred=no  factored=no 
+  y=20 M=     9699690 (log2 M~ 23.2) x=25110174 (>=24) pred=no  factored=no 
+  y=24 M=   223092870 (log2 M~ 27.7) x= 1091746 (<24) pred=YES factored=YES
+  y=28 M=   223092870 (log2 M~ 27.7) x= 1091746 (<24) pred=YES factored=YES
+  y=32 M=200560490130 (log2 M~ 37.5) x=    1214 (<24) pred=YES factored=YES
+
+N=252212570486623463392953928625847170093 (128 bits), N^(1/4)~2^32=4294967296, p=14771167530850900049
+  y= 8 M=         210 (log2 M~  7.7) x=70338893004051904 (>=32) pred=no  factored=no 
+  y=12 M=        2310 (log2 M~ 11.2) x=6394444818550173 (>=32) pred=no  factored=no 
+  y=16 M=       30030 (log2 M~ 14.9) x=491880370657705 (>=32) pred=no  factored=no 
+  y=20 M=     9699690 (log2 M~ 23.2) x=1522849444760 (>=32) pred=no  factored=no 
+  y=24 M=   223092870 (log2 M~ 27.7) x=66210845424 (>=32) pred=no  factored=no 
+  y=28 M=   223092870 (log2 M~ 27.7) x=66210845424 (>=32) pred=no  factored=no 
+  y=32 M=200560490130 (log2 M~ 37.5) x=73649438 (<32) pred=YES factored=YES
+
