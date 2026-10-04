@@ -138,7 +138,7 @@ CENSUS = "Catalog/Cryptography/FactoringBarriers/Round48_SUMMARY.md"
 # tree; its work is left untouched, so it is not this census's business.
 # DOCUMENTED rather than silently skipped -- an allowlist nobody can audit is
 # an allowlist that hides defects.
-FOREIGN_PREFIXES = ("research_fact_round_", "fact_round_", "research_")
+FOREIGN_PREFIXES = ("research_fact_round_", "fact_round_", "research_", "residue_")
 
 
 def check_orphans(root: Path) -> list[str]:
