@@ -556,6 +556,23 @@ producing 20/27 remains **unexplained**: measured and confirmed, not derived. St
 papered over, because a measured constant with an unknown origin is still a correct number and a
 plausible derivation would not be.
 
+> **⚠️ SUPERSEDED — the mechanism is now DERIVED, and this paragraph was written before that
+> happened.** `notes/HH_explain_20_over_27.md` now derives it: success is
+> `P(v₂(ord_p g) ≠ v₂(ord_q g))`, averaged over the joint law of `s = v₂(p−1)`, and the sum is
+> **`20/27` exactly** — deficit **−1.7 × 10⁻¹⁸** in exact rational arithmetic, monotone from
+> below, with **no renormalisation**.
+>
+> My first derivation was wrong **twice**: the law `P(s=j) = 2^{-(j+1)}` has total mass **0.5, not
+> 1.0**, so with it the sum is **`5/27`** — and it reached `20/27` only via an **undeclared
+> renormalisation** that cancelled the factor-2 exactly. The correct law is `P(s=j) = 2^{-j}`
+> (measured over 216,815 primes), which has mass 1 and needs no normalisation.
+>
+> > **A renormalisation is an assertion that your quantity does not sum to its natural value. If
+> > you need one, the quantity is usually wrong — find out which, and write it down.**
+>
+> The **verdict above is unaffected**: 20/27 is confirmed and correctly attributed to the
+> order-finding step, not to the ℚ-kernel.
+
 ---
 
 ## ■ THE NON-EC GROUP SURVEY — no family survives, and a reconciliation that matters
