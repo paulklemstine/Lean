@@ -42,9 +42,30 @@ At `n ≈ 2⁴⁰, b = 52`, with the `QQ` rref backend:
 
 Swapping *only* the linear-algebra backend moves `frac_LA` from **0.328 → 0.049**.
 
-The construction that 48 rounds attacked is ~5% of the cost. The hard half is relation-finding —
-which is the number field sieve, already the state of the art. **That is the honest accounting,
-and it is more useful than any barrier claim: it says where a successor should not spend time.**
+The construction that 48 rounds attacked is ~5% of the cost **at these sizes**. The hard half is
+relation-finding — which is the number field sieve, already the state of the art.
+
+> ### ⚠️ CORRECTED — the "95%" is CONDITIONAL on `(n, b)`, and must never be quoted without them
+>
+> Measured later on a full **24-cell grid** (`b ∈ {5…52}`, `n ∈ {2²⁵–2⁴⁰}`), the kernel share
+> `frac_LA` spans **0.0000 → 0.7772**:
+>
+> - at **large `n`** (`2³⁸–2⁴⁰`) the kernel is **0.06–1.3%** — so the headline holds;
+> - at **small `n`, `b ≈ 26–52`** the kernel is **31–78%** of cost — so it **fails**, on **7 of
+>   24 cells**, all in one intermediate band.
+>
+> **The programme's priority order is right about the destination and wrong about the road.**
+>
+> **And an instrument caveat that applies to every number in this paper:** running that grid twice
+> with **fixed seeds** — so the matrices were *identical* — moved `frac_LA` from **0.3146 to 0.3825**,
+> a **+22% swing on fixed input**. **The measurement precision here is roughly ±20% per cell.**
+> That is the same lesson as `p_split` applied to a *cost fraction*: any claim of the form "the
+> expensive phase is X%" must carry its `(n, b)`, and no single cell should be quoted more finely
+> than the noise.
+
+The directional conclusion survives the correction: **relation-finding is the phase that matters
+asymptotically, and it is the number field sieve.** The 1.2× base-conditioning result of
+`#532` is a success-*rate* result, measured per modulus, and is unaffected.
 
 ## 2. The defect is real, and it does not bind
 
