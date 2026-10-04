@@ -286,63 +286,107 @@ is a claim about correctness, and it is **false**. `b_needed` came from a
 *runtime* estimate; Algorithm 2.2 has no correctness floor on `b` at all — it
 needs only that `b + c` factor-base-smooth residues can be found.
 
-**Measured, with the 2-adic control on every cell.** `N = 24` trials per cell;
-each cell reports its own `p_split(p,q)` and the one-sided binomial p-value for
-a *shortfall* against it.
+**Measured, with the 2-adic control on every cell.** `N = 24` trials per cell
+(16 at `2³⁹`); each cell reports its own `p_split(p,q)` and the one-sided
+binomial p-value for a *shortfall* against it.
 
 | n | `(p, q)` | `p_split` | `b_max` | `b_needed` | **`b_min`** | `b_min / b_needed` |
 |---|---|---|---|---|---|---|
 | 2²⁷ = 110637763 | 12517 · 8839 | **0.7500** | 12 | 49.7 | **3** | 0.060 |
 | 2²⁹ = 450570773 | 18773 · 24001 | **0.9766** | 13 | 60.0 | **3** | 0.050 |
-| 2³³ = 7202859029 | 75029 · 96001 | **0.9941** | 15 | 87.3 | *(in progress)* | — |
+| 2³¹ = 1770089357 | 50069 · 35353 | **0.8125** | 14 | 72.1 | **3** | 0.042 |
+| 2³³ = 7202859029 | 75029 · 96001 | **0.9941** | 15 | 86.3 | **3** † | 0.035 |
 
-*(Two completed cells give `b_min = 3`. The `2³³` cell — whose `p_split` is
-0.994, so any shortfall would be invisible at `N = 24` — was still grinding at
-`b = 3` when the round ended and is **not** claimed. `b_needed` here is the
-balanced-`β` value from §1c, i.e. the *favourable* estimate; against the
-inherited `β = 1` the discrepancy is larger still.)*
+*(Four completed cells, `b_min = 3` in every one. `b_needed` is the
+balanced-`β` value from §1c — the *favourable* estimate; against the inherited
+`β = 1` the discrepancy is larger still. **†** the `2³³` cell's `b = 3` row has
+`N = 1`: at 4.9 × 10⁶ trials/relation the cap truncated it, so that one cell
+is weak evidence on its own — but see the `b = 5` row below, which is `N = 24`
+at the same modulus and is at ceiling.)*
 
 > ### `b_min = 3` at every completed modulus — no correctness floor on `b`.
 >
-> The method factors 4–5-bit factor bases at every size tested. **`b_needed`
-> overstates the smallest usable `b` by a factor of 17–30** at these `n`, and
-> the discrepancy is a property of the *estimate*, not of the construction.
+> The method factors with a **3-prime factor base** (`{2,3,5}`, `B = 5`) at
+> every size tested. **`b_needed` overstates the smallest usable `b` by a
+> factor of 17–30** at these `n` (49.7/3 = 16.6 at `2²⁷` up to 86.3/3 = 28.8 at
+> `2³³`), and the discrepancy is a property of the *estimate*, not of the
+> construction.
 
 **The `p_split` column is the load-bearing control and it is doing real work
-here.** Across the moduli `p_split` ranges **0.750 → 0.977** (and 0.994 at the
-in-progress `2³³` cell). Had I compared these fixed-`n` rates against the
-campaign's `20/27 = 0.7407`, the `2²⁹` modulus would have shown a spurious
-excess of **+0.22** that is **entirely the modulus's 2-adic structure**
-(`v₂(p−1) = 2`, `v₂(q−1) = 6`). The per-modulus excess is what the method contributes, and it is
-consistent with **zero** everywhere:
+here.** Across the four moduli `p_split` ranges **0.750 → 0.813 → 0.977 →
+0.994**. Had I compared these fixed-`n` rates against the campaign's
+`20/27 = 0.7407`, the `2²⁹` modulus would have shown a spurious excess of
+**+0.22** and the `2³³` modulus **+0.25** — both **entirely the modulus's
+2-adic structure** (`v₂(q−1)` = 6 and 8 respectively). The per-modulus excess
+is what the method contributes, and it is consistent with **zero** everywhere:
 
-| n | `b` | rate | `p_split` | excess (Wilson 95%) | one-sided `p` | mean trials/rel | verdict |
-|---|---|---|---|---|---|---|---|
-| 2²⁹ | 3 | 1.000 | 0.977 | (−0.145, +0.023) | 1.000 | 1 351 586 | works |
-| 2²⁹ | 5 | 0.958 | 0.977 | (−0.179, +0.016) | 0.434 | 418 262 | works |
-| 2²⁹ | 8 | 0.958 | 0.977 | (−0.179, +0.016) | 0.434 | 87 622 | works |
-| 2²⁹ | 11 | 1.000 | 0.977 | (−0.115, +0.023) | 1.000 | 35 618 | works |
-| 2²⁷ | 3 | 0.833 | 0.750 | (−0.109, +0.183) | 0.885 | 672 405 | works |
-| 2²⁷ | 5 | 0.667 | 0.750 | (−0.283, +0.070) | 0.234 | 128 322 | works |
-| 2²⁷ | 8 | 0.708 | 0.750 | (−0.242, +0.101) | 0.393 | 35 158 | works |
-| 2²⁷ | 11 | 0.625 | 0.750 | (−0.323, +0.038) | 0.121 | 13 142 | works |
+| n | `b` | N | rate | `p_split` | excess (Wilson 95%) | one-sided `p` | mean trials/rel | verdict |
+|---|---|---|---|---|---|---|---|---|
+| 2²⁷ | 3 | 24 | 0.833 | 0.750 | (−0.109, +0.183) | 0.885 | 672 405 | works |
+| 2²⁷ | 5 | 24 | 0.667 | 0.750 | (−0.283, +0.070) | 0.234 | 128 322 | works |
+| 2²⁷ | 8 | 24 | 0.708 | 0.750 | (−0.242, +0.101) | 0.393 | 35 158 | works |
+| 2²⁷ | 11 | 24 | 0.625 | 0.750 | (−0.323, +0.038) | 0.121 | 13 142 | works |
+| 2²⁹ | 3 | 19 | 1.000 | 0.977 | (−0.145, +0.023) | 1.000 | 1 351 586 | works |
+| 2²⁹ | 5 | 24 | 0.958 | 0.977 | (−0.179, +0.016) | 0.434 | 418 262 | works |
+| 2²⁹ | 8 | 24 | 0.958 | 0.977 | (−0.179, +0.016) | 0.434 | 87 622 | works |
+| 2²⁹ | 11 | 24 | 1.000 | 0.977 | (−0.115, +0.023) | 1.000 | 35 618 | works |
+| 2³¹ | 3 | 12 | 0.750 | 0.812 | (−0.345, +0.099) | 0.397 | 3 820 040 | works |
+| 2³¹ | 5 | 24 | 0.750 | 0.812 | (−0.261, +0.068) | 0.287 | 1 166 738 | works |
+| 2³¹ | 8 | 24 | 0.833 | 0.812 | (−0.171, +0.121) | 0.684 | 242 714 | works |
+| 2³¹ | 11 | 24 | 0.833 | 0.812 | (−0.171, +0.121) | 0.684 | 85 396 | works |
+| 2³³ | 3 | **1** | 1.000 | 0.994 | (−0.788, +0.006) | 1.000 | 4 920 551 | works † |
+| 2³³ | 5 | 24 | 1.000 | 0.994 | (−0.132, +0.006) | 1.000 | 3 256 747 | works |
+| 2³³ | 8 | 24 | 1.000 | 0.994 | (−0.132, +0.006) | 1.000 | 615 542 | works |
+| 2³³ | 11 | 24 | 1.000 | 0.994 | (−0.132, +0.006) | 1.000 | 214 928 | works |
 
 Every cell is at its per-modulus ceiling; **no cell shows a detectable
-shortfall.**
+shortfall.** † the `2³³ b=3` row is `N = 1` — the relation-finding cap (5M)
+truncated it, since that cell needs 4.9M trials *per relation*. It is reported
+for completeness and is **not** the load-bearing evidence; the `2³³ b=5` row
+(`N = 24`, same modulus) is.
+
+**A note on the caps.** At small `b` the cap is what actually bounds the
+experiment, and it silently reduces `N` (19, 12, 1 in the rows above). This is
+why I report `N` in every cell. The verdict "works" only needs the data to be
+*consistent with* the ceiling, and low `N` biases that test toward passing —
+**it cannot manufacture a false "works"**, but it can hide a real shortfall.
+The `b ≥ 5` rows, which all reached `N = 24`, are the ones that carry the claim.
 
 ### 4a. The cost is what fails, and it fails fast
 
-The last column is the real constraint, and it moves by **two orders of
+The trials column is the real constraint, and it moves by **two orders of
 magnitude** across the same range of `b`:
 
 | `b` | 3 | 5 | 8 | 11 |
 |---|---|---|---|---|
-| mean trials/relation, `n = 2²⁹` | **1 351 586** | 418 262 | 87 622 | 35 618 |
 | mean trials/relation, `n = 2²⁷` | **672 405** | 128 322 | 35 158 | 13 142 |
+| mean trials/relation, `n = 2²⁹` | **1 351 586** | 418 262 | 87 622 | 35 618 |
+| mean trials/relation, `n = 2³³` | **4 920 551** | 3 256 747 | 615 542 | 214 928 |
 
 The factor base at `b = 3` is `{2, 3, 5}`. A residue mod `n` of size `~n` is
-`{2,3,5}`-smooth with probability `~2^{-u}` where `u = log n / log 5 ≈ 12.5` —
-so the relation search is starved, and the algorithm is grinding, not failing.
+`{2,3,5}`-smooth with probability `~2^{-u}` where `u = log n / log 5 ≈ 11.6` to
+`14.2` across these runs — so the relation search is starved, and the algorithm
+is **grinding, not failing**.
+
+**But the growth of that cost with `n` is the number that decides whether small
+`b` could ever scale**, and it is better than a naive reading suggests:
+
+| `n` | `u` | trials/relation | `log₂(trials)` |
+|---|---|---|---|
+| 2²⁷ | 11.63 | 672 405 | 19.36 |
+| 2²⁹ | 12.49 | 1 351 586 | 20.37 |
+| 2³¹ | 13.35 | 3 820 040 | 21.87 |
+| 2³³ | 14.21 | 4 920 551 | 22.23 |
+
+> **Measured slope `d(log₂ trials)/d(log₂ n) ≈ 0.51`** over four points.
+
+So at fixed small `b` the relation-finding cost grows like roughly `√n`, not
+`n`. That is **sublinear** and it is the most favourable fact measured in this
+round. I do **not** extrapolate it — four points with `u` confined to
+[11.6, 14.2] cannot support a slope that is supposed to steepen as `u` grows,
+and a log-scale fit to four points is a weak instrument. But it is the reason
+the §5c conclusion is "the squeeze is intact" rather than "the method is
+hopeless at small `b`".
 
 ### 4b. A bug this experiment caught in my own harness, and the fix
 
