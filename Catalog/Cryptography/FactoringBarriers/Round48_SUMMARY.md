@@ -225,6 +225,7 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 | axis | status | reason |
 |---|---|---|
 | Stange **linear-algebra bottleneck** | **NOT removable by sparsity — proved** | The relation matrix IS sparse (density `Θ(1/b)`), and a sparse route is `Θ(b²)` against dense `Θ(b³)` — a **factor-`b`** win, measured at `n≈2³⁰`. **But the permutation-similarity defect is `Θ(b)` and provably invariant under every permutation**, because **the row for `p = 2` is dense: a constant fraction of all `B`-smooth integers are even.** NFS's `O(n²)` sparse treatment rests on a *bounded* defect and **does not transfer**. The mechanism is **exact**: row *i* is nonzero iff `p_i | r_j`, and `Pr[row i] = Ψ(n/p_i,B)/Ψ(n,B)`, so the defect is `≈0.6(b+c)` at every `b`. And the **permutation-similarity defect equals the identity for ANY matrix** (a column permutation preserves each row's nonzero count) — **so no reordering exists to find; the NFS premise fails structurally, not empirically.** Jeljeli arXiv:1209.5520v4 says it outright: *"hundreds or fewer non-zero elements per row"* — the bounded defect NFS has and Stange does not. **And `Θ(b²)` fill is forced by the MATRIX, not the pivot order** (AMD minimum-degree gives ratios 0.89–1.41, straddling 1). **T4: the argmin does NOT move** — `b = 12/32/64` at `2²⁰/2³⁰/2⁴⁰` under dense *and* sparse; sparsity is worth only 1.01–1.11× at the argmin, so **cheaper LA flattens the minimum, it does not move it.** At `b = 6×10⁵` sparse is **memory-infeasible** (5.5×10⁹ fill entries ≈ 275 GB) and black-box is 2.2×10¹² ops: **nothing is usable.** (Dense ceiling is higher than believed — exact `DomainMatrix.rref()` completes `b = 512` in 4.4 s where sympy `nullspace()` dies at 32.) |
+| **⚡ THE ONE ACTIONABLE NUMBER IN ROUND 48** | **a backend swap, not an algorithm change** | The incumbent kernel routine leaves **a factor of ~10 on the table**: `sympy.DomainMatrix.rref` over `QQ` beats it at **all 16 cells by 4.2–15.3×**. Verdict on the drop-in claim is **(b) EQUIVALENT** — the round's positive framing overstated it. **And the corollary worth more than the factoring result: a `Θ(b)` defect is an asymptotic obstruction, not a practical one** — a matched-nnz `O(1)`-defect control costs the *same* at `b = 26–52` (0.93–1.13, replicated on fresh seeds) |
 | **Is Stange's kernel a drop-in for NFS's?** (round 49's most interesting positive claim) | **UNFALSIFIABLE AS STATED — and the round was wrong in BOTH directions** | The claim names a phase that **is not the binding constraint**. At `n ≈ 2⁴⁰, b = 52`, swapping **only the linear-algebra backend** moves `frac_LA` from **0.328 → 0.049**: with a good backend the kernel is **5%** of the phase and relation-finding **95%**. (The earlier 19.4%/80.5% split used a slower backend.) **A phase that is 5–20% of the cost is not a bottleneck**, so "drop-in" holds only in the operationally-irrelevant sense and is nearly vacuous. **⚠️ AND THE OBVERSE: the `Θ(b)` defect is NOT practically binding.** It is confirmed — log–log fit over `b = 16…256` gives exponent **0.900** (`R² = 0.999`) — but a matched-shape, matched-nnz control with an `O(1)` defect costs the **SAME** number of sparse arithmetic updates at `b = 26–52` (ratios **1.13, 1.07, 0.92**, straddling 1). **The defect is an ASYMPTOTIC obstruction, not a practical one** |
 | **Where `b_needed ≈ 5.9×10⁵` comes from** | **DERIVED — and the gap is STRUCTURAL** | It is `L_n(1/2, β=1) = exp(√(log n · log log n))` — Stange's own **runtime argmin**, *not* a smoothness condition and *not* F&W's window. **β = 1 was HARDCODED**; Stange p.5 declines to determine β, and balancing her own two costs gives **β → 1/√2 (3.3 orders better)**. **Classification:** `b_needed` is **subexponential**, `b_max` is **polylog**, so the ratio **DIVERGES — they never meet for any fixed β > 0.** `c` does **not** help (additive `log(1+c/b)`, O(1) shift; every column → 1.0000) and **there is no `m`** — Algorithm 2.2's parameters are only `B` and `c`. **The method factors at `b = 3` at every `n` tested** — there is no correctness floor; what fails at small `b` is cost |
 
@@ -746,10 +747,27 @@ Full table and the CRT ground-truth recipe: `notes/T_pari_ellcard_hazard.md`.
 
 ## ■ FILES
 
-`factor-scratch/r48/notes/` — `00_HYPOTHESIS` (preregistered), `A_classgroup`, `A2_genericity`,
-`A3_phantoms`, `F_rigorous`, `G_adversary`, `H_crossdiscipline`, `M_forensics`,
-`P_citation_propagation`, `Q_vacuous_measurement`, `R1_lower_algebraic`, `R1_lower_quantum`,
-`THEOREM_ordercert`, `ZERO_shared_harness`.
-**Also (round-49 provenance, see warning above):** `S_supply`, `B_groups`, `D_partialinfo`, `O_e6c_recheck`, `U_stange_improve`, `Y_adversary_papers`.
-Scripts: `r49/exp/supply/` (supply audit), `r48/exp/stange/` (method), `r51/exp/audit2/` (the adversarial audit).
-`_shared/` — `dickman.py` (the instrument).
+**Generated from disk, not hand-maintained.** Two earlier versions of this list were
+hardcoded and drifted: they named 20 of 45 notes, so a reader following the index would
+have found a quarter of the evidence missing. A list that must be remembered will be
+remembered wrongly; a list that must be regenerated cannot. Third hardcoded-list failure
+this round, after two checkers with frozen `TARGETS`.
+
+`factor-scratch/r48/notes/` (45 notes):
+
+  `00_HYPOTHESIS`, `A2_genericity`, `A3_phantoms`, `AA_stride_sampler`, `A_classgroup`,
+  `BB_smoothpow`, `B_groups`, `CC_crossref_parallel_loop`, `CC_nfs_e2e`, `C_smoothness`,
+  `DD_jacobi`, `D_partialinfo`, `EE_polysel`, `E_funcfield`, `FF_litsweep2`, `F_rigorous`,
+  `GG_shoup_constant`, `G_adversary`, `HH_explain_20_over_27`, `H_crossdiscipline`,
+  `II_eprint_scope_correction`, `I_constant`, `JJ_pkinfo_close`, `KK_audit_amendments`,
+  `K_stange`, `LL_dickman_harness_broken`, `MM_regime`, `MM_sparse`, `M_forensics`, `OO_bneed`,
+  `O_e6c_recheck`, `PP_droptest`, `P_citation_propagation`, `Q_vacuous_measurement`,
+  `R1_lower_algebraic`, `R1_lower_quantum`, `S_supply`, `THEOREM_ordercert`,
+  `T_pari_ellcard_hazard`, `U_stange_improve`, `V_repeat_of_the_vacuous_measurement`,
+  `W_bsweep`, `X_verify_20_over_27`, `Y_adversary_papers`, `ZERO_shared_harness`
+
+`factor-scratch/r48/_shared/` — `dickman.py` (valid only for `u <= 5`, and it now RAISES
+above that; see `LL_dickman_harness_broken.md`), `check_consistency.py`,
+`check_issues_match_papers.sh`.
+
+Experiment code: `r49exp/`, `r50/`, `r51/`, `r52/` — one directory per axis, agent-scoped.
