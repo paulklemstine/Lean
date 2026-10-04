@@ -1,0 +1,11 @@
+Fourier/Chebotarev kernel set vs random: difference-set residue coverage.
+n | Fourier-kernel | random  (higher = better cover candidate)
+
+  n=12 | Fourier  15.0 | random  20.3
+  n=16 | Fourier  21.0 | random  28.2
+  n=20 | Fourier  28.0 | random  36.4
+
+=> Fourier-kernel sets are WORSE than random at every scale tested.
+   The full-support kernel forces rigid structure that CONCENTRATES
+   differences; a divisor cover needs SPREAD differences.
+   VERDICT: the Fourier/Chebotarev cover construction is a NEGATIVE.
