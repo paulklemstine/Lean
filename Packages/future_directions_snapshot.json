@@ -4877,25 +4877,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "0768415b",
-    "description": "## FACT round-35 #8 — CONJUGATE-S3-TEST (paper 127)\n\n**Verdict name: THE-FIELD-NOT-THE-POLYNOMIAL.**\n\nConjugate S3 cubics with same disc -23: x3-x+1 and x3-x-1 produce EXACTLY identical type channels.\nI(p mod 23; T) = 1.000065 for BOTH — bit-for-bit identical to 6 decimal places.\nSemiprime pair channels agree within MC noise.\nConfirms the type-channel law depends on the FIELD, not the POLYNOMIAL.\n\nNow 455 experiments. Assessment v232. Paper 127.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3531",
-    "lineage_refs": [],
-    "priority_score": 0.9,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T01:10:29.774651+00:00",
-    "title": "FACT round-35 #8 — CONJUGATE-S3-TEST: conjugate fields produce identical type channels (paper 127)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "38666d07",
     "description": "Round-37 #3 (exp 461, assessment v240). THE DECISIVE UTILITY EXPERIMENT for the battery/type-channel programme.\n\n**REAL-FILTER-EQUALS-SHAM**: a Bayesian candidate filter built from the exact type-channel posterior is indistinguishable from a same-size coin-flip keep-set at every dial (d2 1 bit, d3, d5, bat2, bat4 3.49 bits): max |real − sham| = 0.0075 vs batch SD 0.0073. The ρ-grid shows the (apparent) gain is a function of keep-rate alone, indifferent to which classes are kept.\n\nHonest accounting: with each membership test priced at one division-equivalent on every candidate ≤ √N, EVERY filter — real or sham — runs at ~0.50x: a net 2x loss. No-fallback failure rates = 1/n exactly.\n\nMechanism: barrier 2 made algorithmic — the marginal posterior over the target's residue is flat no matter what N reveals about the joint, so posterior capacity cannot reweight candidates. 3.49 bits of measured battery capacity ride channels orthogonal to ordering decisions. Pre-stated 4/3x refuted (companion theory paper: under complete-procedure accounting the sharp cap is 1x).\n\nLedger (9 catches): two substantive cost-accounting bugs produced spurious >1.5x speedups — caught by SHAM CO-INFLATION + derivation; dummy dial v1 leaked 1 bit by reading its random table through the factors (not N-computable) — rebuilt public.\n\nDecides: type-channel/battery capacity has exactly zero conversion into trial-division speedup. The utility question opened by paper 98 is CLOSED quantitatively.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp461_posterior_filter.py (script + result.json), seed 20260821, 20k semiprimes/cell x 5 batches.",
     "domain_bridges": [],
@@ -4915,7 +4896,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5a7633ee",
     "description": "Round-38 #3 (exp 467, assessment v246). Paper 132's open residual item (1), measured.\n\n**POSITION-PAYS-5.19X** (positional-cap guess <2x REFUTED): sqrt-descending visitation order — literally Fermat's order applied to divisibility tests — gives a sham-controlled **5.1936x** expected trial-division speedup (sham 1.65x; real/sham = 3.16x).\n\nTwo separable mechanisms with OPPOSITE gradients across balance strata q/p ∈ {1–1.25, 1.25–2, 2–4}:\n(a) Fermat-type balance bet: **20.67× / 4.74× / 1.97×** — concentrated at near-squares;\n(b) learned range-truncation (finite-pool feasibility r ≥ N/2^17 revealed by magnitude): 4.35× / 4.73× / **6.91×**.\n\nThe learned Bayes ordering (3.37x test-only) refuted the smooth-posterior collapse claim at the pool's truncation edge (the d1≡ascending designed check still passed 30000/30000). Honest computable frontier = plain sqrt-descending; the learned selector's edge was train-inflation.\n\nThe barrier map now reads: residues cap at 4/3 (theorem, paper 132); position pays 5.19x here (measurement, mechanism decomposed) — separated by exactly the uniform-marginal lemma's scope. Accounting: expected divisibility-test counts (information), not wall-clock.\n\nLedger (7) incl. ML#4 self-refutation disclosed and a vacuous feature caught.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp467_positional_filter.py + result.json, seed 20260821, n=30k × 5 batches.",
     "domain_bridges": [],
     "domains": [
@@ -4927,7 +4908,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T03:08:29.725146+00:00",
     "title": "FACT round-38 #3 — POSITIONAL-FILTER: position pays 5.19x, the stratum beyond the residue cap is live (paper 137)"
   },
@@ -78958,5 +78939,24 @@
     "status": "available",
     "timestamp": "2026-10-01T19:02:07.425864+00:00",
     "title": "Galois-theoretic proof that the D₅ dial is ℚ(√−5)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**True and proved:** invariance under rational changes of generator. The affine case is\n  general. The Möbius (reciprocal) case was done for this one cubic, using the explicit\n  inverse `r⁻¹ = r² - 1`.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_5141",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0768415b",
+    "status": "available",
+    "timestamp": "2026-10-04T15:54:37.262506+00:00",
+    "title": "True and proved: invariance under rational changes of generator."
   }
 ]
