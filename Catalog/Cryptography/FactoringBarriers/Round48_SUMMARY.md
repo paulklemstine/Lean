@@ -208,19 +208,56 @@ reaches the current 0.53 exponent.** *Unresolved. This is the open item from rou
 | Projective point count over `Z/NZ` | **EQUIVALENT to factoring** | both directions, no slack (arXiv:1911.11004 p.3); affine twists sum to `4N`, a tautology |
 | Cross-discipline sweep (7 fields) | **CLOSED (field 6 now too — see below)** | K-theory, Tate modules, theta, Brauer, information-theoretic all fail |
 | **Jacobi-symbol graph degree** (was "the round's only genuinely live lead") | **CLOSED — verified by the coordinator** | `deg = φ(N)/2` and `p+q = N+1−2·deg`, so the degree reveals a factor **exactly**. Closed on four independent grounds: the count factorises to exactly `φ(N)/2` (a restatement); `Σₓ (x/N) = 0` identically so **no partial-information channel exists at all**; the Ihara zeta does not even apply for `N ≡ 3 (mod 4)` (**half of all RSA moduli** — the graph is directed with complex eigenvalues); and `deg = φ(N)/2` needs `N` squarefree. **Zero literature on arXiv AND on IACR eprint.** The census's old closure rested on "φ is polylog-equivalent to factoring", **asserted with no proof or citation** — that was the actual gap, and it is now closed by argument rather than by assertion |
-| Partial-information factoring below ½ the bits of p | **MEASURED *and PROVED OPTIMAL*** | Our measurement: **31 unknown bits WORKS, 32 FAILS** at N=2¹²⁸ — `X = N^{1/4}` exactly. ⚠️ **Upgraded by a literature sweep, and VERIFIED BY ME from arXiv (2016-05-25).**
-**arXiv:1605.08065** — Chinburg, Hemenway, Heninger, Scherr, *"Cryptographic applications of capacity theory: On the optimality of Coppersmith's method for univariate polynomials."* Abstract, verbatim:
+| Partial-information factoring below ½ the bits of p | **MEASURED; optimality UNPROVED for this problem** | Our measurement: **31 unknown bits WORKS, 32 FAILS** at N=2¹²⁸ — `X = N^{1/4}` exactly. ⚠️ **An earlier "now also a THEOREM" upgrade is STRUCK — it was my error.** arXiv:1605.08065 proves optimality for **univariate polynomials modulo N**, and its p.6 §2.3.1 lists *"factoring RSA moduli N=pq when half of the most or least significant bits of one of the factors p is known"* as **"a direction for future research"**. **Our `X = N^{1/4}` is a CONJECTURE here — it is the *modulo-unknown-divisor* bound, not R1's *modulo-N* one.** Nothing tested beat ½ |
 
-> *"Using capacity theory, we prove that Coppersmith's bound for univariate polynomials is optimal in the sense that there are no auxiliary polynomials of the type he used that would allow finding roots of size `N^{1/d+eps}` for monic degree-`d` polynomials modulo `N`. Our results rule out the existence of polynomials of any degree and do not rely on lattice algorithms, thus eliminating the possibility of even superpolynomial-time improvements."*
+An earlier version of this row said, in bold, that the threshold was *"now also a THEOREM"* on
+the strength of arXiv:1605.08065. **That is withdrawn.** I fetched the abstract myself and
+checked the authors and date; I did **not** check that its scope covered our row. It does not.
 
-⚠️ **The scope is narrower than usually quoted, and the distinction matters:** optimality is
-(i) for **UNIVARIATE** polynomials only, (ii) **within Coppersmith's auxiliary-polynomial
-class** — "of the type he used", not among all conceivable methods — and (iii) proved via
-**capacity theory**, independent of lattices.
+**What R1 actually proves** (Chinburg, Hemenway, Heninger, Scherr, *Cryptographic applications
+of capacity theory: On the optimality of Coppersmith's method for univariate polynomials*,
+arXiv:1605.08065, Thm 2, p. 2 read as an image): the optimality is about the **existence of
+Coppersmith-type auxiliary polynomials** `h = Σ a_{i,j} x^i (f/N)^j` for **univariate**
+polynomials **modulo N**. That is *stronger* than lattice-optimality and *weaker* than
+method-optimality — a third thing, not what this row needs.
 
-**So the program's measured `X = N^{1/4}` boundary was a correct and careful re-derivation of a
-result settled in 2016.** Lattice reduction on the univariate axis is provably pointless; the
-program spent a round measuring a known wall. **Nothing tested beat ½.** |
+**And R1 explicitly EXCLUDES our row.** p. 6 §2.3.1, verbatim: it covers *"univariate
+polynomials modulo integers"*, and *"Adapting these results to the other settings"* — having
+just listed *"factoring RSA moduli `N = pq` **when half of the most or least significant bits of
+one of the factors `p` is known**"* — *"is a direction for future research."*
+
+**So our measured `X = N^{1/4}` is a CONJECTURE for this problem, not a theorem.** It is the
+*modulo-unknown-divisor* bound (Coppersmith/Howgrave–Graham/May), which is a different result
+from R1's *modulo-N* bound. **Our 31-works/32-fails measurement remains exactly as valid; its
+status was overstated.**
+
+**What R2 settles.** Chinburg et al., arXiv:2111.14180, supplies a **decidable test** for
+algebraic independence, now implemented. On realistic 2-sample HNP instances it returns WORKS
+(γ ≈ 0.005–0.09, an independent function provably exists) and crosses to FAIL at larger `X`
+(WORKS at `X = 180`, **FAIL at `X = 321`**, where the method is *provably impossible*). And the
+fire rate is **not rare**: for `X ≥ ⅓√p`, **100% of instances provably fail independence**
+(4980/4980 already at `c = 1/4`). So the census's *"no multivariate/Herrmann–May construction
+built at all"* becomes **"provably unavailable"** — but **only in the two-variable linear
+subcase**, which is not the same as closing the multivariate axis.
+
+**Honest limits from that agent, recorded because they are the point:**
+- It **refused to attribute a known-multiplier threshold it could not read** (Ernst et al.
+  EUROCRYPT 2005 is Crossref-confirmed but the Springer PDF is challenge-blocked and it is not
+  on eprint; it verified the condition only as a restatement in eprint 2018/516 p. 16).
+  **That is the correct call and it is the one I would have been tempted to make.**
+- **Citation trap recorded:** eprint 2007/374 is a *rigorous, different* paper from
+  ASIACRYPT '08. Not the same work.
+- **Multivariate independence is still a heuristic**, stated as "Assumption 1" (CRYPTO 2025,
+  2024/1330 p. 11) and "Heuristic 1" (EUROCRYPT 2025, 2024/1577 p. 6), with **no post-2021
+  follow-up by any of the four authors**.
+
+**The precise residue — the one live question this axis leaves:**
+
+> **Is `X = N^{1/4}` optimal for partial-information factoring, and does the known-multiplier
+> case have its own optimal bound?**
+
+Both need **capacity theory for roots modulo an *unknown divisor*** — which is precisely the
+gap R1 itself names (*"joint capacities of many adelic sets … not been developed"*).
 | GNFS constant via BKZ past LLL | **no gain found; "provably nothing" WITHDRAWN** | 40/40 give LLL/SVP = 1.0000000000 on the *certified* lattices. ⚠️ But the census's **mechanism sentence is not measured and the note's own control contradicts it**: `I_constant.md:26` records LLL/SVP ∈ [1.000, **1.149**] and S4b finds LLL **strictly suboptimal 1/60**. Also **Montgomery normalisation is absent — 0/40 rows m-divisible** (`I_constant.md:139-143`, "a real gap I flag rather than claim"). Honest status: **no constant improvement demonstrated on the lattices tested** |
 
 ### The constant axis, settled by an exact computation rather than a comparison
