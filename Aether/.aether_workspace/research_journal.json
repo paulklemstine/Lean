@@ -1,56 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4c85503d",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — Tropical / \"Constrained = penalised\" (Phase A, v19c)\n\nThis cycle formalised the duality core of Conjecture 2 over a finite outcome set:\n\n* the **duality identity** `t·(𝔼_{p_t}[r]",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-09-09T16:35:24",
-      "title": "Constrained = penalised"
-    },
-    {
-      "cycle_id": "01cb7b4b",
-      "domain": "Algebra",
-      "key_insight": "# Future directions: product constructions for snake-in-the-box codes\n\n## What this cycle established\n\nWorking with snakes (induced paths) in hypercubes indexed by an arbitrary finite\ncoordinate set —",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-09-10T04:57:04",
-      "title": "Product constructions with bounded chord repair"
-    },
-    {
-      "cycle_id": "ad3686b6",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — comonotone repair distance (Bridges thread, cycle v19c)\n\n## What this cycle settled\n\nWorking over `Catalog.UniformDial` (`Combinatorics.UniformDialDrawInvariance`,\n`Combinatorics",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 82,
-      "timestamp": "2026-09-10T17:41:24",
-      "title": "Comonotone Repair Distance"
-    },
-    {
-      "cycle_id": "0e02e0b5",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — Singmaster multiplicity thread\n\n## What the thread has established\n\nSix sorry-free files of developed theory, all verified, and depending only on the standard\nfoundational axioms",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 100,
-      "timestamp": "2026-09-11T00:33:23",
-      "title": "Next-cycle sub-conjectures (v19c thread continuation)"
-    },
-    {
-      "cycle_id": "5c4155a3",
-      "domain": "Bridges",
-      "key_insight": "",
-      "quality_score": 0.70417,
-      "sorry_count": 0,
-      "theorem_count": 42,
-      "timestamp": "2026-09-11T05:13:36",
-      "title": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The"
-    },
-    {
       "cycle_id": "63101e70",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — plateau identifiability and the cost of a ladder\n\n## What this cycle settled\n\n1. **Exact `m`-rung identifiability** (`plateauSet_prefix_eq_Icc`).  Measuring a prefix\n   `p 0, …,",
@@ -499,79 +449,59 @@
       "theorem_count": 84,
       "timestamp": "2026-09-29T15:10:09",
       "title": "FACT round-34 #1 — MASTER-TABLE: every type-channel value in one document (paper 119)"
+    },
+    {
+      "cycle_id": "5621f0f8",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE_DIRECTIONS — COMPOSITE-DIAL (paper 125, verdict THE-WHOLE-EXCEEDS-THE-SUM)\n\n## What this cycle established (all proofs complete: no `sorry`, standard axioms only)\n\n- `Catalog/Tropical/Composi",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-10-02T15:07:15",
+      "title": "FACT round-35 #4 — COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
+    },
+    {
+      "cycle_id": "9aae3e9c",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after FULL-PINNING-AT-DEGREE-8 (paper 124)\n\nWhat this cycle established (all in Lean, no `sorry`):\n`H(T) = typeEntropy((f-1)/2)` for **every** odd prime conductor `f`\n(`uEnt_real",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-10-02T19:57:32",
+      "title": "FACT round-35 #3 — THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
+    },
+    {
+      "cycle_id": "f81db42e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — after FIVE-FIELDS-ONE-LAW (paper 123)\n\n## What this cycle established (all in Lean, 0 sorries)\n\n* **The law is exact, and it is a theorem about the model, not about the five fiel",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 44,
+      "timestamp": "2026-10-03T02:24:52",
+      "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
+    },
+    {
+      "cycle_id": "602d68e3",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE (paper 128)\n\n## What was established (this cycle)\n\n- `ramified_contribution_negligible`: `|I_{U∪R} − I_U| ≤ (|R|/N)(3 log₂ N + 2/ln 2)`",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-10-03T17:55:06",
+      "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
+    },
+    {
+      "cycle_id": "152d60cd",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — HINT-SIZE-SCALING (round 37 #1)\n\n## What this cycle proved\n\nResults are in `Catalog/Logic/HintSizeScaling.lean` and `Catalog/Logic/HintSizeScalingInstances.lean`.\n\n* **Size-stabi",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-10-03T21:10:48",
+      "title": "FACT round-37 #1 — HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "a32bc1e4",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — destructive verification as a state transition\n\nThis cycle formalised verification as a state transition `t : D → Bool × D`\n(\"run the test, get a verdict and a residual dish\") an",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 111,
-      "timestamp": "2026-08-25T16:56:56",
-      "title": "Destructive verification"
-    },
-    {
-      "cycle_id": "6247b80f",
-      "domain": "Shared",
-      "key_insight": "# Future Directions\n\nDerived from the three research cycles in this run:\n\n1. a kernel-verified `q`-expansion of `j = E₄³/Δ` (twelve coefficients) built\n   from formal power series over `ℤ`, with a con",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-25T17:47:01",
-      "title": "The reduction is proved, and the 194 values `c_g(1)` are tabulated"
-    },
-    {
-      "cycle_id": "a08d5a50",
-      "domain": "NumberTheory",
-      "key_insight": "# Future directions — profile form and the beyond-Dickman residual\n\nDerived from the Stage-3 analysis and the Stage-4 adversarial review of this\ncycle (`Catalog/NumberTheory/ProfileForm{PowerLaw,Resid",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 119,
-      "timestamp": "2026-08-25T18:58:30",
-      "title": "FACT round-80 #1 — PROFILE-FORM (exp 579): positional layer gets a LAW — small-j hit profile = POWER"
-    },
-    {
-      "cycle_id": "7b6f9981",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions\n\nDerived from the analysis and adversarial review of this cycle.  What was\nproved (all `sorry`-free, in `Catalog/NumberTheory/`):\n\n* `VietaInjectiveFamilies.lean` — the six-element",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 94,
-      "timestamp": "2026-08-25T18:58:46",
-      "title": "Parametric families"
-    },
-    {
-      "cycle_id": "7af52a9c",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — after C4 (classification of the ternary Pythagorean trees)\n\n## What this cycle established\n\nWorking with the node set `N = {1 ≤ n < m, gcd(m,n) = 1, m+n odd}` and root `(2,1)`, a",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-08-25T20:47:31",
-      "title": "C4. The `±2` obstruction is the only obstruction: classify the ternary Pythagorean trees"
-    },
-    {
-      "cycle_id": "acd2f64e",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — edge-kernel refinement (positional profiles)\n\nThe two new files\n`Catalog/Pythagorean/EdgeKernelRefinement.lean` and\n`Catalog/Pythagorean/EdgeKernelSeparation.lean`\nestablish, wit",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 39,
-      "timestamp": "2026-08-25T22:46:43",
-      "title": "FACT round-84 #1 — EDGE-KERNEL-REFINEMENT (exp 588): H1 CONFIRMED — paper 234's left-edge tension re"
-    },
-    {
-      "cycle_id": "e645a8ec",
-      "domain": "Probability",
-      "key_insight": "# Future directions after exp 580 / paper 230 (round-80 #2)\n\nThe formal cycle established four things: (i) the occupancy table of a scan is\na rate layer times a positional layer, and \"no interaction\"",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 124,
-      "timestamp": "2026-08-25T23:40:18",
-      "title": "FACT round-80 #2 — POSITIONAL-RATE-LINK (exp 580): H0 INDEPENDENT LAYERS — hit-rich vs hit-poor posi"
-    },
     {
       "cycle_id": "0dec095c",
       "domain": "Novelty",
@@ -2501,69 +2431,79 @@
       "theorem_count": 42,
       "timestamp": "2026-09-30T20:47:12",
       "title": "FACT round-32 #4 — UNIVERSAL-S3-FOURTH: four fields, one answer (paper 115)"
+    },
+    {
+      "cycle_id": "d7b08081",
+      "domain": "Bridges",
+      "key_insight": "# Future directions after D5-HINT-VALUE (paper 125)\n\nWhat this cycle established (in `Catalog/Bridges/D5HintValue.lean`, no `sorry`):\n\n* the residue dial of `x⁵ + 20x + 32` is the character `χ₂₀ = (−5",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 76,
+      "timestamp": "2026-10-01T19:02:25",
+      "title": "FACT round-35 #6 — D5-HINT-VALUE: completing the D5 row (paper 125)"
+    },
+    {
+      "cycle_id": "b39a3b1a",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — HINT-VALUE-SCALING (paper 124)\n\nWhat this cycle established (all in `Catalog/Bridges/HintValueScalingLaw.lean`, 0 sorries):\n\n* **Compounding horizon** (`compounding_horizon`): if",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 36,
+      "timestamp": "2026-10-02T02:20:51",
+      "title": "FACT round-35 #5 — HINT-VALUE-SCALING: hints compound (paper 124)"
+    },
+    {
+      "cycle_id": "5621f0f8",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE_DIRECTIONS — COMPOSITE-DIAL (paper 125, verdict THE-WHOLE-EXCEEDS-THE-SUM)\n\n## What this cycle established (all proofs complete: no `sorry`, standard axioms only)\n\n- `Catalog/Tropical/Composi",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-10-02T15:07:15",
+      "title": "FACT round-35 #4 — COMPOSITE-DIAL: emergence in the composite type channel (paper 125)"
+    },
+    {
+      "cycle_id": "9aae3e9c",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after FULL-PINNING-AT-DEGREE-8 (paper 124)\n\nWhat this cycle established (all in Lean, no `sorry`):\n`H(T) = typeEntropy((f-1)/2)` for **every** odd prime conductor `f`\n(`uEnt_real",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-10-02T19:57:32",
+      "title": "FACT round-35 #3 — THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder (paper 124)"
+    },
+    {
+      "cycle_id": "f81db42e",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — after FIVE-FIELDS-ONE-LAW (paper 123)\n\n## What this cycle established (all in Lean, 0 sorries)\n\n* **The law is exact, and it is a theorem about the model, not about the five fiel",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 44,
+      "timestamp": "2026-10-03T02:24:52",
+      "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
+    },
+    {
+      "cycle_id": "602d68e3",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after RAMIFIED-CONTRIBUTION-IS-NEGLIGIBLE (paper 128)\n\n## What was established (this cycle)\n\n- `ramified_contribution_negligible`: `|I_{U∪R} − I_U| ≤ (|R|/N)(3 log₂ N + 2/ln 2)`",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-10-03T17:55:06",
+      "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (paper 128)"
+    },
+    {
+      "cycle_id": "152d60cd",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — HINT-SIZE-SCALING (round 37 #1)\n\n## What this cycle proved\n\nResults are in `Catalog/Logic/HintSizeScaling.lean` and `Catalog/Logic/HintSizeScalingInstances.lean`.\n\n* **Size-stabi",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 81,
+      "timestamp": "2026-10-03T21:10:48",
+      "title": "FACT round-37 #1 — HINT-SIZE-SCALING: hint value is size-stable across a 16,384x span (paper 129)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "fbb83685",
-      "domain": "Physics",
-      "name": "card_coFiringSet",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "fbb83685",
-      "domain": "Physics",
-      "name": "card_deadSet",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "587eb79b",
-      "domain": "Computation",
-      "name": "for",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "587eb79b",
-      "domain": "Computation",
-      "name": "applies",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "587eb79b",
-      "domain": "Computation",
-      "name": "is",
-      "quality": 0.85
-    },
-    {
-      "cycle_id": "643f7ea2",
-      "domain": "Bridges",
-      "name": "H_pair_swap",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "643f7ea2",
-      "domain": "Bridges",
-      "name": "MI_comm",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "643f7ea2",
-      "domain": "Bridges",
-      "name": "MI_nonneg",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "61cd19b1",
-      "domain": "Pythagorean",
-      "name": "gives",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "61cd19b1",
-      "domain": "Pythagorean",
-      "name": "cubeCount_eq_card",
-      "quality": 0.8
-    },
     {
       "cycle_id": "900e5fcb",
       "domain": "Algebra",
@@ -2803,9 +2743,69 @@
       "domain": "Algebra",
       "name": "pinEnt_five",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "9aae3e9c",
+      "domain": "Novelty",
+      "name": "card_filter_comp_of_uniform",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9aae3e9c",
+      "domain": "Novelty",
+      "name": "card_of_uniform",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "9aae3e9c",
+      "domain": "Novelty",
+      "name": "uEnt_comp_of_uniform",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f81db42e",
+      "domain": "Combinatorics",
+      "name": "two_root_relations",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f81db42e",
+      "domain": "Combinatorics",
+      "name": "third_root",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "f81db42e",
+      "domain": "Combinatorics",
+      "name": "disc_eq_sq",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "602d68e3",
+      "domain": "Probability",
+      "name": "uEnt_eq_lam",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "602d68e3",
+      "domain": "Probability",
+      "name": "lam_nonneg",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "602d68e3",
+      "domain": "Probability",
+      "name": "lam_pair",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "152d60cd",
+      "domain": "Logic",
+      "name": "about",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-09-30T20:47:12",
+  "last_updated": "2026-10-03T21:10:48",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3145,18 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "8d588bfb",
-        "quality": 0.85,
-        "theorems": 2138,
-        "title": "FACT round-42 #5 — FACTOR-LOCAL-ET FULL: the plane measured, ECM's validity edge"
-      },
-      {
-        "cycle_id": "69567235",
-        "quality": 0.85,
-        "theorems": 92,
-        "title": "D3. Nonlinear probe ceiling on the pooled window population"
-      },
-      {
         "cycle_id": "ad3686b6",
         "quality": 0.83,
         "theorems": 82,
@@ -3203,15 +3191,21 @@
         "quality": 0.72,
         "theorems": 34,
         "title": "FACT round-34 #3 — DIAL-CROSS-TALK: independent dials are truly independent (pap"
+      },
+      {
+        "cycle_id": "d7b08081",
+        "quality": 0.66,
+        "theorems": 76,
+        "title": "FACT round-35 #6 — D5-HINT-VALUE: completing the D5 row (paper 125)"
+      },
+      {
+        "cycle_id": "b39a3b1a",
+        "quality": 0.66,
+        "theorems": 36,
+        "title": "FACT round-35 #5 — HINT-VALUE-SCALING: hints compound (paper 124)"
       }
     ],
     "Combinatorics": [
-      {
-        "cycle_id": "4467887a",
-        "quality": 0.85,
-        "theorems": 87,
-        "title": "FACT round-70 #2 — ENERGY-ASCENT: a magnitude channel sees the Berggren branch l"
-      },
       {
         "cycle_id": "108711a9",
         "quality": 0.82,
@@ -3265,6 +3259,12 @@
         "quality": 0.83,
         "theorems": 596,
         "title": "FACT round-26 #1 — CONVERSE-COST-CURVE: the empirical barrier-4 across the witne"
+      },
+      {
+        "cycle_id": "f81db42e",
+        "quality": 0.72,
+        "theorems": 44,
+        "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
       }
     ],
     "Computation": [
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "3cb644d1",
-        "quality": 0.82,
-        "theorems": 86,
-        "title": "The Tree as a Solvable Model of the abc Conjecture — The Exact Quality Spectrum "
-      },
-      {
         "cycle_id": "eb2ba545",
         "quality": 0.85,
         "theorems": 65,
@@ -3513,6 +3507,12 @@
         "quality": 0.78,
         "theorems": 54,
         "title": "FACT round-45 #2 — U-HARDEN: the u-sensitivity is mostly intrinsic, partly resol"
+      },
+      {
+        "cycle_id": "152d60cd",
+        "quality": 0.8,
+        "theorems": 81,
+        "title": "FACT round-37 #1 — HINT-SIZE-SCALING: hint value is size-stable across a 16,384x"
       }
     ],
     "MachineLearning": [
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "63061d5b",
-        "quality": 0.84,
-        "theorems": 88,
-        "title": "FACT round-95 #4 — KAPPA-SUFFICIENCY-SCALE (exp 606): H1 AT ALL THREE SCALES — c"
-      },
-      {
         "cycle_id": "3831c02e",
         "quality": 0.78,
         "theorems": 63,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 70,
         "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper"
+      },
+      {
+        "cycle_id": "9aae3e9c",
+        "quality": 0.72,
+        "theorems": 43,
+        "title": "FACT round-35 #3 — THE-OCTIC-CYCLIC: degree 8 completes the high-degree ladder ("
       }
     ],
     "NumberTheory": [
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "523b9317",
-        "quality": 0.76,
-        "theorems": 153,
-        "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-"
-      },
-      {
         "cycle_id": "9c1e5dc4",
         "quality": 0.84,
         "theorems": 101,
@@ -3823,6 +3817,12 @@
         "quality": 0.62,
         "theorems": 73,
         "title": "FACT round-33 #3 — D5-TYPE-CHANNEL: completing the D5 measurement at m*=320 (pap"
+      },
+      {
+        "cycle_id": "602d68e3",
+        "quality": 0.72,
+        "theorems": 24,
+        "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (p"
       }
     ],
     "Pythagorean": [
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "6f277833",
-        "quality": 0.83,
-        "theorems": 63,
-        "title": "C3. The even/odd dichotomy of the one-bit cap"
-      },
-      {
         "cycle_id": "837a61ec",
         "quality": 0.72,
         "theorems": 58,
@@ -4009,6 +4003,12 @@
         "quality": 0.83,
         "theorems": 354,
         "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid"
+      },
+      {
+        "cycle_id": "5621f0f8",
+        "quality": 0.72,
+        "theorems": 4,
+        "title": "FACT round-35 #4 — COMPOSITE-DIAL: emergence in the composite type channel (pape"
       }
     ]
   }
