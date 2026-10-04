@@ -1,0 +1,13 @@
+IMPLICIT FACTORIZATION: shared low-bit primes -> polynomial-time factor.
+alpha (bits of q) = 16; shared low bits w. Verify q1=N1*z^(-1) mod 2^w.
+
+  w= 16 (alpha=16, 2alpha=32): recovered 8/8
+  w= 18 (alpha=16, 2alpha=32): recovered 8/8
+  w= 32 (alpha=16, 2alpha=32): recovered 8/8
+  w= 36 (alpha=16, 2alpha=32): recovered 8/8
+
+=> With the shared low part z known and w >= alpha, factoring N1 is
+   POLYNOMIAL TIME (one modinv + one division) -- far below L[1/3].
+   This grounds the published IFP line (t ~ 2*alpha, polynomial time)
+   as a THIRD distribution-specific per-instance model, alongside
+   small-pool batches (r108/r108b).
