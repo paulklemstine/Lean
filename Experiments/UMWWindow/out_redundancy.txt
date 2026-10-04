@@ -1,0 +1,9 @@
+(1) q mod M determined by (p mod M, N) [gcd=1]: 3000/3000
+(2) b-filter removes ZERO candidate divisors: 3000/3000
+(3) compatibility M | (a*b - N) automatic: 3000/3000
+
+CONCLUSION: knowing BOTH p mod M and q mod M adds ZERO information
+about p beyond p mod M and N alone. The two-residue bivariate attack
+(the open frontier question of round 100) is CLOSED -- not blocked by
+lattice isolation, but by a pure redundancy theorem (machine-checked in
+ResidueRedundancy.lean).
