@@ -112,6 +112,50 @@ def check_status(root: Path) -> list[str]:
     return out
 
 
+# Third class. The first two track what a file SAYS; this tracks what it
+# OMITS. A paper that exists, is published, and carries the round's most
+# useful general principle can still be invisible if the index never names it.
+# That is not a stale figure and not a superseded status word -- it is an
+# absence, which no amount of re-reading an existing line will surface.
+# Found on first run: paper #522 had ZERO references in the census, and the
+# "localisable" strengthening of the NFS result had been dropped, leaving
+# only the retraction.
+CENSUS = "Catalog/Cryptography/FactoringBarriers/Round48_SUMMARY.md"
+
+
+def check_orphans(root: Path) -> list[str]:
+    """Every published paper must be named by the census, and its headline
+    finding must appear there."""
+    out: list[str] = []
+    census = root / CENSUS
+    if not census.exists():
+        return [f"{CENSUS}: MISSING -- no index to audit against"]
+    text = census.read_text(encoding="utf-8", errors="replace")
+
+    for rel in TARGETS:
+        if not rel.startswith("Papers/"):
+            continue
+        name = Path(rel).name
+        if name not in text:
+            out.append(f"{CENSUS}: ORPHAN PAPER -- {name} is never referenced")
+
+    # Headline findings that must survive into the index.
+    REQUIRED_FINDINGS = [
+        ("NFS excess is LOCALISABLE (stronger than the withdrawn figure)",
+         r"localisab", None),
+        ("the subgroup-wall reframe (general principle, #522)",
+         r"subgroup wall|subgroup.*wall", None),
+        ("sampler proved OPTIMAL (#525)", r"cost-optimal|proved.{0,20}optimal", None),
+        ("2sqrt2 -> 2, unconditional (#527)", r"2√2|2 sqrt2", None),
+        ("gap is in the GUARANTEE, not the method",
+         r"GUARANTEE|guarantee, not the method", None),
+    ]
+    for label, pattern, _ in REQUIRED_FINDINGS:
+        if not re.search(pattern, text, re.I):
+            out.append(f"{CENSUS}: MISSING FINDING -- {label}")
+    return out
+
+
 def main() -> int:
     root = Path(sys.argv[1] if len(sys.argv) > 1 else "/home/raver1975/lean")
     live: list[str] = []
@@ -145,16 +189,18 @@ def main() -> int:
                 live.append(f"{rel}:{i}  [{label}]\n      {line.strip()[:150]}")
 
     status_live = check_status(root)
+    orphan_live = check_orphans(root)
 
     print("=" * 72)
-    print("CONSISTENCY CHECK — stale figures AND superseded status words, OUTSIDE a correction notice")
+    print("CONSISTENCY CHECK — stale figures, superseded status words, AND orphaned claims")
     print("=" * 72)
     print(f"  scanned {seen_targets}/{len(TARGETS)} files, "
           f"{len(STALE_FIGURES)} tracked figures")
     live.extend(status_live)
+    live.extend(orphan_live)
     if not live:
-        print("\n  CLEAN — every retired figure and every superseded status word appears\n"
-              "  only inside a correction notice.\n")
+        print("\n  CLEAN — no stale figure, no superseded status word, no orphaned\n"
+              "  claim; every paper and headline finding is present in the index.\n")
         return 0
     print(f"\n  {len(live)} LIVE stale figure(s):\n")
     for item in live:
