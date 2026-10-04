@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7b0f4515",
-      "domain": "Probability",
-      "key_insight": "# Future directions — harmonic bulk × steeper-edge kernels\n\nThe thread turned the carried-forward \"bulk exponent −1.10 versus steeper-than-harmonic left\nedge\" tension into a proved structural mechanis",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-08-26T02:00:14",
-      "title": "FACT round-83 #1 — SYNTHESIS-R73-80 (papers-only): MAP-CONSOLIDATED-ONE-TENSION — five closures conf"
-    },
-    {
       "cycle_id": "56a9e19d",
       "domain": "Novelty",
       "key_insight": "# Future directions — NET-95 thread (weight floor collapsed)\n\nWhat this cycle established formally (all in `Catalog/Novelty/`, 0 sorries):\n\n1. **The ladder is a one-parameter geometric law.**  Over *a",
@@ -2501,6 +2491,16 @@
       "theorem_count": 56,
       "timestamp": "2026-10-04T05:45:08",
       "title": "FACT round-35 #9 — BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
+    },
+    {
+      "cycle_id": "0768415b",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after THE-FIELD-NOT-THE-POLYNOMIAL (paper 127)\n\n## What this cycle established (Lean, 0 sorries: `Catalog/Novelty/ConjugateS3FieldInvariance.lean`)\n* `x³-x+1`, `x³-x-1` and the r",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 37,
+      "timestamp": "2026-10-04T15:54:49",
+      "title": "FACT round-35 #8 — CONJUGATE-S3-TEST: conjugate fields produce identical type channels (paper 127)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-04T05:45:08",
+  "last_updated": "2026-10-04T15:54:49",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "b3a54ad0",
-        "quality": 0.82,
-        "theorems": 84,
-        "title": "Both regimes are proved unconditionally here"
-      },
-      {
         "cycle_id": "41afeb86",
         "quality": 0.87,
         "theorems": 120,
@@ -3637,6 +3631,12 @@
         "quality": 0.72,
         "theorems": 56,
         "title": "FACT round-35 #9 — BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
+      },
+      {
+        "cycle_id": "0768415b",
+        "quality": 0.62,
+        "theorems": 37,
+        "title": "FACT round-35 #8 — CONJUGATE-S3-TEST: conjugate fields produce identical type ch"
       }
     ],
     "NumberTheory": [

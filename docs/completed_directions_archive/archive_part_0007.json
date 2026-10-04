@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-10-04T05:44:55Z",
-  "count": 195,
+  "archived_at": "2026-10-04T15:54:37Z",
+  "count": 196,
   "directions": [
     {
       "id": "fd_3695",
@@ -7733,6 +7733,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 223
+    },
+    {
+      "id": "fd_3531",
+      "title": "FACT round-35 #8 — CONJUGATE-S3-TEST: conjugate fields produce identical type channels (paper 127)",
+      "description": "## FACT round-35 #8 — CONJUGATE-S3-TEST (paper 127)\n\n**Verdict name: THE-FIELD-NOT-THE-POLYNOMIAL.**\n\nConjugate S3 cubics with same disc -23: x3-x+1 and x3-x-1 produce EXACTLY identical type channels.\nI(p mod 23; T) = 1.000065 for BOTH — bit-for-bit identical to 6 decimal places.\nSemiprime pair channels agree within MC noise.\nConfirms the type-channel law depends on the FIELD, not the POLYNOMIAL.\n\nNow 455 experiments. Assessment v232. Paper 127.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "0768415b",
+      "timestamp": "2026-08-22T01:10:29.774651+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.62,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-03T21:11:31.016193+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 222
     }
   ]
 }
