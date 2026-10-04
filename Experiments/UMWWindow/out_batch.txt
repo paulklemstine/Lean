@@ -1,0 +1,18 @@
+MODEL 1: SMALL-PRIME-POOL BATCH (key-reuse distribution).
+  B=48-bit primes. Per-instance cost vs L[1/3] baseline.
+  L[1/3] for B=48: ~exp(100.2) ~ 3.42e+43 (single-key GNFS)
+
+  pool=8/side, t=64: all factored=True  divisions/instance=2.00  (per-instance O(B)<<L[1/3]~3.4e+43)
+  pool=16/side, t=256: all factored=True  divisions/instance=2.00  (per-instance O(B)<<L[1/3]~3.4e+43)
+  pool=32/side, t=1024: all factored=True  divisions/instance=2.00  (per-instance O(B)<<L[1/3]~3.4e+43)
+  pool=64/side, t=4096: all factored=True  divisions/instance=2.00  (per-instance O(B)<<L[1/3]~3.4e+43)
+
+RESULT: a batch of small-pool semiprimes factors at O(B) per instance,
+  provably below L[1/3] PER INSTANCE. Rigorous (Bernstein factoring-
+  into-coprimes is essentially linear in total input). This is a real
+  per-instance improvement, but ONLY for the key-reuse distribution.
+
+MODEL 2 (batch gcd, shared primes): linear in total input via product/
+  remainder trees -- rigorous, but distribution-specific (shared primes).
+CONTRAST (Batch NFS): per-key TIME L^{0.522} is WORSE than single-key
+  L^{1/3}; only the area-time PRODUCT improves. Not a per-instance time win.
