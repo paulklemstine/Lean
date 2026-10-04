@@ -69,6 +69,49 @@ TARGETS = [
 ]
 
 
+# A second class the first version MISSED entirely: superseded STATUS words.
+# check_consistency.py caught stale FIGURES, but "the mechanism remains
+# unexplained" is not a figure -- it is a claim about the state of knowledge,
+# and it stayed live in the census after the note that closed it. Tracking only
+# numbers gives false assurance, which is worse than not checking.
+SUPERSEDED_STATUS = [
+    ("20/27 mechanism called unexplained after it was derived",
+     r"20/27.{0,80}unexplained|unexplained.{0,80}20/27", "superseded|now derived|derived"),
+    ("'measured and confirmed, not derived' after derivation",
+     r"not derived", "superseded|now|derived|was"),
+    ("axis called NOT closed after closure",
+     r"axis NOT closed|axis not closed", None),
+    ("'undiscovered in the literature' style unverified novelty",
+     r"apparently-unpublished|apparently unpublished", None),
+    ("census claims a row is LIVE after closure",
+     r"genuinely live lead", "closed|was"),
+]
+
+
+def check_status(root: Path) -> list[str]:
+    """Second pass: superseded status words, not stale figures."""
+    out: list[str] = []
+    for rel in TARGETS:
+        path = root / rel
+        if not path.exists():
+            continue
+        lines = path.read_text(encoding="utf-8", errors="replace").split("\n")
+        WINDOW = 4
+        for label, pattern, required in SUPERSEDED_STATUS:
+            for i, line in enumerate(lines, 1):
+                if not re.search(pattern, line, re.I | re.S):
+                    continue
+                lo = max(0, i - 1 - WINDOW)
+                hi = min(len(lines), i + WINDOW)
+                ctx = "\n".join(lines[lo:hi])
+                if required and re.search(required, ctx, re.I):
+                    continue
+                if CORRECTION_MARKERS.search(ctx):
+                    continue
+                out.append(f"{rel}:{i}  [{label}]\n      {line.strip()[:150]}")
+    return out
+
+
 def main() -> int:
     root = Path(sys.argv[1] if len(sys.argv) > 1 else "/home/raver1975/lean")
     live: list[str] = []
@@ -101,13 +144,17 @@ def main() -> int:
                     continue
                 live.append(f"{rel}:{i}  [{label}]\n      {line.strip()[:150]}")
 
+    status_live = check_status(root)
+
     print("=" * 72)
-    print("CONSISTENCY CHECK — stale figures appearing OUTSIDE a correction notice")
+    print("CONSISTENCY CHECK — stale figures AND superseded status words, OUTSIDE a correction notice")
     print("=" * 72)
     print(f"  scanned {seen_targets}/{len(TARGETS)} files, "
           f"{len(STALE_FIGURES)} tracked figures")
+    live.extend(status_live)
     if not live:
-        print("\n  CLEAN — every retired figure appears only inside a correction notice.\n")
+        print("\n  CLEAN — every retired figure and every superseded status word appears\n"
+              "  only inside a correction notice.\n")
         return 0
     print(f"\n  {len(live)} LIVE stale figure(s):\n")
     for item in live:
