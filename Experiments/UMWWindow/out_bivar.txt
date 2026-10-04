@@ -1,0 +1,17 @@
+PART 1 -- WELL-POSEDNESS (bits of p only):
+  N=3898166903 (32 bits), k=n/4=8, X=256
+  p = a + x, a=60160 known, x=171 in [0,256) -> ONE small unknown.
+  => UNIVARIATE small-root problem; no second variable for a
+     multivariate method. The 'multivariate beats n/4?' question is
+     ILL-POSED for this model; the real target is bits of BOTH p,q.
+
+PART 2 -- bits of BOTH p,q: from-scratch bivariate lattice.
+  N=650596280783 (40 bits), kx=ky=n/4=10, X=1024
+  all shift polynomials vanish at true root? True
+  -> lattice CONTAINS the root, but our ad-hoc basis does not
+     produce a short enough vector to ISOLATE it (measured: no
+     structural recovery). Not Howgrave-Graham-optimal yet.
+
+  HONEST RESULT: this construction fails its own structural test.
+  No sub-n/4 attack is claimed. Next: a reference multivariate
+  Coppersmith (May/Jochemsz-May) with H-G parameter selection.
