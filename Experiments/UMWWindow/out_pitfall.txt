@@ -1,0 +1,13 @@
+THE BUDGET-ESCAPE PITFALL. Constraint: every cover element <= M=exp(n^g).
+
+(A) UNCONSTRAINED family test (CHEATS -- ignores M):
+   gamma=0.4: lcm-prefix(CHEAT)=1859  random=120  -> looks like a 16x win
+   gamma=0.48: lcm-prefix(CHEAT)=1893  random=192  -> looks like a 16x win
+
+(B) SAME family with the BUDGET ENFORCED (element <= M=exp(n^g)):
+   gamma=0.4: lcm-prefix(<=M, j<=24)=24  random(<=M)=124  -> the win EVAPORATES
+   gamma=0.48: lcm-prefix(<=M, j<=46)=46  random(<=M)=235  -> the win EVAPORATES
+
+CONCLUSION: any 'beating random' claim for a divisor-cover family MUST
+enforce max(element) <= exp(n^gamma). Un-enforced, it is a budget escape
+-- the same trap that produced the retracted round-96c 'complete cover'.
