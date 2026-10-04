@@ -123,14 +123,16 @@ def test_against_paper_formula():
 def test_capacity_edge_cases():
     print("\n[B] capacity edge cases")
     p = 101
-    # d2 chosen so the second constraint is nowhere near binding -> interval is [-Y, Y]
-    X = Y = Fr(3)
-    # |d2 y + d3| <= d1 X  with tiny d2 forces a point
-    g = capacity_from_g1(p, 1, 0, 0, X, Y)   # d2 = 0, d3 = 0 -> |0| <= d1 X always
-    check("d2=d3=0 gives full interval capacity", g == Fr(2 * 3, 4) / 1, f"got {g}")
-    # empty: d2 != 0, d3 huge
-    g = capacity_from_g1(p, 1, 1, p // 2, X, Y)  # |d3| > d1 X -> empty
-    check("empty archimedean set gives gamma=0", g == 0, f"got {g}")
+    X = Y = 3.0
+    # d2 = 0, d3 = 0 -> E_inf = D(0,Y) whole disk, capacity = Y
+    g = gamma_archimedean(p, 1, 0, 0, X, Y)
+    check("d2=d3=0 gives capacity Y", abs(g - Y) < 1e-12, f"got {g}")
+    # |d3| > |d1| X with d2 = 0 -> E_inf empty, capacity 0
+    g = gamma_archimedean(p, 1, 0, p // 2, X, Y)
+    check("empty archimedean set gives gamma=0", g == 0.0, f"got {g}")
+    # gamma_full divides by d1
+    g1 = gamma_full(p, 4, 0, 0, X, Y)
+    check("gamma_full = gamma_inf / d1", abs(g1 - Y / 4) < 1e-12, f"got {g1}")
 
 
 # ---------------------------------------------------------------- (C) THE load-bearing test
