@@ -62,6 +62,19 @@ def main():
     print(f"FACT verification: low bits of p recovered from low bits of q and N: "
           f"{ok}/{tot} correct")
 
+    # 1b) the coupling is SYMMETRIC (both primes odd, both invertible mod 2^t)
+    ok_sym = 0
+    random.seed(1)
+    for _ in range(3000):
+        p = gen_prime(random.randint(8, 24)); q = gen_prime(random.randint(8, 24))
+        N = p * q
+        t = random.randint(1, min(p.bit_length(), q.bit_length()) - 1)
+        m2 = 1 << t
+        q_rec = ((N % m2) * pow(p % m2, -1, m2)) % m2
+        ok_sym += (q_rec == q % m2)
+    print(f"SYMMETRY: low bits of q recovered from low bits of p and N: "
+          f"{ok_sym}/3000 correct")
+
     # 2) candidate-count: splitting the leak gives no gain
     def find_semiprime(bits):
         ps = [x for x in range(2, 1 << 13) if is_prime(x)]

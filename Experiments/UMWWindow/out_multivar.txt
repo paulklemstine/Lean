@@ -1,4 +1,5 @@
 FACT verification: low bits of p recovered from low bits of q and N: 2000/2000 correct
+SYMMETRY: low bits of q recovered from low bits of p and N: 3000/3000 correct
 
 instance N=8399557 (24 bits); Coppersmith univariate guarantees k=n/4=6.0 bits
 
