@@ -29,15 +29,13 @@ extends the round-47 census (`Round47_SUMMARY.md`).
 > - **The load-bearing conclusion: the relation-finding is where all the difficulty lives — 95%
 >   of the phase. The construction 48 rounds attacked is 5%, the EASY half.**
 
-> ## READ THIS FIRST → **`Papers/fifty_rounds_assembled.md` (#530)** — the consolidated state of
-> both rounds, with every retraction resolved and the correct value stated everywhere.
+> ## 📌 READ THIS FIRST → **`Papers/fifty_two_rounds.md` (#533)** — the definitive synthesis
+> through round 52. **Supersedes #530.**
 >
-> ## FIVE PAPERS, ALL POSITIVE — proved, exactly derived, or independently confirmed twice
->
-> | paper | result |
-> |---|---|
-> | **#525** | The stride relation-finder **attains the unconditional lower bound** `(b+c)/Ψ(n,BB)` multiplications per factor **with equality** — 54.78× fewer modular multiplications. **Optimal, not merely better.** Beating it would require violating the equidistribution conjecture for `{g^x mod n}`. |
-> | **#529** | **Where the time is:** relation-finding is **95%** of the cost and the kernel **5%** — the construction 48 rounds attacked is the cheap half. Plus a **backend swap worth >3×10⁴×** on identical mathematics (`Matrix.nullspace()` → `DomainMatrix.rref` over `QQ`) |
+> Also: `conditioning_the_base.md` (#532) · `the_kernel_is_five_percent.md` (#529) ·
+> `choosing_b_well.md` (#526) · `sharper_proved_l_half.md` (#527) ·
+> `the_order_finding_constant.md` (#528) · `the_optimal_sampler.md` (#525)
+> · `fifty_rounds_assembled.md` (#530) — **SUPERSEDED by #533**, retained as the round-48/49 snapshot
 | **#528** | `20/27` **derived exactly** (to −1.7 × 10⁻¹⁸ in rational arithmetic) as `P(v₂(ord_p g) ≠ v₂(ord_q g))` over the joint law of `s = v₂(p−1)`; and **no correctness floor on `b`** (`b_min = 3`) |
 | **#527** | Shoup's **unconditional** factoring bound `2√2 → 2`, proved. The `c=2` square is removable (Thm 15.1's `u log log x` vs the sharp `u log u`); the `a=2` square is forced by counting. **Optimal within this shape:** `√2` needs ECM, whose `√2` is a heuristic — **there is no proved unconditional `√2`.** |
 

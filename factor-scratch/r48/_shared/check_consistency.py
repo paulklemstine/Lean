@@ -70,6 +70,8 @@ TARGETS = [
     "Papers/choosing_b_well.md",
     "Papers/sharper_proved_l_half.md",
     "Papers/the_order_finding_constant.md",
+    "Papers/fifty_rounds_assembled.md",
+    "Papers/fifty_two_rounds.md",
     "Catalog/Cryptography/FactoringBarriers/Round48_SUMMARY.md",
 ]
 
