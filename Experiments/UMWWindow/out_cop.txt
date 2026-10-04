@@ -1,0 +1,10 @@
+KNOWN-ROOT VALIDATION (a correct lattice must return >0):
+linear f=x-x0:
+  N=24b X=64: m=1,t=3:0  m=2,t=4:0  m=3,t=6:0
+  N=32b X=128: m=1,t=3:0  m=2,t=4:0  m=3,t=6:0  m=4,t=8:0
+quadratic f=(x-x0)(x-x1):
+  N=24b X=64: m=1,t=4:0  m=2,t=6:0  m=3,t=8:0
+  N=32b X=256: m=2,t=6:0  m=3,t=8:0  m=4,t=10:0
+
+RESULT: all zeros => construction NOT validated (see docstring).
+No quantitative claim is made; the multivariate sub-N^(1/4) gap stays open.
