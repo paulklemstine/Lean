@@ -467,6 +467,35 @@ def main():
 
     print()
     print("=" * 78)
+    print("ST10 -- the RECOMMENDED backend (DM) is equivalent to the incumbent (F)")
+    print("=" * 78)
+    # §2.1 recommends swapping sympy's QQ rref in for r50's Fraction
+    # Gauss-Jordan. That recommendation is only sound if the two compute the
+    # SAME thing, so pin it on REAL Stange matrices (the synthetic ones skip DM
+    # because of the float leak, ST6).
+    agree = tot = 0
+    dims = set()
+    for bits in (30, 40):
+        for b in (26, 40, 52):
+            for s in range(2):
+                rng2 = random.Random(771000 + s * 31 + b + bits)
+                nn, pp, qq = D.stange.gen_semiprime(bits, rng2)
+                gg = D.rand_g(nn, rng2)
+                rels2, _ = D.make_relations(nn, gg, b, 1, rng2, "seq")
+                M2 = D.build_M(rels2, b)
+                d1 = D.kernel_dense_DM(M2, "st10DM")
+                d2 = D.kernel_dense_F(M2, "st10F")
+                tot += 1
+                if d1["dim"] == d2["dim"] and d1["rank"] == d2["rank"]:
+                    agree += 1
+                dims.add(d1["dim"])
+    check("ST10a DM and F agree on dim AND rank on real Stange matrices",
+          agree == tot and tot >= 12, f"{agree}/{tot} cells, dims seen {sorted(dims)}")
+    check("ST10b the sweep covered >1 dimension (not a degenerate all-equal case)",
+          len(dims) >= 2, str(sorted(dims)))
+
+    print()
+    print("=" * 78)
     print("ST9 -- degenerate shapes")
     print("=" * 78)
     Z = [[0, 0, 0], [0, 0, 0]]

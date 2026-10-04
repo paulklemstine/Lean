@@ -3,7 +3,7 @@
 **Round 51, agent PP · `factor-scratch/r51/exp/droptest/` · 2026-10-03**
 
 Code: `dtcore.py` (independent re-implementation, five exact routes),
-`selftest.py` (**42 checks, ALL PASS**, every control fires),
+`selftest.py` (**44 checks, ALL PASS**, every control fires),
 `exp_D1.py` `exp_D1c.py` `exp_D1d.py` `exp_D2.py` `exp_D3.py`.
 Nothing is copied from the read-only `r49exp/sparse/spcore.py`; the only import
 is r48's **validated** relation finder and factoring primitives, reused rather
@@ -243,7 +243,10 @@ time is recorded. Median of 3 relation sets. Times in ms.
 
 **`DM` — sympy's `DomainMatrix.rref` over `QQ` — is the fastest Q-routable
 option at every single one of the 16 cells**, beating the incumbent `F` by
-**4.2–15.3×** and beating my hand-written sparse dictionary by **2.2–4.1×**.
+**4.2–15.3×** and beating my hand-written sparse dictionary by **2.2–6.0×**.
+(Equivalence to `F` — same dimension and rank on 12/12 real matrices — is
+pinned in `selftest` **ST10**, so this is a speed comparison between two routes
+that provably compute the same thing.)
 This is the single most actionable number in the note and it is not about
 Stange at all: *r50's incumbent kernel is leaving a factor of ~10 on the table.*
 
@@ -390,14 +393,22 @@ Same picture at `b = 52`: rate 1.000, and the baseline choice alone moves the
 reported excess between **+0.225** (per-cell mean) and **+0.259** (`20/27`).
 
 > ⚠️ **This cell timed out twice before it ran, and the cause is the note's own
-> main finding.** `stange.kernel_basis` calls sympy `Matrix.nullspace()`, which
-> takes **>200 s** at `b = 52` on this host. Relation finding is *not* the
-> bottleneck — at `B = 239, n = 2³⁰` the smooth density is `1.76·10⁻²`, so all
-> 53 relations need only ~3000 trials, under a second. Swapping that one call
-> for `DomainMatrix.rref` over `QQ` (the identical exact computation) took the
-> cell from *timeout* to **0.1 s per modulus**. **A >10⁴× speed gap, on the same
-> mathematics, from a backend swap alone** — which is §2.1's finding biting the
-> experiment that was trying to measure it.
+> main finding.** Measured on one `b = 52` matrix, same `n`, same relations:
+>
+> | step | time |
+> |---|---|
+> | `find_relations` (faithful `random` sampler, 53 relations) | **0.013 s** |
+> | `DomainMatrix.rref` over `QQ` (`DM`) | **0.013 s** |
+> | `stange.kernel_basis` → sympy `Matrix.nullspace()` | **>400 s** (still running when a 400 s alarm fired) |
+>
+> **>3·10⁴×, lower bound**, on the *same exact mathematics*, from a backend swap
+> alone. Relation finding was never the bottleneck — at `B = 239, n = 2³⁰` the
+> smooth density is `1.76·10⁻²`, so all 53 relations need ~3000 trials.
+> `Matrix.nullspace()` is the culprit, exactly as `MM_sparse` §5.1 recorded
+> ("`sympy.Matrix.nullspace()` dies at `b ≈ 32`"); `DomainMatrix.rref` is a
+> different sympy entry point on the same library and does not. **§2.1's finding
+> bit the experiment that was trying to support it, and fixing it with that
+> finding closed a gap the note had otherwise had to disclose as a limitation.**
 
 Three readings, and the last one is the important one:
 
@@ -496,6 +507,7 @@ recorded.
 | **injected dependence**, with a negative control | ST3a–f | built a *square* matrix (my first version used `12×14`, where nullity ≥ 2 **always**, so the injection was invisible and the control unfalsifiable — dim read 2 before and 2 after); injecting a column relation raises dim 0→1, breaking it returns 1→0. **A self-test that cannot fail is not a self-test.** |
 | **zero vector rejected** by the black-box route | ST8c–g | the undivided reconstruction is **identically zero** — and it **passes** `M w = 0 mod p`, because the zero vector is in every kernel. My control asserting it would be *rejected* correctly refused to fire, and that is how the real mechanism was found. **A kernel routine can pass its own correctness test and return nothing.** |
 | degenerate shapes | ST9 | all-zero → full kernel (`dim = ncols`); identity → empty kernel |
+| the **recommended backend** is equivalent to the incumbent it replaces | ST10a–b | `DM` and `F` agree on **dimension AND rank** in **12/12** real Stange matrices across `n ∈ {2³⁰,2⁴⁰}`, `b ∈ {26,40,52}`, spanning more than one dimension. Without this the §2.1 recommendation would rest on two routes that might not compute the same thing — a speed comparison between different computations is the error this project keeps recording |
 | **2-adic, per modulus, never vs 20/27** | §3.2, ST7a–e | mean `p_split` over 400 moduli = the known 20/27; individual moduli span [0.500, 0.999]; Monte-Carlo confirms the closed form. Caught a **−0.458** apparent deficit that was a `seq`-sampler artefact (§3.2). Also showed the **baseline itself moves 0.085 between two samples of the same cell** — the strongest argument for never quoting a bare rate |
 | `r48/_shared/dickman.py` | **not used** | raises above `u = 5`. Exact `Ψ` by enumeration instead; **no `ρ` anywhere** — the `Ψ/x → e^{−γ}/ln B` vs `ρ → 0` divergence makes `ρ` the wrong null |
 | `int(n**(1/3))` | **not applicable** | no cube root taken; `bbound_for_b`/`factor_base` imported from r48 |
@@ -548,7 +560,7 @@ which I fetched and read.
 
 ```bash
 cd /home/raver1975/lean/factor-scratch/r51/exp/droptest
-python3 selftest.py     # 42 checks, ALL PASS, every negative control fires
+python3 selftest.py     # 44 checks, ALL PASS, every negative control fires
 python3 exp_D1.py       # defect + exact Psi mechanism          -> D1_defect.json
 python3 exp_D1c.py      # dense-vs-control confounds           -> D1_diag.json
 python3 exp_D1d.py      # probes/updates split, exponents       -> D1_scaling.json
