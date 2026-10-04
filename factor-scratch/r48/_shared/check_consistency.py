@@ -65,8 +65,15 @@ TARGETS = [
     "Papers/the_optimal_sampler.md",
     "Papers/choosing_b_well.md",
     "Papers/sharper_proved_l_half.md",
+    "Papers/the_order_finding_constant.md",
     "Catalog/Cryptography/FactoringBarriers/Round48_SUMMARY.md",
 ]
+
+# ⚠️ THIS LIST IS A FIXED SCOPE, and it just bit me: adding paper #528 left the
+# checker reporting CLEAN, because #528 was not in TARGETS and therefore not
+# scanned or orphan-checked. A hardcoded file list cannot notice that a file was
+# added. The census cross-check below is the mitigation -- it asks whether the
+# SET of published papers has changed, rather than trusting the list above.
 
 
 # A second class the first version MISSED entirely: superseded STATUS words.
@@ -138,6 +145,32 @@ def check_orphans(root: Path) -> list[str]:
         name = Path(rel).name
         if name not in text:
             out.append(f"{CENSUS}: ORPHAN PAPER -- {name} is never referenced")
+
+    # The mitigation for the fixed-scope problem above. Discovering papers by
+    # SIZE alone was a false-positive generator: Papers/ holds hundreds of
+    # files from the parallel Aether loop and earlier rounds. The right
+    # discriminator is "what did THIS campaign add" -- recent mtime. A paper
+    # modified in the last day that is neither scanned nor referenced is the
+    # case worth catching.
+    import time
+    papers_dir = root / "Papers"
+    if papers_dir.is_dir():
+        cutoff = time.time() - 24 * 3600
+        recent = [md for md in sorted(papers_dir.glob("*.md"))
+                  if md.stat().st_mtime > cutoff and md.stat().st_size > 3000]
+        if len(recent) > 12:
+            out.append(
+                f"{CENSUS}: {len(recent)} papers touched in the last 24h -- this campaign "
+                f"authored about 8, so other work (a parallel loop?) is also landing here. "
+                f"Confirm the census covers this campaign's papers, and that foreign work "
+                f"is left untouched."
+            )
+        for md in recent:
+            if md.name not in text and md.name not in TARGETS:
+                out.append(
+                    f"{CENSUS}: RECENT PAPER NOT IN CENSUS -- {md.name} was modified in "
+                    f"the last 24h, is not in TARGETS, and is never referenced."
+                )
 
     # Headline findings that must survive into the index.
     REQUIRED_FINDINGS = [
