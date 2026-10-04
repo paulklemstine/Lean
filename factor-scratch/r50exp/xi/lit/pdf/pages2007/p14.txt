@@ -1,0 +1,87 @@
+                                    Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+
+                            𝑖   𝑗
+is a proper subset of 𝑜(X 2 Y 2 ). This first step works as long as the equation derived from the constraint follows
+certain patterns, which are given in Proposition 20 below.
+                                                                                  𝑖0   𝑗0
+    In a second step, we prove that this remainder has in fact the form 𝜅X 2 Y 2 (1 + 𝑜(1)), where 𝜅 is the
+corresponding coefficient in the guessed series. This verification involves an equation that is similar to Eq. (3) in
+the proof of Theorem 17. Again, the shape of the equation encountered is crucial to proceed.
+    Based on our experiments, we surmise that only three patterns occur in the first step, and that the equation
+encountered in the second step always matches the shape of Eq. (3). Algorithm ProveMinimality only consists
+in verifying that this holds.
+Proposition 20. Let e  𝑏, 𝑑e = 𝑜(1) be three functions.
+                    𝑎, e
+   • Pattern (P1): Let 𝑖 > 0, 𝑗 ≥ 0. Assume that e                  𝑏(𝜈) ≤ 𝑏 0 (𝜈), where 𝑎 0 , 𝑏 0 = 𝑂 (X −1 Y). Assume
+                                                   𝑎 (𝜈) ≤ 𝑎 0 (𝜈), e
+     further that                                       !
+                                           𝑑e2
+                                               −e
+                                                𝑎 − 2e 𝑏 X 𝑖 Y 𝑗 = 𝑂 (X 𝑖−1 Y 𝑗+1 ).
+                                            3
+                                             1   1
+      Then e  𝑏 = 𝑂 (X −1 Y) and 𝑑e = 𝑂 (X − 2 Y 2 ).
+           𝑎, e
+    • Pattern (P2): Let 𝑖 > 1 and 𝜅 ∈ R. Assume that e                𝑏(𝜈) ≤ 𝑏 0 (𝜈), where 𝑎 0 , 𝑏 0 = 𝑂 (X 𝑖+1 Y −𝑖 ).
+                                                     𝑎 (𝜈) ≤ 𝑎 0 (𝜈), e
+      Assume further that
+                                                  !
+                            𝑑e2                            e 𝑖+1    𝑖
+                                −e𝑎 − 2𝑏(1 + 𝑜(1)) Y 𝑖 + 𝜅 𝑑X
+                                       e                       2 Y 2 (1 + 𝑜(1)) = 𝑂 (X 𝑖+1 ).
+                             3
+                                                            1                 𝑖+1    𝑖
+      Then e                     𝑏 ∈ 𝑂 (X 𝑖+1 Y −𝑖 ) ⊂ 𝑂 (Y 2 ), and 𝑑e = 𝑂 (X 2 Y − 2 ).
+            𝑎 = 𝑂 (X 𝑖+1 Y −𝑖 ), e
+    • Pattern (P3): Let 𝑖 > 2. Assume that e                          𝑏(𝜈) ≤ 𝑏 0 (𝜈), where 𝑎 0 = 𝑂 (X −1 Y) and 𝑏 0 =
+                                                     𝑎 (𝜈) ≤ 𝑎 0 (𝜈), e
+                     3
+      𝑂 (X 𝑖−1 Y −𝑖+ 2 ). Assume further that
+                                                    !
+                                              𝑑e2                 1
+                                                   𝑎 X 𝑖 − 2e
+                                                  −e        𝑏Y 𝑖− 2 = 𝑂 (X 𝑖−1 Y).
+                                               3
+                                                     3                  1     1
+           𝑎 = 𝑂 (X −1 Y) and e
+      Then e                  𝑏 = 𝑂 (X 𝑖−1 Y −𝑖+ 2 ), and 𝑑e = 𝑂 (X 2 Y − 2 ).
+Proof. The proof in all three cases is very similar. We only prove Pattern (P1) as an example.
+   Dividing the equality by X 𝑖 Y 𝑗 , we get
+
+                                                          𝑑e2
+                                                𝑎 + 2e
+                                                e    𝑏=       + 𝑂 (X −1 Y),
+                                                           3
+which shows that e       𝑏 is bounded below by a function in 𝑂 (X −1 Y). Since e
+                    𝑎 + 2e                                                              𝑏 ≤ 𝑎 0 + 2𝑏 0 = 𝑂 (X −1 Y),
+                                                                                   𝑎 + 2e
+we deduce that e       e        −1
+                 𝑎 + 2𝑏 = 𝑂 (X Y). Writing 𝑎, 𝑏 for e         −1       −1
+                                                        𝑎 XY , 𝑏XY respectively, we get that 𝑎 + 2𝑏 = 𝑂 (1).
+                                                                 e
+Together with the fact that 𝑎, 𝑏 are bounded above by lim sup 𝑎 0 XY −1 , lim sup 𝑏 0 XY −1 respectively, this implies
+that 𝑎, 𝑏 ∈ 𝑂 (1), and hence that e  𝑏 ∈ 𝑂 (X −1 Y). Hence 𝑑e2 must also belong to 𝑂 (X −1 Y).
+                                  𝑎, e
+                                                                                                                    
+    In fact these three patterns do not appear at random during the proof: They appear according to the shape of the
+remainder 𝑜(X 𝑖 Y 𝑗 ) in the series expansion of 𝑎 we are currently considering. When 𝑖 ≠ 0 and 𝑗 ≠ 0 the equation
+follows pattern (P1), when 𝑖 = 0 it follows pattern (P2) and when 𝑗 = 0 it follow pattern (P3). In particular, pattern
+(P3) is always encountered one step after pattern (P2) has been encountered. We want to consider that e              𝑏 is in
+      1
+𝑂 (Y 2 ) instead of the tighter class 𝑂 (X 𝑖+1 Y −𝑖 ) at the end of pattern (P2) precisely to ensure that the next step will
+yield an equation that follows pattern (P3).
+    The three algorithms GuessTerms, ProveExistence and ProveMinimality are used consecutively in order
+to compute a proven asymptotic expansion of 𝑎, 𝑏, 𝑑 at a given precision 𝑛. We have implemented a function Com-
+puteProvenExpansion which performs this process: It takes as input an integer 𝑛 > 1 and — if it does not fail
+— it returns two bivariate polynomials A (𝑛+1) , D (𝑛+1)/2 of respective degrees 𝑛 + 1 and (𝑛 + 1)/2 such that the
+minimizers 𝑎, 𝑏, 𝑑 of Problem 3 satisfy
+
+                                𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (A (𝑛+1) (X, Y) + 𝑜(Y 𝑛+1 )),
+                                𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (A (𝑛) (X, Y) + 𝑜(Y 𝑛 )),
+                                𝑑 = (3𝜈/log 𝜈) 1/3 (D (𝑛+1)/2 (X, Y) + 𝑜(Y (𝑛+1)/2 )).
+
+
+
+                                                             14
+

@@ -1,0 +1,55 @@
+                                   Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+
+
+
+                     0.00
+
+                     0.25
+
+                     0.50
+
+                     0.75
+
+                     1.00                                                           degree
+                                                                                         0
+                     1.25                                                                1
+                                                                                         2
+                     1.50                                                                3
+                                                                                         4
+                                                                                         5
+                     1.75
+                            e e5      e e6     e e7      e e8      e e9      ee10      ee11
+
+Figure 1: Truncations of 𝜉 up to total degree 𝑖 for 0 ≤ 𝑖 ≤ 5 in function of 𝑁 for cryptographically relevant values
+of 𝑁. The abscissa axis is in log log scale.
+
+
+
+
+                    0.048
+
+
+                    0.046
+
+
+                    0.044
+
+
+                    0.042
+                                                                                    degree
+                                                                                         1
+                    0.040                                                                2
+                                                                                         3
+                                                                                         4
+                                                                                         5
+                    0.038
+                            ee21 ee22 ee23 ee24 ee25 ee26 ee27
+
+                    Figure 2: Converging behavior for 𝜉𝑖 . The abscissa axis is in log log scale.
+
+
+
+
+                                                         16
+

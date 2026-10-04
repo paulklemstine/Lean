@@ -1,0 +1,66 @@
+                                   Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+
+   Of course, we can assume that this is an equality, since otherwise decreasing 𝐴 would decrease the complexity.
+   We are looking for expressions for 𝑑, 𝐴, and 𝐵 that are functions of 𝜈 = log 𝑁. Let now 𝑎(𝜈) = log 𝐴(𝜈) and
+𝑏(𝜈) = log 𝐵(𝜈). Note that all functions are expected to tend to infinity as 𝜈 = log 𝑁 tends to infinity and that
+log(𝜋 𝐾0 (𝐵(𝜈))) = 𝑏(𝜈) (1 + 𝑜(1)) and log(𝜋 𝐾1 (𝐵(𝜈))) = 𝑏(𝜈) (1 + 𝑜(1)) by Chebotarev’s density theorem. We
+have
+
+                                        log 𝐶search = 𝑂 (1) + 2𝑎(𝜈),
+                                                                                                  
+                                   log 𝐶linear algebra = 𝑂 (1) + log (𝜋 𝐾0 (𝐵(𝜈)) + 𝜋 𝐾1 (𝐵(𝜈))) 2
+                                                        = 𝑂 (1) + 2𝑏(𝜈),
+                       log(𝐶search + 𝐶linear algebra ) = 𝑂 (1) + log max(𝐶search , 𝐶linear algebra )
+                                                        = 𝑂 (1) + 2 max(𝑏(𝜈), 𝑎(𝜈)).
+
+   Likewise, the constraint on the probabilities can be rewritten, using the notation 𝑝(𝑢, 𝑣) from Definition 1 :
+                                        ∑︁
+                            2𝑎(𝜈) +               𝑝(log 𝑀𝑖 , 𝑏) = log(𝜋 𝐾0 (𝐵(𝜈)) + 𝜋 𝐾1 (𝐵(𝜈)))
+                                      𝑖 ∈ {0,1}
+
+                                                               = log (2(1 + 𝑜(1))𝐵(𝜈))
+                                                               = 𝑂 (1) + 𝑏(𝜈).
+
+    Given the inaccuracy that exists in Formula (1), we can profit from some simplifications before we formulate
+our optimization problem. In light of this, it is sufficient to minimize the function max(𝑎(𝜈), 𝑏(𝜈)), as this would
+imply a cost that would be at most within a constant factor of the optimal. Likewise, the 𝑂 (1) in the constraint
+can be dropped. Using this latter argument, we can also take into account only the important parts of the bounds
+𝑀0 and 𝑀1 , namely 𝑚 𝐴 and 𝑚 𝐴 𝑑 . Our optimization problem is therefore rewritten as the following simplified
+problem, which is our main target here as well as in Section 4.
+
+Problem 3 (Simplified optimization problem). Find three functions,
+
+                                                  𝑎(𝜈), 𝑏(𝜈), 𝑑 (𝜈) : R>0 → R>0
+
+which for all 𝜈 ∈ R>0 minimize max(𝑎(𝜈), 𝑏(𝜈)) subject to the constraint
+
+                                    𝑝 (𝑎 + 𝜈/𝑑, 𝑏) + 𝑝 (𝑑 𝑎 + 𝜈/𝑑, 𝑏) + 2 𝑎 − 𝑏 = 0.                                (2)
+
+   To deal with the optimization problem, the usual analysis of NFS relies on the following result.
+
+Proposition 4 (Canfield-Erdős-Pomerance [6] and De Bruĳn [9]). Let 𝜀 ∈]0, 1[. If 3 ≤ 𝑥/𝑦 ≤ (1 − 𝜀)𝑥/log 𝑥 then,
+as 𝑥/𝑦 → +∞:
+                                       𝑝(𝑥, 𝑦) = −(𝑥/𝑦) · log(𝑥/𝑦) · (1 + 𝑜(1)).
+
+    Using this low-order result, the analysis is completely classical, and yields the following well-known expressions,
+see e.g. [5, §11]:
+
+Proposition 5. Let (𝑎, 𝑏, 𝑑) be a minimizer for Problem 3. Then
+
+                                                       𝑎(𝜈) = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑜(1)),
+                                                       𝑏(𝜈) = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑜(1)),
+                                                       𝑑 (𝜈) = (3𝜈/log 𝜈) 1/3 (1 + 𝑜(1)).
+
+Furthermore,
+
+                                                      1
+                                (𝑎(𝜈) + 𝜈/𝑑 (𝜈))/𝑏(𝜈) = (3𝜈/log 𝜈) 1/3 (1 + 𝑜(1)),
+                                                      2
+                                                      3
+                          (𝑑 (𝜈)𝑎(𝜈) + 𝜈/𝑑 (𝜈))/𝑏(𝜈) = (3𝜈/log 𝜈) 1/3 (1 + 𝑜(1)).
+                                                      2
+
+
+                                                                4
+

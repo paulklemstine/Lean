@@ -1,0 +1,71 @@
+                                  Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+
+    Since (1 − log 𝜂)Δ(P (𝑛) ) (X, Y) can be written as 𝑇𝑛 (X, Y) for some 𝑇𝑛 ∈ R[𝑋, 𝑌 ], the previous result shows
+that there exists 𝑅𝑛 ∈ R[𝑋, 𝑌 ] such that
+                 ∫ 𝑢                                                                    ∫ 𝑢
+                     𝑠d𝜂 = [𝜂 log 𝜂 · (1 − Y) · P (𝑛) (X, Y)] 𝑢𝑒 + [𝜂 · 𝑅𝑛 (X, Y)] 𝑢𝑒 +     𝑜(Y 𝑛−1 )d𝜂.
+                 𝑒                                                                              𝑒
+                                                                                                       ∫𝑢
+The claimed expression, with 𝑄 𝑛 = (1 − 𝑌 )P (𝑛) + 𝑌 · 𝑅𝑛 , follows from the verification that 𝑒 𝑜(1/(log 𝜂) 𝑛−1 )d𝜂 =
+𝑜(𝑢/(log 𝑢) 𝑛−1 ) as 𝑢 → +∞, which is unilluminating but easy. Finally, we notice that for all 𝑖, 𝑗 ≥ 0, 𝑅𝑖 (𝑋, 𝑌 ) ≡
+𝑅 𝑗 (𝑋, 𝑌 ) mod h𝑋, 𝑌 i min(𝑖, 𝑗) , which implies that 𝑄 𝑖 (𝑋, 𝑌 ) ≡ 𝑄 𝑗 (𝑋, 𝑌 ) mod h𝑋, 𝑌 i min(𝑖, 𝑗) .
+     The series Q has therefore the following expression, which makes it easy to compute Q from P.
+
+                                     Q = (1 − 𝑌 )P + 𝑌 (1 + Δ) −1 (1 − 𝑌 −1 )ΔP.
+
+                                                                                                                    
+Corollary 13. We recall that Q is the series introduced in Proposition 12. For all 𝑛 ∈ Z ≥0 we have, as 𝑢 → +∞:
+                                                                                
+                           𝜌(𝑢) = exp −𝑢 log 𝑢 Q (𝑛) (X(𝑢), Y (𝑢)) + 𝑜 (Y (𝑢) 𝑛 ) .
+
+Proof. We use the equivalent of 𝜌 introduced at the
+                                                ∫ 𝑢 very beginning of the section. Constant offsets are absorbed in
+the error term that comes from the expansion of     𝑠d𝜂, and the result is a direct consequence of Proposition 12.
+                                                      ∫ 𝑢       
+                                         𝑒𝛾
+                            𝜌(𝑢) ∼ √          × exp −        𝑠d𝜂
+                                 𝑢→+∞    2𝜋𝑢             1
+                                        ∫ 𝑢               
+                                 = exp −      𝑠d𝜂 + 𝑂 (1)
+                                            𝑒
+                                                                                    
+                                 = exp −𝑢 log 𝑢 · Q (𝑛) (X(𝑢), Y (𝑢)) + 𝑜 (Y (𝑢) 𝑛 ) .
+
+                                                                                                                    
+Corollary 14. In the optimal parameter range of NFS, the asymptotic expansion of the smoothness probabilities
+follows from the previous result. For any 𝑛 ∈ Z ≥0 we have, on both sides (rational and algebraic), as 𝑁 → +∞:
+                                                                                     
+                        Ψ(𝑀𝑖 , 𝐵)/𝐵 = exp −𝑢 log 𝑢 Q (𝑛) (X(𝑢), Y (𝑢)) + 𝑜 (Y (𝑢) 𝑛 ) ,
+
+where 𝑢 denotes log 𝑀𝑖 /log 𝐵, which is the size ratio on side 𝑖 ∈ {0, 1}.
+Proof. As we argued when justifying the use of Theorem 8, Proposition 5 tells us that the optimal parameter range
+of NFS leads to 𝑢 = Θ((𝜈/log 𝜈) 1/3 ), with 𝜈 = log 𝑁 as in Section 2. It follows that 𝑏 = Θ(𝑢 log 𝑢), so that the
+right-hand side of Theorem 8 can be written as
+                                                                     
+                                  1                                   1
+                     𝜌(𝑢) 1 + 𝑂         = 𝜌(𝑢) exp −𝑢 log 𝑢 · 𝑂 2
+                                  𝑢                                𝑢 log 𝑢
+                                                                                       
+                                        = exp −𝑢 log 𝑢 Q (𝑛) (X(𝑢), Y (𝑢)) + 𝑜 (Y (𝑢) 𝑛 ) .
+                                                       
+                                               1
+   Put otherwise, a function within 𝑂       𝜂 2 log 𝜂
+                                                            is always in C, and its associated series is zero.      
+
+3.3 COMPUTATION OF Q
+   Propositions 9 and 10 are completely explicit. In Proposition 12, the expression of Q is straightforward to
+compute as well. For example, the terms of Q up to degree 3, are:
+
+                                                                              𝑋 2𝑌
+                            Q (3) (𝑋, 𝑌 ) = 1 + 𝑋 − 𝑌 + 𝑋𝑌 − 𝑌 2 −                 + 2𝑋𝑌 2 − 2𝑌 3 .
+                                                                               2
+
+4 ASYMPTOTIC EXPANSION OF 𝜉
+   This section is devoted to the analysis of the asymptotic behavior of the unknown function 𝜉 involved in the
+heuristic complexity of NFS. To this end, we compute the asymptotic expansion of the unknown functions written
+𝑜(1) in Prop. 5.
+
+
+                                                                    8
+

@@ -1,0 +1,85 @@
+                           Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+
+Proof. First, for all 𝑘 ∈ Z ≥0 and all 𝜂 > 𝑒 𝑒 we have Y ≤ X, so that
+                              𝑘 ∑︁
+                                 𝑖                                           𝑘 ∑︁
+                                                                                𝑖                              𝑘
+                             ∑︁    𝑠(𝑖, 𝑖 − 𝑗 + 1)                          ∑︁    𝑠(𝑖, 𝑖 − 𝑗 + 1)             ∑︁
+                                                             X 𝑗 Y 𝑖− 𝑗 ≤                              X𝑖 =          𝑐𝑖 X𝑖
+                             𝑖=1 𝑗=1
+                                                𝑗!                              𝑖=1 𝑗=1
+                                                                                             𝑗!                𝑖=1
+              𝑖                                 𝑖
+              Í 𝑠 (𝑖,𝑖− 𝑗+1)                    Í         𝑠 (𝑖,𝑖− 𝑗+1)
+where 𝑐 𝑖 =           𝑗!       . Let 𝑎 𝑖 = 𝑖!                   𝑗!     . According to the asymptotic formula for the sequence A138013
+              𝑗=1                               𝑗=1
+of the OEIS2, we have, as 𝑖 → +∞:
+                                  √︁
+                             𝑎 𝑖 ∼ −1 − 𝑊 (−1, −𝑒 −2 ) × (−𝑊 (−1, −𝑒 −2 )) 𝑖 × 𝑖 𝑖−1 /𝑒 𝑖
+where 𝑊 is the Lambert 𝑊 function, so that
+                                                           𝑎 𝑖 /𝑖!             1
+                                                                      −→                  .
+                                                      𝑎 𝑖+1 /(𝑖 + 1)! 𝑖→∞ −𝑊 (−1, −𝑒 −2 )
+    This shows that the power series with
+                                        Í coefficients 𝑎 𝑖 /𝑖! has a finite radius of convergence equal to −1/𝑊 (−1, −𝑒 −2 ).
+Since |𝑐 𝑖 | ≤ 𝑎 𝑖 /𝑖!, the power series 𝑐 𝑖 𝑋 also has finite radius of convergence, which is at most as large as the
+                                               𝑖
+
+former. Therefore the series converges uniformly for log2 𝜂 ≤ −1/𝑊 (−1, −𝑒 −2 ), and this inequality is satisfied for
+                                                          log 𝜂
+
+𝜂 ≥ 176.
+                                                                                                                         
+                                                                     ∫𝑢
+    We now shift gears and study the asymptotic behavior of 1 𝑠d𝜂 as 𝑢 grows. The first step towards this goal
+lies in the following proposition.
+                                         1
+                                                 ∫𝑢
+Proposition 12. The function 𝑢 → 𝑢 log       𝑢 · 𝑒 𝑠d𝜂 is in C, and the coefficients of its associated series Q can be
+computed explicitly.
+Proof. We prove that for all 𝑛 ∈ Z ≥0 , there is a polynomial 𝑄 𝑛 such that, as 𝑢 → +∞:
+                              ∫ 𝑢
+                                   𝑠d𝜂 = 𝑢 log 𝑢 · (𝑄 𝑛 (X(𝑢), Y (𝑢))) + 𝑜 (Y (𝑢) 𝑛 )) ,
+                                       𝑒
+
+and that for all 𝑖, 𝑗 ≥ 0, 𝑄 𝑖 (𝑋, 𝑌 ) ≡ 𝑄 𝑗 (𝑋, 𝑌 ) mod h𝑋, 𝑌 i min(𝑖, 𝑗) . We emphasize that our proof provides an explicit
+method to compute 𝑄 𝑛 .
+    Let us first notice that since we are looking for an asymptotic expansion of a divergent integral as 𝑢 → ∞, up
+to terms that also tend to infinity, we are free to choose the lower bound of the integral.
+    Let Δ be the R-linear operator defined on R[𝑋, 𝑌 ] by Δ1 = 0, Δ𝑋 = 𝑌 · (𝑌 − 𝑋), Δ𝑌 = −𝑌 2 , and Δ(𝑈𝑉) =
+𝑈Δ𝑉 + (Δ𝑈)𝑉. One can check that:
+                                                                    d           1
+                                           ∀𝑇 ∈ R[𝑋, 𝑌 ],             𝑇 (X, Y) = · (Δ𝑇) (X, Y).
+                                                                   d𝜂           𝜂
+   Notice that ΔR[𝑋, 𝑌 ] ⊂ 𝑌 R[𝑋, 𝑌 ].
+   We use the properties of Δ to prove an intermediate result. Let 𝑇 be an arbitrary bivariate polynomial in
+R[𝑋, 𝑌 ]. Using the above notation, repeated integration by parts yields:
+                  ∫ 𝑢                                 ∫ 𝑢
+                       𝑇 (X, Y)d𝜂 = [𝜂𝑇 (X, Y)] 𝑢𝑒 −      (Δ𝑇) (X, Y)d𝜂
+                       𝑒                                                    𝑒
+                                                𝑛−1
+                                                ∑︁                                                    ∫ 𝑢
+                                            =             (−1) 𝑖 [𝜂 · (Δ𝑖 𝑇) (X, Y)] 𝑢𝑒 + (−1) 𝑛            (Δ𝑛𝑇) (X, Y)d𝜂
+                                                    𝑖=0                                                𝑒
+                                                                            ∫ 𝑢
+                                            = [𝜂 · 𝑅(X, Y)] 𝑢𝑒 +                    𝑜(Y 𝑛−1 )d𝜂
+                                                                                𝑒
+
+              (−1) 𝑖 Δ𝑖 𝑇 ∈ R[𝑋, 𝑌 ]. Note that 𝑅 is a truncation of (1 + Δ) −1𝑇.
+        Í𝑛−1
+for 𝑅 = 𝑖=0
+    This allows us to quickly conclude. Indeed, using Proposition 9, for all 𝑛 ∈ Z ≥0 :
+                            ∫ 𝑢
+                                 𝑠d𝜂 = [(𝜂 log 𝜂 − 𝜂)P (𝑛) (X, Y)] 𝑢𝑒 +
+                             𝑒
+                                      ∫ 𝑢                                 ∫ 𝑢
+                                          (1 − log 𝜂)Δ(P (𝑛) ) (X, Y)d𝜂 +      𝑜(Y 𝑛−1 )d𝜂.
+                                                𝑒                                                 𝑒
+
+   2https://oeis.org/A138013
+
+
+
+                                                                                7
+

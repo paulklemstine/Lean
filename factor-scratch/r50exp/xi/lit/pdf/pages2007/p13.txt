@@ -1,0 +1,67 @@
+                      Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+
+4.3 FURTHER TERMS IN THE ASYMPTOTIC EXPANSION OF THE COMPLEXITY OF NFS
+    In this section, we describe how the arguments of Section 4.2 can be turned into three algorithms that allow
+to compute more precise asymptotic expansions for the minimizers 𝑎, 𝑏, 𝑑. These three algorithms take as input
+the precision requested for the asymptotic expansion of the complexity and they mirror the three steps used in the
+proof of Theorem 17:
+    • Algorithm GuessTerms guesses the asymptotic expansion of the minimizers of Problem 3.
+    • Algorithm ProveExistence proves the existence of functions satisfying the constraint in Problem 3, and
+      whose asymptotic expansion is the output of Algorithm GuessTerms. This establishes an upper bound for
+      the minimum of the objective function in Problem 3.
+     • Algorithm ProveMinimality proves that the asymptotic expansion of the minimizers of Problem 3 must be
+       the output of Algorithm GuessTerms.
+    These algorithms are used in the following way. We set a degree 𝑛 > 1. The three algorithms are used to
+prove that 𝜉 (𝑁) = 𝑄(X(log 𝑁), Y (log 𝑁)) + 𝑜(Y (log 𝑁) 𝑛 ) where 𝑄 is a bivariate polynomial of total degree
+𝑛, whose coefficients are computed along the way. We emphasize that these algorithms might fail, i.e., become
+unable to compute or prove new terms at some point. We were unable to prove that our algorithms never fail, but
+experimentally they never did. And even if one of them does, the terms of the complexity computed up until the
+failure point are guaranteed to be correct. We also point out that all the bivariate polynomials that we consider
+in these algorithms have coefficients in Q(log 2, log 3), so they can be described exactly without having to rely on
+floating-point computations.
+   We now describe more precisely the algorithms GuessTerms, ProveExistence and ProveMinimality as-
+suming there is no failure.
+    Algorithm GuessTerms assumes that 𝑎, 𝑏, 𝑑 belong respectively to the classes C [1/3,2/3] , C [1/3,2/3] , C [1/3,−1/3]
+and even that 𝑎 = 𝑏. We call A, B, D the bivariate series associated to 𝑎, 𝑏, 𝑑. First, we expand Eq. (2) based on the
+asymptotic expansions of 𝑎, 𝑏 and 𝑑 (initialized thanks to the result of Theorem 17). Then we minimize the leading
+term of the asymptotic expansion of the objective function in Problem 3 under the constraint that the coefficient of
+the main term in the asymptotic expansion of Eq. (2) must vanish. This is done thanks to Taylor series expansions
+at infinity and bivariate series computations at finite precision. From this, we deduce the next coefficients of our
+series. The repetition of this process provides an algorithm to iteratively compute the coefficients of the series
+A, B, D. These series will be our candidates for the asymptotic expansion of the minimizers of Problem 3.
+    Algorithm ProveExistence is the counterpart of Lemma 18. It checks that there exist functions 𝛼, 𝛽, 𝛿 such
+that:
+     • The asymptotic expansion of 𝛼 is 𝛼 = A (𝑛+1) (X, Y) + 𝑜(Y 𝑛+1 );
+    • The asymptotic expansion of 𝛽 is 𝛽 = B (𝑛+1) (X, Y) + 𝑜(Y 𝑛+1 );
+    • The asymptotic expansion of 𝛿 is 𝛿 = D (𝑛+1)/2 (X, Y) + 𝑜(Y (𝑛+1)/2 );
+    • The functions 𝛼, 𝛽, 𝛿 satisfy the constraint (2).
+    Algorithm ProveExistence serves the same purpose as Lemma 18: Give a baseline result that ensures the
+existence of functions that satisfy the constraint (2) and whose asymptotic expansions are known up to a given
+degree. In particular, a solution to Problem 3 must be smaller than 𝛼, 𝛽, 𝛿. The algorithm works similarly to the
+proof of Lemma 18 by setting three functions 𝑎, 𝑏, 𝑑 where 𝑎 depends on an unknown function e 𝑎:
+
+                                 𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (A (𝑛+1) (X, Y) + e
+                                                                                   𝑎 X 𝑛+2 );
+                                 𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 B (𝑛+1) (X, Y);
+                                 𝑑 = (3𝜈/log 𝜈) 1/3 D (𝑛+1)/2 (X, Y).
+
+    Then the algorithm checks by using Taylor series expansions that the constraint of Problem 3 instantiated with
+these functions can be rewritten as (e
+                                     𝑎 − 𝜅) = 𝜀(e
+                                                𝑎 , 𝜈) for some 𝜅 ∈ R and 𝜀 a function as in the proof of Lemma 18.
+    Algorithm ProveMinimality is the counterpart of the proof of Theorem 17 and it follows its roadmap. We
+proceed iteratively with the terms of the asymptotic expansion, computing and proving the expansions of the
+minimizers 𝑎, 𝑏, 𝑑 up to degree 𝑛. To do so, we use the current (proven) knowledge of the asymptotic expansions
+of 𝑎, 𝑏, 𝑑, initialized thanks to Theorem 17, and expand the constraint by computing Taylor series expansions at
+infinity.
+    To prove that the next terms of the series guessed by Algorithm GuessTerms are correct, we proceed as
+                                                                                               𝑖   𝑗
+follows. First, we prove that the remainder of the series expansion, which has form 𝑜(X 2 Y 2 ), is in fact of the form
+        0   0                                                                                                           𝑗0
+      𝑖   𝑗                                                                                                         𝑖0
+𝑂 (X 2 Y 2 ), where (𝑖 0, 𝑗 0) is strictly larger than (𝑖, 𝑗) for the graded lexicographical ordering, so that 𝑂 (X 2 Y 2 )
+
+
+                                                             13
+

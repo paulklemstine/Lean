@@ -1,0 +1,36 @@
+                                 Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+
+ [8]   L. Comtet. Advanced Combinatorics: The art of finite and infinite expansions. 1974.
+ [9]   N. G. De Bruĳn. “On the number of positive integers ≤ 𝑥 and free of prime factors > 𝑦”. In: Proceedings of
+       the Koninklĳke Nederlandse Akademie van Wetenschappen: Series A: Mathematical Sciences 54.1 (1951),
+       pp. 50–60. doi: 10.1016/S1385-7258(51)50008-2.
+[10]   N. G. De Bruĳn. “The asymptotic behaviour of a function occurring in the theory of primes”. In: J. Indian
+       Math. Soc. (N.S.) 15 (1951), pp. 25–32. doi: 10.18311/jims/1951/17064.
+[11]   ENISA. Algorithms, key sizes and parameters report. European Union Agency for Network and Information
+       Security. Report available at https://www.enisa.europa.eu/publications/algorithms- key-
+       size-and-parameters-report-2014. 2014.
+[12]   A. Granville. “Smooth numbers: Computational number theory and beyond”. In: Algorithmic Number Theory:
+       Lattices, Number Fields, Curves and Cryptography. Ed. by J. P. Buhler and P. Stevenhagen. Vol. 44. Math.
+       Sci. Res. Inst. Publ. Cambridge University Press, Dec. 2008, pp. 267–323.
+[13]   A. Hildebrand. “On the number of positive integers ≤ 𝑥 and free of prime factors > 𝑦”. In: J. Number Theory
+       22.3 (1986), pp. 289–307. doi: 10.1016/0022-314X(86)90013-2.
+[14]   J. D. Lee and R. Venkatesan. “Rigorous analysis of a randomised number field sieve”. In: J. Number Theory
+       187 (2018), pp. 92–159. doi: 10.1016/j.jnt.2017.10.019.
+[15]   A. K. Lenstra and E. R. Verheul. “Selecting cryptographic key sizes”. In: J. Cryptology 14.4 (2001), pp. 255–
+       293. doi: 10.1007/s00145-001-0009-4.
+[16]   B. A. Murphy. “Polynomial Selection for the Number Field Sieve Integer Factorisation Algorithm”. PhD
+       thesis. Australian National University, 1999. url: http://maths- people.anu.edu.au/~brent/pd/
+       Murphy-thesis.pdf.
+[17]   National Institute of Standards and Technology and Canadian Centre for Cyber Security. Implementation
+       Guidance for FIPS 140-2 and the Cryptographic Module Validation Program. Version of 2019, December
+       3. Available at https : / / csrc . nist . gov / CSRC / media / Projects / Cryptographic - Module -
+       Validation-Program/documents/fips140-2/FIPS1402IG.pdf.
+[18]   D. Wiedemann. “Solving sparse linear equations over finite fields”. In: IEEE Transactions on Information
+       Theory 32.1 (1986), pp. 54–62. doi: 10.1109/TIT.1986.1057137.
+
+
+
+
+                                                        18
+

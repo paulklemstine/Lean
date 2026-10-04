@@ -1,0 +1,63 @@
+                     Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+
+   At the same location, we also detail some of the unilluminating technical calculations that are omitted for
+brevity in the text.
+
+NOTATIONS AND CONVENTIONS
+    Throughout the article, log 𝑥 denotes the natural logarithm to base 𝑒. We use the notation log𝑚 to denote the 𝑚-th
+iterate of the log function, so that log𝑚+1 = log ◦ log𝑚 . The notation 𝑢 = Θ(𝑣) denotes: (𝑢 = 𝑂 (𝑣) and 𝑣 = 𝑂 (𝑢)).
+Throughout the paper, we assume a RAM computation model, where the cost of memory accesses is neglected.
+
+
+2 BACKGROUND ON NFS
+     In a nutshell, NFS defines two irreducible integer polynomials 𝑓0 and 𝑓1 , and searches for integer pairs (𝑢, 𝑣)
+in a search space A such that the integers Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓0 (𝑥)) and Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓1 (𝑥)) are smooth with respect to
+chosen smoothness bounds 𝐵0 and 𝐵1 , where Res 𝑥 denotes the resultant with respect to 𝑥. The notations 𝐾𝑖 for
+𝑖 = 0, 1 denote the number fields Q[𝑥]/ 𝑓𝑖 (𝑥). The number of smooth pairs that must be collected must be at least
+(𝜋 𝐾0 (𝐵0 ) + 𝜋 𝐾1 (𝐵1 )), which is the number of prime ideals with norm at most 𝐵0 and 𝐵1 in the rings of integers of
+𝐾0 and 𝐾1 . A linear algebra calculation follows, and its dimension is again (𝜋 𝐾0 (𝐵0 ) + 𝜋 𝐾1 (𝐵1 )). These two steps
+of the algorithm are the most costly.
+     In order to analyze the algorithm, we consider a simplified version, which has of course little to do with
+computational feats that use the Number Field Sieve [4]. In particular, we consider the straightforward “base-𝑚”
+polynomial selection. For a chosen degree 𝑑, we set 𝑚 = d𝑁 1/(𝑑+1) e, 𝑓0 = 𝑥 − 𝑚, and 𝑓1 of degree 𝑑 such that
+ 𝑓1 (𝑚) = 𝑁 and || 𝑓1 || ∞ < 𝑚. We have 𝐾0 = Q, and 𝐾1 is a degree 𝑑 number field. Side 0 is therefore called
+the rational side, and side 1 is called the algebraic side. We assume that the smoothness bounds 𝐵0 and 𝐵1 can
+be chosen equal to the same bound 𝐵 without increasing the overall asymptotic complexity. Letting 𝐵0 and 𝐵1
+have distinct values would add an extra layer of technicality to the analysis, but we acknowledge that it would be
+interesting to investigate the general case in future work. In our simplified NFS algorithm, we pick the pairs (𝑢, 𝑣)
+from a set A = [−𝐴, 𝐴] 2 , for some bound 𝐴. The integers that we check for smoothness in NFS are bounded by
+𝑀0 and 𝑀1 , which we define as follows
+                                    |Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓0 (𝑥))| ≤ 𝑀0 = (𝑚 + 1) 𝐴,
+                                and |Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓1 (𝑥))| ≤ 𝑀1 = (𝑑 + 1)𝑚 𝐴 𝑑 .
+    It is important to point out the heuristic nature of the estimate given by Formula (1), which is related to the
+estimation of the probabilities of smoothness.
+Heuristic assumption 2. In the Number Field Sieve algorithm, the probability that the two integers Res 𝑥 (𝑢 −𝑣𝑥, 𝑓0 )
+and Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓1 ) are simultaneously 𝐵-smooth, as (𝑢, 𝑣) are picked uniformly from the search space A, is
+given by the probability that two random integers of the same size are 𝐵-smooth, which is Ψ( 𝑀 0 ,𝐵)
+                                                                                              𝑀0     · Ψ( 𝑀1 ,𝐵)
+                                                                                                          𝑀1     .
+    This assumption is very bold, and in fact wrong in several ways. Correcting terms, which are actually used in
+practice, can be used to lessen the gap between Res 𝑥 (𝑢 − 𝑣𝑥, 𝑓0 ) and integers of the same size [16, 2]. However,
+this heuristic is not that wrong asymptotically, as evidenced by [12, Eq. (1.21)]. We also note that if the number
+field is a random variable, positive results do exist [14].
+    Our goal is not to get rid of this heuristic assumption. The usual complexity analysis of NFS already uses it as
+a base and we will do the same to improve on the asymptotic estimate in Formula (1).
+    Our simplified version of NFS has three main parameters that we can tune, as functions of log 𝑁, in order to
+optimize the asymptotic complexity: the degree 𝑑 = deg 𝑓1 , and the bounds 𝐴 and 𝐵. The time complexity of NFS
+is then the sum of the time taken by the search for smooth pairs and the time taken by linear algebra. We write
+these as
+                                          𝐶search = 𝐴2 · 𝐶test ,
+                                   𝐶linear algebra = (𝜋 𝐾0 (𝐵) + 𝜋 𝐾1 (𝐵)) 2 (1 + 𝑜(1)).
+    In the expressions above, 𝐶test is the time spent per pair (𝑢, 𝑣). Several techniques can be used to bring 𝐶test to
+an amortized cost of 𝑂 (1); sieving is the most popular, but ECM-testing also works (heuristically), and it is also
+possible to detect smooth values with product trees as in [3]. Furthermore, we counted a quadratic cost for linear
+algebra, as this can be carried out with sparse linear algebra algorithms such as [18]. We wish to minimize the cost,
+subject to one constraint: We need enough smooth pairs, as we mentioned in the first paragraph of this section.
+                                         Ψ(𝑀0 , 𝐵) Ψ(𝑀1 , 𝐵)
+                                  𝐴2 ·            ·          ≥ 𝜋 𝐾0 (𝐵) + 𝜋 𝐾1 (𝐵).
+                                           𝑀0        𝑀1
+
+
+                                                              3
+

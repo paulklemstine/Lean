@@ -1,0 +1,69 @@
+                                                                                     Mathematical Cryptology, 1(1): 1–18
+
+
+
+                                         Refined Analysis of the Asymptotic Com-
+                                         plexity of the Number Field Sieve
+                                         Aude Le Gluher1,* , Pierre-Jean Spaenlehauer1 , Emmanuel Thomé1
+                                         1 Université de Lorraine, CNRS, Inria, LORIA, F-54000 Nancy, France
+
+                                         Received: June 23, 2021 | Revised: June 23, 2021 | Accepted: June 23, 2021
+
+                                         Abstract The classical heuristic complexity of the Number Field Sieve (NFS) involves an unknown function,
+                                         usually noted 𝑜(1) and called 𝜉 (𝑁) throughout this paper, which tends to zero as the entry 𝑁 grows. The aim of this
+                                         paper is to find optimal asymptotic choices of the parameters of NFS as 𝑁 grows, in order to minimize its heuristic
+                                         asymptotic computational cost. This amounts to minimizing a function of the parameters of NFS bound together by
+                                         a non-linear constraint. We provide precise asymptotic estimates of the minimizers of this optimization problem,
+                                         which yield refined formulas for the asymptotic complexity of NFS. One of the main outcomes of this analysis
+                                         is that 𝜉 (𝑁) has a very slow rate of convergence: We prove that it is equivalent to 4logloglog 𝑁/(3loglog 𝑁).
+arXiv:2007.02730v2 [cs.CR] 22 Jun 2021
+
+
+
+
+                                         Moreover, 𝜉 (𝑁) has an unpredictable behavior for practical estimates of the complexity. Indeed, we provide an
+                                         asymptotic series expansion of 𝜉 and numerical experiments indicate that this series starts converging only for
+                                         𝑁 > exp(exp(25)), far beyond the practical range of NFS. This raises doubts on the relevance of NFS running time
+                                         estimates that are based on setting 𝜉 = 0 in the asymptotic formula.
+
+                                         Keywords: Complexity, Asymptotic optimization, Number Field Sieve.
+                                         2010 Mathematics Subject Classification: 68W40 (Analysis of algorithms), 11Y05 (Factorization).
+
+
+
+                                         1 INTRODUCTION
+                                              Factoring integers and solving discrete logarithms in finite fields are two fundamental problems in computational
+                                         number theory, which are core routines for a very large range of applications. Perhaps their most prominent and
+                                         critical use is the fact that the security of many currently deployed cryptosystems — e.g. RSA, finite field Diffie-
+                                         Hellman, ElGamal — relies directly on their computational difficulty. This explains why the development of
+                                         algorithms for solving these two problems and the analysis of their complexity are central topics in computational
+                                         mathematics.
+                                              To this day, the Number Field Sieve (NFS) is the most efficient method to factor integers and to compute discrete
+                                         logarithms in prime finite fields. It is an active research area, and implementations of NFS have led to several
+                                         record computations which give a good idea of the computational power required to factor RSA moduli up to 2800 ,
+                                         or to compute discrete logarithms in prime fields of the same size [4]. Existing software can also be used to form
+                                         reasonable estimates of the hardness of these problems, up to roughly 1024 bits.
+                                              Another approach to estimate the computational power needed is to use a theoretical cost analysis of NFS. The
+                                         asymptotic complexity of the usual variant of NFS to factor an integer 𝑁, under various heuristic assumptions, is
+                                         known to be                               √︂                                            !
+                                                                                    3 64
+                                                                              exp        (log 𝑁) 1/3 (log log 𝑁) 2/3 (1 + 𝜉 (𝑁))                            (1)
+                                                                                       9
+                                         where 𝜉 (𝑁) ∈ 𝑜(1) as 𝑁 grows. This asymptotic formula is obtained by solving an optimization problem, which
+                                         involves a number-theoretic function related to the notion of smoothness:
+                                         Definition 1. Let 𝑥 ≥ 1 and 𝑦 ≥ 1 be two real numbers. An integer in [1, 𝑥] is 𝑦-smooth if all of its prime factors
+                                         are below 𝑦. We let
+                                                                        Ψ(𝑥, 𝑦) = #{integers in [1, 𝑥] that are 𝑦-smooth}.
+                                         In particular, Ψ(𝑥, 𝑦)/𝑥 is the probability that a uniformly random integer in [1, 𝑥] is 𝑦-smooth. For convenience,
+                                         we also use the notation 𝑝(𝑢, 𝑣) = log (Ψ(𝑒 𝑢 , 𝑒 𝑣 )/𝑒 𝑢 ).
+                                             Unfortunately, the complexity given by Formula (1) is not very satisfactory. First, it relies on several heuristics,
+                                         most notably on the fact that norms of random ideals in a given number field have the same smoothness probability
+                                         as random integers of the same order of magnitude. A second point is that even if we consider that these assumptions
+                                         hold, the complexity given by Formula (1) involves a function 𝜉 which is never spelled out explicitly.
+                                            * Corresponding Author: aude.le-gluher@loria.fr
+
+
+
+
+                                                                                                     1
+

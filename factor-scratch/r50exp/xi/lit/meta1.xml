@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/QFM6A4n32OBoJEtBahi48Yy81H8</id>
+  <title>arXiv Query: search_query=&amp;id_list=2007.02730,2006.06197,1408.0718,1602.06739&amp;start=0&amp;max_results=10</title>
+  <updated>2026-10-04T15:34:19Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=10&amp;id_list=2007.02730,2006.06197,1408.0718,1602.06739" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>4</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1408.0718v4</id>
+    <title>Improvements to the number field sieve for non-prime finite fields</title>
+    <updated>2022-08-25T09:45:36Z</updated>
+    <link href="https://arxiv.org/abs/1408.0718v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1408.0718v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose various strategies for improving the computation of discrete logarithms in non-prime fields of medium to large characteristic using the Number Field Sieve. This includes new methods for selecting the polynomials; the use of explicit automorphisms; explicit computations in the number fields; and prediction that some units have a zero virtual logarithm. On the theoretical side, we obtain a new complexity bound of $L_{p^n}(1/3,\sqrt[3]{96/9})$ in the medium characteristic case. On the practical side, we computed discrete logarithms in $F_{p^2}$ for a prime number $p$ with $80$ decimal digits.Warning: This unpublished version contains some inexact statements.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-08-04T15:54:42Z</published>
+    <arxiv:comment>This unpublished version contains some inexact statements. Please refer to the version published at Eurocrypt 2015 also available at https://hal.inria.fr/hal-01112879v2</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Razvan Barbulescu</name>
+      <arxiv:affiliation>CARAMEL</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pierrick Gaudry</name>
+      <arxiv:affiliation>CARAMEL</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Aurore Guillevic</name>
+      <arxiv:affiliation>GRACE, LIX</arxiv:affiliation>
+    </author>
+    <author>
+      <name>François Morain</name>
+      <arxiv:affiliation>LIX</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1602.06739v1</id>
+    <title>A quality check of the $AKARI$ mid-infrared all-sky diffuse map toward the massive star-forming regions NGC 6334 and NGC 6357</title>
+    <updated>2016-02-22T11:41:36Z</updated>
+    <link href="https://arxiv.org/abs/1602.06739v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1602.06739v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a comparative study of CO and polycyclic aromatic hydrocarbon (PAH) emission toward a region including the massive star-forming regions of NGC 6334 and NGC 6357. We use the NANTEN $^{12}$CO($J$ = 1--0) data and the $AKARI$ 9 $μ$m All-Sky diffuse map in order to evaluate the calibration accuracy of the $AKARI$ data. We confirm that the overall CO distribution shows a good spatial correspondence with the PAH emission, and their intensities exhibit a good power-law correlation with a spatial resolution down to 4$'$ over the region of 10$^\circ$$\times$10$^\circ$. We also reveal poorer correlation for small scale structures between the two quantities toward NGC 6357, due to strong UV radiation from local sources. Larger scatter in the correlation toward NGC 6357 indicates higher ionization degree and/or PAH excitation than that of NGC 6334.</summary>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-02-22T11:41:36Z</published>
+    <arxiv:comment>2 pages, 2 figures, 1 table, Accepted for publication in Publications of the Korean Astronomical Society</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.GA"/>
+    <author>
+      <name>Hidetoshi Sano</name>
+    </author>
+    <author>
+      <name>Tomoya Amatsutsu</name>
+    </author>
+    <author>
+      <name>Toru Kondo</name>
+    </author>
+    <author>
+      <name>Keichiro Nakamichi</name>
+    </author>
+    <author>
+      <name>Mitsuyoshi Yamagishi</name>
+    </author>
+    <author>
+      <name>Daisuke Ishihara</name>
+    </author>
+    <author>
+      <name>Shinki Oyabu</name>
+    </author>
+    <author>
+      <name>Hidehiro Kaneda</name>
+    </author>
+    <author>
+      <name>Kengo Tachihara</name>
+    </author>
+    <author>
+      <name>Yasuo Fukui</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.02730v2</id>
+    <title>Refined Analysis of the Asymptotic Complexity of the Number Field Sieve</title>
+    <updated>2021-06-22T13:32:28Z</updated>
+    <link href="https://arxiv.org/abs/2007.02730v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.02730v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The classical heuristic complexity of the Number Field Sieve (NFS) is the solution of an optimization problem that involves an unknown function, usually noted $o(1)$ and called $ξ(N)$ throughout this paper, which tends to zero as the entry $N$ grows. The aim of this paper is to find optimal asymptotic choices of the parameters of NFS as $N$ grows, in order to minimize its heuristic asymptotic computational cost. This amounts to minimizing a function of the parameters of NFS bound together by a non-linear constraint. We provide precise asymptotic estimates of the minimizers of this optimization problem, which yield refined formulas for the asymptotic complexity of NFS. One of the main outcomes of this analysis is that $ξ(N)$ has a very slow rate of convergence: We prove that it is equivalent to $4{\log}{\log}{\log}\,N/(3{\log}{\log}\,N)$. Moreover, $ξ(N)$ has an unpredictable behavior for practical estimates of the complexity. Indeed, we provide an asymptotic series expansion of $ξ$ and numerical experiments indicate that this series starts converging only for $N&gt;\exp(\exp(25))$, far beyond the practical range of NFS. This raises doubts on the relevance of NFS running time estimates that are based on setting $ξ=0$ in the asymptotic formula.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-06T13:10:01Z</published>
+    <arxiv:comment>Accepted for publication in Mathematical Cryptology</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Aude Le Gluher</name>
+    </author>
+    <author>
+      <name>Pierre-Jean Spaenlehauer</name>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.06197v1</id>
+    <title>Comparing the difficulty of factorization and discrete logarithm: a 240-digit experiment</title>
+    <updated>2020-06-11T05:17:58Z</updated>
+    <link href="https://arxiv.org/abs/2006.06197v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.06197v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We report on two new records: the factorization of RSA-240, a 795-bit number, and a discrete logarithm computation over a 795-bit prime field. Previous records were the factorization of RSA-768 in 2009 and a 768-bit discrete logarithm computation in 2016. Our two computations at the 795-bit level were done using the same hardware and software, and show that computing a discrete logarithm is not much harder than a factorization of the same size. Moreover, thanks to algorithmic variants and well-chosen parameters, our computations were significantly less expensive than anticipated based on previous records.The last page of this paper also reports on the factorization of RSA-250.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-11T05:17:58Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <arxiv:journal_ref>The 40th Annual International Cryptology Conference (Crypto 2020), Aug 2020, Santa Barbara, USA, United States</arxiv:journal_ref>
+    <author>
+      <name>Fabrice Boudot</name>
+      <arxiv:affiliation>XLIM</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pierrick Gaudry</name>
+      <arxiv:affiliation>CARAMBA, LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Aurore Guillevic</name>
+      <arxiv:affiliation>CARAMBA, LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nadia Heninger</name>
+      <arxiv:affiliation>UC San Diego</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+      <arxiv:affiliation>CARAMBA, LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Paul Zimmermann</name>
+      <arxiv:affiliation>CARAMBA, LORIA</arxiv:affiliation>
+    </author>
+  </entry>
+</feed>

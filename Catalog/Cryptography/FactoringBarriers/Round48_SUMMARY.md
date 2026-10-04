@@ -478,10 +478,17 @@ inherited row was independently re-checked against its source.
 | the **`2 − 1/p` divisibility excess** | **CLOSED — fully captured by the sieve, zero headroom** (the excess is exactly the `p∣a, p∣b` corner; the sieve's mark rate is `r_p/p` exactly) |
 | **batch smoothness** | **CLOSED — structurally nothing to save**; NFS already *is* a segmented sieve at the `ln ln B` asymptote |
 | **sparse linear algebra** | **CLOSED — the defect is asymptotic, not practical** (`Θ(b)`, but an `O(1)`-defect control costs the same at `b = 26–52`) |
-| **`ξ(N)`, the `o(1)` term** | **THE ONE THREAD STILL OPEN** — named as live by two round-49 agents, worth ≈`2⁴⁵` at 2048 bits, not converging until `N > exp(exp(25))`. **Whether `2⁴⁵` is measured or inherited is itself unverified.** Under attack; see `notes/HH_xi.md` |
+| **`ξ(N)`, the `o(1)` term** | **ALREADY A THEOREM. The `2⁴⁵` is RETRACTED — wrong by ≈2⁵⁰** | Theorem 17 / Corollary 19 (**arXiv:2007.02730v2, p.9**, page image) give `ξ(N) = (4/3)·log₃N/log₂N + (−2ln2 + ln3/6 − 2)/log₂N + o(1/log₂N)`. **This programme cited that very paper for `1.9230` with its central theorem unread one page later.** `2⁴⁵` was an **inherited, unchecked, misattributed** number — the ratio `g₀/g = 2^44.60` of two *hand-built illustration functions* in which **the constant 20 is chosen by hand**. **Real value: `ξ(2²⁰⁴⁸) = −0.0772`, worth `2⁴·⁷`, not `2⁴⁵`.** Sign is **negative** — `ξ = 0` over-predicts cost. **And it washes out:** `(1+ξ)` sits *in the exponent*, so 4.7 bits at 2048 bits — **smaller than the ~10-bit `B` over-prediction this programme already measured on real RSA-240 data.** Three terms are provably not attackable (the ξ series diverges below `exp(exp(25))`) |
 
-So the honest current statement is narrower than round 48's: **NFS at `L[1/3]` is not untouched —
-it is closed except for its `o(1)` remainder, and the constant itself is now provably fixed.**
+**So NFS at `L[1/3]` is now fully closed**, and the thread that appeared to survive was closed
+*against the brief that raised it*. The remaining gap is not mathematics but discipline: every
+quantity here is `o(1)`-concealed, and **the fix is to compute the `o(1)`, not to hunt for a
+better constant.**
+
+⚠️ **And a citation trap for the record:** `1602.06739`, used in an earlier sweep in this
+programme, is **an astronomy paper.** It is not a factoring result and should never have been
+consulted. `pdftotext` also rendered Corollary 19's `(log log N)^{2/3}` as `^{1/3}` — caught from
+the page image, and it had nearly inverted the whole analysis.
 
 ---
 

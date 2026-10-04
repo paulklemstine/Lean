@@ -1,0 +1,83 @@
+                                     Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+
+Proof. Set
+                  𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X + 𝑎 01 Y + 𝑎 20 X 2 + 𝑎 11 XY + 𝑎 02 Y 2 + e
+                                                                                                         𝑎X3 )
+                  𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X + 𝑎 01 Y + 𝑎 20 X 2 + 𝑎 11 XY + 𝑎 02 Y 2 )
+                  𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑10 X + 𝑑01 Y),
+where 𝑎 10 , 𝑎 01 , 𝑎 20 , 𝑎 11 , 𝑎 02 , 𝑑10 , 𝑑01 are as in the lemma, and e
+                                                                            𝑎 is an unknown function of the variable 𝜈.
+    Given these expressions, we wish to rewrite Eq. (2) as a function of e                𝑎 . This is particularly tedious, but
+straightforward. The only needed tools are formulas in Prop. 16 over the function field R(e            𝑎 ). The code repository
+mentioned in the introduction of this article shows how the expansion can be carried out with a computer algebra
+system (and the same holds for other calculations in this section). We obtain that Eq. (2) with the functions set
+above can be rephrased as:
+                                                            (e𝑎 − 32/81) = 𝜀(e
+                                                                             𝑎 , 𝜈),
+for a continuous function 𝜀 such that for all 𝑡 ∈ R, lim𝜈→∞ 𝜀(𝑡, 𝜈) = 0. Let now 𝑡 − = 31/81 and 𝑡+ = 33/81. Since
+𝜀(𝑡− , 𝜈) and 𝜀(𝑡+ , 𝜈) both tend to zero, we can define 𝜈− and 𝜈+ such that
+                                          ∀𝜈 > 𝜈− , (𝑡 − − 32/81) − 𝜀(𝑡− , 𝜈) < 0,
+                                          ∀𝜈 > 𝜈+ , (𝑡 + − 32/81) − 𝜀(𝑡 + , 𝜈) > 0.
+    By the intermediate value theorem, we obtain that for any 𝜈 > max(𝜈− , 𝜈+ ), there exists 𝑡 ∈ [𝑡− , 𝑡+ ] such that
+(𝑡 − 32/81) = 𝜀(𝑡, 𝜈). Let now e𝑎 be the function of 𝜈 that returns such a number 𝑡. Then the functions 𝑎, 𝑏, and 𝑑
+defined above satisfy by construction the desired property.                                                         
+Proof of Theorem 17. The roadmap of the proof is the following:
+   1. We express the constraint (2) using a sufficiently precise asymptotic expansion of the smoothness probability
+      (given by Corollary 14) and the asymptotic expansions of 𝑎, 𝑏, 𝑑 known so far. Then we prove that the
+      𝑜(1) involved in the asymptotic expansions of 𝑎, 𝑏, 𝑑 are actually in the class 𝑂 (X 𝜆 Y 𝜇 ) for some 𝜆, 𝜇 ≥ 0
+      (not both being zero) so that we can write these 𝑜(1) as 𝐶 · X 𝜆 Y 𝜇 where 𝐶 is a function bounded at a
+      neighbourhood of ∞.
+   2. We prove that 𝐶 = 𝑐 + 𝑜(1) where 𝑐 is a constant computed along the way and restart the whole process
+       using the more precise asymptotic expansions for 𝑎, 𝑏, 𝑑 that we have just obtained in order to compute the
+       next coefficients.
+    Step 1: By Proposition 5, minimizers can be written as
+                                            𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + e
+                                                                                 𝑎 ),
+                                                      1/3 1/3           2/3
+                                            𝑏 = (8/9) 𝜈 (log 𝜈) (1 + 𝑏),         e
+                                            𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑),
+                                                                    e
+
+where e    𝑏, 𝑑e = 𝑜(1).
+        𝑎, e
+     Direct computations and simplifications (that involve Taylor series expansions, Prop. 16, and the asymptotic
+expansion of the smoothness probability in Corollary 14) that take into account the fact that e         𝑏, 𝑑e = 𝑜(1) rephrase
+                                                                                                     𝑎, e
+Eq. (2) as
+                                                       2 2 1 e2
+                                                  𝑎= e
+                                                  e      𝑏 + 𝑑 + 𝑂 (X).
+                                                       3      3
+     The last equation shows that e        −1
+                                       𝑎 X is bounded below by a finite constant. Moreover, Lemma 18 ensures the
+existence of functions 𝑎 0 , 𝑏 0 , 𝑑0 that can be used as substitutes for e  𝑏, 𝑑eabove, that satisfy the constraint (2), and
+                                                                          𝑎, e
+                     −1
+such that lim 𝑎 0 X exists and is finite. Since 𝑎, 𝑏, 𝑑 are minimizers of Problem 3, e     𝑎 X −1 is also upper bounded by
+     −1
+𝑎 0 X . Therefore, e                                                   2
+                      𝑎 ∈ 𝑂 (X), whence the same also holds for 𝑏 and 𝑑 .
+                                                                     e        e  2
+                                                   1      1
+     Replacing e    𝑏, 𝑑erespectively by 𝑎X, 𝑏X 2 , 𝑑X 2 for some functions 𝑎, 𝑏, 𝑑 bounded at a neighborhood of +∞
+                 𝑎, e
+in Eq. (2), we obtain that
+                                                      2 2 1 2 4
+                                                −𝑎 + 𝑏 + 𝑑 + = 𝑜(1),
+                                                      3      3      3
+which means in particular that 𝑎 ≥ 4/3 + 𝑜(1). By minimality of 𝑎 we must also have 𝑎 ≤ 4/3 + 𝑜(1) so as not to
+contradict Lemma 18. So 𝑎 = 4/3 + 𝑜(1) and we must necessarily have 𝑏 = 𝑑 = 𝑜(1). Therefore, we obtain
+                                       𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 4X/3 + e
+                                                                                   𝑎 X),
+                                                                               1
+                                       𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + e
+                                                                            𝑏X 2 ),
+                                                                     1
+                                       𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑X
+                                                               e 2 ),
+
+
+
+                                                               10
+

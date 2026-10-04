@@ -1,0 +1,80 @@
+                                     Le Gluher, A. & Spaenlehauer, P-J & Thomé E.
+
+
+for all 𝑢 > 1 and 𝜉 = (𝑒 𝑢 − 1)/𝑢. Let 𝜂 = (𝑒 𝑠 − 1)/𝑠, so that 𝑠 = log(1 + 𝑠𝜂). By substitution we have:
+                                          ∫ 𝜉 𝑠                    ∫ 𝑢
+                                                𝑠𝑒 − 𝑒 𝑠 + 1
+                                                             d𝑠 =      𝑠d𝜂.
+                                            0        𝑠               1
+
+    Let us study the integral on the right-hand side. First, we need to know more about 𝑠.
+
+Proposition 9. The function 𝜂 → 𝑠(𝜂)/log 𝜂 is in C.
+Proof. We prove by induction on 𝑛 that there exists 𝑃𝑛 ∈ R[𝑋, 𝑌 ] such that, as 𝜂 → +∞, we have 𝑠 = log 𝜂 ·
+(𝑃𝑛 (X, Y) + 𝑜(Y 𝑛 )). First we show that 𝑠 = (log 𝜂) (1 + 𝑜(1)) when 𝜂 → +∞, which is to say 𝑃0 = 1. Indeed
+𝜑 : 𝑠 ↦−→ (𝑒 𝑠 − 1)/𝑠 is bĳective on R>0 and strictly increasing, and so is 𝜑−1 . Since 𝜑(log 𝜂) = (𝜂 − 1)/log 𝜂 <
+𝜂 = 𝜑(𝑠), we have log 𝜂 < 𝑠. Let now 𝜀 > 0. When 𝜂 is large enough, we have 𝜂1+𝜀 > (1 + 𝜀)𝜂 log 𝜂 + 1. This
+leads to 𝜑(𝑠) < 𝜑((1 + 𝜀) log 𝜂), hence to 𝑠 < (1 + 𝜀) log 𝜂 and proves the base case.
+    We now proceed with the induction step. Since 𝑠 = log(1 + 𝑠𝜂), we may write
+
+                                   𝑠 = log 𝑠 + log 𝜂 + log(1 + 1/(𝑠𝜂))
+                                     = log 𝜂 · (1 + log 𝑠/log 𝜂 + 𝑜(1/𝜂))
+                                                                                   
+                                     = log 𝜂 · 1 + X + Y · log 𝑃𝑛 (X, Y) + 𝑜(Y 𝑛+1 ) ,
+
+where the last expression omits some terms that are swallowed by 𝑜(Y 𝑛+1 ). Since the constant coefficient of 𝑃𝑛
+is 1, an expansion of the inner logarithm above to 𝑛 terms gives the desired result. More precisely, it is easy to
+verify that 𝑃𝑛+1 is the truncation to total degree at most 𝑛 + 1 of
+                                                              𝑛
+                                                             ∑︁              (𝑃𝑛 − 1) 𝑖
+                                               1 + 𝑋 −𝑌            (−1) 𝑖               .
+                                                             𝑖=1
+                                                                                 𝑖
+
+                                                                                                                              
+    In fact, a more explicit version of the series associated to 𝑠(𝜂)/log 𝜂 can be computed:
+Proposition 10. Letting P denote the series associated to 𝑠(𝜂)/log 𝜂, we have
+                                                              +∞ ∑︁
+                                                                  𝑖
+                                                              ∑︁    𝑆(𝑖, 𝑖 − 𝑗 + 1)
+                                   P(𝑋, 𝑌 ) = 1 + 𝑋 + 𝑌 ·                                       𝑋 𝑗 𝑌 𝑖− 𝑗
+                                                              𝑖=1 𝑗=1
+                                                                                   𝑗!
+
+where the 𝑆(𝑖, 𝑗) are signed Stirling numbers of the first kind.
+Proof. By [7] (see also [8, Sec. 5, Exercise 22]), the reciprocal 𝑔(𝑦) of 𝑓 : 𝑥 ↦→ 𝑒 𝑥 /𝑥 has the following asymptotic
+series expansion at the neighborhood of ∞:
+                                                        +∞ ∑︁
+                                                            𝑖
+                                                        ∑︁    𝑆(𝑖, 𝑖 − 𝑗 + 1) (log 𝑦) 𝑗         2
+                                     log 𝑦 + log2 𝑦 +                                                   .
+                                                         𝑖=1 𝑗=1
+                                                                              𝑗!            (log 𝑦) 𝑖
+
+    By definition, 𝑠(𝑦) is the reciprocal of the function ℎ : 𝑥 ↦→ 𝑒 𝑥 /𝑥 − 1/𝑥. We will show that 𝑠(𝑦) − 𝑔(𝑦) ∼
+(𝑦 log 𝑦) −1 as 𝑦 → +∞. This will conclude our proof since it will ensure that for all 𝑛 ∈ Z ≥0 ,
+                                                   𝑛 ∑︁
+                                                      𝑖                                                        
+                                                  ∑︁    𝑆(𝑖, 𝑖 − 𝑗 + 1) (log 𝑦) 𝑗       2           1
+                        𝑠(𝑦) = log 𝑦 + log2 𝑦 +                                               +𝑜
+                                                   𝑖=1 𝑗=1
+                                                                        𝑗!          (log 𝑦) 𝑖    (log 𝑦) 𝑛
+
+as 𝑦 grows.
+      First, using the fact that ℎ(𝑠(𝑦)) = 𝑒 𝑠 ( 𝑦) 𝑦 −1 − 𝑠(𝑦) −1 = 𝑦, we get that 𝑓 (𝑠(𝑦)) − 𝑓 (𝑔(𝑦)) = 𝑒 𝑠 ( 𝑦) 𝑠(𝑦) −1 − 𝑦 =
+𝑠(𝑦) −1 . By the mean value theorem, there exists 𝜃 𝑦 between 𝑔(𝑦) and 𝑠(𝑦) such that 𝑠(𝑦) −1 = 𝑓 (𝑠(𝑦)) − 𝑓 (𝑔(𝑦)) =
+ 𝑓 0 (𝜃 𝑦 ) (𝑠(𝑦) − 𝑔(𝑦)). Since 𝑠(𝑦) = log 𝑦 + log2 𝑦 + 𝑜(1) and 𝑔(𝑦) = log 𝑦 + log2 𝑦 + 𝑜(1), we deduce that 𝜃 𝑦 =
+log 𝑦 + log2 𝑦 + 𝑜(1) when 𝑦 → +∞, hence 𝑓 0 (𝜃 𝑦 ) ∼ 𝑦. Consequently, 𝑠(𝑦) − 𝑔(𝑦) ∼ (𝑦𝑠(𝑦)) −1 ∼ (𝑦 log 𝑦) −1 . 
+Proposition 11. The series
+                                               +∞ ∑︁
+                                                   𝑖
+                                               ∑︁    𝑆(𝑖, 𝑖 − 𝑗 + 1)
+                                                                               X 𝑗 Y 𝑖− 𝑗
+                                               𝑖=1 𝑗=1
+                                                                   𝑗!
+
+converges uniformly for 𝜂 ∈ [176, +∞[.
+
+
+                                                                   6
+

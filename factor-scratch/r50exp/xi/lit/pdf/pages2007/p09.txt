@@ -1,0 +1,63 @@
+                     Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+
+4.1 EXTENSION OF THE CLASS C
+    In order to express conveniently our results on the asymptotic expansion of the function 𝜉, we introduce a
+variant of the class C defined in Section 3.
+
+Definition 15. Let 𝛼, 𝛽 ∈ R. The class of functions C [ 𝛼,𝛽 ] is the set of functions 𝑓 with values in R such that
+𝜈 ↦→ 𝜈 −𝛼 (log 𝜈) −𝛽 𝑓 (𝜈) is in C.
+
+    In particular, C [0,0] = C. If 𝑓 is in C [ 𝛼,𝛽 ] , then we denote by F ∈ R[𝑋, 𝑌 ] the series associated to 𝜈 ↦→
+𝜈 −𝛼 (log 𝜈) −𝛽 𝑓 (𝜈) and call it, by extension, the series associated to 𝑓 . Note however that this extension deserves
+some caution, as the association makes sense only relative to a given (𝛼, 𝛽).
+    The introduction of these classes C [ 𝛼,𝛽 ] is motivated by the fact that in the context of NFS, the function
+𝑢 ↦→ − log 𝜌(𝑢), which gives the relevant smoothness probabilities, is in C [1,1] (see Corollaries 13 and 14). The
+following proposition establishes stability properties for elements of the classes C [ 𝛼,𝛽 ] .
+
+Proposition 16. Let 𝑓 ∈ C [ 𝛼,𝛽] with associated series F ∈ R[[𝑋, 𝑌 ]] such that 𝛼 > 0 and F(0, 0) > 0. Then
+  1. log 𝑓 ∈ C [0,1] and its associated series is 𝛼 + 𝛽𝑋/𝛼 + (𝑌 log F)/𝛼;
+   2. Y ( 𝑓 ) = (log 𝑓 ) −1 ∈ C and its associated series is
+
+                                                 𝑌 /(𝛼 + 𝛽𝑋/𝛼 + (𝑌 log F)/𝛼);
+
+   3. if 𝛼 > 0, then X( 𝑓 ) = log2 𝑓 /log 𝑓 ∈ C and its associated series is
+
+                            (𝑋 + 𝑌 log(𝛼 + 𝛽𝑋/𝛼 + (𝑌 log F)/𝛼))/(𝛼 + 𝛽𝑋/𝛼 + (𝑌 log F)/𝛼).
+
+Proof. The result follows by direct computations.                                                                      
+
+4.2 TWO NEW PROVEN TERMS FOR THE NFS COMPLEXITY
+    In this section we develop the functions of interest 𝑎, 𝑏, 𝑑, defined in Section 2. The end result of this section is
+an asymptotic expansion of the complexity of NFS with two new terms. We also introduce several reasonings that
+will be intensively used and automatized in Section 4.3.
+
+Theorem 17. The minimizers 𝑎, 𝑏, 𝑑 satisfy :
+
+                          𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X(𝜈) + 𝑎 01 Y (𝜈) + 𝑜(Y (𝜈))),
+                          𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X(𝜈) + 𝑎 01 Y (𝜈) + 𝑜(Y (𝜈))),
+                          𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑10 X(𝜈) + 𝑑01 Y (𝜈) + 𝑜(Y (𝜈))),
+
+where 𝑎 10 = 4/3, 𝑎 01 = −2 log 2 + log 3/6 − 2, 𝑑10 = −2/3 and 𝑑01 = log 2 − 5 log 3/6 + 1.
+
+    Before proving Thm. 17, we show that there exist functions 𝑎, 𝑏, 𝑑 as in Thm. 17 which satisfy Eq. (2). They
+will serve as a baseline for our minimization problem. One could wonder where the constants 𝑎 𝑖 𝑗 and 𝑑𝑖 𝑗 in the
+statement of Thm. 17, and also in the following lemma, come from. To obtain these constants, we used a computer
+algebra system to iteratively expand the constraint (2) and then we minimized the coefficients of the expansions of
+𝑎, 𝑏, 𝑑 by hand. In the rest of the section, we will always omit the argument 𝜈 of the functions X and Y.
+
+Lemma 18. There exist functions 𝑎, 𝑏, 𝑑 which satisfy Eq. (2) and such that
+
+                𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X + 𝑎 01 Y + 𝑎 20 X 2 + 𝑎 11 XY + 𝑎 02 Y 2 + 𝑜(Y 2 ))
+                𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 𝑎 10 X + 𝑎 01 Y + 𝑎 20 X 2 + 𝑎 11 XY + 𝑎 02 Y 2 + 𝑜(Y 2 ))
+                𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑10 X + 𝑑01 Y + 𝑜(Y)),
+
+where
+                                      𝑎 10 = 4/3, 𝑎 01 = −2 log 2 + log 3/6 − 2,
+                                    𝑎 20 = −4/9, 𝑎 11 = 4 log 2/3 − log 3/9 + 4,
+                     𝑎 02 = −(log 2) 2 + (log 2 · log 3)/6 − 7(log 3) 2 /36 − 6 log 2 + log 3/2 − 5,
+                                  𝑑10 = −2/3, and 𝑑01 = log 2 − 5 log 3/6 + 1.
+
+
+                                                               9
+

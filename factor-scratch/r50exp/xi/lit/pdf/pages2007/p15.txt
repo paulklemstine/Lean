@@ -1,0 +1,71 @@
+                      Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+
+    The expansion for 𝑏 is proven up to a degree one less than the one for 𝑎. The underlying reasons are the same
+as in the proof of Theorem 17, where this behavior was first encountered.
+    This implies that the heuristic complexity of NFS is bounded above by
+                       "√︂                                                                 #
+                         3 64                                  log   𝑁   1              1
+                   exp        (log 𝑁) 1/3 (log2 𝑁) 2/3 A (𝑛)       3
+                                                                       ,       +𝑜                  .
+                           9                                   log2 𝑁 log2 𝑁        (log2 𝑁) 𝑛
+
+
+5 EXPERIMENTAL RESULTS
+    In this section, we report on experimental results obtained with our implementation of the algorithms described
+in Section 4.3. Our implementation is available in the code repository mentioned in the introduction of this article.
+    These algorithms provide an asymptotic expansion of the heuristic complexity 𝐶 (𝑁) of NFS. More precisely,
+they output coefficients of a bivariate series A ∈ Q(log 2, log 3) [[𝑋, 𝑌 ]] such that for all 𝑛 ≥ 0 such as our
+algorithms do not fail, we have:
+                             √︂                                                                 
+                              3 64                                  log3 𝑁    1              1
+                 log 𝐶 (𝑁) =       (log 𝑁) 1/3 (log2 𝑁) 2/3 A (𝑛)          ,        +𝑜                 .
+                                 9                                  log2 𝑁 log2 𝑁        (log2 𝑁) 𝑛
+                                                               Í
+    Here are the first coefficients of the series A(𝑋, 𝑌 ) =                      𝑖 𝑗
+                                                                   𝑖, 𝑗 ≥0 𝑎 𝑖 𝑗 𝑋 𝑌 obtained via this implementation:
+
+               𝑎 00   1
+               𝑎 10   4/3
+               𝑎 01   −2 log 2 + log 3/6 − 2
+               𝑎 20   −4/9
+               𝑎 11   4 log 2/3 − log 3/9 + 4
+               𝑎 02   −(log 2) 2 + log 2 log 3/6 − 7(log 3) 2 /36 − 6 log 2 + log 3/2 − 5
+               𝑎 30   32/81
+               𝑎 21   −16 log 2/9 + 4 log 3/27 − 56/9
+               𝑎 12   8(log 2) 2 /3 − 4 log 2 log 3/9 + 56 log 2/3 + 14(log 3) 2 /27 − 14 log 3/9 + 64/3
+               𝑎 03   −4(log 2) 3 /3 + (log 2) 2 log 3/3 − 14(log 2) 2 − 7 log 2(log 3) 2 /9
+                      +7 log 2 log 3/3 − 32 log 2 + 41(log 3) 3 /648 − 49(log 3) 2 /18 + 8 log 3/3 − 85/3
+    The function 𝜉 in the introduction can be approximated asymptotically by evaluating at (log3 𝑁/log2 𝑁, 1/log2 𝑁)
+the truncations of the series A(𝑋, 𝑌 ) − 1. Using the algorithms in Section 4.3, we were able to compute the series
+A, B = A, and D up to degree 14 (more than a hundred terms). The fact that A = B has been verified so far backs
+the claim that the patterns encountered while proving minimality are always as expected. Moreover, despite the
+fact the algorithms ProveExistence and ProveMinimality regularly have to consider terms X 𝑖 Y 𝑗 with 𝑖 or 𝑗 in
+1
+2 Z in the expansions of 𝑎, 𝑏, 𝑑, the coefficients of these terms always turned out to be zero in our experiments.
+These remarks allow us to formulate the following conjecture:
+
+Conjecture 21. The minimizers 𝑎, 𝑏, 𝑑 of Problem 3 belong respectively to the classes of functions C [1/3,2/3] ,
+C [1/3,2/3] , C [1/3,−1/3] . Moreover, the series A, B ∈ R[[𝑋, 𝑌 ]] associated to 𝑎, 𝑏 are equal.
+
+    For 𝑖 ≥ 0, we let 𝜉𝑖 (𝑁) denote the function A (𝑖) (log3 𝑁/log2 𝑁, 1/log2 𝑁) − 1. In particular, for all 𝑖 ≥ 0, we
+have 𝜉 (𝑁) = 𝜉𝑖 (𝑁) + 𝑜(1/(log2 𝑁) 𝑖 ). Figure 1 shows the behavior of 𝜉𝑖 for cryptographically relevant values of
+𝑁. Figure 2 focuses on the range where we observe experimentally the convergence of the truncations 𝜉𝑖 .
+    These figures raise questions on the relevance of the traditional assumption 𝜉 = 0 for estimating the complexity
+of NFS in the range which is useful for cryptographic applications, i.e., 𝑁 ≤ 220000 . Indeed, we only start to observe
+convergence for 𝑁 > exp(exp(25)) ≈ 2103881111194 . Let us also notice that the convergence of 𝜉 to zero is very slow
+as 𝑁 grows, since 𝜉 (𝑁) ∼ 4 log3 𝑁/(3 log2 𝑁) (Theorem 17). One could think that adding more and more terms
+in the developement of 𝜉 would yield a more precise formula for the complexity of NFS. However, it turns out that
+for practical values of 𝑁, replacing 𝜉 by 𝜉𝑖 for 𝑖 > 0 is possibly even worse since the asymptotic series expansion
+of 𝜉 seems to diverge for 𝑁 ≤ exp(exp(25)). In summary, all the asymptotic estimations for 𝜉 that we have at our
+disposal, including the brutal approximation 𝜉 = 0, say little to nothing about the behavior of the complexity of
+NFS in the range where the algorithm can be used.
+    In fact, the expansion of 𝜉 relies on the expansion of 𝜌, and the latter involves a series that converges only for suffi-
+ciently large values as stated in Proposition 11. We recall that 𝜌(𝑢) ∼ exp −𝑢 log 𝑢 Q (𝑖) (X(𝑢), Y (𝑢)) + 𝑜 Y (𝑢) 𝑖
+                                                                                                                          
+where Q is defined in Proposition 12. To experimentally assess the convergence properties of 𝜌 estimations, Figure 3
+plots the functions 𝑢 ↦→ Q (𝑖) (X(𝑢), Y (𝑢)) in function of 𝑢 for 1 ≤ 𝑖 ≤ 6.
+
+
+                                                            15
+

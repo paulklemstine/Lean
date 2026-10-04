@@ -1,0 +1,104 @@
+                     Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+
+
+for some fresh functions e  𝑏, 𝑑e = 𝑜(1).
+                         𝑎, e
+   Step 2: We use the result obtained in Step 1 and the asymptotic expansion of the smoothness probability
+(Corollary 14) to deduce by direct computations the following equality enforced by Eq. (2):
+                                                         
+                                              2 2 1 e2
+                                         −e
+                                          𝑎+ e  𝑏 + 𝑑 · X = 𝑂 (Y).
+                                              3       3
+                                                                         1   1   1   1
+    Following the same reasoning as in Step 1, e         𝑏X 2 Y − 2 and 𝑑X
+                                               𝑎 XY −1 , e               e 2 Y − 2 must be bounded at a neighborhood
+of +∞. Replacing e 𝑎 (resp. e
+                            𝑏, 𝑑)
+                                                         1              1
+                               e by 𝑎X −1 Y (resp. 𝑏X − 2 Y 2 and 𝑑X − 2 Y 12 ) for some functions 𝑎, 𝑏, 𝑑 bounded at a
+                                                            1
+
+
+neighborhood of +∞, we obtain the following equality:
+                                                2     2
+                                          2𝑏   𝑑             log 3
+                                     −𝑎 +    +   − 2 log 2 +       − 2 = 𝑜(1).
+                                           3   3               6
+    By minimality and using our baseline result Lemma 18 as we did in Step 1, the equalities 𝑎 = −2 log 2 +
+log 3/6 − 2 + 𝑜(1), 𝑏 = 𝑜(1), and 𝑑 = 𝑜(1) must hold, which means that:
+                     𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 4X/3 + (−2 log 2 + log 3/6 − 2)Y + e
+                                                                                             𝑎 Y),
+                                                                    1
+                     𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + e
+                                                          𝑏Y 2 ),
+                                             e 21 ),
+                     𝑑 = (3𝜈/log 𝜈) 1/3 (1 + 𝑑Y
+
+for some fresh functions e  𝑏, 𝑑e = 𝑜(1).
+                         𝑎, e
+   Step 3: Again we use the asymptotic expansion obtained in Step 2 to refine the asymptotic equality from Eq. (2)
+and obtain:
+                                                                                      3
+                               5 log(3)                             2 log(3)                 Y2
+                   −2 log(2) +          − 2 + 𝑜(1) 𝑑 + 8 log(2) −
+                                                    e                         + 2 + 𝑜(1) e
+                                                                                         𝑏
+                                   3                                    3                     3
+                                                              !                 !
+                                                    2       2
+                                                  𝑑
+                                                  e     2𝑏e         4𝑑 16𝑏
+                                                                      e       e      1
+                                         + −e 𝑎+      +         Y+      −         XY 2 = 𝑂 (X 2 ).
+                                                   3      3          9      9
+
+where 𝑜(1) are explicit expressions in e
+                                       𝑎, e  e which we omit for brevity.
+                                          𝑏, 𝑑,
+   This can be rephrased as
+                                                                         2
+                         1 e 1 2                      5 log(3)
+                             𝑑Y + X + − log(2) +
+                                2                              − 1 + 𝑜(1) Y +
+                         3          3                     6
+                           |                        {z                       }
+                                                          = 𝛿 (𝜈)
+                                                              2
+                       2 e 1 4                   log(3) 1
+                           𝑏Y 2 − X + 2 log(2) −       + + 𝑜(1) Y −e𝑎 Y = 𝑂 (X 2 ).
+                       3         3                 6    2
+                         |                    {z                  }
+                                                     =𝛽 (𝜈)
+
+     We prove now that 𝛽(𝜈) = 𝑂 (X 2 ) and 𝛿(𝜈) = 𝑂 (X 2 ). Assume by contradiction that this does not hold. Then
+𝑎 (𝜈) is positive asymptotically and it cannot belong to the class 𝑂 (X 2 ). This would contradict our upper bound
+e
+for the minimum given in Lemma 18.
+     Consequently, 𝛽(𝜈) and 𝛿(𝜈) belong to 𝑂 (X 2 ) and then so does e  𝑎 Y. This means that e 𝑎 = 𝑂 (X 2 Y −1 ) and
+                  1                                                           1           1
+                −
+𝑏, 𝑑e = 𝑂 (XY 2 ). As usual we call 𝑎, 𝑏, 𝑑 the functions e
+e                                                              −2
+                                                           𝑎 X Y, e     −1
+                                                                    𝑏X Y 2 and 𝑑X     −1
+                                                                                   e Y 2 bounded at ∞, and we
+substitute in Eq. (2) to get
+                                                          2           2
+                                              4     2      4      1      2
+                                         −𝑎 −     +     𝑏−      +     𝑑+      = 𝑜(1).                              (3)
+                                              9     3      3      3      3
+   Lemma 18 ensures that we must have 𝑎 ≤ −4/9 + 𝑜(1), otherwise it would contradict the minimality of 𝑎.
+The equation above ensures that we must have 𝑎 ≥ −4/9 + 𝑜(1) as well. So 𝑎 = −4/9 + 𝑜(1), which implies that
+𝑏 = 4/3 + 𝑜(1) and 𝑑 = −2/3 + 𝑜(1). This third step of this proof gives:
+                𝑎 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 4X/3 + (−2 log 2 + log 3/6 − 2)Y − 4X 2 /9 + e
+                                                                                                  𝑎 X 2 ),
+                𝑏 = (8/9) 1/3 𝜈 1/3 (log 𝜈) 2/3 (1 + 4X/3 + e
+                                                            𝑏X),
+               𝑑 = (3𝜈/log 𝜈) 1/3 (1 − 2X/3 + 𝑑X),
+                                              e
+
+
+
+                                                                    11
+
