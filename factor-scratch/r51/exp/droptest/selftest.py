@@ -353,20 +353,43 @@ def main():
     nn, pp, qq = D.stange.gen_semiprime(24, rng)
     ps, mp_, mq_ = D.p_split(pp, qq)
     check("ST7c p_split in [0,1]", 0.0 <= ps <= 1.0, f"{ps}")
-    # Monte-Carlo confirmation of one modulus's p_split
-    nn, pp, qq = D.stange.gen_semiprime(20, rng)
+    # Monte-Carlo confirmation of one modulus's p_split, at the SIZE the
+    # control is actually used at (2^30 moduli, not 2^20).
+    nn, pp, qq = D.stange.gen_semiprime(30, rng)
     ps, mp_, mq_ = D.p_split(pp, qq)
     hits = tot = 0
     for _ in range(3000):
         gg = D.rand_g(nn, rng)
-        hits += (D.stange.n_order(gg, pp) % 2) != (D.stange.n_order(gg, qq) % 2) \
-            if False else (D.v2(D.stange.n_order(gg, pp))
-                           != D.v2(D.stange.n_order(gg, qq)))
+        hits += (D.v2(D.stange.n_order(gg, pp))
+                 != D.v2(D.stange.n_order(gg, qq)))
         tot += 1
     mc = hits / tot
-    check("ST7d Monte-Carlo p_split agrees with the closed form",
+    check("ST7d Monte-Carlo p_split agrees with the closed form (2^30 modulus)",
           abs(mc - ps) < 0.05, f"MC={mc:.4f} formula={ps:.4f} "
                                f"(v2(p-1)={mp_}, v2(q-1)={mq_})")
+    # The baseline must be verified against REAL primes across v2 patterns,
+    # not just one modulus: the whole control rests on it being right.
+    from sympy import nextprime
+    rs = random.Random(1234)
+    ok7 = True
+    det = []
+    for _ in range(3):
+        pbig = int(nextprime(rs.randrange(10 ** 6, 2 * 10 ** 6))) | 1
+        qbig = int(nextprime(rs.randrange(2 * 10 ** 6, 4 * 10 ** 6))) | 1
+        if pbig == qbig:
+            continue
+        frm, _, _ = D.p_split(pbig, qbig)
+        h = t = 0
+        for _ in range(1500):
+            gbig = D.rand_g(pbig * qbig, rs)
+            h += (D.v2(D.stange.n_order(gbig, pbig))
+                  != D.v2(D.stange.n_order(gbig, qbig)))
+            t += 1
+        det.append((frm, h / t))
+        if abs(h / t - frm) > 0.05:
+            ok7 = False
+    check("ST7e p_split closed form verified on 3 large random prime pairs",
+          ok7 and len(det) == 3, str([(round(a, 4), round(b, 4)) for a, b in det]))
 
     print()
     print("=" * 78)

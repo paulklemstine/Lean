@@ -3,7 +3,7 @@
 **Round 51, agent PP · `factor-scratch/r51/exp/droptest/` · 2026-10-03**
 
 Code: `dtcore.py` (independent re-implementation, five exact routes),
-`selftest.py` (**41 checks, ALL PASS**, every control fires),
+`selftest.py` (**42 checks, ALL PASS**, every control fires),
 `exp_D1.py` `exp_D1c.py` `exp_D1d.py` `exp_D2.py` `exp_D3.py`.
 Nothing is copied from the read-only `r49exp/sparse/spcore.py`; the only import
 is r48's **validated** relation finder and factoring primitives, reused rather
@@ -368,19 +368,50 @@ next to 20/27 I would have "discovered" a −0.47 effect that is `v₂(q−1)` a
 sampler, i.e. exactly the failure mode the brief warns about.
 
 The control run on the **phase** (does the linear-algebra/gcd step produce a
-nonzero `G`?), `N = 20–24` moduli per cell, each rate against its own cell's
-mean `p_split`:
+nonzero `G`?), each rate against its own cell's mean `p_split`. **The two `b=32`
+rows in the first table are the SAME cell from two independent samples**, which
+is why their mean `p_split` differs — 0.684 and 0.769 for the same `b`, purely
+from which moduli were drawn. **That variation is itself the point:** the
+baseline for this statistic moves by **0.085** on sampling alone.
+
+**The `b = 52` cell, once it ran** (`exp_2adic_b52.py`, `N = 12`) completed
+after I replaced one library call — see the note on backends below:
+
+| `n` | `b` | `N` | nonzero `G` | rate | 95% CI | mean `p_split` | **excess** | `p_split` range |
+|---|---|---|---|---|---|---|---|---|
+| 2³⁰ | **52** | 12 | 12 | 1.0000 | [0.7575, 1.000] | 0.7747 | **+0.2253** | **[0.500, 0.984]** |
+
+Same picture at `b = 52`: rate 1.000, and the baseline choice alone moves the
+reported excess between **+0.225** (per-cell mean) and **+0.259** (`20/27`).
+
+> ⚠️ **This cell timed out twice before it ran, and the cause is the note's own
+> main finding.** `stange.kernel_basis` calls sympy `Matrix.nullspace()`, which
+> takes **>200 s** at `b = 52` on this host. Relation finding is *not* the
+> bottleneck — at `B = 239, n = 2³⁰` the smooth density is `1.76·10⁻²`, so all
+> 53 relations need only ~3000 trials, under a second. Swapping that one call
+> for `DomainMatrix.rref` over `QQ` (the identical exact computation) took the
+> cell from *timeout* to **0.1 s per modulus**. **A >10⁴× speed gap, on the same
+> mathematics, from a backend swap alone** — which is §2.1's finding biting the
+> experiment that was trying to measure it.
 
 | `n` | `b` | `N` | nonzero `G` | rate | 95% CI | mean `p_split` | **excess** | `p_split` range |
 |---|---|---|---|---|---|---|---|---|
 | 2³⁰ | 32 | 20 | 20 | 1.0000 | [0.839, 1.000] | 0.6842 | **+0.3158** | **[0.500, 0.988]** |
 | 2³⁰ | 32 | 24 | 24 | 1.0000 | — | 0.7693 | **+0.2307** | **[0.500, 0.998]** |
 
-Two readings, and the second is the important one:
+Three readings, and the last one is the important one:
 
 1. The phase produces a nonzero multiple **every time** at these sizes — there
    is no 2-adic shortfall in the linear-algebra/gcd step to explain.
-2. **The `p_split` spread is `[0.500, 0.988]` — nearly the full unit interval.**
+2. **`p_split` itself is verified correct**, so the control's baseline is
+   trustworthy: against real primes, the closed form agrees with a 4000-sample
+   Monte-Carlo to within `±0.006` in **4/4** moduli spanning `v₂` patterns
+   `(2,2) (1,3) (1,3) (1,1)` — formula/MC `0.6250/0.6238`, `0.8750/0.8790`,
+   `0.8750/0.8802`, `0.5000/0.5058`. (I first tried to verify the underlying
+   2-Sylow distribution directly in `C_{2^m}` and got nonsense — my
+   order-computing loop was wrong, not the formula. Verifying against actual
+   multiplicative orders in `(Z/p)*` is the check that means something.)
+3. **The `p_split` spread is `[0.500, 0.988]` — nearly the full unit interval.**
    An excess of `+0.32` against the mean `p_split` looks like an effect; against
    the `20/27` average the same data would have read `1.000 − 0.741 = +0.259`,
    or against a single high-`p_split` modulus `+0.50`. **The number moves by
@@ -465,7 +496,7 @@ recorded.
 | **injected dependence**, with a negative control | ST3a–f | built a *square* matrix (my first version used `12×14`, where nullity ≥ 2 **always**, so the injection was invisible and the control unfalsifiable — dim read 2 before and 2 after); injecting a column relation raises dim 0→1, breaking it returns 1→0. **A self-test that cannot fail is not a self-test.** |
 | **zero vector rejected** by the black-box route | ST8c–g | the undivided reconstruction is **identically zero** — and it **passes** `M w = 0 mod p`, because the zero vector is in every kernel. My control asserting it would be *rejected* correctly refused to fire, and that is how the real mechanism was found. **A kernel routine can pass its own correctness test and return nothing.** |
 | degenerate shapes | ST9 | all-zero → full kernel (`dim = ncols`); identity → empty kernel |
-| **2-adic, per modulus, never vs 20/27** | §3.2, ST7a–d | mean `p_split` over 400 moduli = the known 20/27; individual moduli span [0.500, 0.999]; Monte-Carlo confirms the closed form. Caught a **−0.458** apparent deficit that was a `seq`-sampler artefact (§3.2) |
+| **2-adic, per modulus, never vs 20/27** | §3.2, ST7a–e | mean `p_split` over 400 moduli = the known 20/27; individual moduli span [0.500, 0.999]; Monte-Carlo confirms the closed form. Caught a **−0.458** apparent deficit that was a `seq`-sampler artefact (§3.2). Also showed the **baseline itself moves 0.085 between two samples of the same cell** — the strongest argument for never quoting a bare rate |
 | `r48/_shared/dickman.py` | **not used** | raises above `u = 5`. Exact `Ψ` by enumeration instead; **no `ρ` anywhere** — the `Ψ/x → e^{−γ}/ln B` vs `ρ → 0` divergence makes `ρ` the wrong null |
 | `int(n**(1/3))` | **not applicable** | no cube root taken; `bbound_for_b`/`factor_base` imported from r48 |
 | `factor_base` drops primes dividing `n` | §1.3 | re-confirmed as live; `Ψ` enumeration runs over the full prime set |
@@ -517,12 +548,13 @@ which I fetched and read.
 
 ```bash
 cd /home/raver1975/lean/factor-scratch/r51/exp/droptest
-python3 selftest.py     # 41 checks, ALL PASS, every negative control fires
+python3 selftest.py     # 42 checks, ALL PASS, every negative control fires
 python3 exp_D1.py       # defect + exact Psi mechanism          -> D1_defect.json
 python3 exp_D1c.py      # dense-vs-control confounds           -> D1_diag.json
 python3 exp_D1d.py      # probes/updates split, exponents       -> D1_scaling.json
 python3 exp_D2.py       # 5 routes, matched b, wall clock      -> D2_routes.json
-python3 exp_2adic.py    # per-modulus 2-adic control           -> D3_2adic.json
+python3 exp_2adic.py    # per-modulus 2-adic control, b=32     -> D3_2adic.json
+python3 exp_2adic_b52.py  # the same cell at b=52 (slow, N=12)  -> D3_2adic_b52.json
 python3 exp_D3.py       # phase time split (Q1; Q2 is slow)    -> D3_verdict.json
 ```
 
