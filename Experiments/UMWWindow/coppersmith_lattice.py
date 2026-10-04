@@ -13,17 +13,22 @@ WHAT WORKS: the shift-polynomial + LLL skeleton runs fast (fpylll). The
 "hangs" encountered while building this were a slow trial-division is_prime(),
 not the lattice; with Miller-Rabin primality it is instant.
 
-WHAT FAILS: for f(x) = x - x0 (linear) or f(x) = (x-x0)(x-x1) (quadratic) with
-KNOWN small roots x0, and X well inside the Coppersmith bound X < N^{beta^2/d},
-the reduced basis contains NO row with h(x0) = 0, across a sweep of (m, t) and
-scales. That should NOT happen for a correct Howgrave-Graham construction, so
-there is an unresolved bug in the scaling (candidates: the X^{D-k} row weighting,
-the N^{m-i} placement, the monic reduction, or the required m,t ~ N^{beta/d}
-scaling) that I did not isolate.
+WHAT FAILS (ROOT CAUSE, round 97e): the lattice is CORRECT -- every pre-LLL row
+g(x0) == 0 (mod N), verified directly. The bug is my RECOVERY path: I evaluated
+the SCALED coefficient vector at x0. The lattice is built from scaled rows
+(c_k * X^k, or c_k * X^(D-k)); scaling is a metric device and CHANGES the
+polynomial, so eval(scaled_row, x0) is nonzero even though the underlying lattice
+element vanishes at x0. A correct implementation must either (a) recover the
+UNSCALED polynomial via the LLL TRANSFORMATION MATRIX (each reduced row is a
+linear combination of the original rows, same combination applied to the unscaled
+g_i), or (b) root-find on reduced vectors when the scaling is the identity.
+Confirmed: the X^{D-k} vs X^k direction is NOT the bug (both give the same 0);
+the primality hang is NOT the bug (Miller-Rabin fixes it). Even with the
+transformation-matrix reconstruction, Coppersmith's guarantee needs m,t scaled to
+~ N^{beta/d}, a regime not reached here.
 
 The lattice SHOULD produce a short vector whose evaluation is divisible by N^m;
-the fact that it does not recover the known root is the signal that the
-construction is mis-scaled here.
+until a version recovers a KNOWN root, NO claim is made (rule 5).
 
 CONCLUSION. The multivariate sub-N^(1/4) question (round 97c) remains open, its
 "split the leak" family is already excluded (round 97b, verified), and the
