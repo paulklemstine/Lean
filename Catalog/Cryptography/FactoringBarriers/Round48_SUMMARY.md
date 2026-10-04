@@ -29,6 +29,9 @@ extends the round-47 census (`Round47_SUMMARY.md`).
 > - **The load-bearing conclusion: the relation-finding is where all the difficulty lives — 95%
 >   of the phase. The construction 48 rounds attacked is 5%, the EASY half.**
 
+> ## READ THIS FIRST → **`Papers/fifty_rounds_assembled.md` (#530)** — the consolidated state of
+> both rounds, with every retraction resolved and the correct value stated everywhere.
+>
 > ## FOUR PAPERS, ALL POSITIVE — proved or exactly derived, never estimated
 >
 > | paper | result |
