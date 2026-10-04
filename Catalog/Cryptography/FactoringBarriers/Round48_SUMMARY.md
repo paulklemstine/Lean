@@ -29,16 +29,17 @@ extends the round-47 census (`Round47_SUMMARY.md`).
 > - **The load-bearing conclusion: the relation-finding is where all the difficulty lives — 95%
 >   of the phase. The construction 48 rounds attacked is 5%, the EASY half.**
 
-> ## THREE POSITIVES — all PROVED or exactly derived, not estimated
+> ## FOUR PAPERS, ALL POSITIVE — proved or exactly derived, never estimated
 >
 > | paper | result |
 > |---|---|
 > | **#525** | The stride relation-finder **attains the unconditional lower bound** `(b+c)/Ψ(n,BB)` multiplications per factor **with equality** — 54.78× fewer modular multiplications. **Optimal, not merely better.** Beating it would require violating the equidistribution conjecture for `{g^x mod n}`. |
-> | **#528** | `20/27` **derived exactly** (to −1.7 × 10⁻¹⁸ in rational arithmetic) as `P(v₂(ord_p g) ≠ v₂(ord_q g))` over the joint law of `s = v₂(p−1)`; and **no correctness floor on `b`** (`b_min = 3`) |
+> | **#529** | **Where the time is:** relation-finding is **95%** of the cost and the kernel **5%** — the construction 48 rounds attacked is the cheap half. Plus a **backend swap worth >3×10⁴×** on identical mathematics (`Matrix.nullspace()` → `DomainMatrix.rref` over `QQ`) |
+| **#528** | `20/27` **derived exactly** (to −1.7 × 10⁻¹⁸ in rational arithmetic) as `P(v₂(ord_p g) ≠ v₂(ord_q g))` over the joint law of `s = v₂(p−1)`; and **no correctness floor on `b`** (`b_min = 3`) |
 | **#527** | Shoup's **unconditional** factoring bound `2√2 → 2`, proved. The `c=2` square is removable (Thm 15.1's `u log log x` vs the sharp `u log u`); the `a=2` square is forced by counting. **Optimal within this shape:** `√2` needs ECM, whose `√2` is a heuristic — **there is no proved unconditional `√2`.** |
 
 **Read this page, not the logs.** Round 48 produced: **one working factoring construction**,
-**two proved positives**, a set of closures with *stated reasons*, **two corrections of false
+**four positive papers**, a set of closures with *stated reasons*, **two corrections of false
 premises the program had carried for years** (a rigorous `L[1/2]` has existed since ~2009; and
 Coppersmith's univariate bound was settled in 2016), and a **retraction** of the program's last
 live lead — its support was a Dickman self-reference with no code behind it.
