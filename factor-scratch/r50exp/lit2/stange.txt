@@ -1,0 +1,1231 @@
+Factoring using multiplicative relations modulo n: a subexponential algorithm inspired by
+the index calculus
+
+arXiv:2211.06821v2 [math.NT] 16 Jul 2023
+
+KATHERINE E. STANGE
+
+Abstract. We demonstrate that a modification of the classical index calculus algorithm can be used to
+factor integers. More generally, we reduce the factoring problem to finding an overdetermined system of
+multiplicative relations in any factor base modulo
+√ n, where n is the integer whose factorization is sought. The
+algorithm has subexponential runtime exp(O( log n log log n)) (or exp(O((log n)1/3 (log log n)2/3 )) with the
+addition of a number field sieve), but requires a rational linear algebra phase, which is more intensive than
+the linear algebra phase of the classical index calculus algorithm. The algorithm is certainly slower than
+the best known factoring algorithms, but is perhaps somewhat notable for its simplicity and its similarity
+to the index calculus.
+
+1. Introduction
+The index calculus (whose roots date to Kraitchik [9] and which was rediscovered and developed more
+recently by Adleman [1] and Western and Miller [20], among others) computes the discrete logarithm of a
+residue h modulo p with respect to a base g by collecting relations of the form
+gx =
+
+b
+Y
+
+pei i (mod p),
+
+i=1
+
+in terms of a factor base of primes pi . Choosing subexponentially many primes, it takes subexponential time
+to find as many relations as there are primes. This leads to a linear algebra system, whose solution gives the
+discrete logarithms of the primes, which can then be used to find the discrete logarithm of h.
+It has long been observed that factoring algorithms and discrete logarithm algorithms have many similarities. In the present note, we demonstrate a factoring algorithm that is especially closely inspired by
+the index calculus algorithm. The fundamental idea is easy to state: we attempt to use the index calculus
+algorithm modulo an integer n with unknown factorization (instead of a prime p). That is, with respect to
+a factor base of primes, collect relations of the form
+x
+
+g =
+
+b
+Y
+
+pei i (mod n).
+
+i=1
+
+In this case, the exponent relations live modulo the Euler totient ϕ(n), or, more precisely, modulo the order of
+the chosen base g. We do not know this order, and in fact its discovery would typically lead to a factorisation
+of n. Although the discrete logarithms of a factor base need not exist in this situation, multiple relations
+will tend to lead to a linear system that is overdetermined and has no solution, unless working modulo the
+order of g. This leads to a linear algebra method to extract the order of g.
+It turns out that more generally, any method of finding an overdetermined system of multiplicative
+relations between elements of a factor base modulo n will lead to a method of factorization. We give a
+simple heuristic reduction from factoring to finding such a system of multiplicative relations:
+Theorem 1.1 (Introductory form of Theorem 3.2). Let n be an integer, and let b be a function of n. Let B
+be a factor base of b residues modulo n. Suppose an oracle provides random multiplicative relations of size
+≤ O(log n) amongst the residues B. Then there is a Monte Carlo algorithm to determine the multiplicative
+order of residues modulo n (and hence factor n), whose runtime is polynomial in b and log n, and which
+requires at most O(b) calls to the oracle. Furthermore, under Hypothesis 3.1 (Section 3), the probability of
+success approaches 1 − 1/ζ(c + 1) where a total of b + c calls are made to the oracle.
+Date: July 21, 2023.
+2020 Mathematics Subject Classification. Primary: 11Y05.
+Katherine E. Stange was supported by NSF-CAREER CNS-1652238.
+1
+
+2
+
+KATHERINE E. STANGE
+
+The notation ζ denotes the Riemann zeta function. Although the algorithm may fail (it may return a
+nontrivial multiple of the order of g, or return 0), a simple and informal implementation using SageMath
+[19] indicates the algorithm succeeds with very high probability. Hypothesis 3.1 concerns the probability
+that a random selection of elements of a lattice will generate that lattice, or, more precisely, that the same
+is true for a restriction to a one-dimensional subspace. The probability 1 − 1/ζ(k) is more familiar as the
+probability that k random integers have no non-trivial common factor.
+The runtime of the new index-calculus-like algorithm is slower than that of the textbook index calculus,
+because the linear algebra step involves arithmetic over Q. Its runtime is exp(O((log n)1/2 (log log n)1/2 )).
+The textbook index calculus described above has been improved by the addition of the number field sieve
+in the precomputation (relation-finding) phase [7]. The methods of [7, Section 3.1] can be adapated to find
+relations modulo n, which, when combined with Theorem 3.2, leads to a version of the present algorithm
+which runs in time exp(O((log n)1/3 (log log n)2/3 )). We do not pursue this in greater detail here.
+The literature for factoring includes a panoply of approaches. As far as index-calculus-style approaches
+to factoring, another family of approaches uses an index calculus within the class group of a quadratic field
+[10, 12, 17]. The analysis of Section 3 has some commonalities with the Hafner-McCurley rigorous class group
+algorithm [8], and their methods may be applicable to making the present algorithm rigorous. Although
+the present algorithm is closely related to the index calculus and other relation-finding approaches such as
+the quadratic and number fields sieves, the author has been unable to find this particular variation in the
+literature. For background on the index calculus, the number field sieve and factoring algorithms in general,
+see [3].
+Accompanying code. A toy implementation is available at
+https://github.com/katestange/index-factor
+Acknowledgements. Thank you to Carl Pomerance and Sam Wagstaff for sharing their expertise in the
+factoring literature, and to Sam Wagstaff and Renate Scheidler for helpful comments on an earlier draft.
+Thank you to Karthekeyan Chandrasekaran for help with a reference. And finally, the author is grateful to
+the students in her Fall 2022 Introduction to Coding Theory and Cryptography at the University of Colorado
+Boulder for their enthusiasm and engagement, which led, indirectly, to this paper.
+2. The algorithm
+The algorithm is actually one for finding the multiplicative order of g modulo n. It is well-known that
+this leads to a factorization of n. For example, Shor’s quantum factoring algorithm determines this order r
+for random values of g until it finds an order r which is even and for which g r/2 6= −1 (mod n) [18]. In this
+case, gcd(g r/2 ± 1, n) should be a non-trivial factor. More generally, including odd orders, see [4].
+By the period problem for an integer n, we shall mean the problem of computing the multiplicative order
+of a given residue modulo n. The factorization problem for an integer n is the problem of giving its unique
+prime factorization over the integers. It is known that these are equivalent.
+Theorem 2.1 ([13, Theorem 4]). Under the Extended Riemann Hypothesis, the period problem and the
+factorization problem are polynomial-time equivalent.
+The Extended Riemann Hypothesis is used to guarantee the existence of a small residue which generates
+the multiplicative group; in practice, choosing a residue at random is likely to result in a generator very
+quickly.
+We now describe the algorithm. Let n be an odd positive integer, and let g be a residue modulo n. Let B
+be a factor base consisting of the primes p1 , . . . , pb less than or equal to a bound B, chosen depending upon
+n (so b = #B).
+For random integers 0 < xj < n, compute g xj (mod n) and attempt to factor the resulting smallest
+positive residue in the factor base. For each relation obtained in this way, being of the form
+g xj =
+
+b
+Y
+f
+pi j,i (mod n),
+i=1
+
+store the vector fj = (fj,i )bi=1 ∈ Zb and the value xj . Collect these vectors until we have more than b vectors;
+say f1 , . . . , fb+c . (Taking c = 10 or so should generally suffice, but this is a parameter of the algorithm.)
+
+Factoring using multiplicative relations modulo n: a subexponential algorithm inspired by the index calculus
+
+3
+
+We should now find integer relations between the vectors fj . These relations can be found as elements of
+the basis of the right kernel of the b × (b + c) matrix whose columns are the relations, working over Q. Using
+gcd computations, scale c of these basis elements to have integral entries with no common factor, and call
+them b1 , . . . , bc ∈ Zb+c . In other words,
+b+c
+X
+(bt )j fj = 0,
+j=1
+
+for t = 1, . . . , c. Collect the values
+
+αt :=
+
+b+c
+X
+
+(bt )j xj .
+
+j=1
+
+We return the gcd of this set of values. We show below that this gcd is is with high probability the
+multiplicative order of g modulo n, and otherwise an integer multiple of this multiplicative order. The
+algorithm is given more formally in Algorithm 2.2.
+Algorithm 2.2: Computing the multiplicative order of g modulo n.
+Input : A positive integer n, and a positive integer g < n.
+Output: The multiplicative order of g modulo n.
+Inititialization phase:
+Select a suitable B ∈ N, and let B = {p1 , p2 , . . . , pb } be the factor base consisting of all primes less
+than B.
+2 Select a suitable c ∈ N (typically c ∼ 10 is fine).
+1
+
+Relation finding phase:
+Let j = 1.
+while j < b + c do
+5
+Choose an integer x randomly in the range [1, . . . , n]. (If x has been drawn previously, draw
+again.)
+6
+Compute the smallest positive residue of g x modulo n.
+7
+Attempt to factor the residue of g x in terms of the factor base.
+Qb
+8
+if g x is factored, say g x = i=1 pfi i (mod n) then
+9
+Set fj = (f1 , . . . , fb ). Set xj = x. Increment j.
+
+3
+
+4
+
+Linear algebra phase:
+10
+11
+
+Form the b × (b + c) integer matrix whose columns are the fj .
+Compute independent vectors b1 , . . . , bc ∈ Qb+c in the right kernel of this matrix (i.e., column
+combinations that vanish).
+GCD computation phase:
+
+Scale each basis element so that the entries are integers with no factor common to all entries.
+for t from 1 to c do
+Pb+c
+14
+Let αt = j=1 (bt )j xj .
+
+12
+13
+
+15
+16
+
+Let G be the greatest common divisor of all the α1 , . . . , αc .
+return G
+
+2.1. Correctness. We now briefly demonstrate the claim that the result is a multiple of ord(g), the multiplicative order of g. For a more complete analysis of runtime and success probability, see the next section.
+When one has a relation
+b+c
+X
+(bt )j fj = 0,
+j=1
+
+4
+
+KATHERINE E. STANGE
+
+this implies that
+b+c
+Y
+
+(g xj )(bt )j = 1 (mod n).
+
+j=1
+
+In particular, this implies that
+
+αt =
+
+b+c
+X
+
+(bt )j xj = 0 (mod ord(g)).
+
+j=1
+
+Hence, the multiplicative order g modulo n must divide every αt . Therefore the final gcd of the algorithm
+is a multiple of ord(g).
+Remark 2.3. Particularly when g has small order, it is likely that the individual discrete logarithms Lg (pi )
+don’t all exist. However, the algorithm doesn’t mind; the factorization is just a way to create multiplicative
+relations between values of g x . If Lg (pi ) and Lg (pj ) don’t exist, but Lg (pi pj ) does, then Lg (pi ) will only
+appear with the same coefficient as Lg (pj ) in the linear algebra, effectively reducing the number of variables
+and increasing the size of the kernel. But the correctness of the algorithm is not affected.
+3. Factoring by relations modulo n
+In order to analyse the algorithm’s correctness and runtime, we will isolate the novel phase encompassing
+the linear algebra and gcd computations. In fact, this phase of the algorithm above generalizes to give
+a heuristic reduction from factoring to finding multiplicative relations modulo n, which we will state in
+Theorem 3.2 below. This theorem will then imply that Algorithm 2.2 is correct and has a high probability
+of success, under Hypothesis 3.1 below. This hypothesis is known to hold in some cases, such as when the
+size of the factor base is much smaller than n, so that in those cases there is a reduction from factoring n to
+finding relations in such a factor base (under ERH).
+If we have a factor base B of b residues a1 , . . . , ab modulo n, then by a multiplicative relation, we shall
+mean a relationship
+b
+Y
+aei i = 1
+i=1
+
+for ei ∈ Z. We give a name to the lattice of exponent vectors for all valid relations:
+)
+(
+b
+Y
+ei
+b
+ai = 1 .
+ΛB = e = (ei )i=1 :
+i=1
+
+b
+
+This is a sublattice of Z . If the residues generate (Z/nZ)∗ , then it will have covolume equal to ϕ(n).
+Let Si be the i-th coordinate subspace, i.e. vectors whose entries are non-zero only in the i-th position.
+The restriction ΛB |Si of ΛB to Si has covolume equal to the multiplicative order of ai , denoted ord(ai ). In
+particular, it is generated by a vector having i-th entry ord(ai ). Equivalently, any generating set for ΛB |Si
+will have entries with gcd equal to ord(ai ).
+The size of a relation will be equal to the logarithm of the 1-norm |ei |1 of its exponent vector. (Thus
+relation vectors whose entries are < n have size O(log n).)
+Hypothesis 3.1 (Hypothesis on sublattice generation). Let n > 0 tend to ∞, and b = f (n) be a given
+function of n. Let Λ′B ⊆ ΛB be a lattice generated by b + c relations randomly chosen from amongst those in
+ΛB of size O(log n). Then, asymptotically, the probability that Λ′B |Si = ΛB |Si is equal to the probability that
+c + 1 random integers (in the sense of natural density) share no common factor, i.e. 1 − 1/ζ(c + 1) where ζ
+is the Riemann zeta function.
+If b and n satisfy the relationship n ≥ 8bb/2 as n tends to infinity, then taking c = b + 1, it is known that
+the probability has a lower bound [5, Theorem 1.1]. By contrast, to apply this result to Algorithm 2.2, we
+need the Hypothesis to hold when b is subexponential in log n.
+To provide some evidence for the Hypothesis, we give a heuristic argument. The index [ΛB |Si : Λ′B |Si ]
+is computed (for example in Algorithm 2.2) as follows: let K be the right kernel of the matrix M whose
+columns are the b + c relations. It has dimension ≥ c, and with high probability the dimension is exactly c
+(if the relations generate a sublattice of ΛB of full rank; see [5] for a result that this is the case with constant
+probability once the relation size is large enough). Let Mi be the matrix obtained by deleting the i-th row
+
+Factoring using multiplicative relations modulo n: a subexponential algorithm inspired by the index calculus
+
+5
+
+of M . Then its right kernel Ki ⊇ K (of dimension c + 1 with high probability) gives linear combinations of
+the original relations which are supported only on ai , i.e. live in Si . These generate Λ′B |Si , and each is an
+integer multiple of ord(ai )si , where si is the i-th standard basis vector in Zn . Write αt for these integers,
+t = 1, . . . , c + 1.
+Let us assume heuristically that the values αt behave as random integers (in the sense of natural density).
+The probability that k random integers share no common factor is 1 − 1/ζ(k), where ζ is the Riemann zeta
+function. Therefore the probability that ΛB |Si = Λ′B |Si would be 1 − 1/ζ(c + 1).
+As the convergence ζ(n) → 1 as n → ∞ is exponential, we need only a polynomial number of extra
+relations to reduce the failure probability to be negligible. For example, we might expect ΛB |Si = Λ′B |Si at
+least 99.9% of the time if c ≥ 9.
+It is worth noting that it is possible for the algorithm to return αt = 0. This occurs for elements of K ⊆ Ki ,
+which forms a hyperplane of codimension 1; such occurrences are unlikely (by a cardinality argument similar
+to that in [5, Section 2.1]).
+Theorem 3.2. Let n be an integer, and let b be a function of n. Let B be a factor base of b residues modulo
+n. Suppose an oracle provides random multiplicative relations of size ≤ O(log n) amongst the residues
+B. Then there is a Monte Carlo algorithm to solve the period problem for modulus n, whose runtime is
+O(b4 log b) poly(log n) and which requires at most O(b) calls to the oracle. Furthermore, under Hypothesis 3.1,
+the probability of success approaches 1 − 1/ζ(c + 1) where a total of b + c calls are made to the oracle.
+Recall that a Monte Carlo algorithm is one whose output may be incorrect with a finite probability.
+Proof. The algorithm is as follows (similarly to the latter portions of Algorithm 2.2). Let c > 0 be an integer.
+Call the oracle b + c times to obtain b + c relations. Isolate variable a1 , rewriting the j-th relation for each
+j as
+b
+Y
+e
+e
+ai j,i .
+a1j,1 =
+i=2
+
+Then, by dimensional considerations, there are at least c + 1 vectors (ck,j )b+c
+j=1 for k = 1, . . . , c + 1 which give
+Pb+c
+linear combinations j=1 ck,j ej which are supported only on the first entry. Equivalently, these satisfy
+Pb+c
+
+a1 j=1
+
+ck,j ej,1
+
+= 1.
+
+We can normalize these relations so the entries ck,j are integers with no common factor, by use of a gcd
+Pb+c
+computation. Write αk := j=1 ck,j ej,1 . Let g be the gcd of the set of exponents αk , k = 1, . . . , c + 1. Then
+g is a multiple of the multiplicative order of a1 modulo n, say g = h ord(a1 ).
+By the discussion preceding the proof, h = [ΛB |Si : Λ′B |Si ]. Under Hypothesis 3.1, the probability that
+h = 1 (and hence the algorithm succeeds) is 1 − 1/ζ(c + 1).
+We now take c to be O(b), and consider the runtime. We must find a basis for the kernel of a b × (b + c)
+matrix, where b + c = O(b). The entries are of size O(log n) (in the sense that they are integers ≤ n).
+Thus the linear algebra takes naı̈ve time at most O(b4 ) poly(log n) resulting in vectors with entries of size
+O(b4 ) poly(log n) [16, Corollary 3.2d]. In the GCD phase, we must perform O(b) gcd operations on integers
+of size at most O(b4 log b) poly(log n); this has runtime O(b4 log b) poly(log n). Overall, the runtime of the
+algorithm is O(b4 log b) poly(log n).
+
+4. Runtime of Algorithm 2.2
+As usual, we set the notation
+Lx (α, β) = exp((β + o(1))(log x)α (log log x)1−α ).
+We will now show that the algorithm is of runtime Ln (1/2, β) for some constant β, which can be improved
+by the use of many optimizations developed for the index calculus; see below. However, since this algorithm
+is of academic, not practical, interest, we will not devote time to optimizing the constant β.
+The runtime of the linear algebra and gcd phase is given in Theorem 3.2. The relation finding phase is
+exactly as for the index calculus itself. If we use the standard notation uu for the number of trials to find
+one smooth integer, where u = log n/ log b, then the runtime is uu (b + c)bπ(b) = uu O(b3 / log b) with trial
+
+6
+
+KATHERINE E. STANGE
+
+division. Thus, balancing the runtimes we obtain a heuristic runtime of Ln (1/2, β) (for the standard analysis
+of such runtimes, see [3, Chapter 6] or [6, Chapter 15]).
+Some relevant implementation notes:
+(1) One might include −1 in the factor base.
+(2) One may use the linear sieve of Coppersmith, Odlyzko and Schroeppel [2]; this improves the relationfinding phase.
+(3) For the linear algebra phase, one might use an algorithm of runtime O(b3 ) poly(log n) due to Mulders
+and Storjohann [14].
+(4) One might use the elliptic curve method [11] to remove all prime factors below a bound before
+attempting this algorithm. Having many small factors will result in the order of g being smaller
+more often, which gives a higher failure rate in using the order to obtain the factorization.
+(5) We might test for the existence of a non-trivial kernel periodically as we generate relations, since if
+the order of g is small, the algorithm actually requires fewer relations.
+(6) In the same vein, we might use a single kernel element, when it is found, to obtain a multiple of
+ord(g) and then do further linear algebra modulo that modulus.
+(7) We may need to return to the relation-finding and add more relations if we do not find enough
+elements of the kernel which result in αk 6= 0.
+(8) Many implementation tricks for the index calculus may apply in this situation, see for example [15].
+(9) The number field sieve as in [7, Section 3.1] can be adapted to speed up the relation-finding phase.
+
+5. Example
+Let us compute the order of g = 43 modulo n = 62389 and use this to factor n. We will use B = 50,
+resulting in a factor base of b = 15 primes 2 ≤ p ≤ 47. We will need 25 relations (this assumes c = 10).
+With 188 smoothness tests, we find the relations:
+4355571 = 23 · 33 · 7 · 29,
+4351344 = 54 ,
+43
+
+1724
+
+3
+
+= 2 · 5 · 7 · 23,
+
+439399 = 3 · 13 · 37,
+4356136 = 2 · 3 · 112 · 13,
+4353393 = 54 · 41,
+4324567 = 24 · 7 · 232 ,
+432484 = 2 · 32 · 13 · 37,
+4339818 = 72 ,
+
+4341451 = 22 · 5 · 7 · 112 ,
+
+4320 = 22 · 53 · 72 ,
+
+4353596 = 33 · 11 · 43,
+
+4325418 = 25 · 3 · 17 · 19,
+
+4312688 = 23 · 3 · 7 · 192 ,
+
+4350821 = 52 · 41,
+
+4310480 = 23 · 33 · 5 · 13,
+
+4346106 = 2 · 3 · 7 · 112 ,
+
+4319831 = 28 · 3 · 5 · 11,
+
+4314141 = 2 · 3 · 52 · 7 · 19,
+
+4327853 = 26 · 32 · 5 · 7,
+
+4326246 = 2 · 33 · 5 · 41,
+
+4325154 = 25 · 31 · 37,
+
+4310795 = 2 · 53 · 7 · 11,
+
+439481 = 23 · 7 · 11,
+
+4320889 = 5 · 11 · 37,
+
+The relation matrix is (cols are relations):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3
+3
+0
+1
+0
+0
+0
+0
+0
+1
+0
+0
+0
+0
+0
+
+0
+0
+4
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+1
+0
+3
+1
+0
+0
+0
+0
+1
+0
+0
+0
+0
+0
+0
+
+0
+1
+0
+0
+0
+1
+0
+0
+0
+0
+0
+1
+0
+0
+0
+
+1
+1
+0
+0
+2
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+0
+0
+4
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1
+0
+0
+
+4
+0
+0
+1
+0
+0
+0
+0
+2
+0
+0
+0
+0
+0
+0
+
+1
+2
+0
+0
+0
+1
+0
+0
+0
+0
+0
+1
+0
+0
+0
+
+0
+0
+0
+2
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+2
+0
+1
+1
+2
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+0
+3
+0
+0
+1
+0
+0
+0
+0
+0
+0
+0
+0
+1
+0
+
+3
+1
+0
+1
+0
+0
+0
+2
+0
+0
+0
+0
+0
+0
+0
+
+3
+3
+1
+0
+0
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+8
+1
+1
+0
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+6
+2
+1
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+5
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1
+1
+0
+0
+0
+
+3
+0
+0
+1
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+2
+0
+3
+2
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+5
+1
+0
+0
+0
+0
+1
+1
+0
+0
+0
+0
+0
+0
+0
+
+0
+0
+2
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1
+0
+0
+
+1
+1
+0
+1
+2
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+1
+1
+2
+1
+0
+0
+0
+1
+0
+0
+0
+0
+0
+0
+0
+
+1
+3
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1
+0
+0
+
+1
+0
+3
+1
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+0
+0
+1
+0
+1
+0
+0
+0
+0
+0
+0
+1
+0
+0
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Factoring using multiplicative relations modulo n: a subexponential algorithm inspired by the index calculus
+
+The following matrix is made up of rows representing the right kernel:
+ 0 1 0 0 0 0
+0 0 0 0 0 0
+0 0 12 0 −23
+3 0
+
+
+
+
+
+
+
+
+
+
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+2
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+0
+1
+0
+0
+0
+0
+0
+0
+0
+0
+
+0
+0
+1
+0
+0
+0
+0
+0
+0
+0
+
+0
+0
+0
+1
+0
+0
+0
+0
+0
+0
+
+−1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+0
+0
+0
+0
+1
+0
+0
+0
+0
+0
+
+0
+0
+0
+0
+0
+1
+0
+0
+0
+0
+
+0
+0
+0
+0
+0
+0
+1
+0
+0
+0
+
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+0
+0
+0
+0
+0
+0
+0
+1
+0
+0
+
+0
+−1
+−1
+0
+−1
+0
+0
+0
+0
+0
+
+0
+0
+0
+0
+0
+0
+0
+0
+1
+0
+
+7
+0
+8
+13
+4
+3
+8
+2
+6
+14
+
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+−12
+1
+−15
+−25
+−7
+−5
+−16
+−5
+−15
+−27
+
+1
+−1
+2
+3
+0
+−1
+2
+1
+3
+3
+
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+14
+8
+−1
+8
+14
+4
+3
+9
+2
+8
+16
+
+18
+10
+−1
+10
+19
+5
+3
+11
+3
+11
+20
+
+0
+0
+0
+0
+0
+0
+0
+0
+−2
+0
+0
+
+−14
+−8
+1
+−8
+−15
+−4
+−3
+−9
+−2
+−8
+−16
+
+−13
+−8
+2
+−7
+−13
+−2
+−1
+−8
+−1
+−8
+−13
+
+7
+
+0
+0
+−1
+0
+0
+−1
+0
+0
+0
+0
+0
+
+The corresponding αk are:
+
+
+
+
+
+
+
+
+
+
+
+
+1201200, 631400, −61600, 708400, 1232000, 323400, 277200, 754600, 169400, 662200, 1309000.
+Their gcd is 15400. We check that
+4315400 = 1,
+
+4315400/2 = 51174 6= ±1 (mod n).
+
+and therefore taking
+gcd(51174 − 1, 62389) = 701
+reveals a non-trivial factor. In fact, 62389 = 701 · 89.
+References
+[1] L. Adleman. A subexponential algorithm for the discrete logarithm problem with applications to cryptography. In 20th
+Annual Symposium on Foundations of Computer Science (sfcs 1979), pages 55–60, 1979.
+[2] D. Coppersmith, A. M. Odlzyko, and R. Schroeppel. Discrete logarithms in GF(p). Algorithmica, 1(1):1–15, 1986.
+[3] R. Crandall and C. Pomerance. Prime numbers. Springer, New York, second edition, 2005. A computational perspective.
+[4] M. Ekerå. On completely factoring any integer efficiently in a single run of an order-finding algorithm. Quantum Information
+Processing, 20(20):205, 2021.
+[5] F. Fontein and P. Wocjan. On the probability of generating a lattice. J. Symbolic Comput., 64:3–15, 2014.
+[6] S. D. Galbraith. Mathematics of public key cryptography. Cambridge University Press, Cambridge, 2012.
+[7] D. M. Gordon. Discrete logarithms in GF(p) using the number field sieve. SIAM J. Discrete Math., 6(1):124–138, 1993.
+[8] J. L. Hafner and K. S. McCurley. A rigorous subexponential algorithm for computation of class groups. J. Amer. Math.
+Soc., 2(4):837–850, 1989.
+[9] M. Kraitchik. Théorie des Nombres, Vol. 1. Gauthier-Villars, 1922.
+[10] A. K. Lenstra. Fast and rigorous factorization under the generalized Riemann hypothesis. Nederl. Akad. Wetensch. Indag.
+Math., 50(4):443–454, 1988.
+[11] H. W. Lenstra, Jr. Factoring integers with elliptic curves. Ann. of Math. (2), 126(3):649–673, 1987.
+[12] H. W. Lenstra, Jr. and C. Pomerance. A rigorous time bound for factoring integers. J. Amer. Math. Soc., 5(3):483–516,
+1992.
+[13] G. L. Miller. Riemann’s hypothesis and tests for primality. J. Comput. System Sci., 13(3):300–317, 1976.
+[14] T. Mulders and A. Storjohann. Certified dense linear system solving. J. Symbolic Comput., 37(4):485–510, 2004.
+[15] A. M. Odlyzko. Discrete logarithms in finite fields and their cryptographic significance. In Advances in cryptology (Paris,
+1984), volume 209 of Lecture Notes in Comput. Sci., pages 224–314. Springer, Berlin, 1985.
+[16] A. Schrijver. Theory of linear and integer programming. Wiley-Interscience Series in Discrete Mathematics. John Wiley &
+Sons, Ltd., Chichester, 1986. A Wiley-Interscience Publication.
+[17] M. Seysen. A probabilistic factorization algorithm with quadratic forms of negative discriminant. Math. Comp.,
+48(178):757–780, 1987.
+[18] P. W. Shor. Algorithms for quantum computation: discrete logarithms and factoring. In 35th Annual Symposium on
+Foundations of Computer Science (Santa Fe, NM, 1994), pages 124–134. IEEE Comput. Soc. Press, Los Alamitos, CA,
+1994.
+[19] The Sage Developers. SageMath, the Sage Mathematics Software System (Version 9.2), 2022. https://www.sagemath.org.
+[20] A. E. Western and J. C. P. Miller. Tables of indices and primitive roots. Royal Society Mathematical Tables, Vol. 9.
+Published for the Royal Society at the Cambridge University Press, London, 1968.
+Department of Mathematics, University of Colorado, Campux Box 395, Boulder, Colorado 80309-0395
+Email address: kstange@math.colorado.edu
+
+

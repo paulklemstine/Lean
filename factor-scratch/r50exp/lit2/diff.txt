@@ -1,0 +1,2271 @@
+Diffusion Computation versus Quantum Computation: A
+Comparative Model for Order Finding and Factoring
+
+arXiv:2601.02518v1 [math.SP] 5 Jan 2026
+
+Carlos A. Cadavid
+Paulina Hoyos
+Jay Jorgenson
+Lejla Smajlović
+J. D. Vélez
+January 7, 2026
+
+Abstract
+We study a hybrid computational model for integer factorization in which standard digital
+arithmetic is augmented by access to an iterated diffusion process on a finite graph. A
+diffusion step consists of applying a fixed local-averaging operator (a half-lazy random-walk
+matrix) to an ℓ1 -normalized state vector, together with a prescribed readout of a small
+number of coordinates. The goal is not to improve on Shor’s algorithm within the usual
+circuit models, but to understand what can be achieved if diffusion is treated as a genuine
+hardware primitive whose wall-clock update cost does not scale with the size of the underlying
+state space.
+Let N ≥ 3 be an odd composite integer with m ≥ 2 distinct prime factors and let
+b ∈ (Z/N Z)∗ have multiplicative order r = ordN (b). We attach to the cyclic subgroup ⟨b⟩ a
+t
+weighted Cayley graph with dyadic generators b±2 for 0 ≤ t ≤ M = ⌊log2 N ⌋ + 1, and we
+analyze the associated half-lazy walk operator W . Using an explicit character expansion and
+a doubling lemma for the lacunary sequence 2t mod r, we prove that after n = O (log2 N )2
+diffusion steps the single heat-kernel value at the identity satisfies
+pn (e) −
+
+1
+1
+≤
+,
+r
+4N 2
+
+so that r is recovered uniquely by rounding 1/pn (e). Combining this diffusion order-finding
+primitive with the classical reduction from factoring to order finding yields a diffusion-assisted
+factoring procedure with success probability p(m) = 1 − (m + 1)/2m , depending only on the
+number m of distinct prime factors of N .
+In parallel, we develop a complementary relation-finding mechanism: collisions among
+dyadic words encountered while exploring the Cayley graph produce loop relations D = qr,
+and repeated gcd updates often stabilize to r (or a small multiple). We include numerical
+examples and implementations, including cycle-based factorizations of the Fermat number
+F5 = 232 + 1, of N = 8,219,999 (for comparison with recent quantum-annealing experiments),
+and of N = 1,099,551,473,989 (for comparison with contemporary quantum computing
+records).
+
+1
+
+Introduction
+
+1.1
+
+Motivation and scope
+
+Factoring a composite integer N is a cornerstone problem in computational number theory and
+cryptography, intimately tied to the structure of (Z/N Z)∗ ; see, e.g., [HW08, CP05, Me96, BS96].
+1
+
+Classical methods are highly nontrivial and often subexponential, but no polynomial-time
+algorithm in log2 N is known in the standard digital model [CP05].
+Shor’s algorithm shows that, in the quantum circuit model, factoring reduces to order finding
+and order finding can be solved in polynomial time via quantum period finding/Fourier sampling
+[Sh94, Sh97, NC10, EJ96]. For recent advances and generalizations see [CBK22, Hh25, Ra24,
+Re25, XQLM23] and references therein. In broad terms: one encodes modular exponentiation
+into a coherent linear evolution, extracts periodicity through interference, and completes the
+computation by classical post-processing (continued fractions and verification) [Sh94, Sh97,
+KSV99, NC10].
+This paper investigates a different computational primitive: diffusion on a finite graph as an
+analog mechanism for order finding. Specifically, we analyze an iterated half-lazy random
+walk (discrete-time heat flow) on a weighted Cayley graph attached to a cyclic subgroup of
+(Z/N Z)∗ . Our objective is not to improve on Shor’s algorithm within the usual digital/RAM or
+quantum-circuit models. Rather, we propose a hybrid model in which standard digital arithmetic
+is augmented by a diffusion process that can be iterated and queried. In this accounting,
+order recovery is achieved using poly(log2 N ) digital work together with O((log2 N )2 ) diffusion
+iterations, under explicit interface assumptions.
+
+1.2
+
+Quantum layers and diffusion iterations
+
+For clarity of resource accounting, we compare both non-digital paradigms schematically as
+alternating applications of a linear operator and (i) an observation/projection in the quantum
+case, and (ii) a classical readout followed by conditioning (post-processing) in the diffusion case:
+U
+
+measure/proj
+
+W
+
+read/cond
+
+U
+
+measure/proj
+
+quantum:
+
+··· −
+→ −−−−−−−−→ −
+→ −−−−−−−−→ · · · ,
+
+diffusion:
+
+· · · −→ −−−−−−→ −→ −−−−−−→ · · · .
+
+W
+
+read/cond
+
+This is bookkeeping only: U is unitary (interference-capable), while W is Markovian and
+dissipative [NC10, LPW09]. The point is to make explicit where work is assumed to occur
+in the hybrid model: theorems bound the number of invocations of the diffusion primitive by
+O((log2 N )2 ), while the remaining processing is standard digital arithmetic.
+
+1.3
+
+Physical diffusion primitive, resource scaling and locality
+
+Our complexity bounds track two resources separately: digital steps and diffusion steps.
+Digital steps. Deterministic operations on O(log2 N )-bit integers (modular arithmetic, gcd,
+verification, bookkeeping), all polynomial in log2 N in the standard arithmetic/RAM sense
+[Kn97, BS96].
+Diffusion steps. One application of a fixed local-averaging operator, the half-lazy walk
+operator W on a graph X, together with a prescribed readout of a small number of “temperature”
+coordinates of a ℓ1 -normalized state vector.
+The intended interpretation of a diffusion step is hardware-based. Indeed, the speedup occurs
+only if diffusion is treated as a genuine hardware primitive: a single hardware-level update that
+performs local averaging simultaneously at every vertex, whose wall-clock cost (the actual elapsed
+real time as measured by a clock) does not scale with the number of vertices, and whose required
+readout precision is achievable with poly(log2 N ) overhead. In this model, the wall-clock cost
+of one diffusion step is treated as independent of the number of vertices represented, because
+all vertices are updated in parallel. If diffusion is digitally simulated by explicitly updating a
+2
+
+length-r state vector (with r = ordN (b) possibly as large as φ(N ), the Euler totient function),
+then the advantage disappears and the procedure becomes exponential in log2 N .
+This assumption shifts cost from time to physical resources. Any literal diffuser must represent
+a state over a vertex set of size Ω(|X|), so device area/energy scales (at least) linearly with |X|.
+Our results are therefore conceptual and model-based: they show that, given such a diffusion
+primitive with sufficient readout precision, the order r is determined from a single heat-kernel
+value after O((log2 N )2 ) diffusion iterations.
+A further operational point is locality. Although the underlying Cayley graph has r vertices, the
+dynamics are specified by a short generating set and are local; thus an implementation need not
+pre-construct the full graph. Instead, the diffusion mechanism can evolve the state by repeated
+local averaging and (conceptually) “grow” only the portion of the graph that is actually reached
+within the prescribed number of iterations, in the spirit of standard random-walk perspectives
+on Cayley graphs [LPW09, Ch97].
+
+1.4
+
+Main results
+
+Fix an odd composite integer
+N=
+
+m
+Y
+pei
+i
+
+(m ≥ 2, pi distinct odd primes).
+
+(1.1)
+
+i=1
+
+Let b ∈ (Z/N Z)∗ have odd order r = ordN (b). Without knowing r in advance, we consider a
+t
+weighted Cayley graph on ⟨b⟩ generated by the moves b±2 for 0 ≤ t ≤ M = ⌊log2 N ⌋ + 1. We
+analyze the associated half-lazy walk operator W and its discrete-time heat kernel. We prove
+that for
+
+n0 = 4(M + 1) log2 N + 2 = O((log2 N )2 ),
+the single heat-kernel value at the identity, pn0 (e), determines r uniquely by rounding 1/pn0 (e).
+There exist deterministic algorithms which ascertain if N is either a prime or the power of
+a prime; see, for example, [AKS04], [Be07], or [Ra80]. In these two problems, meaning the
+determination of N is prime or a prime power, the best known algorithms have (classical)
+complexity of order O((log N )a ) for some constant a. With this, we do not view the assumption
+that N is neither a prime nor a prime power as being restrictive, at least from the point of view
+of theoretical computability.
+
+1.5
+
+Organization
+
+The paper is organized as follows. Section 2 develops the diffusion/heat-kernel framework
+on weighted graphs and Cayley graphs. Section 3 collects the number-theoretic preliminaries
+used in the reduction from factoring to order finding. Section 4 proves the main diffusion
+order-finding theorem. Section 5 gives pseudocode for the diffusion-assisted factoring algorithm
+and for numerical simulation of the diffusion primitive (e.g. in Python). Section 6 presents an
+accelerated, collision-based relation-finding mechanism based on detecting closed cycles and
+using gcd stabilization of the resulting loop lengths. Section 7 analyzes collision statistics for the
+walk on G, including scale estimates. Finally, Section 8 provides illustrative numerical examples.
+
+3
+
+2
+
+Diffusion preliminaries
+
+2.1
+
+Weighted graphs
+
+Throughout, graphs are finite, undirected, connected, and without self-loops. A weighted graph
+X = (V, E, w) consists of a finite vertex set V , an edge set E of 2-element subsets of V , and a
+weight function w : V × V → R with the following properties.
+• Symmetry: w(x, y) = w(y, x) for all x, y ∈ V .
+• Non-negativity: w(x, y) ≥ 0 for all x, y ∈ V .
+• Support on edges: w(x, y) > 0 iff {x, y} ∈ E.
+Fix an ordering of V with |V | = k. The adjacency operator AX is the operator on the space of
+P
+functions f on V such that (AX f )(x) = y∈V w(x, y) f (y).
+The degree of a vertex x ∈ V is
+
+d(x) =
+
+X
+
+w(x, y).
+
+y∈V
+
+We call X regular of degree d if d(x) = d for all x ∈ V .
+
+2.2
+
+Half-lazy random walks and the discrete-time heat kernel
+
+Assume X is d-regular. The half-lazy walk matrix is
+W =
+
+1
+1
+I + AX .
+2
+d
+
+
+
+
+(2.1)
+
+Starting from an initial probability distribution p0 ∈ Rk (p0 ≥ 0, ∥p0 ∥1 = 1), define
+pn = W n p0 .
+Write wn (x, y) for the (x, y)-entry of W n . This is the probability that a walk started at y is at
+x after n steps. We refer to pn as the discrete-time heat kernel.
+Namely, the discrete-time derivative ∂n pn = pn+1 − pn and the discrete (probabilistic) Laplacian
+∆ = W − I satisfy
+∂n pn = ∆pn ,
+(2.2)
+the discrete heat equation on X. An explicit expression for the discrete time heat kernel pn on a
+regular graph is derived in [CHJSV23].
+
+2.3
+
+Spectral expansion and a uniform bound
+
+Since the graph is d-regular, the random-walk matrix is P = d1 AX . Then P is real symmetric
+and
+spec(P ) ⊂ [−1, 1]
+(see e.g. [Ni18, Thm. 7.5]).
+Recall that W = 21 (I + P ). If θ ∈ spec(P ), then 12 (1 + θ) ∈ spec(W ). Hence
+spec(W ) =
+
+n
+
+o
+
+1
+2 (1 + θ) : θ ∈ spec(P )
+
+⊂ [0, 1].
+
+In particular, W is symmetric and all its eigenvalues are real and nonnegative. Let
+1 = λ0 > λ1 ≥ · · · ≥ λk−1 ≥ 0
+4
+
+(2.3)
+
+be the eigenvalues of W , with an orthonormal eigenbasis {ψ0 , ψ1 , . . . , ψk−1 } satisfying W ψj =
+λj ψj .
+Moreover, P 1 = 1 (and hence W 1 = 1), so we may take ψ0 = √1k 1. Therefore, for any initial
+distribution p0 we have the spectral expansion
+pn = W n p0 =
+
+k−1
+X
+
+⟨ψj , p0 ⟩ λnj ψj ,
+
+j=0
+
+where ⟨ψ, ϕ⟩ denotes the usual inner product of vectors ψ, ϕ ∈ Rk .
+Proposition 2.1. Let λ1 be the largest eigenvalue of W strictly less than 1. If p0 is a probability
+distribution, then for every vertex x ∈ V and every n ≥ 0,
+1
+≤ λ1n .
+k
+
+pn (x) −
+
+Proof. Let ψ0 = √1k 1 and extend this vector to an orthonormal eigenbasis {ψ0 , ψ1 , . . . , ψk−1 } of
+W : W ψj = λj ψj , with 1 = λ0 > λ1 ≥ λ2 ≥ · · · . Since p0 is a probability distribution,
+1
+1 X
+p0 (x) = √ .
+⟨ψ0 , p0 ⟩ = √
+k x∈V
+k
+Therefore
+pn = W n p0 =
+
+k−1
+X
+
+⟨ψj , p0 ⟩ λnj ψj =
+
+j=0
+
+Set un =
+
+k−1
+X
+1
+1+
+⟨ψj , p0 ⟩ λnj ψj .
+k
+j=1
+
+1
+n
+j=1 ⟨ψj , p0 ⟩ λj ψj , so pn = k 1 + un and un is orthogonal to 1.
+
+Pk−1
+
+Fix x ∈ V and set aj = ⟨ψj , p0 ⟩ and bj = λnj ψj (x) for 1 ≤ j ≤ k − 1. Then un (x) =
+and by Cauchy–Schwarz,
+|un (x)| ≤
+
+k−1
+X
+
+|aj |2
+
+1/2 k−1
+X
+
+j=1
+
+|bj |2
+
+1/2
+
+=
+
+j=1
+
+k−1
+X
+
+|⟨ψj , p0 ⟩|2
+
+1/2 k−1
+X
+
+j=1
+
+2
+λ2n
+j ψj (x)
+
+j=1 aj bj ,
+
+Pk−1
+
+1/2
+
+.
+
+j=1
+
+By Parseval’s identity,
+∥p0 ∥22 =
+
+k−1
+X
+
+k−1
+X
+
+hence
+
+|⟨ψj , p0 ⟩|2 ,
+
+j=0
+
+|⟨ψj , p0 ⟩|2 ≤ ∥p0 ∥22 .
+
+j=1
+
+Since λj ∈ [0, λ1 ] for j ≥ 1,
+k−1
+X
+
+2
+2n
+λ2n
+j ψj (x) ≤ λ1
+
+j=1
+
+k−1
+X
+
+ψj (x)
+
+j=1
+
+2
+
+≤ λ2n
+1
+
+k−1
+X
+
+ψj (x)2 .
+
+j=0
+
+Finally, using ⟨ψj , δx ⟩ = ψj (x) and Parseval’s identity for δx , we see that
+k−1
+X
+j=0
+
+ψj (x)2 =
+
+k−1
+X
+
+|⟨ψj , δx ⟩|2 = ∥δx ∥22 = 1.
+
+j=0
+
+Combining those bounds yields |un (x)| ≤ λn1 ∥p0 ∥2 . Since p0 ≥ 0 and ∥p0 ∥1 = 1, we have
+∥p0 ∥2 ≤ ∥p0 ∥1 = 1, hence |pn (x) − k1 | = |un (x)| ≤ λn1 .
+
+5
+
+2.4
+
+Weighted Cayley graphs of finite abelian groups
+
+Let G be a finite abelian group written additively, S ⊆ G a symmetric generating set (so
+s ∈ S ⇒ −s ∈ S), and α : S → R>0 with α(s) = α(−s). The weighted Cayley graph
+X = Cay(G, S, α) has vertex set G and edge weights
+w(x, y) = α(x − y)
+
+if x − y ∈ S,
+
+It is regular of degree
+
+d=
+
+X
+
+w(x, y) = 0 otherwise.
+
+α(s).
+
+s∈S
+
+Characters diagonalize the adjacency operator AX ; see [CR62] for background and [Ba79,
+Cor. 3.2] for the Cayley-graph spectral formula. If χ is a character of G, then it is an eigenvector
+of AX with eigenvalue
+X
+η(χ) =
+α(s)χ(s),
+s∈S
+
+hence an eigenvector of W with eigenvalue λ(χ) = 21 (1 + η(χ)/d).
+
+3
+
+Number-theoretic preliminaries
+
+This section records the elementary number theory used in the factoring reduction. All statements
+below are standard; we include short proofs in the form and level of generality needed later.
+General references include [HW08, Chs. 1–3], [CP05, Chs. 2–4], and [BS96, Chs. 2–4]; see also
+[Me96, §2–5] for standard cryptographic formulations of the order-finding to factoring reduction.
+Let N be a positive odd integer which we write as a product
+N=
+
+m
+Y
+pei i ,
+
+(3.1)
+
+i=1
+
+where m ≥ 2, the primes p1 , . . . , pm are distinct and odd, and the exponents satisfy ei > 0. In
+particular, N is neither prime nor a prime power.
+Let ZN = Z/N Z denote the residue ring modulo N , and let Z∗N denote its group of units. There
+is a natural mapping
+a 7−→ a mod pe11 , . . . , a mod pemm .
+
+
+ZN −→ Zpe1 × · · · × Zpemm ,
+1
+
+(3.2)
+
+By the Chinese Remainder Theorem (CRT), (3.2) is an isomorphism of rings. Restricting to
+units yields an isomorphism of groups
+∼
+
+gN : Z∗N −−→ Z∗pe1 × · · · × Z∗pemm .
+1
+
+(3.3)
+
+In a slight abuse of notation, we occasionally use x to denote either an element of Z∗N or its
+image gN (x).
+For each i, the group Z∗pei is cyclic under multiplication. Fix a generator ui . Its order is
+i
+
+ordpei (ui ) = φ(pei i ) = pei i −1 (pi − 1) = 2ci p′i ,
+i
+
+where ci > 0 and p′i is odd.
+Without loss of generality we assume that the primes are ordered so that
+c1 ≥ c2 ≥ · · · ≥ cm .
+
+(3.4)
+
+The following proposition shows that, assuming a parity condition on the exponents in the CRT
+decomposition, one can produce a nontrivial square root of 1 modulo N.
+6
+
+Proposition 3.1. Let a ∈ Z∗N . Let s ≥ 0 be the least integer such that
+s
+
+a2 q ≡ 1
+
+(mod N )
+
+for some odd integer q. Write
+gN (a) = (ud11 , . . . , udmm ).
+If there exist indices i < j such that di is odd and dj is even, then s > 0. Moreover, setting
+s−1 q
+
+x = a2
+
+,
+
+one has that
+x2 ≡ 1
+
+(mod N )
+
+(mod N ).
+
+x ̸≡ ±1
+
+and
+
+(3.5)
+
+Proof. Assume di is odd and dj is even. Write dj = 2v d′j with v > 0 and d′j odd.
+s
+
+Since a2 q ≡ 1 (mod N ), it follows that
+s
+
+ui2 qdi ≡ 1
+
+(mod pei i ).
+
+Thus the order ordpei (ui ) := 2ci p′i divides 2s qdi . Because q and di are odd, the 2-part forces
+i
+2ci | 2s , hence s ≥ ci ≥ 1.
+Set
+
+s−1 q
+
+x = a2
+
+Then
+
+s−1 qd
+1
+
+s−1 qd
+m
+
+= (u21
+
+, . . . , u2m
+
+s
+
+(mod N ).
+
+x2 = a2 q ≡ 1
+
+).
+
+By minimality of s, we have x ̸≡ 1 (mod N ).
+It remains to show x ̸≡ −1 (mod N ). Now
+2s−1 qdj
+
+x ≡ uj
+
+2s−1 q·2v d′j
+
+= uj
+
+2s+v−1 qd′j
+
+e
+
+= uj
+
+e
+
+(mod pj j ).
+e
+
+s
+
+We claim that x is 1 modulo pj j . Indeed, since a2 q ≡ 1 (mod pj j ) we have
+2s qdj
+
+uj
+
+2s+v qd′j
+
+= uj
+
+≡1
+
+e
+
+(mod pj j ).
+
+Thus the order 2cj p′j divides 2s+v qd′j . As qd′j is odd, this implies
+s + v ≥ cj
+
+and
+
+p′j | qd′j .
+
+Since s ≥ ci ≥ cj (by (3.4)) and v > 0, we have s + v − 1 ≥ cj , hence 2cj p′j divides 2s+v−1 qd′j ,
+which is exactly the condition that
+2s+v−1 qd′j
+
+uj
+
+≡1
+
+e
+
+(mod pj j ).
+
+e
+
+Therefore x ≡ 1 (mod pj j ).
+e
+
+But this implies that x ̸≡ −1 (mod N ), for otherwise x ≡ −1 (mod pj j ) also holds. Subtracting
+e
+the two congruences would give 2 ≡ 0 (mod pj j ), a contradiction because pj is odd.
+
+7
+
+Lemma 3.2. Let N be as in (3.1), and let M = ⌊log2 N ⌋ + 1. For any a ∈ Z∗N , define the list
+of elements
+t
+
+t
+
+S(a) = { a2 mod N : t = 0, . . . , M } ∪ { a−2 mod N : t = 0, . . . , M } ⊂ Z∗N .
+If there is a repetition in S(a), then (from that repetition) one can determine an odd integer q
+s
+and the least s ≥ 0 such that a2 q ≡ 1 (mod N ) using at most O(log2 N ) deterministic steps.
+Moreover, if a is chosen uniformly at random from Z∗N , then with probability
+p(m) = 1 −
+s−1 q
+
+the element x = a2
+
+m+1
+,
+2m
+
+(when s > 0) satisfies (3.5).
+
+Proof. A repetition in S(a) means that for some 0 ≤ t′ < t ≤ M and some choice of signs,
+t′
+
+t
+
+a2 ≡ a±2
+hence
+
+(mod N ),
+
+t′
+
+t
+
+a2 ±2 ≡ 1
+
+Factor the exponent as
+
+′
+
+(mod N ).
+
+′
+
+′
+
+′
+
+2t ± 2t = 2t (2t−t ± 1) = 2t q,
+
+′
+
+s
+
+where q = 2t−t ± 1 is odd. From q one can determine the least s such that a2 q ≡ 1 (mod N )
+by repeatedly dividing by 2 when possible, which takes O(log2 N ) checks.
+For the probability bound, write gN (a) = (ud11 , . . . , udmm ). For each i, the exponent di is
+uniformly distributed modulo 2 (half even, half odd), and CRT makes the parity vector (d1 mod
+2, . . . , dm mod 2) uniform on {0, 1}m .
+By Proposition 3.1, success occurs if there exists i < j with di odd and dj even. Failure means
+there is no such pair, i.e. there do not exist indices i < j with di odd and dj even. Equivalently,
+the parity vector
+(d1 mod 2, . . . , dm mod 2) ∈ {0, 1}m
+is nondecreasing (once a 1 appears, all later entries are 1). Hence it must be of the form
+(0, . . . , 0, 1, . . . , 1 )
+
+for some t ∈ {0, 1, . . . , m},
+
+| {z } | {z }
+t zeros
+
+m−t ones
+
+giving exactly m + 1 possibilities. Each possibility occurs with probability 2−m , so the failure
+probability is (m + 1)/2m and the success probability is 1 − (m + 1)/2m .
+Remark 3.3. Since N is neither prime nor a prime power, we have m ≥ 2. Hence p(2) = 1− 34 = 14 ,
+and the function p(m) = 1 − m+1
+2m is strictly increasing for m ≥ 2 with p(m) → 1 as m → ∞. In
+particular, without knowing m a priori, a single random choice of a ∈ Z∗N produces an element
+s−1
+x = a2 q (when s > 0) with the desired property (3.5) with probability at least p(2) = 14 .
+Equivalently, the failure probability satisfies
+Pr[failure in one trial] = 1 − p(m) =
+
+m+1
+3
+≤ .
+m
+2
+4
+
+If we repeat the construction independently k times (fresh random choices of a), then the
+probability that none of the resulting values x satisfies the two conditions is
+(1 − p(m)) ≤
+k
+
+3
+4
+
+ k
+
+.
+
+For highly composite N (large m), the quantity 1 − p(m) = (m + 1)2−m is much smaller than
+3/4, so the failure probability decays substantially faster than (3/4)k .
+8
+
+Lemma 3.4. Let G be a finite cyclic group of even order n = 2c m with c > 0 and m odd, and
+let u be a generator. Then for 1 ≤ d ≤ n one has
+ordG (ud ) =
+
+n
+.
+gcd(n, d)
+
+Proof. This is standard since ud generates the subgroup of index gcd(n, d).
+Lemma 3.5. For any a ∈ Z∗N , the largest power of 2 dividing ordN (a) is strictly less than
+M
+log2 N . In particular, if M = ⌊log2 N ⌋ + 1 and b = a2 , then ordN (b) is odd.
+Proof. Write gN (a) = (a1 , . . . , am ) with ai ∈ Z∗pei . Then
+i
+
+ordN (a) = lcm ordpe1 (a1 ), . . . , ordpemm (am ) .
+
+
+1
+
+Each ordpei (ai ) divides φ(pei i ) = 2ci p′i , hence the 2-adic valuation of ordN (a) is at most maxi ci .
+i
+
+Finally, 2ci | φ(pei i ) < pei i ≤ N , so ci < log2 N for all i, hence maxi ci < log2 N . Taking
+M
+M = ⌊log2 N ⌋ + 1 makes 2M divisible by the entire 2-part of ordN (a), so b = a2 has odd
+order.
+M
+
+Proposition 3.6. Set M = ⌊log2 N ⌋ + 1. For any a ∈ Z∗N , let b = a2
+
+and write
+
+rb = ordN (b),
+which is odd by Lemma 3.5. If rb is known, then ordN (a) can be computed in at most O(log2 N )
+deterministic steps.
+Moreover, if a is chosen uniformly at random from Z∗N , then with probability at least p(m) =
+1 − (m + 1)/2m the order ra = ordN (a) is even and the element x = ara /2 satisfies (3.5).
+M
+
+Proof. Since b = a2 and rb is odd, the order of a has the form ra = 2k rb for some 0 ≤ k ≤ M .
+k
+One finds the least such k by testing a2 rb ≡ 1 (mod N ) for k = 0, 1, . . . , M , which costs
+O(log2 N ) deterministic steps (repeated squaring / modular exponentiation).
+For the probability statement, apply Lemma 3.2 and Proposition 3.1.
+
+4
+
+Diffusion order finding
+
+This section contains the analytic core: an order–finding primitive based on iterating a half–lazy
+walk operator on the Cayley graph of the cyclic subgroup generated by b. The method is local:
+one never constructs the full Cayley graph. A single application of the walk operator at a point
+x ∈ ⟨b⟩ only requires evaluating the neighbors
+t
+
+x 7−→ x b±2
+
+(mod N )
+
+(0 ≤ t ≤ M ),
+
+which can be executed by modular multiplication (and modular inversion).
+The underlying Cayley graph and the random walk matrix. Let
+G = ⟨b⟩ ⊆ (Z/N Z)∗ .
+
+M = ⌊log2 N ⌋ + 1,
+
+Consider the (unweighted) Cayley graph X = XN,b = Cay(G, S) with generating multiset
+t
+
+S = { b±2 : 0 ≤ t ≤ M }.
+9
+
+Equivalently, X is the weighted graph with vertex set G and weights
+t
+
+t
+
+w(x, y) = # t ∈ {0, . . . , M } : y = x b2 or y = x b−2
+
+
+.
+
+Then X is d–regular of degree d = 2(M + 1), with adjacency matrix AX given by
+(AX p)(x) =
+
+X
+
+w(x, y) p(y).
+
+y∈G
+
+As in Section 2.2, the (simple) random-walk matrix on X is
+P =
+
+1
+AX .
+d
+
+In particular, for functions p : G → R we have the concrete formula
+M 
+
+X
+1
+t
+t
+p(x b2 ) + p(x b−2 ) ,
+(P p)(x) =
+2(M + 1) t=0
+
+x ∈ G.
+
+(4.1)
+
+Fix an ordering G = {x1 , . . . , x|G| } and identify p : G → R with the column vector
+(p(x1 ), . . . , p(x|G| ))T ∈ R|G| .
+As before, define the associated half-lazy walk operator
+1
+W = WN,b = (I + P ).
+2
+
+4.1
+
+The diffusion theorem
+
+Theorem 4.1 (Diffusion order finding). Let N > 1 be an integer. Let b ∈ (Z/N Z)∗ have
+multiplicative order r = ordN (b). Set
+M = ⌊log2 N ⌋ + 1,
+
+G = ⟨b⟩ ⊆ (Z/N Z)∗ ,
+
+|G| = r.
+
+Let {pn }n≥0 be a half-lazy walk on G with transition matrix W and the initial state being the
+delta function at the identity, meaning
+p0 = δe ,
+
+p n = W n p0 ,
+
+(n ≥ 0).
+
+Then, for every
+n ≥ 4(M + 1) log2 N + 2 ,
+
+
+(4.2)
+
+the single readout value pn (e) determines r uniquely as the unique integer in (0, N ] whose
+reciprocal lies within 1/(4N 2 ) of pn (e).
+Theorem 4.1 will be proved in subsection 4.2.
+Corollary 4.2. Under the hypotheses of Theorem 4.1, if |pn (e) − 1/r| ≤ 1/(4N 2 ) then
+round 1/pn (e) = r.
+
+
+Proof. Since r ≤ N , we have
+pn (e) ≥
+
+1
+1
+1
+1
+4N − 1
+3
+−
+≥
+−
+=
+>
+.
+2
+2
+2
+r 4N
+N
+4N
+4N
+4N
+
+Therefore
+
+1
+r(1/r − pn (e))
+N · (1/(4N 2 ))
+1
+1
+−r =
+≤
+= < ,
+pn (e)
+pn (e)
+3/(4N )
+3
+2
+which forces rounding to equal r.
+10
+
+Remark 4.3. Theorem 4.1 is stated in full generality. It only concerns diffusion on the cyclic
+subgroup G = ⟨b⟩ of order r = ordN (b), and its proof does not use any special arithmetic
+hypotheses on N beyond the explicit inequalities stated. In the remainder of this paper, however,
+we will invoke Theorem 4.1 only in the factoring setting, where N is assumed to be an odd
+integer that is neither prime nor a prime power, and where we choose b so that r = ordN (b) is
+odd.
+Next, we will state and prove a doubling lemma we will need in the proof of Theorem 4.1 in
+the next section. Conceptually, this is a lacunary-series phenomenon: the doubling sequence
+2t spreads residues quickly enough that one must encounter an interval where the phase has
+nonpositive cosine value, reminiscent of the mechanisms exploited in Korobov-type bounds for
+lacunary exponential sums, see e.g. [KM12] or [Va19].
+Lemma 4.4 (Doubling Lemma). Let r be an integer and let M ≥ 0 be such that 2M > r. For
+every integer k with 1 ≤ k ≤ r − 1, there exists t ∈ {0, 1, . . . , M } such that
+k2t mod r ∈
+
+h r 3r i
+
+.
+,
+4 4
+
+Proof. For each t ≥ 0, let at ∈ {0, 1, . . . , r − 1} be the least residue of k2t modulo r. Assume for
+contradiction that for all t ∈ {0, . . . , M },
+h
+
+at ∈ 0,
+Set
+
+ 3r 
+r
+∪
+,r .
+4
+4
+
+bt := min(at , r − at ).
+
+Then 0 < bt < r/4 for all t ∈ {0, . . . , M }.
+We claim that bt+1 = 2bt for t = 0, . . . , M − 1. If at < r/4, then 2at < r/2 < r, so at+1 = 2at and
+hence bt+1 = 2bt . If at > 3r/4, then 2at ∈ (3r/2, 2r), so at+1 = 2at − r ∈ (r/2, r) and therefore
+bt+1 = r − at+1 = r − (2at − r) = 2(r − at ) = 2bt .
+Thus bt = 2t b0 for all t ≤ M . Since b0 = min(k, r − k) ≥ 1, we have bM ≥ 2M .
+By hypothesis 2M > r, hence bM ≥ 2M > r/4, contradicting bM < r/4. This contradiction
+proves the lemma.
+Recall that for k ∈ {0, 1, . . . , r − 1}, if
+
+
+χk (j) = exp
+then
+
+4.2
+
+2πikj
+r
+
+X
+1 r−1
+χk (j) =
+r k=0
+
+(
+
+1,
+0,
+
+
+
+,
+
+j ∈ Z/rZ,
+
+j≡0
+j ̸≡ 0
+
+(mod r),
+(mod r).
+
+Proof of Theorem 4.1
+
+Proof. We change to additive notation. The subgroup G = ⟨b⟩ is cyclic of order r. Hence,
+ϕ : Z/rZ −→ G,
+
+ϕ(j) = bj
+
+is an isomorphism. Using ϕ we transport functions p : G → R to functions pe : Z/rZ → R
+by pe(j) = p(bj ). In particular pe(0) = p(e). Under this identification, right multiplication by
+11
+
+t
+
+b±2 becomes translation by ±2t modulo r. Hence the random walk operator P becomes the
+translation-invariant walk
+(P pe)(j) =
+
+M 
+
+X
+1
+pe(j + 2t ) + pe(j − 2t ) ,
+2(M + 1) t=0
+
+j ∈ Z/rZ.
+
+Now the characters are eigenfunctions of P . Since χk (j ± a) = χk (j)χk (±a) one has
+M 
+M
+
+X
+1 X
+2πk2t
+1
+t
+t
+e2πik2 /r + e−2πik2 /r = χk (j) ·
+cos
+(P χk )(j) = χk (j) ·
+2(M + 1) t=0
+M + 1 t=0
+r
+
+!
+
+.
+
+Thus P χk = µk χk with
+M
+2πk2t
+1 X
+cos
+µk =
+M + 1 t=0
+r
+
+!
+
+,
+
+and therefore W χk = λk χk where λk = (1 + µk )/2. As noted before (2.3), λ0 = 1 and 0 ≤ λk ≤ 1
+for all k.
+Let δ0 be the delta function at 0 ∈ Z/rZ. By orthogonality,
+δ0 (j) =
+
+X
+1 r−1
+χk (j).
+r k=0
+
+Applying W n and evaluating at 0 gives
+(W n δ0 )(0) =
+
+X
+X
+1 1 r−1
+1 r−1
+λnk = +
+λn .
+r k=0
+r r k=1 k
+
+Transporting back to G, the left-hand side is exactly pn (e), hence
+pn (e) −
+
+1
+≤ max λnk .
+1≤k≤r−1
+r
+
+(4.3)
+
+Fix k ∈ {1, . . . , r − 1}. By Lemma 4.4 there exists t ∈ {0, . . . , M } such that
+k2 mod r ∈
+t
+
+h r 3r i
+
+,
+,
+4 4
+
+hence
+
+2πk2t
+cos
+r
+
+!
+
+≤ 0.
+
+All other cosine terms are ≤ 1, so
+µk ≤
+
+1
+M
+=1−
+,
+M +1
+M +1
+
+and therefore
+
+λk =
+
+1
+1 + µk
+≤1−
+.
+2
+2(M + 1)
+
+Combining with (4.3) and using 1 − x ≤ e−x ,
+1
+1
+pn (e) −
+≤ 1−
+r
+2(M + 1)
+
+
+n
+
+n
+≤ exp −
+.
+2(M + 1)
+
+
+
+
+If n ≥ 4(M + 1)(log2 N + 2) then
+
+
+exp −
+
+n
+2(M + 1)
+
+
+
+≤ exp −2(log2 N + 2) = e−4 e−2 log2 N .
+
+
+Since log2 N = ln N/ ln 2 ≥ ln N , we have e−2 log2 N ≤ e−2 ln N = N −2 , so the right-hand side is
+≤ e−4 N −2 < 4N1 2 . Hence
+1
+1
+pn (e) −
+≤
+.
+r
+4N 2
+12
+
+Uniqueness of r. Since r = ordN (b) divides |Z∗N | = φ(N ) and N > 1, we have φ(N ) < N,
+hence r < N . (In particular 2M > N > r, for M = ⌊log2 N ⌋ + 1.) For distinct integers a =
+̸ b in
+{1, . . . , N },
+|a − b|
+1 1
+1
+=
+−
+≥ 2.
+a b
+ab
+N
+Therefore there is at most one integer r′ ∈ (0, N ] such that pn (e) − r1′ ≤ 4N1 2 . The preceding
+estimate shows that r satisfies this inequality, hence r is uniquely determined by pn (e).
+
+5
+
+A diffusion-assisted factoring algorithm
+
+In this section, we describe diffusion assisted factorization algorithm. It receives as an input
+a positive integer N with m ≥ 2 odd prime factors. The algorithm returns a divisor d of
+N , with probability at least p(m) = 1 − 2−m (m + 1) for each choice of a random integer
+a ∈ {1, 2, . . . , N − 1}.
+Before we proceed with the pseudocode for the algorithm, let us state the following two remarks.
+Remark 5.1. Algorithm 1 is probabilistic in the same sense as Shor’s factoring algorithm: a
+single trial (i.e. one choice of a and the subsequent steps) may end in a restart (continue in
+Algorithm 1; equivalently, FAIL for that particular a), for instance because the extracted square
+root satisfies x ≡ ±1 (mod N ) and hence yields only a trivial gcd.
+However, for composite N with at least two distinct prime factors, each independent trial has
+a nonzero success probability depending only on the CRT parity pattern (cf. Proposition 3.6
+and Lemma 3.2). Consequently, repeating the procedure independently drives the overall failure
+probability very close to 0.
+We will leave for elsewhere the problem of optimizing the probability p(m) of success. In that
+regard, the methodology of [Za13] seems applicable.
+Remark 5.2. In practice one can efficiently exclude the cases “N is prime” and “N is a prime
+power” before invoking Algorithm 1. For primality testing there are fast randomized tests (e.g.
+Miller–Rabin), deterministic polynomial-time algorithms (AKS), and practical certificate-based
+methods (e.g. ECPP). To test whether N is a prime power, one may first perform a perfect-power
+test (decide whether N = uk with k ≥ 2) and, if so, apply a primality test to the base u. See,
+for example, [CP05].
+
+13
+
+Algorithm 1: Diffusion-Assisted Factoring(N )
+Input: Odd composite N ≥ 3 that is neither prime nor a prime power.
+Output: A nontrivial factor d of N .
+while true do
+(1) Random choice and gcd test.
+Choose a ← uniform in {1, 2, . . . , N − 1}.
+d ← gcd(a, N ).
+if 1 < d < N then
+return d
+(2) Compute the doubling multiset.
+M ← ⌊log2 N ⌋ + 1.
+Compute
+t
+S(a) = {a±2 mod N : t = 0, 1, . . . , M }
+by repeated squaring (and inversion).
+(3) Early collision branch.
+if S(a) contains a repetition then
+From the repetition, deterministically extract an odd q and the least s ≥ 0 such that
+s
+a2 q ≡ 1 (mod N ) (Lemma 3.2).
+if s > 0 then
+s−1
+x ← a2 q mod N .
+d ← gcd(x − 1, N ).
+if 1 < d < N then
+return d
+(4) Oddify the order.
+M
+b ← a2 mod N .
+
+// then ordN (b) is odd (Lemma 3.5)
+
+(5) Diffusion order finding.
+Use the diffusion primitive (Theorem 4.1) to recover rb ← ordN (b).
+(6) Lift order and extract a factor.
+k
+Find the least k ∈ {0, 1, . . . , M } such that a2 rb ≡ 1 (mod N ).
+ra ← 2k rb .
+if ra is even then
+x ← ara /2 mod N .
+d ← gcd(x − 1, N ).
+if 1 < d < N then
+return d
+continue
+
+6
+
+// FAIL for this a; restart with new a
+
+Relation finding via collisions and gcd stabilization
+
+This section discusses a complementary (faster) mechanism for recovering the order r = ordN (b)
+from explicit relations produced by collisions while exploring the Cayley graph of
+G = ⟨b⟩ ⊆ (Z/N Z)∗ .
+
+14
+
+We view the Cayley graph as being explored from the identity by following short words in the
+dyadic generating multiset
+t
+
+S = { b±2 : 0 ≤ t ≤ M },
+
+M = ⌊log2 N ⌋ + 1.
+
+Whenever two distinct sampled words land at the same vertex, we obtain an arithmetic relation
+in the group. Repeated collisions yield many such relations; taking gcds of the corresponding
+exponents often stabilizes to r (or to a small multiple of r).
+We note that two such words combine to form a closed geodesic on the graph, so the problem
+in hand is closely related to measuring the girth of the graph and detecting its shortest closed
+non-trivial path. As a result, we are showing another manner in which the geometry of the
+graphs we consider are related to the arithmetic associated to ordN (b).
+
+6.1
+
+Exponent words and loop relations
+
+As in the proof of Theorem 4.1 (and throughout the paper), we work in exponent coordinates.
+Assume r is odd and identify
+G = ⟨b⟩ ≃ Z/rZ,
+
+j 7−→ bj .
+
+A (non-lazy) word of length L is a sequence
+w = (ε1 , t1 ), . . . , (εL , tL ) ,
+
+
+
+
+εi ∈ {±1}, ti ∈ {0, . . . , M }.
+
+Its integer exponent and endpoint are
+E(w) =
+
+L
+X
+
+εi 2ti ∈ Z,
+
+x(w) = bE(w) ∈ G.
+
+i=1
+
+Clearly,
+
+|E(w)| ≤ L 2M .
+
+(6.1)
+
+Definition 6.1 (Word collision and loop relation). Let w, w′ be words of length at most L. We
+say that (w, w′ ) is a word collision if
+x(w) = x(w′ )
+
+in G.
+
+The associated loop difference (or loop exponent) is
+D(w, w′ ) = E(w) − E(w′ ).
+A word collision is called nontrivial if E(w) ̸= E(w′ ), equivalently if D(w, w′ ) ̸= 0.
+Proposition 6.2. Let w, w′ be words of length at most L forming a nontrivial word collision
+(Definition 6.1). Then
+D(w, w′ ) ̸= 0,
+
+r | D(w, w′ ),
+
+and
+
+0 < |D(w, w′ )| ≤ 2L 2M .
+
+Equivalently, there exists q ∈ Z \ {0} such that
+D(w, w′ ) = q r
+
+and
+
+15
+
+|q r| ≤ 2L 2M .
+
+Proof. The collision x(w) = x(w′ ) means
+′
+
+bE(w) ≡ bE(w )
+hence
+
+′
+
+bE(w)−E(w ) ≡ 1
+
+(mod N ),
+(mod N ).
+
+By definition of r = ordN (b), this implies r | D(w, w′ ).
+If E(w) = E(w′ ), then D(w, w′ ) = 0 and the collision yields no relation; by assumption we are
+in the nontrivial case, so D(w, w′ ) ̸= 0.
+Finally, by (6.1),
+
+|D(w, w′ )| ≤ |E(w)| + |E(w′ )| ≤ 2L 2M .
+
+Remark 6.3 (Running gcd is always a multiple of r). If D1 , . . . , Ds are nonzero loop differences
+coming from nontrivial word collisions, then each Di is divisible by r, hence
+r | gs = gcd(|D1 |, . . . , |Ds |).
+Thus the running gcd can only decrease as more relations are collected, and it always remains a
+multiple of the true order.
+
+6.2
+
+Gcd stabilization and the zeta function
+
+Each collision yields, by Proposition 6.2, a nonzero relation Di = qi r ̸= 0, i = 1, . . . , s and we
+form the gcd gs = gcd(|D1 |, . . . , |Ds |). Clearly,
+gs = r · gcd(|q1 |, . . . , |qs |).
+In particular, gs = r if and only if gcd(q1 , . . . , qs ) = 1.
+Thus, order recovery reduces to understanding how quickly gcd(q1 , . . . , qs ) drops to 1.
+Remark 6.4. In favorable long walks, distinct collisions arise from essentially unrelated word
+pairs, and the multipliers qi = Di /r behave like approximately independent nonzero integers in
+a comparable magnitude range.
+The following Theorem is well known in the literature (see [Nym72] and [Leh00]).
+Theorem 6.5 (Riemann’s zeta law for gcds). Fix s ≥ 2. Let U1 , . . . , Us be independent random
+integers, each uniform on {1, 2, . . . , Q}. Then as Q → ∞,
+1
+δs=2 log Q + 1
+Pr(gcd(U1 , . . . , Us ) = 1) =
++O
+,
+ζ(s)
+Q
+
+
+
+
+where δs=2 = 1 if s = 2, and it equals zero otherwise.
+Remark 6.6.
+1
+6
+= 2 ≈ 0.608,
+ζ(2)
+π
+
+1
+≈ 0.832,
+ζ(3)
+
+1
+90
+= 4 ≈ 0.924.
+ζ(4)
+π
+
+This explains why only a few independent relations often suffice for the running gcd to drop to
+the true order.
+
+16
+
+7
+
+Collision bounds for the walk on G
+
+We specialize the collision discussion to our (half–lazy) random walk on the cyclic group
+G = ⟨b⟩,
+
+|G| = r,
+
+with transition operator W as in the previous sections. For x, y ∈ G and t ≥ 0, define the t–step
+transition probabilities by
+p(y, x; t) = (W t δy )(x).
+Thus p(y, x; t) is the probability that a walk started at y is at x after t steps. In particular, the
+endpoint distribution at time t for a walk started at the identity e is
+pt (x) = p(e, x; t) = (W t δe )(x),
+
+x ∈ G.
+
+To avoid dependence between samples taken along a single trajectory, we generate endpoints by
+independent walks: we run the walk for t steps starting from e, record the endpoint, restart at e,
+and repeat this procedure T times.
+Definition 7.1. Fix t ≥ 0 and an integer T ≥ 1. Set Ω = GT . For x = (x1 , . . . , xT ) ∈ Ω, define
+the coordinate maps
+Xi : Ω → G,
+
+Xi (x) = xi
+
+(i = 1, . . . , T ).
+
+Definition 7.2. Assume Definition 7.1. We say that X1 , . . . , XT are sampled by independent
+restarts at time t if for every x = (x1 , . . . , xT ) ∈ Ω,
+Pr (X1 , . . . , XT ) = (x1 , . . . , xT ) =
+
+
+T
+Y
+
+p(e, xi ; t).
+
+i=1
+
+Definition 7.3. Assume Definition 7.2. We say that a collision occurs in the sample X1 , . . . , XT
+if there exist 1 ≤ i < j ≤ T and x ∈ G, so that Xi (x) = Xj (x).
+Definition 7.4. Define the collision parameter at time t by
+s2 (t) =
+
+X
+
+p(e, x; t)2 =
+
+x∈G
+
+X
+
+pt (x)2 .
+
+x∈G
+
+Theorem 7.5. Let X1 , . . . , XT be sampled by independent restarts at time t (Definition 7.2).
+Let Z denote the number of colliding pairs among the T samples, i.e.
+Z = #{(i, j) : 1 ≤ i < j ≤ T, Xi (x) = Xj (x) for some x ∈ G}.
+The expected value of the first collision among T independent walks at time t is
+E[Z] =
+
+T
+2
+
+!
+
+s2 (t).
+
+In particular, as t → ∞, so that x 7→ p(e, x; t) is close to the uniform distribution on G, we have
+that
+T (T − 1)
+E[Z] ∼
+.
+(7.1)
+2r
+Proof. The random variables X1 , . . . , XT are independent and
+Pr(Xi = x) = pt (x) = p(e, x; t),
+17
+
+(x ∈ G, i = 1, . . . , T ).
+
+Hence, the expected value E[Z] is
+E[Z] =
+
+Pr(Xi (x) = Xj (x) for some x ∈ G).
+
+X
+1≤i<j≤T
+
+Fix i < j. Using independence and the common law pt , we have
+Pr(Xi = Xj ) =
+
+X
+
+Pr(Xi = x, Xj = x) =
+
+x∈G
+
+There are
+
+X
+
+Pr(Xi = x) Pr(Xj = x) =
+
+x∈G
+
+X
+
+pt (x)2 = s2 (t).
+
+x∈G
+
+T
+2 choices of (i, j), hence (7.1) holds true.
+
+Finally, if t is large enough that pt is close to uniform on G (so pt (x) ≈ 1/r for all x ∈ G), then
+s2 (t) =
+
+X
+
+pt (x)2 ≈
+
+x∈G
+
+X 1
+
+1
+= ,
+r
+
+r2
+x∈G
+
+which proves the second statement.
+Remark 7.6. Heuristically speaking, Theorem 7.5 tells us that the first collision among T
+independent walks at time t becomes plausible (meaning that the expectation of the collision is
+close to 1) once
+!
+T
+1
+s2 (t) ≈ 1,
+equivalently
+T ≈p
+.
+2
+s2 (t)
+In particular, if t is large enough that x 7→ p(e, x; t) is close to uniform on G, then
+1
+s2 (t) ≈ ,
+r
+
+and hence
+
+T ≈
+
+√
+
+r.
+
+Remark 7.7. This heuristic explained above immediately separates two regimes for a purely
+digital collision search (i.e. when the walk is simulated and endpoints are generated by ordinary
+arithmetic, rather than by a diffusion primitive). In the generic situation one expects
+r = ordN (b) to be large, typically comparable to φ(N ) (and often of order N ).
+Then the collision scale becomes
+T ≈
+
+√
+
+r ≈
+
+q
+
+φ(N ),
+
+so the number of restarts required to see a first collision is itself on the order of a square root of
+the ambient group size. This is precisely what one expects from a classical digital algorithm
+whose only mechanism for producing relations is collision detection: it is governed by statistics
+and does not yield a polynomial-time order-finding procedure in log N .
+On the other hand, if the chosen base happens to have small order
+r = ordN (b) ≪ φ(N ),
+then the same estimate predicts a substantial digital speedup:
+T ≈
+
+√
+
+r ≪
+
+q
+
+φ(N ).
+
+In this situation the method can be quite practical on an ordinary digital computer, because
+the sampling burden is reduced from a square root of φ(N ) down to a square root of r, and the
+subsequent gcd-stabilization step typically needs only a small number of essentially independent
+relations. This behavior is visible in numerical experiments; see Example 8.3, where r is small
+enough that collisions appear after a manageable number of independent restarts and the order
+is recovered quickly by standard digital processing.
+18
+
+It is worth separating this digital speedup from what changes (and what does not) in the
+diffusion-based model. When the diffusion primitive of Section 4 is available, the order is
+not recovered by waiting for random-walk endpoints to collide. Instead, one reads a single
+heat-kernel value after a controlled number of diffusion iterations: the analysis shows that after
+t = O((log2 N )2 ) updates the distribution has flattened enough that pt (e) ≈ 1/r, and this single
+√
+scalar already determines r by rounding. Thus the scale T ≈ r is not the quantity governing
+performance in the diffusion order-finding procedure.
+By contrast, if one tries to realize the collision method itself in a diffusion device, then the digital
+√
+estimate T ≈ r still describes
+how many essentially independent samples must be generated to
+p
+√
+see collisions. Replacing φ(N ) by r can be a major improvement in software, but it may
+have limited impact on a physical diffuser, where the dominant costs are often dictated by the
+size, energy, and precision required to represent and evolve a state whose underlying vertex set
+has on the order of r elements.
+Finally, one can envision hybrid variants that use diffusion hardware more directly for collisionstyle relation finding. Rather than restarting only at the identity e, one could initiate diffusion
+from many starting points simultaneously, allowing the Cayley graph to be explored in parallel
+as the mass spreads outward from multiple sources. In that picture, “collisions” would manifest
+as overlaps of expanding profiles (heat fronts) rather than as literal coincidences of two sampled
+endpoints. We do not pursue such multi-source growth strategies here, but they suggest a
+natural direction in which diffusion parallelism might be leveraged beyond the single-source
+setup analyzed above.
+
+8
+
+Examples
+
+This section illustrates the diffusion–based order recovery on different composite integers as well
+as examples employing the digital collision strategy.
+
+8.1
+
+Example 1: N = 299
+
+Take N = 299 = 13 · 23 and b = 3 ∈ (Z/N Z)∗ . One checks that gcd(b, N ) = 1. The element b
+has odd multiplicative order modulo N :
+r = ord299 (3) = 33.
+As in Section 4, we form the Cayley graph on the cyclic subgroup ⟨b⟩ ⊂ (Z/N Z)∗ using generators
+t
+b±2 for 0 ≤ t ≤ M with M = ⌊log2 N ⌋ + 1. See Figure 1. Then we run the half–lazy random
+walk started at the identity element.
+
+19
+
+t
+
+Figure 1: Cayley graph on ⟨3⟩ ⊂ (Z/299Z)∗ with generators b±2 . Here N = 299, b = 3, and
+ord299 (3) = 33.
+
+Figure 2: The identity value pn (e) for the half–lazy walk on ⟨3⟩ (with N = 299).
+Recovering the order by rounding. As shown in Figure 2, pn (e) rapidly approaches 1/r,
+so that 1/pn (e) approaches r = 33. Figure 3 plots 1/pn (e) together with the target level r.
+Numerically, rounding stabilizes quickly: from n = 17 onward one has
+round 1/pn (e) = 33.
+
+
+20
+
+Figure 3: The sequence 1/pn (e) converging to r = ord299 (3) = 33; rounding recovers r. (The
+dashed line indicates r = 33.)
+This provides a concrete “small-N ” visualization of the diffusion model: the dynamics mix
+toward the uniform distribution on ⟨b⟩ (of size r), and a single scalar readout pn (e) determines r
+once it is close enough to 1/r.
+
+8.2
+
+Example 2: N = 1022117
+
+Now, we take N = 1009·1013 = 1022117, and b = 576 ∈ (Z/N Z)∗ . One checks that gcd(b, N ) = 1,
+and the order of b modulo N is odd:
+r = ordN (b) = 5313.
+We run the half-lazy diffusion on the weighted Cayley graph of the cyclic subgroup ⟨b⟩, using
+t
+generators b±2 for 0 ≤ t ≤ M with M = ⌊log2 N ⌋ + 1. The theory predicts that after
+n = O((log2 N )2 ) diffusion steps, the single heat-kernel value at the identity determines r by
+rounding 1/pn (e). See Figures 5 and 6.
+Remark 8.1. The diffusion update is local, so an implementation does not need to pre-construct
+the entire Cayley graph. For visualization, however, we draw only a small neighborhood of the
+identity (a local view), since the full graph has r = 5313 vertices. See Figure 4.
+
+21
+
+Figure 4: A local view of the Cayley graph near the identity (shown in exponent coordinates).
+This is only for illustration; the full Cayley graph has r = 5313 vertices.
+
+Figure 5: The identity heat-kernel value pn (e) as a function of the number n of diffusion steps.
+As n → ∞ one has pn (e) → 1/r.
+
+22
+
+Figure 6: The inverse 1/pn (e) converging to the true order r = 5313 (dashed line). In this run,
+rounding 1/pn (e) recovers r after relatively few diffusion steps.
+
+8.3
+
+5
+
+Example 3: F5 = 22 + 1
+
+We demonstrate the cycle-search implementation on the Fermat number
+5
+
+F5 = 22 + 1 = 232 + 1 = 4294967297.
+⟨a⟩ ⊂ (Z/N Z)∗
+distinct words land at the same endpoint,
+aEnew ≡ aEprev
+
+(mod N ),
+
+we record a cycle certificate. This yields an exponent difference
+D = Enew − Eprev
+
+with
+
+aD ≡ 1
+
+(mod N ),
+
+so D is a multiple of the order r = ordN (a). We then apply the standard “halve when possible”
+reduction to obtain a smaller multiple Dmin , and we maintain the running gcd
+g ← gcd(g, Dmin ).
+In practice, after a modest number of collisions this gcd often stabilizes to an order multiple,
+which can then be reduced to the true order and fed into the usual order-to-factor step.
+For N = F5 , using word length L = 2000, at most 120000 samples, and stability threshold 8, the
+algorithm succeeded on the first attempt, with random base
+a = 3945765912.
+The successive cycle results and the evolution of the running gcd were:
+[attempt 1] trying a = 3945765912
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+[collision # 1] D_min = 314919552
+running_gcd = 314919552
+[collision # 2] D_min = 32543920512
+running_gcd = 6700416
+[collision # 3] D_min = 52336949376
+running_gcd = 6700416
+[collision # 4] D_min = 22975726464
+running_gcd = 6700416
+[collision # 5] D_min = 40839035520
+running_gcd = 6700416
+[collision # 6] D_min = 25012652928
+running_gcd = 6700416
+[collision # 7] D_min = 4187760000
+running_gcd = 6700416
+23
+
+[collision # 8] D_min = 3986747520
+[collision # 9] D_min = 18097823616
+[collision # 10] D_min = 9749105280
+stabilized gcd = 6700416
+reduced order r = 6700416
+
+running_gcd = 6700416
+running_gcd = 6700416
+running_gcd = 6700416
+
+After the second collision, the running gcd collapses to g = 6700416 and remains unchanged; the
+stabilization criterion is met after a few more collisions. The subsequent deterministic reduction
+confirms that
+r = ordN (a) = 6700416.
+Finally, since r is even and ar/2 ̸≡ ±1 (mod N ), the standard order-to-factor step produces
+nontrivial divisors:
+gcd ar/2 − 1, N = 6700417,
+
+gcd ar/2 + 1, N = 641,
+
+
+
+and hence
+
+
+
+F5 = 4294967297 = 641 · 6700417.
+
+In this run, the observed the clock time was 11.734 seconds.
+
+8.4
+
+Example 4: N = 8219999
+
+A recently developed quantum-annealing approach embeds a compact binary multiplier circuit
+into the Pegasus topology and reports factoring
+N = 8219999 = 251 · 32749
+on a D-Wave Advantage 4.1 annealer; see [DSS24].
+We apply the diffusion-with-cycles implementation to the same integer N . The algorithm explores
+the Cayley graph of the cyclic subgroup
+⟨a⟩ ⊂ (Z/N Z)×
+t
+
+using dyadic generators a±2 . Whenever two distinct words land at the same endpoint,
+aEnew ≡ aEprev
+
+(mod N ),
+
+we obtain a cycle certificate with exponent difference D = Enew − Eprev and hence aD ≡ 1
+(mod N ). After “halving when possible” to get Dmin , we update a running gcd g ← gcd(g, Dmin );
+once g stabilizes, it is reduced to the true order r = ordN (a) and used in the standard order-tofactor step.
+For this run we used word length L = 2000, at most 120000 samples, and stability threshold 8.
+The algorithm succeeded on the first attempt with base a = 7081686:
+[attempt 1] trying a = 7081686
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+[collision # 1] D_min = 12962750
+running_gcd = 12962750
+[collision # 2] D_min = 111206750
+running_gcd = 682250
+[collision # 3] D_min = 119393750
+running_gcd = 682250
+[collision # 4] D_min = 42981750
+running_gcd = 682250
+[collision # 5] D_min = 3411250
+running_gcd = 682250
+[collision # 6] D_min = 3411250
+running_gcd = 682250
+24
+
+[collision # 7] D_min = 130309750
+[collision # 8] D_min = 68907250
+[collision # 9] D_min = 104384250
+[collision # 10] D_min = 55262250
+stabilized gcd = 682250
+reduced order r = 682250
+
+running_gcd = 682250
+running_gcd = 682250
+running_gcd = 682250
+running_gcd = 682250
+
+SUCCESS: N = 32749 * 251
+FINAL: 8219999 = 251 * 32749
+TOTAL TIME: 3.120 s (0:00:03)
+Thus, on this instance the cycle method recovers the factorization
+8219999 = 251 · 32749
+in about 3.12 seconds of clock time in the reported run.
+
+8.5
+
+Example 5: N = 1099551473989
+
+In work involving Zapata Computing and collaborators, the integer N = 1,099,551,473,989 was
+factored using the variational quantum factoring (VQF) workflow on a superconducting quantum
+processor; see [KSK21]. The following is the results of the collision-strategy.
+Enter N (odd, >3, not prime, not prime power), up to ~10 digits recommended: 1099551473989
+Choose word length L (e.g. 800–2000): 2000
+Choose max_samples per attempt (e.g. 30000–120000): 120000
+Choose max_attempts (e.g. 20–80): 80
+[attempt 1] trying a = 28213600916
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 2] trying a = 1010844181454
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 3] trying a = 45342608514
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+[collision # 1] D_min = 33192646812150
+running_gcd = 33192646812150
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 4] trying a = 528571176770
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 5] trying a = 591840418317
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 6] trying a = 327685619692
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+25
+
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 7] trying a = 1046655708948
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 8] trying a = 477422510912
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 9] trying a = 378381310618
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 10] trying a = 747483761123
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 11] trying a = 1001492753655
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 12] trying a = 394688788349
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 13] trying a = 478211699347
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 14] trying a = 365250373964
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+[attempt 15] trying a = 893381186972
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+no stabilized gcd from loops in this attempt (try another a).
+
+[attempt 16] trying a = 750796458253
+sampling words of length L = 2000, max_samples = 120000, stable_hits = 8
+[collision # 1] D_min = 3966231680600
+AGGRESSIVE ONE-COLLISION FACTOR: 1048589 * 1048601
+FINAL: 1099551473989 = 1048589 * 1048601
+TOTAL TIME: 3132.641 s (0:52:13)
+
+9
+
+A minimal RC-network implementation of the diffusion primitive
+
+To conclude, let us briefly describe a possible physical realization of a diffusion primitive in
+continuous time and explain why sampling at a small time step ∆t approximates the discrete
+26
+
+operator used in our model.
+Fix a finite undirected weighted graph with vertex set V = {1, . . . , r} and symmetric conductances
+gij = gji ≥ 0 (gij = 0 if there is no edge). Attach to each vertex i a capacitor C > 0 to ground,
+and connect vertices i and j by a resistor whose conductance is gij = 1/Rij . Let Vi (t) be the
+voltage at node i at time t, and set
+V (t) = (V1 (t), . . . , Vr (t))T .
+By Kirchhoff’s current law, the capacitor current equals minus the net resistive outflow:
+C
+
+r
+X
+
+d
+Vi (t) = −
+gij Vi (t) − Vj (t) .
+dt
+j=1
+
+Let L be the associated weighted graph Laplacian, meaning that
+Lii =
+
+X
+
+gij ,
+
+Lij = −gij (i ̸= j).
+
+j̸=i
+
+Then the network dynamics are the linear ODE
+d
+C V (t) = −L V (t),
+dt
+
+hence
+
+t
+V (t) = exp − L V (0).
+C
+
+
+
+
+(9.1)
+
+Thus the RC network implements the continuous-time heat flow on the graph.
+In the abstract model of this paper, one diffusion step is a fixed linear operator
+W : Rr → Rr
+applied repeatedly. A continuous-time implementation produces instead the semigroup t 7→
+exp(−(t/C)L), and a natural discrete-time primitive is obtained by sampling at a fixed time
+increment ∆t > 0:
+V
+
+(n+1)
+
+∆t
+= V ((n + 1)∆t) = exp − L V (n∆t) = W∆t V (n) ,
+C
+
+
+where
+
+
+
+(9.2)
+
+∆t
+W∆t = exp − L .
+C
+
+
+
+
+This is an exact discrete-time evolution obtained by observing the continuous circuit only at
+times 0, ∆t, 2∆t, . . . .
+For sufficiently small ∆t, the matrix exponential admits the first-order expansion
+∆t
+∆t
+exp − L = I −
+L + O(∆t2 ),
+C
+C
+
+
+
+
+∆t → 0,
+
+(9.3)
+
+with the error understood entrywise or in operator norm. Consequently, one sampled step
+satisfies
+∆t
+V (n+1) − V (n) = − L V (n) + O(∆t2 ).
+C
+In words: over a very short time interval, each node voltage changes by a small amount
+proportional to the Laplacian (a weighted difference between the node and its neighbors), which
+is the defining local averaging mechanism of diffusion.
+Equivalently, if one specifies a target discrete-time averaging operator of the form
+P = I − γL
+27
+
+for some scale γ > 0, then choosing
+γ=
+
+∆t
+C
+
+makes the circuit’s sampled step satisfy
+∆t
+W∆t = exp − L = P + O(∆t2 ).
+C
+
+
+
+
+Therefore, by taking ∆t small (and correspondingly increasing the number of sampled steps to
+reach a fixed physical mixing time), the continuous-time RC diffusion approximates the discrete
+diffusion process used in our analysis.
+Implementation
+In a physical realization, the circuit runs continuously, and one “diffusion step” in the computational accounting corresponds to either:
+• sampling the node voltages every ∆t seconds (giving the exact map W∆t ), or
+• operating in a regime where ∆t is small so that each sample is a small local averaging
+update, approximating a prescribed discrete operator.
+This provides a concrete interpretation of the diffusion primitive as a hardware-supported local
+relaxation step.
+v2
+1 µF
+
+Ω
+
+1k
+
+Ω
+
+1k
+
+v0
+
+v1
+1 kΩ
+1 µF
+
+1 µF
+
+Figure 7: RC network implementing diffusion on the Cayley graph for N = 21. Take N = 21
+M
+and choose a = 2. With M = ⌊log2 21⌋ + 1 = 5, set b ≡ a2 ≡ 232 (mod 21). Since ord21 (2) = 6,
+we have 232 ≡ 22 ≡ 4 (mod 21), hence b = 4 and ord21 (4) = 3. Therefore G = ⟨4⟩ = {1, 4, 16}
+t
+has three vertices, and the generators b±2 reduce to steps ±1 on Z/3Z, so the Cayley graph is a
+3-cycle.
+
+Acknowledgments
+Carlos A. Cadavid gratefully acknowledges the financial support of Universidad EAFIT (Colombia) for the project Study and Applications of Diffusion Processes of Importance in Health and
+Computation (project code 11740052022). Jay Jorgenson acknowledges grant support from
+PSC-CUNY Award 68462-00 56, which is jointly funded by the Professional Staff Congress
+and The City University of New York. Juan D. Vélez gratefully acknowledges the Universidad
+Nacional de Colombia for its support during this research.
+
+28
+
+References
+[AKS04] M. Agrawal, N. Kayal, and N. Saxena, PRIMES is in P, Ann. of Math. (2) 160 (2004),
+781–793.
+[Ba79] L. Babai, Spectra of Cayley graphs, J. Combin. Theory Ser. B 27 (1979), no. 2, 180–189.
+[BS96] E. Bach and J. Shallit, Algorithmic Number Theory, Volume 1: Efficient Algorithms,
+MIT Press, 1996.
+[Be07] D. J. Bernstein, H. W. Lenstra, and J. Pila, Detecting perfect powers by factoring into
+coprimes, Math. Comp. 76 (2007), 385–388.
+[CBK22] D. Chicayban Bastos and L. A. Kowada, A quantum version of Pollard’s Rho of which
+Shor’s algorithm is a particular case, in: Computing and Combinatorics, Lecture Notes in
+Comput. Sci. 13595, Springer, Cham, 2022, 212–219.
+[CHJSV23] C. A. Cadavid, P. Hoyos, J. Jorgenson, L. Smajlović, and J. D. Vélez, Discrete
+diffusion-type equation on regular graphs and its applications, J. Difference Equ. Appl. 29
+(2023), no. 4, 455–488.
+[Ch97] F. R. K. Chung, Spectral Graph Theory, American Mathematical Society, 1997.
+[CP05] R. Crandall and C. Pomerance, Prime Numbers: A Computational Perspective, 2nd ed.,
+Springer, 2005.
+[CR62] C. W. Curtis and I. Reiner, Representation Theory of Finite Groups and Associative
+Algebras, Wiley, 1962; reprint: Wiley Classics Library, 1988.
+[DSS24] J. Ding, G. Spallitta, and R. Sebastiani, Effective prime factorization via quantum
+annealing by modular locally-structured embedding, Sci. Rep. 14 (2024), Article 3518.
+doi: 10.1038/s41598-024-53708-7.
+[EJ96] A. K. Ekert and R. Jozsa, Quantum computation and Shor’s factoring algorithm, Rev.
+Mod. Phys. 68 (1996), no. 3, 733–753.
+[HW08] G. H. Hardy and E. M. Wright, An Introduction to the Theory of Numbers, 6th ed.,
+Oxford University Press, 2008.
+[Hh25] M. Hhan, A new approach to generic lower bounds: classical/quantum MDL, quantum
+factoring, and more, in: Advances in Cryptology—EUROCRYPT 2025. Part VII, Lecture
+Notes in Comput. Sci. 15607, Springer, Cham, 2025, 345–374.
+[KM12] J. Kaczorowski and G. Molteni, Extremal values for the sum
+Theory 132 (2012), 2595–2603.
+
+r
+r=1 e(a2 /q), J. Number
+
+Pτ
+
+[Kn97] D. E. Knuth, The Art of Computer Programming, Volume 2: Seminumerical Algorithms,
+3rd ed., Addison–Wesley, 1997.
+[KSK21] A. H. Karamlou, W. A. Simon, A. Katabarwa, T. L. Scholten, B. Peropadre, Y. Cao,
+et al., Analyzing the performance of variational quantum factoring on a superconducting
+quantum processor, npj Quantum Information 7 (2021), Article 156. DOI: 10.1038/s41534021-00478-z.
+[KSV99] A. Yu. Kitaev, A. H. Shen, and M. N. Vyalyi, Classical and Quantum Computation,
+Graduate Studies in Mathematics 47, American Mathematical Society, Providence, RI,
+2002 (translated from the 1999 Russian original by L. J. Senechal).
+29
+
+[Leh00] D. N. Lehmer, Asymptotic evaluation of certain totient sums, Amer. J. Math. 22 (1900),
+293–335.
+[LPW09] D. A. Levin, Y. Peres, and E. L. Wilmer, Markov Chains and Mixing Times, American
+Mathematical Society, 2009.
+[Me96] A. J. Menezes, P. C. van Oorschot, and S. A. Vanstone, Handbook of Applied Cryptography,
+CRC Press, 1996.
+[NC10] M. A. Nielsen and I. L. Chuang, Quantum Computation and Quantum Information,
+10th Anniversary Edition, Cambridge University Press, 2010.
+[Ni18] B. Nica, A Brief Introduction to Spectral Graph Theory, EMS Textbooks in Mathematics,
+European Mathematical Society, 2018.
+[Nym72] J. E. Nymann, On the probability that k positive integers are relatively prime, J. Number
+Theory 4 (1972), 469–473.
+[Ra80] M. O. Rabin, Probabilistic algorithm for testing primality, J. Number Theory 12 (1980),
+no. 1, 128–138.
+[Ra24] S. Ragavan and V. Vaikuntanathan, Space-efficient and noise-robust quantum factoring,
+in: Advances in Cryptology—CRYPTO 2024. Part VI, Lecture Notes in Comput. Sci. 14925,
+Springer, Cham, 2024, 107–140.
+[Re25] O. Regev, An efficient quantum factoring algorithm, J. ACM 72 (2025), no. 1, Art. 10,
+13 pp. doi: 10.1145/3708471.
+[Sh94] P. W. Shor, Algorithms for quantum computation: Discrete logarithms and factoring, in:
+Proceedings of the 35th Annual Symposium on Foundations of Computer Science (FOCS),
+IEEE, 1994, 124–134.
+[Sh97] P. W. Shor, Polynomial-time algorithms for prime factorization and discrete logarithms
+on a quantum computer, SIAM J. Comput. 26 (1997), no. 5, 1484–1509.
+[Va19] J. Vandehey, Differencing methods for Korobov-type exponential sums, J. Anal. Math.
+138 (2019), 405–439.
+[XQLM23] L. Xiao, D. Qiu, L. Luo, and P. Mateus, Distributed Shor’s algorithm, Quantum Inf.
+Comput. 23 (2023), no. 1–2, 27–44.
+[Za13] P. Zawadzki, Closed-form formula on quantum factorization effectiveness, Quantum Inf.
+Process. 12 (2013), 97–108.
+
+Author information
+Carlos A. Cadavid
+Department of Mathematics, Universidad Eafit, Medellín, Colombia
+ccadavid@eafit.edu.co
+Paulina Hoyos
+Department of Mathematics, The University of Texas at Austin, USA
+paulinah@utexas.edu
+Jay Jorgenson
+Department of Mathematics, The City College of New York, USA
+jjorgenson@mindspring.com
+30
+
+Lejla Smajlović
+Department of Mathematics, University of Sarajevo, Bosnia and Herzegovina
+lejlas@pmf.unsa.ba
+Juan D. Vélez
+Department of Mathematics, Universidad Nacional de Colombia, Medellín, Colombia
+jdvelez@unal.edu.co
+
+31
+
+

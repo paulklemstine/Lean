@@ -1,0 +1,5228 @@
+Sharp probability estimates for Shor’s order-finding
+algorithm
+
+arXiv:quant-ph/0607148v3 4 Sep 2006
+
+P. S. Bourdon1 and H. T. Williams2
+Abstract: Let N be a (large) positive integer, let b be an integer satisfying 1 < b < N
+that is relatively prime to N , and let r be the order of b modulo N . Finally, let QC be a quantum
+computer whose input register has the size specified in Shor’s original description of his order-finding
+algorithm. We prove that when Shor’s algorithm is implemented on QC, then the probability P of
+obtaining a (nontrivial) divisor of r exceeds .7 whenever N > 211 and r ≥ 40, and we establish that
+.7736 is an asymptotic lower bound for P . When N is not a power of an odd prime, Gerjuoy has
+shown that P exceeds 90 percent for N and r sufficiently large. We give easily checked conditions
+on N and r for this 90 percent threshold to hold, and we establish an asymptotic lower bound for
+P of 2Si(4π)/π ≈ .9499 in this situation. More generally, for any nonnegative integer q, we show
+that when QC(q) is a quantum computer whose input register has q more qubits than does QC,
+and Shor’s algorithm is run on QC(q), then an asymptotic lower bound on P is 2Si(2q+2 π)/π (if
+N is not a power of an odd prime). Our arguments are elementary and our lower bounds on P are
+carefully justified.
+
+1
+
+Introduction
+
+In this Introduction, we assume readers are familiar with Shor’s algorithm for finding the order of
+an integer b relative to a larger integer N to which b is relatively prime. The algorithm is reviewed
+in the next section.
+The goal of Shor’s algorithm is to find the least positive integer r such that br ≡ 1 (mod N );
+that is, to find the order of b modulo N . In [8, 9], Shor describes an efficient algorithm to accomplish
+this task that runs on a quantum computer whose input register has n qubits, where n is chosen to
+be the unique positive integer such that N 2 ≤ 2n < 2N 2 . The final quantum-computational step
+in Shor’s algorithm is measurement of the input register in the computational basis. One obtains
+an n-bit integer y, and the key calculation at this point is the probability that y satisfies
+(1)
+
+y−
+
+1
+s2n
+≤
+for some s ∈ {1, 2, . . . r − 1}.
+r
+2
+
+Lower bounds for this probability, for sufficiently large N and r, are typically given at around 40
+percent along with 4/π 2 as an asymptotic lower bound (see, e.g., [9, p. 1500], [1], [7, p. 58], [5,
+1
+
+Department of Mathematics, Washington and Lee University, Lexington, VA 24450; pbourdon@wlu.edu
+Department of Physics and Engineering, Washington and Lee University, Lexington, VA 24450;
+williamsh@wlu.edu
+2
+
+1
+
+Chapter 3]). We find a precise formula for the probability that y belongs to
+s2n
+S := nint
+r
+
+
+
+
+
+
+
+
+: s = 1, 2, 3, . . . , r − 1 ,
+
+and thereby satisfies (1). Here, nint is the nearest-integer function. We use our probability formula
+to show that the integer y obtained by Shor’s quantum computation will belong to S with probability exceeding 70%, as long as N ≥ 211 and r ≥ 40. In fact, we show that the probability P that
+y belongs to S will exceed 70% as long as N · 211 ≤ 2n and r ≥ 40. Moreover, we show that
+2
+(−2 + πSi(π)) ≈ 0.7737
+π2
+provides an asymptotic lower bound for P . Here Si is the sine-integral function Si(x) = 0x sint t dt.
+Note that we may assume both r and N are large; otherwise, there is no reason to resort to quantum
+computation to find r.
+R
+
+Efficient order finding leads to efficient methods for factoring composite integers (see, e.g., [6,
+§5.3.2]). Interest in the factoring problem is especially great for composite integers of the form pq,
+where p and q large distinct primes—the ability to factor such integers is equivalent to the ability
+to read information encoded via the RSA cryptography system (see, e.g, [2]). When N is not a
+power of a prime, Gerjuoy ([2]) shows that Shor’s algorithm (input register having n qubits where
+N 2 ≤ 2n < 2N 2 ) succeeds in finding a divisor of r with probability exceeding 90%, given N and
+r are sufficiently large. (Here and in the sequel, by “divisor of r” we mean a divisor exceeding 1.)
+The key lemma for Gerjuoy’s work is that r < N/2 whenever N is not a power of a prime. (See
+[2, Appendix B] for an elementary proof of this fact in case N = pq, where p and q are distinct
+odd primes; we provide a general argument in Section 5 below.) This lemma allows Gerjuoy to
+establish that Shor’s algorithm finds a divisor of r whenever the integer y observed at the conclusion
+of quantum computation belongs to
+s2n
+≤ 2 for some s ∈ {1, 2, . . . , r − 1} .
+S̃ := y : y −
+r
+
+
+
+
+In Section 5 of this paper, we apply our methods to find a precise formula for the probability P̃
+that y belongs to S̃. We then use the formula to describe conditions on r and N that will ensure
+P̃ exceeds 90% and we show that
+2Si(4π)
+≈ 0.9499
+π
+is an asymptotic lower bound for P̃ .
+In the final section of this paper, we extend our results to the case where the quantum computer “QC(q)” implementing Shor’s algorithm has n + q qubits in its input register, where q is a
+nonnegative integer and where, just as before, N 2 ≤ 2n < 2N 2 . Again assuming that N is not a
+2
+
+power of a prime (so that Gerjuoy’s lemma applies), we show that when Shor’s algorithm is run on
+QC(q), an asymptotic lower bound on the probability of finding a divisor of r is
+2Si(22+q π)
+.
+π
+When q = 3, our asymptotic bound exceeds 0.993. Also, when q = 3, we give easily checked
+conditions on r and N that will ensure the probability of success exceeds 99 percent.
+We remark that phase-estimation analysis, as it is described in in [6] (see the paragraph containing (5.44) on page 227), assures that the 99 percent threshold is reached when q = 5 (N not a
+power of a prime), or when q = 7 (N arbitrary).
+
+2
+
+Preliminaries
+
+Our probability analysis depends on some elementary number theory; specifically, the following two
+lemmas. In these lemmas, r is a positive integer exceeding 1.
+Lemma 1 Suppose that t is a positive integer less than r which is relatively prime to r and that k
+is a positive integer; then {(kr + s)t (mod r) : s = 1, 2, . . . r − 1} = {1, 2, . . . , r − 1}.
+Proof: Define f : {1, 2, . . . , r − 1} → {1, 2, . . . , r − 1} by
+f (s) = (kr + s)t (mod r) = st (mod r).
+To prove the lemma, it suffices to show f is one-to-one. Suppose f (s1 ) = f (s2 ), then
+(s1 − s2 )t ≡ 0 (mod r).
+Since t is relatively prime to r, the preceding equation shows that r must divide s1 − s2 ,
+but since |s1 − s2 | < r, we must have s1 − s2 = 0. Hence f is one-to-one, as desired.///
+Lemma 2 Suppose that 2n exceeds r and r = 2k̃ r ′ , where k̃ is a nonnegative integer and r ′ is a
+positive odd integer exceeding 1. Then there exists an integer q and a positive integer t less than r ′ ,
+relatively prime to r ′ , such that
+t
+2n
+= q + ′.
+r
+r
+Proof: Note 2n /r = 2n−k̃ /r ′ . Let q be the integer quotient that results when 2n−k̃ is
+divided by r ′ and let t be the remainder:
+2n−k̃
+= q + t/r ′ .
+r′
+3
+
+It follows that 2n−k̃ = qr ′ + t, and this equation shows that if t and r ′ had a common
+divisor exceeding 1 (necessarily odd since r ′ is odd), then that common divisor would
+be a odd number greater than 1 dividing 2n−k̃ , which is absurd. The lemma follows.///
+Let Z+ denote the set of positive integers. For the remainder of this paper, b and N denote
+elements of Z+ such that b < N and b is relatively prime to N . Let r be the order of b modulo
+N : br ≡ 1 (mod N ) and r is the least positive integer for which this equation holds. It is easy to
+show such an r exists and that r < N .3 Also, since 1 < b < N , r must be greater than 1. We now
+describe Shor’s quantum algorithm, which is designed to compute the order r of b.
+We focus on the transformations and measurements of the input and output registers of the
+machine implementing the algorithm, ignoring any work-register activity. The machine has input
+register having n qubits, where n is the least positive integer such that
+N 2 ≤ 2n < 2N 2 .
+Its output register will have n0 qubits, where n0 is the least positive integer for which N ≤ 2n0 .
+(It’s easy to check that either n = 2n0 or n = 2n0 − 1.) Note that the size of the output register
+allows it to hold any of the r integers in the set {bx (mod N ) : x = 0, 1, 2, . . . , r − 1}.
+
+The machine begins in state |0in |0in0 . Then Hadamard gates are applied to each of the n qubits
+in the input register to put the machine in state
+1
+
+n −1
+2X
+
+2n/2 x=0
+
+|xin |0in0 .
+
+Then the unitary transformation that takes
+|xin |0in0 to |xin |bx (mod N )in0 , x ∈ {0, 1, 2, . . . , 2n − 1},
+is applied, yielding the machine state
+(2)
+
+1
+
+n −1
+2X
+
+2n/2 x=0
+
+|xin |bx (mod N )in0 .
+
+The next step in the algorithm, as described by Shor [9], is the application of the quantum Fouriertransform to the input register. However, to limit the number of summations that appear in our
+work, we will, at this stage, follow David Mermin [5, Chapter 3] and measure the output register.
+When this measurement is made on the machine in state (2), we obtain an n0 -bit integer J. Observe
+that there must be exactly one integer x0 in {0, 1, 2, . . . , r − 1} such that bx0 ≡ J (mod N ) and
+3
+
+In fact, r must divide φ(N ), where φ(N ) denotes the number of positive integers less than N that are relatively
+prime to N .
+
+4
+
+that every x ∈ {0, 1, . . . , 2n − 1} such that bx ≡ J (mod N ) has the form x0 + kr for some integer
+k in {0, 1, 2, . . . , m − 1}, where
+ n
+
+2
+x0
+m=
+−
+(3)
+.
+r
+r
+(Here, ⌈w⌉ represents the least integer greater than or equal to the real number w; later we use
+⌊w⌋ to represent that greatest integer less than or equal to w.) For future reference, observe
+2n
+2n
+−1<m<
++ 1.
+r
+r
+
+(4)
+
+Thus, after measuring J in the output register, the machine’s input register is in state
+X
+1 m−1
+√
+|kr + x0 in .
+m k=0
+
+(5)
+
+√
+We can think of the input register’s state as 1/ m times a vector of 0’s and 1’s, which has 1’s in
+positions kr + x0 for k ∈ {0, 1, 2, . . . , m − 1} and zeros elsewhere. Thus the input register contains
+√
+values of a periodic {0, 1/ m}-valued function, having period r. By taking the quantum Fouriertransform of the input register, we (hope to) obtain information about the fundamental frequency
+1/r and its overtones s/r, s = 2, 3, . . . , r − 1. After applying the quantum Fourier-transform, the
+input register is in state
+n −1
+m−1
+X
+n
+1 2X
+2πix0 y/2n
+√
+(6)
+e2πikry/2 |yi.
+e
+n
+2 m y=0
+k=0
+Here we are following Mermin [5, Chapter 3], even notationally.
+The final step in the quantum-computational part of Shor’s algorithm is measurement of the
+input register, which yields and n-bit integer y. The key calculation at this point is the probability
+that the integer y ∈ {0, 1, 2, . . . , 2n − 1} measured will belong to
+s2n
+S = nint
+r
+
+
+(7)
+
+
+
+
+
+
+
+: s = 1, 2, 3, . . . , r − 1 .
+
+This calculation is carried out in the next section.
+
+3
+
+An Exact Probability Calculation
+
+For each s ∈ {1, 2, . . . , r − 1}, let
+
+s2n
+ys = nint
+.
+r
+
+
+We seek to compute
+5
+
+
+
+P := the probability that the n-bit integer y observed via measurement of the quantum
+system in state (6) belongs to S = {ys : s = 1, 2, . . . , r − 1}.
+If y does belong to S, then Shor [8, 9] explains how to use that information to find a divisor of r
+(in an efficient way). He depends on a classical result in number theory that states that if y is an
+integer such that
+y
+s
+1
+(8)
+− ≤ 2 for some s ∈ {1, 2, . . . , r − 1},
+n
+2
+r
+2r
+then one can obtain, via the continued-fraction expansion of y/2n , a rational number r̃s̃ , in lowest
+terms, such that r̃s̃ = rs ; hence, r = s̃s r̃ and r̃ is a divisor of r. If s happens to be relatively prime
+to r, then the order r is determined. Note that if y = ys is an element of S, then
+y−
+
+1
+s2n
+≤ ,
+r
+2
+
+so that |y/2n − s/r| ≤ 2 12n ≤ 2N1 2 < 2r12 . Thus observing an integer from S at the conclusion
+of quantum computation will yield a divisor of r. The probability of finding r itself, as the least
+common-multiple of divisors found, rises quickly to 1 with the number of different divisors known.
+It follows from (6) that the probability p(ys ) that ys will be observed is
+2
+
+X
+n
+1 m−1
+e2πikrys /2 , s ∈ {1, 2, . . . , r − 1},
+p(ys ) = n
+2 m k=0
+
+which may be rewritten,
+2
+
+(9)
+because e
+
+2πikr
+2n
+
+n
+
+ys − s2r
+
+X 2πikr y − s2n 
+1 m−1
+e 2n s r
+, s ∈ {1, 2, . . . , r − 1},
+p(ys ) = n
+2 m k=0
+
+
+n
+
+n
+
+= e2πikrys /2 e−2πiks = e2πikrys /2 for each s. Let
+δs = ys −
+
+(10)
+
+s2n
+s2n−k̃
+= ys −
+,
+r
+r′
+
+which allows us to re-express (9) as
+(11)
+
+X 2πikrδs
+1 m−1
+e 2n
+p(ys ) = n
+2 m k=0
+
+2
+
+, s ∈ {1, 2, . . . , r − 1}.
+
+Representation (11) of p(ys ) can be simplified by using the formula for the partial sum of a geometric
+P
+l
+m
+′
+series ( m−1
+l=0 w = (1 − w )/(1 − w); one obtains that for every s ∈ {1, 2, . . . , r − 1}
+(12)
+
+p(ys ) =
+
+1−e
+
+2πimrδs
+2n
+
+2
+
+1
+s 2
+2n m 1 − e 2πirδ
+2n
+6
+
+
+
+
+
+2 πmrδs
+1 sin
+2n
+
+ .
+= n
+2 m sin2 πrδn s
+2
+
+In our calculation of P , we will assume only that the number n of qubits in the input register
+exceeds n0 , the number in the output register. Observe that this ensures that 2n /r > 2n−n0 ≥ 2.
+It follows that the set S of (7) consists of r − 1 distinct elements, and thus
+(13)
+
+P =
+
+r−1
+X
+
+p(ys ).
+
+s=1
+
+Also note that there is no ambiguity in the value of nint (s2n /r) for s = 1, 2, . . . , r − 1 because
+s2n /r can never be a half-integer.
+
+
+n
+
+n
+
+We consider the simplest case first: 2r is an integer. In this case, ys = nint s2r
+therefore δs = 0 for each s. It follows from (11) that p(ys ) = 2mn for every s and thus
+
+
+
+n
+
+= s2r and
+
+m
+P = (r − 1) n .
+2
+
+(14)
+
+Using the lower bound on m from (4) it is easy to show
+(15)
+
+P >1−
+
+1 r−1
+− n .
+r
+2
+
+This exceeds .95 if, e.g., r > 25 and n > 15.
+n
+
+We now address the more challenging, more interesting case: 2r is not an integer. Note that in
+this case, there must be a nonnegative integer k̃ such that
+r = 2k̃ r ′ , where r ′ is odd and exceeds 1.
+
+(16)
+
+Suppose that k̃ is positive so that r is even. Then appearing in the sum over s in (13) are
+ values
+
+n
+′
+′
+′
+k̃
+′
+of s that are multiples of r : r , 2r , ..., (2 − 1)r . For each of these values, ys = nint s2r
+=
+
+
+
+
+nint 2n−k̃ rs′ = 2n−k̃ rs′ and therefore δs = 0 for each such s. Thus we have from (11)
+
+Observation 1: The total contribution to P from multiples of r ′ is (2k̃ − 1) 2mn .
+The remaining s values, i.e. those that are not multiples of r ′ , consist of 2k̃ sequences, each with
+r ′ − 1 terms:
+
+
+
+
+(17) (1, 2, ..., r ′ − 1), (r ′ + 1, r ′ + 2, ..., 2r ′ − 1), . . . , (2k̃ − 1)r ′ + 1, (2k̃ − 1) + 2, ..., 2k̃ r ′ − 1 .
+We will show that the contribution to P from each sequence is the same.
+
+Note that Observation 1 is valid even if k̃ = 0 and that the assertion made in the preceding
+paragraph is trivially true since there is only one sequence in (17) in this case.
+7
+
+n
+
+Apply Lemma 2 to represent 2r as q + t/r ′ where q is a positive integer and t < r ′ is relatively
+prime to r ′ . Consider the collection
+′
+
+
+
+′
+
+S := {ys : s ∈ {1, 2, . . . , r − 1}} =
+
+nint
+
+
+
+s2n
+r
+
+
+
+st
+nint sq + ′
+r
+
+
+
+=
+
+
+
+
+
+: s ∈ {1, 2, . . . , r ′ − 1}
+
+
+′
+
+
+
+: s ∈ {1, 2, . . . , r − 1}
+
+Apply Lemma 1 with k = 0 to see that st 6≡ 0 (mod r ′ ) for each s ∈ {1, 2, . . . , r ′ − 1}. Hence, for
+each such s, st = qs r ′ + js for some nonnegative integer qs and some js ∈ {1, 2, . . . , r ′ − 1}. Thus
+
+
+
+
+S ′ = nint sq + qs +
+
+(18)
+
+Let s ∈ {1, 2, . . . , r ′ − 1}. Observe that if
+(19)
+
+js ≤
+
+If
+js ≥
+
+(20)
+
+js
+r′
+
+
+
+
+
+: s ∈ {1, 2, . . . , r ′ − 1} .
+
+s2n
+r
+= −js /r ′ .
+, then ys = sq + qs and ys −
+2
+r
+
+ ′
+
+ ′
+
+r
+r ′ − js
+s2n
+=
+.
+, then ys = sq + qs + 1 and ys −
+2
+r
+r′
+
+Lemma 1 tells us that as s varies from 1 to r ′ − 1, the integers js appearing in the representation
+js
+st
+′
+r = sq + r ′ = sq + qs + r ′ will also vary from 1 to r − 1. Thus, in (18)
+
+s2n
+
+
+
+js
+: s ∈ {1, 2, . . . , r ′ − 1} =
+r′
+
+
+
+
+1 2
+r′ − 1
+, ′,...,
+.
+′
+r r
+r′
+
+
+Thus Lemma 1 (with k = 0), combined with observations (19) and (20), yields
+
+
+(21)
+
+s2n
+: s = 1, 2, . . . , r ′ − 1 =
+ys −
+r
+
+and that for a given l ∈ {1, 2, . . .
+2n
+
+
+
+j ′k
+r
+2
+
+
+
+1 2
+⌊r ′ /2⌋
+,
+,
+.
+.
+.
+,
+r′ r′
+r′
+
+
+
+}, there are exactly two integers s1 and s2 in {1, 2, 3, . . . , r ′ −1}
+n
+
+such that |ys1 − s1r | = l/r ′ and |ys2 − s2r2 | = l/r ′ . Now suppose that r ′ < r; in other words, the
+integer k̃ in (16) is positive. Let k be any integer satisfying 1 ≤ k ≤ 2k̃ − 1. The analysis of the
+preceding two paragraphs, with Lemma 2 applied as stated, shows that
+(22)
+
+
+
+s2n
+: s = kr ′ + 1, kr ′ + 2, . . . , kr ′ + r ′ − 1 =
+ys −
+r
+
+
+
+
+1 2
+⌊r ′ /2⌋
+,
+,
+.
+.
+.
+,
+,
+r′ r′
+r′
+
+n
+
+
+
+with each element of the set on the right corresponding to |ys − s2r | for exactly two values of s in
+the range kr ′ + 1 to kr ′ + r ′ − 1.
+8
+
+Using the definition of δs from (10) as well as (21) and (22), we see that for any k with
+0 ≤ k ≤ 2k̃ − 1,
+
+ ′ 
+j
+r
+{|δkr′ +q | : q = 1, 2, . . . , r ′ − 1} =
+:
+j
+=
+1,
+2,
+.
+.
+.
+,
+(23)
+′
+r
+2
+with each member of the set on the right corresponding to |δkr′ +q | for exactly two values of q ∈
+{1, 2, . . . , r ′ − 1}. Thus we have
+Observation 2: the contribution to P from from any one of the sequences in (17),
+P ′ −1
+which would take the form rq=1
+p(ykr′ +q ) for some k ∈ {0, 1, . . . , 2k̃ − 1}, is given by
+j ′k
+r
+2
+
+(24)
+
+
+
+j ′k
+r
+2
+
+
+
+2 πmr(j/r ′ )
+2 X sin
+2n
+
+
+′)
+n
+2 m j=1 sin2 πr(j/r
+n
+2
+
+2
+
+
+
+πmj
+
+
+
+2 X sin 2n−k̃
+,
+
+= n
+2 m j=1 sin2 πj
+2n−k̃
+
+where we have used (12).
+Combining Observations 1 and 2 leads us to a final form for the exact probability:
+⌊r ′ /2⌋
+
+(25)
+
+2
+
+
+
+
+
+πmj
+
+2 X sin 2n−k̃
+m
+
+ + (2k̃ − 1) .
+P = 2k̃ n
+2 m j=1 sin2 πj
+2n
+2n−k̃
+
+n
+
+Note that the preceding formula is valid even when 2r is an integer, provided we
+take r = 2k̃ r ′ ,
+j k
+
+where r ′ = 1, and we follow convention and interpret the sum from j = 1 to j =
+
+4
+
+r′
+2
+
+= 0 to be 0.
+
+Lower Bounds on the Probability of Success
+
+In this section, we discuss two different ways of obtaining lower bounds for
+2
+P = 2k̃ n
+2 m
+
+
+
+
+
+πmj
+m
+n−k̃
+ + (2k̃ − 1) ,
+2
+πj
+2
+2n
+j=1 sin
+2n−k̃
+
+⌊r ′ /2⌋ sin2
+
+X
+
+n
+
+n
+
+where r < N ≤ 2n0 , 2k̃ r ′ = r with r ′ ≥ 3 odd (and k̃ ≥ 0), and 2r − 1 < m < 2r + 1. Our
+first method of bounding P below uses elementary inequalities based on the Maclaurin series for
+the sine function and requires only that n > n0 . Our second method provides an integral-based
+underestimate and requires N 2 ≤ 2n (Shor’s condition). The lower bounds presented below are
+rigorously justified in Appendix B.
+
+9
+
+To derive a series-based lower bound for P , we use the following elementary inequalities:
+2
+
+2
+
+2
+
+sin x ≤ x for all x, and sin x ≥
+
+(26)
+
+x3
+x−
+6
+
+!2
+
+3π
+for, say, x ∈ 0,
+.
+4
+
+
+
+
+We obtain (see Appendix B)
+(27)
+
+1
+
+
+
+
+
+1
+
+1
+P > 1 − n−n0 −
+2
+r
+
+
+π2
+1−
+36
+
+
+
+1
+1
+r+1
++ n−n0 −1 + 2(n−n )
+0
+r
+2
+2
+
+!
+
+if k̃ = 0 (r, odd),
+
+and
+(28)
+
+P
+
+>
+
+1
+1
+π2 r′ + 1
++ n−n0 −2 + 2(n−n )−1
+1−
+′
+0
+36
+r
+2
+2
+1
+1
+1
++ ′−
+− n−n0 if k̃ > 0 (r, even).
+k̃
+′
+r
+2
+2 r
+
+1
+1 − n−n0 − ′
+2
+r
+
+
+
+
+
+!
+
+Assuming that n − n0 ≥ 11 and r ≥ 40, one can show (Appendix B) that the right-hand side
+of either (27) or (28) exceeds 0.70. Thus if Shor’s algorithm is carried out with an input register
+having the size described in Shor’s original paper, then the probability of finding a divisor of the
+period sought exceeds 70% (as long as r ≥ 40 and N ≥ 211 ).
+Note that as r and n − n0 approach ∞ in our lower bound formula (27) for odd r, we get an
+asymptotic lower bound on P of (1 − π 2 /36) ≈ 0.726. A sharper asymptotic bound is provided by
+2
+
+(29)
+
+π
+1 − 4N
+2
+P ≥
+1 + N1
+
+2
+π2
+
+Z 1+ 1
+2
+
+1/r ′
+
+2r ′
+
+!
+
+3
+1
+1
+sin2 (πx)
+dx −
++ ′−
+,
+2
+x
+N
+r
+2k̃ r ′
+
+an inequality proved to be valid in Appendix B (assuming N 2 ≤ 2n ). By letting r ′ and N approach
+infinity, we obtain
+Z
+2
+2 1/2 sin2 (πx)
+dx = 2 (−2 + πSi(π)) ≈ 0.7737
+2
+2
+π 0
+x
+π
+as an asymptotic lower bound for P .
+Consider the function F (N, k̃, r ′ ) defined by the right-hand side of (29). It is clear that if either
+of k̃ or N increases, so does F . Additionally, the partial derivative of F with respect to r ′ is
+positive (whenever N exceeds, say 9) and thus F increases in r ′ as well. F exceeds 0.75 when
+N = 211 , r ′ = 75, and k̃ = 0. Thus if one uses a classical computer to check that the order r of b
+modulo N doesn’t have the form 2k̃ c where c is an odd number satisfying 1 ≤ c ≤ 73, and k̃ is a
+nonnegative integer for which 2k̃ c < N , then one can be over 75% certain of success. Note there are
+fewer than 37 log 2 (N ) numbers to check so that the checking may be done efficiently on a classical
+computer. The 0.77 success-rate threshold is reached by, e.g. N = 215 , r ′ = 447.
+10
+
+5
+
+Order-finding when N is not a power of a prime
+
+In this section, we assume that N is not a power of prime, that b is an integer satisfying 1 < b < N
+which is relatively prime to N , and that r is the order of b modulo N . In this situation, Gerjuoy
+([2]) has shown that Shor’s algorithm succeeds in finding a divisor of r with probability on the
+order of 90% (given that N and r are sufficiently large). As we mentioned in the Introduction, the
+key to Gerjuoy’s work is his use of the following lemma:
+Lemma 3 (Gerjuoy) If N is not a power of a prime and b is relatively prime to N , then the
+order r of b modulo N must satisfy
+N
+r< .
+2
+Gerjuoy [2, Appendix B] provides an elementary proof of the preceding lemma in case N = pq,
+where p and q are distinct odd primes. The general result may be established as follows. The
+collection of all integers less than N and relatively prime to N forms a group under multiplication
+modulo N . This group, frequently denoted U (N ), contains φ(N ) elements, where φ is the Euler
+φ function. A well-known number-theory result (see, e.g., [4, Proposition 4.1.3]) shows that U (N )
+contains an element having order φ(N ) modulo N if and only if N is 2 or 4 or has the form pj or
+2pj , where p is an odd prime and j ∈ Z+ . Thus if N is a not a power of a prime, then either
+(i) U (N ) contains no element of order φ(N ), or
+(ii) N = 2pj for some positive integer j and some odd prime p.
+Suppose that (i) holds, that b ∈ U (N ), and that b has order r modulo N . Since the order r of
+b must divide the number of elements in U (N ) ([3, p. 43]) and since r 6= φ(N ), we must have
+φ(N ) = kr for some integer k ≥ 2. Hence
+r = φ(N )/k ≤ φ(N )/2 < N/2,
+as desired. Suppose that (ii) holds. Then U (N ) does contain elements of order φ(N ); however,
+an easy calculation shows φ(2pj ) = pj − pj−1 , which is less than N/2. Thus in case (ii) holds, all
+elements of U (N ) have order less than N/2, which completes the proof of the lemma.
+Gerjuoy [2] explains how Lemma 3 shows that a divisor of r may be extracted from the integer y
+observed at the conclusion of Shor’s quantum computation for a larger collection of y’s than those
+contained in the set S of integers nearest s2n /r, s = 1, 2, . . . , r − 1. Specifically, he shows that if
+one observes an integer y satisfying
+(30)
+
+y−
+
+s2n
+≤ 2 for some s ∈ {1, 2, . . . r − 1},
+r
+11
+
+then one can obtain a divisor of r. To see why this is so, recall from (8) that the real goal of the
+computation is to find an integer y satisfying
+y
+s
+1
+−
+≤ 2 for some s ∈ {1, 2, . . . , r − 1}.
+n
+2
+r
+2r
+
+(31)
+
+Note that if (30) holds and Lemma 3 applies (so that 2r < N ), then
+2
+s
+2
+2
+1
+y
+− ≤ n ≤ 2 <
+= 2,
+n
+2
+2
+r
+2
+N
+(2r)
+2r
+so that knowledge of y means knowledge of a divisor of r.
+Thus, given that N is not a prime power, Gerjuoy establishes that Shor’s computation is
+successful provided the integer observed belongs to
+
+
+S̃ = y : y −
+
+s2n
+≤ 2 : s = 1, 2, . . . , r − 1 .
+r
+
+
+Observe that the gap between successive values of s2n /r exceeds 2n /r ≥ N 2 /(N/2) = 2N so that
+′ n
+n
+the set of integers satisfying y − s2r ≤ 2 will be disjoint from those satisfying y − s r2 ≤ 2, given
+s′ 6= s.
+
+We now describe the elements of S̃ relative to the nearest integers ys (introduced earlier) and
+calculate the exact probability that the integer y observed at the end of the Shor computation will
+belong to S̃.
+Recall that for each s ∈ {1, 2, . . . , r − 1}, ys = nint (s2n /r). Note that if ys < s2n /r, then S̃ will
+contain, in addition to ys , the integers ys + 1, ys + 2, and ys − 1. Similarly, if ys > s2n /r, then S̃ will
+contain ys , ys +1, ys −1, and ys −2. Finally, if s2n /r is an integer (so that in the notation of Section 3,
+s = kr ′ for some k satisfying 1 ≤ k ≤ 2k̃ − 1), then S̃ will contain ys − 2, ys − 1, ys , ys + 1, ys + 2. We
+have computed the probability P that the integer observed belongs to set {ys : s = 1, 2, . . . , r − 1},
+where ys = nint (s2n /r). Similar methods will allow us to compute the probability that integers of
+the form ys + h, h ∈ {−2, −1, 1, 2} will be observed. In fact, we compute the probability the ys + h
+is observed for any integer h, but in this section will focus only the |h| ≤ 2 case.
+
+Let h ∈ {−2, −1, 1, 2} and s ∈ {1, 2, . . . , r − 1} be arbitrary. Substituting ys + h for ys in (9) and
+using the definition of δs in (10), we obtain the probability p(ys + h) that ys + h will be observed:
+(32)
+
+p(ys + h) =
+
+1
+2n m
+
+m−1
+X
+
+2
+
+e
+
+2πikr(h+δs )
+2n
+
+k=0
+
+
+
+2
+
+which should be compared to (11) and (12). Let Ph =
+did P :
+Ph =
+
+r−1
+X
+
+
+
+2 πmr(h+δs )
+1 sin
+2n
+ , s ∈ {1, 2, . . . , r − 1},
+
+= n
+s)
+2 m sin2 πr(h+δ
+n
+
+p(ys + h)
+
+s=1
+
+12
+
+Pr−1
+
+s=1 p(ys + h). We compute Ph just as we
+
+k̃ −1
+2X
+
+=
+
+k=0
+
+ ′
+rX
+−1
+
+p(y
+q=1
+
+kr ′ +q
+
+
+
+X  X 1 sin
+
+
+2n m
+
+2k̃ −1
+
+=
+
+r ′ −1
+
++ h) +
+
+2
+
+sin
+
+q=1
+
+k=0
+
+
+
+
+
+2
+
+k̃ −1
+2X
+
+p(y
+
+k=1
+
+πmr(h+δkr ′ +q )
+2n
+
+
+
+πr(h+δkr ′ +q
+2n
+
+kr ′
+
++ h)
+
+
+
+
+
+2 πmrh
+n
+ 2k̃ − 1 sin
+2
+
+ 
+ ,
+ + 2n m
+2 πrh
+)
+
+sin
+
+2n
+
+where we have used (32) to obtain the final equality above. Recall from (19), (20), and (23) that
+{δkr′ +q : q = 1, 2, . . . r ′ − 1} = {j/r ′ : j = 1, 2, . . . , ⌊r ′ /2⌋} ∪ {−j/r ′ : j = 1, 2, . . . , ⌊r ′ /2⌋}. Thus, we
+can say
+Ph =
+
+
+
+k̃ −1
+2X
+
+2
+
+⌊r ′ /2⌋
+
+
+
+πmr(h+j/r ′ )
+
+
+
+2
+
+⌊r ′ /2⌋
+
+
+
+πmr(h−j/r ′ )
+
+
+
+2
+
+
+
+πmrh
+
+
+
+X sin
+2k̃ − 1 sin
+1  X sin
+2n
+2n
+2n
++
+
+
+
+
+
+
++
+′)
+′)
+n
+n
+πr(h+j/r
+πr(h−j/r
+2
+2 m j=1 sin2
+2 m sin2 πrh
+n
+n
+n
+j=1 sin
+k=0
+2
+
+2
+
+2
+
+Observe that Ph is an even function of h, i.e., Ph = P−h . Thus we can say that the probability
+of observing an integer in S̃ is
+(33)
+P + 2P1 + P t,
+where P t is the probability that the following integers are observed: (a) ys + 2, given s2N /r > ys ,
+or (b) ys − 2, given s2n /r < ys , or (c) both ys + 2 and ys − 2, given s2n /r is an integer. We have
+Pt = 2
+
+
+
+k̃ −1
+2X
+
+
+
+
+
+
+
+
+
+πmr(2−j/r ′ )
+2 πmr2
+2k̃ − 1 sin
+2n
+2n
++2
+
+
+
+ .
+′
+)
+2n m sin2 πr2
+sin2 πr(2−j/r
+n
+n
+2
+2
+
+⌊r ′ /2⌋ sin2
+
+1 
+nm
+2
+j=1
+k=0
+X
+
+Using our formulas for P , P1 , and P t, and doing a bit of rearranging, we obtain the following as
+the probability that an element of S̃ will be observed:
+⌊r ′ /2⌋
+
+(34)
+
+P̃
+
+2
+
+
+
+πmr(j/r ′ +h)
+
+
+
+1
+X sin
+m
+2 X
+2n
+
+ + (2k̃ − 1)
+= 2k̃ n
+′ +h)
+πr(j/r
+2 m h=−2 j=1 sin2
+2n
+n
+2
+
++2
+
+2k̃ − 1 sin
+
+2
+
+
+
+2n m sin2
+
+πmr1
+2n
+
+
+
+πr1
+2n
+
+
+
+ +2
+
+2
+2k̃ − 1 sin
+
+
+
+2n m sin2
+
+πmr2
+2n
+
+
+
+πr2
+2n
+
+
+
+
+
+In Appendix A, we present a numerical calculation illustrating the correctness of our formula
+for P̃ . In Appendix B, we obtain the following lower bound for P̃ :
+(35)
+
+P̃
+
+≥
+
+
+
+2
+
+1 − Nπ 2
+
+
+
+2
+
+π
+1 − 16N
+2
+
+1
+1 + 2N
+
+
+
+1
+X
+
+h=−2
+
+2
+π2
+
+Z 1− 1
+2
+
+0
+
+2r ′
+
+−
+13
+
+!
+
+1
+sin2 (πx)
+dx − ′
+2
+(x + h)
+r
+7
+1
+16
+
+−
+−
+.
+2N
+2k̃ r ′
+πN 1 − 1
+2N
+
+As r ′ and N approach infinity, we obtain an asymptotic lower bound of
+(36)
+
+1
+X
+
+h=−2
+
+2
+π2
+
+Z 1
+
+2
+
+0
+
+sin2 (πx)
+dx
+(x + h)2
+
+!
+
+=
+
+2Si(4π)
+≈ 0.9499.
+π
+
+Clearly, the quantity on the right-hand side of (35) increases as any one of r ′ , N , or k̃ increases.
+This quantity exceeds 0.90 when N = 216 , r ′ = 59, and k̃ = 0. Thus if one uses a classical computer
+to check that the order r of b modulo N doesn’t have the form 2k̃ c where c is an odd number
+satisfying 1 ≤ c ≤ 57, and k̃ is a nonnegative integer for which 2k̃ c < N , then one can be over 90%
+certain of success. Note there are fewer than 29 log 2 (N ) numbers to check so that the checking
+may be done efficiently on a classical computer. The 0.94 success-rate threshold is reached by, e.g.
+N = 216 , r ′ = 299.
+We remark that the trig identity sin2 (πx) = sin2 (π(x + h)) (for h, an integer) along with some
+elementary calculus shows that the sum of integrals on the left of (36) equals
+2
+π2
+
+Z 2
+0
+
+sin2 (πx)
+dx
+x2
+
+.
+which via appropriate trig identities and substitutions yields 2Si(4π)
+π
+
+6
+
+Probability Calculations for Larger Computers
+
+Just as in the preceding section, we assume that N is a (large) positive integer that is not a power
+of a prime, that b > 1 is an integer than N , relatively prime to N , whose order r (modulo N ) we
+seek. Note that Gerjuoy’s lemma remains in force: r < N/2. Just as before, let n be the positive
+integer satisfying N 2 ≤ 2n < 2N 2 so that n is the number of qubits Shor originally specified for
+the input register of the quantum computer “QC” running his order-finding algorithm. For each
+nonnegative integer q let QC(q) be a quantum computer having input register of size n + q qubits.
+Let
+)
+(
+s2n+q
+1+q
+≤2
+for some s ∈ {1, 2, . . . , r − 1} .
+S̃q = y : y −
+r
+Observe that if y ∈ S̃q then for some s ∈ {1, 2, . . . , r − 1},
+y
+2n+q
+
+−
+
+s
+2
+2
+2
+1
+≤ n ≤ 2 <
+= 2
+2
+r
+2
+N
+(2r)
+2r
+
+so that if the integer y, observed at the end of the Shor computation on QC(q), belongs to S̃q then
+the computation will be successful in the sense that a divisor of r (exceeding 1) will be found.
+14
+
+Let P̃q be the probability that a integer y in S̃q is observed. (Note S̃0 = S̃ and P̃0 = P̃ .)
+Generalizing the computations in the preceding section in the obvious way, we obtain the following
+analogue of (34):
+2
+P̃q = 2k̃ n+q
+2 m
+
+
+
+
+
+πmr(j/r ′ +h)
+2n+q
+
+
+′ +h)
+sin2 πr(j/r
+2n+q
+
+′ /2⌋
+2q+1
+sin2
+X−1 ⌊rX
+
+h=−2q+1 j=1
+
+2
+2k̃ − 1 2X sin
+q+1
+
+
+
+πmrj
+2n+q
+
+
+
+m
+.
+
++ (2k̃ − 1) n+q + 2 n+q
+2
+2
+m j=1 sin2 πrj
+n+q
+2
+
+The preceding formula yields the following lower-bound for P̃q (see Appendix B), which is a
+generalization of our lower-bound formula (35) for P̃ :
+
+(37)
+
+P̃q ≥
+
+
+
+1−
+
+
+π 2
+N
+
+
+
+1−
+
+
+
+π
+
+2q+2 N
+
+1
+1 + 2q+1
+N
+
+2 
+
+2q+1
+X−1
+
+2
+π2
+
+h=−2q+1
+
+−
+
+Z 1− 1
+2
+
+0
+
+2r ′
+
+!
+
+sin2 (πx)
+1
+dx − ′
+(x + h)2
+r
+
+7
+16
+
+−
+q+1
+N2
+πN 1 −
+
+1
+N 2q+1
+
+Fixing q and letting N and r ′ approach infinity, we obtain
+2q+1
+X−1
+
+h=−2q+1
+
+2
+π2
+
+Z 1
+2
+
+0
+
+sin2 (πx)
+dx
+(x + h)2
+
+!
+
+=
+
+−
+
+1
+2k̃ r ′
+
+.
+
+2Si(22+q π)
+π
+
+≈ 0.9937
+as an asymptotic lower bound for P̃q . When q = 3, we have 2Si(32π)
+π
+
+Fix q = 3. Clearly, the quantity on the right-hand side of (37) increases as any one of r ′ , N ,
+and k̃ increases. Given q = 3, this quantity exceeds 0.99 when N = 220 , r ′ = 819, and k̃ = 0. Thus
+if one uses a classical computer to check that the order r of b modulo N doesn’t have the form
+2k̃ c where c is an odd number satisfying 1 ≤ c ≤ 817, and k̃ is a nonnegative integer for which
+2k̃ c < N , then one can be over 99% certain of success in finding a divisor of r on QC(3). Note
+there are fewer than 409 log 2 (N ) numbers to check so that the checking may be done efficiently on
+a classical computer.
+Recall the well-known result
+Si(∞) =
+
+Z ∞
+0
+
+sin t
+π
+dt = ;
+t
+2
+2+q π)
+
+thus, given Shor’s algorithm runs on QC(q), our asymptotic lower bound 2Si(2π
+bility of success approaches 1 as q → ∞, as expected.
+
+15
+
+on the proba-
+
+Appendix A: Some Numerical Calculations
+To illustrate the correctness of our formula (34) for P̃ , we complete a case study here involving
+small values of N and r: we take N = 247 and b = 4 so that r = 18, which means k̃ = 1 and r ′ = 9.
+We use Maple to calculate P̃ two ways.
+(1) We use the (inverse) discrete Fourier transform4 to compute the coordinates, relative to the
+computational basis, of the state (6), which is the state that results from applying the quantum
+Fourier transform to the periodic vector (5). We plot the resulting probability amplitudes
+and sum those corresponding to basis states belonging to
+
+
+S̃ = y : y −
+
+s2n
+≤ 2 for some s ∈ {1, 2, . . . , r − 1} .
+r
+
+
+(2) We use our formula (34).
+The reader will see that the probabilities calculated by (1) and (2) agree to many decimal places.
+Maple Probability Calculation Based on Fourier Coefficients
+We suppose N = 247 and b = 4 so that r = 18. Here, the output register will have n0 = 8 qubits
+and, following Shor, the input register will have n = 16 qubits. For simplicity we take x0 = 0 in (5)
+and create a vector V corresponding to this state. Then we apply InverseFourierTransform(V),
+plot the resulting probability amplitudes and sum those corresponding to the possible desired
+outcomes—those in the S̃. Here’s the Maple code and output.
+>Digits:=20:
+>with(DiscreteTransforms):
+>V:=Vector(2ˆ(16)): # V will store values of periodic function to which DFT applied; entries
+initialized to 0
+>m:=ceil(2ˆ(16)/18);
+m := 3641
+>for k from 0 to m-1 do V[k*18+1]:=1/sqrt(m): od: #Every 18th value of V set to 1/sqrt(m)
+>Z:=InverseFourierTransform(V):
+4
+
+As an operator, the inverse of the discrete Fourier transform is equivalent to what is called the quantum Fourier
+transform.
+
+16
+
+> for k from 0 to 2ˆ16-1 do NZ[k]:=Z[k+1] od: #Re-index so that NZ[k] is amplitude of |k >
+for k = 0..216 -1
+>with(plots):
+>pointplot(seq([p/2ˆ(16),abs(NZ[p])ˆ2],p=0..2ˆ16-1));
+
+Figure 1: The probability
+that the integer y is observed peaks when 2y16
+s
+is near an element of 18 : s = 0,1, . . . , 17 . Data-points marked with x’s
+
+have have coordinates
+s = 1, 2, . . . , 17.
+
+ys
+216 , p(ys )
+
+, where ys is the integer nearest s216 /18,
+
+>for s from 1 to 17 do y[s]:=round(s*2ˆ(16)/18): od: #Compute the nearest integers
+>Prob:=0: #After next loop Prob will be probability of observing an integer in {y[s] : s = 1..17}
+>for k from 1 to 17 do Prob:= Prob + abs(NZ[y[k]])ˆ2: od:
+> Prob;
+.71982482558080545540
+>Prob1:=0: #After next two loops Prob1 will be probability of observing an integer in {y[s]±1 :
+s = 1..17}
+>for k from 1 to 17 do Prob1:=Prob1 + abs(NZ[y[k]+1])ˆ2: od:
+>for k from 1 to 17 do Prob1:=Prob1 + abs(NZ[y[k]-1])ˆ2: od:
+> Prob1;
+0.15577667957639559817
+
+17
+
+>Prob2:=0: #After next loop Prob2 will be probability of observing the integer y[s] + 2 or y[s]
+- 2, whichever is closer to s2ˆ16/18
+> for k from 1 to 17 do
+if (round(k*2ˆ(16)/18) < k*2ˆ(16)/18) then Prob2:=Prob2 +abs(NZ[y[k]+2])ˆ2 else Prob2:=Prob2
++abs(NZ[y[k]-2])ˆ2 fi; od:
+>Prob2;
+0.018781342656774252754
+>Prob + Prob1 + Prob2 + abs(NZ[y[9]+2])ˆ2; # Yields probability that observed integer is
+in S-tilde; last term needed since both y[9] + 2 and y[9] − 2 belong to S-tilde
+0.89438284786571392115
+
+Probability Calculation Using Formula (34) for P̃
+> PP:= (k,n,m,rp)− > 2ˆk*2/(2ˆn*m)*sum(sum(evalf(sin(Pi*m*2ˆk*rp*(h+j/rp)/2ˆn)ˆ2/
+sin(Pi*2ˆk*rp*(h+ j/rp)/2ˆn)ˆ2),j=1..floor(rp/2)),h=-2..1) + evalf((2ˆk -1)*m/2ˆn + 2*(2ˆk1)/(2ˆn*m)*sum(sin(Pi*m*rp*2ˆk*w/2ˆn)ˆ2/sin(Pi*rp*2ˆk*w/2ˆn)ˆ2,w=1..2)):
+> PP(1,16,3641,9);
+0.89438284786571368093
+
+18
+
+Appendix B: Proofs of Lower Bounds for Probability of Success
+Lower Bound on P Using Sine Series
+Recall our formula (25) for P :
+⌊r ′ /2⌋
+
+2
+
+
+
+πmj
+
+
+
+2 X sin 2n−k̃
+m
+
+ + (2k̃ − 1) ,
+P = 2k̃ n
+2 m j=1 sin2 πj
+2n
+2n−k̃
+
+n
+
+n
+
+where we assume r < N ≤ 2n0 , 2k̃ r ′ = r with r ′ ≥ 3 odd (and k̃ ≥ 0), 2r − 1 < m < 2r + 1, and
+n > n0 . Recall that n0 is chosen to be the least positive integer such that 2n0 ≥ N . Observe that
+m > 2n /r − 1 yields
+m
+1
+1
+1
+1
+1
+1
+1
+(2k̃ − 1) n ≥ ′ − −
+(38)
++ n > ′− −
+.
+2
+r
+r 2n−k̃
+2
+r
+r 2n−k̃
+n
+
+Also observe that if j ∈ 1, 2, . . . ,
+πmj
+
+j ′ ko
+r
+2
+
+, then our inequalites for m yield
+
+mr j
+1
+3π
+r
+π
+1
+0≤
+(39)
+.
+=π n
+<π 1+ n
+<
+1 + n−n0 ≤
+′
+n−
+k̃
+2
+r
+2
+2
+2
+2
+4
+2
+Our goal is to establish the lower bounds (27) and (28). The work is tedious but straightforward.
+
+
+
+
+
+
+ 
+
+
+
+
+
+Using the sine function inequalities (26), the second of which holds by (39), as well as
+(a) (1 − x)2 ≥ 1 − 2x for x ∈ (−∞, ∞) and (b)
+
+(40)
+
+k
+X
+
+j2 =
+
+j=1
+
+k(k + 1)(2k + 1)
+,
+6
+
+we have
+⌊r ′ /2⌋
+
+P
+
+2 X
+≥ 2k̃ n
+2 m j=1
+=
+
+≥
+
+2m
+2k̃ n
+2
+2m
+2k̃ n
+2
+
+
+
+πmj
+−
+2n−k̃
+
+X
+
+j=1
+
+1−
+
+
+
+1−
+
+
+
+⌊r ′ /2⌋
+
+X
+
+j=1
+
+
+
+
+2m 
+= 2k̃ n  r ′ /2 −
+2
+
+(41)
+
+=
+
+
+2m 
+2k̃ n r ′ /2
+2
+
+( n−k̃ )
+2
+
+⌊r ′ /2⌋
+
+2
+
+πmj 3
+/6
+2n−k̃
+m
++ (2k̃ − 1) n
+πj 2
+2
+
+
+
+
+
+1−
+
+πmj
+2n−k̃
+πmj
+2n−k̃
+πm
+2n−k̃
+
+
+
+2
+
+!2
+
+/6
+
+(by (26))
+
+m
++ (2k̃ − 1) n
+2
+
+!
+
+2
+
+m
+/3 + (2k̃ − 1) n (by (40)(a))
+2
+
+2
+
+1 X 2
+m
+j
++ (2k̃ − 1) n
+3 j=1
+2
+
+πm
+2n−k̃
+
+2
+
+⌊r ′ /2⌋
+
+
+
+(⌊r ′ /2⌋ + 1)(2 ⌊r ′ /2⌋ + 1)
+18
+19
+
+!
+
+m
++ (2k̃ − 1) n (by (40)(b)).
+2
+
+n
+
+n
+
+′
+
+We continue the calculation, using (38), 2r + 1 > m > 2r − 1, and ⌊r ′ /2⌋ = r2 − 12 , the latter fact
+holding because r ′ is odd. We obtain separate underestimates for the cases
+(a) k̃ > 0 (so that r, which equals 2k̃ r ′ , is even), and
+(b) k̃ = 0 (so that r is odd and r ′ = r).
+For k̃ > 0, we have
+Peven >
+(42)
+
+=
+
+ ′
+
+
+
+2
+1
+−
+r ′ 2n−k̃−1
+
+
+
+1
+1
+r
+1− n − ′ +
+n−
+2
+r
+2 k̃
+
+1
+r
+−
+2
+2
+
+
+
+
+
+1−π
+
+π2
+1−
+36
+
+2
+
+
+
+1
+1
++
+r ′ 2n−k̃
+
+2
+
+(r ′ + 1)r ′
+36
+
+!
+
++
+
+r′ + 1
+r ′ (r ′ + 1)
+r +1
++
++
+r′
+2n−k̃−1
+22n−2k̃
+
+ ′
+
+1
+1
+1
+− −
+r ′ r 2n−k̃
+
+!
+
++
+
+1
+1
+1
+− −
+.
+′
+n−
+r
+r 2 k̃
+
+For case (b), note that when k̃ = 0 the final summand in (41) disappears. Thus for k̃ = 0, so
+that r = r ′ , we have
+
+(43)
+
+1
+1
+r
+1− n − + n
+2
+r 2
+
+Podd >
+
+
+
+>
+
+
+
+r
+1
+1− n −
+2
+r
+
+
+
+
+
+π2
+1−
+36
+
+π2
+1−
+36
+
+
+
+
+
+r + 1 r + 1 r(r + 1)
++ n−1 +
+r
+2
+22n
+
+r + 1 r + 1 r(r + 1)
++ n−1 +
+r
+2
+22n
+
+!
+
+!
+
+.
+
+We analyze Podd first. Recall that r < N ≤ 2n0 , where r is the order of b modulo N . For now, we
+just assume n > n0 . Note that if 2n0 (or 2n0 − 1) is substituted into the quantity of (43) for any r
+appearing in the numerator of a fraction, the effect is to produce a smaller quantity; thus, we have
+arrived at the advertised lower bound (27) for P when r is odd:
+1
+Podd > 1 − n−n0 −
+2
+r
+1
+
+
+
+π2
+1−
+36
+
+
+
+
+
+1
+1
+r+1
++ n−n0 −1 + 2(n−n )
+0
+r
+2
+2
+
+!
+
+.
+
+We show that Podd > .70 assuming only that the difference n − n0 ≥ 11 and r ≥ 41. Thus if
+N ≥ 211 and r ≥ 40 is odd, then Shor’s algorithm, as it was described in his papers [8, 9], finds a
+divisor of r with probability at least 70%. Assume n − n0 ≥ 11, then
+
+
+π2
+1−
+36
+
+
+
+1
+1
+r+1
++ 10 + 2(11)
+r
+2
+2
+
+1
+1
+f (r) = 1 − 11 −
+2
+r
+
+π2
+1−
+36
+
+1
+1
+r+1
++ 10 + 22
+r
+2
+2
+
+1
+1
+Podd > 1 − 11 −
+2
+r
+
+
+!
+
+Define f : [41, ∞) → R by
+
+
+
+
+20
+
+
+
+!
+
+.
+
+.
+
+It is easy to show that f has positive derivative on [41, ∞) and f (41) > .70, which verifies our
+claims concerning successfully finding a divisor of r in case r is odd.
+Now we turn to the case k̃ > 0 so that r = 2k̃ r ′ is even. Using (42) along with k̃ ≤ n0 and
+r < 2n0 , we obtain the advertised lower bound (28) for P given r is even:
+Peven >
+
+1
+
+1
+1 − n−n0 − ′
+2
+r
+
+
+
+
+
+π2
+1−
+36
+
+ ′
+
+1
+1
+r +1
++ n−n0 −2 + 2(n−n )−1
+′
+0
+r
+2
+2
+1
+1
+1
++ ′−
+− n−n0 .
+k̃
+′
+r
+2
+2 r
+
+!
+
+We continue to assume that r ≥ 40 and n − n0 ≥ 11. Because 2k̃ r ′ ≥ 40 we may work with the
+following four cases (1) k̃ ≥ 4, r ′ ≥ 3, (2) k̃ = 3, r ′ ≥ 5, (3) k̃ = 2, r ′ ≥ 11, and (4) k̃ = 1, r ′ ≥ 21.
+We handle these cases separately. Case 1: if we assume that k̃ ≥ 4, we can say
+1
+1
+Peven > 1 − 11 − ′
+2
+r
+
+
+π2
+1−
+36
+
+
+
+ ′
+
+1
+1
+r +1
++ 9 + 21
+′
+r
+2
+2
+
+!
+
++
+
+1
+1
+1
+−
+− 11 .
+′
+′
+r
+16r
+2
+
+!
+
++
+
+Define f : [3, ∞) → R by
+1
+1
+f (r ) = 1 − 11 − ′
+2
+r
+
+
+′
+
+
+
+π2
+1−
+36
+
+ ′
+
+1
+1
+r +1
++ 9 + 21
+′
+r
+2
+2
+
+1
+15
+− 11 .
+′
+16r
+2
+2
+
+4194304π
+It is easy to show that f has a global minimum on [3, ∞) at r0 := 9(524288−569π
+2 ) ≈ 8.87 and that
+f (r0 ) > .72.
+
+Case 2: For k̃ = 3, r ′ ≥ 5, we can say Peven > f (r ′ ), where f : [5, ∞) → R is given by
+1
+1
+f (r ) = 1 − 11 − ′
+2
+r
+′
+
+
+
+
+
+π2
+1−
+36
+
+ ′
+
+1
+1
+r +1
++ 9 + 21
+′
+r
+2
+2
+
+!
+
++
+
+1
+7
+− 11 .
+′
+8r
+2
+
+It is easy to show that f has positive derivative on [5, ∞) and f (5) > .71.
+
+Case 3: For k̃ = 2, r ′ ≥ 11, we can say Peven > f (r ′ ), where f : [11, ∞) → R is given by
+1
+1
+f (r ) = 1 − 11 − ′
+2
+r
+′
+
+
+
+
+
+π2
+1−
+36
+
+ ′
+
+1
+1
+r +1
++ 9 + 21
+′
+r
+2
+2
+
+!
+
++
+
+1
+3
+− 11 .
+′
+4r
+2
+
+It is easy to show that f has positive derivative on [11, ∞) and f (11) > .70.
+
+Case 4: For k̃ = 1, r ′ ≥ 21, we can say Peven > f (r ′ ), where f : [21, ∞) → R is given by
+1
+1
+f (r ) = 1 − 11 − ′
+2
+r
+′
+
+
+
+
+
+π2
+1−
+36
+
+ ′
+
+1
+1
+r +1
++ 9 + 21
+′
+r
+2
+2
+
+21
+
+!
+
++
+
+1
+1
+− 11 .
+′
+2r
+2
+
+It is easy to show that f has positive derivative on [21, ∞) and f (21) > .70.
+
+The preceding four cases justify our claims concerning the probability P of success when r is
+even, and thus, complete our proof that if Shor’s algorithm is carried out with an input register
+having the size described in Shor’s original paper, then the probability of finding a divisor of the
+period sought exceeds 70% (as long as r ≥ 40 and N ≥ 211 ).
+
+Bounding P Below by an Integral
+We provide a lower bound for P in terms of an integral. We start with a representation of P
+derived from our formula (25) and equation (24):
+2
+
+⌊r ′ /2⌋
+
+(44)
+
+
+
+πmr(j/r ′ )
+
+
+
+2 X sin
+m
+2n
+
+ + (2k̃ − 1) ,
+P = 2k̃ n
+′
+)
+2 m j=1 sin2 πr(j/r
+2n
+n
+2
+
+n
+
+n
+
+where r < N ≤ 2n0 , 2r − 1 < m < 2r + 1, and 2k̃ r ′ = r with k̃ a nonnegative integer
+and r ′ ≥ 3 odd.
+j k
+
+We assume that n satisfies 2n ≥ N 2 and that r < N . Recall that since r ′ is odd,
+
+r′
+2
+
+= (r ′ − 1)/2.
+
+Our approach to finding a integral-based lower bound for P is not the simplest possible one.
+We use methods here that will be required in our work to underestimate P̃q in the final subsection
+of this appendix.
+Lemma 4 For j ∈ {1, 2, . . . ,
+
+j ′k
+r
+2
+
+2
+
+sin
+
+},
+
+
+
+πmr(j/r ′ )
+2n
+
+
+
+≥ sin
+
+2
+
+
+
+πj
+πj
+−
+r′
+2n−k̃
+
+
+
+.
+
+Proof. Using 2n /r + 1 ≥ m ≥ 2n /r − 1, we see that the argument of the sine function on the
+left in the lemma statement satisfies
+(45)
+
+π
+
+
+
+j
+j
++
+r ′ 2n−k̃
+
+
+
+≥
+
+j
+j
+πmr(j/r ′ )
+≥π ′ −
+n−
+2n
+r
+2 k̃
+
+
+Note that the rightmost expression in (45) is positive: πj
+
+
+
+2k̃
+1
+r ′ − 2n
+
+
+
+
+.
+= πj
+
+ n
+
+2 −r
+2n r ′
+
+
+
+> 0. The
+
+following simple computation shows that leftmost quantity in (45) is less than π/2 for all j between
+1 and ⌊r ′ /2⌋ = (r ′ − 1)/2:
+
+22
+
+′
+
+Assuming j ≤ r 2−1 , we have
+j
+j
+π ′+
+n−
+r
+2 k̃
+
+
+
+
+1
+r′ − 1
+1
+− ′+
+≤ π
+2 2r
+2 · 2n−k̃
+
+
+=
+=
+<
+
+π π
+−
+2
+2
+
+π π
+−
+2
+2
+π
+,
+2
+
+
+
+2k̃ (r ′ − 1)
+1
+−
+r′
+2n
+
+ n
+
+2 − r(r ′ − 1)
+2n r ′
+
+!
+
+
+
+where the inequality on the final line follows because the quantity inside parentheses on the penultimate line is positive (2n − r(r ′ − 1)) > 2n − r 2 > 2n − N 2 ≥ 0). Thus, because
+the sine function
+
+′)
+πmr(j/r ′ )
+by replacing πmr(j/r
+is increasing on [0, π/2], we will obtain an underestimate of sin
+2n
+2n
+with π
+
+
+
+j
+j
+r ′ − 2n−k̃
+
+
+
+, which yields the lemma.///
+
+Lemma 5 For real numbers a and b we have
+sin2 (a ± b) ≥ (sin2 a)(1 − b2 ) − 2|b|| sin a|.
+Proof. Using the angle addition formula for the sine function and then
+(46)
+
+(s − t)2 ≥ s2 − 2st,
+
+which is valid for all real numbers s and t, we find
+sin2 (a ± b) ≥ (| sin(a) cos(b)| − | sin(b) cos(a)|)2
+
+≥ sin2 (a) cos2 (b) − 2| sin(b)|| sin(a)|| cos(a) cos(b)|
+
+≥ sin2 (a)(1 − sin2 (b)) − 2| sin(b)|| sin(a)|
+≥ sin2 (a)(1 − b2 ) − 2|b|| sin(a)|.///
+
+23
+
+
+
+Using (44), Lemma 4, and replacing sin2
+
+
+(47)
+
+P ≥
+
+
+πr(j/r ′ )
+2n
+
+with the larger quantity
+
+πj
+πj
+r ′ − 2n−k̃
+
+
+πr(j/r ′ ) 2
+
+2
+⌊r /2⌋
+2k̃ (2) X sin
+′
+
+2n m
+
+
+
+
+
+j=1
+
+
+
+
+
+
+πr(j/r ′ ) 2
+, we have
+2n
+
+m
+
+k̃
+ + (2 − 1) n .
+
+2n
+
+2
+
+We seek to find an easily computable lower bound for the quantity in square brackets in the
+preceding inequality; calling this quantity Q we have
+Q =
+
+(48)
+
+≥
+
+(49)
+
+2k̃+1
+
+
+
+⌊r ′ /2⌋ sin2
+
+1 X
+
+mr
+2
+
+(π ) 2n
+2
+
+r j=1
+
+
+
+1
+
+
+
+
+πj
+πj
+r ′ − 2n−k̃
+ 2
+j
+
+
+
+r′
+
+2
+
+X sin
+
+⌊r ′ /2⌋
+
+ r′
+(π 2 ) mr
+2n
+j=1
+
+
+
+πj
+r′
+
+
+
+1−
+
+
+
+
+
+
+πj
+
+2n−k̃
+
+2 
+
+−
+
+πj
+
+sin
+n−k̃−1
+
+2
+
+ 2
+j
+r′
+
+k̃
+
+
+
+πj
+r′
+
+
+
+
+
+
+πj
+where to obtain (49), we have used 2r = r1′ as well as Lemma 5 with a = πj
+r ′ and b = 2n−k̃ . We
+continue the calculation, underestimating the quantity on line (49) by replacing the first occurrence
+πr
+of πj/2n−k̃ with 2n+1
+, which exceeds its maximum possible value π(r ′ − 1)/2n−k̃+1 , replacing mr
+2n
+r
+with (1 + 2n ), and separating the sum:
+
+(50)
+
+Q ≥
+
+(π 2 )
+
+
+
+2
+
+X sin
+
+⌊r ′ /2⌋
+
+1
+2
+
+r  ′
+1 + 2n
+r j=1
+
+
+
+πj
+r′
+
+
+
+1−
+
+ 2
+j
+r′
+
+
+
+πr
+
+2n+1
+
+2 
+
+πj
+
+⌊r ′ /2⌋
+
+−
+
+1 X
+r ′ j=1
+
+2n−k̃−1
+
+sin
+
+
+
+πj
+r′
+
+ 2
+j
+r′
+
+
+
+
+
+
+We make the subtracted quantity in (50) larger by replacing sin(πj/r ′ ) with πj/r ′ ; we also cancel
+j’s and r ′ ’s, obtaining
+Q ≥
+
+
+
+2 1−
+
+
+
+πr
+
+2n+1
+
+2  
+
+r 
+
+(π 2 ) 1 + 2n
+
+1 X
+ ′
+
+r
+
+j=1
+
+
+
+πj
+r′
+ 2
+j
+
+⌊r ′ /2⌋ sin2
+
+r′
+
+
+
+
+−
+
+π2  ′ 
+2
+
+r /2
+(π 2 ) 1 + 2rn 2n−k̃−1
+
+We increase the subtracted quantity on the preceding line by replacing 1/(1 + r/2n ) with 1 and
+we decrease the initial quantity by viewing the sum in parentheses as a Riemann sum with a
+left-endpoint selection for the decreasing function x 7→ sin2 (πx)/x2 on [ r1′ , 12 + 2r1 ′ ]:
+Q ≥
+(51)
+
+≥
+
+
+
+2 1−
+
+
+
+πr
+
+2n+1
+
+2 
+
+
+r
+
+(π 2 ) 1 + 2n
+
+
+πr
+2n+1
+1 + 2rn
+
+1−
+
+2
+
+2
+π2
+
+Z 1+ 1
+
+2k̃ (r ′ − 1)
+sin2 (πx)
+dx
+−
+x2
+2n−1
+
+Z 1+ 1
+
+sin2 (πx)
+r
+dx − n−1 .
+2
+x
+2
+
+2
+
+2r ′
+
+1/r ′
+2
+
+1/r ′
+
+24
+
+2r ′
+
+!
+
+Thus, starting with (47) and using the definition of Q, the underestimate (51) for Q, as well as
+(38), we have
+1−
+
+P ≥
+
+
+
+πr
+
+2n+1
+
+1 + 2rn
+
+2
+
+2
+π2
+
+Z 1+ 1
+
+2r ′
+
+2
+
+1/r ′
+
+!
+
+r
+1
+1 2k̃
+sin2 (πx)
+− .
+dx
+−
++
+−
+x2
+2n−1 r ′ r 2n
+
+Because r < N ≤ 2n/2 , we have 2rn ≤ N1 ; using this as well as 2k̃ /2n < r/2n and r = 2k̃ r ′ yields
+2
+
+π
+1 − 4N
+2
+P ≥
+1
+1+ N
+
+2
+π2
+
+Z 1+ 1
+
+2r ′
+
+2
+
+1/r ′
+
+!
+
+sin2 (πx)
+1
+3
+1
++ ′−
+,
+dx −
+2
+k̃
+x
+N
+r
+2 r′
+
+which is the advertised lower bound (29) on P .
+Bounding P̃q Below (Including P̃0 = P̃ )
+We derive the lower bound (37) for P̃q , which upon letting q = 0 yields the lower bound (35) for
+P̃ . We depend upon the results of the preceding subsection along with the following three Lemmas.
+Lemma 6
+
+P∞
+
+1
+h=1 (h− 1 )2 ≤ 6
+
+Proof.
+
+2
+
+∞
+X
+
+∞
+X
+1
+1
+=
+4
++
+1 2
+(h − 2 )
+(h − 21 )2
+h=1
+h=2
+
+!
+
+Z ∞
+
+1
+dx
+≤ 4+
+2
+1/2 x
+
+!
+
+= 6.///
+
+Lemma 7 For every integer h and every nonnegative integer q,
+sin2
+
+
+
+πmr(j/r ′ + h)
+2n+q
+
+Proof. Let W = sin2
+W
+
+
+
+
+
+≥ sin2
+
+
+
+πmr(j/r ′ ))
+2n+q
+
+
+
+. We have
+
+
+
+
+
+πmr(j/r ′ +h)
+2n+q
+
+
+
+1−
+
+
+
+πhr
+2n+q
+
+2 !
+
+−2
+
+πhr
+.
+2n+q
+
+πhmr
+πmr(j/r ′ ))
+πhmr
+πmr(j/r ′ ))
+−
+cos
+cos
+sin
+sin
+≥
+2n+q
+2n+q
+2n+q
+2n+q
+
+
+
+
+
+
+′
+πmr(j/r ))
+πhmr
+πhmr
+≥ sin2
+,
+cos2
+− 2 sin
+n+q
+n+q
+2
+2
+2n+q
+
+
+
+
+
+
+
+
+
+
+
+
+where, to obtain the second inequality, we have used (46) as well as
+πmr(j/r ′ ))
+πhmr
+πmr(j/r ′ ))
+sin
+cos
+cos
+2n+q
+2n+q
+2n+q
+
+
+
+
+
+
+
+
+25
+
+
+
+
+
+≤ 1.
+
+ 2
+
+We continue the calculation, using mr/2n+q = 1 + x, where −r/2n+q ≤ x ≤ r/2n+q :
+W
+
+≥ sin
+
+2
+
+≥ sin
+
+2
+
+≥ sin
+
+2
+
+
+
+πmr(j/r ′ ))
+2n+q
+
+
+
+
+
+πmr(j/r ′ ))
+2n+q
+
+
+
+
+
+πmr(j/r ′ ))
+2n+q
+
+
+
+!
+
+2
+
+1 − sin (πh(1 + x)) − 2 sin (πh(1 + x))
+2
+
+2
+
+!
+
+−2
+
+πhr
+,
+2n+q
+
+1 − cos (πh) sin (πhx) − 2 cos(πh) sin(πhx)
+1−
+
+
+
+πhr
+2n+q
+
+2 !
+
+as desired.///
+
+Lemma 8 For every nonzero integer h and odd integer r ′ ≥ 3,
+⌊r ′ /2⌋ sin2
+
+1 X
+
+(52)
+
+r ′ j=1
+
+
+
+
+
+πj
+r′
+
+
+
+2 ≥
+
+j
+r′ + h
+
+Proof. For every integer h, let
+(53)
+
+fh (x) =
+
+Z 1− 1
+2
+
+0
+
+2r ′
+
+sin2 (πx)
+dx
+(x + h)2
+
+sin2 (πx)
+.
+(x + h)2
+
+Assume h is a negative integer. As x increases from 0 to 1/2, sin2 (πx) increases and (x + h)2 decreases (since h ≤ −1). Thus fh is an increasing function of x when h is negative.
+View the left-hand
+
+
+side of (52) as a Riemann sum for fh corresponding to the partition P :=
+h
+
+i
+
+of 0, 21 − 2r1 ′ with right-hand selection points SP := { r1′ , r2′ , . . . ,
+h
+
+i
+
+r′
+− 12
+2
+r′
+
+[0, r1′ ], [ r1′ , r2′ ], . . . ,
+
+r′
+− 32
+2
+r′
+
+,
+
+r′
+− 21
+2
+r′
+
+}. Because, fh is increasing
+
+on 0, 21 − 2r1 ′ , the Riemann sum overestimates the integral. Hence, (52) holds.
+
+Now assume that h is a positive integer. In this case, the function fh increases up to a maximum
+occurring at “xm (h)”, which is a little less than 1/2, and then decreases. For example, xm (1) ≈
+0.4303 for the function f1 whose graph appears in Figure 2. To establish the lemma for positive h
+we will need to used the following easily verified facts:
+(a) For every positive integer h, the point xm (h) where fh attains its maximum value on [0, 1/2]
+exceeds 0.43.
+(b) For every positive integer h, there is a positive number a < 1/4 such that the graph of fh is
+concave up on [0, a] and down on [a, 1/2].
+26
+
+
+
+Note that if r ′ = 3, 5, or 7, then the interval of integration on the right of (52) is contained in
+[0, 0.43]. Since fh is increasing on [0, 0.43] for every h, (52) holds for r ′ = 3, 5, 7 by the argument
+applied above for negative values of h. Thus we assume r ′ ≥ 9.
+
+For the remainder of the argument j is used to denote an integer in {1, 2, . . . , (r ′ − 1)/2}. Define
+ja to be the least positive integer such that jra′ − 2r1 ′ > a. Because the graph of fh is concave down
+on (a, 1/2], for all j ≥ ja the integral
+Z j ′+ 1
+
+2r ′
+
+r
+
+(54)
+
+j
+− 2r1 ′
+r′
+
+fh (x) dx
+
+is less than the area f (j/r ′ )1/r ′ of the trapezoid (pictured in Figure 2) bounded by the x-axis, the
+vertical lines x = rj′ − 2r1 ′ , x = rj′ + 2r1 ′ , and the line tangent to the graph of fh at (j/r ′ , f (j/r ′ )).
+It follows that
+  Z 1
+(r ′ −1)/2
+2
+1 X
+j
+fh ′ ≥ j
+(55)
+fh (x) dx.
+′
+a
+r j=j
+r
+− 2r1 ′
+r′
+a
+
+Figure
+2: The trapezoid
+pictured has area exceeding the integral of f1 over
+h
+i
+j
+j
+1
+1
+−
+,
++
+.
+r′
+2r ′ r ′
+2r ′
+1
+< 0.43 so that fh is increasing on the
+For values
+of j i< ja , note that rj′ ≤ a + 2r1 ′ ≤ 14 + 18
+h
+
+interval
+(56)
+
+j
+1 j
+r′ − r′ , r′
+
+. Hence for such a j, the integral
+Z
+
+j
+r′
+
+j
+− r1′
+r′
+
+fh (x) dx
+
+27
+
+is less than f (j/r ′ )1/r ′ . From this it follows that
+j −1
+
+a
+1 X
+j
+fh ′
+′
+r j=1
+r
+
+(57)
+
+
+
+
+
+Z ja −1
+r′
+
+≥
+
+0
+
+fh (x) dx.
+
+Combining (55) and (57) yields
+1
+r′
+
+(r ′ −1)/2
+
+X
+
+j=1
+
+j
+fh ( ′ ) >
+r
+
+Z ja −1
+
+=
+
+Z 1− 1
+
+(58)
+
+r′
+
+0
+
+fh (x) dx +
+
+2r ′
+
+2
+
+0
+
+Z 1
+
+2
+
+ja
+− 2r1 ′
+r′
+
+fh (x) dx +
+
+fh (x) dx
+
+Z 1
+
+2
+
+1
+− 1
+2 2r ′
+
+fh (x) dx −
+
+Z ja − 1
+r′
+
+2r ′
+
+ja −1
+r′
+
+!
+
+fh (x) dx .
+
+We complete the proof of the lemma by establishing that the quantity in parentheses
+h
+i on the right
+1
+1 1
+of (58) is nonnegative. It suffices to show that the minimum value of fh on 2 − 2r′ , 2 exceeds the
+
+maximum value of fh on
+integer. Since
+
+h
+
+ja −1 ja
+1
+r ′ , r ′ − 2r ′
+
+i
+
+. We continue to assume that h is an arbitrary positive
+
+1
+1
+1 1
+ja
+− ′ ≤ a + ′ ≤ + < 0.43,
+′
+r
+2r
+r
+4 9
+
+(59)
+
+h
+
+i
+
+
+
+
+
+ja −1 ja
+1
+is fh jra′ − 2r1 ′ . The
+′ , r ′ − 2r ′
+r
+i
+h
+minimum value of fh on 12 − 2r1 ′ , 12 occurs either at L := 21 − 2r1 ′ or at 1/2. A computation shows
+
+and fh is increasing on [0, .43], the maximum value of f on
+
+fh (1/2) > fh (1/4
+ + 1/9);
+ thus by (59) and the fact that fh is increasing on [0, .43], we may conclude
+ja
+1
+fh (1/2) > fh r′ − 2r′ , as desired. As for L, there are two possibilities, (i) L ∈ [xm (h), 1/2] or
+
+(ii) jra′ − 2r1 ′ < L < xm (h). In case (i), f (L) > fh (1/2) > fh
+inequality holds since fh is increasing on [0, xm (h)]. ///
+
+
+
+ja
+1
+r ′ − 2r ′
+
+
+
+and in case (ii), the desired
+
+We are now in position to find a lower bound for P̃q in terms of integrals of the functions fh
+defined by (53). We begin with our exact formula for P̃q from Section 6, obtaining an underestimate
+for P̃q by eliminating the final term in the formula (which is clearly nonnegative):
+2
+
+P̃q ≥ 2k̃ n+q
+2 m
+
+(60)
+
+h=−2q+1 j=1
+
+
+
+
+
+πmr(j/r ′ +h)
+2n+q
+
+
+′ +h)
+sin2 πr(j/r
+n+q
+2
+
+′ /2⌋
+2q+1
+sin2
+X−1 ⌊rX
+
+m
++ (2k̃ − 1) n+q .
+2
+
+Using r < N/2, N 2 ≤ 2n and Lemma 7, we obtain
+(61)
+
+sin
+
+2
+
+
+
+πmr(j/r ′ + h)
+2n+q
+
+
+
+≥ sin
+
+2
+
+
+
+πmr(j/r ′ ))
+2n+q
+28
+
+
+
+πh
+1 − q+1
+2 N
+
+
+2 !
+
+−
+
+π|h|
+.
+2q N
+
+j ′k
+
+Because we are assuming j varies from 1 to ⌊r ′ /2⌋, rj′ ≤ r1′ r2 < 1/2, and thus we have for every
+integer h,
+|h|
+|h|
+(62)
+2 ≤ 
+
+2 ≤ 4.
+j
+1
++
+h
+|h|
+−
+r′
+2
+Using (61) and (60), we have
+2
+
+2
+
+P̃q ≥ 2k̃ n+q
+2 m
+
+(63)
+
+πmr(j/r ′ ))
+2n+q
+
+2q+1 −1
+
+X
+
+
+
+X sin
+
+
+
+2k̃+1 2q+1
+X−1
+
+
+
+1
+
+
+2
+
+⌊r ′ /2⌋
+
+r
+(π 2 ) 2mr
+n+q
+j=1
+h=−2q+1
+
+
+1−
+
+≥
+
+
+
+π2q+1
+2q+1 N
+
+2 
+
+(π 2 ) 2mr
+n+q
+
+h=−2q+1
+
+−
+
+
+
+sin2
+
+h=−2q+1 j=1
+
+2k̃+1
+
+≥
+
+′ /2⌋ sin
+2q+1
+X−1 ⌊rX
+
+
+
+
+
+
+
+1−
+
+
+πh
+
+2q+1 N
+
+πr(j/r ′ +h)
+2n+q
+
+πmr(j/r ′ ))
+2n+q
+
+
+
+1−
+
+
+
+
+
+2
+
+!
+
+πh
+2q+1 N
+
+(j/r ′ + h)2
+
+1 X
+
+r j=1
+
+2
+(π 2 ) 2mr
+n+q
+
+
+
+πmr(j/r ′ )
+2n+q
+(j/r ′ + h)2
+
+⌊r ′ /2⌋ sin2
+
+2q+1
+X−1
+
+h=−2q+1
+
+
+
+
+r ′ j=1
+
+2 
+
+m
++ (2k̃ − 1) n+q
+2
+
+
+− 2π|h|
+qN
+
+
+ + (2k̃ − 1) m
+
+2n+q
+
+
+
+⌊r ′ /2⌋
+
+1 X
+
+− 2π|h|
+qN
+
+
+
+
+
+π|h|
+m
+2q N
+ + (2k̃ − 1)
+,
+(j/r ′ + h)2
+2n+q
+
+where (63) follows from the line that precedes it by replacing the first occurrence of h in the
+numerator with its maximum possible absolute value (namely 2q+1 ), by separating the sum, and
+k̃
+
+by using 2r = r1′ . Continuing the calculation, we have
+
+P̃q ≥
+
+(64)
+
+≥
+
+
+
+
+
+
+
+′
+π 2
+⌊r ′ /2⌋ sin2 πmr(j/r )
+2k̃+1 2q+1
+X
+X−1
+1
+N
+2n+q
+
+(π 2 ) 2mr
+r j=1
+(j/r ′ + h)2
+n+q
+q+1
+h=−2
+
+1−
+
+1−
+
+
+
+π
+N
+
+
+
+h=−2
+
+
+
+
+
+2 ! 2q+1
+X−1
+
+
+
+⌊r ′ /2⌋
+
+⌊r ′ /2⌋
+
+2
+
+2q+1
+X−1
+
+2
+−
+(π2q N ) 2mr
+n+q
+
+
+
+
+
+
+πmr(j/r ′ )
+
+2k̃+1  1 X sin
+2n+q
+
+mr
+2
+′
+(π ) 2n+q r j=1
+(j/r + h)2
+q+1
+
+h=−2
+
+−
+
+
+
+1 X
+|h|
+m
+
+ + (2k̃ − 1)
+′
+2
+n+q
+r
+(|h|
+−
+1/2)
+2
+q+1
+j=1
+ 
+
+
+2q+2 8 ⌊r ′ /2⌋
+m
+k̃
+mr + (2 − 1) n+q (by (62)).
+q
+′
+(π2 N r ) 2n+q
+2
+
+Using Lemma 4, with n + q replacing n, we obtain, for h ∈ {−2q+1 , . . . , 2q+1 − 1}, a lower bound
+29
+
+on the square-bracketed quantity in (64):
+(65)
+
+2k̃+1
+(π 2 ) 2mr
+n+q
+
+
+
+
+
+
+πmr(j/r ′ )
+2n+q
+′
+(j/r + h)2
+
+⌊r ′ /2⌋ sin2
+
+1 X
+
+r j=1
+
+
+
+2k̃+1
+
+≥
+
+(π 2 ) 2mr
+n+q
+
+
+
+
+⌊r ′ /2⌋ sin2
+
+1 X
+
+r j=1
+
+
+
+πj
+πj
+r ′ − 2n+q−k̃
+(j/r ′ + h)2
+
+
+
+.
+
+The right-hand side of the preceding inequality, with h = 0, is identical to Q of (48) with n + q
+replacing n. Thus our work bounding Q below culminating in (51) shows
+(66)
+
+2k̃+1
+(π 2 ) 2mr
+n+q
+
+
+
+
+
+
+πmr(j/r ′ )
+2n+q
+′
+(j/r + 0)2
+
+⌊r ′ /2⌋ sin2
+
+1 X
+
+r j=1
+
+
+
+1−
+
+
+
+πr
+
+2n+q+1
+r
+1 + 2n+q
+
+≥
+
+2
+
+2
+π2
+
+Z 1+ 1
+2
+
+!
+
+r
+sin2 (πx)
+dx − n+q−1 .
+2
+x
+2
+
+2r ′
+
+1/r ′
+
+Thus we have a lower bound for the h = 0 summand of (64). To bound below the other summands
+in (64), i.e. those corresponding to h ∈ {−2q+1 , . . . , 2q+1 − 1} \ {0}, we again cycle through the
+lower bound calculation for Q, (48) through (51); this time with two substitutions: n + q replacing
+n and j/r ′ + h replacing j/r ′ in the denominator. Underestimate (50) becomes
+
+(67)
+
+
+
+2 1−
+(π 2 )
+
+
+
+
+
+πr
+
+2n+q+1
+
+2 
+
+1 X
+
+
+
+r ′ j=1
+
+⌊r ′ /2⌋
+
+πj
+
+r
+
+1 + 2n+q
+
+
+
+⌊r ′ /2⌋ sin2
+
+
+
+πj
+r′
+
+
+
+2 −
+j
+(π 2 )
+r′ + h
+
+2
+
+
+πj
+
+⌊r ′ /2⌋
+
+r
+
+1 + 2n+q
+
+
+
+1 X
+
+sin
+n+q−k̃−1
+
+2
+
+r ′ j=1
+
+
+
+
+
+πj
+r′
+
+2
+j
++
+h
+′
+r
+
+
+
+.
+
+We make the subtracted quantity in (67) larger by replacing (j/r ′ + h)2 with (|h| − 1/2)2 , sin(πj/r ′ )
+r
+) with the larger number 1. Thus the subtracted quantity
+with πj/r ′ , and we also replace 1/(1+ 2n+q
+in (67) is less than
+2
+(π 2 )
+
+
+
+1 X
+ ′
+
+r
+
+j=1
+
+
+
+2n+q−k̃−1
+
+
+
+|h| − 21
+
+πj
+r′
+2
+
+
+
+
+
+2
+
+⌊r ′ /2⌋
+
+
+
+1 X 2
+j .
+
+2  ′2
+r j=1
+2n+q−k̃−1 |h| − 1
+
+≤
+
+
+
+
+2
+
+The quantity on the right in parentheses simplifies:
+
+where we have used
+
+j ′ k j ′ k
+r
+2
+
+r
+2
+
+j ′k
+
+r ′ −1
+
+1
+r ′2
+
+r
+2
+
+=
+
+2
+
+ j ′k
+
++1
+
+2
+
+r
+2
+
+
+
++1
+
+6
+
+=
+
+(r ′ − 1)(r ′ + 1)
+r′ + 1
+≤
+,
+′
+24r
+24
+
+. Thus the subtracted quantity (67) is less than or equal to
+(r ′ + 1)
+
+
+12 · 2n+q−k̃−1 |h| − 12
+
+2
+
+and, by Lemma 8, the initial quantity in (67) is greater than or equal to
+
+
+2 1−
+
+
+
+
+
+πr
+
+2n+q+1
+
+2 
+
+r
+(π 2 ) 1 + 2n+q
+
+
+
+Z 1− 1
+2
+
+0
+
+30
+
+2r ′
+
+sin2 (πx)
+dx.
+(x + h)2
+
+n/2
+
+Using the preceding two observations as well as 2k̃ r ′ = r, r < N2 ≤ 2 2 , and r + 2k̃ ≤ 2r, we have
+
+
+2 1−
+
+Quantity(67) ≥
+
+
+
+πr
+
+2n+q+1
+
+
+
+r
+(π 2 ) 1 + 2n+q
+
+
+
+2
+
+π
+2q+2 N
+1
+1 + 2q+1
+N
+
+1−
+
+≥
+
+2
+= C(q, N )
+π2
+
+(68)
+
+2 
+
+
+2
+π2
+
+Z 1− 1
+0
+
+Z 1− 1
+2
+
+2r ′
+
+0
+
+sin2 (πx)
+r + 2k̃
+dx
+−
+
+2
+(x + h)2
+12 · 2n+q−1 |h| − 1
+2
+
+2r ′
+
+0
+
+Z 1− 1
+2
+
+2r ′
+
+2
+
+!
+
+sin2 (πx)
+1
+dx −
+(x + h)2
+12 · N 2q−1 (|h| − 1/2)2
+!
+
+sin2 (πx)
+dx − L(h),
+(x + h)2
+
+where we have defined
+(69)
+
+C(q, N ) =
+
+1−
+
+
+
+π
+
+2
+
+2q+2 N
+1
+1 + 2q+1
+N
+
+1
+
+and L(h) =
+
+12 · N 2q−1 (|h| − 1/2)2
+
+for h 6= 0.
+
+Notice that for nonzero h, our under-approximating integral from (68) has limits from 0 to 21 − 2r1 ′
+whereas that for the h = 0 case has limits from r1′ to 12 + 2r1 ′ . To make our final lower-bound formula
+for P̃q simpler, we adjust the under-approximating integral from (66) for the h = 0 case as follows:
+Z 1+ 1
+2
+
+2r ′
+
+1/r ′
+
+sin2 (πx)
+dx =
+x2
+>
+
+Z 1+ 1
+2
+
+2r ′
+
+0
+
+Z 1− 1
+
+2r ′
+
+2
+
+0
+
+Z 1
+
+sin2 (πx)
+dx −
+x2
+
+r′
+
+0
+
+2
+
+sin2 (πx)
+dx
+x2
+
+sin (πx)
+π2
+dx
+−
+,
+x2
+r′
+
+where we have used the nonnegativity of the integrand as well as sin2 (πx)/x2 ≤ π 2 to obtain the
+inequality. Thus (66) becomes
+
+
+⌊r ′ /2⌋
+
+2
+
+
+
+πmr(j/r ′ )
+
+2k̃+1  1 X sin
+2n+q
+mr
+2
+′
+(π ) 2n+q r j=1
+(j/r + 0)2
+
+
+
+
+≥
+
+1−
+
+
+
+πr
+
+2n+q+1
+
+r
+1 + 2n+q
+
+2
+
+−
+≥
+(70)
+
+
+
+2
+
+π
+N 2q+2
+1 + N 21q+1
+
+1−
+
+= C(q, N )
+
+31
+
+2
+π2
+
+Z 1− 1
+
+2
+π2
+
+2
+
+0
+
+Z 1− 1
+
+Z 1− 1
+0
+
+
+
+sin2 (πx)
+dx
+x2
+
+πr
+2n+q+1
+r
+1 + 2n+q
+
+1−
+
+2
+π2
+2
+
+2r ′
+
+2r ′
+
+2
+
+0
+
+2r ′
+
+2
+
+
+
+2
+r′
+
+
+
+!
+
+−
+
+r
+2n+q−1
+
+!
+
+sin2 (πx)
+2
+1
+dx − ′ −
+2
+x
+r
+N 2q
+!
+
+sin2 (πx)
+dx − L(0),
+x2
+
+where L(0) := r2′ + N12q .
+Using (70) to bound below the h = 0 term of the sum on line (64) and using (68) to bound
+below the terms corresponding to h 6= 0, we obtain
+(71)
+
+P̃q ≥
+
+1−
+
+
+
+π
+N
+
+2 ! 2q+1
+X−1
+
+h=−2q+1
+
+2
+C(q, N )
+π2
+−
+
+Z 1− 1
+2
+
+2r ′
+
+0
+
+!
+
+!
+
+sin2 (πx)
+dx − L(h)
+(x + h)2
+
+2q+2 8 ⌊r ′ /2⌋
+m
+k̃
+mr + (2 − 1) n+q .
+q
+′
+(π2 N r ) 2n+q
+2
+
+The preceding inequality will yield the advertised bound (37) for P˜q after a few more steps. Using
+2n+q
+1
+′
+r ′ ⌊r /2⌋ < 1/2, m ≥ r − 1, and r < N/2, we have
+2q+2 8 ⌊r ′ /2⌋
+16
+
+mr ≤
+q
+′
+(π2 N r ) 2n+q
+πN 1 −
+
+(72)
+
+n+q
+
+Using 2k̃ < r < N/2 and again using m ≥ 2 r
+
+1
+N 2q+1
+
+.
+
+− 1, we get
+
+1
+1
+2k̃
+1
+1
+1
+1
+m
+−
+.
+(2k̃ − 1) n+q ≥ ′ − − n+q + n+q > ′ −
+k̃
+′
+2
+r
+r 2
+2
+r
+N 2q+1
+2 r
+
+(73)
+Finally,
+
+2q+1
+X−1
+
+2q+1
+X−1
+
+L(h) = L(0) +
+
+h=−2q+1
+
+1
+
+h = −2q+1
+h 6= 0
+
+≤
+≤
+
+(by (69))
+
+12 · N 2q−1 (|h| − 1/2)2
+
+1
+1
+2
++
++
+r ′ N 2q
+12 · N 2q−1
+
+∞
+X
+
+1
+2
+(|h|
+−
+1/2)2
+h=1
+
+!
+
+2
+1
+1
+2
+3
++
++
+= ′+
+,
+r ′ N 2q
+N 2q−1
+r
+N 2q
+
+where Lemma 6 provides the final inequality.
+Beginning with (71) and then using (72), (73), and
+P̃q ≥
+
+1−
+
+
+
+π
+N
+
+2 !
+
+C(q, N )
+
+2q+1
+X−1
+
+h=−2q+1
+
+−
+
+2
+π2
+
+Z 1− 1
+2
+
+2r ′
+
+0
+
+16
+
+
+πN 1 − N 21q+1
+32
+
+P2q+1 −1
+
+2
+3
+h=−2q+1 L(h) = r ′ + N 2q , we have
+
+!
+
+sin2 (πx)
+dx − 1 −
+(x + h)2
+
++
+
+1
+1
+1
+−
+−
+.
+′
+r
+2k̃ r ′ N 2q+1
+
+
+
+π
+N
+
+2 ! 
+
+2
+3
++
+′
+r
+N 2q
+
+
+
+
+
+Substituting 1 for 1 −
+
+π 2
+N
+
+
+
+the second time it appears on the right of the preceding inequality,
+
+simplifying, and using the definition of C(q, N ), we arrive at the advertised lower bound on P̃q :
+
+P̃q ≥
+
+
+
+1−
+
+
+π 2
+N
+
+
+
+1−
+
+
+
+1
+1 + 2q+1
+N
+
+π
+
+2q+2 N
+
+2 
+
+2q+1
+X−1
+
+2
+π2
+
+h=−2q+1
+
+−
+
+Z 1− 1
+2
+
+0
+
+2r ′
+
+!
+
+sin2 (πx)
+1
+dx − ′
+2
+(x + h)
+r
+
+7
+16
+
+−
+q+1
+N2
+πN 1 −
+
+1
+N 2q+1
+
+−
+
+1
+2k̃ r ′
+
+.
+
+References
+[1] A. Ekert and R. Josza, Quantum computation and Shor’s factoring algorithm, Rev. Mod. Phys.
+68 (1996), 733–753.
+[2] E. Gerjuoy, Shor’s factoring algorithm and modern cryptography. An illustration of the capabilities inherent in quantum computers., Am. J. Phys. 73 (2005), 521–540.
+[3] I. N. Herstein, Topics in Algebra, Wiley, New York, 1975.
+[4] I. Ireland and M. Rosen, A Classical Introduction to Modern Number Theory, Springer-Verlag,
+New York, 1990
+[5] D. Mermin, Lecture Notes on Quantum Computation, Cambridge University Press, to appear.
+(Draft available at http://people.ccmr.cornell.edu/∼mermin/qcomp/CS483.html)
+[6] M. A. Nielsen and I. L. Chuang, Quantum Computing and Quantum Information, Cambridge
+University Press, Cambridge 2000.
+[7] M. Hirvensalo, Quantum Computing, Springer, New York, 2001.
+[8] P. Shor, Algorithms for quantum computation: discrete logarithms and factoring, Proc. 35nd
+Annual Symposium on Foundations of Computer Science (Shafi Goldwasser, ed.), IEEE Computer Society Press (1994), 124-134.
+[9] P. Shor, Polynomial time algorithms for Prime Factorization and discrete logarithms on a
+quantum computer, SIAM J. Computing 26, pp. 1484-1509 (1997).
+
+33
+
+

@@ -1,0 +1,4042 @@
+On the success probability of quantum order finding
+Martin Ekerå1,2
+1
+
+arXiv:2201.07791v2 [quant-ph] 28 Nov 2022
+
+2
+
+KTH Royal Institute of Technology, Stockholm, Sweden
+Swedish NCSA, Swedish Armed Forces, Stockholm, Sweden
+
+November 29, 2022
+Abstract
+We prove a lower bound on the probability of Shor’s order-finding algorithm successfully recovering the order r in a single run. The bound implies
+that by performing two limited searches in the classical post-processing part
+of the algorithm, a high success probability can be guaranteed, for any r, without re-running the quantum part or increasing the exponent length compared
+to Shor. Asymptotically, in the limit as r tends to infinity, the probability
+of successfully recovering r in a single run tends to one. Already for moderate r, a high success probability exceeding e.g. 1 − 10−4 can be guaranteed.
+As corollaries, we prove analogous results for the probability of completely
+factoring any integer N in a single run of the order-finding algorithm.
+
+1
+
+Introduction
+
+In [34, 35], Shor famously introduced a polynomial-time quantum algorithm for
+factoring integers. Shor’s factoring algorithm works by first classically reducing the
+integer factoring problem (IFP) to an order-finding problem (OFP). The resulting
+OFP is then solved using an order-finding algorithm, that in turn consists of a
+quantum part and a classical post-processing part.
+Although the order-finding algorithm was originally described by Shor in the
+context of integer factorization, the algorithm is generic: Let g be a generator of a
+finite cyclic group, that we write multiplicatively in what follows, and for which the
+group operation may be implemented efficiently quantumly. Shor’s order-finding
+algorithm then finds the order r of g in polynomial time. It is also possible to view
+the algorithm as a generic period-finding algorithm [35, p. 1501].
+In this work, we provide a detailed analysis of the success probability of Shor’s
+order-finding algorithm. In particular, we prove a lower bound on the probability of
+the algorithm successfully recovering r in a single run, and we show this probability
+to be high already for moderate r. Asymptotically, in the limit as r tends to infinity,
+the success probability tends to one. A key to achieving these results is to perform
+two limited searches in the classical post-processing. We review earlier results and
+analyses in Sect. 1.5 for comparison to the results we obtain in this work.
+As a corollary, we use the reduction from the IFP to the OFP in [12] to prove
+a lower bound on the probability of completely factoring any integer N efficiently
+in a single run of the order-finding algorithm. Compared to the bound in [12], our
+lower bound also accounts for the probability of the order-finding algorithm failing
+to recover r. Again, already for moderate N , a high probability of recovering the
+complete factorization of N in a single run can be guaranteed. Asymptotically, in
+the limit as N tends to infinity, the success probability tends to one.
+1
+
+1.1
+
+Preliminaries
+
+Assuming quantum computation to be more expensive than classical computation,
+it is advantageous to strive to reduce the requirements imposed on the quantum
+computer at the expense of increasing the classical computational burden.
+This provided that it remains feasible to execute the classical part in practice.
+A minimum requirement is that it must execute in polynomial time. Against this
+backdrop, we parameterize our algorithms: We pick parameters in our asymptotic
+analyses so that both the quantum and classical parts execute in polynomial time.
+For concrete problem instances, we pick parameters so that the classical part can
+be executed in practice on, for instance, an ordinary workstation or cluster.
+In Shor’s order-finding algorithm, a generator g is exponentiated to an exponent
+in superposition. In a typical implementation, the standard square-and-multiply
+i
+algorithm is used to classically pre-compute powers g 2 of g that are then composed
+quantumly. Hence, as a rule of thumb, the longer the exponent, the longer the
+runtime and the required coherence time, and the larger the circuit depth, and so
+forth. Consequently, we strive to keep the exponent as short as possible, whilst
+respecting the constraint that a single run shall in general suffice to compute r.
+Compared to Shor’s original work on performing order-finding in the context of
+integer factorization, the exponent length is on par or slightly shorter in this work1
+when using traditional continued fractions-based classical post-processing. A few
+more bits can be peeled off by instead using lattice-based post-processing.
+It is possible to further reduce the exponent length, at the expense of performing
+several runs of the quantum part of the algorithm and jointly post-processing the
+outputs classically, as in Seifert’s variation [33] of Shor’s order-finding algorithm.
+Although several parts of our analysis cover both Shor’s original order-finding
+algorithm and Seifert’s variation of it, the focus in this work is on analyzing the
+success probability when performing order finding with the aim of computing r in a
+single run of the quantum part of the algorithm. For a detailed analysis of Seifert’s
+algorithm, the interested reader is instead referred to [13, App. A].
+Note also that if the reason for performing order finding is to factor RSA integers so as to e.g. break the RSA cryptosystem [32], then the specialized quantum
+algorithm of Ekerå and Håstad [14, 15] outperforms Shor’s and Seifert’s algorithms.
+
+1.2
+
+Quantum order finding
+
+In what follows, we re-use notation and elements from [13, App. A]: We let g be a
+generator of a cyclic group of order r ≥ 2, and induce the quantum state
+2m+`−1
+X
+
+
+2πi
+exp m+` aj | j, g a i
+2m+` a, j = 0
+2
+1
+
+
+
+(1)
+
+for m an upper bound on the bit length of r such that r < 2m , and ` ∼ m/s a
+positive integer for s some tradeoff factor. In Shor’s original algorithm [34, 35], the
+tradeoff factor s = 1, whereas s > 1 in Seifert’s variation [33] of the algorithm. As
+explained in [13, App. A], a single run yields at least2 ∼ ` bits of information on r.
+1 Depending on how the order r is upper-bounded, for further details see App. A.2.
+2 If m is the bit length of r, the algorithm yields ∼ ` bits of information on r. If m is greater
+
+than the bit length of r, the algorithm yields more than ∼ ` bits of information on r.
+
+2
+
+Let A(e) = {t ∈ [0, 2m+` ) ∩ Z | t ≡ e (mod r)}. Following [13, App. A], if we
+measure the first register of (1), then we observe the frequency j with probability
+r−1
+X
+
+1
+
+22(m+`) e = 0
+
+
+
+X
+a ∈ A(e)
+
+2πi
+exp m+` aj
+2
+
+m+`
+−e−1)/r c
+r−1 b(2
+X
+X
+
+1
+
+22(m+`) e = 0
+
+b=0
+
+m+`
+−e−1)/r c
+r−1 b(2
+X
+X
+
+1
+22(m+`) e = 0
+
+L
+X
+
+β
+22(m+`)
+
+ 2
+=
+2
+
+
+
+2πi
+exp m+` (e + rb)j
+2
+
+
+=
+
+2
+
+eiθr b
+
+=
+
+b=0
+2
+
+e
+
+iθr b
+
+b=0
+
+L−1
+r − β X iθr b
++ 2(m+`)
+e
+2
+b=0
+
+2
+
+(2)
+
+
+
+where β = 2m+` mod r, L = 2m+` /r , and
+θr =
+
+2παr
+2m+`
+
+for
+
+αr = {rj}2m+`
+
+where {u}N denotes u mod N constrained to [−N/2, N/2). In what follows, we
+refer to θr and αr as angles and arguments, respectively, associated with j.
+Furthermore, | u | denotes the absolute value of u ∈ C, whereas bf c, df e and
+bf e denote f ∈ R rounded down, up or to the closest integer, respectively. Ties are
+broken by requiring that bf e = f + δf for some δf ∈ (−1/2, 1/2].
+If αr 6= 0, we may write (2) on closed form as
+P (αr ) =
+
+1 − cos(2παr (L + 1)/2m+` )
++
+1 − cos(2παr /2m+` )
+r − β 1 − cos(2παr L/2m+` )
+.
+22(m+`) 1 − cos(2παr /2m+` )
+
+β
+
+22(m+`)
+
+(3)
+
+Otherwise, if αr = 0, we may write (2) on closed form as
+P (0) =
+
+β
+22(m+`)
+
+(L + 1)2 +
+
+r−β 2
+L2 r + (2L + 1)β
+L =
+.
+2(m+`)
+2
+22(m+`)
+
+(4)
+
+In what follows, we furthermore let ln u, log u and logq u denote the natural,
+base-two and base-q logarithms of u. We let Z>0 and Z≥0 denote the positive and
+non-negative integers, respectively.
+
+1.3
+
+Understanding the probability distribution
+
+The probability distribution induced by the order-finding algorithm has r peaks,
+located approximately a distance 2m+` /r apart in j. The first peak is at j = 0.
+More specifically, the optimal integer frequency of the peak with index z is
+ m+` 
+2
+j0 (z) =
+z
+for z ∈ [0, r) ∩ Z,
+r
+3
+
+which implies, for α0 (z) the argument associated with j0 (z), that
+
+
+α0 (z) = {rj0 (z)}2m+` = {r 2m+` z/r }2m+` = {r(2m+` z/r + δz )}2m+`
+= {2m+` z + δz r}2m+` = {δz r}2m+` = δz r ∈ (−r/2, r/2]
+for some δz ∈ (− 21 , 12 ] that depends on z.
+If r is a power of two, we get r distinct peaks for which P (α0 (z)) = 1/r,
+whereas P (αr ) = 0 for all other αr . If r is not a power of two, P (α0 (z)) will vary
+slightly between the r peaks, and there will be some noise around the peaks, due
+to rounding effects. Hence, the probability mass will be slightly spread out.
+The frequency j0 (z) is optimal for the peak with index z in the sense that other
+frequencies in the neighborhood of j0 (z) yield smaller or at most equal contributions
+to the probability mass associated with the peak.
+
+1.4
+
+Shor’s original analysis and post-processing
+
+In his original paper, Shor [34, 35] lower-bounds the success probability of quantum
+order finding: Specifically, Shor shows [35, p. 1500] that the probability of observing
+j0 (z) for z ∈ [0, r)∩Z is asymptotically lower-bounded by 4/(rπ 2 ) independent of z.
+Hence, the probability of observing j0 (z) for some z ∈ [0, r) ∩ Z may asymptotically
+be taken as 4/π 2 , where, critically, z is then uniformly distributed on [0, r) ∩ Z.
+For j0 (z), the convergent z/r appears in the continued fraction expansion of
+j0 (z)/2m+` if ` is selected sufficiently large (so that 2m+` > r2 , see (16) in Sect. 4).
+Given the convergent z/r, the order r may of course be trivially recovered,
+unless cancellations occur due to z and r not being coprime. Shor points out [35,
+p. 1501] that at least a fraction φ(r)/r of the r values of z ∈ [0, r) ∩ Z are coprime
+to r, and that it follows from [18, Thm. 328 on p. 267] that φ(r)/r = Ω(1/ log log r).
+In summary, the above analysis gives a lower bound on the success probability,
+and hence an upper bound on the expected number of runs required to recover r.
+This being said, the procedure may be improved, as Shor states [35, p. 1501]:
+Firstly, even if an optimal j is not observed, the j observed may be close to j0 (z).
+Hence, by trying to solve not only j, but also j ± 1, j ± 2 . . ., for z/r, the success
+’
+probability may be increased beyond the asymptotic lower bound of 4/π 2 .
+Secondly, Shor credits Odlyzko [35, p. 1501] for pointing out in personal communication that for d = gcd(r, z), one may recover r/d from the denominator of
+z/r and then search over d to recover r from r/d. This improves the expected
+number of runs from O(log log r) without searching to O(1) provided one exhausts
+on the order of (log r)1+ values of d.3
+
+1.5
+
+Earlier works that follow up on Shor’s work
+
+Following the publication of Shor’s original work, a number of analyses of the
+success probability of quantum order finding have been entered into the literature:
+For instance, Knill [19] points out that the probability of recovering the order r
+may be increased by running Shor’s order-finding algorithm multiple times for the
+same g and taking the least common multiple of the tentative orders r/ gcd(r, z)
+extracted from the convergents z/r. After two runs, that yield convergents z1 /r
+and z2 /r, respectively, with z1 and z2 selected uniformly at random from [0, r) ∩ Z,
+the probability of finding r from z1 /r and z2 /r is then lower-bounded by a constant.
+3 The statement in [35] is made in the context of factoring an integer N , and is expressed in
+terms of N , by using that r < N for r the order of g ∈ Z∗N . We restate the claim in terms of r.
+
+4
+
+Knill furthermore explores tradeoffs between the exponent length, the search
+space in the classical post-processing, and the probability of recovering z/r from
+the frequency j in the classical post-processing. Cleve et al. [8, Sect. 5 on p. 348,
+App. C] also explore such tradeoffs. Seifert [33], and later Ekerå [13, App. A],
+explore tradeoffs in the context of jointly solving a set of frequencies for r — the
+idea being to perform less work in each run of the quantum part of the algorithm, at
+the expense of performing more runs of the quantum part, and more work overall.
+McAnally [24] increases the probability of finding some non-trivial divisor of
+the order in a single run to “negligibly less than one”, at the expense of increasing
+the exponent length by approximately a factor of 1.5 compared to Shor.
+Asymptotically, the probability of finding the order r in n runs is reported to
+be greater than 1/ζ(n) − O(N − ), when performing order finding in Z∗N , and for ζ
+the Riemann zeta function, as N tends to infinity for  a positive number. The
+probability is hence at least 0% after one run — i.e. we get no information, slightly
+greater than 60% after two runs, and slightly greater than 90% after four runs.
+Gerjuoy [17, Sect. III.C.8 on p. 534], provides a lower bound of 90% on the
+probability of recovering some non-trivial divisor of the order in a single run, when
+using the same exponent length [17, Sect. III.C.1 on p. 529] as Shor. This when
+performing order finding in Z∗N , for N an odd integer with at least two distinct
+prime factors as in Shor’s original work. Gerjuoy accomplishes this improvement
+by leveraging that r ≤ λ(N ) < N/2 in his analysis [17, Sect. III.C.7 on p. 533],
+for λ the Carmichael function, whereas Shor uses N as an upper bound on r.
+Bourdon and Williams [4] report sharp bounds on the probability of Shor’s
+order-finding algorithm returning some non-trivial divisor of the order in a single
+run; both when the exponent length is as in Shor’s original algorithm, and when
+the exponent is allowed to increase in length by q bits compared to Shor.
+In the former case, they improve upon Gerjuoy’s result and obtain an asymptotic lower bound on the probability of 2 Si(4π)/π ≈ 0.9499, where Si is the sine
+integral function. In the latter case, they obtain an asymptotic lower bound of
+2 Si(2q+2 π)/π. Both bounds pertain to order finding in Z∗N , for N an odd integer
+with at least two distinct prime factors, as in Shor’s and Gerjuoy’s works.
+Proos and Zalka [30, App. A.1] briefly discuss how the success probability of
+Shor’s order-finding algorithm is affected when attempting to solve not only the
+frequency observed j, but also j ± 1, . . ., j ± B, for the order r.
+Einarsson [11] investigates the probability distribution induced by Shor’s orderfinding algorithm, and the expected number of runs. He gives no formal lower
+bound on the success probability, but concludes that there is a high probability
+of the algorithm yielding a non-trivial divisor of r. This when performing order
+finding in Z∗N , for N a semiprime, with an exponent of the same length as Shor.
+Furthermore, Einarsson points out that one can test if a candidate for r is a
+positive integer multiple of r. If only a non-trivial divisor of r is found, then the
+missing factor may be found “by trial or possibly by a more efficient algorithm”.
+Davis [10] follows up on the work by Bourdon and Williams with a slightly
+improved analysis in the context of benchmarking quantum computers.
+In the context of general quantum phase estimation, where a phase is to be
+estimated with s bits of precision using what the authors’ refer to as p extra qubits
+(i.e. extra exponent bits), Chappell et al. [6] present an exact formula for the error
+probability (s, p), and explore the limits of this formula as s → ∞ and p → ∞.
+
+5
+
+1.5.1
+
+Precise simulations and estimates
+
+In [13, App. A], Ekerå studies the success probability of quantum order finding by
+means of simulations, when using lattice-based post-processing, and with respect
+both to Shor’s original order-finding algorithm and to Seifert’s algorithm.
+The idea is to first capture the probability distribution induced for a given
+known order r, and parameters m and `, and to then sample the probability distribution to simulate the quantum part of the algorithm. This is feasible for large,
+cryptographically relevant, problem instances for as long as r is known, enabling
+accurate estimates of the success probability and the expected number of runs to
+be derived for various post-processing strategies and parameterizations.
+The simulations show [13, App. A] that a single run of Shor’s order-finding
+algorithm with ` ∼ m usually suffices to recover r, provided a limited enumeration
+of the lattice is performed.4 For Seifert’s algorithm with s ≥ 1 an integer, it
+suffices to perform slightly more than s runs to achieve ≥ 99% success probability,
+see e.g. [13, Tab. A1–A2], when not enumerating the lattice. This may be slightly
+improved by enumerating a limited number of vectors in the lattice.
+As a rule of thumb, it is possible to decrease ` at the expense of enumerating
+more vectors in the lattice, and vice versa. The enumeration of the lattice essentially
+captures the two searches in offsets in j and in multiples of the denominator in the
+convergent z/r that are required to achieve a high success probability when using
+continued fractions-based post-processing. If the order is partially very smooth, it
+may however be necessary to perform an additional search in the classical postprocessing to recover r. An algorithm for this search is given in [13, Sect. 6.2.4].
+A takeaway from [13, App. A] is that the simulations show that a single run
+with ` ∼ m is usually sufficient to recover the order r. In this paper, we formalize
+this result, by proving a lower bound on the success probability that holds for any r.
+
+1.6
+
+Overview of our contribution
+
+As stated above, there are a number of works that follow up on Shor’s original work
+to give better bounds on the success probability of the order-finding algorithm.
+We are however not currently aware of any previous formal lower bound on the
+success probability that indicates that a single run of the quantum part is usually
+sufficient to recover the order r without increasing the exponent length, and that
+the success probability tends to one in the limit as r tends to infinity.
+In this work, we prove such a bound, for the quantum part of the algorithm as
+described in Sect. 1.2. A key to achieving this result is to perform limited searches
+in the classical post-processing, and to account for these searches in the analysis.
+As stated in Sect. 1.4, Shor points to searching as an option in his original work.
+Before giving an overview of our analysis, let us first revisit the exponent length:
+Suppose that we use traditional continued fractions-based post-processing: We
+then pick m and ` such that 2m > r and 2m+` > r2 . The exponent, which is of
+length m + ` bits in this work, is then on par with or slightly shorter than the
+exponent in Shor’s original work, depending on how r is bounded, see App. A.2.
+Suppose that we instead use lattice-based post-processing: We may then pick
+a slightly smaller `, without voiding the lower bound on the probability of successfully recovering r in a single run, provided that we accept to perform a limited
+enumeration of the lattice. For further details, see the next section and App. C.
+4 Note that m is the bit length of r in [13], and an upper bound on the bit length in this paper.
+
+6
+
+1.6.1
+
+Overview of our analysis
+
+In the first part of our analysis, we sum up P (αr ) in a small B-neighborhood around
+the optimal frequency j0 (z) for the peak with index z for z ∈ [0, r) ∩ Z. Specifically,
+for B ∈ [1, Bmax ) ∩ Z where Bmax = (2m+` /r − 1)/2, we lower-bound the sum
+S(z) =
+
+B
+X
+
+P ({r(j0 (z) + t)}2m+` ) =
+
+t = −B
+
+B
+X
+
+P (α0 (z) + rt)
+
+t = −B
+
+where we have used that for α0 (z) ∈ (−r/2, r/2] and t ∈ [−B, B] ∩ Z, it holds that
+{r(j0 (z) + t)}2m+` = {α0 (z) + rt}2m+`
+= α0 (z) + rt ∈ [−2m+`−1 , 2m+`−1 ),
+
+(5)
+
+enabling us to eliminate the modular reductions.
+To this end, in Sect. 2, we first introduce an error-bounded approximation Pe(αr )
+of P (αr ). In Sect. 3, we then use Pe(αr ) to lower-bound S(z). By Thm. 2,
+
+
+
+1
+2
+1
+1
+π 2 (2B + 1)
+1
++ 2+
+1− 2
+−
+S(z) ≥
+3
+r
+π
+B
+B
+3B
+2m+`
+independent of z. This implies that if we try to solve not only the frequency j
+observed but also j ± 1, j ± 2, . . ., j ± B for z/r, then with probability
+
+
+2
+1
+1
+π 2 r(2B + 1)
+1
++ 2+
+−
+1− 2
+3
+π
+B
+B
+3B
+2m+`
+we will solve j0 (z) for z/r, where critically z is uniformly distributed on [0, r) ∩ Z.
+In the second part of our analysis, we first explain in Sect. 4 that we will find
+z/r — and hence r̃ = r/d where d = gcd(r, z) — if we pick ` such that 2m+` > r2
+and solve j0 (z) for z/r by expanding j0 (z)/2m+` in a continued fraction.
+As an alternative approach, we furthermore show in Sect. 4 and App. C that
+we may instead pick ` = m − ∆ for some small ∆ and use lattice-based
+techniques
+√
+to solve j0 (z) for r̃ at the expense of enumerating at most 6 3 · 2∆ lattice vectors.
+Next, we lower-bound the probability of d being cm-smooth5 , and we show
+that d and hence r can be efficiently recovered from r̃ when d is cm-smooth. We give
+algorithms for recovering either a multiple r0 of r (see Alg. 1), or r (see Alg. 2–3),
+and for filtering the candidates for r̃ generated in the post-processing (see Alg. 4).
+Finally, we wrap up the analysis in our main theorem, Thm. 3: Specifically, we
+lower-bound the probability of recovering r in a single run of the quantum part
+of the order-finding algorithm as a function of B and an additional parameter c.
+This when using either continued fractions-based or lattice-based post-processing.
+In Cor. 3.1 to Thm. 3 we give an analogous bound that holds when using latticebased post-processing and enumerating a bounded number of lattice vectors.
+In Cor. 3.2 to Thm. 3, we analyze the asymptotic behavior of the bound: In
+particular, we show that for B = m = O(poly(log r)) and c = 1, the success
+probability tends to one in the limit as r tends to infinity. For these choices of
+parameters, the algorithm as a whole executes in polynomial time.6
+Already for moderate m = 128, a high success probability exceeding e.g. 1−10−4
+can be guaranteed, see Tab. 1 where the bound is tabulated.7
+5 For the definition of cm-smooth used in this work, please see Sect. 4.1.1.
+6 Note that a bound m = O(poly(log r)) such that r < 2m must be known.
+7 We could pick an even smaller value of m, and still achieve a high success probability, but
+
+as m decreases below 128 the order-finding problem starts to become classically tractable.
+
+7
+
+1.6.2
+
+On the relation to our recent work on factoring completely
+
+In [12], it was recently shown that given the order r of a single element g selected
+uniformly at random from Z∗N , the complete factorization of N may be recovered
+in classical polynomial time with very high probability of success.
+This served as our motivation for proving in this paper that a single run of the
+quantum part of the order-finding algorithm is sufficient to find r given g with high
+probability — and hence, by extension via [12], the complete factorization of N .
+In Cor. 3.3 and Cor. 3.4 in Sect. 4.2.1, we give lower bounds on the probability
+of completely factoring any integer N in a single order-finding run. This when
+accounting for the probability of the order-finding algorithm failing to recover r.
+Furthermore, in Cor. 3.5 we show that the probability of completely factoring N
+in a single run tends to one in the limit as N tends to infinity.
+
+2
+
+Approximating P (αr ) by Pe(αr )
+
+In this section, as a precursor to the main result, we upper-bound the error when
+approximating P (αr ) by Pe(αr ), where
+2(1 − cos(2παr /r))
+r
+.
+22(m+`) (2παr /2m+` )2
+
+Pe(αr ) =
+
+We derive the bound in two steps, by first upper-bounding the error when
+approximating P (αr ) by T (αr ), and by then upper-bounding the error when approximating T (αr ) by Pe(αr ), where
+T (αr ) =
+
+2.1
+
+1 − cos(2παr /r)
+r
+.
+22(m+`) 1 − cos(2παr /2m+` )
+
+Supporting claims
+
+To simplify our analysis, we introduce a few supporting claims in this section. For
+the proofs of these claims, the reader is referred to App. D.1.
+Claim 1. For any u, v ∈ R, it holds that
+| cos(u) − cos(v) | ≤ | u − v | · max (| u |, | v |) .
+Claim 2. It holds that
+2παr L
+2παr (L + 1)
+3παr
+≤
+≤
+.
+2m+`
+2m+`
+r
+Claim 3. It holds that
+L+1 1
+1
+−
+≤ m+`
+2m+`
+r
+2
+
+L
+1
+1
+−
+< m+` .
+2m+`
+r
+2
+
+and
+
+Claim 4. For any φ ∈ [−π, π], it holds that
+2φ2
+φ2
+≤
+1
+−
+cos
+φ
+≤
+.
+π2
+2
+Claim 5. For any φ ∈ [−π, π], it holds that
+(1 − cos φ) −
+
+8
+
+φ2
+φ4
+≤
+.
+2
+4!
+
+2.2
+
+Approximating P (αr ) by T (αr )
+
+Lemma 1. The error when approximating P (αr ) by T (αr ) is bounded by
+| P (αr ) − T (αr ) | <
+
+1
+2m+`
+
+·
+
+3π 2
+4
+
+when
+
+αr 6= 0.
+
+Proof. First verify that
+(1 − cos(2παr (L + 1)/2m+` )) − (1 − cos(2παr /r))
+
+
+
+
+2παr (L + 1)
+2παr
+− cos
+= cos
+2m+`
+r
+2παr (L + 1) 2παr
+3παr
+≤
+−
+·
+2m+`
+r
+r
+2 2
+2 2
+6π αr
+L+1 1
+6π α
+=
+≤ m+` r
+· m+` −
+r
+2
+r
+2
+r
+
+(6)
+(7)
+
+where we have used Claim 1 and 2 in (6), and Claim 3 in (7). Analogously,
+(1 − cos(2παr L/2m+` )) − (1 − cos(2παr /r))
+
+
+
+
+2παr L
+2παr
+= cos
+− cos
+2m+`
+r
+2παr L 2παr
+3παr
+≤
+−
+·
+2m+`
+r
+r
+2 2
+6π αr
+L
+1
+6π 2 α2
+=
+· m+` −
+< m+` r
+r
+2
+r
+2
+r
+
+(8)
+(9)
+
+where we have used Claim 1 and 2 in (8), and Claim 3 in (9).
+It now follows from (7) that
+1 − cos(2παr /r)
+1 − cos(2παr (L + 1)/2m+` )
+−
+1 − cos(2παr /2m+` )
+1 − cos(2παr /2m+` )
+6π 2 α2
+1
+≤ m+` r ·
+2
+r | 1 − cos(2παr /2m+` ) |
+6π 2 α2
+π2
+2m+` 3π 2
+≤ m+` r
+=
+·
+,
+2
+r 2(2παr /2m+` )2
+r
+4
+
+A=
+
+(10)
+
+where we have used Claim 4 in (10). Analogously, it follows from (9) that
+B=
+
+1 − cos(2παr /r)
+1 − cos(2παr L/2m+` )
+2m+` 3π 2
+−
+·
+.
+<
+1 − cos(2παr /2m+` )
+1 − cos(2παr /2m+` )
+r
+4
+
+(11)
+
+Finally, it follows from (3), (10) and (11) that
+| P (αr ) − T (αr ) | =
+
+β
+22(m+`)
+
+A+
+
+1
+3π 2
+r−β
+r
+2m+` 3π 2
+B < 2(m+`) ·
+= m+` ·
+2(m+`)
+r
+4
+2
+4
+2
+2
+
+and so the lemma follows.
+
+
+
+9
+
+2.3
+
+Approximating T (αr ) by Pe(αr )
+
+Lemma 2. The error when approximating T (αr ) by Pe(αr ) is bounded by
+T (αr ) − Pe(αr ) ≤
+
+r
+
+π2
+
+22(m+`) 12
+
+when
+
+αr 6= 0.
+
+Proof. To condense the presentation, let us introduce T 0 (αr ) and Pe0 (αr ), where
+T (αr ) =
+
+1 − cos(2παr /r)
+2(1 − cos(2παr /r))
+r
+r
+, Pe(αr ) = 2(m+`)
+.
+(2παr /2m+` )2
+22(m+`) 1 − cos(2παr /2m+` )
+2
+|
+{z
+}
+|
+{z
+}
+T 0 (αr )
+
+e0 (αr )
+P
+
+The lemma then follows from the fact that
+1 − cos(2παr /r)
+2(1 − cos(2παr /r))
+−
+1 − cos(2παr /2m+` )
+(2παr /2m+` )2
+1
+2
+− 2
+= | 1 − cos(2παr /r) | ·
+|
+{z
+} 1 − cos θr
+θr
+
+T 0 (αr ) − Pe0 (αr ) =
+
+≤2
+
+θ2 − 2(1 − cos θr )
+θr2 /2 − (1 − cos θr )
+≤2 r
+=
+4
+(1 − cos θr )θr2
+(1 − cos θr )θr2
+2
+4
+θ
+θr /4!
+1
+= r
+≤4
+2
+(1 − cos θr )θr
+6 1 − cos θr
+θr2 π 2
+π2
+≤
+·
+=
+6 2θr2
+12
+where we have used Claim 5 in (12), and Claim 4 in (13).
+
+2.4
+
+(12)
+(13)
+
+
+Approximating P (αr ) by Pe(αr )
+
+Lemma 3. The error when approximating P (αr ) by Pe(αr ) is bounded by
+
+
+π2
+r 1
+3
+π2
+e
+| P (αr ) − P (αr ) | ≤ ˜ = m+`
++ m+`
+when αr 6= 0.
+< m+`
+2
+4 2
+12
+2
+Proof. By the triangle inequality, we have that
+˜ = | P (αr ) − Pe(αr ) | = | P (αr ) − T (αr ) + T (αr ) − Pe(αr ) |
+≤ | P (αr ) − T (αr ) | + | T (αr ) − Pe(αr ) |.
+The lemma then follows from Lem. 1 and Lem. 2.
+
+3
+
+
+
+Proving approximate uniformity
+
+In this section, we lower-bound the sum
+B
+X
+
+P (α0 + rt)
+
+(14)
+
+t = −B
+
+where α0 ∈ (−r/2, r/2] and B ∈ [1, Bmax ) ∩ Z for Bmax = (2m+` /r − 1)/2.
+We first bound (14) assuming α0 6= 0 in Sect. 3.1. We then extend this to a
+lower bound that holds for all α0 ∈ (−r/2, r/2] in Sect 3.2 and Sect. 3.3.
+10
+
+The case α0 6= 0
+
+3.1
+
+In what follows, let ψ 0 (x) denote the trigamma function; the first derivative of the
+digamma function ψ(x), or equivalently the second derivative of ln Γ(x).
+Our analysis makes use of ψ 0 (x), and in particular of the below supporting
+lemma and claim. For their proofs, the reader is referred to App. D.2.
+Lemma 4. For non-zero α0 ∈ (−r/2, r/2], and B a positive integer,
+B
+X
+
+1
+=
+(α0 + rt)2
+t=−B
+
+
+2π 2
+1
+0
+0
+−
+(ψ
+(1
++
+B
++
+α
+/r)
++
+ψ
+(1
++
+B
+−
+α
+/r))
+.
+0
+0
+r2 1 − cos(2πα0 /r)
+Claim 6. For any real x > 0,
+ψ 0 (x) <
+
+1
+1
+1
++
++ 3.
+x 2x2
+6x
+
+We are now ready to proceed to lower-bound the sum in the non-zero case:
+Theorem 1. For non-zero α0 ∈ (−r/2, r/2], and B ∈ [1, Bmax ) ∩ Z,
+B
+X
+t = −B
+
+1
+1
+P (α0 + rt) = (1 − R ) + A where 0 ≤ R ≤ R,0 = 2
+r
+π
+
+
+
+1
+1
+2
++ 2+
+B
+B
+3B 3
+
+and | A | ≤ A,0 = (2B + 1)˜
+ for ˜ as in Lem. 3.
+Proof. For the absolute error A , we have that
+B
+X
+
+P (α0 + rt) =
+
+t = −B
+
+B
+X
+
+B
+X
+
+Pe(α0 + rt) +
+
+t = −B
+
+P (α0 + rt) −
+
+t = −B
+
+|
+
+B
+X
+
+Pe(α0 + rt)
+
+t = −B
+
+{z
+
+A
+
+where, by the triangle inequality and Lem. 3, it holds that
+| A | =
+
+B
+X
+
+(P (α0 + rt) − Pe(α0 + rt))
+
+t = −B
+
+≤
+
+B
+X
+
+P (α0 + rt) − Pe(α0 + rt) ≤ (2B + 1) ˜.
+
+t = −B
+
+For the relative error R , we have that
+B
+X
+
+Pe(α0 + rt) =
+
+t = −B
+
+=
+
+r
+
+B
+X
+2(1 − cos(2π(α0 + rt)/r))
+(2π(α0 + rt)/2m+` )2
+
+22(m+`) t = −B
+
+B
+(1 − cos(2πα0 /r))r X
+1
+1
+= (1 − R )
+2π 2
+(α0 + rt)2
+r
+t = −B
+
+11
+
+}
+
+
+
+where we have used that
+B
+X
+
+1
+=
+(α0 + rt)2
+t = −B
+
+
+1
+2π 2
+0
+0
+−
+(ψ
+(1
++
+B
+−
+α
+/r)
++
+ψ
+(1
++
+B
++
+α
+/r))
+0
+0
+r2 1 − cos(2πα0 /r)
+by Lem. 4, which implies that
+1 − cos(2πα0 /r) 0
+(ψ (1 + B − α0 /r) + ψ 0 (1 + B + α0 /r))
+2π 2 
+
+2
+1
+1
+1
+≤ R,0 = 2
++ 2+
+π
+B
+B
+3B 3
+
+R =
+
+where we have used Claim 6, and that 1 + B ± α0 /r ≥ B as | α0 | ≤ r/2.
+
+3.2
+
+
+
+The special case α0 = 0
+
+For completeness, we also treat the case where α0 is zero in this section.
+Note however that α0 = 0 ⇒ j = 2m+`−κr u for some integer u ∈ [0, 2κr ) and 2κr
+the greatest power of two to divide r. This in turn implies that j/2m+` = u/2κr
+which typically yields insufficient information to solve for r unless κr is very large.
+Lemma 5. It holds that
+1
+P (0) = + 
+r
+
+where
+
+0≤=
+
+β(r − β)
+1
+< m+2` .
+2(m+`)
+2
+2
+r
+
+Proof. We have that 0 ≤ β = 2m+` mod r < r < 2m , and by (4) that
+  m+` 
+ !
+ m+` 2
+2
+L2 r + (2L + 1)β
+1
+2
+r+ 2
++1 β
+P (0) =
+= 2(m+`)
+r
+r
+22(m+`)
+2
+!
+ m+`
+2
+ m+`
+
+1
+2
+β
+2
+β
+1 β(r − β)
+r+2
+β + β = + 2(m+`) ,
+= 2(m+`)
+−
+−
+r
+r
+r
+r
+r
+2
+2
+r
+where 0 ≤ β(r − β)/(2m r) < 1, and so the lemma follows.
+
+3.3
+
+
+
+Lower-bounding the sum
+
+Theorem 2. For α0 ∈ (−r/2, r/2], and B ∈ [1, Bmax ) ∩ Z,
+
+
+
+B
+X
+1
+1
+2
+1
+1
+π 2 (2B + 1)
+P (α0 + rt) ≥
+1− 2
++ 2+
+−
+.
+r
+π
+B
+B
+3B 3
+2m+`
+t = −B
+
+Proof. For non-zero α0 ∈ (−r/2, r/2], we have by Thm. 1 that
+B
+X
+t = −B
+
+1
+1
+(1 − R ) + A ≥ (1 − R,0 ) − A,0
+r
+r
+
+
+
+1
+1
+2
+1
+π 2 (2B + 1)
+1
+≥
+1− 2
++ 2+
+−
+r
+π
+B
+B
+3B 3
+2m+`
+
+P (α0 + rt) =
+
+where we have used that | A | ≤ A,0 = (2B + 1)˜
+, where ˜ < π 2 /2m+` by Lem. 3.
+For α0 = 0, we have that P (α0 ) = P (0) ≥ 1/r by Lem. 5, and P (α0 + rt) =
+P (rt) ≥ 0 for | t | ∈ [1, B] ∩ Z as P is non-negative, and so the theorem follows. 
+12
+
+4
+
+Finding the order r given j
+
+As stated earlier in the introduction in Sect. 1.4, Shor [34, 35] originally proposed
+to recover r from j by expanding j/2m+` in a continued fraction.
+By Claim B.1 in App. B, it suffices to require that
+j
+2m+`
+
+−
+
+z
+1
+< 2
+r
+2r
+
+(15)
+
+for the convergent z/r to appear in the continued fraction expansion of j/2m+` .
+By Thm. 2, it suffices with high probability to search a small B-neighborhood
+around the frequency observed to find the optimal frequency j0 (z) that yields
+α0 (z) ∈ (−r/2, r/2]. For j = j0 (z), we then have that
+j0 (z) z
+rj0 (z) − 2m+` z
+| {rj0 (z)}2m+` |
+| α0 (z) |
+1
+−
+=
+=
+, (16)
+= m+` ≤
+m+`
+m+`
+m+`
+2
+r
+2
+r
+2
+r
+2
+r
+2 · 2m+`
+so by Claim B.1 it then suffices that 2m+` > r2 to recover the convergent z/r. Note
+that as 2m > r, the requirement that 2m+` > r2 is met for any ` ≥ m.
+Given z/r, we may immediately recover r̃ = r/d where d = gcd(r, z). By also
+using Claim B.2 to identify z/r in the expansion, we obtain the below lemma:
+Lemma 6. The last convergent p/q with denominator q < 2(m+`)/2 in the continued fraction expansion of j/2m+` is equal to z/r, for j = j0 (z) for any z ∈ [0, r)∩Z,
+and for m, ` ∈ Z>0 such that 2m > r and 2m+` > r2 .
+We may use lattice-based post-processing to achieve an analogous result: More
+specifically, we may recover r̃/2 and hence r̃ by using Lagrange’s algorithm [21, 28]
+to find the shortest non-zero vector, up to sign, of a two-dimensional lattice:
+Lemma 7. The shortest non-zero vector, up to sign, in the lattice L spanned by
+(j, 21 ) and (2m+` , 0) has r̃/2 = r/(2 gcd(r, z)) in its second component, for j = j0 (z)
+for any z ∈ [0, r) ∩ Z, and for m, ` ∈ Z>0 such that 2m > r and 2m+` > r2 .
+When using lattice-based post-processing, we may in fact select ` = m − ∆
+for
+√ some ∆ ∈ [0, m) ∩ Z and still recover r̃ = r/ gcd(r, z) by enumerating at most
+6 3 · 2∆ vectors in the lattice. For small ∆, the enumeration is efficient:
+√
+Lemma 8. At most 6 3·2∆ vectors in the lattice L spanned by (j, 12 ) and (2m+` , 0)
+must be enumerated to recover r̃ = r/ gcd(r, z), for j = j0 (z) for any z ∈ [0, r) ∩ Z,
+for m ∈ Z>0 such that 2m > r, and for√` = m − ∆ for some ∆ ∈ [0, m) ∩ Z.
+More specifically, a set of at most 6 3 · 2∆ candidates for√r̃, that is guaranteed
+to contain r̃, may be constructed by enumerating at most 6 3 · 2∆ vectors w =
+(w1 , w2 ) ∈ L of norm | w | ≤ 2m−1/2 and including 2w2 in the set.
+For further details, and the proofs of Lem.
+6–8, see App. B and App. C. For
+√
+notes on slightly improving the constant 6 3 in Lem. 8, see App. C.4.1.
+
+4.1
+
+Recovering the order r from r̃
+
+Given r̃ = r/d where d = gcd(r, z), and g, we may recover r when d is cm-smooth.
+In what follows, we first formalize the notion of cm-smoothness in Sect. 4.1.1
+and lower-bound the probability of d being cm-smooth in Sect.4.1.2. We then give
+algorithms for recovering r, or a multiple r0 of r, from r̃ = r/d when d is cm-smooth,
+13
+
+in Sect. 4.1.3 thru Sect. 4.1.4. To avoid invoking these algorithms for all candidates
+for r̃ that are generated when solving not only j but also j ± 1, . . . , j ± B for r̃,
+we also give an algorithm for filtering out good candidates for r̃ in Sect. 4.1.5.
+In Sect. 4.1.7, we put all of these components together to efficiently recover r
+or r0 from a set of integers known to contain r̃ = r/d where d is cm-smooth.
+4.1.1
+
+The notion of cm-smoothness
+
+Throughout this paper, an integer is said to be cm-smooth if and only if it is
+positive and not divisible by any prime power greater than cm.
+4.1.2
+
+Bounding the probability of d being cm-smooth
+
+When using Thm. 2 to lower-bound the probability of observing j that belongs
+to the B-neighborhood of j0 (z) for z ∈ [0, r) ∩ Z, the peak index z is uniformly
+distributed on [0, r) ∩ Z as the bound is independent of α0 (z) and hence of z.
+The probability of d being cm-smooth may then be lower-bounded:
+Lemma 9. For z selected uniformly at random from [0, r) ∩ Z, the probability that
+no prime power greater than cm divides d = gcd(r, z) is lower-bounded by
+1−
+
+1
+,
+c log cm
+
+for m such that r < 2m and c ≥ 1 a parameter that may be freely selected.
+Proof. There are at most log r/ log cm prime powers q e > cm that divide r (where q
+is a distinct prime for each power). For each such prime power q e , the probability
+of q e dividing z is 1/q e < 1/(cm).
+By using that log r < m, and taking a union bound, we obtain
+log r
+1
+1
+·
+<
+,
+log cm cm
+c log cm
+and so the lemma follows.
+
+
+
+In what follows, we primarily think of c as a constant, although it is possible to
+let c depend on m. To ensure that the classical post-processing is efficient when c
+depends on m, we require c = O(poly(m)) and m = O(poly(log r)).
+4.1.3
+
+Recovering a multiple r0 of r from r̃ = r/d when d is cm-smooth
+
+Alg. 1 recovers a positive integer multiple r0 of r = d·r̃ given r̃ when d is cm-smooth:
+Algorithm 1 Recovers a positive integer multiple r0 of r = d · r̃ given r̃ when d is
+cm-smooth. Inputs: r̃, g, c, m. Returns: r0 or ¬ to signal failure to recover r0 .
+1 If r̃ 6∈ [1, 2m ) ∩ Z:
+1.1 Return ¬ to signal failure to recover r0 .
+2 Let r0 ← r̃ and x ← g r̃ .
+3 For q ∈ P(cm):
+Note: Iterate over P(cm) in increasing order so that q ← 2, 3, 5, . . .
+
+14
+
+3.1 If x = 1:
+3.1.1 Return r0 .
+3.2 Let e ← blogq (cm)c.
+e
+
+3.3 Let x ← xq and r0 ← r0 · q e .
+4 If x 6= 1:
+4.1 Return ¬ to signal failure to recover r0 .
+5 Return r0 .
+Above in Alg. 1, and in what follows, P(B) denotes the set of primes ≤ B.
+The runtime of Alg. 1 is dominated by a sequence of exponentiations, which
+amount to exponentiating g. By Lem. 10, the total exponent length is O(cm) bits:
+Lemma 10. Alg. 1 exponentiates g to an exponent of length O(cm) bits.
+Proof. The number of primes in P(cm) is O(cm/ ln cm). For each such prime, the
+exponent in step 3.3 is at most of length dlog cme bits since q e ≤ cm.
+The total exponent length in bits is hence at most
+m + dlog cme · O(cm/ ln cm) = O(cm)
+where we have also accounted for step 2 exponentiating g to r̃ ∈ [1, 2m ) ∩ Z.
+
+
+
+The exponent length is usually expected to be much shorter when d is cmsmooth, as the algorithm aborts as soon as x = 1 instead of running to completion.
+4.1.4
+
+Recovering r from r̃ = r/d when d is cm-smooth
+
+Alg. 2 recovers r = d · r̃ given r̃ when d is cm-smooth:
+Algorithm 2 Recovers r = d · r̃ given r̃ when d is cm-smooth.
+Inputs: r̃, g, c, m. Returns: r or ¬ to signal failure to recover r.
+1 If r̃ 6∈ [1, 2m ) ∩ Z:
+1.1 Return ¬ to signal failure to recover r.
+2 Let x ← g r̃ .
+3 If x = 1:
+3.1 Return r̃.
+4 Let S be an empty stack.
+5 For q ∈ P(cm):
+Note: Iterate over P(cm) in increasing order so that q ← 2, 3, 5, . . .
+5.1 Let e ← blogq (cm)c.
+5.2 Push (x, q, e) onto S.
+e
+5.3 Let x ← xq .
+5.4 If x = 1:
+5.4.1 Stop iterating and go to step 6.
+6 If x 6= 1:
+15
+
+6.1 Return ¬ to signal failure to recover r.
+7 Let d ← 1.
+8 While S is not the empty stack, pop (x, q, e) from S:
+8.1 Let x ← xd .
+8.2 For i ← 1, . . . , e:
+8.2.1 If x = 1:
+8.2.1.1 Stop iterating and go to step 8.
+8.2.2 Let x ← xq and d ← d · q.
+9 Return d · r̃.
+The runtime of Alg. 2 is dominated by multiple sequences of exponentiations,
+which all amount to exponentiating g. By Lem. 11, the total exponent length is
+O(cm2 / log cm) bits:
+Lemma 11. Alg. 2 performs multiple exponentiations of g. The total exponent
+length in all of these exponentiations is O(cm2 / log cm) bits.
+Proof. The number of primes in P(cm) is O(cm/ ln cm). For each such prime: In
+step 5.3, the exponent is at most of length dlog cme bits since q e ≤ cm. In step 8.1,
+it is at most of length m bits since d ≤ r < 2m . In step 8.2.2, it is at most of length
+blogq (cm)c · dlog qe bits. The total exponent length in bits is hence at most
+
+m + dlog cme + m + blogq (cm)c · dlog qe · O(cm/ ln cm) = O(cm2 / log cm)
+where we have also accounted for step 2 exponentiating g to r̃ ∈ [1, 2m ) ∩ Z.
+
+
+
+The exponent length is usually expected to be much shorter when d is cmsmooth, as the algorithm aborts as soon as x = 1 instead of running to completion,
+and as d is typically much smaller than r in step 8.1 of the algorithm.
+A better asymptotic worst-case runtime may be achieved by instead performing
+a binary tree search, as in Alg. 3 below. Note however that it will often be the case
+in practice that Alg. 2 outperforms Alg. 3, since d is likely to only have a few small
+prime factors. When this is the case, d is found more quickly by Alg. 2.
+Algorithm 3 Recovers r = d · r̃ given r̃ when d is cm-smooth.
+Inputs: r̃, g, c, m. Returns: r or ¬ to signal failure to recover r.
+1 If r̃ 6∈ [1, 2m ) ∩ Z:
+1.1 Return ¬ to signal failure to recover r.
+2 Let recursive(x, F = {q1 , . . . , ql }) be the following function:
+2.1 If l = 1:
+2.1.1 Return {(q1 , x)}.
+2.2 Let FL ← {q1 , . . . , qbl/2c } and FR ← {qbl/2c+1 , . . . , ql }.
+2.3 Let xL ← xdL and xR ← xdR , where
+Y
+Y
+dL =
+q blogq (cm)c
+and
+dR =
+q blogq (cm)c .
+q∈FR
+
+q∈FL
+
+2.4 Return recursive(xL , FL ) ∪ recursive(xR , FR ).
+16
+
+3 Let x ← g r̃ and d ← 1.
+4 Let T ← recursive(x, P(cm)) = {(q1 , x1 ), . . . , (ql , xl )}.
+5 For (qi , xi ) ∈ T :
+5.1 Let ei ← 0 and ei,max ← blogqi (cm)c.
+5.2 While xi 6= 1:
+5.2.1 If ei = ei,max :
+5.2.1.1 Return ¬ to signal failure to recover r.
+5.2.2 Let xi ← xqi i , d ← d · qi and ei ← ei + 1.
+6 Return r = d · r̃.
+The runtime of Alg. 3 is dominated by multiple sequences of exponentiations,
+which all amount to exponentiating g. By Lem. 12, the total exponent length in
+all of these exponentiations is O(cm log cm) bits:
+Lemma 12. Alg. 3 performs multiple exponentiations of g. The total exponent
+length in all of these exponentiations is O(cm log cm) bits.
+Proof. The number of primes in P(cm) is O(cm/ ln cm).
+In the first part of the algorithm, a tree is traversed by calling recursive
+to construct T . The exponent length in bits at each level of the tree is at most
+dlog cme · O(cm/ ln cm) as q e ≤ cm. There are at most dlog cme levels.
+Hence, the total exponent length in bits in all invocations of step 2.3 is
+2
+
+dlog cme · O(cm/ ln cm) = O(cm log cm).
+In the second part, for each of the O(cm/ ln cm) entries in T , the exponent
+length in bits in step 5.2.2 is at most blogq (cm)c · dlog qe = O(log cm). Hence, the
+total exponent length in bits in the second part of the algorithm is
+blogq (cm)c · dlog qe · O(cm/ ln cm) = O(cm),
+for a total exponent length in bits of
+m + O(cm) + O(cm log cm) = O(cm log cm),
+where we have also accounted for step 3 exponentiating g to r̃ ∈ [1, 2m ) ∩ Z.
+4.1.5
+
+
+
+Filtering candidates for r̃ = r/d when d is cm-smooth
+
+Let S = {r̃1 , . . . , r̃l } be a set of l candidates for r̃ = r/d where d is cm-smooth.
+Alg. 4 then returns the subset S 0 consisting of all r̃i in S that are such that di · r̃i
+is a positive integer multiple of r, for di a cm-smooth integer:
+Algorithm 4 Returns the subset S 0 consisting of all r̃i in S = {r̃1 , . . . , r̃l } that
+are such that di · r̃i is a positive integer multiple of r, for di a cm-smooth integer.
+Inputs: S, g, c, m. Returns: S 0 ⊆ S.
+1 Let x ← g e where
+e=
+
+Y
+q∈P(cm)
+
+17
+
+q blogq cmc .
+
+2 Let S 0 be an empty set.
+3 For r̃i ∈ S:
+3.1 If r̃i ∈ [1, 2m ) ∩ Z and xr̃i = 1:
+3.1.1 Add r̃i to S 0 .
+4 Return S 0 .
+Note that step 1 that pre-computes x depends only on g, c and m. The actual
+test of each candidate for r̃ in S is performed in step 3.1. The set S typically becomes available incrementally. It may be filtered incrementally by pre-computing x
+and then executing step 3.1 for each candidate as it becomes available.
+As for the other algorithms in this section, the runtime of Alg. 4 is dominated
+by multiple sequences of exponentiations, which all amount to exponentiating g.
+By Lem. 13, the total exponent length is O((c + l)m) bits:
+Lemma 13. Alg. 4 performs multiple exponentiations of g. The total exponent
+length in all of these exponentiations is O((c + l)m) bits.
+Proof. In the first part, the number of primes in P(cm) is O(cm/ ln cm). For each
+such prime, the exponent is at most of length dlog cme bits. Hence
+O(log e) ≤ dlog cme · O(cm/ ln cm) = O(cm).
+In the second part, it holds that r̃i ∈ [0, 2m ) ∩ Z for all r̃i in S for which we
+perform exponentiations, and there are l entries in S. The total exponent length
+is hence O((c + l)m) bits, and so the lemma follows.
+
+4.1.6
+
+Notes on optimizing the filtering of candidates for r̃
+
+The basic filtering procedure in Alg. 4 may be optimized in various ways.
+Suppose e.g. that a non-negative multiple µ of r is known. Then Alg. 4 may be
+optimized by not exponentiating x to r̃i in step 3.1, but rather to gcd(r̃i , µ).
+Note that this does not affect the correctness of the algorithm: In particular,
+the correct r̃ = r/d, where d = gcd(r, z) is cm-smooth, will pass the test in step 3.1
+when the optimization is applied, since r̃ = gcd(r̃, µ), and be included in the
+subset S 0 . The same holds for any candidate r̃i for r̃ in S that meets the requirement
+that di · r̃i is a positive integer multiple of r, for di a cm-smooth integer.
+Note furthermore that as soon as a candidate r̃i for r̃ passes the test in step 3.1,
+we know that r̃i · e is a positive multiple of r, and so we may update µ by letting
+µ ← gcd(r̃i · e, µ), further tightening the filter. Initially, we may let µ ← 0. The
+advantage of this optimization is hence that once a candidate for r̃i that passes
+the test has been found, it becomes easier to test additional candidates, as it then
+often suffices to exponentiate x to a smaller exponent, or not at all.
+Other more obvious optimizations in practical implementations involve keeping
+track of candidates for r̃i that have already passed the test, and of reduced candidates gcd(r̃i , µ) that have already been dismissed, so as to avoid repeatedly testing
+candidates that have already been tested, or for which sufficient information has
+been accumulated to immediate dismiss or accept the candidate.
+
+18
+
+4.1.7
+
+Solving a set of candidates for r̃ = r/d for r when d is cm-smooth
+
+As previously explained, so as to achieve a high probability of solving the optimal
+frequency j0 (z) closest to j for r̃ = r/d where d = gcd(r, z), we solve not only j,
+but also j ± 1, . . . , j ± B, for r̃. This yields a set S = {r̃1 , . . . , r̃l } of candidates
+for r̃ guaranteed to contain r̃ if j0 (z) was amongst the frequencies solved for r̃.
+To recover r from S when r̃ = r/d ∈ S and d is cm-smooth, we first call Alg. 4
+to filter the candidates in S. This yields a subset S 0 ⊆ S containing all r̃i ∈ S that
+are such that di · r̃i is a positive integer multiple of r for di a cm-smooth integer.
+’
+For all candidates for r̃ in S 0 , we then call either Alg. 2 or Alg. 3, and return
+the minimum of the candidates for r thus produced. This yields r.
+To see why this is, note that r̃ ∈ S 0 (since r̃ = r/d ∈ S where d is cm-smooth),
+and that a positive integer multiple of r is returned by both Alg. 2 and Alg. 3 for
+all candidates for r̃ that are in S 0 . For r̃, both algorithms return r. Hence, taking
+the minimum yields r.
+4.1.8
+
+Notes on optimizing the basic procedure for solving r̃ for r
+
+The basic procedure outlined in Sect. 4.1.7 may be optimized in various ways:
+In particular, when using lattice-based post-processing and solving a range of
+offsets in j for r̃, information computed when reducing the first lattice basis may
+be used to speed up the reduction of subsequent bases, see App. C.4.3.
+When enumerating the lattice for large ∆, it is furthermore advantageous to
+filter the candidates for r̃ as an integrated part of the enumeration. The structure
+of the lattice may then be leveraged to speed up the filtering step, see App. C.4.2.
+As previously explained in Sect. 4.1.6, the filtering step may also be optimized
+by keeping track of the multiples of r that become known as candidates for r̃i pass
+the filtering step. This information may be used to reduce subsequent candidates.
+If only a positive integer multiple of r is sought, it suffices to post-process the
+first r̃i that is inserted into S 0 by Alg. 4 by calling either Alg. 1, Alg. 2 or Alg. 3.
+As explained in Sect. 4.1.5, the candidates for r̃ may be filtered incrementally by
+Alg. 4 as they become available, enabling the search for r̃ to be aborted early.
+4.1.9
+
+Notes on heuristic optimizations of the basic procedure
+
+Let us furthermore briefly describe two heuristic optimizations:
+As soon as a candidate for r̃ passes the filter, we may use it to compute a positive
+multiple r0 of r by using one of Alg.1–3. If r0 /r is smooth, as is heuristically likely
+to be the case in practice, r may then be found by e.g. using trial division.8
+When solving a range of offsets in j for r̃, it is heuristically likely to be the
+case that a contiguous subrange yields candidates for r̃ that pass the filter. By
+identifying this subrange whilst solving we may typically reduce the search space.
+Note that the two above optimizations are heuristic: They void the lower bound
+on the success probability that we will derive next in Sect. 4.2. We nevertheless
+mention them briefly here as they tend to produce good results in practice.
+4.1.10
+
+Notes on the efficiency of the post-processing algorithms
+
+Note that it follows from Lem. 10–13 that Alg. 1–4, respectively, execute in polynomial time, assuming that c, l = O(poly(m)) and m = O(poly(log r)).
+8 For all primes q up to some bound: For as long as q divides r 0 and g r 0 /q = 1: Let r 0 ← r 0 /q.
+
+19
+
+4.2
+
+Lower-bounding the success probability
+
+We are now ready to wrap up our analysis in the below main theorem:
+Theorem 3. The quantum algorithm in combination with the classical continued
+fractions-based or lattice-based post-processing successfully recovers r in a single
+run with probability at least
+
+
+
+
+
+1
+2
+1
+π 2 r(2B + 1)
+1
+1
+1− 2
+−
+1
+−
++ 2+
+(17)
+π
+B
+B
+3B 3
+2m+`
+c log cm
+for m, ` ∈ Z>0 such that 2m > r and 2m+` > r2 , c ≥ 1, and B ∈ [1, Bmax ) ∩ Z.
+√
+Notes. To remove the dependency on r, use e.g. that r/2m+` < 1/ 2m+` .
+Proof. By Thm. 2, the probability
+B
+X
+t = −B
+
+P (α0 (z) + rt) ≥
+
+1
+r
+
+
+1−
+
+1
+π2
+
+
+
+2
+1
+1
++ 2+
+B
+B
+3B 3
+
+
+−
+
+π 2 (2B + 1)
+2m+`
+
+independent of the peak index z ∈ [0, r) ∩ Z.
+Hence, we observe some j such that | j − j0 (z) | ≤ B, with z selected uniformly
+at random from [0, r) ∩ Z, with probability at least
+
+
+1
+1
+1
+2
+π 2 r(2B + 1)
+1− 2
++ 2+
+.
+(18)
+−
+π
+B
+B
+3B 3
+2m+`
+Assuming that we pass not only j, but also j ± 1, . . . , j ± B, to the postprocessing solver, we will hence pass it j0 (z) with at least the probability in (18).
+By Lem. 6, passing j0 (z) to the continued fractions-based solver, which expands j0 (z)/2m+` in a continued fraction and returns the last convergent p/q with
+denominator q < 2(m+`)/2 , yields z/r and hence r̃ = r/d where d = gcd(r, z).
+By Lem. 7, passing j0 (z) to the lattice-based solver, so that j0 (z) is used to
+setup the basis for the lattice L which is then Lagrange-reduced, yields r̃/2, and
+hence r̃, up to sign, as the second component of the shortest non-zero vector in L.
+The probability of d = gcd(r, z) being cm-smooth is at least 1 − 1/(c log cm) by
+Lem. 9. If d is cm-smooth, Alg. 2 and Alg. 3 are both guaranteed to return r given
+r̃ = r/d. If instead passed an incorrect candidate for r̃, these algorithms will either
+signal a failure to find r, or return some positive integer multiple of r.
+Hence, with probability at least as stated in the theorem, we may recover r by
+taking the minimum of the candidates for r produced by Alg. 2 or Alg. 3 when
+this algorithm is passed the candidates for r̃ produced when solving not only j,
+but also j ± 1, . . . , j ± B, for r̃, using either the continued factions-based or the
+lattice-based post-processing, and so the theorem follows.
+
+Notes. As explained in Sect. 4.1.7, the procedure in the proof may be optimized by
+filtering the candidates for r̃ using Alg. 4, before passing them to Alg. 2 or Alg. 3.
+In order for the quantum algorithm to run in polynomial time, we must require
+m = O(poly(log r)). In practice, we would select the least m that we can guarantee
+meets the requirements that 2m > r, and then the least ` such that 2m+` > r2 .
+For the classical post-processing to run in polynomial time, we must similarly
+require B, c = O(poly(log r)). As may be seen in Thm. 3, it does however suffice
+20
+
+B
+
+c
+
+1
+10
+25
+100
+250
+500
+1000
+
+1
+0.56765
+0.65584
+0.65998
+0.66177
+0.66208
+0.66217
+0.66222
+
+10
+0.83887
+0.96920
+0.97532
+0.97797
+0.97842
+0.97856
+0.97863
+
+100
+0.85539
+0.98829
+0.99453
+0.99723
+0.99769
+0.99783
+0.99790
+
+1000
+0.85696
+0.99011
+0.99636
+0.99906
+0.99953
+0.99967
+0.99973
+
+104
+0.85712
+0.99029
+0.99654
+0.99924
+0.99971
+0.99985
+0.99992
+
+105
+0.85714
+0.99030
+0.99656
+0.99926
+0.99973
+0.99987
+0.99993
+
+Tab. 1: The lower bound on the success probability in Thm. 3 rounded
+down and tabulated in B and c for m = ` = 128. Further increasing m, `
+only increases
+√ the probability. When tabulating the bound, we used that
+r/2m+` < 1/ 2m+` to remove the dependency on r, see the note in Thm. 3.
+
+to let B and c be constants to achieve a high success probability. Already for
+moderate m, a high success probability exceeding e.g. 1 − 10−4 can be guaranteed,
+see Tab. 1 where the bound is tabulated in c and B for m = ` = 128.
+When using lattice-based post-processing, it is possible to reduce ` slightly, at
+the expense of enumerating a bounded number of vectors in the lattice:
+Corollary 3.1. The quantum algorithm in combination with the classical latticebased post-processing successfully recovers r in a single run with probability at least
+
+
+
+
+
+1
+1
+2
+π 2 r(2B + 1)
+1
+1
+1− 2
++ 2+
+−
+1−
+(19)
+π
+B
+B
+3B 3
+2m+`
+c log cm
+for m ∈ Z>0 such that 2m > r, ` = m − ∆√for some ∆ ∈ [0, m) ∩ Z, c ≥ 1, and
+B ∈ [1, Bmax ) ∩ Z, provided that at most 6 3 · 2∆ lattice vectors are enumerated
+for each of the at most 2B + 1 candidate frequencies.
+Notes. To remove the dependency on r, use e.g. that r/2m+` < 1/2` .
+Proof. The proof follows from Thm. 3 and its proof, by using lattice-based postprocessing and enumerating vectors in the lattice L:
+√
+By Lem. 8 and its proof, when 2m > r and ` = m − ∆, at most 6 3 · 2∆
+vectors in L must be enumerated to recover r̃, assuming j = j0 (z) is passed√to the
+solver. More specifically, the enumeration then generates a set of at most 6 3 · 2∆
+candidates for r̃ that is guaranteed to contain
+√ r̃. If j 6= j0 (z) is passed to the solver,
+the enumeration may be aborted after 6 3 · 2∆ vectors have been enumerated.9
+As in the proof of Thm. 3: Not only j but also j ± 1, . . ., j ± B are passed to
+the solver, so as to guarantee a given minimum probability
+√ (18) of passing j0 (z) to
+the solver. At most 2B + 1 enumerations of at most 6 3 · 2∆ lattice vectors are
+hence performed, where each vector yields at most one candidate for r̃.
+The probability of d = gcd(r, z) being cm-smooth is then at least 1−1/(c log cm)
+by Lem. 9. If d is cm-smooth, Alg. 2 and Alg. 3 are both guaranteed to return r
+given r̃ = r/d. If instead passed an incorrect candidate for r̃, these algorithms will
+either signal a failure to find r, or return some positive integer multiple of r.
+1
+9 If the procedure in the proof of Lem. 8 is followed and L enumerated only if λ⊥ < 2m− 2
+,
+2
+√
+∆
+then the enumeration generates a set of at most 6 3 ·√2 candidates for r̃ even if j 6= j0 (z), so
+there is then no need to abort the enumeration after 6 3 · 2∆ vectors have been enumerated.
+
+21
+
+Hence, with probability at least as stated in the corollary, we may recover r by
+taking the minimum of the candidates for r produced by Alg. 2 or Alg. 3 when this
+algorithm is passed the candidates for r̃ produced when solving not only j, but also
+j√
+± 1, . . . , j ± B, for r̃, by using lattice-based processing and enumerating at most
+6 3 · 2∆ vectors in L, and so the corollary follows.
+
+Notes. As explained in App. C.4.2, the procedure in the proof may be optimized by
+filtering the candidates for r̃ as an integrated
+√a part of enumerating L. Furthermore,
+as explained in App. C.4.1, the constant 6 3 may be improved.
+It is furthermore interesting to note that asymptotically in the limit as r tends
+to infinity, the probability of successfully recovering r tends to one:
+Corollary 3.2. In the limit as r tends to infinity, the probability of the quantum
+algorithm in combination with the classical post-processing succeeding in recovering r in a single run tends to one. All algorithms involved may be parameterized
+so as to achieve this limit whilst executing in polynomial time. This assuming that
+and upper bound m = O(poly(log r)) such that 2m > r is known, and that the group
+arithmetic is efficient.
+Proof. The proof follows from Thm. 3, by taking the limit of (17) as r tends to
+infinity, with e.g. c = 1 and B = m. Other choices of c and B are possible.
+
+4.2.1
+
+Notes on factoring integers via order finding
+
+One of our motivations for pursuing this work is the classical probabilistic algorithm
+recently introduced in [12]: It completely factors any integer N efficiently, and with
+a very high probability of success [12, Thm. 1], given the order r of a single element g
+selected uniformly at random from Z∗N . The order r may for instance be computed
+in a single successful run of Shor’s order-finding algorithm as in this work.
+To connect [12, Thm. 1] to the lower bound in Thm. 3, we first need to introduce
+a supporting claim. For its proof, the reader is referred to App. A.2.1.
+Claim 7. For N an odd positive integer that is the product of n ≥ 2 distinct prime
+factors, it holds for the Carmichael function λ that λ(N ) < 21−n N .
+Note that the idea of using N/2 to bound r from above when factoring via order
+finding was seemingly first introduced by Gerjuoy [17], see Sect. 1.5.
+We may now lower-bound the overall success probability of the factoring algorithm in [12] succeeding in completely factoring N in a single order-finding run:
+Corollary 3.3. Let N be an odd l-bit integer with n ≥ 2 distinct prime factors.
+Assume that we select g uniformly at random from Z∗N , attempt to compute the
+order r of g in a single run of the quantum algorithm as described in this work
+with continued fractions-based or lattice-based post-processing, and then attempt
+to completely factor N given r using the classical algorithm in [12]. Then the
+probability of recovering the complete factorization of N is at least
+
+
+
+
+2
+1
+1
+π 2 (2B + 1)
+1
++ 2+
+− √
+·
+1− 2
+π
+B
+B
+3B 3
+2m+`
+
+ 
+
+
+1
+1
+−k n
+1−2
+− 2
+1−
+(20)
+c log cm
+2
+2ς log2 ςl
+22
+
+for m = l − 1, ` the least integer such that 2m+` ≥ N 2 /4, B ∈ [1, Bmax ) ∩ Z, c ≥ 1,
+ς ≥ 1 a constant that may be freely selected (denoted c in [12]), and k ≥ 1 the
+number of iterations in the classical post-processing in [12].
+Notes. To pick k, use e.g. that k ≥ 2 log n − 1 + τ for some positive τ implies
+2−k n2 ≤ 2−τ . To remove the dependency on n, use e.g. that n < l as N < 2l .
+Proof. By Claim 7, we have that r ≤ λ(N ) < N/2 < 2l−1 . We select m = l − 1 to
+ensure that 2m > r, and the least ` such that 2m+` ≥ N 2 /4 > r2 . The
+√ first factor
+in the lower bound (20) then follows from Thm. 3, as r/2m+` < 1/ 2m+` . The
+second factor follows from [12, Thm. 1], and so the corollary follows.
+
+Note that as is explained in [12, Sect. 1], the requirement that n ≥ 2 does
+not imply a loss of generality, since we may reduce perfect powers and test for
+primality in classical polynomial time without resorting to order finding. Similarly,
+the requirement that N must be odd may be handled by performing trial division
+for small factors before attempting to factor N using more elaborate methods.
+Hence, a single order-finding run suffices for any integer N with probability at
+least (20) as the cases excluded in Cor. 3.3 can be handled efficiently classically.
+Again, we may instead pick ` = m−∆ for some small ∆ when using lattice-based
+post-processing and enumerating a bounded number of vectors in the lattice:
+Corollary 3.4. Let N be an odd l-bit integer with n ≥ 2 distinct prime factors.
+Assume that we select g uniformly at random from Z∗N , attempt to compute the
+order r of g in a single run of the quantum algorithm as described in this work
+with lattice-based post-processing, and then attempt to completely factor N given r
+using the classical algorithm in [12]. Then the probability of recovering the complete
+factorization of N is at least
+
+
+
+
+1
+1
+2
+1
+π 2 (2B + 1)
++ 2+
+1− 2
+−
+·
+π
+B
+B
+3B 3
+2`
+
+
+
+ 
+1
+1
+−k n
+(21)
+1−
+1−2
+− 2
+c log cm
+2
+2ς log2 ςl
+for m = l − 1, ` = m − ∆ for some ∆ ∈ [0, m) ∩ Z, B ∈ [1, Bmax ) ∩ Z, c ≥ 1, ς ≥ 1
+a constant that may be freely selected (denoted c in [12]), and k ≥ 1 the √
+number
+of iterations in the classical post-processing in [12], provided that at most 6 3 · 2∆
+lattice vectors are enumerated for each of the at most 2B + 1 candidate frequencies.
+Notes. To pick k, use e.g. that k ≥ 2 log n − 1 + τ for some positive τ implies
+2−k n2 ≤ 2−τ . To remove the dependency on n, use e.g. that n < l as N < 2l .
+Proof. By Claim 7, we have that r ≤ λ(N ) < N/2 < 2l−1 . We select m = l − 1
+to ensure that 2m > r, and ` = m − ∆. The first factor in the lower bound (21)
+then follows from Cor. 3.1, as r/2m+` < 2` . The second factor follows from [12,
+Thm. 1], and so the corollary follows.
+
+As for the asymptotic behavior of the combined factoring algorithm, the overall
+probability of successfully recovering the complete factorization of N in a single
+order-finding run may be seen to tend to one in the limit as N tends to infinity:
+
+23
+
+Corollary 3.5. Let N be an odd l-bit integer with n ≥ 2 distinct prime factors.
+Assume that we select g uniformly at random from Z∗N , attempt to compute the
+order r of g in a single run of the quantum algorithm as described in this work, and
+then attempt to completely factor N given r using the classical algorithm in [12].
+Then, in the limit as N tends to infinity, the probability of successfully recovering the complete factorization of N tends to one. All algorithms involved may be
+parameterized so as to achieve this limit whilst executing in polynomial time in l.
+Proof. Assume that we e.g. select m and ` as in Cor. 3.3, and c = ς = 1, B = m
+and k = d3 log le. Then, in the limit as N tends to infinity, the lower bound (20)
+in Cor. 3.3 tends to one. In particular, note that n < l as N < 2l , and that
+ 
+1
+l(l − 1)
+n
+n(n − 1)
+−k
+≤ .
+≤
+2 ·
+= 2−d3 log le ·
+3
+2
+2l
+l
+2
+For these choices of parameters, all algorithms involved execute in polynomial
+time in l, and so the corollary follows.
+
+Again, for the reasons explained above, the bound in Cor. 3.5 extends to any
+integer N , as the cases excluded in Cor. 3.5 can be handled efficiently classically.
+4.2.2
+
+Notes on the bounds underestimating the success probability
+
+When deriving the bounds in this work, we have assumed that the least m for
+which it can be guaranteed that 2m > r is selected, and that a lower bound on
+the success probability is sought given only the guarantee that r < 2m . Similarly,
+we have assumed that the least ` that fulfills the requirements on ` — e.g. that
+2m+` > r or that ` = m − ∆ — is selected. If m or `, or both, are selected larger
+than necessary, then the lower bound will underestimate the success probability.
+To exemplify, the lower bound in Thm. 3 is derived under the assumption that
+one would search over offsets in the frequency j observed with the aim of finding
+the closest optimal frequency j0 (z) for some z ∈ [0, r) ∩ Z. If 2m+` is much larger
+than r2 , it is however not necessary to find j0 (z) to solve for r in a single run:
+It then suffices to find a frequency close to j0 (z). The lower bound does not
+account for this fact, leading it to underestimate the success probability if 2m+` is
+much larger than r2 — in particular for small B. When using continued fractionsbased post-processing, and for t such that j = j0 (z) + t, we e.g. need that
+| αr |
+| {rj}2m+` |
+| {rj0 (z) + rt}2m+` |
+| {α0 (z) + rt}2m+` |
+=
+=
+=
+2m+` r
+2m+` r
+2m+` r
+2m+` r
+| α0 (z) + rt |
+| δz + t |
+1
+2m+`
+= m+` < 2 ⇒ 2 · | δz + t | <
+=
+m+`
+2
+r
+2
+2r
+r2
+
+(22)
+
+to be able to solve for z/r, where δz ∈ (−1/2, 1/2], see Sect. 1.3 and Sect. 4. If 2m+`
+is much greater than r2 this requirement is met for many t ∈ [−B, B] ∩ Z. For all
+steps in (22) to hold, it is also required that B ∈ [1, Bmax ) ∩ Z, see (5) in Sect. 1.6.
+Note furthermore that the lower bound in Lem. 9 stems from a worst-case
+analysis: In practice, for most orders, the success probability is much higher than
+the bound indicates, and hence much higher than what the corresponding part of
+the lower bound in Thm. 3 — and its various corollaries — indicates. A better lower
+bound can be achieved by imposing constraints on r: For instance by assuming r
+to be random, as random integers are unlikely to be very smooth, or by using side
+information on r if such information is available.
+24
+
+Finally, note that in the unlikely event that d = gcd(r, z) has a factor q > cm so
+that we fail to recover r, we still recover a limited set of candidates r̃i for r̃ = r/d.
+This set includes the correct r̃, but it is not trivial to identify r̃ within the set.
+Even so, the set may be useful: For instance, we may use classical order-finding
+algorithms to attempt to find d as it is the order of g r̃ — the idea being to try
+to solve using all r̃i in the set.10 To take another example, when factoring an
+integer N via order finding, some — and sometimes even all — factors of N may
+be recovered using [12] even if only r̃ = r/d is know as a consequence of d having
+a factor q > cm. This follows from the analysis in [12], where it is stated that for
+N=
+
+n
+Y
+
+pei i ,
+
+i=1
+
+where n ≥ 2, the pi are pairwise distinct odd prime factors, and the ei are positive
+integer exponents, we can afford to miss out on prime factors that divide pi − 1 for
+one pi when attempting to guess a (sub-)multiple of λ0 (N ) = lcm(p1 −1, . . . , pn −1).
+If we miss out on several (large) prime factors that are associated with different
+prime factors pi , then these pi may not be split apart — but any other primes pi
+will still be split apart. Hence, we may still recover the partial or full factorization
+of N — the idea again being to try to solve using all r̃i in the set. Factoring directly
+via r̃ is beyond the scope of Cor. 3.3, however, as it would complicate the corollary.
+
+4.3
+
+Verifying the correctness of the result
+
+In this work, we give lower bounds on the success probability of recovering any
+order r, and of completely factoring any integer N , in a single run of the quantum
+part of Shor’s order-finding algorithm. That is to say, we give a guarantee that
+the correct result is returned with at least the probability indicated by the bound.
+Otherwise, either no result, or a plausible yet incorrect result, is returned.
+When factoring an integer N , in the sense of computing a non-trivial factor f
+of N , it is easy to verify the result: Verify that f ∈ (1, N ) ∩ Z and that f | N .
+Similarly, when computing a positive integer multiple r0 of the order r of g, it is
+0
+easy to verify the result: Verify that r0 ∈ Z>0 and that g r = 1.
+When computing the order r of g, or the complete factorization of N as in this
+’
+work, verifying the result is a bit more involved, however, as explained below:
+4.3.1
+
+Verifying that r is the order of g
+
+To verify that r ∈ Z>0 such that g r = 1 is the order of g, factor r completely, e.g. by
+using the approach described in Sect. 4.2.1: For {q1 , . . . , qk } the set of distinct
+primes that divide r, it then suffices to verify that g r/qi 6= 1 for all i ∈ [1, k] ∩ Z.
+Two order-finding runs would then typically be required for large random r;
+a single run in hgi to compute r, and a single run in a cyclic subgroup of Z∗r to
+verify the computation by completely factoring r. Note that the completeness of
+the factorization must be verified, by first verifying that {q1 , . . . , qk } is a set of
+pairwise distinct integers, and that r = q1e1 ·. . .·qkek for {e1 , . . . , ek } a set of positive
+integer exponents, and by then verifying that qi is prime for all i ∈ [1, k] ∩ Z.
+10 This may be combined with the techniques in this work for removing cm-smooth factors of d.
+
+25
+
+4.3.2
+
+Verifying that qi is a prime
+
+Classical options for proving the primality of qi include using the ECPP (see [2] for
+an overview) or AKS [3] tests, where the former test is amongst the most efficient
+in practice [16, 26] whilst the latter has a proven polynomial runtime. If a proof
+of primality is not required, but only an extremely low probability of qi not being
+prime, a classical probabilistic test such as Miller-Rabin [25, 31] may be used.
+Quantum options include combining some variation of the Pocklington-Lehmer
+test [29, 22] (see also Lucas [23, p. 441, §240]) with a quantum factoring algorithm
+so as to compute the complete or partial factorizations required by the test. This
+was originally proposed by Chau and Lo [7] with respect to using Shor’s original
+factoring algorithm [34, 35] and a variation of the test due to Brillhart et al. [5].
+By instead using the approach to factoring in Sect. 4.2.1, the test can be made
+more efficient: Each complete or partial factorization required by the test may then
+be computed in a single quantum order-finding run with high probability of success.
+Notes. In practice when testing primality, as when factoring, the size of the integer
+and other side information typically determines the choice of algorithm.
+4.3.3
+
+Verifying that {q1 , . . . , qn } is the complete factorization of N
+
+In analogy with the procedure in Sect. 4.3.1, to verify that a set {q1 , . . . , qn } of
+pairwise distinct integers is the complete factorization of an integer N , first verify
+that N = q1e1 · . . . · qnen for {e1 , . . . , en } a set of positive integer exponents, and then
+verify that qi is prime for all i ∈ [1, n] ∩ Z as described in Sect. 4.3.2.
+
+5
+
+Summary and conclusion
+
+We have derived a lower bound on the probability of successfully recovering the
+order r in a single run of the quantum part of Shor’s order-finding algorithm.
+The bound implies that by performing two limited searches in the classical postprocessing part of the algorithm, a high success probability can be guaranteed, for
+any r, without re-running the quantum part or increasing the exponent length
+when comparing to the exponent length used by Shor. By using lattice-based postprocessing and enumerating the lattice, the exponent length may in fact be slightly
+reduced. The classical post-processing is efficient when accounting for searching.
+In practice, the success probability is usually higher than the bound indicates,
+as our bound stems from a worst case analysis that holds for any r given only
+an upper bound m on the bit length of r. A better lower bound on the success
+probability can be achieved by assuming the bit length of r to be known, and by
+imposing constraints on r: For instance, by assuming r to be random.
+Asymptotically, in the limit as r tends to infinity, the probability of successfully
+recovering r tends to one. This when parameterizing the algorithm so that both the
+classical and quantum parts execute in polynomial time. Already for moderate r, a
+high success probability exceeding e.g. 1 − 10−4 can be guaranteed. This supports
+our previous results in [13, App. A] that were derived by means of simulations.
+As a corollary, we have used our result and the classical post-processing in [12]
+to derive a lower bound on the probability of factoring any integer N completely in
+a single order-finding run. Again, the bound shows that a high success probability
+can be achieved even for moderate N . Asymptotically, in the limit as N tends to
+
+26
+
+infinity, the probability of completely factoring N in a single run tends to one. This
+when parameterizing the algorithm so that all parts execute in polynomial time.
+
+Acknowledgments
+I am grateful to Johan Håstad for valuable comments and advice. I thank Andreas
+Minne for proofreading early versions of this manuscript. I thank Dennis Willsch
+for pointing out an issue in Alg. 4 in the first pre-print of this manuscript, and for
+useful discussions. Funding and support for this work was provided by the Swedish
+NCSA that is a part of the Swedish Armed Forces.
+
+A
+
+Supplementary material
+
+In this appendix we provide some useful supplementary bounds and analyses.
+
+A.1
+
+Simpler bounds on | αr | and the search space in j
+
+We know from (15) in Sect. 4 that we need | αr |/2m+` < 1/(2r), for αr = {rj}2m+` ,
+to find the convergent z/r given j by expanding j/2m+` in a continued fraction.
+In this section, we give simple bounds on the probability of observing j yielding | αr | of a given bit length. These bounds enable us to coarsely capture the
+probability distribution in | αr |. In turn, this enables us to understand what the
+probability is of e.g. finding j0 (z) when searching j, j ± 1, . . ., j ± B for some B.
+A.1.1
+
+Supporting claims
+
+It is helpful to first introduce a supporting definition and claim:
+Definition A.1. For t > 0 an integer, let ρ(t) denote the probability of observing
+a frequency j ∈ [0, 2m+` ) that yields an argument αr such that | αr | ∈ [2t−1 , 2t ).
+Claim A.1. There are at most 2t values of j ∈ [0, 2m+` ) that yield αr such that
+| αr | ∈ [2t−1 , 2t ).
+Proof. Let 2κr be the largest power of two to divide r. By the analysis in [13,
+App. A.3], only arguments αr that are multiples of 2κr are admissible. There are
+2κr distinct j that yield each admissible argument αr .
+Hence, there are either 2t or no admissible arguments on the interval [2t−1 , 2t ),
+
+depending on the size of 2κr in relation to 2t , and so the claim follows.
+A.1.2
+
+Deriving the bounds
+
+We now proceed, in analogy with [14, Lem. 2], to derive the bounds:
+Lemma A.1. For r ∈ [2, 2m ), it holds that ρ(t) ≤ 2m−t .
+Proof. For 0 6= | θr | ≤ π, it holds for any M > 0 that
+M
+−1
+X
+b=0
+
+2
+
+e
+
+iθr b
+
+=
+
+2
+π2
+1 − cos(θr M )
+≤
+≤ 2,
+1 − cos(θr )
+1 − cos(θr )
+θr
+
+27
+
+where we have used Claim 4 in the last step.
+Hence, it holds for M ∈ {L, L + 1} and | αr | ∈ [2t−1 , 2t ) that
+(2) ≤
+
+r
+
+π2
+
+22(m+`) θr2
+
+=
+
+π2
+
+r
+
+22(m+`) (2παr /2m+` )2
+
+=
+
+r
+22 αr2
+
+<
+
+2m
+22 · 22(t−1)
+
+= 2m−2t .
+
+It follows that the probability of observing j that yields αr such that | αr | ∈
+[2t−1 , 2t ) is at most 2m−t , as there are at most 2t such j by Claim A.1 that each
+occur with probability at most 2m−2t , and so the lemma follows.
+
+Lemma A.2. For r ∈ [2m−1 , 2m ), it holds that ρ(t) ≤ 2t+3−m .
+Proof. For θr ∈ R, it holds for any M > 0 that
+M
+−1
+X
+
+2
+
+e
+
+iθr b
+
+≤ M 2,
+
+b=0
+
+since the left-hand side is the square norm of a sum of M unit vectors.
+Furthermore, for δ = β/r ∈ [0, 1), it holds that
+2
+ m+` 
+2  m+`
+2
+2
+−δ+1
++1 =
+r
+r
+2
+2
+`+1
+`+1
+≤ 2
++1−δ ≤ 2
++ 1 < 22`+3
+
+L2 < (L + 1)2 =
+
+where we have used that ` is a positive integer in the last step, and furthermore
+that r ≥ 2m−1 . Hence, it holds for M ∈ {L, L + 1} that
+(2) ≤
+
+r
+r
+(L + 1)2 < 2(m+`) 22`+3 < 23−m .
+22(m+`)
+2
+
+It follows that the probability of observing j that yields αr such that | αr | ∈
+[2t−1 , 2t ) is at most 2t+3−m , as there are at most 2t such j by Claim A.1 that each
+occur with probability at most 23−m , and so the lemma follows.
+
+Lemma A.3. For r ∈ [2m−1 , 2m ), it holds that ρ(t) ≤ min(2m−t , 2t+3−m ).
+Proof. The lemma follows by combining Lem. A.1 and Lem. A.2.
+
+
+
+It follows from A.3 that we are likely to observe j yielding an argument αr such
+that | αr | is approximately of length m bits, for m the bit length of r.
+Hence, we can find the optimal j by searching small offsets: If we offset j by
+some small integer t, we offset | αr | by rt, assuming ` to be sufficiently large so
+that no modular reductions occur. We do not need to try a very large offset to find
+the optimal j = j0 (z), yielding an argument α0 (z) ∈ (−r/2, r/2] ∩ Z.
+
+A.2
+
+Order finding in Shor’s factoring algorithm
+
+Shor’s original motivation for introducing the order-finding algorithm in [34, 35]
+was to use it to factor integers, via a randomized reduction to order finding. When
+Shor describes how to select parameters for the order-finding algorithm, he therefore
+does so from a factoring context, using the integer N to be factored as a baseline.
+Specifically, for N an odd integer with at least two distinct prime factors, Shor
+selects g uniformly at random from Z∗N and quantumly computes the order r of g.
+Shor then uses r to attempt to split N into a product of two non-trivial factors.
+28
+
+For m + ` the exponent length, Shor requires that N 2 ≤ 2m+` < 2N 2 [35,
+p. 1498], so that 2m+` ≥ N 2 > r2 . We analogously require that 2m+` > r2 when
+solving for r in a single run using continued fractions-based or lattice-based postprocessing. To ensure that 2m+` > r2 in the context of factoring N , we do however
+use N/2 rather than N as an upper bound on r, see Claim 7 — i.e. we set m + `
+to the bit length11 of (N/2)2 rather than to the bit length of N 2 .
+Hence, we have 2m+` ≥ (N/2)2 > r2 , or equivalently 2m+`+2 ≥ N 2 , so our
+exponent is two bits shorter than Shor’s exponent. If we would instead have used N 2
+as an upper bound, our exponent would have been of the same length as Shor’s.
+It follows that we do not achieve an increased success probability in our analysis
+at the expense of increasing the exponent length m + `. Note also that we may
+slightly further reduce m + ` by using lattice-based post-processing, see App. C.
+A.2.1
+
+Supporting claims
+
+Claim 7. For N an odd positive integer that is the product of n ≥ 2 distinct prime
+factors, it holds for the Carmichael function λ that λ(N ) < 21−n N .
+Proof. By the unique factorization theorem
+N=
+
+n
+Y
+
+pei i
+
+⇒
+
+λ(N ) = lcm((p1 − 1)p1e1 −1 , . . . , (pn − 1)penn −1 )
+
+i=1
+
+for pi pairwise distinct odd primes, and ei some positive integers, for i ∈ [1, n] ∩ Z.
+Since pi − 1 is even for all i ∈ [1, n] ∩ Z, it follows that
+λ(N ) = lcm((p1 − 1)pe11 −1 , . . . , (pn − 1)pnen −1 )
+n
+n
+Y
+Y
+(pi − 1) ei −1
+pi
+< 21−n
+pei i = 21−n N
+≤2
+2
+i=1
+i=1
+and so the claim follows.
+
+
+
+Note that the idea of using N/2 to bound r from above when factoring via order
+finding was seemingly first introduced by Gerjuoy [17], see Sect. 1.5. A similar more
+general lemma was also later used by Bourdon and Williams [4, Lem. 3].
+
+B
+
+Continued fractions-based post-processing
+
+In this appendix, we show that when expanding j0 (z)/2m+` in a continued fraction,
+the last convergent p/q with denominator q < 2(m+`)/2 is equal to z/r if 2m+` > r2 .
+This statement implies that when solving not only j but also j ± 1, . . . , j ± B
+for r̃ = r/d where d = gcd(r, z), in the hope of thus solving j0 (z) for r̃, it suffices
+to consider a single candidate for r̃ for each offset in j considered.
+Note that this statement is analogous to Shor’s original statement [35, p. 1500]
+that when 2m+` ≥ N 2 > r2 the last convergent p/q with denominator q < N in
+the expansion of j0 (z)/2m+` must be equal to z/r. (We have merely generalized it
+to account for us selecting m + ` so that 2m+` > r2 .12 ) It is furthermore analogous
+to the statement in Lem. 7 in App. C in the context of lattice-based processing.
+11 Note that since N is an odd composite, Shor’s requirement that N 2 ≤ 2m+` < 2N 2 simply
+sets m + ` to the bit length of N 2 . We instead set m + ` to the bit length of (N/2)2 .
+12 In the context of factoring N , we use that r < N/2, see Claim 7, and select the least m + `
+such that 2m+` ≥ (N/2)2 > r2 . This implies that we cannot pick the last convergent with q < N .
+Instead, we pick the last convergent with q < N/2, or more generally with q < 2(m+`)/2 .
+
+29
+
+B.1
+
+Preliminaries
+
+Before proceeding, we first need to introduce two standard supporting claims:
+Claim B.1. For x ∈ R, p ∈ Z and q ∈ Z≥1 , the convergent p/q is in the continued
+fraction expansion of x if
+x−
+
+p
+1
+< 2.
+q
+2q
+
+Proof. See [18, Thm. 184 on p. 153] for the proof.
+
+
+
+Claim B.2. For x ∈ R and L ∈ Z>1 , there is at most one convergent p/q with p, q
+coprime integers such that q ∈ (0, L), p ∈ (0, q) and
+x−
+
+1
+p
+≤
+.
+q
+2L2
+
+Proof. Suppose the contrary that there is a second convergent p0 /q 0 6= p/q with p0 , q 0
+coprime integers such that q 0 ∈ (0, L), p0 ∈ (0, q 0 ) and
+x−
+
+p0
+1
+≤
+.
+0
+q
+2L2
+
+By the triangle inequality, it must then be that
+
+ 
+
+p
+p0
+p p0
+p0
+1
+p
+− 0 =
+x− 0 − x−
+≤ x− 0 + x−
+≤ 2.
+q
+q
+q
+q
+q
+q
+L
+
+(23)
+
+At the same time
+p p0
+p · q0
+p0 · q
+| p · q 0 − p0 · q |
+1
+1
+− 0 =
+−
+=
+≥
+> 2,
+0
+0
+0
+2
+q
+q
+q·q
+q ·q
+q ·q
+(L − 1)
+L
+as q 0 · q ∈ [1, (L − 1)2 ] ∩ Z and 0 6= p · q 0 − p0 · q ∈ Z.
+The claim follows from the contradiction between (23) and (24).
+
+B.2
+
+(24)
+
+
+
+Identifying the convergent z/r
+
+Lemma 6. The last convergent p/q with denominator q < 2(m+`)/2 in the continued fraction expansion of j/2m+` is equal to z/r, for j = j0 (z) for any z ∈ [0, r)∩Z,
+and for m, ` ∈ Z>0 such that 2m > r and 2m+` > r2 .
+Proof. It follows from Claim B.1, and the fact that
+j0 (z) z
+rj0 (z) 2m+` z
+| {rj0 (z)}2m+` |
+1
+1
+−
+=
+− m+` =
+≤
+< 2,
+2m+`
+r
+2m+` r
+2
+r
+2m+` r
+2 · 2m+`
+2r
+that the convergent p/q = z/r must occur in the continued fraction expansion of
+x = j0 (z)/2m+` , where we note explicitly that q ≤ r < 2(m+`)/2 as 2m+` > r2 .
+Trivially j0 (z) = 0 if and only if z = 0, in which case p/q = 0/1 = z/r is the
+only convergent in the continued fraction expansion of x = 0. Suppose that z 6= 0:
+By Claim B.2, there is then at most one convergent p/q such that
+1
+j0 (z) p
+−
+≤
+m+`
+2
+q
+2 · 2m+`
+30
+
+with p, q coprime integers such that q ∈ (0, 2(m+`)/2 ) and p ∈ (0, q). This convergent
+p/q must be equal to z/r, with p = z/d and q = r/d = r̃ for d = gcd(r, z).
+Hence, as successive convergents p/q in the expansion of x = j0 (z)/2m+` yield
+increasingly good approximations to x and therefore must have strictly increasing
+denominators, we will recover z/r if we pick the last convergent in the expansion
+with denominator q < 2(m+`)/2 , and so the lemma follows.
+
+
+C
+
+Lattice-based post-processing
+
+In this appendix, we use lattice-based post-processing to recover r̃ = r/ gcd(r, z)
+from an optimal frequency j = j0 (z) for any z ∈ [0, r) ∩ Z in the setting where m
+is selected so that 2m > r, and where ` = m − ∆ for some ∆ ∈ [0, m) ∩ Z.
+To this end, we essentially follow [13], except that we specifically consider and
+analyze the two-dimensional case, and that we do so under the assumption that j is
+optimal. We bound the number of vectors that must at most be enumerated in the
+lattice to guarantee that r̃ may be recovered from one of the vectors enumerated.
+
+C.1
+
+Earlier related works
+
+Before proceeding, let us review some earlier works on post-processing the output
+from Shor’s order-finding algorithm, and their respective relations to this work:
+C.1.1
+
+Notes on the relation to Seifert’s work
+
+As stated in Sect. 1.5, Seifert [33] explores tradeoffs by letting ` ∼ m/s for some
+integer s > 1. Each run then provides at least13 ∼ ` bits of information on r, so ∼ s
+runs are required to ensure there is sufficient information available to solve for r.
+Seifert [33] first performs n ≥ s runs of the quantum order-finding algorithm
+with ` = m/s in the hope of obtaining a set of n good frequencies {j1 , . . . , jn }.
+He then jointly post-processes this set of frequencies by generalizing Shor’s original
+continued fractions-based post-processing algorithm to higher dimensions.
+In [13, App. A and Sect. 6.2], Ekerå instead uses lattice-based post-processing,
+that is adapted from [14, 15], for both Shor’s and Seifert’s algorithms. Furthermore,
+Ekerå relaxes the requirement on the frequencies by capturing the probability distribution induced by the quantum algorithm. See [13, App. A and Sect. 6.2], the
+literature review in Sect. 1.5.1, and App. A.1, for further details.
+The post-processing algorithm that we introduce in this appendix is modeled
+upon [13] via [14, 15], but it solves a single optimal frequency j0 (z) for r̃ = r/d,
+from which r may then be recovered via Alg. 2 or Alg. 3 when d = gcd(r, z) is
+cm-smooth. By searching offsets in the frequency observed, we find j0 (z) with
+high probability. This search is feasible to mount when post-processing a single
+frequency, as the search space is then small.
+C.1.2
+
+Notes on the relation to Koenecke’s and Wocjan’s work
+
+Koenecke and Wocjan [20] observe that the problem of finding the convergent z/r in
+the continued fraction expansion in Shor’s algorithm may be perceived as a lattice
+problem, and be solved using a slightly different lattice-based post-processing:
+13 If m is the bit length of r, the algorithm yields ∼ ` bits of information on r. If m is greater
+
+than the bit length of r, the algorithm yields more than ∼ ` bits of information on r.
+
+31
+
+Specifically, they seek to recover r from two optimal frequencies j1 = j0 (z1 ) and
+j2 = j0 (z2 ), such that z1 and z2 are coprime, returned from two separate runs of
+the quantum part of Shor’s original order-finding algorithm. They hence require
+at least two runs of the quantum part, with an exponent of length as in Shor’s
+original algorithm, so ` ∼ m. Their lattice basis is different from that in [13].
+The post-processing algorithm in this appendix — that stems from the postprocessing in [13] via [14, 15] — requires only a single optimal frequency, and hence
+only a single run of the quantum part, provided it yields a frequency that is close
+enough to an optimal frequency j0 (z) for it to be found by searching. It recovers
+r̃ = r/d, from which r may be recovered when d = gcd(r, z) is cm-smooth.
+C.1.3
+
+Notes on the relation to Knill’s work
+
+As stated in Sect. 1.5, Knill [19] explores tradeoffs between the exponent length,
+the search space in the classical post-processing, and the success probability, in the
+context of using continued fractions-based post-processing:
+For ` = m − ∆ for some small ∆, Knill essentially proposes to solve an optimal
+frequency j = j0 (z) for convergents with denominators on successive limited intervals using Lehmer’s algorithm [9, Alg. 1.3.13 on p. 22] so as to recover z/r. This is
+similar to the lattice-based post-processing that we introduce in this appendix.
+Knill says to run the quantum part of Shor’s order-finding algorithm twice for
+the same g to obtain two optimal frequencies j1 = j0 (z1 ) and j2 = j0 (z2 ), to postprocess these independently to obtain z1 /r and z2 /r, and to then take the least
+common multiple of the denominators of the convergents as the candidate for r.
+The whole process then requires at least two runs. As stated above, our postprocessing algorithm requires only a single optimal frequency, and hence only a
+single run of the quantum part, provided it yields a frequency that is close enough
+to an optimal frequency j0 (z) for it to be found by searching. It recovers r̃ = r/d,
+from which r may be recovered when d = gcd(r, z) is cm-smooth.
+
+C.2
+
+Preliminaries
+
+We follow [13], and let L be the lattice spanned by b1 = (j, 1/2) and b2 = (2m+` , 0),
+where j = j0 (z) is an optimal frequency for some peak index z ∈ [0, r) ∩ Z.
+Note that, compared to [13], we have scaled the second component of b1 slightly
+by a factor of 1/2 as | αr | = | α0 (z) | ≤ r/2 when j = j0 (z). This yields slightly
+better constants in the analysis: In particular, for ∆ = 0 it makes the lattice-based
+post-processing perform on par with continued fractions-based post-processing.
+All vectors in L may be written on the form
+v(m1 , m2 ) = m1 b1 − m2 b2 = (m1 j − 2m+` m2 , m1 /2) ∈ L
+for m1 , m2 ∈ Z. In particular, for d = gcd(r, z), the vector
+u = v(r/d, z/d) = (rj − 2m+` z, r/2)/d = (α0 (z), r/2)/d = (α0 (z)/d, r̃/2) ∈ L,
+and it has r̃ = r/d as its second component.
+Furthermore, as d ≥ 1, r < 2m and | αr | = | α0 (z) | ≤ r/2, we have that
+r 
+p
+α0 (z)2 + (r/2)2
+1
+r 2  r 2
+r
+≤
++
+= √ < 2m− 2 ,
+|u| =
+2
+d
+2
+2
+2
+
+32
+
+(25)
+
+where | x | denotes the Euclidean norm of x ∈ L, both above and in what follows.
+The idea is now to enumerate all vectors in L that are within a circle of radius
+1
+2m− 2 centered at the origin to find u and hence r̃. Alg. 4 may be used to filter
+the candidates for r̃ thus generated when d is cm-smooth. A better option is to
+use the optimized filtering algorithm in App. C.4.2 that leverages the fact that all
+candidates for r̃ stem from vectors that are in L. Once r̃ has been found, the order r
+may be recovered from r̃ using Alg. 2 or 3 when d is cm-smooth, see Sect. 4.1.
+Note that there are other possible approaches: We could e.g. accept a larger
+| αr |, as in [13], to avoid first searching for the optimal frequency j0 (z) close to
+the frequency j observed, and then solving at most all of these frequencies using
+lattice-based techniques. This at the expense of enumerating at most all vectors
+within a much larger circle in L — but at the benefit of only performing a single
+such large enumeration, as opposed to many small enumerations.
+Our objective in this appendix is to keep the post-processing simple to analyze,
+and to align it with the analysis in the main part of the paper. Therefore, we take
+the three-step approach of first searching for j0 (z) given some close frequency, then
+recovering r̃ from j = j0 (z), and finally recovering r from r̃.
+
+C.3
+
+Notation and supporting claims
+
+Up to signs, let s1 of norm λ1 be a shortest non-zero vector in L, and let s2 of norm
+λ2 ≥ λ1 be the shortest non-zero vector in L that is linearly independent to s1 .
+Note that s1 and s2 may be found efficiently using Lagrange’s algorithm [21, 28].
+⊥
+=
+=
+Furthermore, let s⊥
+2 of norm λ2 , and s2 of norm λ2 , be the components of s2
+that are orthogonal and parallel to s1 , respectively.
+m+`−1
+Claim C.1. It holds that λ1 λ⊥
+.
+2 =2
+m+`−1
+Proof. The claim follows from the fact that λ1 λ⊥
+is the area of
+2 = det L = 2
+the fundamental parallelogram in L.
+
+√
+⊥
+3 λ2 /2.
+Claim C.2. It holds that λ=
+2 ≤ λ1 /2 and as a consequence that λ2 ≥
+
+Proof. For projs1 (s2 ) the projection of s2 onto s1 , we have that
+µ = projs1 (s2 ) =
+
+hs1 , s2 i
+,
+| s1 |2
+
+s=
+2 = µs1 ,
+
+=
+s⊥
+2 = s2 − s2 = s2 − µs1 .
+
+It must be that | µ | ≤ 1/2. Otherwise s1 and s02 = s2 − bµe · s1 form a basis
+for L, with | s02 | < | s2 |. This is inconsistent with s1 and s2 forming a reduced basis
+=
+up to sign. It follows that λ=
+2 = | s2 | = | µs1 | ≤ λ1 /2. Furthermore
+2
+= 2
+⊥ 2
+2
+⊥ 2
+2
+λ22 = (λ⊥
+2 ) + (λ2 ) ≤ (λ2 ) + λ1 /4 ≤ (λ2 ) + λ2 /4
+
+which implies λ⊥
+2 ≥
+
+⇒
+
+2
+2
+(λ⊥
+2 ) ≥ 3λ2 /4
+
+√
+3 λ2 /2 by taking the root, and so the claim follows.
+
+
+
+Claim C.3. Suppose that 2m+`−1 > | u |2 . Then λ⊥
+2 > | u |.
+m+`−1
+/λ1 ≥ 2m+`−1 /| u | > | u | where we
+Proof. As λ1 ≤ | u |, we have λ⊥
+2 = 2
+have used Claim C.1, and the supposition in the claim in the last step.
+
+
+33
+
+C.4
+
+Bounding the complexity of the enumeration
+
+If ` is sufficiently large as a function of r and m, then we can immediately recover r̃
+by reducing the basis (b1 , b2 )T for L to (s1 , s2 )T with Lagrange’s algorithm [21, 28]:
+Lemma 7. The shortest non-zero vector, up to sign, in the lattice L spanned by
+(j, 21 ) and (2m+` , 0) has r̃/2 = r/(2 gcd(r, z)) in its second component, for j = j0 (z)
+for any z ∈ [0, r) ∩ Z, and for m, ` ∈ Z>0 such that 2m > r and 2m+` > r2 .
+√
+Proof. As | u | ≤ r/ 2 by (25), the supposition in the lemma that 2m+` > r2
+m+`−1
+implies that 2m+`−1 > | u |2 , and by Claim C.3, λ⊥
+> | u |2 .
+2 > | u | if 2
+⊥
+Hence, λ2 > | u |, so it must be that u is a multiple of s1 . In fact, it must be that
+u = (rj − 2m+` z, r/2)/ gcd(r, z) is equal to s1 up to sign, as the two components
+of u are coprime when scaled up by a factor of two, and so the lemma follows. 
+By Lem. 7, we can immediately recover r̃ by reducing the basis for the lattice
+provided that 2m+` > r2 . This is analogous to the situation that arises when
+solving using continued fractions-based post-processing. As 2m > r, it suffices to
+pick ` ≥ m to meet the requirement. If ` is less than m — say that ` = m −
+√ ∆ for
+some ∆ ∈ [0, m) ∩ Z — then we can still find r̃ by enumerating at most 6 3 · 2∆
+1
+vectors in L that lie within a ball of a radius 2m− 2 centered at the origin:
+√
+Lemma 8. At most 6 3·2∆ vectors in the lattice L spanned by (j, 12 ) and (2m+` , 0)
+must be enumerated to recover r̃ = r/ gcd(r, z), for j = j0 (z) for any z ∈ [0, r) ∩ Z,
+for m ∈ Z>0 such that 2m > r, and for√` = m − ∆ for some ∆ ∈ [0, m) ∩ Z.
+More specifically, a set of at most 6 3 · 2∆ candidates for√r̃, that is guaranteed
+to contain r̃, may be constructed by enumerating at most 6 3 · 2∆ vectors w =
+(w1 , w2 ) ∈ L of norm | w | ≤ 2m−1/2 and including 2w2 in the set.
+Proof. There are two cases that we treat separately:
+1
+
+m− 2
+m+`
+1. Suppose λ⊥
+: Then λ⊥
+z, r/2)/d
+2 ≥ 2
+2 > | u | by (25), so u = (rj − 2
+must be a multiple of s1 . In fact, u is equal to s1 up to sign, as the two
+components of u are coprime when scaled up by a factor of two, so we find
+r̃/2 = r/(2d) and hence r̃ up to sign in the second component of s1 .
+
+In this case there is hence no need to enumerate L: For s1 = (s1,1 , s1,2 ), it
+suffices to include 2 · | s1,2 | = r̃ in the set of candidates.
+1
+
+m− 2
+: In this case, we enumerate all vectors on the form
+2. Suppose λ⊥
+2 <2
+
+w(m1 , m2 ) = m1 s1 + m2 s2 = (w1 , w2 ) ∈ L
+1
+
+for m1 , m2 ∈ Z such that | w(m1 , m2 ) | < 2m− 2 . Then u is amongst the
+1
+vectors enumerated, as | u | < 2m− 2 by (25). For w = u, it holds that
+w2 = r̃/2, so including 2w2 in the set of candidates includes r̃.
+1
+
+1
+
+m− 2
+As | m2 | < 2m− 2 /λ⊥
+/λ⊥
+2 , we need to consider at most 1 + 2 · 2
+2 values
+1
+of m2 . For each value of m2 , we need to consider at most 1 + 2 · 2m− 2 /λ1
+values of m1 . The number of vectors to enumerate is hence at most
+1
+
+1
+
+M = (1 + 2m+ 2 /λ1 )(1 + 2m+ 2 /λ⊥
+2)
+√
+3
+1
+< (1 + 2m+ 2 /( 3λ1 ))(1 + 2m+ 2 /λ⊥
+2)
+√
+2
+m+ 21
+m− 21
+⊥
+< 3 · (2
+/( 3λ1 ))(2
+/λ2 )
+34
+
+(26)
+(27)
+
+√
+√
+√
+m−`
+= 3 3 · 22m /(λ1 λ⊥
+= 6 3 · 2∆
+2)=6 3·2
+
+(28)
+
+where, in (28), we have used Claim C.1.
+1
+
+1
+
+m− 2
+As for the inequality in step (27), we supposed λ⊥
+, so 2m+ 2 /λ⊥
+2 <2
+2 >2
+1
+m+ 21
+⊥
+m+ 12
+⊥
+⊥
+m− 21
+which implies that 1 + 2
+/λ2 < ( 2 + 1) · 2
+/λ2 = 3 · 2
+/λ2 .
+√
+√
+m+ 21
+⊥
+/√ 3, so
+Furthermore,
+by Claim C.2, we have that λ1 ≤ λ2 ≤
+2λ2 / 3 < 2
+√
+√
+3
+3
+1
+2m+ 2 /( 3λ1 ) > 2, which implies that 1 + 2m+ 2 /( 3λ1 ) < 3 · 2m+ 2 /( 3λ1 ).
+√
+(This is why we scaled up the main term in the first factor in (26) by 2/ 3.)
+√
+As there are no vectors to enumerate in the first case, and at most 6 3 · 2∆
+vectors to enumerate in the second case, the lemma follows.
+
+
+C.4.1
+
+Notes on improving the bound on the enumeration complexity
+
+Consider the enumeration in case 2 in the proof of Lem. 8 in the previous section:
+If w(m1 , m2 ) = (w1 , w2 ) ∈ L is within the circle to be enumerated, then so
+is −w, but it suffices to find w. One way to avoid including −w in the enumeration
+is to first iterate over m2 as in the proof, and to then for each m2 only iterate over
+m1 that yield non-negative w2 . This essentially enumerates only the top semicircle,
+and hence improves the bound in Lem. 8 by approximately a factor of two.
+It is possible to obtain an even better bound, by e.g. using that
+| w1 | ≤ | α0 (z) | ≤ r/2 < 2m−1 ,
+
+0 ≤ w2 ≤ r/2 < 2m−1 ,
+
+(29)
+
+to further restrict (w1 , w2 ), and hence (m1 , m2 ), when performing the enumeration.
+In summary, the number√of vectors in L that need to be enumerated to find u
+is O(2∆ ). The constant of 6 3 in Lem. 8 may be slightly improved, at the expense
+of slightly complicating the procedure and the analysis.
+C.4.2
+
+Notes on filtering the candidates for r̃ efficiently
+
+As described in Sect. 4.1.7, the set of candidates for r̃ generated by enumerating L
+may be passed to Alg. 2 or Alg. 3 to be solved for r, or to Alg. 1 to be solved for
+a positive integer multiple r0 of r. Prior to passing the candidates for r̃ to any of
+these algorithms, it is advantageous to first filter the candidates for r̃. One option
+is to use Alg. 4 that performs at most one m-bit exponentiation per candidate.
+At minimum, the two requirements in (29) should be checked before passing 2w2
+as a candidate for r̃ to Alg. 4, so as to avoid performing exponentiations in step 3.1
+of Alg. 4 for candidates that can immediately be trivially dismissed.
+The amount of exponentiation work that needs to be performed may be further
+reduced by leveraging the structure of L: For s1 = (s1,1 , s1,2 ) and s2 = (s2,1 , s2,2 ),
+we may pre-compute x1 = x2s1,2 and x2 = x2s2,2 , where as in Alg. 4 we let
+Y
+x = g e for e =
+q blogq cmc .
+q∈P(cm)
+1 m2
+For w(m1 , m2 ) = m1 s1 + m2 s2 = (w1 , w2 ), we then have that x2w2 = xm
+1 x2 ,
+m1 m2
+2w2
+allowing us to test if x
+= x1 x2 = 1 for each candidate 2w2 for r̃ in step 3.1
+of Alg. 4 by raising x1 , x2 to small m1 , m2 , instead of by raising x to 2w2 .
+
+35
+
+C.4.3
+
+Notes on efficiently solving a range of offsets in j for r̃
+
+In practice, we do not know if the frequency j observed is optimal, so we solve not
+only j but also j ± 1, . . . , j ± B for r̃ in the hope of thus solving j0 (z) for r̃.
+To do this efficiently using lattice-based post-processing, for j the frequency
+observed, we may first setup the basis (b1 (j), b2 )T for the lattice L(j) where
+b1 (j) = (j, 1/2)
+
+and
+
+b2 = (2m+` , 0),
+
+and Lagrange-reduce it to obtain (s1 (j), s2 (j))T . In this process, we may easily also
+compute and return row multiples ν1,1 (j), ν1,2 (j), ν2,1 (j), ν2,2 (j) ∈ Z such that
+s1 (j) = ν1,1 (j) · b1 (j) + ν1,2 (j) · b2 ,
+s2 (j) = ν2,1 (j) · b1 (j) + ν2,2 (j) · b2 .
+When reducing the basis for L(j ±k), for k = 1, . . . , B, we may then recursively
+use the row multiples computed when reducing the basis for the lattice L(j ±(k−1))
+to compute the basis (b01 (j ± k), b02 (j ± k))T for L(j ± k) where
+b01 (j ± k) = ν1,1 (j ± (k − 1)) · b1 (j ± k) + ν1,2 (j ± (k − 1)) · b2 ,
+b02 (j ± k) = ν2,1 (j ± (k − 1)) · b1 (j ± k) + ν2,2 (j ± (k − 1)) · b2 ,
+and then Lagrange-reduce this basis to obtain the basis (s1 (j ± k), s2 (j ± k))T and
+the row multiples ν1,1 (j ± k), ν1,2 (j ± k), ν2,1 (j ± k) and ν2,2 (j ± k).
+This is typically much faster than independently Lagrange-reducing the bases
+(b1 (j ± k), b2 )T for L(j ± k) for k = 1, . . . , B, since (b01 (j ± k), b02 (j ± k))T is easy
+to compute and heuristically likely to already be close to Lagrange-reduced.
+Given the reduced bases (s1 (j ± k), s2 (j ± k))T for L(j ± k) for k = 0, . . . , B,
+we may finally proceed as previously outlined to solve j ± k for r̃ by enumerating
+short vectors in L(j ± k), or by considering only the shortest vector in L(j ± k).
+
+D
+
+Proofs of supporting lemmas and claims
+
+In this appendix we provide proofs for supporting lemmas and claims.
+
+D.1
+
+Approximating P (αr ) by Pe(αr )
+
+Claim 1. For any u, v ∈ R, it holds that
+| cos(u) − cos(v) | ≤ | u − v | · max (| u |, | v |) .
+Proof. By the mean value theorem (MVT), we have for some t ∈ (u, v) that
+cos0 (t) =
+
+cos(u) − cos(v)
+u−v
+
+which implies
+| cos(u) − cos(v) | = | u − v | · | cos0 (t) |
+< | u − v | · max (| u |, | v |)
+since | cos0 (t) | = | sin(t) | ≤ | t |, again by the MVT when t 6= 0 as
+| sin(t) | = | sin(t) − sin(0) | = | t | · | cos(t0 ) | ≤ | t |
+for some t0 ∈ (0, t), and trivially when t = 0, and so the claim follows.
+36
+
+
+
+Claim 2. It holds that
+2παr (L + 1)
+3παr
+2παr L
+≤
+≤
+.
+m+`
+m+`
+2
+2
+r
+Proof. For δ = β/r ∈ [0, 1), it holds that
+ m+` 
+ m+`
+
+
+1
+2
+2
+L+1
+1
+1 1−δ
+= m+`
++ 1 = m+`
+− δ + 1 = + m+`
+m+`
+2
+2
+r
+2
+r
+r
+2
+1 1−δ
+1
+1
+3
+< +
+≤ +
+= ,
+r
+2r
+r
+2r
+2r
+as r < 2m and ` ≥ 1, from which the claim follows.
+
+
+
+Claim 3. It holds that
+L+1 1
+1
+−
+≤ m+`
+m+`
+2
+r
+2
+
+and
+
+L
+2m+`
+
+−
+
+1
+1
+< m+` .
+r
+2
+
+Proof. For δ = β/r ∈ [0, 1), it holds that
+
+
+ m+` 
+ m+`
+L+1 1
+1
+1
+2
+1
+2
+1
+=
+=
+−
++
+1
+−
+−
+δ
++
+1
+−
+m+`
+m+`
+m+`
+2
+r
+2
+r
+r
+2
+r
+r
+1 1−δ
+1
+1−δ
+1
+=
++ m+` −
+= m+` ≤ m+` ,
+r
+2
+r
+2
+2
+and analogously that
+
+ m+` 
+ m+`
+1
+1
+1
+2
+1
+2
+1
+−
+= m+`
+−
+= m+`
+−δ −
+m+`
+2
+r
+2
+r
+r
+2
+r
+r
+1
+δ
+1
+δ
+1
+=
+− m+` −
+= m+` < m+` ,
+r
+2
+r
+2
+2
+L
+
+and so the claim follows.
+
+
+
+Claim 4. For any φ ∈ [−π, π], it holds that
+2φ2
+φ2
+≤
+1
+−
+cos
+φ
+≤
+.
+π2
+2
+Proof. For φ = 0, the claim trivially holds. Given the series expansion
+cos φ =
+
+∞
+X
+(−1)k φ2k
+
+(2k)!
+
+k=0
+
+=1−
+
+φ2
+φ4
+φ6
++
+−
++ O(φ8 )
+2!
+4!
+6!
+
+we have for 0 < | φ | ≤ π that
+φ2
+φ4
+φ2
+−
+≤ 1 − cos φ ≤
+2
+4!
+2
+as the series is alternating, and as it holds for any k ≥ 1 that
+φ2(k+1)
+φ2k
+<
+.
+(2(k + 1))!
+(2k)!
+37
+
+This proves the upper bound on 1 − cos φ.
+As for the lower bound, it holds that
+2φ2
+φ2
+φ4
+≤
+−
+≤ 1 − cos φ
+2
+π
+2
+4!
+for 0 < | φ | ≤ ϕ = π2
+
+(30)
+
+p
+3(π 2 − 4), as
+
+2φ2
+φ2
+φ4
+≤
+−
+2
+π
+2
+4!
+
+⇒
+
+
+
+φ2 ≤ 4!
+
+2
+1
+− 2
+2 π
+
+
+=
+
+
+12 2
+π −4 .
+2
+π
+
+For | φ | ≥ ϕ, the sign of the derivative
+
+
+4φ
+2φ2
+d
+1 − cos φ − 2 = sin φ − 2 .
+dφ
+π
+π
+is sgn(φ), whilst 1 − cos φ > 2φ2 /π 2 > 0 when | φ | = ϕ.
+Hence, 2φ2 /π 2 is less than but approaching 1 − cos φ in | φ | when | φ | = ϕ. The
+crossover point where 2φ2 /π 2 = 1 − cos φ occurs when | φ | = π, as is easy to verify.
+This proves the lower bound on 1 − cos φ, and so the claim follows.
+
+Claim 5. For any φ ∈ [−π, π], it holds that
+(1 − cos φ) −
+
+φ2
+φ4
+≤
+.
+2
+4!
+
+Proof. For φ = 0, the claim trivially holds. Given the series expansion
+cos φ =
+
+∞
+X
+(−1)k φ2k
+k=0
+
+(2k)!
+
+=1−
+
+φ2
+φ4
+φ6
++
+−
++ O(φ8 )
+2!
+4!
+6!
+
+we have for 0 < | φ | ≤ π that
+φ2
+φ4
+φ2
+φ4
+φ6
+−
+≤ 1 − cos φ ≤
+−
++
+2!
+4!
+2!
+4!
+6!
+as the series is alternating, and as it holds for any k ≥ 1 that
+φ2(k+1)
+φ2k
+<
+.
+(2(k + 1))!
+(2k)!
+It follows that
+−
+
+φ4
+φ2
+φ4
+φ6
+≤ (1 − cos φ) −
+≤−
++
+4!
+2
+4!
+6!
+
+⇒
+
+(1 − cos φ) −
+
+φ2
+φ4
+≤
+2
+4!
+
+and so the claim follows.
+
+D.2
+
+
+
+Proving approximate uniformity
+
+Lemma 4. For non-zero α0 ∈ (−r/2, r/2], and B a positive integer,
+B
+X
+
+1
+=
+(α0 + rt)2
+t=−B
+
+
+1
+2π 2
+0
+0
+−
+(ψ
+(1
++
+B
++
+α
+/r)
++
+ψ
+(1
++
+B
+−
+α
+/r))
+.
+0
+0
+r2 1 − cos(2πα0 /r)
+38
+
+Proof. Divide the sum into three partial sums
+B
+X
+t=−B
+
+∞
+−B−1
+∞
+X
+X
+X
+1
+1
+1
+1
+=
+−
+−
+.
+2
+2
+(α0 + rt)2
+(α
++
+rt)
+(α
++
+rt)
+(α
++
+rt)2
+0
+0
+0
+t=−∞
+t=−∞
+t=B+1
+
+By [1, Sect. 6.4.10 on p. 260], for x > 0, we have that
+ψ (n) (x) = (−1)n+1 n!
+
+∞
+X
+
+(x + t)−n−1
+
+ψ 0 (x) = ψ (1) (x) =
+
+⇒
+
+t=0
+
+∞
+X
+
+1
+(x + t)2
+t=0
+
+for ψ (n) the n:th derivative of ψ. It follows that
+ψ 0 (1 + B + α0 /r) =
+
+∞
+X
+
+∞
+X
+1
+1
+=
+2
+((1
++
+B
++
+α
+/r)
++
+t)
+(α
+/r
++ t)2
+0
+0
+t=0
+t = B+1
+
+∞
+X
+
+=
+
+∞
+X
+
+2
+
+t = B+1
+
+r
+=
+2
+r (α0 /r + t)2
+
+t = B+1
+
+r2
+(α0 + rt)2
+
+and analogously that
+ψ 0 (1 + B − α0 /r) =
+
+∞
+X
+
+∞
+X
+1
+1
+=
+2
+((1
++
+B
+−
+α
+/r)
++
+t)
+(−α
+/r
++ t)2
+0
+0
+t=0
+t = B+1
+
+∞
+X
+
+=
+
+2
+
+t = B+1
+
+=
+
+r
+=
+r2 (−α0 /r + t)2
+
+−B−1
+X
+
+∞
+X
+t = B+1
+
+r2
+(−α0 + rt)2
+
+−B−1
+X
+
+2
+
+r
+r2
+=
+.
+(−α0 − rt)2
+(α0 + rt)2
+t = −∞
+t = −∞
+
+It now only remains to show that
+∞
+X
+
+1
+1
+2π 2
+=
+.
+(α0 + rt)2
+r2 1 − cos(2πα0 /r)
+t=−∞
+To this end, we use that by [1, Sect. 4.3.92 on p. 75] it holds that
+csc2 (x) =
+
+∞
+X
+
+1
+(x
++
+tπ)2
+t=−∞
+
+assuming
+
+x 6∈ {πu | u ∈ Z},
+
+where we note when comparing to [1] that the sign of the term tπ in the denominator
+is arbitrary since we sum over all t ∈ Z. It follows that
+2
+
+2
+
+π csc (πx) =
+
+∞
+X
+
+1
+(x
++
+t)2
+t=−∞
+
+assuming
+
+x 6∈ Z,
+
+which in turn implies, assuming x/r 6∈ Z, that
+π 2 csc2 (πx/r) =
+
+∞
+∞
+X
+X
+1
+r2
+r2
+=
+=
+(x/r + t)2
+r2 (x/r + t)2
+(x + rt)2
+t=−∞
+t=−∞
+t=−∞
+∞
+X
+
+39
+
+from which it follows that
+∞
+X
+
+π2
+1
+2π 2
+1
+= 2 csc2 (πα0 /r) = 2
+2
+(α0 + rt)
+r
+r 1 − cos(2πα0 /r)
+t=−∞
+where α0 /r ∈
+/ Z as α0 is non-zero and on (−r/2, r/2], and so the lemma follows. 
+Claim 6. For any real x > 0,
+ψ 0 (x) <
+
+1
+1
+1
++ 2 + 3.
+x 2x
+6x
+
+Proof. As in the formulation, let x ∈ R and x > 0. By [1, Sect. 6.4.10 on p. 260],
+ψ (n) (x) = (−1)n+1 n!
+
+∞
+X
+
+(x + k)−n−1
+
+⇒
+
+ψ 0 (x) = ψ (1) (x) =
+
+k=0
+
+∞
+X
+k=0
+
+1
+(x + k)2
+
+for ψ (n) the n:th derivative of ψ. Let s ∈ R and s > 1. As Nemes [27, Sect. 1] states,
+∞
+X
+
+ζ(s, x) =
+
+k=0
+
+1
+(x + k)s
+
+⇒
+
+ψ 0 (x) = ζ(2, x),
+
+where ζ(s, x) is the Hurwitz zeta function. We now follow Nemes [27]:
+Let N be a positive integer. By [27, eq. (1.3)],
+x1−s
+1
++ x1−s
+ζ(s, x) = x−s +
+2
+s−1
+
+N
+−1
+X
+
+B2n (s)2n−1
++ RN (s, x)
+(2n)!
+x2n
+n=1
+
+!
+
+for B2n the 2n:th Bernoulli number, and (u)v = Γ(u + v)/Γ(u) the Pochhammer
+symbol. As for the remainder term RN (s, x), by [27, Thm. 1.3],
+RN (s, x) =
+
+B2N (s)2N −1
+θN (s, x)
+(2N )! x2N
+
+where θN (s, x) ∈ (0, 1). For s = N = 2 and any real x > 0, it follows that
+
+
+1
+1 B2 (2)1
+1
++
+R
+(2,
+x)
+ψ 0 (x) = ζ(2, x) = 2 + +
+2
+2x
+x x 2 x2
+1
+1
+1
+R2 (2, x)
+1
+1
+1
+= + 2+ 3+
+< + 2+ 3
+x 2x
+6x
+x
+x 2x
+6x
+as (2)1 = 2 and B2 = 16 , and where we have used that
+R2 (2, x) =
+
+B4 (2)3
+1
+θ2 (2, x) = −
+θ2 (2, x) < 0
+4! x4
+30x4
+
+1
+as (2)3 = 4! and B4 = − 30
+, and so the claim follows.
+
+
+
+References
+[1] M. Abramowitz and I.A. Stegun: Handbook of Mathematical Functions With
+Formulas, Graphs and Mathematical Tables, 10th printing (1972), U.S. Government Printing Office.
+40
+
+[2] A.O.L. Atkin and F. Morain: Elliptic curves and primality proving, Math.
+Comput. 61(203) (1993), 29–68. (See also inria-00075302.)
+[3] M. Agrawal, N. Kayal and N. Saxena: PRIMES is in P, Ann. Math. 160(2)
+(2004), 781–793.
+[4] P.S. Bourdon and H.T. Williams: Sharp probability estimates for Shor’s orderfinding algorithm, Quantum Inf. Comput. 7(5–6) (2007), 522–550. (See also
+quant-ph/0607148v3.)
+[5] J. Brillhart, D.H. Lehmer and J.L. Selfridge: New Primality Criteria and
+Factorizations of 2m ± 1, Math. Comput. 29(130) (1975), 620–647.
+[6] J.M. Chappell, M.A. Lohe, L. von Smekal, A. Iqbal and D. Abbott: A Precise
+Error Bound for Quantum Phase Estimation, PLoS ONE 6(5):e19663 (2011).
+[7] H.F. Chau and H.-K. Lo: Primality Test via Quantum Factorization, Int.
+J. Mod. Phys. C 8(2) (1997), 131–138. (See also quant-ph/9508005v3 and
+IASSNS-HEP-95/69.)
+[8] R. Cleve, A. Ekert, C. Macchiavello and M. Mosca: Quantum algorithms
+revisited, Proc. R. Soc. Lond. A 454(1969) (1998), 339–354.
+[9] H. Cohen: A Course in Computational Algebraic Number Theory, Graduate
+Texts in Mathematics 138, 1st edition (1993), Springer-Verlag Berlin Heidelberg.
+[10] E.D. Davis: Benchmarks for quantum computers from Shor’s algorithm, ArXiv
+2111.13856v1 (2021).
+[11] G. Einarsson: Probability Analysis of a Quantum Computer, ArXiv quantph/0303074v1 (2003).
+[12] M. Ekerå: On completely factoring any integer efficiently in a single run of an
+order-finding algorithm, Quantum Inf. Proc. 20:205 (2021), 1–14.
+[13] M. Ekerå: Quantum algorithms for computing general discrete logarithms and
+orders with tradeoffs, J. Math. Cryptol. 15(1) (2021), 359–407.
+[14] M. Ekerå: On post-processing in the quantum algorithm for computing short
+discrete logarithms, Des. Codes Cryptogr. 88(11) (2020), 2313–2335.
+[15] M. Ekerå and J. Håstad: Quantum algorithms for computing short discrete
+logarithms and factoring RSA integers. In: PQCrypto 2017. Lecture Notes in
+Computer Science (LNCS) 10346 (2017), 347–363.
+[16] J. Franke, T. Kleinjung, F. Morain and T. Wirth: Proving the Primality
+of Very Large Numbers with fastECPP. In: ANTS 2004. Lecture Notes in
+Computer Science (LNCS) 3076 (2004), 194–207.
+[17] E. Gerjuoy: Shor’s factoring algorithm and modern cryptography. An illustration of the capabilities inherent in quantum computers, Am. J. Phys. 73(6):521
+(2005), 521–540.
+[18] G.H. Hardy and E.M. Wright: An Introduction to the Theory of Numbers,
+4th edition (1960), with corrections up to 1975, Oxford University Press.
+41
+
+[19] E. Knill: On Shor’s quantum factor finding algorithm: Increasing the probability of success and tradeoffs involving the Fourier transform modulus, Tech.
+Rep. LAUR-95-3350 (1995), Los Alamos National Laboratory.
+[20] A. Koenecke and P. Wocjan: Recovering the period in Shor’s algorithm with
+Gauss’ algorithm for lattice basis reduction, ArXiv 1210.3003v2 (2013).
+[21] J.-L. Lagrange:
+Recherches d’arithmétique, Nouveaux Mémoires de
+l’Académie royale des Sciences et Belles-Lettres de Berlin, années 1773 et 1775.
+In: Œuvres de Lagrange, tome 3 (1869), 695–795. (Retrieved via Gallica.)
+[22] D.H. Lehmer: Tests for primality by the converse of Fermat’s theorem. Bull.
+Amer. Math. Soc. 33(3) (1927), 327–340.
+[23] E. Lucas: Théorie des nombres, tome 1 (1891), Gauthier-Villars et fils, du
+Beaureau des Longitudes, de l’École Polytechnique, Paris.
+[24] D. McAnally: A Refinement of Shor’s Algorithm, ArXiv quant-ph/0112055v4
+(2002).
+[25] G.L. Miller: Riemann’s hypothesis and tests for primality, J. Comput. Syst.
+Sci. 13(3) (1976), 300–317.
+[26] F. Morain: Implementing the asymptotically fast version of the elliptic curve
+primality proving algorithm, Math. Comp. 76(257) (2007), 493–505.
+[27] G. Nemes: Error bounds for the asymptotic expansion of the Hurwitz zeta
+function, Proc. R. Soc. A. 473(2203):20170363 (2017), 1–16.
+[28] P.Q. Nguyen: Hermite’s Constant and Lattice Algorithms. In: The LLL Algorithm: Survey and Applications (2010), 19–69, Springer Berlin Heidelberg.
+[29] H.C. Pocklington: The Determination of the Prime or Composite Nature of
+Large Numbers by Fermat’s Theorem. In: Proc. Camb. Philos. Soc. 18(1)
+(1914), 29–30.
+[30] J. Proos and C. Zalka: Shor’s discrete logarithm quantum algorithm for elliptic
+curves, ArXiv quant-ph/0301141v2 (2004).
+[31] M.O. Rabin: Probabilistic algorithm for testing primality, J. Number Theory
+12(1) (1980), 128–138.
+[32] R.L. Rivest, A. Shamir and L. Adleman: A method for obtaining digital signatures and public-key cryptosystems, Commun. ACM 21(2) (1978), 120–126.
+[33] J.-P. Seifert: Using Fewer Qubits in Shor’s Factorization Algorithm via Simultaneous Diophantine Approximation. In: CT-RSA 2001. Lecture Notes in
+Computer Science (LNCS) 2020 (2001), 319–327.
+[34] P.W. Shor: Algorithms for Quantum Computation: Discrete Logarithms and
+Factoring. In: Proceedings of the 35th Annual Symposium on Foundations of
+Computer Science, SFCS ’94 (1994), 124–134.
+[35] P.W. Shor: Polynomial-time algorithms for prime factorization and discrete
+logarithms on a quantum computer, SIAM J. Comput. 26(5) (1997), 1484–
+1509.
+
+42
+
+
