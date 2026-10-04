@@ -139,29 +139,69 @@ def degree_is_zero_mode(n: int) -> tuple[int, list]:
 
 
 def recover_factors_from_s(n: int, s_est):
-    """Given n and an ESTIMATE s of p+q (int or float), try to recover (p, q).
+    """Given n and an ESTIMATE s of p+q (int, float or Fraction), recover (p,q).
 
-    Returns (p, q) on exact success, or None. This is the honest recovery
-    step: it rounds the two real roots to the nearest integers and CHECKS
-    p*q == n. It is NOT hard-wired to succeed.
-
-    Accepts a real-valued s_est, because the estimate deg~ is real-valued.
+    EXACT ARITHMETIC. This matters: at n ~ 1e12 a float s_est has absolute
+    precision ~1e-4, which is COARSER than the epsilons under test, and the
+    whole precision question is invisible inside float noise. (This is the
+    float-cube-root class of bug.) So we do the discriminant in integers:
+        sqrt(s_est^2 - 4n) = sqrt(Nd)/sd,  s_est = sn/sd
+    Returns (p,q) or None -- a real test, not a rubber stamp.
     """
-    if s_est <= 0:
-        return None
-    D = float(s_est) ** 2 - 4 * n
-    if D < 0:
-        return None
-    r = math.sqrt(D)
-    # the two roots of X^2 - s X + n
-    for q_f, p_f in (((s_est + r) / 2.0, (s_est - r) / 2.0),
-                     ((s_est - r) / 2.0, (s_est + r) / 2.0)):
-        q, p = round(q_f), round(p_f)
-        if p < 2 or q < 2:
+    from fractions import Fraction
+    s = Fraction(s_est).limit_denominator(10 ** 18)
+    sn, sd = s.numerator, s.denominator
+    Nd = sn * sn - 4 * n * sd * sd          # = (s^2 - 4n) * sd^2
+    if Nd <= 0:
+        return None                          # discriminant not positive
+    # sqrt(s^2-4n) = sqrt(Nd*sd^2)/sd^2, and isqrt(Nd*sd^2)/sd^2 is a lower bound
+    r = Fraction(math.isqrt(Nd * sd * sd), sd * sd)
+    for cand in (r, r + Fraction(1, sd * sd)):
+        if cand <= 0:
             continue
-        if p * q == n:
-            return (min(p, q), max(p, q))
+        qf, pf = (s + cand) / 2, (s - cand) / 2
+        for Qf, Pf in ((qf, pf), (pf, qf)):
+            # ROUND (the estimate is perturbed, so the roots are genuinely
+            # non-integers), then VERIFY exactly. The verification, not the
+            # rounding, is what makes this a real test.
+            Q = math.floor(Qf + Fraction(1, 2))
+            P = math.floor(Pf + Fraction(1, 2))
+            if P > 1 and Q > 1 and P * Q == n:
+                return (min(P, Q), max(P, Q))
     return None
+
+
+def bound_task(p: int, q: int) -> float:
+    """The bound quoted in the task brief: eps < (p-q)^2 / 8."""
+    return (p - q) ** 2 / 8
+
+
+def bound_exact(p: int, q: int) -> float:
+    """THE EXACT precision demand.
+
+    With s_est = (p+q) - 2*eps (the branch that shrinks s), put g = q-p (q>p),
+    S = p+q. Then
+        r := sqrt(s_est^2 - 4n),  r^2 = g^2 - 4*eps*S + 4*eps^2,
+        q~ - q = (r - g - 2*eps)/2,   p~ - p = (g - r - 2*eps)/2.
+    Both roots must round to the right integers; the binding one is |q~ - q|:
+        A + 2*eps < 1,  A := g - r,
+    i.e.  r > g - 1 + 2*eps.  Squaring (both sides positive for g >= 2):
+        4*eps*(S + g - 1) < 2g - 1.
+    Hence   eps* = (2g - 1) / (4*(S + g - 1)) = (2g-1) / (8q - 4).
+    The opposite branch (s_est larger) gives (2g+1)/(4(S+g-1)); the smaller of
+    the two is binding, so eps* above is the necessary AND sufficient demand.
+    Asymptotically eps* ~ g/(4*sqrt(n)) for balanced p,q -- i.e. the brief's
+    bound is too LOOSE by a factor ~ g*sqrt(n)/2.
+    """
+    g = abs(p - q)
+    S = p + q
+    return (2 * g - 1) / (4.0 * (S + g - 1))
+
+
+def bound_linear(p: int, q: int) -> float:
+    """First-order (linearised) bound g/(2(p+q)) ~ g/(4 sqrt n). Kept so the
+    exact bound can be checked against it at the tightest case."""
+    return abs(p - q) / (2.0 * (p + q))
 
 
 def kronecker_even(a: int, n: int) -> int:
@@ -192,23 +232,6 @@ def deg_kronecker_all_residues(n: int) -> int:
     n is even. For odd n this is identical to deg_brute_all_residues."""
     f = jacobi_free if n % 2 == 1 else kronecker_even
     return sum(1 for x in range(n) if f(x, n) == 1)
-
-
-def bound_task(p: int, q: int) -> float:
-    """The bound quoted in the task brief: eps < (p-q)^2 / 8."""
-    return (p - q) ** 2 / 8
-
-
-def bound_true(p: int, q: int, n: int) -> float:
-    """The bound derived by differentiating sqrt(s^2-4n) at s = p+q:
-        |delta_s| * (s / sqrt(s^2-4n)) < 1   <=>   |delta_s| < (p-q)/(p+q).
-    With delta_s = 2*eps:
-        eps < |p-q| / (2*(p+q)).
-    """
-    return abs(p - q) / (2.0 * (p + q))
-
-
-# ---------------------------------------------------------------- Fermat
 
 
 def fermat_steps(n: int, p: int, q: int) -> int:

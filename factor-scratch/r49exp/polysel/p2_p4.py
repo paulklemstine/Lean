@@ -39,9 +39,16 @@ import core as K  # noqa: E402
 
 D = 3
 ETA = 0.08
-N_CELLS = 900_000
-SCAN_CELLS = 120_000      # cheaper cells for the RULE SEARCH (rates only)
-Y = 1000
+N_CELLS = 400_000         # cells for EVALUATING the chosen polynomials
+SCAN_CELLS = 150_000      # cheaper cells for the RULE SEARCH
+Y = None                  # per-modulus: y = 2^(bits/3.5), i.e. u ~ 3.5
+
+
+def y_for_bits(bits):
+    """The NFS operating point: y tracks N^(1/3), so u = log|f|/log y is
+    CONSTANT in N.  Holding y fixed at 1000 instead drove u to 5.6 by 54 bits,
+    where the rates are ~1e-4 and the scan is starved of relations."""
+    return int(2 ** (bits / 3.5))
 SEED = 20260903
 M_LO_FRAC = 0.90          # the wide scan the round-48 note says is necessary
 
@@ -65,12 +72,12 @@ def mstar(N, d=D):
     m = int(N ** (1.0 / d))
     while m ** d >= N:
         m -= 1
-    while (m + 1) ** d >= N:
+    while (m + 1) ** d < N:
         m += 1
     return m
 
 
-def norm_of(c, a, b, y=Y, cells=None):
+def norm_of(c, a, b, y, cells=None):
     if cells is not None:
         a, b = a[:cells], b[:cells]
     r = K.count_relations(c, a, b, y=y)
@@ -78,15 +85,20 @@ def norm_of(c, a, b, y=Y, cells=None):
     return r
 
 
-def splitting_load(c, y=Y):
-    """Sieve cost proxy: sum over p <= y of the number of roots of f mod p.
+def splitting_load(c, y0=3000):
+    """Root-hits for p <= y0: a PARTIAL sieving-cost proxy.
 
-    Sieving time is proportional to (cells x total root-hits over p <= y), so
-    this is the polynomial-dependent part of the cost of finding a relation.
+    Sieve time is proportional to (cells x total root-hits over p <= y), so this
+    is the only polynomial-dependent part of the cost of finding a relation at
+    a fixed (y, box, cells).  Brute force over p <= 3000 is ~4.5e6 iterations,
+    which is affordable; the cap is applied identically to every polynomial so
+    the comparison stays fair.  (A gcd(f, x^p-x) version was tried first but
+    sympy's gf_gcd kept degenerating to the constant 1; the PARI route needs a
+    PARI handle that cypari2 would not build here.)
     """
     tot = 0
     nsplit = 0
-    for p in K.primes_upto(y):
+    for p in K.primes_upto(y0):
         rt = K.roots_mod(c, p)
         if rt:
             nsplit += 1
@@ -96,7 +108,7 @@ def splitting_load(c, y=Y):
 
 # ---------------------------------------------------------------- P2
 
-def scan_m(N, n_scan=40, cells=SCAN_CELLS):
+def scan_m(N, n_scan=30, cells=SCAN_CELLS, y=None):
     """Scan m over a wide range; return per-m (mass, meanlog, rate, roots)."""
     ms = mstar(N)
     lo = int(M_LO_FRAC * ms)
@@ -115,7 +127,7 @@ def scan_m(N, n_scan=40, cells=SCAN_CELLS):
             continue
         a, b, B = K.sample_box(m, ETA, cells, seed=SEED)
         ml = K.mean_log_norm(c, a, b)
-        r = norm_of(c, a, b, cells=cells)
+        r = norm_of(c, a, b, y=y, cells=cells)
         out.append({"m": m, "c": c, "mass": K.mass(c), "meanlog": ml,
                     "rate": r["rate"], "n_smooth": r["n_smooth"],
                     "n_cells": r["n_cells"], "n_zero": r["n_zero"]})
@@ -134,7 +146,7 @@ def fit(x, y, w=None):
     return float(coef[1]), float(se), float(coef[0])
 
 
-def p2(train_bits=(36, 42), test_bits=(45, 51, 56)):
+def p2(train_bits=(36, 42), test_bits=(45, 51, 54)):
     print("=" * 78)
     print("P2  CAN IT BE A SELECTION RULE?")
     print("=" * 78)
@@ -143,7 +155,10 @@ def p2(train_bits=(36, 42), test_bits=(45, 51, 56)):
         for bits in bits_list:
             N = rsa(bits, seed=3000 + bits)
             ms = mstar(N)
-            sc = scan_m(N)
+            yy = y_for_bits(bits)
+            sc = scan_m(N, y=yy)
+            print(f"  [{split}] N = {N.bit_length()} bits, m* = {ms}, "
+                  f"y = {yy}, {len(sc)} admissible m, scan cells {SCAN_CELLS}")
             if len(sc) < 10:
                 print(f"  [{split}] N {bits} bits: only {len(sc)} admissible m")
                 continue
@@ -160,6 +175,16 @@ def p2(train_bits=(36, 42), test_bits=(45, 51, 56)):
                      for fr in (0.90, 0.95, 0.98, 0.995, 1.0)]
             cands = list({c["m"]: c for c in cands}.values())
 
+            # re-evaluate the four chosen polynomials on MORE cells so the
+            # reported gains are not noise-limited (the scan itself is
+            # deliberately cheap).
+            for tag, rr in (("R0", R0), ("R1", R1), ("R2", R2), ("R3", R3)):
+                aa, bbx, _ = K.sample_box(rr["m"], ETA, N_CELLS, seed=SEED + 1)
+                rr["rate"] = norm_of(rr["c"], aa, bbx, y=yy)["rate"]
+                rr["n_smooth"] = int(rr["rate"] * N_CELLS)
+                rr["meanlog"] = K.mean_log_norm(rr["c"], aa, bbx)
+                rr["n_split_roots"] = splitting_load(rr["c"])
+
             def show(tag, r, ref=None):
                 extra = ""
                 if ref:
@@ -168,8 +193,6 @@ def p2(train_bits=(36, 42), test_bits=(45, 51, 56)):
                 print(f"    {tag:<26} m={r['m']:>9}  mass={r['mass']:>10}"
                       f"  meanlog={r['meanlog']:>7.3f}  rate={r['rate']:.4e}"
                       f"{extra}")
-            print(f"  [{split}] N = {N.bit_length()} bits, m* = {ms}, "
-                  f"{len(sc)} admissible m")
             show("R0 standard m=floor(N^1/3)", R0)
             show("R1 minimise MASS", R1, R0)
             show("R2 minimise meanlog(f)", R2, R0)
@@ -241,7 +264,7 @@ def p2(train_bits=(36, 42), test_bits=(45, 51, 56)):
 
 # ---------------------------------------------------------------- P4
 
-def p4(bits_list=(39, 45, 51), y_list=(500, 1000, 2000, 4000)):
+def p4(bits_list=(45,), y_list=(500, 1000, 2000, 4000, 8000)):
     """Size dependence: real n sweep, and a y sweep that exposes the u-law."""
     print("=" * 78)
     print("P4  SIZE DEPENDENCE")
@@ -250,16 +273,17 @@ def p4(bits_list=(39, 45, 51), y_list=(500, 1000, 2000, 4000)):
     for bits in bits_list:
         N = rsa(bits, seed=1000 + bits)
         ms = mstar(N)
-        sc = scan_m(N, n_scan=30)
+        yy = y_for_bits(bits)
+        sc = scan_m(N, n_scan=30, y=yy)
         good = [r for r in sc if r["n_smooth"] >= 15]
         if len(good) < 8:
-            print(f"  {bits} bits: too few points")
+            print(f"  {bits} bits: too few points ({len(good)})")
             continue
         b_m, se_m, _ = fit([math.log(r["mass"]) for r in good],
                            [r["n_smooth"] for r in good])
         b_f, se_f, _ = fit([r["meanlog"] for r in good],
                            [r["n_smooth"] for r in good])
-        u = np.mean([r["meanlog"] for r in good]) / math.log(Y)
+        u = np.mean([r["meanlog"] for r in good]) / math.log(yy)
         print(f"  N = {bits} bits  m* = {ms:>8}  n = {len(good):>3}  "
               f"u = {u:.3f}")
         print(f"      slope log(rate)~log(mass)  {b_m:+.3f} +- {se_m:.3f}")
@@ -274,7 +298,7 @@ def p4(bits_list=(39, 45, 51), y_list=(500, 1000, 2000, 4000)):
     print("  extrapolation axis; n enters ONLY through u.")
     N = rsa(45, seed=1045)
     ms = mstar(N)
-    sc = scan_m(N, n_scan=24)
+    sc = scan_m(N, n_scan=24, y=y_for_bits(45))
     good = sorted([r for r in sc if r["n_smooth"] >= 15],
                   key=lambda r: r["meanlog"])
     if len(good) >= 4:
@@ -312,7 +336,8 @@ def p4(bits_list=(39, 45, 51), y_list=(500, 1000, 2000, 4000)):
             print(f"      y={y:>5} u={u:.2f}  measured {meas:+.4f}"
                   f"   Dickman law {pred:+.4f}")
     with open(os.path.join(HERE, "p4_rows.json"), "w") as fh:
-        json.dump({"n_sweep": out, "y_sweep": ys if good else []}, fh,
+        json.dump({"n_sweep": out,
+                   "y_sweep": ys if (len(good) >= 4) else []}, fh,
                   default=str, indent=1)
     return out
 

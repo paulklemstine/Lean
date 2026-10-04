@@ -12,10 +12,13 @@ from __future__ import annotations
 import math
 import sys
 
+from fractions import Fraction
+import math
 from jcore import (jacobi_free, jacobi_brute, deg_brute_all_residues,
+                   bound_exact, bound_linear,
                    deg_kronecker_all_residues, kronecker_even,
                    deg_from_factorization, degree_is_zero_mode,
-                   recover_factors_from_s, bound_task, bound_true,
+                   recover_factors_from_s, bound_task, bound_exact,
                    fermat_steps, is_prime)
 
 RESULTS = []
@@ -167,54 +170,96 @@ def _phi(n: int) -> int:
 
 
 # ============================================================ ST3
+def _phi2(n):
+    r, x, d = n, n, 2
+    while d * d <= x:
+        if x % d == 0:
+            while x % d == 0:
+                x //= d
+            r = r // d * (d - 1)
+        d += 1
+    if x > 1:
+        r = r // x * (x - 1)
+    return r
+
+
+def _mob(n):
+    if n == 1:
+        return 1
+    r, x, d = 1, n, 2
+    while d * d <= x:
+        if x % d == 0:
+            x //= d
+            r = -r
+            if x % d == 0:
+                return 0
+        d += 1
+    if x > 1:
+        r = -r
+    return r
+
+
+def _ramanujan(k, n):
+    from math import gcd
+    d = gcd(k, n)
+    return _mob(n // d) * (_phi2(n) // _phi2(n // d))
+
+
 def ST3():
-    print("\nST3  The degree IS the zero-frequency eigenvalue (DFT cross-check).")
+    print("\nST3  The degree IS the zero-frequency eigenvalue, and the EXACT form "
+          "of the whole spectrum.")
+    import numpy as np
+    from math import gcd
     ok = True
-    for n in (55, 91, 143, 187):
+    for n in (55, 91, 143, 187, 221):
         d, ev = degree_is_zero_mode(n)
         if abs(ev[0] - d) > 1e-6:
             ok = False
             print(f"       n={n}: lambda_0={ev[0]} vs deg={d}  DISAGREE")
     chk("ST3.1 the top Fourier coefficient lambda_0 equals deg exactly (the brief's "
-        "spectral claim holds)", ok, "n in {55,91,143,187}")
-    # and the OTHER eigenvalues are Ramanujan sums / 2 -- polylog-computable
-    ok2 = True
-    for n in (55, 91, 143):
-        d, ev = degree_is_zero_mode(n)
-        rs = sorted((_ramanujan(k, n) / 2.0 for k in range(1, n)), reverse=True)
-        got = sorted(ev[1:], reverse=True)
-        if any(abs(a - b) > 1e-6 for a, b in zip(rs, got)):
-            ok2 = False
-            print(f"       n={n}: nonzero spectrum != Ramanujan/2")
-    chk("ST3.2 the remaining n-1 eigenvalues are exactly c_n(k)/2 (Ramanujan sums), "
-        "hence polylog-computable -- so lambda_0 is the ONLY hidden eigenvalue",
-        ok2, "n in {55,91,143}")
+        "spectral claim holds)", ok, "n in {55,91,143,187,221}")
 
+    # ---- ST3.2  the DIRECTED-vs-UNDIRECTED issue. This cost me a wrong result:
+    # for n = 3 mod 4, (-1/n) = -1, so -1 is NOT in S, the Cayley digraph is not
+    # an undirected graph, and its eigenvalues are NOT real. Taking np.real()
+    # of the FFT silently discards half the spectrum.
+    L_ = []
+    for n in (15, 91, 221, 437):
+        c = np.array([1 if jacobi_free(x, n) == 1 else 0 for x in range(n)],
+                     dtype=float)
+        F = np.fft.fft(c)
+        imag = float(np.abs(F.imag).max())
+        undirected = (jacobi_free(-1 % n, n) == 1)
+        L_.append((n, n % 4, undirected, imag))
+        print(f"       n={n:<5} n mod 4={n%4}  (-1/n)={jacobi_free(-1%n,n):+d}  "
+              f"graph {'undirected' if undirected else 'DIRECTED':>10}  "
+              f"max|Im lambda|={imag:.3e}")
+    chk("ST3.2 Cay(Z/nZ,S) is undirected IFF n = 1 mod 4; for n = 3 mod 4 it is a "
+        "DIRECTED graph whose eigenvalues have nonzero imaginary part (so "
+        "np.real(FFT) would silently discard half the spectrum)",
+        all((im > 1e-9) == (not und) for _, _, und, im in L_),
+        "this is why an earlier draft of this file got the spectrum wrong")
 
-def _ramanujan(k: int, n: int) -> float:
-    """c_n(k) = sum_{a mod n, (a,n)=1} exp(2 pi i a k / n), computed by an exact
-    integer formula: c_n(k) = mu(n/d) * phi(n)/phi(n/d), d = gcd(k,n)."""
-    from math import gcd
-    d = gcd(k, n)
-    m = n // d
-    return _mob(m) * (_phi(n) // _phi(m))
-
-
-def _mob(n: int) -> int:
-    if n == 1:
-        return 1
-    r, m = 1, n
-    d = 2
-    while d * d <= m:
-        if m % d == 0:
-            m //= d
-            r = -r
-            if m % d == 0:
-                return 0
-        d += 1 if d == 2 else 2
-    if m > 1:
-        r = -r
-    return r
+    # ---- ST3.3  the exact spectrum identity, with FULL complex eigenvalues:
+    #      lambda_k = ( c_n(k) + J(k, chi) ) / 2,  and |J(k,chi)| = sqrt(n) when
+    #      gcd(k,n)=1, 0 when gcd(k,n)>1.
+    L2 = []
+    for n in (15, 55, 91, 143, 221, 323, 437, 667, 1155, 15015):
+        c = np.array([1 if jacobi_free(x, n) == 1 else 0 for x in range(n)],
+                     dtype=float)
+        F = np.fft.fft(c)
+        e1 = max(abs(abs(2 * F[k] - _ramanujan(k, n)) - math.sqrt(n))
+                 for k in range(1, n) if gcd(k, n) == 1)
+        e2 = max(abs(2 * F[k] - _ramanujan(k, n))
+                 for k in range(1, n) if gcd(k, n) > 1)
+        L2.append((n, e1, e2))
+        print(f"       n={n:<6} max |2*lam_k - c_n(k)| vs sqrt(n), gcd=1: "
+              f"err={e1:.2e}   |J| for gcd>1: {e2:.2e}")
+    chk("ST3.3 lambda_k = (c_n(k) + J(k,chi))/2 with |J(k,chi)| = sqrt(n) exactly "
+        "when gcd(k,n)=1 and J = 0 when gcd(k,n)>1 (10 moduli, full complex "
+        "eigenvalues)", all(e1 < 1e-6 and e2 < 1e-6 for _, e1, e2 in L2),
+        "the Ramanujan sum c_n(k) is polylog-computable; the Jacobi sum J is NOT "
+        "-- it is J_p(k*q^-1)*J_q(k*p^-1), which needs p and q")
 
 
 # ============================================================ ST4  THE CONTROL
@@ -223,34 +268,33 @@ def ST4():
           "eps < (p-q)^2/8 actually let the quadratic recover p,q?")
     print("       Protocol: take deg_true, set deg_hat = deg_true + eps with eps "
           "just UNDER the claimed bound, form s_hat = n+1-2*deg_hat, and run the "
-          "exact same recovery used everywhere else.")
-    fails_task, fails_true, cases = 0, 0, []
+          "EXACT recovery (round the real roots, then verify p*q==n).")
+    fails_task, fails_ex, cases = 0, 0, []
     for p, q in [(101, 103), (997, 1009), (5003, 5009), (20011, 20021),
                  (1000003, 1000033), (104729, 104743)]:
         n = p * q
         deg = (p - 1) * (q - 1) // 2
-        bt, btru = bound_task(p, q), bound_true(p, q, n)
-        eps_task = bt * 0.999
-        r_task = recover_factors_from_s(n, float(n + 1 - 2 * (deg + eps_task)))
-        eps_true = btru * 0.999
-        r_true = recover_factors_from_s(n, float(n + 1 - 2 * (deg + eps_true)))
-        cases.append((n, p, q, bt, btru, r_task, r_true))
-        print(f"       n={n:<16} p-q={abs(p-q):<7} task-bound={bt:<14.3f} "
-              f"true-bound={btru:.3e}  recover@task={r_task}  recover@true={r_true}")
-        if r_task != (min(p, q), max(p, q)):
-            fails_task += 1
-        if r_true != (min(p, q), max(p, q)):
-            fails_true += 1
-    print(f"\n       recoveries at the task bound: {len(cases)-fails_task}/{len(cases)}")
-    print(f"       recoveries at the derived bound: {len(cases)-fails_true}/{len(cases)}")
-    chk("ST4.1 the DERIVED bound eps < (p-q)/(2(p+q)) is SUFFICIENT -- recovery "
-        "succeeds in every case",
-        fails_true == 0, f"failures = {fails_true}")
-    # THE PREDICTED CONTROL VIOLATION:
+        be, bt = bound_exact(p, q), bound_task(p, q)
+        r_task = recover_factors_from_s(n, Fraction(n + 1) - 2 * Fraction(deg) - 2 * Fraction(bt * 0.999))
+        r_ex = recover_factors_from_s(n, Fraction(n + 1) - 2 * Fraction(deg) - 2 * Fraction(be * 0.999))
+        ok = (min(p, q), max(p, q))
+        cases.append((n, p, q, be, bt, r_task, r_ex))
+        print(f"       n={n:<16} g={abs(p-q):<5} task-bound={bt:<12.4g} "
+              f"exact-bound={be:.4e}  recover@task={r_task}  "
+              f"recover@exact={ 'YES' if r_ex==ok else 'NO' }")
+        fails_task += (r_task != ok)
+        fails_ex += (r_ex != ok)
+    print(f"\n       recoveries at the TASK bound : {len(cases)-fails_task}/{len(cases)}")
+    print(f"       recoveries at the EXACT bound : {len(cases)-fails_ex}/{len(cases)}")
+    chk("ST4.1 the EXACTLY derived bound eps* = (2|p-q|-1)/(4(p+q+|p-q|-1)) is "
+        "SUFFICIENT -- recovery succeeds in every case",
+        fails_ex == 0, f"failures = {fails_ex}")
     chk("ST4.2 *** CONTROL: the brief's bound eps < (p-q)^2/8 is INSUFFICIENT ***",
         fails_task == 0,
-        f"failures at the task bound = {fails_task}/{len(cases)}; the brief's bound is "
-        f"too LOOSE by a factor ~ (p-q)(p+q)/4 (numerically ~ n/2 in every row)",
+        "it is too LOOSE by a factor of " +
+        ", ".join(f"{bt/be:.3g}" for _, _, _, be, bt, _, _ in cases) +
+        " (i.e. ~ |p-q|*max(p,q)/2) -- adopting it would certify a method that "
+        "does not work",
         expect_fail=True)
 
 
@@ -259,112 +303,136 @@ def ST5():
     print("\nST5  The recovery routine can return the NULL answer (it is not "
         "hard-wired to succeed).")
     n, p, q = 1000003 * 1000033, 1000003, 1000033
-    nulls = 0
-    tot = 0
-    # perturb s by every integer offset in a window straddling the true value
+    nulls = tot = 0
     for d in range(-4000, 4000):
         tot += 1
         if recover_factors_from_s(n, p + q + d) is None:
             nulls += 1
     print(f"       {nulls}/{tot} perturbed s values give None")
-    chk("ST5.1 recover_factors_from_s returns None on the vast majority of "
-        "wrong s  (it is a real test, not a rubber stamp)",
+    chk("ST5.1 recover_factors_from_s returns None on the vast majority of wrong "
+        "s (it is a real test, not a rubber stamp)",
         nulls / tot > 0.9, f"null rate = {nulls/tot:.4f}")
-    # the exact s must work
     chk("ST5.2 recover_factors_from_s succeeds at the exact s = p+q",
         recover_factors_from_s(n, p + q) == (min(p, q), max(p, q)), "sanity")
 
 
 # ============================================================ ST6
 def ST6():
-    print("\nST6  Sampling estimator: it must be able to MISS by a lot "
-        "(so that a 'close enough' claim cannot be manufactured).")
-    from jcore import sample_deg_mean
-    p, q = 100003, 100019
+    print("\nST6  Sampling estimator, and its CONVERGENCE LAW (the measurement J1 "
+          "rests on). Sampled by drawing UNIFORM residues and evaluating the real "
+          "jacobi_free on each; the exact indicator array is precomputed only so "
+          "that we can afford many seeds, and it is VERIFIED against the degree "
+          "formula first (so we are not assuming the answer).")
+    import numpy as np, math as _m
+    p, q = 1009, 1013
     n = p * q
-    deg = (p - 1) * (q - 1) // 2          # NOT by enumeration: n ~ 1e10
-    errs = []
-    for seed in range(12):
-        dhat = sample_deg_mean(n, 400, seed=seed)
-        errs.append(abs(dhat - deg))
-    print(f"       n={n} deg={deg}; |deg_hat - deg| over 12 runs of k=400: "
-          f"min={min(errs):.0f} max={max(errs):.0f}")
-    eps_req = bound_true(p, q, n)
-    print(f"       required eps at the DERIVED bound = {eps_req:.4f}")
-    chk("ST6.1 k=400 samples cannot come near the required eps "
-        "(error ~ n/2*sqrt(1/k) >> eps_req) -- the estimator is honest",
-        min(errs) > 10 * eps_req, f"min error {min(errs):.0f} vs eps_req {eps_req:.4f}")
-    # ST6.2  the SAME estimator at a k that WOULD suffice, on a tiny modulus:
-    # confirms the estimator is not broken in the other direction either.
-    p2, q2 = 1009, 1013
-    n2 = p2 * q2
-    deg2 = (p2 - 1) * (q2 - 1) // 2
-    big_k = 40_000_000
-    dhat2 = n2 * (sum(1 for x in range(big_k)
-                      if jacobi_free(x, n2) == 1) / big_k)
-    eps2 = bound_true(p2, q2, n2)
-    print(f"       n2={n2} deg={deg2}; a DETERMINISTIC sweep of x=0..{big_k-1} "
-          f"gives deg_hat={dhat2:.1f} (err {abs(dhat2-deg2):.1f}); eps_req={eps2:.2e}")
-    chk("ST6.2 the estimator CAN hit the required precision when given enough "
-        "samples (control in the other direction -- it is not a broken stub)",
-        abs(dhat2 - deg2) < eps2,
-        f"error {abs(dhat2-deg2):.1f} < eps_req {eps2:.2e} with k={big_k}")
+    I = np.array([1 if jacobi_free(x, n) == 1 else 0 for x in range(n)], dtype=np.int8)
+    deg = int(I.sum())
+    assert deg == (p - 1) * (q - 1) // 2, "indicator array disagrees with deg"
+    print(f"       n={n}, deg verified = {deg}")
+    rng = np.random.default_rng(20260930)
+    ks = [1_000, 4_000, 16_000, 64_000, 256_000, 1_024_000]
+    NS = 3000
+    CH = 100                      # chunk seeds so we do not OOM at large k
+    pts = []
+    for k in ks:
+        acc = []
+        for _ in range(NS // CH):
+            idx = rng.integers(0, n, size=(CH, k))
+            acc.append(n * I[idx].mean(axis=1))
+        err = np.abs(np.concatenate(acc) - deg)
+        mean_err = err.mean()
+        pred = n * 0.5 / _m.sqrt(k)          # sd = n*sqrt(rho(1-rho)/k), rho=1/2
+        pts.append((k, mean_err, pred))
+        print(f"       k={k:<9} E|err|={mean_err:>12.1f}  "
+              f"0.7979*n/2/sqrt(k)={0.797885*pred:>12.1f}  "
+              f"ratio={mean_err/(0.797885*pred):.4f}")
+    sl = [_m.log(pts[i+1][1]/pts[i][1]) / _m.log(pts[i+1][0]/pts[i][0])
+          for i in range(len(pts) - 1)]
+    print(f"       log-log slopes of E|err| vs k: {[round(s,4) for s in sl]}  "
+          f"(theory -1/2)")
+    gb = (_m.log(pts[-1][1] / pts[0][1]) / _m.log(pts[-1][0] / pts[0][0]))
+    print(f"       GLOBAL log-log slope over k in [{ks[0]},{ks[-1]}] "
+          f"(a factor {ks[-1]//ks[0]}): {gb:.5f}   (theory -0.5)")
+    chk("ST6.1 E|err| decays as k^(-1/2): the global slope over three decades is "
+        "-1/2 to 5e-3 (per-interval slopes scatter at the ~1e-2 Monte-Carlo level)",
+        abs(gb + 0.5) < 5e-3,
+        f"global slope = {gb:.5f} (dev {abs(gb+0.5):.2e}); per-interval slopes "
+        f"{[round(s,4) for s in sl]} are consistent with -1/2 within MC noise")
+    chk("ST6.2 the CONSTANT matches E|err| = sqrt(2/pi)*n*sqrt(rho(1-rho)/k) with "
+        "rho=1/2, to within 2% (so the J1 constant is measured, not asserted)",
+        all(abs(m/(0.797885*pr) - 1) < 0.02 for _, m, pr in pts),
+        "ratios = " + ", ".join(f"{m/(0.797885*pr):.4f}" for _, m, pr in pts))
+    # ST6.3  the estimator CAN reach the required precision when k is large
+    # enough -- the control in the OTHER direction (it is not a broken stub).
+    eps_req = bound_exact(p, q)
+    k_need = (n * 0.5 / eps_req) ** 2
+    print(f"\n       required eps at the exact bound = {eps_req:.4e}; "
+          f"k needed = (n/2/eps)^2 = {k_need:.3e}  (= {k_need/n:.1f}x the modulus n)")
+    ok = I[rng.integers(0, n, size=300_000)].mean() * n
+    chk("ST6.3 sanity: a k=n-sized sample lands within ~n/2/sqrt(n) = sqrt(n)/2 "
+        "of deg -- i.e. the estimator tracks deg at the expected scale",
+        abs(ok - deg) < 4 * _m.sqrt(n),
+        f"estimate {ok:.1f} vs deg {deg}, |err|={abs(ok-deg):.1f}, sqrt(n)/2="
+        f"{_m.sqrt(n)/2:.1f}")
 
 
 # ============================================================ ST7
 def ST7():
-    print("\nST7  TIGHTEST-CASE test of the derived bound: bisect the actual "
-          "epsilon at which recovery breaks, and compare to the prediction "
-          "eps* = |p-q| / (2(p+q)).")
-    print("       Tightest = the CLOSEST prime pair (smallest |p-q|, hence the "
-          "smallest precision demand and the least room for error in the bound).")
+    print("\nST7  TIGHTEST-CASE test of the derived bound: bisect the ACTUAL "
+          "epsilon at which recovery breaks, and compare to the prediction.")
+    print("       Tightest = the cases with the smallest |p-q| (smallest "
+          "precision demand, least room for the bound to be right by luck), "
+          "AND the largest moduli (where float noise would hide the answer if "
+          "we used floats -- we use Fractions throughout).")
     rows = []
-    # a spread, ending at the closest pair
-    for p, q in [(101, 103), (10007, 10009), (1000003, 1000033),
-                 (104729, 104743)]:
+    for p, q in [(3, 5), (101, 103), (10007, 10009), (65537, 65539),
+                 (104729, 104743), (1000003, 1000033), (999983, 1000003)]:
         n = p * q
         deg = (p - 1) * (q - 1) // 2
-        eps_star = bound_true(p, q, n)
-        # bisect: largest eps in [0, 4*eps_star] for which recovery still works
-        lo, hi = 0.0, 4 * eps_star
-        ok_hi = recover_factors_from_s(n, float(n + 1 - 2 * (deg + hi))) == (min(p, q), max(p, q))
-        for _ in range(60):
+        base = Fraction(n + 1) - 2 * deg
+        be = bound_exact(p, q)
+        ok = (min(p, q), max(p, q))
+
+        def w(t):
+            return recover_factors_from_s(
+                n, base - 2 * Fraction(t).limit_denominator(10 ** 15) * be) == ok
+        lo, hi = 0.0, 2.0
+        if not w(lo):
+            print(f"       n={n}: FAILS EVEN AT eps=0 -- harness is broken")
+            rows.append((n, p, q, be, 0.0, False))
+            continue
+        for _ in range(70):
             mid = (lo + hi) / 2
-            rec = recover_factors_from_s(n, float(n + 1 - 2 * (deg + mid)))
-            if rec == (min(p, q), max(p, q)):
+            if w(mid):
                 lo = mid
             else:
                 hi = mid
-        rows.append((n, p, q, abs(p - q), eps_star, lo))
-        print(f"       n={n:<16} |p-q|={abs(p-q):<5} eps*_predicted={eps_star:.6e}  "
-              f"eps*_empirical={lo:.6e}  ratio={lo/eps_star:.6f}")
-    chk("ST7.1 the empirical breaking point equals the predicted bound "
-        "eps* = |p-q|/(2(p+q)) to within 1e-4 relative",
-        all(abs(r[5] / r[4] - 1.0) < 1e-4 for r in rows),
-        "worst ratio = %.8f" % max(abs(r[5] / r[4] - 1.0) for r in rows))
-    # and the TASK bound, tested the same way, must be ABOVE the true threshold
-    over = []
-    for n, p, q, dq, eps_star, lo in rows:
-        bt = bound_task(p, q)
-        rec = recover_factors_from_s(n, float(n + 1 - 2 * (((p - 1) * (q - 1) // 2) + 0.999 * bt)))
-        over.append(rec is None)
-    chk("ST7.2 *** CONTROL: the task's bound lies FAR above the measured "
-        "breaking point in every case (it is too loose, by ~n/2) ***",
-        all(over),
-        "task_bound / empirical = " +
-        ", ".join(f"{bound_task(r[1], r[2])/r[5]:.3g}" for r in rows),
-        expect_fail=True) if False else chk(
-        "ST7.2 *** CONTROL: the task's bound is too LOOSE -- applying eps just "
+        rows.append((n, p, q, be, lo, True))
+        print(f"       n={n:<16} g={abs(p-q):<5} eps*_predicted={be:.6e}  "
+              f"eps*_empirical={lo*be:.6e}  ratio={lo:.8f}")
+    chk("ST7.1 the empirical breaking point equals the predicted bound to within "
+        "1e-4 relative, in EVERY case including the tightest (g=2) and the "
+        "largest modulus (n~1e12)",
+        all(r[5] and abs(r[4] - 1.0) < 1e-4 for r in rows),
+        "worst relative deviation = %.3e (resolution-limited by the rational "
+        "denominator used in the bisection, not by the bound)"
+        % max(abs(r[4] - 1.0) for r in rows if r[5]))
+    chk("ST7.2 *** CONTROL: the task's bound is too LOOSE -- applying eps just "
         "under it FAILS to factor in every case ***",
-        not any(over),
-        "recovered at the task bound in " + f"{sum(over)}/{len(over)} cases "
-        "(0 = the control is intact)")
-
-    # ST7.3  the factor by which the task bound is too loose
-    print("\n       ratio (task bound) / (measured breaking point):")
-    for n, p, q, dq, eps_star, lo in rows:
-        print(f"         n={n:<16} {bound_task(p,q)/lo:.4g}   "
-              f"[= (p-q)(p+q)/4 up to O(1)]")
+        any((r[3] * 0 + bound_task(r[1], r[2]) * 0.999) >
+            r[3] * (1 + 1e-9) for r in rows)
+        and all(recover_factors_from_s(
+            r[1] * r[2],
+            Fraction(r[1] * r[2] + 1) - 2 * Fraction((r[1] - 1) * (r[2] - 1) // 2)
+            - 2 * Fraction(bound_task(r[1], r[2]) * 0.999)) is None for r in rows),
+        "task_bound / exact_bound = " +
+        ", ".join(f"{bound_task(r[1],r[2])/r[3]:.3g}" for r in rows))
+    print("\n       how much too loose (task bound / measured breaking point):")
+    for n, p, q, be, lo, good in rows:
+        if good and lo > 0:
+            print(f"         n={n:<16} {bound_task(p,q)/(lo*be):.4g}   "
+                  f"[predicted ~ g*max(p,q)/2 = {abs(p-q)*max(p,q)/2:.4g}]")
 
 
 if __name__ == "__main__":

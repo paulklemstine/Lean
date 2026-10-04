@@ -20,7 +20,41 @@ Success ⟺ `v₂(ord_p g) ≠ v₂(ord_q g)`. The law of `v₂(ord_p g)` depend
 
 - In a cyclic group of order `m = 2^s·u` with `g = a^j` uniform, `v₂(ord g) = s − min(s, v₂(j))`,
   with `P(v₂(j)=i) = 2^{-(i+1)}` for `i < s` and `P(j ≡ 0 mod 2^s) = 2^{-s}`.
-- For random primes, `s` itself is geometric: `P(s = j) = 2^{-(j+1)}`, `j ≥ 1`.
+- For random primes, `s` itself is geometric: **`P(s = j) = 2^{-j}`, `j ≥ 1`.**
+
+> ### ⚠️ FATAL CORRECTION (2026-10-03, adversarial audit `KK_audit_amendments.md`)
+>
+> **The first version of this note stated `P(s = j) = 2^{-(j+1)}`. That law has total mass
+> 0.5, not 1.0 — it was never a probability law.** Measured over 216,815 primes below 3·10⁶:
+> `P(s=1) = 0.500574`, `P(s=2) = 0.250038`, `P(s=3) = 0.124604` — that is `2^{-j}`, not
+> `2^{-(j+1)}`.
+>
+> **With the wrong law the sum converges to `5/27`, not `20/27`** (exactly, in rational
+> arithmetic; `20/27 = 4 × 5/27`). And the code papered over this with an **undeclared
+> renormalisation** — dividing the truncated mass — a step this note never mentioned.
+>
+> **An undeclared renormalisation is precisely what let a factor-2 error in the law pass as
+> confirmation of a prettier constant.** It is the same shape as the round's standing failure
+> modes: something silently patching something else.
+>
+> **The fix is simpler than the error.** With `P(s=j) = 2^{-j}` the weight vector has mass
+> exactly 1, **no renormalisation is needed**, and the sum is `20/27` with no residual:
+>
+> | `S_max` | sum (no renormalisation) | deficit vs 20/27 |
+> |---|---|---|
+> | 10 | 0.738791006583 | −1.95×10⁻³ |
+> | 20 | 0.740738833397 | −1.91×10⁻⁶ |
+> | 40 | 0.740740740739 | −1.82×10⁻¹² |
+> | 60 | 0.740740740741 | **−1.73×10⁻¹⁸** |
+>
+> **So `20/27` is correct and now derived without a fudge.** The derivation is real; the
+> published version of it was not.
+>
+> A lesson worth keeping, and it is the sharpest one this round has produced:
+>
+> > **A renormalisation is an assertion that your quantity does not sum to its natural value.
+> > If you need one, the quantity is usually wrong — find out which, and write the
+> > renormalisation down.**
 
 Averaging `P(v₂(ord_p g) ≠ v₂(ord_q g))` over the joint law of `(s_p, s_q)`:
 
@@ -30,10 +64,9 @@ Averaging `P(v₂(ord_p g) ≠ v₂(ord_q g))` over the joint law of `(s_p, s_q)
 | 2 | 0.7500 | 0.6250 | 0.8125 | 0.9062 | 0.9531 | 0.9766 |
 | 3 | 0.8750 | 0.8125 | 0.6562 | 0.8281 | 0.9141 | 0.9570 |
 
-> **AVERAGE = 0.74061428**
-> **20/27 = 0.74074074** — difference **1.3 × 10⁻⁴**
-
-**The constant is fully explained.** It is not `20/27` by coincidence of notation; it is the
+> **AVERAGE = 20/27 exactly** (under the corrected law; see the box above)
+>
+> **The constant is fully explained.** It is not `20/27` by coincidence of notation; it is the
 `P(v₂(ord_p g) ≠ v₂(ord_q g))` for two random odd primes, and the closed form of that average is
 `20/27`.
 
@@ -48,16 +81,17 @@ four digits would have been a serious problem with this result**, so it was chec
 | 6 | 0.73286488 | −7.88×10⁻³ |
 | 8 | 0.73873581 | −2.00×10⁻³ |
 | 10 | 0.74023607 | −5.05×10⁻⁴ |
-| **12 (used)** | **0.74061428** | **−1.26×10⁻⁴** |
+| **12 (wrong law + renorm)** | **0.74061428** | −1.26×10⁻⁴ **(SUPERSEDED — see the FATAL box)** |
 | 16 | 0.74073283 | −7.91×10⁻⁶ |
 | 20 | 0.74074025 | −4.94×10⁻⁷ |
 | 24 | 0.74074071 | −3.09×10⁻⁸ |
 | 30 | 0.74074074 | **−4.83×10⁻¹⁰** |
 
-**Monotone, geometric, converging from below to `20/27` to ten decimal places.** A truncation
-artefact would drift, oscillate, or converge to something else. It does not. **The constant is
-derived, not fitted** — and the reported `0.74061428` is simply the `S_max = 12` partial sum,
-with its truncation error stated rather than hidden.
+Monotone and geometric — **but this table was computed under the WRONG law with a
+renormalisation**, so it is retained only as a record of what I first computed, not as evidence.
+It remains true that a truncation artefact would drift or oscillate; it does not rule out the
+defect above, which was a wrong summand rather than a bad cut-off. The corrected computation
+needs no truncation caveat at all.
 
 ## My refuted derivation was wrong TWICE, and the self-test caught the second error
 

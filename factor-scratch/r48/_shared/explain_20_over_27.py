@@ -58,19 +58,27 @@ def selftest() -> bool:
         print("  [PASS] s=1 matches -- so s=1 is the case my wrong derivation assumed")
 
     print()
-    print("SELFTEST 2: with BOTH primes = 3 mod 4, P(unequal) must be 2/3")
+    print("SELFTEST 2: with BOTH primes = 3 mod 4, P(unequal) must be 1/2")
     got = p_unequal(1, 1)
-    print(f"  P(unequal | s_p=s_q=1) = {got:.6f}   (want 0.666667 = 2/3)")
-    if abs(got - 2 / 3) > 1e-9:
+    print(f"  P(unequal | s_p=s_q=1) = {got:.6f}   (want 0.500000 = 1/2)")
+    if abs(got - 0.5) > 1e-9:
         print("  [FAIL]")
         ok = False
     else:
-        print("  [PASS] -- this is exactly my refuted 2/3 derivation, now identified")
+        print("  [PASS] -- this is where my refuted 2/3 derivation actually died:")
+        print("         the s=1 law is TRUNCATED to {k=0: 1/2, k=1: 1/2}, so P(unequal)=1/2,")
+        print("         not 2/3. I had summed an infinite geometric series that does not apply.")
 
     print()
-    print("SELFTEST 3: the sampler must be able to return the NULL")
-    # a deliberately wrong averaging: use s=1 always -> should give 2/3, not 20/27
-    print(f"  [PASS] a constant-s=1 model gives 2/3, distinguishable from 20/27")
+    print("SELFTEST 3: the weight law must have mass exactly 1 (the FATAL of 2026-10-03)")
+    mass = sum(2.0 ** (-j) for j in range(1, 200))
+    print(f"  mass of P(s=j)=2^-j  = {mass:.12f}   (want exactly 1)")
+    if abs(mass - 1.0) > 1e-9:
+        print("  [FAIL] -- the weight law does not sum to 1, so the sum needs a")
+        print("          renormalisation, which means the summand is wrong.")
+        ok = False
+    else:
+        print("  [PASS] -- no renormalisation is needed, and the sum is 20/27 directly.")
     print()
     return ok
 
@@ -91,20 +99,20 @@ def main() -> None:
         cum += w
         print(f"  {S:>3} {w:>14.6f} {cum:>11.6f} {p_unequal(S, S):>15.6f}")
 
-    # Exact sum over all (s_p, s_q), truncated in s
-    Smax = 12
+    # CORRECTED 2026-10-03 after adversarial audit KK_audit_amendments.md:
+    # the law is P(s = j) = 2^-j  (mass exactly 1), NOT 2^-(j+1) (mass 0.5).
+    # The old code divided by the truncated mass -- an UNDECLARED renormalisation
+    # that silently compensated for the wrong summand. Delete it; it is not needed.
+    Smax = 40
     total = 0.0
     for sp in range(1, Smax + 1):
         for sq in range(1, Smax + 1):
-            w = 2.0 ** (-(sp + 1)) * 2.0 ** (-(sq + 1))
+            w = 2.0 ** (-sp) * 2.0 ** (-sq)
             total += w * p_unequal(sp, sq)
-    # renormalise the truncated mass back to 1
-    mass = sum(2.0 ** (-(s + 1)) for s in range(1, Smax + 1)) ** 2
-    total /= mass
 
     print()
     print(f"  EXACT AVERAGE  P(unequal) = {total:.8f}")
-    print(f"  AGENT'S CLAIMED CONSTANT = {20/27:.8f}   (20/27)")
+    print(f"  AGENT'S CLAIMED CONSTANT = {20/27:.8f}   (20/27)  <- no renormalisation used")
     print(f"  MY REFUTED DERIVATION   = {2/3:.8f}   (2/3)")
     print(f"  MEASURED (independent)  = 0.73325")
     print()

@@ -1,0 +1,334 @@
+==============================================================================
+SELF-TEST: Shoup Thm 15.6 constant factor (2 sqrt 2 vs sqrt 2)
+source: factor-scratch/r48/lit/r1/shoup_ntb.pdf, printed pp. 399, 407, 410-413
+==============================================================================
+
+PART 0 -- regression: does my model of the PRINTED exponent give 2*sqrt(2)?
+  [PASS] printed exponent at 4096b gives 2*sqrt(2) got 2.8284271247, want 2.8284271247
+  [PASS] printed exponent at 16384b gives 2*sqrt(2) got 2.8284271247, want 2.8284271247
+  [PASS] printed exponent at 65536b gives 2*sqrt(2) got 2.8284271247, want 2.8284271247
+  [PASS] printed log y is the argmin of the printed exponent argmin at scale 1.0
+  [PASS] 3 log y branch does not bind at the printed optimum (ratio 3/4 < 1) 3 log y = 0.750000 x the displayed constant
+
+PART 1 -- H1: does log u / log log n -> 1/2 at the balanced point?
+       bits          u      log u / log log n
+        1024     14.7049   0.4094739902
+        4096     26.7233   0.4132097586
+       16384     49.3198   0.4174892309
+       65536     92.0434   0.4217014616
+      262144    173.2300   0.4256451131
+     1048576    328.1846   0.4292672959
+     4194304    625.0524   0.4325710191
+    16777216   1195.6580   0.4355795388
+  [PASS] ratio INCREASES monotonically toward 1/2 0.409474 -> 0.435580
+
+     asymptote: ratio = 1/2 - (1/2)(log log L)/(log L) + (1/2)(ln2)/(log L)
+        1024 bits   measured 0.4094739902   formula 0.4094739902   |diff| 0.00e+00
+        4096 bits   measured 0.4132097586   formula 0.4132097586   |diff| 0.00e+00
+       16384 bits   measured 0.4174892309   formula 0.4174892309   |diff| 0.00e+00
+       65536 bits   measured 0.4217014616   formula 0.4217014616   |diff| 0.00e+00
+      262144 bits   measured 0.4256451131   formula 0.4256451131   |diff| 1.11e-16
+     1048576 bits   measured 0.4292672959   formula 0.4292672959   |diff| 0.00e+00
+     4194304 bits   measured 0.4325710191   formula 0.4325710191   |diff| 0.00e+00
+    16777216 bits   measured 0.4355795388   formula 0.4355795388   |diff| 0.00e+00
+  [PASS] measured ratio matches the closed form to 1e-9 at every size worst |diff| = 1.110e-16
+
+     pushing log n to absurd sizes:
+  log log n =     10   ratio = 0.4195281044   gap = 8.05e-02
+  log log n =     30   ratio = 0.4548658300   gap = 4.51e-02
+  log log n =    100   ratio = 0.4804398850   gap = 1.96e-02
+  log log n =    300   ratio = 0.4916489412   gap = 8.35e-03
+  log log n =   1000   ratio = 0.4968926960   gap = 3.11e-03
+  log log n =   3000   ratio = 0.4987811299   gap = 1.22e-03
+  log log n =  10000   ratio = 0.4995741403   gap = 4.26e-04
+  log log n = 1000000   ratio = 0.4999934388   gap = 6.56e-06
+  [PASS] ratio -> 1/2 (within 1e-5 at log log n = 10^6) got 0.4999934388
+
+     overcharge factor  log log n / log u  (Shoup's Thm 15.1 vs sharp Dickman):
+  log log n =        10   overcharge = 2.3836305353   gap = 3.84e-01
+  log log n =        30   overcharge = 2.1984504750   gap = 1.98e-01
+  log log n =       100   overcharge = 2.0814258584   gap = 8.14e-02
+  log log n =       300   overcharge = 2.0339716335   gap = 3.40e-02
+  log log n =      1000   overcharge = 2.0125069419   gap = 1.25e-02
+  log log n =     10000   overcharge = 2.0017048907   gap = 1.70e-03
+  log log n =   1000000   overcharge = 2.0000262451   gap = 2.62e-05
+  log log n = 100000000   overcharge = 2.0000003546   gap = 3.55e-07
+  [PASS] overcharge -> 2 (within 1e-5 at log log n = 10^8) got 2.0000003546, gap 3.55e-07
+
+PART 2 -- the replacement bound, and the shared harness's valid range
+  Dickman-de Bruijn:  -log rho(u) ~ u (log u + log log u - 1).  The leading
+  constant is 1, so c=1 in the exponent is TIGHT (not improvable).  Using the
+  SHARED harness, which is the designated source of truth:
+        u     -log rho(u)      u log u        ratio c(u)
+      1.50        0.519970     0.608198  0.854936
+      2.00        1.181371     1.386294  0.852179
+      2.50        2.037720     2.290727  0.889552
+      3.00        3.023841     3.295837  0.917473
+      3.50        4.120603     4.384670  0.939775
+      4.00        5.315396     5.545177  0.958562
+      4.50        6.590100     6.768348  0.973664
+      5.00        7.934941     8.047190  0.986051
+  [PASS] shared harness c(u) rises monotonically toward 1 for 2 <= u <= 5 (its whole usable range) u=1.5:0.8549  u=2.0:0.8522  u=2.5:0.8896  u=3.0:0.9175  u=3.5:0.9398  u=4.0:0.9586  u=4.5:0.9737  u=5.0:0.9861
+  [PASS] c(u) at the guard u=5 is already within 2% of the Dickman limit 1 c(5) = 0.986051
+  [NULL] rho(u) at RSA sizes (u = 11..25) NOT MEASURED, and the shared harness cannot supply it: it is now correctly GUARDED to raise above u = 5.  Four independent attempts to build a validated local replacement all failed the same way -- see notes/GG_shoup_constant.md S4 for the h-convergence table.  The best scheme reached (log-space Simpson on the causal Volterra equation, arbitrary precision) is h-converged to 0.014% at u=5, 0.2% at u=6 and 3.7% at u=7, then collapses (85% spread at u=8, 19000% at u=10) because rho has fallen to ~1e-10 and the per-cell increment has dropped under the representable resolution of the running value.  So rho is trustworthy to u ~ 7 and NOT to u ~ 20.
+
+     Consequently: -log rho(u) at RSA sizes is NOT measured here.  The
+     de Bruijn leading form u(log u + log log u - 1) gives the CORRECT SCALE
+     (a 1-parameter asymptotic), and the next correction is u(log log u - 1)/log u:
+    u =  11.0   -log rho ~    25.00 (leading)      24.42 (1st corr.)   rho ~ e^-24.4
+    u =  15.0   -log rho ~    40.56 (leading)      40.54 (1st corr.)   rho ~ e^-40.5
+    u =  19.8   -log rho ~    60.97 (leading)      61.60 (1st corr.)   rho ~ e^-61.6
+    u =  25.0   -log rho ~    84.70 (leading)      86.01 (1st corr.)   rho ~ e^-86.0
+    u =  40.0   -log rho ~   159.77 (leading)     163.08 (1st corr.)   rho ~ e^-163.1
+
+PART 3 -- exact optimisation: shape constant = sqrt(2*a*c)
+
+  a=2 c=2  Shoup AS PRINTED (a=2, c=2)
+      predicted constant sqrt(2ac) = 2.82842712,  predicted s* = sqrt(c/2a) = 0.707107
+      L=1e  6  min=2.63058569  s*=0.708720  err=6.9948%
+      L=1e 20  min=2.73189059  s*=0.698520  err=3.4131%
+      L=1e 50  min=2.77852997  s*=0.700820  err=1.7641%
+      L=1e100  min=2.79922719  s*=0.702900  err=1.0324%
+      L=1e300  min=2.81645046  s*=0.705140  err=0.4234%
+  [PASS] a=2 c=2: constant converges DOWN to sqrt(2ac) errors ['6.995%', '3.413%', '1.764%', '1.032%', '0.423%']
+  [PASS] a=2 c=2: argmin s* -> sqrt(c/2a) s*=0.705140 vs 0.707107
+
+  a=2 c=1  remove H1: sharp Dickman (a=2, c=1)
+      predicted constant sqrt(2ac) = 2.00000000,  predicted s* = sqrt(c/2a) = 0.500000
+      L=1e  6  min=1.90959258  s*=0.512700  err=4.5204%
+      L=1e 20  min=1.94691792  s*=0.497640  err=2.6541%
+      L=1e 50  min=1.97078271  s*=0.497060  err=1.4609%
+      L=1e100  min=1.98237857  s*=0.497780  err=0.8811%
+      L=1e300  min=1.99253720  s*=0.498860  err=0.3731%
+  [PASS] a=2 c=1: constant converges DOWN to sqrt(2ac) errors ['4.520%', '2.654%', '1.461%', '0.881%', '0.373%']
+  [PASS] a=2 c=1: argmin s* -> sqrt(c/2a) s*=0.498860 vs 0.500000
+
+  a=1 c=2  remove H2: one relation (a=1, c=2)
+      predicted constant sqrt(2ac) = 2.00000000,  predicted s* = sqrt(c/2a) = 1.000000
+      L=1e  6  min=1.80945064  s*=0.978680  err=9.5275%
+      L=1e 20  min=1.91644384  s*=0.980380  err=4.1778%
+      L=1e 50  min=1.95863360  s*=0.988100  err=2.0683%
+      L=1e100  min=1.97632190  s*=0.992540  err=1.1839%
+      L=1e300  min=1.99052474  s*=0.996720  err=0.4738%
+  [PASS] a=1 c=2: constant converges DOWN to sqrt(2ac) errors ['9.527%', '4.178%', '2.068%', '1.184%', '0.474%']
+  [PASS] a=1 c=2: argmin s* -> sqrt(c/2a) s*=0.996720 vs 1.000000
+
+  a=1 c=1  remove BOTH (a=1, c=1)
+      predicted constant sqrt(2ac) = 1.41421356,  predicted s* = sqrt(c/2a) = 0.707107
+      L=1e  6  min=1.31529285  s*=0.708720  err=6.9948%
+      L=1e 20  min=1.36594529  s*=0.698520  err=3.4131%
+      L=1e 50  min=1.38926498  s*=0.700820  err=1.7641%
+      L=1e100  min=1.39961360  s*=0.702900  err=1.0324%
+      L=1e300  min=1.40822523  s*=0.705140  err=0.4234%
+  [PASS] a=1 c=1: constant converges DOWN to sqrt(2ac) errors ['6.995%', '3.413%', '1.764%', '1.032%', '0.423%']
+  [PASS] a=1 c=1: argmin s* -> sqrt(c/2a) s*=0.705140 vs 0.707107
+  [PASS] Shoup's PRINTED constant reproduced as 2*sqrt(2) got 2.81645046, want 2.82842712 (0.423% -- the O(1/log L) tail)
+  [PASS] H1 ALONE is worth sqrt(2):  2 sqrt(2) -> 2 got 1.99253720, printed 2.82842712
+  [PASS] H2 ALONE is ALSO worth sqrt(2) (independent squares) got 1.99052474
+  [PASS] removing BOTH gives sqrt(2), the ECM heuristic shape constant got 1.40822523
+  [PASS] ratio 2sqrt(2)/2 = sqrt(2) EXACTLY (H1) ratio = 1.41349956
+  [PASS] ratio 2sqrt(2)/2 = sqrt(2) EXACTLY (H2) ratio = 1.41492864
+  [PASS] ratio 2sqrt(2)/sqrt(2) = 2 EXACTLY (both) ratio = 2.00000000
+
+PART 4 -- S4 regime: u at real sizes
+   bits    log n     log log n   log y (Shoup)      u      log u   log u/log log n
+     512   354.891      5.8718          32.279    10.995    2.3974   0.408289
+     768   532.337      6.2773          40.876    13.023    2.5667   0.408894
+    1024   709.783      6.5650          48.268    14.705    2.6882   0.409474
+    1536  1064.674      6.9704          60.915    17.478    2.8609   0.410441
+    2048  1419.565      7.2581          71.775    19.778    2.9846   0.411205
+    3072  2129.348      7.6636          90.328    23.573    3.1601   0.412356
+    4096  2839.131      7.9513         106.242    26.723    3.2855   0.413210
+    8192  5678.262      8.6444         156.661    36.246    3.5903   0.415335
+   16384  11356.523      9.3375         230.263    49.320    3.8983   0.417489
+   65536  45426.094     10.7238         493.529    92.043    4.5223   0.421701
+
+  u = sqrt(2) sqrt(log n / log log n).  At RSA-2048, u = 19.8.  Shoup's own
+  hypothesis (no prime factor of n is <= y) forces y < sqrt(n), hence u > 2 always;
+  and u -> infinity only as slowly as sqrt(log n).
+
+  How large must n be for u to reach a given value?
+    u =       20   needs  n ~ 2^2102  (2102 bits)
+    u =       50   needs  n ~ 2^1.689e+04  (1.689e+04 bits)
+    u =      100   needs  n ~ 2^7.867e+04  (7.867e+04 bits)
+    u =     1000   needs  n ~ 2^1.146e+07  (1.146e+07 bits)
+    u =  1000000   needs  n ~ 2^2.189e+13  (2.189e+13 bits)
+
+  The H1 overcharge at RSA sizes (limit is 2):
+       512 bits:  log u / log log n = 0.408289   overcharge = 2.4492  (limit 2.0)
+      1024 bits:  log u / log log n = 0.409474   overcharge = 2.4422  (limit 2.0)
+      2048 bits:  log u / log log n = 0.411205   overcharge = 2.4319  (limit 2.0)
+      4096 bits:  log u / log log n = 0.413210   overcharge = 2.4201  (limit 2.0)
+     16384 bits:  log u / log log n = 0.417489   overcharge = 2.3953  (limit 2.0)
+
+  Lemma 15.5 (p. 412-413): P[failure] = 2^{-w+1}, w = #distinct odd primes of n.
+    w =   2  ->  P[failure] = 2^-1 = 5.0000e-01
+    w =   3  ->  P[failure] = 2^-2 = 2.5000e-01
+    w =   4  ->  P[failure] = 2^-3 = 1.2500e-01
+    w =   8  ->  P[failure] = 2^-7 = 7.8125e-03
+    w =  16  ->  P[failure] = 2^-15 = 3.0518e-05
+    w =  32  ->  P[failure] = 2^-31 = 4.6566e-10
+    w =  64  ->  P[failure] = 2^-63 = 1.0842e-19
+  [NULL] u -> infinity is NOT reached at any RSA size u = 11.0 at 512 bits, 19.8 at 2048, 92 at 65536.  Reaching u = 100 needs a ~79000-bit modulus.  Every statement in Thm 15.6 is an o(1)-term asymptotic; at RSA sizes the o(1) is NOT small.
+
+PART 5 -- empirical: the printed p.412 counting step, measured
+
+  Dickman's theorem at fixed u=2: Psi(y^2,y)/y^2 -> 1 - ln 2 = 0.30685282
+    y=2^ 5  exact Psi/x = 0.43164062   gap to 1-ln2 = +0.124788
+    y=2^ 6  exact Psi/x = 0.38940430   gap to 1-ln2 = +0.082551
+    y=2^ 7  exact Psi/x = 0.37194824   gap to 1-ln2 = +0.065095
+    y=2^ 8  exact Psi/x = 0.35829163   gap to 1-ln2 = +0.051439
+    y=2^ 9  exact Psi/x = 0.35263443   gap to 1-ln2 = +0.045782
+    y=2^10  exact Psi/x = 0.34468746   gap to 1-ln2 = +0.037835
+    y=2^11  exact Psi/x = 0.33952212   gap to 1-ln2 = +0.032669
+    y=2^12  exact Psi/x = 0.33644617   gap to 1-ln2 = +0.029593
+    y=2^13  exact Psi/x = 0.33298038   gap to 1-ln2 = +0.026128
+  [PASS] exact Psi counter at fixed u=2 converges DOWN toward 1 - ln 2 counter is behaving like a smoothness counter should
+  [PASS] shared harness rho(2) equals 1 - ln 2 to 1e-4 harness 0.30685782 vs exact 0.30685282, rel 1.63e-05
+
+  Shoup's p.412 step:  sigma = Psi(y,n)/|Z*_n|  >=  Psi(y,n)/n.
+  [PASS] the p.412 hypothesis holds: no prime factor of n is <= y p=1000003, q=1000033, y=1000
+    n = 1000036000099 (40 bits),  |Z*_n| = 1000034000064
+    slack is exactly |Z*_n|/n = 0.9999980000369989
+  [PASS] slack |Z*_n|/n is NEGLIGIBLE, so the '>= Psi/n' step is NOT the source of the factor 2 relative loss = -2.000e-06
+
+  Same identity at a size where exact Psi IS computable:  n = 1028171
+    p = 1009, q = 1019, y = 60, u = 3.3811
+    Psi(y,n) = 41230   (EXACT)
+    |Z*_n|   = 1026144
+    sigma = Psi(y,n)/|Z*_n| = 4.01795460e-02   <- EXACT prediction
+    Shoup's weaker Psi(y,n)/n  = 4.01003335e-02
+    shared-harness rho(3.381)   = 2.12624514e-02   <- NOT converged at this n
+    MEASURED over 200000 random elements of Z*_n: 4.04750000e-02
+    deviation from the EXACT prediction: 0.67 sigma
+  [PASS] MEASURED sigma matches the EXACT Psi(y,n)/|Z*_n| -- this validates Shoup's p.412 counting identity directly, with no Dickman model in the loop dev = 0.67 sigma
+  [NULL] the counting identity at RSA-scale u ~ 20 verified at u = 3.38 only.  Exact Psi is computable to u ~ 3.5, so the identity is NOT verified at the u = 19.8 of RSA-2048.  What IS verified there is algebra, not counting: |Z*_n|/n = 1 - O(1/p) at every size, so the '>= Psi/n' relaxation costs nothing regardless of u.
+
+  Measuring P[gamma = +-1] for a semiprime, p = q = 3 mod 4:
+  [PASS] the four roots really do square to 1 mod n roots = [1, 121640364921, 878513635532, 1000154000452]
+  [PASS] exactly 4 square roots of 1 mod n (p,q = 3 mod 4) p=1000003 q=1000151 roots=[1, 121640364921, 878513635532, 1000154000452]
+    n = 1000154000453 (40 bits)
+    roots of x^2 = 1 mod n: [1, 121640364921, 878513635532, 1000154000452]
+    of which +-1: 2  =>  P[gamma = +-1] = 0.5
+  [PASS] P[gamma = +-1] = 1/2 EXACTLY -- Lemma 15.5's 'at most 1/2' is TIGHT (attained) for a semiprime, so Exercise 15.5's extra relations are genuinely needed got 0.5
+  [NULL] the 1/2 failure probability is NOT a source of the factor 2 it affects the SUCCESS probability, not the exp[...] constant.  And it is TIGHT, so it cannot be improved analytically -- only bought with extra relations, which is a k+2 -> k+1+ell change.  Since log k = o(sqrt(L log L)), ell extra relations cost nothing in the constant.  So the 1/2 is orthogonal to the factor of 2.
+
+PART 6 -- S3: is 2 optimal within this shape?
+  [PASS] Dickman constant c(u) rises monotonically toward 1 for 2 <= u <= 5: c = 1 is TIGHT, so no better smoothness count can lower the constant u=2.0:0.8522  u=2.5:0.8896  u=3.0:0.9175  u=3.5:0.9398  u=4.0:0.9586  u=4.5:0.9737  u=5.0:0.9861
+
+  a = 2 is forced by COUNTING, not by analysis quality:
+    - k = pi(y) primes form the factor base (p. 407)
+    - k+2 relations needed: Z_2^{(k+1)} has dim k+1 (p. 410)
+    - each attempt costs k trial divisions (p. 411 pseudocode)
+    => running time ~ sigma^-1 * pi(y)^2, so a = 2 FORCED
+  [PASS] with c=1 forced and a=2 forced, constant 2 is the SHAPE OPTIMUM got 1.99253720 (0.373% -- O(1/log L) tail)
+
+  constant landscape sqrt(2*a*c):
+    a = 1.0   c=0.75: 1.2247   c=1.0: 1.4142   c=2.0: 2.0000
+    a = 1.5   c=0.75: 1.5000   c=1.0: 1.7321   c=2.0: 2.4495
+    a = 2.0   c=0.75: 1.7321   c=1.0: 2.0000   c=2.0: 2.8284
+    a = 3.0   c=0.75: 2.1213   c=1.0: 2.4495   c=2.0: 3.4641
+    (c < 1 is NOT achievable: Dickman is tight at c = 1)
+  [NULL] a < 2 requires a DIFFERENT ALGORITHM, not a better analysis a = 1 means ONE relation suffices, i.e. no factor-base linear algebra.  That is the ECM shape, and ECM's sqrt(2) is HEURISTIC -- it needs the random-curve smoothness model, not a counting bound.  So sqrt(2) is NOT a proved unconditional constant for factoring.
+  [NULL] global lower bound on the constant of ANY factoring algorithm NOT PROVED.  This script optimises Shoup's SHAPE only.  Asserting 2 as a universal lower bound over all algorithms would be unsound.
+
+PART 7 -- audit: does any conclusion rest on rho(u) with u > 5?
+
+PART 2 -- the replacement bound, and the shared harness's valid range
+  Dickman-de Bruijn:  -log rho(u) ~ u (log u + log log u - 1).  The leading
+  constant is 1, so c=1 in the exponent is TIGHT (not improvable).  Using the
+  SHARED harness, which is the designated source of truth:
+        u     -log rho(u)      u log u        ratio c(u)
+      1.50        0.519970     0.608198  0.854936
+      2.00        1.181371     1.386294  0.852179
+      2.50        2.037720     2.290727  0.889552
+      3.00        3.023841     3.295837  0.917473
+      3.50        4.120603     4.384670  0.939775
+      4.00        5.315396     5.545177  0.958562
+      4.50        6.590100     6.768348  0.973664
+      5.00        7.934941     8.047190  0.986051
+  [PASS] shared harness c(u) rises monotonically toward 1 for 2 <= u <= 5 (its whole usable range) u=1.5:0.8549  u=2.0:0.8522  u=2.5:0.8896  u=3.0:0.9175  u=3.5:0.9398  u=4.0:0.9586  u=4.5:0.9737  u=5.0:0.9861
+  [PASS] c(u) at the guard u=5 is already within 2% of the Dickman limit 1 c(5) = 0.986051
+  [NULL] rho(u) at RSA sizes (u = 11..25) NOT MEASURED, and the shared harness cannot supply it: it is now correctly GUARDED to raise above u = 5.  Four independent attempts to build a validated local replacement all failed the same way -- see notes/GG_shoup_constant.md S4 for the h-convergence table.  The best scheme reached (log-space Simpson on the causal Volterra equation, arbitrary precision) is h-converged to 0.014% at u=5, 0.2% at u=6 and 3.7% at u=7, then collapses (85% spread at u=8, 19000% at u=10) because rho has fallen to ~1e-10 and the per-cell increment has dropped under the representable resolution of the running value.  So rho is trustworthy to u ~ 7 and NOT to u ~ 20.
+
+     Consequently: -log rho(u) at RSA sizes is NOT measured here.  The
+     de Bruijn leading form u(log u + log log u - 1) gives the CORRECT SCALE
+     (a 1-parameter asymptotic), and the next correction is u(log log u - 1)/log u:
+    u =  11.0   -log rho ~    25.00 (leading)      24.42 (1st corr.)   rho ~ e^-24.4
+    u =  15.0   -log rho ~    40.56 (leading)      40.54 (1st corr.)   rho ~ e^-40.5
+    u =  19.8   -log rho ~    60.97 (leading)      61.60 (1st corr.)   rho ~ e^-61.6
+    u =  25.0   -log rho ~    84.70 (leading)      86.01 (1st corr.)   rho ~ e^-86.0
+    u =  40.0   -log rho ~   159.77 (leading)     163.08 (1st corr.)   rho ~ e^-163.1
+
+PART 5 -- empirical: the printed p.412 counting step, measured
+
+  Dickman's theorem at fixed u=2: Psi(y^2,y)/y^2 -> 1 - ln 2 = 0.30685282
+    y=2^ 5  exact Psi/x = 0.43164062   gap to 1-ln2 = +0.124788
+    y=2^ 6  exact Psi/x = 0.38940430   gap to 1-ln2 = +0.082551
+    y=2^ 7  exact Psi/x = 0.37194824   gap to 1-ln2 = +0.065095
+    y=2^ 8  exact Psi/x = 0.35829163   gap to 1-ln2 = +0.051439
+    y=2^ 9  exact Psi/x = 0.35263443   gap to 1-ln2 = +0.045782
+    y=2^10  exact Psi/x = 0.34468746   gap to 1-ln2 = +0.037835
+    y=2^11  exact Psi/x = 0.33952212   gap to 1-ln2 = +0.032669
+    y=2^12  exact Psi/x = 0.33644617   gap to 1-ln2 = +0.029593
+    y=2^13  exact Psi/x = 0.33298038   gap to 1-ln2 = +0.026128
+  [PASS] exact Psi counter at fixed u=2 converges DOWN toward 1 - ln 2 counter is behaving like a smoothness counter should
+  [PASS] shared harness rho(2) equals 1 - ln 2 to 1e-4 harness 0.30685782 vs exact 0.30685282, rel 1.63e-05
+
+  Shoup's p.412 step:  sigma = Psi(y,n)/|Z*_n|  >=  Psi(y,n)/n.
+  [PASS] the p.412 hypothesis holds: no prime factor of n is <= y p=1000003, q=1000033, y=1000
+    n = 1000036000099 (40 bits),  |Z*_n| = 1000034000064
+    slack is exactly |Z*_n|/n = 0.9999980000369989
+  [PASS] slack |Z*_n|/n is NEGLIGIBLE, so the '>= Psi/n' step is NOT the source of the factor 2 relative loss = -2.000e-06
+
+  Same identity at a size where exact Psi IS computable:  n = 1028171
+    p = 1009, q = 1019, y = 60, u = 3.3811
+    Psi(y,n) = 41230   (EXACT)
+    |Z*_n|   = 1026144
+    sigma = Psi(y,n)/|Z*_n| = 4.01795460e-02   <- EXACT prediction
+    Shoup's weaker Psi(y,n)/n  = 4.01003335e-02
+    shared-harness rho(3.381)   = 2.12624514e-02   <- NOT converged at this n
+    MEASURED over 200000 random elements of Z*_n: 4.04750000e-02
+    deviation from the EXACT prediction: 0.67 sigma
+  [PASS] MEASURED sigma matches the EXACT Psi(y,n)/|Z*_n| -- this validates Shoup's p.412 counting identity directly, with no Dickman model in the loop dev = 0.67 sigma
+  [NULL] the counting identity at RSA-scale u ~ 20 verified at u = 3.38 only.  Exact Psi is computable to u ~ 3.5, so the identity is NOT verified at the u = 19.8 of RSA-2048.  What IS verified there is algebra, not counting: |Z*_n|/n = 1 - O(1/p) at every size, so the '>= Psi/n' relaxation costs nothing regardless of u.
+
+  Measuring P[gamma = +-1] for a semiprime, p = q = 3 mod 4:
+  [PASS] the four roots really do square to 1 mod n roots = [1, 121640364921, 878513635532, 1000154000452]
+  [PASS] exactly 4 square roots of 1 mod n (p,q = 3 mod 4) p=1000003 q=1000151 roots=[1, 121640364921, 878513635532, 1000154000452]
+    n = 1000154000453 (40 bits)
+    roots of x^2 = 1 mod n: [1, 121640364921, 878513635532, 1000154000452]
+    of which +-1: 2  =>  P[gamma = +-1] = 0.5
+  [PASS] P[gamma = +-1] = 1/2 EXACTLY -- Lemma 15.5's 'at most 1/2' is TIGHT (attained) for a semiprime, so Exercise 15.5's extra relations are genuinely needed got 0.5
+  [NULL] the 1/2 failure probability is NOT a source of the factor 2 it affects the SUCCESS probability, not the exp[...] constant.  And it is TIGHT, so it cannot be improved analytically -- only bought with extra relations, which is a k+2 -> k+1+ell change.  Since log k = o(sqrt(L log L)), ell extra relations cost nothing in the constant.  So the 1/2 is orthogonal to the factor of 2.
+
+PART 6 -- S3: is 2 optimal within this shape?
+  [PASS] Dickman constant c(u) rises monotonically toward 1 for 2 <= u <= 5: c = 1 is TIGHT, so no better smoothness count can lower the constant u=2.0:0.8522  u=2.5:0.8896  u=3.0:0.9175  u=3.5:0.9398  u=4.0:0.9586  u=4.5:0.9737  u=5.0:0.9861
+
+  a = 2 is forced by COUNTING, not by analysis quality:
+    - k = pi(y) primes form the factor base (p. 407)
+    - k+2 relations needed: Z_2^{(k+1)} has dim k+1 (p. 410)
+    - each attempt costs k trial divisions (p. 411 pseudocode)
+    => running time ~ sigma^-1 * pi(y)^2, so a = 2 FORCED
+  [PASS] with c=1 forced and a=2 forced, constant 2 is the SHAPE OPTIMUM got 1.99253720 (0.373% -- O(1/log L) tail)
+
+  constant landscape sqrt(2*a*c):
+    a = 1.0   c=0.75: 1.2247   c=1.0: 1.4142   c=2.0: 2.0000
+    a = 1.5   c=0.75: 1.5000   c=1.0: 1.7321   c=2.0: 2.4495
+    a = 2.0   c=0.75: 1.7321   c=1.0: 2.0000   c=2.0: 2.8284
+    a = 3.0   c=0.75: 2.1213   c=1.0: 2.4495   c=2.0: 3.4641
+    (c < 1 is NOT achievable: Dickman is tight at c = 1)
+  [NULL] a < 2 requires a DIFFERENT ALGORITHM, not a better analysis a = 1 means ONE relation suffices, i.e. no factor-base linear algebra.  That is the ECM shape, and ECM's sqrt(2) is HEURISTIC -- it needs the random-curve smoothness model, not a counting bound.  So sqrt(2) is NOT a proved unconditional constant for factoring.
+  [NULL] global lower bound on the constant of ANY factoring algorithm NOT PROVED.  This script optimises Shoup's SHAPE only.  Asserting 2 as a universal lower bound over all algorithms would be unsound.
+
+     the spy recorded 27 calls to the shared rho(); u values: [1.5, 2.0, 2.5, 3.0, 3.381076468577242, 3.5, 4.0, 4.5, 5.0]
+     LARGEST u ever passed to rho() = 5.0
+  [PASS] no conclusion in this note evaluates rho(u) for u > 5 (the harness's own guard) max u fed to rho = 5.0
+  [PASS] the 2sqrt(2) -> 2 improvement is re-derived with rho() POISONED (closed form in (a, c) only) ratio = 1.41349956 vs sqrt(2) = 1.41421356
+  [PASS] the H1 identity log u / log log n -> 1/2 is re-derived with rho() POISONED measured 0.4292672959 vs formula 0.4292672959
+  [NULL] rho(u) for u > 5 supports NO conclusion in this note Verified executably: with rho() replaced by a function that raises, both load-bearing results still verify.  rho is used only for the c(u) TIGHTNESS diagnostic in S3, on 2 <= u <= 5 where the harness is sound (c(5) = 0.9861, rising monotonically toward 1).
+
+==============================================================================
+RESULTS: 51 PASS, 0 FAIL, 12 NULL
+No failures. NULLs are DELIBERATE (claims NOT proved here).
+==============================================================================

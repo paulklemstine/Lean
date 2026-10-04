@@ -30,8 +30,43 @@ import sys
 from fractions import Fraction as Fr
 from math import isqrt
 
-from capacity import (admissible_g1, capacity_from_g1, capacity_paper_formula,
-                      decide, verdict_of)
+from capacity import admissible_g1
+from lens import gamma_full, gamma_archimedean
+
+
+def decide(p, t, a, X, Y):
+    """R2's test, using the CORRECTED archimedean capacity from lens.py.
+
+    (capacity.py's capacity_from_g1 is retained only as the historical record of the bug --
+    it used Lemma 3.11's LOWER BOUND as an equality -- so nothing imports it any more.)"""
+    gs = admissible_g1(p, t, a, X, Y)
+    if not gs:
+        return {"p": p, "t": t, "a": a, "X": X, "Y": Y, "g1": [],
+                "verdict": "NO g1 (Minkowski box empty at this X,Y)"}
+    rows = [{"d": g, "gamma": gamma_full(p, *g, X, Y)} for g in gs]
+    worst = max(r["gamma"] for r in rows)
+    if worst > 1:
+        v = "FAIL"
+    elif worst < 1:
+        v = "WORKS"
+    else:
+        v = "KNIFE"
+    return {"p": p, "t": t, "a": a, "X": X, "Y": Y, "g1": rows, "verdict": v}
+
+
+def capacity_paper_formula(p, d1, d2, d3, c):
+    """Lemma 3.11 (3.15)/(3.16). NOTE this is a LOWER BOUND on gamma(E), so it can only be
+    compared as gamma_paper <= gamma_true -- equality is the bug this file was written to
+    catch."""
+    from math import isqrt
+    sp = isqrt(p)
+    d1c_over_d2 = Fr(d1) * c / d2
+    d3_over = Fr(d3) / (sp * d2)
+    delta1 = max(-c, -d1c_over_d2 - d3_over)
+    delta2 = min(c, d1c_over_d2 - d3_over)
+    if delta1 > delta2:
+        return Fr(0)
+    return sp * (delta2 - delta1) / (4 * d1)
 
 fails = []
 
@@ -58,8 +93,12 @@ def brute_force_integer_solutions(p, t, a, X, Y):
 # ---------------------------------------------------------------- (A) cross-check vs paper
 
 def test_against_paper_formula():
-    print("\n[A] capacity_from_g1 vs paper eqs (3.15)/(3.16)")
-    # p must be a perfect square for the paper's closed form; p = q^2 with q prime.
+    print("\n[A] gamma_full >= paper's Lemma 3.11 LOWER bound (3.15)/(3.16)")
+    print("    (equality is NOT expected: (3.16) is an inequality, which is exactly the bug")
+    print("     this self-test was written to catch -- an earlier version used it as an")
+    print("     equality and got 1712 false 'no solutions' verdicts.)")
+    viol = 0
+    n = 0
     for q in (5, 7, 11, 13, 17, 19, 23, 29, 31, 37):
         p = q * q
         c = Fr(1, 2)
@@ -68,13 +107,15 @@ def test_against_paper_formula():
             for a in range(0, min(p, 4)):
                 rows = decide(p, t, a, X, Y)
                 for r in rows["g1"]:
-                    mine = r["gamma"]
-                    theirs = capacity_paper_formula(p, *r["d"], c)
-                    if mine != theirs:
-                        check(f"formula agreement q={q} t={t} a={a}", False,
-                              f"mine={mine} paper={theirs} d={r['d']}")
-                        return
-    check("formula agreement over 10 moduli x 11 t x 4 a", True)
+                    n += 1
+                    lb = capacity_paper_formula(p, *r["d"], c)
+                    if r["gamma"] < lb:
+                        viol += 1
+                        if viol <= 3:
+                            print(f"    VIOLATION q={q} t={t} a={a} d={r['d']}: "
+                                  f"gamma={float(r['gamma']):.8f} < lower bound {float(lb):.8f}")
+    check(f"gamma_full >= Lemma 3.11 lower bound on {n} instances", viol == 0,
+          f"{viol} violations")
 
 
 # ---------------------------------------------------------------- (B) capacity sanity

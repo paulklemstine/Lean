@@ -17,6 +17,31 @@ import math
 from functools import lru_cache
 from math import isqrt
 
+
+# ⚠️⚠️⚠️ VALIDITY LIMIT — ADDED 2026-10-03 AFTER AN ADVERSARIAL FINDING ⚠️⚠️⚠️
+#
+# THIS HARNESS IS VALID ONLY FOR u <= 5. BEYOND THAT IT SATURATES AND IS WRONG.
+#
+# Measured failure (r49exp/shoup/, independently confirmed by the coordinator):
+#   u    this harness            truth (Dickman-de Bruijn)
+#   6    2.224e-05                ~2.6e-04
+#   8    ~1.9e-06                 ~5e-07 .. 1e-9 (regime-dependent)
+#   12   ~1.15e-06                ~1e-13
+#   20   6.666e-07                ~1e-27
+# The RK4 step DEGENERATES: the grid integration freezes near the floating-point
+# floor instead of continuing to decrease. The self-test only ever probed u <= 4,
+# so it passed while the function was already wrong one step beyond.
+#
+# WHY THIS MATTERS: this file was distributed to EVERY round-48/49 agent as
+# "the validated shared harness". Any conclusion depending on rho(u) at u > 5 is
+# UNSUPPORTED. Affected in particular: NFS operating points (u ~ 3-5, marginal --
+# verify by Monte Carlo, do not trust rho there) and every Stange-regime number.
+#
+# USE INSTEAD: exact Psi, or a Monte Carlo estimate, or the de Bruijn closed form
+#   log rho(u) ~ -u (log u + log log u - 1)   [asymptotic, u large]
+# Do NOT use this file outside 0 < u <= 5.
+VALID_U_MAX = 5.0
+
 from sympy import factorint, isprime
 
 # ---------------------------------------------------------------------------
@@ -85,6 +110,12 @@ def rho(u: float) -> float:
         return 0.0
     if u <= 1:
         return 1.0
+    if u > VALID_U_MAX:
+        raise ValueError(
+            f"rho(u) requested at u={u}, but this harness is only valid for "
+            f"u <= {VALID_U_MAX} (it saturates above that -- see VALID_U_LIMIT note). "
+            "Use exact Psi, Monte Carlo, or the de Bruijn closed form instead."
+        )
     return max(0.0, min(1.0, _rho_at(u)))
 
 

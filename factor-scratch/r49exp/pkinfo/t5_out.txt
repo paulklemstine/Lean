@@ -1,0 +1,49 @@
+==============================================================================
+EXACT VALIDATION OF THE ARCHIMEDEAN CAPACITY (Theorem 3.5)
+==============================================================================
+
+[T1] Theorem 3.5 stated special cases (exact)
+  PASS  D(0,1.0) n D(1.0,2.0) = 1.000000000000 (expect 1.0)
+  PASS  D(0,2.0) n D(3.0,5.0) = 2.000000000000 (expect 2.0)
+  PASS  D(0,1.5) n D(2.5,4.0) = 1.500000000000 (expect 1.5)
+  PASS  D(0,2.0) n D(1.0,1.0) = 1.000000000000 (expect 1.0)
+  PASS  D(0,5.0) n D(3.0,2.0) = 2.000000000000 (expect 2.0)
+  PASS  D(0,4.0) n D(2.5,1.5) = 1.500000000000 (expect 1.5)
+  PASS  D(0,1.0) n D(0.0,3.0) = 1.000000000000 (expect 1.0)
+  PASS  D(0,3.0) n D(0.0,1.0) = 1.000000000000 (expect 1.0)
+  PASS  D(0,2.0) n D(0.0,2.0) = 2.000000000000 (expect 2.0)
+  PASS  empty/tangent D(0,1.0) n D(3.0,1.0) = 0.0 (expect 0)
+  PASS  empty/tangent D(0,2.0) n D(5.0,1.0) = 0.0 (expect 0)
+  PASS  empty/tangent D(0,1.0) n D(2.0,1.0) = 0.0 (expect 0)
+
+[T2] Remark 3.7 limit: gamma_inf -> r as s -> 1+r from below
+    r=0.5: s->1+r gives ['0.499514794', '0.499999484', '0.499999999', '0.500000000']  (target 0.5) ok
+    r=1.0: s->1+r gives ['0.999593554', '0.999999578', '1.000000000', '1.000000000']  (target 1.0) ok
+    r=2.0: s->1+r gives ['1.999641608', '1.999999633', '2.000000000', '2.000000000']  (target 2.0) ok
+    r=3.7: s->1+r gives ['3.699666722', '3.699999662', '3.700000000', '3.700000000']  (target 3.7) ok
+  PASS  Remark 3.7 limit reproduced
+
+[T3] Lemma 3.11: gamma_inf(E_inf) = 0  <=>  delta_1 > delta_2  (d3 != 0 included)
+  PASS  gamma=0 matches delta_1>delta_2 on 11586 triples
+
+[T4] Theorem 3.4(3) monotonicity in (X,Y), inside Theorem 2.1's regime
+  PASS  gamma strictly increasing on 1268 in-regime pairs
+
+[T5] alpha convention: which reading converges to the true capacity?
+  PASS  unit circle d_10 = 1.291544 vs exact n^(1/(n-1)) = 1.291550
+  PASS  unit circle d_14 = 1.225041 vs exact n^(1/(n-1)) = 1.225078
+  PASS  unit circle d_20 = 1.170628 vs exact n^(1/(n-1)) = 1.170780
+    canonical lens D(0,1) n D(1,1): current formula = 0.64951905
+       n      d_n/n^(1/(n-1))    implied/formula
+      10             0.647469           0.996844
+      12             0.646646           0.995577
+      14             0.638253           0.982655
+      16             0.643283           0.990400
+      20             0.643481           0.990704
+      24             0.644790           0.992719
+      28             0.641062           0.986980
+      32             0.641975           0.988385
+  PASS  implied capacity stable in n (last 4 spread 0.0057, want << 0.1)
+
+==============================================================================
+RESULT: ALL EXACT CHECKS PASS

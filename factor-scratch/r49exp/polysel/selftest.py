@@ -335,6 +335,11 @@ def main():
     s4_norm_bruteforce()
     s5_smooth_exactness()
     s6_r48_defect_and_null()
+    print("S10  Dickman rho REPLACEMENT (the shared harness is valid only to u<=5)")
+    ok, lines = K.rho_selftest()
+    for L in lines:
+        print(L)
+    check("S10 rebuilt rho validated on u<=5 and finite-y gap measured", ok)
     s9_smoothness_null()
     print("=" * 74)
     if FAIL:

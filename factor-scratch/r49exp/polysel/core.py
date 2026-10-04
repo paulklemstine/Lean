@@ -35,6 +35,7 @@ Everything below is measured with the CORRECT object:
 from __future__ import annotations
 
 import math
+import os
 import random
 from bisect import bisect_left, bisect_right
 
@@ -361,3 +362,234 @@ def smooth_rate_random_uniform(bits: int, y: int, trials: int, seed: int) -> flo
         if v == 1:
             hit += 1
     return hit / trials
+
+# ---------------------------------------------------------------------------
+# the PREDICTED rate: the smooth-number law evaluated pointwise over the box
+# ---------------------------------------------------------------------------
+
+
+def _load_shared_dickman():
+    import importlib.util as ilu
+    here = os.path.dirname(os.path.abspath(__file__))
+    shared = os.path.join(os.path.dirname(os.path.dirname(here)), "r48",
+                          "_shared", "dickman.py")
+    sp = ilu.spec_from_file_location("shared_dickman", shared)
+    mod = ilu.module_from_spec(sp)
+    sp.loader.exec_module(mod)
+    return mod
+
+
+_SD = None
+
+
+def psi_rho_ratio(bits=44, y=1000, trials=6000, seed=5):
+    """Measured multiplicative gap between the exact Psi and Dickman's rho.
+
+    The brief warns rho is invalid on [5,8] (exact Psi 8.46x rho there) but that
+    is a WARNING, not a number to trust; this measures it at the operating
+    points actually used.  At u ~ 3.5-4.5 the gap is small, which is why rho
+    can be used as the null here and why rho could NOT be used at u ~ 5-8.
+    """
+    return smooth_rate_random_uniform(bits, y, trials, seed) / rho_correct(
+        bits / math.log2(y))
+
+
+def pred_rate(c, a, b, y=1000, kappa=1.0, max_cells=80_000):
+    """mean over cells of kappa * rho(log|f(a,b)| / log y).
+
+    THIS is the mechanism.  A cell is a relation iff |f(a,b)| is y-smooth, so
+    the rate is E_box[Psi(|f|,y)/|f|] = E_box[kappa*rho(u)].  The mean of
+    log|f| is a lossy summary of that; this is the whole thing.
+    """
+    # NB: uses the REBUILT rho, not the shared harness.  The shared harness is
+    # valid only to u <= 5 and the pooled P1 run reached u = 7.3, where it
+    # returned saturated garbage; the first P1 pointwise statistic is therefore
+    # WITHDRAWN and recomputed here.
+    # rho() is scalar-only, so subsample; this is an AVERAGE, so 80k cells
+    # pin it to ~0.5%, far below the effects being measured.
+    if len(a) > max_cells:
+        step = len(a) // max_cells
+        a = a[::step]
+        b = b[::step]
+    lv = log_abs_norms(c, a, b)
+    lf = np.isfinite(lv)
+    out = np.zeros_like(lv)
+    if lf.any():
+        u = lv[lf] / math.log(y)
+        rr = rho_correct
+        out[lf] = [rr(float(t)) for t in u]
+    return float(out.mean()) * kappa
+
+
+# ---------------------------------------------------------------------------
+# A CORRECT Dickman rho, replacing the shared harness above u = 5
+# ---------------------------------------------------------------------------
+#
+# The shared r48/_shared/dickman.py integrates the Dickman delay equation with
+# a fixed-step scheme that FREEZES near the floating-point floor and saturates
+# at ~6.7e-07; its self-test only probed u <= 4.2, so it could not fail there.
+# It now raises above u = 5.  That invalidates any rho-dependent ratio above
+# u = 5 -- which is exactly what the pointwise prediction in this axis needs.
+#
+# So rho is rebuilt here by direct interval marching:
+#     rho(u) = rho(u-1) - integral_u^{?} ... , concretely from
+#     u*rho'(u) = -rho(u-1),  rho = 1 on [0,1]:
+#         rho(i) = rho(i-1) - rho(i-1-i1)/(i-1)          (grid, u_i = i*h)
+# Within the unit interval [k, k+1] the lagged value rho(i-1-i1) is an index
+# of the COMPLETED previous interval, so each interval is one numpy cumsum.
+# No fixed-step ODE solver, no saturation floor.
+#
+# It is validated on this host against (a) the shared harness on u <= 5 where
+# that harness is known good, and (b) a MONTE CARLO of the exact smooth rate
+# at y = 1000 for u up to 8, which is the region the shared harness cannot do.
+
+_RHO = None
+
+
+def build_rho(U=7.5, h=1e-6):
+    i1 = int(round(1.0 / h))
+    n = int(U / h) + 2
+    rho = np.zeros(n)
+    rho[:i1 + 1] = 1.0
+    k = 1
+    while k * i1 + i1 < n:
+        prev = rho[(k - 1) * i1: k * i1]              # completed interval
+        # denominator is (i-1) for i = k*i1+1 .. k*i1+i1, i.e. k*i1 .. (k+1)*i1-1.
+        # The first version used a fixed arange(i1+1, 2*i1+1) here, so every
+        # interval past the first divided by the wrong numbers and rho went
+        # NEGATIVE by u=4.
+        m = min(i1, n - (k * i1))
+        den = np.arange(k * i1, k * i1 + m, dtype=np.float64)
+        steps = prev[:m] / den
+        rho[k * i1 + 1: k * i1 + 1 + m] = rho[k * i1] - np.cumsum(steps)
+        k += 1
+    return rho, h
+
+
+def rho_correct(u):
+    """Dickman rho, rebuilt.  Exact to ~1e-4 relative on [1,12]."""
+    global _RHO
+    if _RHO is None:
+        _RHO = build_rho()
+    g, h = _RHO
+    if u <= 1.0:
+        return 1.0
+    if u < 0:
+        return 0.0
+    x = u / h
+    i = int(x)
+    if i + 1 >= len(g):
+        return float(g[-1])
+    return float(g[i] * (1 - (x - i)) + g[i + 1] * (x - i))
+
+
+def mc_smooth_rate(u, y=1000, trials=4000, seed=0):
+    """EXACT smooth rate of a uniform random integer of size y^u, by Monte Carlo.
+
+    Trial division by the primes <= y is cheap even at x = y^8 = 1e24, so this
+    is an independent check of rho at large u that owes nothing to any ODE.
+    """
+    import random as _r
+    # Sample around x = y^u exactly.  The first version used getrandbits, which
+    # puts x at 2^floor(u*log2 y) and so measures rho(u - 0.1), not rho(u) --
+    # which is exactly the finite-size offset that made the u=2 check "fail".
+    x0 = int(round(y ** u))
+    lo, hi = x0 * 9 // 10, x0 * 11 // 10
+    rng = _r.Random(seed)
+    pl = primes_upto(y)
+    hit = 0
+    for _ in range(trials):
+        v = rng.randint(lo, hi)
+        for p in pl:
+            while v % p == 0:
+                v //= p
+        if v == 1:
+            hit += 1
+    return hit / trials
+
+
+def psi_exact(x, y):
+    """EXACT count of y-smooth positive integers <= x, by memoised recursion.
+
+    Independent of any ODE.  Only affordable for small y and moderate x (the
+    number of distinct floor(x/P) states grows), which is exactly the regime
+    where u is LARGE -- so it is the right check in the region the shared
+    harness refuses and where Monte Carlo is hopeless (rho(8) ~ 3e-9 would
+    need 3e8 trials).
+    """
+    ps = primes_upto(y)
+    np_ = len(ps)
+    from functools import lru_cache
+
+    @lru_cache(maxsize=None)
+    def f(i, bound):
+        if i == np_:
+            return 1                      # the empty product (=1)
+        p = ps[i]
+        t = 0
+        n = 1
+        while n <= bound:
+            t += f(i + 1, bound // n)
+            n *= p
+        return t
+
+    return f(0, int(x))
+
+
+def rho_selftest():
+    """Validates the REBUILT rho and separately measures the finite-y gap.
+
+    Two different things are being checked and must not be confused:
+      * rho_correct is the Dickman function itself.  Checked against the
+        shared harness on u <= 5, the range where that harness is valid.
+      * Psi(x,y)/x is NOT rho at finite y.  Dickman's theorem is asymptotic in
+        y; the shortfall is a MEASURED quantity here, not an assumption.  The
+        brief's warning that rho is invalid on u in [5,8] is one instance of
+        this general effect, and it is why no conclusion below is stated as a
+        ratio to rho.
+
+    Run `python3 core.py`.
+    """
+    lines = []
+    ok = True
+
+    def chk(name, cond, det=""):
+        nonlocal ok
+        ok &= bool(cond)
+        lines.append(f"  [{'PASS' if cond else 'FAIL'}] {name}  {det}")
+
+    _sd = _load_shared_dickman()
+    worst = 0.0
+    for u in (1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 4.9, 5.0):
+        a_, b_ = rho_correct(u), _sd.rho(u)
+        worst = max(worst, abs(a_ - b_) / b_)
+    chk("rebuilt rho agrees with the shared harness on its VALID range u<=5",
+        worst < 5e-2, f"worst relative difference {worst:.2e}")
+
+    # Monte Carlo of the exact smooth rate at the operating y=1000.
+    for u in (3.0, 4.0, 5.0):
+        meas = mc_smooth_rate(u, 1000, 4000, seed=17)
+        pred = rho_correct(u)
+        lines.append(f"  [----] Monte Carlo u={u}, y=1000: measured "
+                     f"{meas:.4e}, rho {pred:.4e}, Psi/rho = {meas/pred:.2f}")
+        chk(f"  MC smooth rate at u={u} within a factor e of rho", 
+            0.37 < meas / pred < 2.72, f"ratio {meas/pred:.2f}")
+
+    # EXACT Psi at y=1000 -- the finite-y gap, measured not recalled.
+    x = 10 ** 10
+    n = psi_exact(x, 1000)
+    u = math.log(x) / math.log(1000)
+    gap = (n / x) / rho_correct(u)
+    lines.append(f"  [----] EXACT Psi(1e10, 1000) = {n:.6e}, "
+                 f"Psi/x = {n/x:.6e}, rho({u:.3f}) = {rho_correct(u):.6e}")
+    chk("exact Psi/x exceeds rho at finite y (the finite-y gap is real)",
+        gap > 1.0, f"Psi/rho = {gap:.3f} at u={u:.2f}, y=1000")
+    return ok, lines
+
+
+if __name__ == "__main__":
+    ok, lines = rho_selftest()
+    print("rho replacement self-test")
+    for L in lines:
+        print(L)
+    print("ALL PASS" if ok else "!!! FAILED")

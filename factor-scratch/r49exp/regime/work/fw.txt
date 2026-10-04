@@ -1,0 +1,916 @@
+                                                     On the Probability of Generating a Lattice
+                                                                     Felix Fontein∗              Pawel Wocjan†
+arXiv:1211.6246v2 [math.CO] 16 May 2013
+
+
+
+
+                                                                                November 8, 2018
+
+
+                                                                                       Abstract
+                                                      We study the problem of determining the probability that m vectors selected
+                                                  uniformly at random from the intersection of the full-rank lattice Λ in Rn and
+                                                  the window [0, B)n generate Λ when B is chosen to be appropriately large. This
+                                                  problem plays an important role in the analysis of the success probability of
+                                                  quantum algorithms for solving the Discrete Logarithm Problem in infrastruc-
+                                                  tures obtained from number fields and also for computing fundamental units of
+                                                  number fields.
+                                                      We provide the first complete and rigorous proof that 2n + 1 vectors suffice to
+                                                  generate Λ with constant probability (provided that B is chosen to be sufficiently
+                                                  large in terms of n and the covering radius of Λ and the last n + 1 vectors are
+                                                  sampled from a slightly larger window). Based on extensive computer simulations,
+                                                  we conjecture that only n+1 vectors sampled from one window suffice to generate
+                                                  Λ with constant success probability. If this conjecture is true, then a significantly
+                                                  better success probability of the above quantum algorithms can be guaranteed.
+
+
+                                          1       Introduction
+                                          Let G be a finite group. Denote by pm (G) the probability that m elements drawn
+                                          uniformly at random from G with replacement generate G. The problem of determining
+                                          or bounding this probability is of fundamental interest in group theory and has been
+                                          extensively studied for various families of groups [Acc96, Pom01].
+                                              The purpose of this paper is to study a very natural generalization of this prob-
+                                          lem from finite abelian groups to finitely generated abelian torsion-free groups. More
+                                          precisely, we consider the case of lattices, i.e., discrete subgroups of Rn . The problem
+                                          is now to determine the probability that m vectors selected uniformly at random with
+                                              ∗
+                                               Insitute of Mathematics, University of Zurich, Winterthurerstrasse 190, 8057 Zurich, Switzerland;
+                                          felix.fontein@math.uzh.ch
+                                             †
+                                               Mathematics Department & Center for Theoretical Physics, Massachusetts Institute of Technology,
+                                          Cambridge, MA 02139, USA; on sabbatical leave from Department of Electrical Engineering and
+                                          Computer Science, University of Central Florida, Orlando, FL 32816, USA; wocjan@eecs.ucf.edu
+
+
+                                                                                            1
+replacement from the intersection of the full-rank lattice Λ in Rn and a window X ⊂ Rn
+generate Λ. We denote this probability by pm (Λ, X).
+    Our study this problem of was initially motivated by its relevance to quantum
+algorithms and quantum cryptanalysis, which we explain in more detail at the end
+of the paper. But we also believe that this problem is interesting on its own due
+to its appeal as a very natural and fundamental problem in lattice theory. In fact,
+it can be viewed as a generalization of the following elementary problem in number
+theory. For Λ = Z and X = [1, B], the probability pm (Λ, X) corresponds to the
+probability that m integers chosen uniformly at random from the set {1, . . . , B} with
+replacement are coprime. It is known that limB→∞ pm (Z, B) = 1/ζ(m) where ζ denotes
+the Riemann zeta function. For Λ = Zn and X, the probability pm (Λ, X) is equal to
+the probability that the m × n matrix whose column vectors are selected uniformly at
+random from Λ ∩ X is unimodular. This problem was studied for special forms of X
+asymptotically. For X = [−B, B]n , B → ∞, it was studied by G. Maze, J. Rosenthal
+and U. Wagner in [MRW11], and for X = v + [−B, B]n , B → ∞, where the entries of
+the vector v are bounded polynomially in terms of B, by S. Elizalde and K. Woods in
+[EW07]. In both cases, it was shown that the limit of the probability for B → ∞ is
+Q  m
+   j=m−n+1 ζ(j) . Both works did not study the problem of bounding the probability
+               −1
+
+in the non-asymptotic case, i.e., in the case where B is fixed.
+    In this paper, we consider the case where Λ is an arbitrary full-rank lattice and
+X = [0, B)n for a sufficiently large but fixed B. Ideally, we want to minimize m, while
+at the same time ensure that the probability pm (Λ, [0, B))n is bounded from below by
+a nonzero constant. We use ν(Λ) to denote the covering radius of Λ, λ1 (Λ) the length
+of a shortest (nonzero) vector of Λ, and det(Λ) the determinant of Λ.
+    Our two major contributions to the study of this problem are:
+Theorem 1.1. Let Λ be a lattice of full rank in Rn , and assume that B ≥ 8nn/2 · ν(Λ)
+and B1 ≥ 8n2 (n + 1)B. Assume that n vectors are selected uniformly at random from
+Λ ∩ [0, B)n and n + 1 vectors uniformly at random from Λ ∩ [0, B1 )n . If the vectors are
+sampled independently, then the probability that all these vectors generate Λ is at least
+                   n+1              n−1               n/2
+                                      Y                    + 1)k
+                                                                  
+                                                k/2 (4n
+                     Y
+                             −1   1
+             αn :=       ζ(i) − 4 ·        1−n                      ≥ 0.092.
+                     i=2              k=0
+                                                    (4nn/2 − 1)n
+
+    Unfortunately, our current approach requires m = 2n + 1 samples and two windows
+of different sizes to be able to prove that the probability of generating the lattice Λ is
+bounded from below by a non-zero constant. However, based on extensive numerical
+evidence, we formulate the following conjecture, which states that only m = n + 1
+samples and only one window size suffice to attain a constant probability of generating
+the lattice.
+Conjecture 1.2. For every n ∈ N, there exists a constant 0 < cn < 1 and a rational
+function fn ∈ R(x, y) satisfying
+                           1/n 
+                                 : sup fn (x, y) 0 < x ≤ x0 , y0 ≤ y ≤ x1/n < ∞
+                                      
+       ∀x0 > 0 ∀y0 ∈ 0, x0
+
+                                            2
+such that the following holds:
+     Let Λ be a lattice in Rn and let B > fn (det Λ, λ1 (Λ)). Then the probability that n+ 1
+vectors chosen uniformly at random from Λ ∩ [0, B)nQgenerate the lattice Λ is at least
+cn . Moreover, the constant cn can be chosen close to n+1    k=2 ζ(k) .
+                                                                     −1
+
+
+
+
+2     Solving the Lattice Generation Problem
+We break down the lattice generation problem into two subproblems. First, we consider
+the probability that n vectors sampled uniformly at random from Λ generate a sublat-
+tice Λ1 of full rank, i.e. do not lie in a hyperplane. Then, we compute the probability
+that the residue classes of the next n + 1 vectors generate the finite abelian quotient
+group Λ/Λ1 . Finally, we combine these two results.
+    In the following, we assume that n > 1. We discuss a result for the case n = 1 in
+Section 3.
+    The idea to prove a lower bound on the probability by considering the above two
+steps was proposed by A. Schmidt in [Sch07]. We present a correct proof of the problem
+arising in the first step, fixing a mistake in Schmidt’s proof. Our approach to analyzing
+the problem arising in the second step is entirely different from the approach undertaken
+by Schmidt. The differences will be discussed in Sections 2.1 and 2.3.
+
+2.1    Generating a Sublattice of Full Rank
+Note that λ1 , . . . , λn ∈ Λ ∩ [0, B)n generate a sublattice of full rank if and only if they
+are linearly independent over R. This is the case if λi is not contained in the (i − 1)-
+dimensional hyperplane spanned by λ1 , . . . , λi−1 . Thus to bound the probability that n
+uniformly random vectors from Λ ∩[0, B)n generate a full rank sublattice, we bound the
+number of lattice elements in the intersection as well as the number of lattice elements
+lying both in the intersection and a k-dimensional hyperplane, 1 ≤ k < n. We find
+such bounds using Voronoi cells; see also Section 1.2 of Chapter 8 in [MG02]. To state
+the results, we need to introduce some notation, most notably the covering radius of a
+lattice.
+    Let Λ be a lattice in Rn of full rank. For λ ∈ Λ, let
+
+                VΛ (λ) = {x ∈ Rn | ∀λ′ ∈ Λ \ {λ} : kx − λk2 < kx − λ′ k2 }
+
+be its (open) Voronoi cell. We know that VΛ (λ) is contained in an open ball of radius
+ν(Λ) centered around λ, where ν(Λ) is the covering radius of S   Λ, and that the volume of
+VΛ (λ) is det Λ. Moreover, if λ 6= λ , VΛ (λ) ∩ VΛ (λ ) = ∅, and λ∈Λ VΛ (λ) = Rn . Details
+                                      ′              ′
+
+can be found in [MG02, Chapter 8].
+    Note that ν(Λ) ≤ 12 nn/2+1 λ1det Λ
+                                 (Λ)n−1
+                                        , where λ1 (Λ) denotes the first successive minimum
+of Λ [MG02], i.e. the length of a shortest nonzero vector in Λ.
+
+
+
+                                              3
+Lemma 2.1. If B > 2ν(Λ). Then
+
+                          (B − 2ν(Λ))n                    (B + 2ν(Λ))n
+                                       ≤ |Λ ∩ [0, B)n | ≤              .
+                             det Λ                           det Λ
+Lemma 2.2. Let B > 0 and H be a k-dimensional hyperplane, 1 ≤ k < n. Then
+
+                                                 nk/2 (B + 2ν(Λ))k (2ν(Λ))n−k
+                        |Λ ∩ H ∩ [0, B)n | ≤                                  .
+                                                             det Λ
+    The proofs are similar to the one of Proposition 8.7 in [MG02]:
+Proof of Lemma 2.1. If λ ∈ Λ satisfies VΛ (λ) ∩ [ν(Λ), B − ν(Λ))n 6= ∅, then we must
+have λ ∈ [0, B)n . Therefore, (B − 2ν(Λ))n / det Λ ≤ |Λ ∩ [0, B)n |.
+   If λ ∈ Λ ∩ [0, B)n , then we must have VΛ (λ) ⊆ [−ν(Λ), B + ν(Λ))n . Therefore,
+|Λ ∩ [0, B)n | ≤ (B + 2ν(Λ))n / det Λ.
+Proof of Lemma 2.2. Let λ ∈ Λ∩H ∩[0, B)n . Then VΛ (λ) ⊆ X := [−ν(Λ), B +ν(Λ))n ∩
+(H + Bν(Λ) (0)), where Bν(Λ) (0) is a ball of radius ν(Λ) centered around 0. Therefore,
+|Λ ∩ H ∩ [0, B)n | ≤ vol(X)/ det Λ, and we have to estimate vol(X).
+   Clearly, if volk (Y ) denotes the k-dimensional volume of Y := H ∩[−ν(Λ), B+ν(Λ))n ,
+we have that vol(X) ≤ volk (Y ) · (2ν(Λ))n−k . (In fact, we can replace (2ν(Λ))n−k by the
+volume of an (n − k)-dimensional ball of radius ν(Λ).)
+Pk Let b1 , . . . , bk be an orthonormal     basis of H. Set T := {(x1 , . . . , xk ) ∈ Rk |
+                                       n
+  i=1 xi bi ∈ [−ν(Λ), B + ν(Λ)) }; then vol(T ) = volk (Y ). A point y ∈ Y corre-
+sponds to (hy, b1i, . . . , hy, bk i) ∈ T . Write bi = (bi1 , . . . , bin ) and y = (y1 , . . . , yn ) ∈
+[−ν(Λ), B + ν(Λ))n , set Aij := B + ν(Λ) if bij ≥ 0 and Aij := ν(Λ) if bij < 0. Then
+              n
+              X                                                 n
+                                                                X                 n
+                                                                                  X
+                     |bij |(Aij − (B + 2ν(Λ))) ≤ hy, bi i =            yj bij ≤         |bij |Aij ,
+               j=1                                               j=1              j=1
+
+                                                                                              √
+implying that hy, bi i ranges over an interval of length kbi k1 (B+2ν(Λ)) ≤                       n(B+2ν(Λ)).
+Therefore,
+                                vol(T ) ≤ nk/2 (B + 2ν(Λ))k .
+   The lemmas allow us to find the following bound on the probability that n random
+vectors generate a sublattice of full rank:
+
+Corollary 2.3. Assume that B ≥ 8nn/2 · ν(Λ). Let
+
+                         X := (Λ ∩ [0, B)n )n
+                     and Y := {(y1 , . . . , yn ) ∈ X | spanR (y1 , . . . , yn ) = Rn }.
+
+Then |Y | ≥ 21 |X|.
+
+
+
+                                                     4
+Proof. Assume that y1 , . . . , yk ∈ X are linearly independent, 0 ≤ k < n. We bound the
+probability from above that yk+1 ∈ X is not contained in the hyperplane generated by
+y1 , . . . , yk , which is of dimension k. Write B = j · ν(Λ) with j ≥ 8nn/2 . By Lemmas 2.1
+and 2.2, the probability that yk+1 is in a k-dimensional hyperplane is bounded from
+above by
+
+              nk/2 (B + 2ν(Λ))k (2ν(Λ))n−k        det Λ                    k n−k
+                                                                k/2 (j + 2) 2
+        Pk :=                               ·                = n                 .
+                          det Λ               (B − 2ν(Λ))n            (j − 2)n
+                                                     Qn−1
+The success probability is bounded from below by k=0       (1 − Pk ). Using induction on
+n, we can prove that
+                               n−1
+                               Y                  n−1
+                                                  X
+                                  (1 − Pk ) ≥ 1 −     Pk .
+                                k=0                  k=0
+          Pn−1
+The sum     k=0 Pk can be bounded from above as follows:
+
+            n−1                n−1 √             k
+            X           2n    X         n(j + 2)
+               Pk =
+           k=0
+                    (j − 2)n k=0           2
+                                              n                             −1
+                        2n
+                              √                       √            
+                                     n(j + 2)                 n(j + 2)
+                  =                                −1                     −1
+                    (j − 2)n            2                        2
+                              √             n √                    −1
+                        2n
+                                                                 
+                                   n(j + 2)            n(j + 2)
+                  <                                                −1
+                    (j − 2)n          2                   2
+                                      n √                   −1
+                     n/2           4             n(j + 2)
+                  =n       1+                                −1      .
+                                j−2                 2
+          4 n
+                      4n                 4                                √
+Now 1 + j−2    ≤ exp( j−2 ) ≤ exp( 8nn/2−1  −2/n
+                                                 ) ≤ 2 for all n ≥ 1 and n(j + 2)/2 − 1 ≥
+j/2, whence
+                           n−1
+                           X                   2     4nn/2     1
+                                Pk < 2nn/2 · ≤ n/2 = .
+                            k=0
+                                               j     8n        2
+                                                                                  Pn−1
+   Note that our lower bound is far from optimal. If one considers the value         k=0 Pk
+from the proof and substitutes j by 8nn/2 , one obtains the lower bound
+                               n−1
+                               Y              (4nn/2 + 1)k
+                                                              
+                                      1 − nk/2                 .
+                               k=0
+                                               (4nn/2 − 1)n
+
+For n = 1 this is 23 , and the product grows to 1 for n → ∞. For small n, the values are:
+
+          Dimension n        1     2     3     4     5     6     7
+          Lower bound      0.666 0.725 0.812 0.859 0.883 0.896 0.905
+
+
+
+                                              5
+Remark 2.4. The basic idea of the proof of this corollary is similar to the proof of
+the first part of Satz 2.4.23 in [Sch07]. Note that the proof in [Sch07] is not correct:
+the ratio |Mi−1 ∩ B|/|Mi ∩ B| considered in the proof can be > 12 ; for example, consider
+r = 3, M = Z3 , n > 0 arbitrary (in [Sch07], nν(M) is what we denote by b, i.e.,
+B = [0, nν(M))n ), x1 = (1, nν(M) − 1, 0), x2 = (0, 1, nν(M) − 1), x3 = (0, 0, 1);
+then M1 ∩ B contains two elements, while M2 ∩ B contains three elements. Therefore,
+|M1 ∩ B|/|M2 ∩ B| = 23 > 21 . The problem is that det Mi cannot be bounded linearly
+in terms ofp ν(M) and det Mi−1 , asp   it was claimed in that proof; in this example,
+det M1 = 1 + (n − 1) , det M2 = 1 + (n − 1)2 + (n − 1)4 and ν(M) = 1. In our
+                         2
+
+proof, we proceed differently by considering the ratio |Mi ∩ B|/|M ∩ B| directly, and
+both our bound on the probability and our bound on the minimal size of B is in fact
+better than the corresponding bounds given in [Sch07].
+
+2.2    Generating a Finite Abelian Group
+In case Λ1 is a sublattice of full rank of Λ, the quotient group G = Λ/Λ1 is a finite
+abelian group. Its order equals the index [Λ : Λ1 ], and by the Elementary Divisor
+Theorem, it can be generated by n elements.
+
+Proposition 2.5. Let G be a finite abelian group known to be generated by n elements.
+Then the probability that n + 1 elements drawn uniformly at random from G generate
+G is at least
+                                            ∞
+                                            Y
+                                    ζ̂ :=         ζ(i)−1 ≥ 0.434 ,
+                                            i=2
+
+where ζ denotes the Riemann zeta function.
+
+    For the decimal expansion of ζ̂, see [Seq]. The probability that a finite group
+is generated by a certain number of random elements has been studied extensively.
+Formulas for the probability for p-groups and products of finite groups of coprime
+orders have been derived by V. Acciaro in [Acc96, Lemma 4 and Corollary 3] (see also
+[Pom01]). Our result is essentially a corollary of these two results, which we have not
+found in this form in the literature.
+Proof of Proposition 2.5. For a finite group H, let λt (H) be the probability that t group
+elements chosen uniformly at random generate H. In [Acc96], it is shown that if H is
+a p-group with minimal number d of generators, then
+                          d                  t                        t
+                          Y
+                                      −i
+                                             Y pi−d − p−d             Y
+               λt (H) =         (1 − p ) ·                       =         (1 − p−i )
+                          i=1                i=d+1
+                                                      pi−d − 1       i=t−d+1
+
+
+for t ≥ d (Lemma 4), and that if H = H1 × H2 with |H1 |, |H2 | being coprime, then
+λt (H) = λt (H1 )λt (H2 ) (Corollary 3).
+
+                                                     6
+     Let p1 , . . . , pk be the distinct prime divisors of |G|, and let Gi be the pi -Sylow
+subgroup
+Qk          of G. Then G = G1 ⊕ · · · ⊕ Gk . Now [Acc96, Corollary 3] yields λt (G) =
+   i=1 λt (Gi ) since |Gi | is a pi -group, and pi 6= pj for i 6= j. Let di be the minimal number
+of generators for Gi ; since the minimal number for G is n, we must have di ≤ n. Thus,
+by [Acc96, Lemma 4]
+                                          n+1
+                                          Y                          n+1
+                                                                     Y
+                         λn+1 (Gi ) =              (1 − p−i ) ≥             (1 − p−i ).
+                                        i=n+1−di                     i=2
+
+Therefore, the probability that n elements of an arbitrary finite abelian group G which
+can be generated by n elements generate the group is at least
+
+                    Y n+1
+                      Y             n+1
+                                    YY             n+1
+                                                    Y        −1
+                               −i             −i
+                         (1 − p ) =     (1 − p ) =      ζ(i)
+                     p   i=2                i=2    p                         i=2
+
+using the Euler product representation of the Riemann zeta function. Now
+                                   n+1
+                                   Y               ∞
+                                                   Y
+                                         ζ(i) ≤            ζ(i) = ζ̂ −1 .
+                                   i=2             i=2
+
+   Observe that our approach only works if we have at least n + 1 elements. If we
+chose just n elements randomly, the final product would include ζ(1)−1 = 0 and the
+probability would drop down to zero. However, a different approach can result in a
+non-zero probability for n elements. This probability will necessarily not be constant
+anymore, Qbut has to depend on n or |G|. For example, if p1 , . . . , pk are distinct primes
+and G = ki=1 Fnpi ∼= (Z/(p1 · · · pk )Z)n , then G can be generated by n elements, but the
+probability that n random elements from G generates G is exactly ki=1 nj=1 (1 − p−j
+                                                                        Q Q
+                                                                                         i ),
+which goes to zero for k → ∞ for exactly the above reasons. Hence, any non-trivial
+bound on the probability must take n or p1 , . . . , pk into account.
+   This shows that our approach will not work with fewer than 2n + 1 elements, if the
+desired bound on the probability should be independent of n.
+
+2.3     The Final Result
+Assume that the first n sampled vectors from Λ ∩ [0, B)n generate a sublattice Λ1 of full
+rank. Then G = Λ/Λ1 is a finite abelian group which can be generated by n elements.
+Thus if we sample n + 1 elements λ + Λ1 from G in a uniform random manner, we can
+bound the probability that they generate G. In case G = hλn+1 + Λ1 , . . . , λ2n+1 + Λ1 i
+and Λ1 = hλ1 , . . . , λn i, we have Λ = hλ1 , . . . , λn , λn+1 , . . . , λ2n+1 i.
+    The main problem is that we cannot directly sample uniformly at random from G:
+if we choose λ ∈ Λ ∩ [0, B)n uniformly at random, then λ + Λ1 will in general not be
+uniformly distributed in G = Λ/Λ1 . By enlarging the window [0, B)n to [0, B1 )n with
+B1 > B large enough, we ensure that the residue classes of the samples λ ∈ Λ ∩ [0, B1 )n
+
+                                                       7
+are essentially distributed uniformly at random in G. More precisely, we can show that
+the statistical distance between the distribution and the perfectly uniform distribution
+is small enough. This is established by the following result:
+
+Lemma 2.6. Let Λ1 be an arbitrary full-rank sublattice of Λ. Assume that B1 > 2ν(Λ1 )
+and we can sample uniformly at random from Λ ∩ [0, B1 )n . Denote the sample by λ.
+Then, the total variation distance between the uniform distribution over Λ/Λ1 and the
+distribution of λ + Λ1 , where λ ∈ Λ ∩ [0, B1 )n is uniformly distributed, is at most
+
+                                           (B1 − 2ν(Λ1 ))n
+                                      1−                   .
+                                            (B1 + 2ν(Λ))n
+
+Proof.   First note that VΛ1 (λ1 ) = λ1 + VΛ1 (0) and VΛ1 (λ1 ) = λ1 + VΛ1 (0). Now, as
+                             n
+S
+  λ1 ∈Λ1 (λ 1 + VΛ1 (0)) = R and two translates of VΛ1 (0) by different elements of Λ1 do
+not intersect, there exists a set V with VΛ1 (0) ⊆ V ⊆ VΛ1 (0) satisfying
+                [
+                     (λ1 + V ) = Rn and ∀λ1 ∈ Λ1 \ {0} : (λ1 + V ) ∩ V = ∅.
+            λ1 ∈Λ1
+
+Note that vol(V ) = vol(VΛ1 (0)) = det Λ1 .
+   We first assume that the window has the form [0, B1 ]n instead of the form [0, B1 )n
+and later argue that the bounds derived also apply to the actual window [0, B1 )n . We
+need the following three facts:
+
+   • There are exactly m = det Λ1 / det Λ points of Λ in each translate of V , i.e.,
+
+                               |(λ1 + V ) ∩ Λ| = m for all λ1 ∈ Λ1 .
+
+     This can be shown by using asymptotic arguments similarly to those used in the
+     proof that each translate of the elementary parallelepipeds of Λ1 contains exactly
+     m elements of Λ (see e.g. [Bar]).
+
+   • There are at least
+                                               (B1 − 2ν(Λ1 ))n
+                                          ℓ=
+                                                   det Λ1
+     translates of V that are entirely contained inside the window [0, B1 ]n since V ⊆
+     Bν(Λ1 ) (0).
+
+   • There are at most
+                                              (B1 + 2ν(Λ))n
+                                           u=
+                                                  det Λ
+     points of Λ inside [0, B1 ]n .
+
+Let Ω = Λ ∩ [0, B1 ]n . We call λ ∈ Ω good if there exists λ1 ∈ Λ1 such that
+
+                                      λ ∈ λ1 + V ⊆ [0, B1 ]n .
+
+                                                 8
+In words, λ ∈ Ω is good if it belongs to a translate of V that is entirely inside the
+window [0, B1 ]n . Let Ωgood denote the set of good points. Using the first two facts
+above, we deduce that |Ωgood | ≥ mℓ.
+    Let P denote the uniform distribution on Ω and P̃ the uniform distribution on the
+set of good points. We view P̃ as a probability distribution on Ω by assigning the
+probability 0 to any point that is not good. Then, the total variation distance between
+P and P̃ is bounded from above by
+                                                        
+        1X                     1              1        1    1                  1
+              |P(λ) − P̃(λ)| = |Ωgood |             −      + (|Ω| − |Ωgood |)
+        2 λ∈Ω                  2            |Ωgood | |Ω|    2                 |Ω|
+                                                                           n
+                                    |Ωgood |        mℓ        B1 − 2ν(Λ1 )
+                             =1−             ≤1−        ≤1−               n .
+                                      |Ω|            u        B1 + 2ν(Λ)
+
+    Let κ : Λ → Λ/Λ1 denote the canonical projection map. Let Q and Q̃ be the
+probability distribution on the cosets Λ/Λ1 induced by the following two-step process:
+(1) sample λ according to P and P̃, respectively, and (2) apply κ to the obtained
+sample λ. Observe that Q̃ is the uniform distribution on Λ/Λ1 . Unfortunately, we
+cannot sample according to Q̃ but only according to Q. However, the total variation
+distance between Q and Q̃ must be less or equal to the one between P and P̃ since the
+total variation distance satisfies a so-called data processing inequality.
+    Note that so far, we have considered [0, B1 ]n instead of [0, B1 )n . As Λ is discrete,
+there exists some 2ν(Λ1 ) < B1′ < B1 with [0, B1′ ]n ∩ Λ = [0, B1 )n . Applying the result
+above to [0, B1′ ]n and then using that
+                                             (x − 2ν(Λ1 ))n
+                                  x 7→ 1 −
+                                              (x + 2ν(Λ))n
+is increasing yields the stated claim for [0, B1 )n .
+   Combining the lemma and Proposition 2.5 and using the additivity of the total
+variation distance under composition provided that the components are independent,
+we obtain the following result:
+Corollary 2.7. Assume that B ≥ 8nn/2 · ν(Λ) and B1 ≥ 8n2 (n + 1)B. Let Y be as in
+Corollary 2.3 and (y1 , . . . , yn ) ∈ Y . Let
+                                     n+1
+        X1 := Λ ∩ [0, B1 )n
+         Z = {(z1 , . . . , zn+1 ) ∈ X1n+1 | spanZ {y1 , . . . , yn , z1 , . . . , zn+1 } = Λ}.
+Then |Z| ≥ ζ̂ − 41 |X1 | ≥ 0.184|X1 |.
+                  
+
+Proof. Let Λ1 be the full-rank sublattice generated by y1 , . . . , yn . We have the following
+simple bound on the covering radius
+                        √               √                 √
+                           n              n                   n√           nB
+              ν(Λ1 ) ≤       λn (Λ1 ) ≤     max kyi k2 ≤             nB =
+                          2              2 i=1,...,n        2               2
+
+                                               9
+                                                                                       √
+since the yi are linearly independent and every vector in [0, B)n is shorter than nB.
+Moreover, ν(Λ1 ) ≥ ν(Λ).
+    Let zi be uniformly distributed in Λ∩[0, B1 )n . Then, Lemma 2.6 implies that zi +Λ1
+(for i = n + 1, . . . , 2n + 1) are distributed almost uniformly at random from Λ/Λ1 . The
+total variation distance from the uniform distribution is bounded from above as follows:
+                                                                                    n
+               (B1 − 2ν(Λ1 ))n             (B1 − 2ν(Λ1 ))n
+                                                                 
+                                                                          4ν(Λ1 )
+           1−                       ≤1−                    =1− 1−
+                (B1 + 2ν(Λ))n              (B1 + 2ν(Λ1 ))n             B1 + 2ν(Λ1 )
+                                                            2
+                                       
+                             4ν(Λ1 )         4nν(Λ1 )    2n B        1
+        ≤1− 1−n                            ≤          ≤       ≤           .
+                           B1 + 2ν(Λ1 )         B1         B1    4(n + 1)
+
+Consider now the uniform probability distribution on the (n + 1)-fold direct product
+of Λ/Λ1 and the probability distribution that arises from sampling almost uniformly at
+random on each of the components as above. Then the total variation between these
+                                                          1
+two distributions is bounded from above by (n + 1) · 4(n+1)   = 41 . This is because the
+total variation distance is subadditive under composition provided that the components
+are independent (see e.g. [MG02, Subsection 1.3 “Statistical distance” in Chapter 8] for
+more information on the total variation distance).
+    Clearly, the abelian group Λ/Λ1 can be generated with only n generators. Hence,
+Proposition 2.5 implies that n+1 samples (provided that they are distributed uniformly
+at random over the group) form a generating set with probability greater or equal to ζ̂.
+Due to the deviation from the uniform distribution on the (n + 1)-fold direct product
+of Λ/Λ1 this probability may decrease. However it is at least ζ̂ − 1/4 since the total
+variation distance is at most 1/4. The claim follows now by translating the lower
+bound on the probability to a lower bound on the fraction of elements with the desired
+property.
+    Combining this corollary with Corollary 2.3, we obtain a proof of Theorem 1.1.
+This theorem is similar to Satz 2.4.23 in [Sch07]. We emphasize that our bound on the
+success probability is constant, whereas the bound presented in Satz 2.4.23 decreases
+exponentially fast with the dimension n. The first part of proof of Satz 2.4.23 (con-
+cerning the generation of a full-rank sublattice) is unfortunately not correct, but can be
+corrected as we have shown in our proof of Corollary 2.3. The idea behind the second
+part is completely different from our proof and cannot be used to prove a constant
+success probability. Perhaps it could be used to prove that only 2n random elements
+(as opposed to 2n + 1 elements) are needed to guarantee a non-zero success probability.
+    Note that for a fixed dimension n, one obtains bounds larger than 0.092. For n = 2,
+3, 4 and 5, αn is larger than 0.238, 0.185, 0.176, 0.172 and 0.170, respectively.
+
+
+
+
+                                           10
+3     Conjecture
+Let b1 , . . . , bn be any basis of the lattice Λ. Consider the natural isomorphism Φ : Rn →
+Rn mapping the i-th standard unit vector ei to bi . Then Φ(Zn ) = Λ. Let
+                                                                         n
+                                                                          X                          
+                        −1        n                                   n                          n
+               X := Φ ([0, B) ) =            (a1 , . . . , an ) ∈ R             ai bi ∈ [0, B)           ;
+                                                                          i=1
+
+                                                   B   n
+this is a parallelepiped in Rn of volume det         Λ
+                                                        having 0 as a vertex. If we assume that
+the basis b1 , . . . , bn is reduced, then this parallelepiped is not too skewed.
+    Now let v1 , . . . , vm ∈ Λ be vectors, m ≥ n, and consider v̂i := Φ−1 (vi ) ∈ Zn for
+i = 1, . . . , m. We have that hv1 , . . . , vm i = Λ if and only if hv̂1 , . . . , v̂m i = Zn , and this
+is the case if and only if the matrix (v̂1 , . . . , v̂m ) ∈ Zn×m is unimodular.
+    Therefore, the probability that m ≥ n vectors selected uniformly at random in
+Λ ∩ [0, B)n generate Λ equals the probability that an n × m integer matrix whose
+columns are chosen uniformly at random in X is unimodular.
+    As indicated in the introduction, this problem was studied for special forms of X
+asymptotically. For X = [−B, B]n , B → ∞, it was studied in G. Maze, J. Rosenthal
+and U. Wagner showed in [MRW11], and for X = v + [−B, B]n , B → ∞ while v is
+bounded polynomially in terms of B, in S. Elizalde and K. WoodsQ[EW07]. In both
+cases, it was shown that the limit of the probability for B → ∞ is m                   j=m−n+1 ζ(j)
+                                                                                                    −1
+                                                                                                        –
+which for m = n + 1, not very surprisingly, equals the probability given in Section 2.2.
+This can be bounded from below by ζ̂ > 0.434 as soon as m > n. This implies that for
+a certain B̂ > 0, we have that the probability is at least 0.434 for all B > B̂.
+    While it seems probable that the proof of [EW07] can yield effective non-trivial
+bounds for any such B̂. However, it is unclear whether this would help for the general
+case, as the proof only considers the special case X = v + [−B, B]n , while we have to
+consider essentially arbitrary parallelepipeds with 0 as a vertex.
+    We have run computer experiments to study the probability for arbitrary paral-
+lelepipeds. We restricted to the case m = n + 1. For the experiments, we generated
+a random parallelepiped by choosing n vectors from [−C, C]n and considering the par-
+allelepiped spanned by them. We generated 1000 such parallelepipeds, and for every
+parallelepiped we generated 10 000 integer matrices with columns taken uniformly at
+random from the parallelepiped. Every matrix was tested whether it is unimodular. We
+used three different bounds for C, namely C = 104 , C = 109 and C = 1018 . For every
+combination of n × m = n × (n + 1) and C, we computed both the average probability
+that an n × m integer matrix taken from a parallelepiped is unimodular, and the mini-
+mal probability (over all parallelepipeds for given n × m and C). The results are shown
+in Tables 1 (average probabilities)Q     and 2 (minimal probabilities) on page 12. They also
+include the “ideal” probabilities n+1       j=2 ζ(j)
+                                                     −1
+                                                         predicted for the special parallelepiped
+with B → ∞ in [MRW11].
+    As one can clearly see, the average values are very close to the ideal ones. But
+also the minimal probabilities observed in the experiments were always close to the
+
+                                                      11
+               n     C = 104    C = 109   C = 1018    ideal probability
+               1    60.7273%   60.8094%   60.8103%           60.7927%
+               2    50.5849%   50.5899%   50.5649%           50.5739%
+               3    46.7040%   46.7257%   46.7367%           46.7272%
+               4    45.0382%   45.0252%   45.0080%           45.0631%
+               5    44.2531%   44.2315%   44.2052%           44.2949%
+               6    43.8661%   43.8894%   43.8740%           43.9281%
+               7    43.6945%   43.6773%   43.7059%           43.7497%
+               8    43.6003%   43.6162%   43.6049%           43.6620%
+               9    43.5529%   43.5662%   43.5447%           43.6187%
+              10    43.5369%   43.5343%   43.5332%           43.5971%
+              11    43.5124%   43.5463%   43.5556%           43.5864%
+              12    43.5314%   43.5488%   43.5218%           43.5810%
+              13    43.5329%   43.5314%   43.5224%           43.5784%
+              14    43.5217%   43.5322%   43.5679%           43.5770%
+              15    43.5113%   43.5273%   43.4947%           43.5764%
+
+
+Table 1: Average empirical probability that a random n × (n + 1) integer matrix from
+a random parallelepiped inside [−C, C]n is unimodular.
+
+
+                n    C = 104 C = 109 C = 1018        ideal probability
+                1     58.98% 59.17%   59.31%                60.7927%
+                2     49.03% 48.91%   49.17%                50.5739%
+                3     45.16% 44.96%   45.34%                46.7272%
+                4     43.09% 43.31%   43.60%                45.0631%
+                5     42.39% 42.61%   42.61%                44.2949%
+                6     42.27% 42.06%   42.06%                43.9281%
+                7     42.24% 42.37%   41.72%                43.7497%
+                8     41.99% 42.17%   41.83%                43.6620%
+                9     42.18% 42.14%   41.78%                43.6187%
+               10     42.14% 42.02%   42.14%                43.5971%
+               11     41.94% 41.97%   42.09%                43.5864%
+               12     41.86% 41.81%   42.09%                43.5810%
+               13     41.98% 42.12%   42.05%                43.5784%
+               14     41.65% 42.10%   42.06%                43.5770%
+               15     41.99% 42.00%   42.13%                43.5764%
+
+
+Table 2: Minimal empirical probability that a random n × (n + 1) integer matrix from
+a random parallelepiped inside [−C, C]n is unimodular.
+
+
+                                          12
+ideal values. In fact, the difference between minimal and maximal probabilities never
+exceeded 3.66%. If one compares these probabilities to the ones given at the end of
+Section 2.3, one sees that the probabilities obtained there are far too low.
+     Our conjecture is based on the evidence sketched above. The conditions on f ensure
+that given a family of lattices where we have an upper bound on det Λ and a lower bound
+on λ1 (Λ), we can find a lower bound on B such that the result holds for all lattices of
+this family. This is for example the case for unit lattices of number fields. There, one
+has a lower bound on λ1 (Λ) depending only on the degree of the number field [Rem32],
+and an upper bound on det Λ in terms of the degree and discriminant of the number
+field [San91].
+     The only case in which we know how to prove the conjecture is n = 1. In that case,
+we have Λ = vZ for some real number v > 0. Given two elements av, bv ∈ Λ ∩ [0, B),
+we have that hav, bvi = vZ if and only if a and b are coprime.        Therefore, we are
+                                                                  B
+                                                              
+interested in the probability that two random integers in 0, det Λ are coprime. For
+  B
+det Λ
+      → ∞, it is well-known that this probability goes to ζ(2)−1 = π62 ≈ 0.607927. One
+can easily make this more precise, for example by using the computations from [Leh00]
+and additional computer computations for n ≤ 1000:
+
+Proposition 3.1. Let n ≥ 1 be a natural number and
+
+                          |{(x, y) ∈ N2 | 0 ≤ x, y ≤ n, gcd(x, y) = 1}|
+                   pn =                                                 .
+                                             (n + 1)2
+
+Then
+                                           13
+                                     pn ≥     > 0.5909
+                                           22
+with equality in the first inequality if and only if n = 10.
+
+Proof of Proposition 3.1. For n ≥ 1, let
+
+                 A(n) := {(x, y) ∈ N2 | 0 ≤ x, y ≤ n, gcd(x, y) = 1} .
+               A(n)                  Pn
+Clearly, pn = (n+1) 2 and A(n) = 2     k=1 φ(k) + 1, where
+
+
+                      φ(k) = |{x ∈ N | 0 ≤ x < k, gcd(x, k) = 1}|
+
+is Euler’s totient function. Now in [Leh00, Theorem IV and proof], it is proven that
+           n                                                       n
+           X           n2   1                                      X 1 n2 1
+                φ(k) =    ·   + ∆(n),         where |∆(n)| ≤ n       +   ·
+            k=1
+                       2 ζ(2)                                  k=1
+                                                                   k   2 n
+                                            Pn   1
+                                                           Rn 1
+and ζ is the Riemann ζ function. Now         k=1 k ≤ 1 +    1 x
+                                                                  dx = 1 + log n, whence
+
+                       |∆(n)| ≤ n(1 + log n) + 12 n = 32 n + n log n.
+
+
+                                             13
+                             2
+This together with ζ(2) = π6 shows that
+
+                     1 + 2 nk=1 φ(k)     1 + 2 π32 n2 − 23 n − n log n
+                           P                                          
+                pn =                  ≥
+                         (n + 1)2                   (n + 1)2
+                      6     n2        n log n         3n            1
+                   = 2·          2
+                                   −         2
+                                               −            2
+                                                              +          .
+                     π (n + 1)       (n + 1)     2(n + 1)       (n + 1)2
+
+Using a computer program, one quickly verifies that pn ≥ 13 22
+                                                               for all n ∈ Z ∩ [1, 1000],
+with equality if and only if n = 10. For n > n0 := 1000, the above inequality yields
+
+                         6    n20       n0 log n0       3n0
+                  pn >    2
+                            ·       2
+                                      −          2
+                                                   −            > 13
+                                                                  22
+                                                                     .
+                         π (n0 + 1)     (n0 + 1)     2(n0 + 1)2
+
+   Therefore, the conjecture is true for n = 1 with c1 = 13
+                                                         22
+                                                            and f1 (x, y) = x.
+   Finally, note that in case n = m, the result in [MRW11] shows that one expects
+that the only lower bound one can give is 0. We have run a few experiments here as
+well, and already for C = 104 , not a single unimodular matrix was found during the
+experiments.
+
+
+4    Relevance of Lattice Generation to Quantum Al-
+     gorithms and Quantum Cryptanalysis
+The Discrete Logarithm Problem (DLP) is a mathematical primitive on which many
+public-key cryptosystems are based. Examples of groups, in which the DLP is consid-
+ered to be computationally hard, include the multiplicative group of Fq [MvOV97], the
+group of Fq -rational points of an elliptic curve [CFA+ 06], the divisor class and ideal
+class groups of an algebraic curve, or the infrastructure of an algebraic number field
+[Buc91, SBW94]. For the cryptographically relevant instances, the best know classical
+algorithms have a subexponential running time. In contrast, there are efficient quan-
+tum algorithms that solve these DLPs in polynomial time [Sho97, CM01, Hal02, SW11,
+Hal05, SV05, Sch07].
+    The statement on the running time of the quantum algorithm for solving the DLP in
+the infrastructure of a number field needs to be made more precise. It scales polynomi-
+ally in the logarithm of the discriminant ∆K/Q of the number field K, but exponentially
+in a polynomial expression q([K : Q]) of its degree [K : Q]. While the exponential scal-
+ing seems to be unavoidable for fundamental reasons – one has to compute shortest
+lattice basis vectors in dimension [K : Q] to be able to perform basic arithmetic opera-
+tions in the infrastructure – it is important to reduce the magnitude of the polynomial q.
+We now explain why our theorem and conjecture on lattice generation can be used to
+achieve such reduction.
+    The quantum algorithm solves the DLP problem by reducing it to the problem of
+finding a basis of a certain full-rank lattice L ⊂ Rn where n = d + 1. We explain
+
+                                           14
+this reduction in more detail at the end of this section. To find a basis of L, the
+quantum algorithm has a mechanism which, with a certain probability p1 > 0, outputs
+an essentially uniformly distributed vector λ ∈ Λ ∩ [0, B)n+1 , where Λ = L∗ is the dual
+lattice of L and B > 0 is sufficiently large. With probability 1 − p1 it outputs a vector
+that is not an element of Λ. Unfortunately, this unfavorable case cannot be recognized
+efficiently. If one has λ1 , . . . , λm with Λ = hλ1 , . . . , λm iZ , one can compute a basis of Λ
+from these vectors and then use linear algebra (matrix inversion) to retrieve a basis of
+L = Λ∗ itself.
+     To compute the success probability, one has to consider the probability that the
+m sampled vectors are actually in Λ, and the probability that the m random vectors
+from Λ ∩ [0, B)n+1 generate Λ. If the latter probability is p2 , then the overall success
+probability is ≈ pm 1 p2 , and one expects that one has to run the algorithm ≈ (p1 p2 )
+                                                                                               m   −1
+
+times before it outputs a basis of Λ and thus of L itself. The main problem is that for
+n > 1, the lower bound one can prove for p1 is quite small. In fact, it seems unavoidable
+that p1 is bounded away from 1 by a nonzero constant. Therefore, it becomes evident
+why it is so important to minimize m without decreasing p2 too much.
+     Theorem 1.1 shows that the quantum algorithm can recover a basis of L with con-
+stant probability p2 conditioned on the event that it has obtained m = 2n + 1 samples
+                                                  2n+1
+of Λ, which occurs with probability pm      1 = p1      . For this, we use two different window
+sizes: the first n vectors are sampled from a smaller window [0, B)n+1 , and the latter
+n + 1 vectors from a larger window [0, B1 )n+1 with B1 > B. To the best of our knowl-
+edge, this is the first explicit result that leads to a rigorous bound on the running time
+of the quantum algorithm.
+     Conjecture implies that that the quantum algorithm can recover a basis of L with
+constant probability p2 conditioned on the event that it has obtained only mc = n + 1
+samples of Λ. This event occurs with probability pm             1 = p1
+                                                                 c      n+1
+                                                                            , which is greater by the
+                          n
+exponential factor 1/p1 . Moreover, the quantum algorithm becomes simpler because it
+suffices to sample vectors from one window.
+     For the sake of completeness, we now describe the reduction in more detail. The
+infrastructure of a number field is isomorphic to a torus T = Rd /M, where M is a full-
+rank lattice in Rd and the coefficients of all non-trivial vectors of M are transcendental
+numbers [Fon11]. This forces one to work with approximations, which is ultimately
+responsible for the poor performance when the dimension d increases.
+     Assume that we are given two elements x, y ∈ T and we want to find the “discrete
+logarithm” ℓ ∈ Z with ℓx = y, assuming that such number ℓ exists. For this, it suffices
+to know v, w ∈ Rd with v + M = x and w + M = y together with a basis of M: then one
+can use linear algebra to recover ℓ (and decide whether it exists). In the infrastructure of
+a number field, one has a representation of T which allows us to compute the projection
+Rd → T easily, but recovering a preimage of a random x ∈ T is hard.
+     Finding a preimage can be reformulated as a lattice problem: consider the map
+                              φ : Z × Rd → T,         (z, v) 7→ zx + v;
+this is a group homomorphism, and the kernel L := ker φ is a lattice in Rd+1 of full
+
+                                                 15
+rank. The kernel contains elements of the form (−1, v) with v ∈ Rd ; any such element
+satisfies v + M = x. If we have a basis of L, we can again use linear algebra to recover
+such an element. Thus, the task is to find a basis of a lattice L ⊆ Rd+1 of full rank.
+    Finally, we want to note that using different distributions on the lattice vectors can
+lead to much better results which are simpler to obtain. For example, when using the
+discrete Gaussian distribution on the lattice points, a result similar to ours in Theo-
+rem 1.1 follows from works by D. Micciancio, O. Regev [MR07], C. Gentry, C. Peikert
+and V. Vaikuntanathan [GPV08]. Unfortunately, it is not known how to sample from
+this distribution on a quantum computer, even in case a basis of the lattice is given.
+For our problem, where we want to determine a basis, we are only given an indirect
+description of the lattice. Therefore, these results cannot be used for solving the DLP
+without new ideas.
+
+Acknowledgments P.W. gratefully acknowledges the support from the NSF grant
+CCF-0726771 and the NSF CAREER Award CCF-0746600. P.W. would also like to
+thank Joachim Rosenthal and his group members for their hospitality during his visit at
+the Institute of Mathematics, University of Zurich. F.F. gratefully acknowledges partial
+support form the SNF grant No. 132256. Both authors would like to thank A. Schmidt
+for pointing out an error in an earlier preprint, both referees for their valuable comments,
+and S. Elizalde and K. Woods for pointing us to their paper [EW07].
+
+
+References
+[Acc96]     V. Acciaro. The probability of generating some common families of finite
+            groups. Utilitas Math., 49:243–254, 1996.
+
+[Bar]       A.     Barvinok.          Math669:         Combinatorics,     ge-
+            ometry       and      complexity      of      integer     points.
+            http://www.math.lsa.umich.edu/~ barvinok/latticenotes669.pdf.
+
+[Buc91]     J. A. Buchmann. Number theoretic algorithms and cryptology. In FCT
+            ’91: Proceedings of the 8th International Symposium on Fundamentals of
+            Computation Theory, pages 16–21, London, UK, 1991. Springer-Verlag.
+
+[CFA+ 06] H. Cohen, G. Frey, R. Avanzi, C. Doche, T. Lange, K. Nguyen, and F. Ver-
+          cauteren, editors. Handbook of elliptic and hyperelliptic curve cryptogra-
+          phy. Discrete Mathematics and its Applications (Boca Raton). Chapman &
+          Hall/CRC, Boca Raton, FL, 2006.
+
+[CM01]      K. K. H. Cheung and M. Mosca. Decomposing finite abelian groups. Quan-
+            tum Information & Computation, 1(3):26–32, 2001.
+
+[EW07]      S. Elizalde and K. Woods. The probability of choosing primitive sets. J.
+            Number Theory, 125(1):39–49, 2007.
+
+                                            16
+[Fon11]   F. Fontein. The infrastructure of a global field of arbitrary unit rank. Math.
+          Comp., 80(276):2325–2357, 2011.
+[GPV08]   Craig Gentry, Chris Peikert, and Vinod Vaikuntanathan. Trapdoors for
+          hard lattices and new cryptographic constructions [extended abstract]. In
+          STOC’08, pages 197–206. ACM, New York, 2008.
+[Hal02]   S. Hallgren. Polynomial-time quantum algorithms for Pell’s equation and
+          the principal ideal problem. In Proceedings of the Thirty-Fourth Annual
+          ACM Symposium on Theory of Computing, pages 653–658 (electronic), New
+          York, 2002. ACM.
+
+[Hal05]   S. Hallgren. Fast quantum algorithms for computing the unit group and
+          class group of a number field. In STOC’05: Proceedings of the 37th Annual
+          ACM Symposium on Theory of Computing, pages 468–474. ACM, New York,
+          2005.
+
+[Leh00]   D. N. Lehmer. Asymptotic Evaluation of Certain Totient Sums. Amer. J.
+          Math., 22(4):293–335, 1900.
+[MG02]    D. Micciancio and S. Goldwasser. Complexity of lattice problems. The
+          Kluwer International Series in Engineering and Computer Science, 671.
+          Kluwer Academic Publishers, Boston, MA, 2002. A cryptographic perspec-
+          tive.
+
+[MR07]    Daniele Micciancio and Oded Regev. Worst-case to average-case reductions
+          based on Gaussian measures. SIAM J. Comput., 37(1):267–302 (electronic),
+          2007.
+[MRW11] G. Maze, J. Rosenthal, and U. Wagner. Natural density of rectangular
+        unimodular integer matrices. Linear Algebra Appl., 434(5):1319–1324, 2011.
+[MvOV97] A. J. Menezes, P. C. van Oorschot, and S. A. Vanstone. Handbook of applied
+         cryptography. CRC Press Series on Discrete Mathematics and its Applica-
+         tions. CRC Press, Boca Raton, FL, 1997. With a foreword by Ronald L.
+         Rivest.
+
+[Pom01]   C. Pomerance. The expected number of random elements to generate a
+          finite abelian group. Periodica Mathematica Hungarica, 43(1–2):191–198,
+          2001.
+
+[Rem32]   R. Remak. Über die Abschätzung des absoluten Betrages des Regula-
+          tors eines algebraischen Zahlkörpers nach unten. J. Reine Angew. Math.,
+          167:360–378, 1932.
+[San91]   J. W. Sands. Generalization of a theorem of Siegel. Acta Arith., 58(1):47–57,
+          1991.
+
+                                         17
+[SBW94]   R. Scheidler, J. A. Buchmann, and H. C. Williams. A key-exchange protocol
+          using real quadratic fields. J. Cryptology, 7(3):171–199, 1994.
+
+[Sch07]   A. Schmidt. Zur Lösung von zahlentheoretischen Problemen mit klassischen
+          und Quantencomputern. Ph.D. thesis, Technische Universität Darmstadt,
+          2007.
+
+[Seq]     Integer sequence A021002. The on-line encyclopedia of integer sequence
+          http://oeis.org/A021002.
+
+[Sho97]   Peter W. Shor. Polynomial-time algorithms for prime factorization and
+          discrete logarithms on a quantum computer. SIAM J. Comput., 26(5):1484–
+          1509, 1997.
+
+[SV05]    A. Schmidt and U. Vollmer. Polynomial time quantum algorithm for the
+          computation of the unit group of a number field (extended abstract). In
+          STOC’05: Proceedings of the 37th Annual ACM Symposium on Theory of
+          Computing, pages 475–480. ACM, New York, 2005.
+
+[SW11]    P. Sarvepalli and P. Wocjan. Quantum algorithms for one-dimensional in-
+          frastructures. http://arxiv.org/abs/1106.6347; to appear in Quantum
+          Information and Computation, 2011.
+
+
+
+
+                                       18
+

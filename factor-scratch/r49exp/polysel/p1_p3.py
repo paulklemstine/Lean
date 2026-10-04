@@ -67,12 +67,16 @@ def mstar(N, d=D):
     m = int(N ** (1.0 / d))
     while m ** d >= N:
         m -= 1
-    while (m + 1) ** d >= N:
+    while (m + 1) ** d < N:
         m += 1
     return m
 
 
+KAPPA = None
+
+
 def measure(c, a, b, y=Y, do_norm=True):
+    global KAPPA
     t0 = time.time()
     r = K.count_relations(c, a, b, y=y)
     dt = time.time() - t0
@@ -80,6 +84,9 @@ def measure(c, a, b, y=Y, do_norm=True):
     r["seconds"] = dt
     if do_norm:
         r["meanlog"] = K.mean_log_norm(c, a, b)
+        if KAPPA is None:
+            KAPPA = K.psi_rho_ratio()
+        r["pred"] = K.pred_rate(c, a, b, y=y, kappa=KAPPA)
     return r
 
 
@@ -145,16 +152,20 @@ def family_B(N, m, a_ignored=None, b_ignored=None, n=25):
 # ---------------------------------------------------------------- fitting
 
 def fit_loglog(x, y, w=None):
-    """OLS of log y on x, with the slope's standard error."""
+    """OLS of log(count) on x, where x is ALREADY in natural-log units.
+
+    NOTE: the first version wrote `lx, ly = np.log(y), np.log(y)` -- a
+    copy-paste slip that regressed log(count) on ITSELF and therefore returned
+    slope exactly +1.000 with R^2 exactly 1.000 for every family.  Callers now
+    pass log(mass) or meanlog(f), both of which are natural logs.
+    """
     x = np.asarray(x, float)
-    y = np.asarray(y, float)
-    y = np.maximum(y, 1.0)            # a zero count is a censoring, not a log
-    lx, ly = np.log(np.maximum(y, 1.0)), np.log(y)
+    y = np.maximum(np.asarray(y, float), 1.0)   # a zero count is a censoring
     ly = np.log(y)
-    A = np.vstack([np.ones_like(lx), lx]).T
+    A = np.vstack([np.ones_like(x), x]).T
     coef, *_ = np.linalg.lstsq(A, ly, rcond=None)
     resid = ly - A @ coef
-    dof = max(len(lx) - 2, 1)
+    dof = max(len(x) - 2, 1)
     s2 = float(resid @ resid) / dof
     XtXi = np.linalg.inv(A.T @ A)
     se = math.sqrt(s2 * XtXi[1, 1])
@@ -200,12 +211,14 @@ def p1(bits_list=(39, 45, 51), do_p3=True):
         rowsA = family_A(N, int(0.90 * ms), ms, None, None, n=22)
         for r in rowsA:
             print(f"  m={r['m']:>12}  mass={r['mass']:>14}  meanlog={r['meanlog']:>7.3f}"
-                  f"  rels={r['n_smooth']:>8}  rate={r['rate']:.4e}")
+                  f"  rels={r['n_smooth']:>8}  rate={r['rate']:.4e}"
+                  f"  pred={r['pred']:.4e}  m/p={r['rate']/r['pred']:.3f}")
         print("Family B -- m FIXED, coefficients moved off the digit lattice")
         rowsB = family_B(N, ms)
         for r in rowsB:
             print(f"  mass={r['mass']:>14}  meanlog={r['meanlog']:>7.3f}"
-                  f"  rels={r['n_smooth']:>8}  rate={r['rate']:.4e}")
+                  f"  rels={r['n_smooth']:>8}  rate={r['rate']:.4e}"
+                  f"  pred={r['pred']:.4e}  m/p={r['rate']/r['pred']:.3f}")
         allrows.append({"bits": bits, "N": N, "m": ms,
                         "A": rowsA, "B": rowsB})
 
@@ -215,7 +228,7 @@ def p1(bits_list=(39, 45, 51), do_p3=True):
                 print(f"  [P1 {fam}] too few points with >=20 relations "
                       f"({len(good)}) -- not fitted")
                 continue
-            b_m, se_m, a_m, r2m = fit_loglog([r["mass"] for r in good],
+            b_m, se_m, a_m, r2m = fit_loglog([math.log(r["mass"]) for r in good],
                                               [r["n_smooth"] for r in good])
             b_f, se_f, a_f, r2f = fit_loglog([r["meanlog"] for r in good],
                                               [r["n_smooth"] for r in good])
@@ -228,7 +241,7 @@ def p1(bits_list=(39, 45, 51), do_p3=True):
     allgood = [r for blk in allrows for fam in ("A", "B")
                for r in blk[fam] if r["n_smooth"] >= 20]
     if len(allgood) >= 10:
-        b_m, se_m, _, r2m = fit_loglog([r["mass"] for r in allgood],
+        b_m, se_m, _, r2m = fit_loglog([math.log(r["mass"]) for r in allgood],
                                         [r["n_smooth"] for r in allgood])
         b_f, se_f, _, r2f = fit_loglog([r["meanlog"] for r in allgood],
                                         [r["n_smooth"] for r in allgood])
@@ -237,6 +250,15 @@ def p1(bits_list=(39, 45, 51), do_p3=True):
         print(f"  log(rate) ~ log(mass)    slope {b_m:+.3f} +- {se_m:.3f}  R2 {r2m:.3f}")
         print(f"  log(rate) ~ meanlog(f)   slope {b_f:+.4f} +- {se_f:.4f}  R2 {r2f:.3f}")
         print("  (meanlog is the natural log, so the meanlog slope is per e-fold)")
+
+    if allgood:
+        mp = np.array([r["rate"] / r["pred"] for r in allgood])
+        print("=" * 78)
+        print(f"PREDICTION CHECK -- measured rate / pointwise rho-prediction, "
+              f"n = {len(allgood)}")
+        print(f"  min {mp.min():.3f}  median {np.median(mp):.3f}  "
+              f"max {mp.max():.3f}  spread {mp.max()/mp.min():.2f}x")
+        print(f"  (a validated mechanism would give a spread near 1.0x)")
 
     # P1.2 -- compare to the random-integer null slope
     print("=" * 78)
