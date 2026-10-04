@@ -93,8 +93,22 @@ code. **The search is closed.**
 
 ## 5. Scope — stated first, because it is the thing most likely to be misread
 
-**This is a 1.2× improvement to a phase that is 5% of the cost.** Relation-finding is **95%**,
-and relation-finding *is* the number field sieve.
+**This is a 1.2× improvement to a phase that is ~5% of the cost at large `n`** — and that
+figure is **conditional**, see below. Relation-finding is the rest, and it *is* the number field
+sieve.
+
+> **⚠️ The "5%" carries `(n, b)` and must not be quoted without them.** Measured on a
+> 24-cell grid (`b ∈ {5…52}`, `n ∈ {2²⁵–2⁴⁰}`) the kernel share spans **0.0000–0.7772**: it is
+> **0.06–1.3%** at `2³⁸–2⁴⁰`, and **31–78%** at `2³⁰` with `b ≥ 26` (failing on **7 of 24
+> cells**). At the small-`(n, b)` end this paper's 1.2× is a *large* fraction of the cost, not a
+> rounding error. The honest statement is conditional on where you run it.
+>
+> **Instrument caveat, which applies to the cost figures here too:** running that grid twice with
+> **fixed seeds** — identical matrices — moved the kernel share by **+22%**. **Cells are good to
+> ~±20%.** No single cell in this area should be quoted more finely than that.
+>
+> **What is NOT conditional: the success rate.** `20/27 → 8/9` is measured per modulus with the
+> 2-adic structure reported, and is unaffected by any of the above.
 
 **This is not a factoring advance.** It is a real, free, exactly-derived improvement to a
 working algorithm — and on the cost metric that decides RSA-scale work it moves almost nothing.
