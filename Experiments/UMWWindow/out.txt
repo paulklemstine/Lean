@@ -1,0 +1,40 @@
+=== (1) window arithmetic (gamma=max(alpha,beta), diagonal alpha=beta=gamma) ===
+target exponent = gamma/2; beats Harvey 1/5 iff gamma<0.4
+  gamma=0.3333  cap_exp=3g=1.0000  slack=3g-1=+0.0000  exponent=0.1667
+  gamma=0.3400  cap_exp=3g=1.0200  slack=3g-1=+0.0200  exponent=0.1700
+  gamma=0.3500  cap_exp=3g=1.0500  slack=3g-1=+0.0500  exponent=0.1750
+  gamma=0.3600  cap_exp=3g=1.0800  slack=3g-1=+0.0800  exponent=0.1800
+  gamma=0.3800  cap_exp=3g=1.1400  slack=3g-1=+0.1400  exponent=0.1900
+  gamma=0.3900  cap_exp=3g=1.1700  slack=3g-1=+0.1700  exponent=0.1950
+  gamma=0.3990  cap_exp=3g=1.1970  slack=3g-1=+0.1970  exponent=0.1995
+
+=== (2) magnitude obstruction: budget exp(n^g) vs group-lcm <= exp(n^(1-2g)*ln n) ===
+fits iff ln n <= n^(3g-1)
+  g=0.3333 n=1e4  fits=False ln(n)=   9.21 n^(3g-1)=      1.00
+  g=0.3333 n=1e8  fits=False ln(n)=  18.42 n^(3g-1)=      1.00
+  g=0.3333 n=1e12 fits=False ln(n)=  27.63 n^(3g-1)=      1.00
+  g=0.3500 n=1e4  fits=False ln(n)=   9.21 n^(3g-1)=      1.58
+  g=0.3500 n=1e8  fits=False ln(n)=  18.42 n^(3g-1)=      2.51
+  g=0.3500 n=1e12 fits=False ln(n)=  27.63 n^(3g-1)=      3.98
+  g=0.3800 n=1e4  fits=False ln(n)=   9.21 n^(3g-1)=      3.63
+  g=0.3800 n=1e8  fits=False ln(n)=  18.42 n^(3g-1)=     13.18
+  g=0.3800 n=1e12 fits=True  ln(n)=  27.63 n^(3g-1)=     47.86
+  g=0.3900 n=1e4  fits=False ln(n)=   9.21 n^(3g-1)=      4.79
+  g=0.3900 n=1e8  fits=True  ln(n)=  18.42 n^(3g-1)=     22.91
+  g=0.3900 n=1e12 fits=True  ln(n)=  27.63 n^(3g-1)=    109.65
+  g=0.3990 n=1e4  fits=False ln(n)=   9.21 n^(3g-1)=      6.14
+  g=0.3990 n=1e8  fits=True  ln(n)=  18.42 n^(3g-1)=     37.67
+  g=0.3990 n=1e12 fits=True  ln(n)=  27.63 n^(3g-1)=    231.21
+
+=== (3) random rank-2 coverage vs gamma (n=100) ===
+  gamma=0.34 p=  5 single_cap= 12 nominal_cap=  300 cov= 73/100 ( 73%) exp=0.170
+  gamma=0.36 p=  5 single_cap= 12 nominal_cap=  300 cov= 67/100 ( 67%) exp=0.180
+  gamma=0.38 p=  6 single_cap= 12 nominal_cap=  432 cov= 82/100 ( 82%) exp=0.190
+  gamma=0.39 p=  6 single_cap= 12 nominal_cap=  432 cov= 84/100 ( 84%) exp=0.195
+  gamma=0.40 p=  6 single_cap= 20 nominal_cap=  720 cov= 84/100 ( 84%) exp=0.200
+  gamma=0.42 p=  7 single_cap= 24 nominal_cap= 1176 cov= 95/100 ( 95%) exp=0.210
+  gamma=0.45 p=  8 single_cap= 31 nominal_cap= 1984 cov= 99/100 ( 99%) exp=0.225
+  gamma=0.50 p= 10 single_cap= 31 nominal_cap= 3100 cov=100/100 (100%) exp=0.250
+
+Full coverage (100%) first achieved near gamma~0.5 -> exponent 1/4,
+which EQUALS the trivial one-set (T={0}) construction. No free lunch.
