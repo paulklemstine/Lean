@@ -3,7 +3,7 @@
 **Round 51, agent PP · `factor-scratch/r51/exp/droptest/` · 2026-10-03**
 
 Code: `dtcore.py` (independent re-implementation, five exact routes),
-`selftest.py` (**45 checks, ALL PASS**, every control fires),
+`selftest.py` (**41 checks, ALL PASS**, every control fires),
 `exp_D1.py` `exp_D1c.py` `exp_D1d.py` `exp_D2.py` `exp_D3.py`.
 Nothing is copied from the read-only `r49exp/sparse/spcore.py`; the only import
 is r48's **validated** relation finder and factoring primitives, reused rather
@@ -30,13 +30,24 @@ absolute cost is already a few thousand operations. **The defect is an
 asymptotic obstruction, not a practical one, and the round's framing conflates
 the two.**
 
-**2. The right answer to "is the dense kernel competitive where it matters" is
-that the question is settled before it is asked.** At `n ~ 2⁴⁰, b = 52` the
-kernel is **19.4%** of the phase's time and relation-finding is **80.5%**
-(`exp_D3` Q1). Swapping the kernel route changes the total by **~2×** while
-changing nothing about the algorithm. A phase that is 20% of the cost is not a
+**2. The answer to "is the dense kernel competitive where it matters" is that
+the question is settled before it is asked, and by the backend rather than by
+the mathematics.** At `n ~ 2⁴⁰, b = 52`, holding the relation set and the
+algorithm fixed and swapping *only* the kernel implementation:
+
+| kernel backend | `frac_LA` (kernel share of the phase) |
+|---|---|
+| dense `Fraction` (r50's incumbent) | **0.328** |
+| sparse dictionary | **0.214** |
+| **sympy `DomainMatrix.rref` over `QQ`** | **0.049** |
+
+An **8.9× swing in whether the kernel is a bottleneck at all, from
+implementation choice alone.** With a good backend the kernel is 5% of the
+phase and relation-finding is 95%. A phase that is 5% of the cost is not a
 bottleneck, so "drop-in" is true in the only sense in which it could matter
-operationally — and is also nearly vacuous.
+operationally — and is also nearly vacuous. **The most actionable number in this
+note is not about Stange at all: r50's incumbent kernel leaves a factor of ~10
+on the table.**
 
 **3. My sparse route was not measuring sparsity.** It probes `R[i].get(c)` for
 every row at every pivot: a `Θ(b²)` floor **independent of the matrix** (§2.3).
@@ -236,6 +247,10 @@ option at every single one of the 16 cells**, beating the incumbent `F` by
 This is the single most actionable number in the note and it is not about
 Stange at all: *r50's incumbent kernel is leaving a factor of ~10 on the table.*
 
+**Replicated on independent seeds at `n ~ 2⁴⁰`** (5 fresh relation sets per
+`b`, `min` timing): `b = 26` → `F/DM = 7.98`, `b = 40` → 11.39, `b = 52` → 12.83;
+`SQ/DM` = 3.88, 5.99, 5.35. Same conclusion with a different seed family.
+
 ### 2.2 Re-measuring the sparse agent's three claims
 
 The brief asks me to re-measure these. Here they are against my numbers:
@@ -315,6 +330,21 @@ Two regimes, and they point the same way:
   `n = 2³⁰` is 20 doublings below any real modulus, and the kernel route is
   swappable by **10×** (`DM` vs `F`) at no change to the algorithm.
 
+**The route choice decides whether the kernel is a bottleneck at all.** Same
+matrix size, same relation-finding, same algorithm — three backends only:
+
+| `n = 2⁴⁰, b = 52` | `t_rels` (ms) | `t_LA` (ms) | `t_gcd` (ms) | total (ms) | **`frac_LA`** | `frac_rels` |
+|---|---|---|---|---|---|---|
+| dense `Fraction` (`F`) | 248.16 | 121.79 | 0.236 | 347.42 | **0.328** | 0.672 |
+| sparse dict (`SQ`) | 254.25 | 61.37 | 0.208 | 306.71 | **0.214** | 0.786 |
+| sympy `QQ` dense (`DM`) | 267.00 | **13.75** | 0.208 | 280.96 | **0.049** | 0.950 |
+
+**Swapping the linear-algebra backend moves `frac_LA` from 0.33 to 0.05** — an
+8.9× swing produced entirely by implementation choice, with the algorithm
+untouched. The claim that the kernel route matters presumes the phase is
+kernel-bound; with a good backend it is **not**, and relation-finding is 95% of
+the cost. This is the same measurement that decides the verdict below.
+
 ### 3.2 The 2-adic control, and a −0.46 "deficit" that was a sampler artefact
 
 ⚠️ **Recorded because it would have shipped as a finding.** My first version of
@@ -337,9 +367,26 @@ the method and not a statement about this phase.** Had I reported the raw 0.275
 next to 20/27 I would have "discovered" a −0.47 effect that is `v₂(q−1)` and a
 sampler, i.e. exactly the failure mode the brief warns about.
 
-The per-modulus `p_split` spread is wide, which is the whole point of the
-control: across 40 moduli, `p_split` ranged **[0.500, 0.999]**. Any raw rate
-compared against the 20/27 average inherits that spread as apparent effect.
+The control run on the **phase** (does the linear-algebra/gcd step produce a
+nonzero `G`?), `N = 20–24` moduli per cell, each rate against its own cell's
+mean `p_split`:
+
+| `n` | `b` | `N` | nonzero `G` | rate | 95% CI | mean `p_split` | **excess** | `p_split` range |
+|---|---|---|---|---|---|---|---|---|
+| 2³⁰ | 32 | 20 | 20 | 1.0000 | [0.839, 1.000] | 0.6842 | **+0.3158** | **[0.500, 0.988]** |
+| 2³⁰ | 32 | 24 | 24 | 1.0000 | — | 0.7693 | **+0.2307** | **[0.500, 0.998]** |
+
+Two readings, and the second is the important one:
+
+1. The phase produces a nonzero multiple **every time** at these sizes — there
+   is no 2-adic shortfall in the linear-algebra/gcd step to explain.
+2. **The `p_split` spread is `[0.500, 0.988]` — nearly the full unit interval.**
+   An excess of `+0.32` against the mean `p_split` looks like an effect; against
+   the `20/27` average the same data would have read `1.000 − 0.741 = +0.259`,
+   or against a single high-`p_split` modulus `+0.50`. **The number moves by
+   ±0.25 purely by choosing the wrong baseline**, which is precisely why the
+   brief makes this control mandatory. I report the excess against the per-cell
+   mean and flag the spread, and I make **no claim** about a `+0.32` "effect".
 
 ### 3.3 Verdict
 
@@ -353,19 +400,30 @@ compared against the 20/27 average inherits that spread as apparent effect.
 
 **The precise statement.** "Stange's linear-algebra and gcd phase is a drop-in
 for the NFS's" is not a claim about the matrix, the defect, or the sparse
-route — it is a claim about a phase that costs under a millisecond while the
-rest of the algorithm costs hundreds. **It is true in the only sense in which
-it could be operationally meaningful, and it carries no information about the
-linear algebra, which is why it coexists so easily with `MM_sparse`'s
-`Θ(b)`-defect result.** The two round-49 notes are not in conflict; the first
-one is simply about a part of the cost that is not the constraint.
+route. It is a claim about a phase that costs **1–14 ms with a good backend**
+(`DM`, §3.1) while the relation-finding phase it sits next to costs **250–2400
+ms**. **It is true in the only sense in which it could be operationally
+meaningful, and it carries essentially no information about the linear algebra
+— which is exactly why it coexists so easily with `MM_sparse`'s `Θ(b)`-defect
+result.** The two round-49 notes are not in conflict; `MM_regime` is simply
+about a part of the cost that is not the constraint.
 
 **And the "easy half" framing is the part that overstates.** "The construction
 that 48 rounds have attacked is the easy half" is true of *relation-finding*
-(`frac_rels` up to 0.997) but the sentence as written covers the linear-algebra
-and gcd phases too, and there the kernel is 81–91% at `n ~ 2³⁰`. At that size
-the phase is not the easy half. It only becomes so at sizes the regime analysis
-cares about, where it is also irrelevant.
+alone (`frac_rels` up to 0.997). But the sentence as written covers the
+linear-algebra and gcd phases too, and there the kernel is **81–91%** of the
+phase at `n ~ 2³⁰, b = 52` under r50's incumbent backend. At that size the phase
+is not the easy half — it is the whole cost. It only becomes so at the sizes
+the regime analysis cares about, where it is also irrelevant.
+
+**The asymmetry worth stating plainly.** The claim and its refutation were both
+about the same object, and the resolution is that **they were answering
+different questions**: `MM_regime` asked "is this phase cheap?", `MM_sparse`
+asked "is this matrix NFS-shaped?". The first is true (with a good backend) and
+the second is true (`Θ(b)` defect) — and neither bears on the other. **The
+honest summary is that the round contains a correct positive result about a
+part of the cost that does not constrain the algorithm, sitting next to a
+correct negative result about a property that does not constrain it either.**
 
 ---
 
@@ -459,12 +517,13 @@ which I fetched and read.
 
 ```bash
 cd /home/raver1975/lean/factor-scratch/r51/exp/droptest
-python3 selftest.py     # 45 checks, ALL PASS, every negative control fires
+python3 selftest.py     # 41 checks, ALL PASS, every negative control fires
 python3 exp_D1.py       # defect + exact Psi mechanism          -> D1_defect.json
 python3 exp_D1c.py      # dense-vs-control confounds           -> D1_diag.json
 python3 exp_D1d.py      # probes/updates split, exponents       -> D1_scaling.json
 python3 exp_D2.py       # 5 routes, matched b, wall clock      -> D2_routes.json
-python3 exp_D3.py       # phase time split + 2-adic control    -> D3_verdict.json
+python3 exp_2adic.py    # per-modulus 2-adic control           -> D3_2adic.json
+python3 exp_D3.py       # phase time split (Q1; Q2 is slow)    -> D3_verdict.json
 ```
 
 Wall clocks: 16-core Linux, CPython 3.12.1, sympy 1.13.1, no `flint` module
