@@ -1,61 +1,68 @@
 #!/usr/bin/env python3
 """
-Q3 (fast): cost split GENERATE vs SMOOTHNESS-TEST at realistic FB sizes.
-The smoothness test is trial division of a candidate by every FB prime.
-We count OPS (deterministic, machine-independent) and also time a sample.
+Q3: quantify Bernstein batch smoothness at realistic FB sizes.
+Use pi(B) ARITHMETICALLY (primecount via sympy) -- enumerating 5.7M primes to
+B=1e8 costs 117s and changes nothing: Q3 needs |FB|, not the primes.
+Also: MAP the saving onto the constant honestly.
 """
-import math, sys, time, random
+import math, sys
 sys.path.insert(0,'/home/raver1975/lean/factor-scratch/r52/exp/relof')
-from sympy import primerange
-from relcore import psi_exact
 
-def split(BB, n_bits=60, n_cand=20000, rng_seed=1):
-    fb=list(primerange(2,BB+1))
-    V=2**n_bits
-    frac=psi_exact(V,BB)/V if BB<=5000 else None
-    random.seed(rng_seed)
-    # GENERATE: evaluating the cubic relation value = 3 multiplies + adds
-    gen_ops = 3*n_cand
-    # TEST: every candidate that survives the sieve must be trial divided.
-    # In NFS the sieve removes all but ~n_cand * (yield); survivors carry a large
-    # prime factor. Trial division by |FB| primes is the standard cost model.
-    test_ops = n_cand*len(fb)
-    return dict(BB=BB, fb=len(fb), gen_ops=gen_ops, test_ops=test_ops,
-                test_share=test_ops/(test_ops+gen_ops), frac=frac)
+def pi_le(B):
+    from sympy import primepi
+    return int(primepi(B))
 
-if __name__=="__main__":
-    print("Q3 -- the smoothness TEST as a share of relation-collection cost")
-    print("model: cost = 3 multiplies to GENERATE a value + |FB| trial divisions to TEST it")
-    print()
-    print(f"{'BB':>10} {'|FB|':>9} {'gen ops':>10} {'test ops':>14} {'TEST SHARE':>12} {'max batch speedup':>20}")
-    for BB in [10**3,10**4,10**5,10**6,10**7,10**8]:
-        r=split(BB)
-        print(f"{BB:>10} {r['fb']:>9} {r['gen_ops']:>10} {r['test_ops']:>14} "
-              f"{r['test_share']:>12.6f} {1/(1-r['test_share']):>20.6f}x")
-    print()
-    print("INTERPRETATION")
-    print("  The dominant cost is the SIEVE+trial division, not the test per se.")
-    print("  Round 52 measured the TEST alone at 0.1% of cost (Stange regime).")
-    print("  Here the trial-division share is |FB|/(3+|FB|) -> 1 as BB grows.")
-    print("  So in NFS the smoothness TEST IS essentially the whole cost, and")
-    print("  Bernstein batch smoothness is precisely the tool that attacks THAT term.")
-    print()
-    print("  BUT: batch smoothness changes the CONSTANT multiplying |FB| (by ~ln B in")
-    print("  the best case), not the fact that |FB| tests are needed. The L[1/3]")
-    print("  constant is set by (number of candidates) x (cost per candidate), and")
-    print("  batch smoothness reduces the per-candidate cost by a bounded factor.")
-    print()
-    print("  Q3 VERDICT: quantified below -- a factor f in per-candidate cost maps to")
-    print("  a constant c -> c / f^(1/3) ONLY if the savings is a per-candidate factor")
-    print("  applied to the (ln N)^(1/3) term. Here the saving is on |FB| = e^(lnB),")
-    print("  and ln B is itself L^(1/3)-scale, so the two DO interact.")
-    for BB in [10**3,10**4,10**5,10**6,10**7]:
-        r=split(BB)
-        s=r['test_share']
-        # a batch method giving factor f reduction in trial-division cost:
-        for f in [2,10,100]:
-            new_test = r['test_ops']/f
-            ns = new_test/(new_test+r['gen_ops'])
-            print(f"   BB={BB:<9} f={f:<4} test share {s:.4f} -> {ns:.4f}, "
-                  f"total speedup {1/(1-ns)/(1/(1-s)):.4f}x")
-        break
+print("="*76)
+print("Q3a -- where the cost of NFS relation-finding actually sits")
+print("="*76)
+print("  cost per candidate = GENERATE (3 mults) + TEST (|FB| trial divisions)")
+print(f"{'lnB':>8} {'B':>12} {'|FB|':>10} {'test share':>12} {'gen share':>11}")
+for B in [10**3,10**4,10**5,10**6,10**7,10**8,10**9,10**12]:
+    fb=pi_le(B)
+    ts=fb/(fb+3.0)
+    print(f"{math.log(B):>8.3f} {B:>12} {fb:>10} {ts:>12.6f} {1-ts:>11.6f}")
+print()
+print("  => trial division IS ~the whole cost for any real FB. This CONTRADICTS")
+print("     round 52's 0.1% figure, which was measured in the STANGE regime where")
+print("     candidate GENERATION is 50-200 modular multiplications, not 3.")
+print("     The brief's premise ('test is 0.1% of cost') is a Stange-regime number.")
+print()
+print("="*76)
+print("Q3b -- Bernstein batch smoothness: what saving maps to what constant?")
+print("="*76)
+print("  Batch smoothness (Bernstein) amortises the smoothness TEST over a range")
+print("  of candidates: it replaces |FB| trial divisions PER CANDIDATE with a")
+print("  shared sieve.  Model: test cost per candidate  |FB|  ->  |FB|/f  where f")
+print("  is the amortisation factor (best case f ~ ln|B|, since the batch sieve")
+print("  divides out all primes <= sqrt(B) in one pass).")
+print()
+print(f"{'B':>12} {'lnB':>7} {'f=lnB':>10} {'speedup':>10} {'f=lnB^2':>11} {'speedup':>10}")
+for B in [10**3,10**4,10**5,10**6,10**7,10**8,10**9,10**12]:
+    fb=pi_le(B); lnb=math.log(B)
+    base=1.0 + fb/3.0                 # cost ratio, gen=1 unit, test=fb/3
+    out=[]
+    for f in [lnb, lnb**2]:
+        new=1.0 + fb/(3.0*f)
+        out.append((f, base/new))
+    print(f"{B:>12} {lnb:>7.3f} {out[0][0]:>10.2f} {out[0][1]:>10.4f}x {out[1][0]:>11.2f} {out[1][1]:>10.4f}x")
+print()
+print("="*76)
+print("Q3c -- DOES IT MOVE THE CONSTANT?  (the honest mapping)")
+print("="*76)
+print("  The L[1/3,c] cost is  exp(c L^(1/3) (lnL)^(2/3)).  A saving that removes a")
+print("  constant fraction of the PER-CANDIDATE cost divides the TOTAL cost by that")
+print("  factor, i.e. c -> c / (factor).  It does NOT change the L^(1/3) EXPONENT.")
+print("  So the question is purely: what factor does batching buy?")
+print()
+print("  From Q3b at NFS operating points (lnB ~ 20-40):")
+for B in [10**8,10**9,10**12]:
+    fb=pi_le(B); lnb=math.log(B)
+    base=1.0+fb/3.0
+    s1=base/(1.0+fb/(3.0*lnb)); s2=base/(1.0+fb/(3.0*lnb**2))
+    print(f"    B={B:<10} lnB={lnb:5.2f}  f=lnB -> {s1:.4f}x (c: 1.9230 -> {1.9229994271/s1:.4f})"
+          f"   f=lnB^2 -> {s2:.4f}x (c -> {1.9229994271/s2:.4f})")
+print()
+print("  CAVEAT THAT DOMINATES: a constant-factor saving in relation-finding does NOT")
+print("  change the L[1/3] CLASS -- it stays L[1/3]. And the standard c already")
+print("  assumes the optimal sieve; batching is a constant-factor engineering win,")
+print("  exactly analogous to the 8.9x kernel-backend swing measured in PP_droptest.")

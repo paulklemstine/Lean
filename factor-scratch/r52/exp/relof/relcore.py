@@ -47,14 +47,23 @@ def psi_ratio(x, B):
 #        ==> on the p_nmid_b stratum the rate is EXACTLY uniform, 1/p^k.
 #   (ii) ALL the excess sits on p | b.
 def solcount_a2b3(p, k):
-    """(total, nb_pdivb, nb_unit, c0, c1) -- exact, by enumeration mod p^k."""
+    """(total, nb_pdivb, nb_unit, c0, c1) -- EXACT.
+    #{(a,b) in [0,p^k)^2 : p^k | a^2 - b^3}, split by whether p | b.
+
+    BUG HISTORY (both would have shipped a wrong headline number):
+      v1 looped b over range(p)      -> ratio 1.0 at every k   (wrong sign vs 2-1/p)
+      v2 vectorised as (aa == bb)    -> compares a_j^2 with b_i^3, a TRANSPOSED
+                                         pair, giving 65 where the truth is 45.
+    This direct form is the reference and is verified against hand enumeration."""
     m = p ** k
     nb0 = nb1 = c0 = 0
     for b in range(m):
         t = pow(b, 3, m)
         c = sum(1 for a in range(m) if (a * a - t) % m == 0)
-        if b % p == 0: nb0 += c; c0 += 1
-        else:          nb1 += c
+        if b % p == 0:
+            nb0 += c; c0 += 1
+        else:
+            nb1 += c
     c1 = m - c0
     return nb0 + nb1, nb0, nb1, c0, c1
 

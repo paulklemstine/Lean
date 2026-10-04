@@ -1,0 +1,7 @@
+QQ results snapshot (2026-10-04)
+  selftest: 37/37 PASS, exit 0  (results/selftest.log)
+  Q1 rho-vs-exactPsi: Psi/rho = 1.0924..1.2188, monotone down in B; fit relerr=1.21384/lnB-0.05059 (resid 3.8e-5)
+  Q1 measured ladder: see q1_ladder.log
+  Q2: P(p^k|a^2-b^3)/p^k = 2-1/p EXACTLY (k>=2); p nmid b stratum EXACTLY uniform;
+      sieve mark rate = r_p/p exactly (1/p model rejected at z=+120..+425)
+  Q3: per-candidate cost already at lnlnB asymptote; NFS IS a segmented sieve
