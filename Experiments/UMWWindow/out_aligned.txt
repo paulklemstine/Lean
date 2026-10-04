@@ -1,0 +1,14 @@
+=== single-t0 CRT alignment: INFEASIBLE (per-bundle lcm overshoots M) ===
+  n=800 gamma=0.39: 139 maximal prime powers, need ~59 bundles,
+  per-bundle lcm (max) = 4.85e+08 > M = exp(n^gamma) = 7.73e+05  -> OVERSHOOT
+  => a single-point T cannot cover; T must be a genuine rank-2 GAP.
+
+=== rank-2 GAP hill-climb, strict budget M=exp(n^gamma) ===
+  coverage = # of i in [2,n] dividing some difference.
+  n=  800  g=0.360(exp=0.180):346/799( 43%)  g=0.399(exp=0.200):488/799( 61%)
+  n= 2000  g=0.360(exp=0.180):793/1999( 39%)  g=0.399(exp=0.200):1164/1999( 58%)
+  n= 5000  g=0.360(exp=0.180):1776/4999( 35%)  g=0.399(exp=0.200):2721/4999( 54%)
+
+VERDICT: no full cover persists as n grows; the n=800 full cover was a
+small-n lucky hit. Hill-climb alignment improves the CONSTANT over random
+but does not yield an asymptotic cover below gamma=1/2. NEGATIVE result.
