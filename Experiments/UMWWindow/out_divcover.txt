@@ -1,0 +1,19 @@
+TRUE divisor-cover number (all d<=M candidates, full-coverage flagged).
+n | gamma |      M | cover_k | uncovered | full | budget n^(2g) | feasible
+ 100 | 0.340 |       119 |      50 |         0 | True  |         22.9 | False
+ 100 | 0.360 |       190 |      44 |         0 | True  |         27.5 | False
+ 100 | 0.399 |       534 |      34 |         0 | True  |         39.4 | True
+ 100 | 0.500 |     22026 |      26 |         0 | True  |        100.0 | True
+ 200 | 0.340 |       427 |      84 |         0 | True  |         36.7 | False
+ 200 | 0.360 |       841 |      73 |         0 | True  |         45.4 | False
+ 200 | 0.399 |      3950 |      57 |         0 | True  |         68.6 | True
+ 200 | 0.500 |   1386281 |      57 |         0 | True  |        200.0 | True
+ 400 | 0.340 |      2139 |     140 |         0 | True  |         58.8 | False
+ 400 | 0.360 |      5679 |     126 |         0 | True  |         74.7 | False
+ 400 | 0.399 |     55269 |     126 |         0 | True  |        119.2 | False
+ 400 | 0.500 | 485165195 |     126 |         0 | True  |        400.0 | True
+
+cover_k ~ 1.9 * (n/ln n) = Theta(pi(n)): every maximal prime power
+needs a dedicated difference (no small d<=M is a multiple of two large
+primes). This exceeds the n^(2g) budget for gamma<1/2, so divisor reuse
+HITS THE SAME COUNTING WALL. No escape; window still closed.
