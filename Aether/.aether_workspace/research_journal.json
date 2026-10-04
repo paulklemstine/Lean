@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "56a9e19d",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — NET-95 thread (weight floor collapsed)\n\nWhat this cycle established formally (all in `Catalog/Novelty/`, 0 sorries):\n\n1. **The ladder is a one-parameter geometric law.**  Over *a",
-      "quality_score": 0.79,
-      "sorry_count": 0,
-      "theorem_count": 14,
-      "timestamp": "2026-08-26T03:19:25",
-      "title": "NET-95 THE-WEIGHT-FLOOR-COLLAPSED: every weight rung from 8.5 to 2.6 bpw stays deployable on a 7B (q"
-    },
-    {
       "cycle_id": "56c4877a",
       "domain": "Combinatorics",
       "key_insight": "# Future directions — from the local-unitary normal form\n\nThe cycle just completed proved, in `Catalog/Combinatorics/LocalUnitaryNormalForm.lean`:\n\n* the sharp Hadamard-type bound `2‖det M‖ ≤ ‖M‖_F²`",
@@ -2501,6 +2491,16 @@
       "theorem_count": 37,
       "timestamp": "2026-10-04T15:54:49",
       "title": "FACT round-35 #8 — CONJUGATE-S3-TEST: conjugate fields produce identical type channels (paper 127)"
+    },
+    {
+      "cycle_id": "38666d07",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — after Paper 131 (posterior filter = sham)\n\nVerified this cycle (`Catalog/Cryptography/PosteriorFilter/`): the keep-rate law\n(success = total keep size, independent of which class",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 26,
+      "timestamp": "2026-10-04T22:32:00",
+      "title": "FACT round-37 #3 — POSTERIOR-FILTER: real filter equals sham — battery capacity converts to zero fac"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-04T15:54:49",
+  "last_updated": "2026-10-04T22:32:00",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "220a83a3",
-        "quality": 0.82,
-        "theorems": 145,
-        "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
-      },
-      {
         "cycle_id": "c9c85c67",
         "quality": 0.82,
         "theorems": 64,
@@ -3389,6 +3383,12 @@
         "quality": 0.66,
         "theorems": 68,
         "title": "FACT round-33 #1 — PROGRAMME-MILESTONE: the post-resume programme in one documen"
+      },
+      {
+        "cycle_id": "38666d07",
+        "quality": 0.62,
+        "theorems": 26,
+        "title": "FACT round-37 #3 — POSTERIOR-FILTER: real filter equals sham — battery capacity "
       }
     ],
     "Geometry": [
