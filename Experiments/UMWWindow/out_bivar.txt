@@ -15,3 +15,11 @@ PART 2 -- bits of BOTH p,q: from-scratch bivariate lattice.
   HONEST RESULT: this construction fails its own structural test.
   No sub-n/4 attack is claimed. Next: a reference multivariate
   Coppersmith (May/Jochemsz-May) with H-G parameter selection.
+
+PART 3 -- resultant-based STRUCTURAL recovery (no scanning):
+  n=32 kx=ky=n/4=8: c2u3:- c3u3:- c3u4:-
+  n=36 kx=ky=n/4=9: c2u3:- c3u3:- c3u4:-
+  n=40 kx=ky=n/4=10: c2u3:- c3u3:- c3u4:-
+  -> resultant recovery finds NO integer root even at n/4, where the
+     VALIDATED univariate solver succeeds. Multivariate ISOLATION
+     (Howgrave-Graham short-vector bound) is not met by this basis.

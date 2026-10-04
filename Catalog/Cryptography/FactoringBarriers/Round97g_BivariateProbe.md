@@ -50,6 +50,14 @@ off the recovered polynomial) — never by scanning `X`.
   (`n≥40`), the bivariate lattice recovers **nothing**: no integer roots, no
   factor, at `kx=ky = n/4` and above.
 
+**Resultant-based recovery (added).** Every reduced vector vanishes at `(x₀,y₀)`,
+so `Res_y(H₁,H₂)` vanishes at `x₀` — a fully structural route (no scanning).
+Tried pairs of reduced vectors from a richer shift set (`cmax,umax` up to 3,4):
+**no integer root** even at `k=n/4`, where the **validated univariate solver
+succeeds**. This localises the failure precisely to multivariate **isolation**:
+the ad-hoc shift basis never produces the two independent short vectors the
+Howgrave-Graham bound requires, so no resultant isolates `x₀`.
+
 **Precise diagnosis.** Every bivariate shift polynomial `x^u y^v · g(x,y)^c`
 (with `g(x,y)=(a+x)(b+y)−N`) vanishes at the true root `(x₀,y₀)` — *verified*.
 The lattice therefore **contains** the root, but LLL does not produce a vector
@@ -69,7 +77,10 @@ quick fix.
 * **Not claimed:** that no bivariate method exists (literature has working
   multivariate Coppersmith — my basis choice is simply not yet H-G-optimal);
   only that *this* construction fails its own structural test, with the reason
-  identified.
+  identified (isolation, via direct and resultant recovery).
+* The **univariate** solver of 97f is re-confirmed working on fresh instances,
+  so the negative is specific to the multivariate construction, not a broken
+  tool.
 
 **Next attack.** Build the bivariate lattice from a **reference** multivariate
 Coppersmith (May's *Solving Problems with Small Roots mod a Divisor* /

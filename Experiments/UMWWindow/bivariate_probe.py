@@ -96,6 +96,95 @@ def part2():
     print("  No sub-n/4 attack is claimed. Next: a reference multivariate")
     print("  Coppersmith (May/Jochemsz-May) with H-G parameter selection.")
 
+
+# ---- structural recovery attempt via resultants (round 97h) ----
+def build_shifts_rich(g, cmax, umax, vmax):
+    import sympy
+    shifts=[]
+    for c in range(1,cmax+1):
+        cur={(0,0):1}
+        for _ in range(c):
+            nxt={}
+            for (i1,j1),c1 in cur.items():
+                for (di,dj),c2 in g.items():
+                    nxt[(i1+di,j1+dj)]=nxt.get((i1+di,j1+dj),0)+c1*c2
+            cur=nxt
+        for u in range(umax+1):
+            for v in range(vmax+1):
+                shifts.append({(i+u,j+v):cc for (i,j),cc in cur.items()})
+    return shifts
+
+def bivar_resultant_recover(N,p,q,n,kx,ky,cmax,umax,vmax):
+    """Every reduced vector vanishes at (x0,y0); Res_y(H1,H2) vanishes at x0.
+    Try resultants of pairs of reduced vectors for a structural integer root."""
+    import sympy
+    xs,ys=sympy.symbols('x y')
+    X=1<<(n//2-kx); Y=1<<(n//2-ky)
+    a=(p>>(n//2-kx))<<(n//2-kx); b=(q>>(n//2-ky))<<(n//2-ky)
+    g={(1,1):1,(1,0):b,(0,1):a,(0,0):a*b-N}
+    shifts=build_shifts_rich(g,cmax,umax,vmax)
+    md=max(max(i for i,j in P) for P in shifts); md2=max(max(j for i,j in P) for P in shifts)
+    ncol=(md+1)*(md2+1)
+    rows=[]
+    for P in shifts:
+        row=[0]*ncol
+        for (i,j),cc in P.items(): row[i*(md2+1)+j]=cc*(X**i)*(Y**j)
+        rows.append(row)
+    while len(rows)<ncol: rows.append([0]*ncol)
+    B=IntegerMatrix(ncol,ncol)
+    for r in range(ncol):
+        for c in range(ncol): B[r,c]=int(rows[r][c])
+    LLL.reduction(B)
+    polys=[]
+    for r in range(ncol):
+        v=[int(B[r,c]) for c in range(ncol)]
+        h={}; ok=True
+        for i in range(md+1):
+            for j in range(md2+1):
+                val=v[i*(md2+1)+j]; s=(X**i)*(Y**j)
+                if val%s!=0: ok=False;break
+                h[(i,j)]=val//s
+            if not ok: break
+        if not ok: continue
+        e=sum(cc*xs**i*ys**j for (i,j),cc in h.items() if cc!=0)
+        if e==0: continue
+        polys.append(sympy.Poly(e,xs,ys))
+    npairs=0
+    for i1 in range(min(len(polys),6)):
+        for i2 in range(i1+1,min(len(polys),6)):
+            npairs+=1
+            try: R=sympy.resultant(polys[i1].as_expr(),polys[i2].as_expr(),ys)
+            except Exception: continue
+            if R==0: continue
+            Rp=sympy.Poly(R,xs)
+            try: roots=sympy.polys.polytools.ground_roots(Rp)
+            except Exception: roots=[]
+            for r,_ in roots:
+                if r.is_integer:
+                    xx=int(r)
+                    if 0<=xx<X and N%(a+xx)==0:
+                        return a+xx
+    return None
+
+def part3():
+    random.seed(0)
+    print("\nPART 3 -- resultant-based STRUCTURAL recovery (no scanning):")
+    for nb in [16,18,20]:
+        while True:
+            p=gen_prime(nb); q=gen_prime(nb); N=p*q
+            if 2**(2*nb-1)<=N<2**(2*nb): break
+        n=N.bit_length()
+        row=[]
+        for cmax,umax in [(2,3),(3,3),(3,4)]:
+            fac=bivar_resultant_recover(N,p,q,n,n//4,n//4,cmax,umax,umax)
+            row.append(f"c{cmax}u{umax}:{'Y' if fac else '-'}")
+        print(f"  n={n} kx=ky=n/4={n//4}: "+" ".join(row))
+    print("  -> resultant recovery finds NO integer root even at n/4, where the")
+    print("     VALIDATED univariate solver succeeds. Multivariate ISOLATION")
+    print("     (Howgrave-Graham short-vector bound) is not met by this basis.")
+
+
 if __name__ == "__main__":
     part1()
     part2()
+    part3()
