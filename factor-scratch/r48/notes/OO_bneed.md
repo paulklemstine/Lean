@@ -27,7 +27,7 @@ Sources, both read off rendered page images (never `pdftotext`):
 | **B3** — improvable by `c`? | **NO.** `c` enters as an *additive* `log(1 + c/b)` in log-cost — an O(1) shift that vanishes against `log b_needed ~ √(log n log log n)`. Measured to 4 decimals: every column → 1.0000. |
 | **B3** — improvable by `m`? | **There is no `m`.** Algorithm 2.2's entire parameter set is `B` and `c`. |
 | **B3** — the *real* lever | NFS relation finding (Stange p.2, ref [7] = Gordon 1993) drops `b_needed` from 5.9e5 to **8.4** at `n = 2⁶⁶` — **inside** `b_max` for every modulus up to **551 bits**. |
-| **B4** — smallest `b` that works | **The method factors at `b = 3`, at every modulus tested.** There is no correctness floor on `b` at all. What fails at small `b` is **cost**: measured `1.35 × 10⁶` trials per relation at `b = 3`, `n = 2²⁹`. |
+| **B4** — smallest `b` that works | **The method factors at `b = 3` at every completed modulus.** There is no correctness floor on `b` at all. What fails at small `b` is **cost**: measured `1.35 × 10⁶` trials per relation at `b = 3`, `n = 2²⁹`. |
 
 > **The axis is closed, for a structural reason, and the reason is not the one
 > two rounds of notes recorded.** `b_needed` is a *runtime* number, and
@@ -302,18 +302,18 @@ a *shortfall* against it.
 balanced-`β` value from §1c, i.e. the *favourable* estimate; against the
 inherited `β = 1` the discrepancy is larger still.)*
 
-> ### `b_min = 3` at every modulus — there is no correctness floor on `b`.
+> ### `b_min = 3` at every completed modulus — no correctness floor on `b`.
 >
 > The method factors 4–5-bit factor bases at every size tested. **`b_needed`
 > overstates the smallest usable `b` by a factor of 17–30** at these `n`, and
 > the discrepancy is a property of the *estimate*, not of the construction.
 
 **The `p_split` column is the load-bearing control and it is doing real work
-here.** Across the three moduli `p_split` ranges **0.750 → 0.977 → 0.994**. Had
-I compared these fixed-`n` rates against the campaign's `20/27 = 0.7407`, the
-first two moduli would have shown spurious excesses of `+0.22` and `+0.24`
-that are **entirely the modulus's 2-adic structure** (`v₂(q−1)` = 1, 6, 8
-respectively). The per-modulus excess is what the method contributes, and it is
+here.** Across the moduli `p_split` ranges **0.750 → 0.977** (and 0.994 at the
+in-progress `2³³` cell). Had I compared these fixed-`n` rates against the
+campaign's `20/27 = 0.7407`, the `2²⁹` modulus would have shown a spurious
+excess of **+0.22** that is **entirely the modulus's 2-adic structure**
+(`v₂(p−1) = 2`, `v₂(q−1) = 6`). The per-modulus excess is what the method contributes, and it is
 consistent with **zero** everywhere:
 
 | n | `b` | rate | `p_split` | excess (Wilson 95%) | one-sided `p` | mean trials/rel | verdict |
