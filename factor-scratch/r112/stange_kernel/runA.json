@@ -1,0 +1,68 @@
+{
+  "seed": 20261004,
+  "configs": [
+    {
+      "label": "2^20_b15_c10",
+      "bits": 20,
+      "b": 15,
+      "c": 10,
+      "trials": 40,
+      "verified": 31,
+      "rate": 0.775,
+      "h_eq_1": 26,
+      "h_max": 5,
+      "median_secs": 0.039,
+      "total_secs": 1.6,
+      "verified_iff_v2differ": "40/40",
+      "alpha_zero_events": 0
+    },
+    {
+      "label": "2^26_b8_c5",
+      "bits": 26,
+      "b": 8,
+      "c": 5,
+      "trials": 40,
+      "verified": 34,
+      "rate": 0.85,
+      "h_eq_1": 29,
+      "h_max": 37,
+      "median_secs": 0.081,
+      "total_secs": 3.6,
+      "verified_iff_v2differ": "40/40",
+      "alpha_zero_events": 1
+    },
+    {
+      "label": "2^30_b12_c10",
+      "bits": 30,
+      "b": 12,
+      "c": 10,
+      "trials": 30,
+      "verified": 26,
+      "rate": 0.8667,
+      "h_eq_1": 21,
+      "h_max": 31,
+      "median_secs": 0.291,
+      "total_secs": 9.1,
+      "verified_iff_v2differ": "30/30",
+      "alpha_zero_events": 0
+    },
+    {
+      "label": "2^40_b20_c10",
+      "bits": 40,
+      "b": 20,
+      "c": 10,
+      "trials": 25,
+      "verified": 17,
+      "rate": 0.68,
+      "h_eq_1": 14,
+      "h_max": 2,
+      "median_secs": 8.632,
+      "total_secs": 238.1,
+      "verified_iff_v2differ": "25/25",
+      "alpha_zero_events": 0
+    }
+  ],
+  "total_verified": 108,
+  "total_trials": 135,
+  "total_rate": 0.8
+}
