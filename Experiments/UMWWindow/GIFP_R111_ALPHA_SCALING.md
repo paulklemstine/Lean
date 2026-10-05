@@ -62,11 +62,34 @@ ideal `(1−√α)m`:
 
 **Working m are exactly those where `round` does not undershoot the ideal** —
 `t ≥ ⌈ideal⌉`. At m=2,3,5,6,8 the rounding truncates and the balance required
-by the size analysis is lost, so the short vectors never appear. This is a
-rounding artefact in the *reference implementation*, not a property of the
-attack: with t and s chosen to satisfy the true balance rather than rounded
-independently, those m should work too. **Not tested** — flagged as the next
-step, not claimed.
+by the size analysis is lost, so the short vectors never appear.
+
+### Confirmed causally (not just correlated)
+
+I flagged the converse as untested in the first write-up, then tested it: force
+`t = ⌈ideal⌉` instead of `round(ideal)`, changing nothing else. At α=0.10,
+γ=0.50, 4 seeds each:
+
+| m | ideal t | t=round | t=ceil |
+|---|---------|---------|---------|
+| 3 | 2.05 | 2 → **0/4** | 3 → **4/4** |
+| 4 | 2.74 | 3 → 3/3 | 3 → 4/4 |
+| 5 | 3.42 | 3 → **0/4** | 4 → **0/4** |
+| 6 | 4.10 | 4 → **0/4** | 5 → **4/4** |
+| 8 | 5.47 | 5 → **0/4** | 6 → **4/4** |
+
+m=3, 6 and 8 flip from 0/4 to 4/4 purely by removing the undershoot. So the
+m-resonance is **a rounding artefact in the reference implementation**, not a
+property of the attack — `gifp.sage:339-340` computes `t` and `s` by rounding
+the ideal balance, and that rounding is lossy.
+
+**m=5 is a genuine exception**: it fails at both t=3 and t=4, so the undershoot
+is not the whole story there. I have not isolated what else constrains m=5, and
+am not claiming the predictor is complete.
+
+Practical consequence: **do not tune m by trial and error** — compute
+`t = ⌈(1−√α)·m⌉` directly. Every "m=4 works, m=5 doesn't" observation in the
+literature on this construction may be this rounding, not the mathematics.
 
 ## Harness notes (bugs that produced wrong numbers first)
 
@@ -89,4 +112,7 @@ All three are properties of the authors' reference code, not of the attack.
 
 - `gifp_verify_sage.sage` — pipeline + README gcd recovery + verification (r110).
 - `gifp_threshold_sweep.sage` — γ sweep at α=0.1 (r110).
-- `alpha_sweep.sage` — the α × ratio table above.
+- `gifp_alpha_sweep.sage` — the α × ratio table above.
+- `gifp_m_scan.sage` — the m-scan and the t-balance table.
+- `gifp_t_rounding_test.sage` — the causal test that `t=ceil` rescues the
+  failing m (the script that produced the "0/4 → 4/4" flips).
