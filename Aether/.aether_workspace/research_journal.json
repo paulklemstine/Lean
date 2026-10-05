@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "56c4877a",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — from the local-unitary normal form\n\nThe cycle just completed proved, in `Catalog/Combinatorics/LocalUnitaryNormalForm.lean`:\n\n* the sharp Hadamard-type bound `2‖det M‖ ≤ ‖M‖_F²`",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 107,
-      "timestamp": "2026-08-26T03:19:41",
-      "title": "Local-unitary normal form"
-    },
-    {
       "cycle_id": "217690eb",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nDerived from this cycle's results in `Catalog/MachineLearning/QRResidual/`\n(`BlockCeiling.lean`, `NeighborNull.lean`, `PermutationNull.lean`,\n`MeasurableCeiling.lean`).\n\nWhat this",
@@ -2501,6 +2491,16 @@
       "theorem_count": 26,
       "timestamp": "2026-10-04T22:32:00",
       "title": "FACT round-37 #3 — POSTERIOR-FILTER: real filter equals sham — battery capacity converts to zero fac"
+    },
+    {
+      "cycle_id": "5a7633ee",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — after Paper 137 (positional filter)\n\n## What this cycle established (Lean, 0 sorries)\n\n`Catalog/Cryptography/PositionalFilter/`:\n\n* **SqrtDescending.lean**: exact costs for `N =",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-10-05T07:13:48",
+      "title": "FACT round-38 #3 — POSITIONAL-FILTER: position pays 5.19x, the stratum beyond the residue cap is liv"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-04T22:32:00",
+  "last_updated": "2026-10-05T07:13:48",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "c9c85c67",
-        "quality": 0.82,
-        "theorems": 64,
-        "title": "FACT round-72 #5 — MODULAR-DYNAMICS: projected Berggren tree is collision-free b"
-      },
-      {
         "cycle_id": "9b32ba78",
         "quality": 0.83,
         "theorems": 80,
@@ -3389,6 +3383,12 @@
         "quality": 0.62,
         "theorems": 26,
         "title": "FACT round-37 #3 — POSTERIOR-FILTER: real filter equals sham — battery capacity "
+      },
+      {
+        "cycle_id": "5a7633ee",
+        "quality": 0.66,
+        "theorems": 58,
+        "title": "FACT round-38 #3 — POSITIONAL-FILTER: position pays 5.19x, the stratum beyond th"
       }
     ],
     "Geometry": [
