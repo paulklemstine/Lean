@@ -175,6 +175,43 @@ Pomerance, Math. Comp. 62(206):865–874 (1994)"* is a **three-way fusion** — 
 volume, issue and page range is a **Frey–Rück** paper, and the real Lenstra–Pomerance
 paper is **JAMS 1992**. Hafner–McCurley's real title differs from the one recorded.
 
+## 8b. Post-hoc scope check — did the 2× error contaminate the cost table?
+
+Error E5 (imprimitive forms, 2× inflation) was caught late, so the obvious worry is
+whether it touched the `forms/h` table. **It did not, and the reason is structural:**
+
+> An imprimitive form of discriminant `−4N` requires `gcd(a,b,c) = 2`, which
+> requires the discriminant `−N` to exist — that is, **`N ≡ 3 (mod 4)`**.
+> **Both `forms/h` rows have `N ≡ 1 (mod 4)`**, so imprimitive forms **cannot**
+> exist there.
+
+Both rows recomputed from scratch, with **and** without the primitivity filter:
+
+| row | `p` | `q` | bits | `N mod 4` | `h(−4N)` | forms | imprimitive seen |
+|---|---|---|---|---|---|---|---|
+| 1 | 92399 | 102559 | 34 | **1** | 123608 ✓ | 111969 ✓ | **0** |
+| 2 | 477011 | 309371 | 38 | **1** | 152852 ✓ | 117401 ✓ | **0** |
+
+**I checked the congruence arithmetic myself:** row 1 has `N = 92399 × 102559 =
+9476349041 ≡ 1 (mod 4)`, while a `≡ 3` control (`2479`) does admit imprimitive forms.
+
+> **★ And the point that is easy to get backwards:** the `N ≡ 3 (mod 4)` instances —
+> where `−4N` *is* fundamental and E5 *does* bite — are the ones in the **§4 control
+> table**. **The §6 rows and the control rows are drawn from different congruence
+> classes, which is exactly why E5 changed the control's correlation (+0.915 →
+> +0.977) while leaving §6 untouched.** A reader who assumed "2× everywhere" would
+> wrongly distrust §6 — hence this note.
+
+**Two further scope facts, recorded because they were nearly misleading:**
+
+- **`−4N` is not the fundamental discriminant when `N ≡ 1 (mod 4)`.** This affects
+  no claim: `qfbclassno(−4N)` and the direct enumeration both describe the order of
+  discriminant `−4N` and **agree exactly** (8/8). But *"the class group"* should be
+  read as **that order's**, and the ambiguous-form mechanism is precisely about it.
+- **The descent stopping at `a = 92399` is 82.2% of the way through the reduced
+  range** (`a_max = 112408`; I recomputed: `92399/112408 = 0.8220`) — **direct
+  evidence it genuinely traverses the class group rather than cutting a corner.**
+
 ## 9. What is NOT settled
 
 - **`Θ(√N)` rests on two measured sizes, not a proof.** The `forms/h` ratio is

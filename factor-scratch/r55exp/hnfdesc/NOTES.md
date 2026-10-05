@@ -138,11 +138,12 @@ Four, all caught by controls rather than by inspection:
   **⚠️ Scope of E5, verified rather than assumed.** E5 only bites when
   `N ≡ 3 (mod 4)`. An imprimitive form of disc `−4N` needs `gcd(a,b,c) = 2`,
   which requires a form of discriminant `−N` to exist — and `−N` is a
-  discriminant only when `N ≡ 1, 2 (mod 4)`. Checked directly: for the 34-bit
-  instance in §6 (`N ≡ 1 mod 4`), the number of imprimitive forms encountered is
-  **0**, so E5 is a **no-op there and the §6 numbers are unaffected**. The
-  control instances that E5 changed are the `N ≡ 3` ones. Worth recording
-  because a reader who assumed "2× everywhere" would wrongly distrust §6.
+  discriminant only when `N ≡ 1, 2 (mod 4)`. Checked directly on **both** §6
+  instances (both `N ≡ 1 mod 4`): imprimitive forms encountered = **0** in each,
+  and the descent counts are identical with and without the filter. So E5 is a
+  **no-op on the §6 table and those numbers are unaffected**. The control
+  instances that E5 changed are the `N ≡ 3` ones. Worth recording because a
+  reader who assumed "2× everywhere" would wrongly distrust §6.
 
 Two further instrument bugs worth recording: `sympy.primefactors(10000)` returns
 the prime factors **of** 10000 (`[2,5]`), not the primes below it — this made
@@ -280,24 +281,35 @@ primitivity enforced, the uncapped measurement is:
 | 34 | 92399 | 92399 | 111969 | 123608 | **0.906** |
 | 38 | 309371 | 309371 | 117401 | 152852 | **0.768** |
 
-(Verified unaffected by error E5: the 34-bit instance has `N ≡ 1 (mod 4)`, so
-imprimitive forms do not exist there and the count is identical with and without
-the primitivity filter — checked directly, 0 imprimitive forms encountered.)
+(Both rows verified unaffected by error E5 — both instances have `N ≡ 1 (mod 4)`,
+so imprimitive forms do not exist and the counts are identical with and without
+the primitivity filter; checked directly on both, 0 imprimitive forms each.)
 
-**Provenance of these two rows, re-verified end-to-end.** The 34-bit instance is
-`p = 92399`, `q = 102559` — both prime (checked), `N = 9476349041`,
-`h(−4N) = 123608` recomputed by PARI and **matching the table exactly**,
-`min(p,q) = 92399` matching, and the descent's 111 969 forms = `0.906 × h`.
-The reduced range for this `D` is `a_max = 112408`, so the descent stopping at
-`a = 92399` is 82.2 % of the way through the range — i.e. it genuinely
-traverses most of the class group rather than cutting a corner.
+**Provenance of these two rows, re-verified end-to-end.** Both instances were
+regenerated and every number recomputed:
 
-Note this instance has `N ≡ 1 (mod 4)`, so `−4N` is **not** the fundamental
+| row | `p` | `q` | `N` bits | `N mod 4` | `h(−4N)` recomputed | forms recomputed | match |
+|---|---|---|---|---|---|---|---|
+| 1 | 92399 | 102559 | 34 | 1 | **123608** ✓ | **111969** ✓ | yes |
+| 2 | 477011 | 309371 | 38 | 1 | **152852** ✓ | **117401** ✓ | yes |
+
+Both `p` and `q` confirmed prime in each row. `min(p,q)` matches the `hit a`
+column in both rows. For row 2 the descent count was recomputed **with and
+without** the primitivity filter and both give 117401, with **0 imprimitive
+forms encountered** — so row 2 is confirmed unaffected by E5, exactly like row 1.
+
+The reduced range for row 1 is `a_max = 112408`, so the descent stopping at
+`a = 92399` is 82.2 % of the way through the range — i.e. it genuinely traverses
+most of the class group rather than cutting a corner.
+
+Note both instances have `N ≡ 1 (mod 4)`, so `−4N` is **not** the fundamental
 discriminant of `ℚ(√−N)` (that is `−N` there, and `−N` is not itself a
 discriminant). This does not affect any claim: `qfbclassno(−4N)` and my
 enumeration both describe the order of discriminant `−4N`, and they agree
 exactly. It does mean "the class group" here is that of the *order*, which is
-the object the ambiguous-form mechanism actually uses.
+the object the ambiguous-form mechanism actually uses. The `N ≡ 3 (mod 4)`
+instances — where `−4N` *is* fundamental and E5 *does* bite — are the ones in
+the §4 control table.
 
 `forms/h` is **Θ(1)** — a constant fraction of the class group, not a shrinking
 one. So:
