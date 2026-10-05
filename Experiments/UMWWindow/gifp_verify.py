@@ -81,13 +81,16 @@ def gifp_factor(N1, N2, n, alpha, gamma, b1, b2, m):
             shifts.append(Poly(g, x, y, z, domain=ZZ))
     allm = set()
     for P in shifts: allm |= set(P.monoms())
-    allm = sorted(allm)
+    # Sage create_lattice: order="invlex" -> compare from the LAST variable,
+    # larger first. For (a,b,c)=(x,y,z) exponents: invlex key = (c, b, -a).
+    allm = sorted(allm, key=lambda mo: (mo[2], mo[1], -mo[0]))
     bounds = {(a,b,c): (X**a)*(Y**b)*(Z**c) for (a,b,c) in allm}
     B = IntegerMatrix(len(shifts), len(allm))
     for r, P in enumerate(shifts):
         for (a,b,c), coef in zip(P.monoms(), P.coeffs()):
             B[r, allm.index((a,b,c))] = int(coef) * bounds[(a,b,c)]
-    LLL.reduction(B)
+    # Sage reduce_lattice uses LLL(delta=0.8) (not the 0.75 default).
+    LLL.reduction(B, delta=0.8)
     polys = []
     for r in range(B.nrows):
         expr = 0; norm2 = 0; ww = 0

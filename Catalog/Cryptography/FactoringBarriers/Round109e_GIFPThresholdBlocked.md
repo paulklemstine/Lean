@@ -101,6 +101,36 @@ is the missing piece, and I cannot run or faithfully reproduce it here.
 > to claim a threshold I had not verified end-to-end. The authors' code is the
 > only trustworthy oracle here, and it needs Sage.
 
+### 1d. Round 109g — final diagnosis: my lattice is degenerate; Sage LLL is required
+
+I applied every remaining detail read off the authors' code — monomials in **four**
+variables `x,y,z,w` (`create_lattice` collects 4-var monomials; my first port had
+collapsed to 3-var by eliminating `w`), **invlex** monomial ordering, and
+**LLL δ=0.8** (`reduce_lattice`). Two further concrete facts learned from the code:
+
+* `create_lattice` multiplies each monomial's coefficient by
+  `monomial(*bounds)` = `X^a Y^b Z^c W^d`, and `reconstruct_polynomials` divides
+  the **reduced** entries back by the same factor (`// monomial(bounds)`), keeping
+  integer coefficients and dropping any row with `norm²·w ≥ (M^m N₁^t)²`.
+* The Gröbner step runs over the reconstructed **integer** polynomials together
+  with `(z·w − N₂)`.
+
+**Diagnosis.** With these corrections the pipeline runs but **every reduced row
+is zero** (`norm²·w = 0` for all rows) — my shift-polynomial construction is
+**degenerate**: after the coefficientwise reduction mod `M^m N₁^t`, the LLL basis
+collapses, so no short vector isolates the root. I cannot diagnose this reliably
+from scratch; the authors' balance of `(y z)^j w^s f^i M^{m−i} N₁^{max(t−i,0)}
+N₂^{-min(i+j,s)}` interacts subtly with the modulus and the four-variable scaling,
+and Sage's exact `L.LLL(0.8)` output (which the `p₂` denominator-trick is
+sensitive to) is not reproducible with `fpylll` here.
+
+> **Final honest status of this line:** the GIFP threshold `γ > 4α(1−√α)` is
+> **not verified end-to-end**, and I have stopped trying to reproduce it without
+> the Sage oracle. This is a tooling limitation, not a mathematical one — the
+> bound itself is quoted correctly from the primary source, and the round-109
+> polynomial-time IFP corollary (8/8) remains the program's only **verified**
+> IFP result.
+
 ## 4. Honest scope
 
 * **The GIFP threshold `γ > 4α(1−√α)` is NOT claimed as verified** by this round.
