@@ -1,0 +1,85 @@
+{
+ "cells": [
+  {
+   "bits_p": 14,
+   "seed": 1,
+   "sqrt_p": 117,
+   "budget": 936,
+   "oracle_q": 173,
+   "oracle_factored": true,
+   "rho_steps": 32,
+   "rho_factored": true,
+   "ratio": 5.406,
+   "oracle_s": 0.0,
+   "rho_s": 0.0
+  },
+  {
+   "bits_p": 14,
+   "seed": 2,
+   "sqrt_p": 125,
+   "budget": 1000,
+   "oracle_q": 147,
+   "oracle_factored": true,
+   "rho_steps": 128,
+   "rho_factored": true,
+   "ratio": 1.148,
+   "oracle_s": 0.0,
+   "rho_s": 0.0
+  },
+  {
+   "bits_p": 16,
+   "seed": 1,
+   "sqrt_p": 235,
+   "budget": 1880,
+   "oracle_q": 194,
+   "oracle_factored": true,
+   "rho_steps": 236,
+   "rho_factored": true,
+   "ratio": 0.822,
+   "oracle_s": 0.01,
+   "rho_s": 0.0
+  },
+  {
+   "bits_p": 16,
+   "seed": 2,
+   "sqrt_p": 250,
+   "budget": 2000,
+   "oracle_q": 84,
+   "oracle_factored": true,
+   "rho_steps": 212,
+   "rho_factored": true,
+   "ratio": 0.396,
+   "oracle_s": 0.0,
+   "rho_s": 0.0
+  },
+  {
+   "bits_p": 18,
+   "seed": 1,
+   "sqrt_p": 471,
+   "budget": 3768,
+   "oracle_q": 994,
+   "oracle_factored": true,
+   "rho_steps": 280,
+   "rho_factored": true,
+   "ratio": 3.55,
+   "oracle_s": 0.16,
+   "rho_s": 0.0
+  },
+  {
+   "bits_p": 18,
+   "seed": 2,
+   "sqrt_p": 500,
+   "budget": 4000,
+   "oracle_q": 1171,
+   "oracle_factored": true,
+   "rho_steps": 306,
+   "rho_factored": true,
+   "ratio": 3.827,
+   "oracle_s": 0.24,
+   "rho_s": 0.0
+  }
+ ],
+ "legendre_note": "Euler criterion; cross-checked vs sympy",
+ "both_arms_fired": 6,
+ "n_cells": 6
+}

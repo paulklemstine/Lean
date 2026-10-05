@@ -1,0 +1,240 @@
+{
+ "tag": "r1",
+ "bits": 128,
+ "seed": 1,
+ "cells": [
+  {
+   "unk": 6,
+   "found": true,
+   "x0": 39,
+   "factor": 3808491431,
+   "dim": 20,
+   "mm": [
+    10,
+    10
+   ],
+   "seconds": 0.0,
+   "pb": 32,
+   "qb": 96,
+   "beta": 0.25,
+   "predA_bits": 8.0,
+   "predB_bits": 16.0,
+   "is_control": true
+  },
+  {
+   "unk": 8,
+   "found": false,
+   "seconds": 46.6,
+   "pb": 32,
+   "qb": 96,
+   "beta": 0.25,
+   "predA_bits": 8.0,
+   "predB_bits": 16.0,
+   "is_control": false
+  },
+  {
+   "unk": 9,
+   "found": false,
+   "seconds": 58.5,
+   "pb": 32,
+   "qb": 96,
+   "beta": 0.25,
+   "predA_bits": 8.0,
+   "predB_bits": 16.0,
+   "is_control": false
+  },
+  {
+   "unk": 16,
+   "found": false,
+   "seconds": 88.2,
+   "pb": 32,
+   "qb": 96,
+   "beta": 0.25,
+   "predA_bits": 8.0,
+   "predB_bits": 16.0,
+   "is_control": false
+  },
+  {
+   "unk": 17,
+   "found": false,
+   "seconds": 89.4,
+   "pb": 32,
+   "qb": 96,
+   "beta": 0.25,
+   "predA_bits": 8.0,
+   "predB_bits": 16.0,
+   "is_control": false
+  },
+  {
+   "unk": 9,
+   "found": true,
+   "x0": 11,
+   "factor": 2840045023243,
+   "dim": 20,
+   "mm": [
+    10,
+    10
+   ],
+   "seconds": 0.0,
+   "pb": 42,
+   "qb": 86,
+   "beta": 0.3281,
+   "predA_bits": 13.78,
+   "predB_bits": 21.0,
+   "is_control": true
+  },
+  {
+   "unk": 13,
+   "found": true,
+   "x0": 4107,
+   "factor": 2840045023243,
+   "dim": 70,
+   "mm": [
+    30,
+    40
+   ],
+   "seconds": 19.2,
+   "pb": 42,
+   "qb": 86,
+   "beta": 0.3281,
+   "predA_bits": 13.78,
+   "predB_bits": 21.0,
+   "is_control": false
+  },
+  {
+   "unk": 14,
+   "found": false,
+   "seconds": 28.3,
+   "pb": 42,
+   "qb": 86,
+   "beta": 0.3281,
+   "predA_bits": 13.78,
+   "predB_bits": 21.0,
+   "is_control": false
+  },
+  {
+   "unk": 21,
+   "found": false,
+   "seconds": 50.5,
+   "pb": 42,
+   "qb": 86,
+   "beta": 0.3281,
+   "predA_bits": 13.78,
+   "predB_bits": 21.0,
+   "is_control": false
+  },
+  {
+   "unk": 22,
+   "found": false,
+   "seconds": 42.2,
+   "pb": 42,
+   "qb": 86,
+   "beta": 0.3281,
+   "predA_bits": 13.78,
+   "predB_bits": 21.0,
+   "is_control": false
+  },
+  {
+   "unk": 16,
+   "found": true,
+   "x0": 19205,
+   "factor": 1529592674798341,
+   "dim": 20,
+   "mm": [
+    10,
+    10
+   ],
+   "seconds": 0.0,
+   "pb": 51,
+   "qb": 77,
+   "beta": 0.3984,
+   "predA_bits": 20.32,
+   "predB_bits": 25.5,
+   "is_control": true
+  },
+  {
+   "unk": 20,
+   "found": false,
+   "seconds": 23.1,
+   "pb": 51,
+   "qb": 77,
+   "beta": 0.3984,
+   "predA_bits": 20.32,
+   "predB_bits": 25.5,
+   "is_control": false
+  },
+  {
+   "unk": 21,
+   "found": false,
+   "seconds": 17.2,
+   "pb": 51,
+   "qb": 77,
+   "beta": 0.3984,
+   "predA_bits": 20.32,
+   "predB_bits": 25.5,
+   "is_control": false
+  },
+  {
+   "unk": 25,
+   "found": false,
+   "seconds": 21.9,
+   "pb": 51,
+   "qb": 77,
+   "beta": 0.3984,
+   "predA_bits": 20.32,
+   "predB_bits": 25.5,
+   "is_control": false
+  },
+  {
+   "unk": 26,
+   "found": false,
+   "seconds": 32.2,
+   "pb": 51,
+   "qb": 77,
+   "beta": 0.3984,
+   "predA_bits": 20.32,
+   "predB_bits": 25.5,
+   "is_control": false
+  },
+  {
+   "unk": 28,
+   "found": true,
+   "x0": 261546755,
+   "factor": 11521716068596245251,
+   "dim": 20,
+   "mm": [
+    10,
+    10
+   ],
+   "seconds": 0.1,
+   "pb": 64,
+   "qb": 64,
+   "beta": 0.5,
+   "predA_bits": 32.0,
+   "predB_bits": 32.0,
+   "is_control": true
+  },
+  {
+   "unk": 32,
+   "found": false,
+   "seconds": 10.0,
+   "pb": 64,
+   "qb": 64,
+   "beta": 0.5,
+   "predA_bits": 32.0,
+   "predB_bits": 32.0,
+   "is_control": false
+  },
+  {
+   "unk": 33,
+   "found": false,
+   "seconds": 13.5,
+   "pb": 64,
+   "qb": 64,
+   "beta": 0.5,
+   "predA_bits": 32.0,
+   "predB_bits": 32.0,
+   "is_control": false
+  }
+ ]
+}

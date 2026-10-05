@@ -42,7 +42,7 @@ def msb_cell(N, p, unk, grid=None, budget=90):
     assert 0 <= x0 < (1 << unk)
     t0 = time.time()
     g = grid or [(10, 10), (14, 14), (18, 18), (22, 22), (26, 26),
-                 (30, 30), (26, 34), (34, 34), (30, 40)]
+                 (30, 30), (26, 34)]
     roots, diag = univariate_small_roots([int(a), 1], N, 1 << unk,
                                          mod_is_factor=True, grid=g)
     got = [r for r in roots if verified_factor(N, p, N // p, r + int(a))]
@@ -68,7 +68,7 @@ def mult_cell(N, p, unk, u, grid=None):
     roots, diag = univariate_small_roots([int(a), 1], Nu, 1 << unk,
                                          mod_is_factor=True, grid=grid or
                                          [(10, 10), (14, 14), (18, 18),
-                                          (22, 22), (26, 26)])
+                                          (22, 22)])
     # a root x0 with a+x0 | uN still gives a factor of N
     got = [r for r in roots if verified_factor(N, p, N // p, r + int(a))]
     return dict(unk=unk, u=u, found=bool(got), dim=diag.get("dim"),
@@ -77,21 +77,20 @@ def mult_cell(N, p, unk, u, grid=None):
 
 def main():
     out = dict(E3=[], E2=[])
-    for bits, seed in [(96, 11), (96, 12)]:
+    for bits, seed in [(80, 11), (80, 12)]:
         p, q, N = gen_semiprime(bits, seed, beta=0.5)
         assert p * q == N and p.bit_length() == bits // 2
         nb = p.bit_length()
         # sweep the leak fraction around the closed-axis 1/2 prediction
-        for unk in [nb // 2 - 3, nb // 2 - 2, nb // 2 - 1, nb // 2,
-                    nb // 2 + 1]:
+        for unk in [nb // 2 - 2, nb // 2 - 1, nb // 2, nb // 2 + 1]:
             r = msb_cell(N, p, unk)
             r.update(bits=bits, seed=seed, model="E3_msb_of_p")
             out["E3"].append(r)
             print("E3 N=%d seed=%d unk=%d (%.3f of p) found=%s dim=%s %.0fs"
                   % (bits, seed, unk, unk / nb, r.get("found"),
                      r.get("dim"), r.get("seconds", 0)), flush=True)
-        for u in [2, 3, 5]:
-            for unk in [nb // 2 - 1, nb // 2, nb // 2 + 1]:
+        for u in [2, 3]:
+            for unk in [nb // 2 - 1, nb // 2]:
                 r = mult_cell(N, p, unk, u)
                 r.update(bits=bits, seed=seed, model="E2_multiplier")
                 out["E2"].append(r)

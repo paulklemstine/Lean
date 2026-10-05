@@ -168,3 +168,30 @@ overstatement of 28–99 bits, so some `nz` rows in those tables were not
 justified. It does not change the verdicts above (all accepted factors were
 ground-truth checked), but the intermediate `nz` counts in r110/r111 should be
 treated as unreliable.
+
+## Addendum 3: there are TWO ceilings, not three (my synthesis was wrong again)
+
+I wrote that α≈0.17–0.18 was a distinct "Gröbner-closure" failure with a healthy
+lattice. I tested it independently and **that is not what happens**:
+
+| α | γ | nz (vanishing polys) |
+|---|---|---|
+| 0.10 | 0.660 | **8/9** |
+| 0.15 | 0.680 | **8/9** |
+| 0.17 | 0.660 | **0/9** |
+| 0.18 | 0.650 | **0/9** |
+| 0.20 | 0.630 | **0/9** |
+
+At α=0.17–0.18 the lattice is **not** healthy — nz=0, identical to α=0.20. The
+"27/28 at 0.17–0.18" was the α≤0.15 numbers misattributed to a band that the
+agent's own table shows is already dead (its α=0.20 row says `nz=0/15`). The
+Gröbner failure there is **downstream of the lattice dying**, not independent.
+
+**Corrected statement: two ceilings, both geometric. The lattice degrades to zero
+vanishing polynomials somewhere in α ∈ (0.15, 0.17]**, and everything above is
+downstream. The transition is bracketed, not located.
+
+This is the third time in this round I propagated a framing from a subagent
+without measuring it myself first. The subagent's numbers were fine; my
+*summary* of them was not. Rule: when summarising another agent's claim, check
+the row the number actually came from before restating it.

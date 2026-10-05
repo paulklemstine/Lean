@@ -1,0 +1,35 @@
+{
+ "cells": [
+  {
+   "bits": 56,
+   "seed": 1,
+   "mismatch": 30,
+   "factored": 30,
+   "cost_modular_exps": 1
+  },
+  {
+   "bits": 56,
+   "seed": 2,
+   "mismatch": 47,
+   "factored": 47,
+   "cost_modular_exps": 1
+  },
+  {
+   "bits": 60,
+   "seed": 1,
+   "mismatch": 40,
+   "factored": 40,
+   "cost_modular_exps": 1
+  },
+  {
+   "bits": 60,
+   "seed": 2,
+   "mismatch": 60,
+   "factored": 60,
+   "cost_modular_exps": 1
+  }
+ ],
+ "note": "upper bound; uses the TRUE orders, which a real attack does not have",
+ "total_mismatch": 177,
+ "total_factored": 177
+}

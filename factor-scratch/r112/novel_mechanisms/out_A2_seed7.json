@@ -1,0 +1,196 @@
+{
+ "seed": 7,
+ "cells": [
+  {
+   "unk": 29,
+   "found": true,
+   "x0": 6438385,
+   "factor": 17585558645207350769,
+   "dim": 20,
+   "mm": [
+    10,
+    10
+   ],
+   "seconds": 0.1,
+   "pb": 64,
+   "predA": 32.0,
+   "predB": 32.0,
+   "seed": 7
+  },
+  {
+   "unk": 30,
+   "found": true,
+   "x0": 543309297,
+   "factor": 17585558645207350769,
+   "dim": 20,
+   "mm": [
+    10,
+    10
+   ],
+   "seconds": 0.1,
+   "pb": 64,
+   "predA": 32.0,
+   "predB": 32.0,
+   "seed": 7
+  },
+  {
+   "unk": 31,
+   "found": true,
+   "x0": 1617051121,
+   "factor": 17585558645207350769,
+   "dim": 36,
+   "mm": [
+    18,
+    18
+   ],
+   "seconds": 0.7,
+   "pb": 64,
+   "predA": 32.0,
+   "predB": 32.0,
+   "seed": 7
+  },
+  {
+   "unk": 32,
+   "found": false,
+   "seconds": 5.4,
+   "pb": 64,
+   "predA": 32.0,
+   "predB": 32.0,
+   "seed": 7
+  },
+  {
+   "unk": 13,
+   "found": true,
+   "x0": 3631,
+   "factor": 3722428665391,
+   "dim": 52,
+   "mm": [
+    26,
+    26
+   ],
+   "seconds": 3.0,
+   "pb": 42,
+   "predA": 13.78,
+   "predB": 21.0,
+   "seed": 7
+  },
+  {
+   "unk": 14,
+   "found": false,
+   "seconds": 34.0,
+   "pb": 42,
+   "predA": 13.78,
+   "predB": 21.0,
+   "seed": 7
+  },
+  {
+   "unk": 20,
+   "found": false,
+   "seconds": 47.4,
+   "pb": 42,
+   "predA": 13.78,
+   "predB": 21.0,
+   "seed": 7
+  },
+  {
+   "unk": 21,
+   "found": false,
+   "seconds": 46.7,
+   "pb": 42,
+   "predA": 13.78,
+   "predB": 21.0,
+   "seed": 7
+  },
+  {
+   "unk": 18,
+   "found": true,
+   "x0": 113523,
+   "factor": 1533288457026419,
+   "dim": 20,
+   "mm": [
+    10,
+    10
+   ],
+   "seconds": 0.0,
+   "pb": 51,
+   "predA": 20.32,
+   "predB": 25.5,
+   "seed": 7
+  },
+  {
+   "unk": 19,
+   "found": true,
+   "x0": 113523,
+   "factor": 1533288457026419,
+   "dim": 28,
+   "mm": [
+    14,
+    14
+   ],
+   "seconds": 0.1,
+   "pb": 51,
+   "predA": 20.32,
+   "predB": 25.5,
+   "seed": 7
+  },
+  {
+   "unk": 20,
+   "found": false,
+   "seconds": 19.3,
+   "pb": 51,
+   "predA": 20.32,
+   "predB": 25.5,
+   "seed": 7
+  },
+  {
+   "unk": 25,
+   "found": false,
+   "seconds": 21.1,
+   "pb": 51,
+   "predA": 20.32,
+   "predB": 25.5,
+   "seed": 7
+  },
+  {
+   "unk": 6,
+   "found": true,
+   "x0": 21,
+   "factor": 3817718869,
+   "dim": 20,
+   "mm": [
+    10,
+    10
+   ],
+   "seconds": 0.0,
+   "pb": 32,
+   "predA": 8.0,
+   "predB": 16.0,
+   "seed": 7
+  },
+  {
+   "unk": 7,
+   "found": true,
+   "x0": 85,
+   "factor": 3817718869,
+   "dim": 36,
+   "mm": [
+    18,
+    18
+   ],
+   "seconds": 0.4,
+   "pb": 32,
+   "predA": 8.0,
+   "predB": 16.0,
+   "seed": 7
+  },
+  {
+   "unk": 8,
+   "found": false,
+   "seconds": 42.1,
+   "pb": 32,
+   "predA": 8.0,
+   "predB": 16.0,
+   "seed": 7
+  }
+ ]
+}
