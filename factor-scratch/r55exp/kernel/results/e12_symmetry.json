@@ -1,0 +1,205 @@
+{
+ "E12": [
+  {
+   "n": 91,
+   "p": 7,
+   "q": 13,
+   "M": 6,
+   "n_chars": 36,
+   "n_units": 72,
+   "checked": 2592,
+   "mismatches": 0,
+   "examples": [],
+   "predicted": "0 mismatches -- mu_M is abelian, so the product is exchange-invariant for EVERY character",
+   "passed": true
+  },
+  {
+   "n": 133,
+   "p": 7,
+   "q": 19,
+   "M": 6,
+   "n_chars": 36,
+   "n_units": 108,
+   "checked": 3888,
+   "mismatches": 0,
+   "examples": [],
+   "predicted": "0 mismatches -- mu_M is abelian, so the product is exchange-invariant for EVERY character",
+   "passed": true
+  },
+  {
+   "n": 247,
+   "p": 13,
+   "q": 19,
+   "M": 6,
+   "n_chars": 36,
+   "n_units": 216,
+   "checked": 7776,
+   "mismatches": 0,
+   "examples": [],
+   "predicted": "0 mismatches -- mu_M is abelian, so the product is exchange-invariant for EVERY character",
+   "passed": true
+  },
+  {
+   "n": 217,
+   "p": 7,
+   "q": 31,
+   "M": 6,
+   "n_chars": 36,
+   "n_units": 180,
+   "checked": 6480,
+   "mismatches": 0,
+   "examples": [],
+   "predicted": "0 mismatches -- mu_M is abelian, so the product is exchange-invariant for EVERY character",
+   "passed": true
+  },
+  {
+   "n": 589,
+   "p": 19,
+   "q": 31,
+   "M": 6,
+   "n_chars": 36,
+   "n_units": 540,
+   "checked": 19440,
+   "mismatches": 0,
+   "examples": [],
+   "predicted": "0 mismatches -- mu_M is abelian, so the product is exchange-invariant for EVERY character",
+   "passed": true
+  }
+ ],
+ "E13": [
+  {
+   "p": 7,
+   "q": 13,
+   "asymmetric_witness": [
+    5,
+    false,
+    true
+   ],
+   "swapped_witness": 6,
+   "exists": true,
+   "passed": true,
+   "note": "two bases with the SAME unordered pair of local cube-membership bits but OPPOSITE order => the function is not determined by the symmetric quotient. Required for E12's claim to be correctly SCOPED: symmetry is vacuous for MULTIPLICATIVE characters, NOT for all functions of the local data."
+  },
+  {
+   "p": 7,
+   "q": 19,
+   "asymmetric_witness": [
+    6,
+    true,
+    false
+   ],
+   "swapped_witness": 11,
+   "exists": true,
+   "passed": true,
+   "note": "two bases with the SAME unordered pair of local cube-membership bits but OPPOSITE order => the function is not determined by the symmetric quotient. Required for E12's claim to be correctly SCOPED: symmetry is vacuous for MULTIPLICATIVE characters, NOT for all functions of the local data."
+  },
+  {
+   "p": 13,
+   "q": 19,
+   "asymmetric_witness": [
+    5,
+    true,
+    false
+   ],
+   "swapped_witness": 7,
+   "exists": true,
+   "passed": true,
+   "note": "two bases with the SAME unordered pair of local cube-membership bits but OPPOSITE order => the function is not determined by the symmetric quotient. Required for E12's claim to be correctly SCOPED: symmetry is vacuous for MULTIPLICATIVE characters, NOT for all functions of the local data."
+  },
+  {
+   "p": 7,
+   "q": 31,
+   "asymmetric_witness": [
+    2,
+    false,
+    true
+   ],
+   "swapped_witness": 6,
+   "exists": true,
+   "passed": true,
+   "note": "two bases with the SAME unordered pair of local cube-membership bits but OPPOSITE order => the function is not determined by the symmetric quotient. Required for E12's claim to be correctly SCOPED: symmetry is vacuous for MULTIPLICATIVE characters, NOT for all functions of the local data."
+  },
+  {
+   "p": 19,
+   "q": 31,
+   "asymmetric_witness": [
+    2,
+    false,
+    true
+   ],
+   "swapped_witness": 7,
+   "exists": true,
+   "passed": true,
+   "note": "two bases with the SAME unordered pair of local cube-membership bits but OPPOSITE order => the function is not determined by the symmetric quotient. Required for E12's claim to be correctly SCOPED: symmetry is vacuous for MULTIPLICATIVE characters, NOT for all functions of the local data."
+  }
+ ],
+ "E14": [
+  {
+   "p": 7,
+   "q": 13,
+   "M": 6,
+   "n_nontrivial_sym_of_order": {
+    "6": 24,
+    "3": 8
+   },
+   "exists_order3": true,
+   "exists_order6": true,
+   "passed": true,
+   "note": "if this were empty, 'symmetry is vacuous' would be a claim about nothing.  Requires >= 1 non-trivial symmetric character of order 3 or 6."
+  },
+  {
+   "p": 7,
+   "q": 19,
+   "M": 6,
+   "n_nontrivial_sym_of_order": {
+    "6": 24,
+    "3": 8
+   },
+   "exists_order3": true,
+   "exists_order6": true,
+   "passed": true,
+   "note": "if this were empty, 'symmetry is vacuous' would be a claim about nothing.  Requires >= 1 non-trivial symmetric character of order 3 or 6."
+  },
+  {
+   "p": 13,
+   "q": 19,
+   "M": 6,
+   "n_nontrivial_sym_of_order": {
+    "6": 24,
+    "3": 8
+   },
+   "exists_order3": true,
+   "exists_order6": true,
+   "passed": true,
+   "note": "if this were empty, 'symmetry is vacuous' would be a claim about nothing.  Requires >= 1 non-trivial symmetric character of order 3 or 6."
+  },
+  {
+   "p": 7,
+   "q": 31,
+   "M": 6,
+   "n_nontrivial_sym_of_order": {
+    "6": 24,
+    "3": 8
+   },
+   "exists_order3": true,
+   "exists_order6": true,
+   "passed": true,
+   "note": "if this were empty, 'symmetry is vacuous' would be a claim about nothing.  Requires >= 1 non-trivial symmetric character of order 3 or 6."
+  },
+  {
+   "p": 19,
+   "q": 31,
+   "M": 6,
+   "n_nontrivial_sym_of_order": {
+    "6": 24,
+    "3": 8
+   },
+   "exists_order3": true,
+   "exists_order6": true,
+   "passed": true,
+   "note": "if this were empty, 'symmetry is vacuous' would be a claim about nothing.  Requires >= 1 non-trivial symmetric character of order 3 or 6."
+  }
+ ],
+ "SEED": 20251004,
+ "ALL_PASS": true
+}
