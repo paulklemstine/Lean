@@ -1,3 +1,26 @@
+> ## ⚠️ CRITICAL FLAW FOUND IN ROUND 112 — the "20/20 verified" has no discriminating content
+>
+> **Every instance in this document is trivially factorable.** In a GIFP instance
+> `|q₂| = α·n`, so at n=200, α=0.1 the small factor is **20 bits** and
+> `N₂ = p₂·q₂` factors in **0.006 s** by PARI with zero GIFP knowledge. The
+> r111 47.5 s/point figure at m=10 is ~8000x *slower* than doing nothing clever.
+>
+> **The counts below are real but vacuous as evidence for GIFP.** "Recovers p₂
+> and q₂" at n=200 is true and uninformative.
+>
+> The mechanism itself is real — at **n=800** (|q₂| = 80 bits) the attack
+> recovered p₂ in **3/3** while PARI `factor` ran **>4 min without success**.
+> But the threshold verification must be read as *"the pipeline runs and is
+> correctly implemented"*, **not** as evidence that GIFP beats generic factoring.
+>
+> **Every GIFP experiment in this campaign so far (r110, r111, r112) used
+> n=200 and therefore inherits this flaw.** The fix is n ≥ 800, plus reporting
+> the generic-factoring baseline next to every "verified" count.
+>
+> Found by the round-112 adversarial verifier; I confirmed the timing directly.
+> See `factor-scratch/r112/LEAD_FINAL_SYNTHESIS.md` and
+> `factor-scratch/r112/verify_gifp/RESULT.md`.
+
 # GIFP threshold γ > 4α(1−√α) — VERIFIED end-to-end (round 110)
 
 **Status: the round-109 blocker is CLOSED.** The GIFP threshold is now verified

@@ -1,0 +1,216 @@
+{
+ "E3": [
+  {
+   "unk": 15,
+   "found": true,
+   "seconds": 0.1,
+   "dim": 20,
+   "leak_frac": 0.4688,
+   "bits": 64,
+   "seed": 11,
+   "model": "E3_msb_of_p"
+  },
+  {
+   "unk": 16,
+   "found": true,
+   "seconds": 0.1,
+   "dim": 20,
+   "leak_frac": 0.5,
+   "bits": 64,
+   "seed": 11,
+   "model": "E3_msb_of_p"
+  },
+  {
+   "unk": 17,
+   "found": false,
+   "seconds": 36.5,
+   "dim": 20,
+   "leak_frac": 0.5312,
+   "bits": 64,
+   "seed": 11,
+   "model": "E3_msb_of_p"
+  },
+  {
+   "unk": 15,
+   "found": true,
+   "seconds": 0.1,
+   "dim": 20,
+   "leak_frac": 0.4688,
+   "bits": 64,
+   "seed": 12,
+   "model": "E3_msb_of_p"
+  },
+  {
+   "unk": 16,
+   "found": false,
+   "seconds": 47.1,
+   "dim": 28,
+   "leak_frac": 0.5,
+   "bits": 64,
+   "seed": 12,
+   "model": "E3_msb_of_p"
+  },
+  {
+   "unk": 17,
+   "found": false,
+   "seconds": 36.4,
+   "dim": 28,
+   "leak_frac": 0.5312,
+   "bits": 64,
+   "seed": 12,
+   "model": "E3_msb_of_p"
+  },
+  {
+   "unk": 17,
+   "found": true,
+   "seconds": 0.3,
+   "dim": 20,
+   "leak_frac": 0.4722,
+   "bits": 72,
+   "seed": 11,
+   "model": "E3_msb_of_p"
+  },
+  {
+   "unk": 18,
+   "found": false,
+   "seconds": 54.2,
+   "dim": 52,
+   "leak_frac": 0.5,
+   "bits": 72,
+   "seed": 11,
+   "model": "E3_msb_of_p"
+  },
+  {
+   "unk": 19,
+   "found": false,
+   "seconds": 41.9,
+   "dim": 52,
+   "leak_frac": 0.5278,
+   "bits": 72,
+   "seed": 11,
+   "model": "E3_msb_of_p"
+  }
+ ],
+ "E2": [
+  {
+   "unk": 16,
+   "u": 2,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5,
+   "bits": 64,
+   "seed": 11,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 17,
+   "u": 2,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5312,
+   "bits": 64,
+   "seed": 11,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 16,
+   "u": 3,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5,
+   "bits": 64,
+   "seed": 11,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 17,
+   "u": 3,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5312,
+   "bits": 64,
+   "seed": 11,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 16,
+   "u": 2,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5,
+   "bits": 64,
+   "seed": 12,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 17,
+   "u": 2,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5312,
+   "bits": 64,
+   "seed": 12,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 16,
+   "u": 3,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5,
+   "bits": 64,
+   "seed": 12,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 17,
+   "u": 3,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5312,
+   "bits": 64,
+   "seed": 12,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 18,
+   "u": 2,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5,
+   "bits": 72,
+   "seed": 11,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 19,
+   "u": 2,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5278,
+   "bits": 72,
+   "seed": 11,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 18,
+   "u": 3,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5,
+   "bits": 72,
+   "seed": 11,
+   "model": "E2_multiplier"
+  },
+  {
+   "unk": 19,
+   "u": 3,
+   "found": false,
+   "dim": 36,
+   "leak_frac": 0.5278,
+   "bits": 72,
+   "seed": 11,
+   "model": "E2_multiplier"
+  }
+ ]
+}

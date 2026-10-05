@@ -1,9 +1,0 @@
-import sys
-LOGF='/home/raver1975/lean/factor-scratch/r112/verify_gifp/tlog.log'
-import builtins
-_bp=builtins.print
-def print(*a,**k):
-    _bp(*a,**k)
-    fh=open(LOGF,'a'); fh.write(' '.join(str(x) for x in a)+'\n'); fh.close()
-builtins.print=print
-print("HELLO", 1+1)
