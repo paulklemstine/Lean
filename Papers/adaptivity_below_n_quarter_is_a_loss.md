@@ -157,6 +157,16 @@ excluding 0.
 **`p = 0.0010`**. **A benefit that vanishes as the modulus grows cannot carry a
 constant-factor cost** — and the win moves *away* from RSA scale, not toward it.
 
+> **Tail = "factored ONLY below `n/4`", excluding instances also solved at `n/4`,**
+> on the `mmax ≤ 10` grid. Raw counts **16/200, 8/200, 2/200**.
+>
+> ⚠️ **★ REPRODUCED BY ME DIRECTLY FROM THE RAW DATA** (`sw{48,64,80}.json`, seeded
+> `20261004`, T=200) — all three match exactly. **This took three attempts and the
+> first two gave 0/200**, because (i) `n4` is a **per-row** field, not top-level, and
+> (ii) collapsing cells by `k` alone silently drops `m > 10` rows. **A tail statistic
+> is easy to compute wrong in a way that reads as a strong null** — both of my failed
+> attempts would have supported a *stronger* negative than the paper claims.
+
 ## 5b. Controls
 
 | control | status |
