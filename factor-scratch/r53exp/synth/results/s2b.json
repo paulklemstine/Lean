@@ -1,0 +1,9 @@
+{
+ "real_median": 1.2307692307692308,
+ "perm_lo": 0.391304347826087,
+ "perm_hi": 2.1666666666666665,
+ "inside": true,
+ "p_value": 0.3541666666666667,
+ "n_replicates": 40,
+ "n_permutations": 240
+}

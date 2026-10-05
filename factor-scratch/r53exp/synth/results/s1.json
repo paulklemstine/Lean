@@ -1,0 +1,311 @@
+{
+ "S0": 0.7407407397749247,
+ "S1": 0.8888888884749678,
+ "ratio": 1.2000000010058285,
+ "calibration": {
+  "n_cells": 13,
+  "max_swing": 0.0,
+  "max_swing_pct": 0.0,
+  "identical": true,
+  "cells": {
+   "(1, 1)": [
+    1.0,
+    1.0
+   ],
+   "(1, 2)": [
+    0.75,
+    0.75
+   ],
+   "(1, 3)": [
+    0.9,
+    0.9
+   ],
+   "(1, 4)": [
+    0.85,
+    0.85
+   ],
+   "(2, 1)": [
+    0.77,
+    0.77
+   ],
+   "(2, 2)": [
+    1.0,
+    1.0
+   ],
+   "(2, 3)": [
+    0.775,
+    0.775
+   ],
+   "(2, 4)": [
+    0.8,
+    0.8
+   ],
+   "(3, 1)": [
+    0.9,
+    0.9
+   ],
+   "(3, 2)": [
+    0.75,
+    0.75
+   ],
+   "(4, 1)": [
+    0.9166666666666666,
+    0.9166666666666666
+   ],
+   "(4, 2)": [
+    0.85,
+    0.85
+   ],
+   "(6, 1)": [
+    1.0,
+    1.0
+   ]
+  }
+ },
+ "cells": [
+  {
+   "cell": [
+    1,
+    1
+   ],
+   "n_u": 1320,
+   "k_u": 655,
+   "pred_u": 0.5,
+   "n_j": 1320,
+   "k_j": 1320,
+   "pred_j": 1.0
+  },
+  {
+   "cell": [
+    1,
+    2
+   ],
+   "n_u": 640,
+   "k_u": 493,
+   "pred_u": 0.75,
+   "n_j": 640,
+   "k_j": 480,
+   "pred_j": 0.75
+  },
+  {
+   "cell": [
+    1,
+    3
+   ],
+   "n_u": 680,
+   "k_u": 604,
+   "pred_u": 0.875,
+   "n_j": 680,
+   "k_j": 605,
+   "pred_j": 0.875
+  },
+  {
+   "cell": [
+    1,
+    4
+   ],
+   "n_u": 120,
+   "k_u": 107,
+   "pred_u": 0.9375,
+   "n_j": 120,
+   "k_j": 112,
+   "pred_j": 0.9375
+  },
+  {
+   "cell": [
+    1,
+    6
+   ],
+   "n_u": 160,
+   "k_u": 159,
+   "pred_u": 0.984375,
+   "n_j": 160,
+   "k_j": 157,
+   "pred_j": 0.984375
+  },
+  {
+   "cell": [
+    2,
+    1
+   ],
+   "n_u": 1080,
+   "k_u": 811,
+   "pred_u": 0.75,
+   "n_j": 1080,
+   "k_j": 818,
+   "pred_j": 0.75
+  },
+  {
+   "cell": [
+    2,
+    2
+   ],
+   "n_u": 440,
+   "k_u": 279,
+   "pred_u": 0.625,
+   "n_j": 440,
+   "k_j": 440,
+   "pred_j": 1.0
+  },
+  {
+   "cell": [
+    2,
+    3
+   ],
+   "n_u": 240,
+   "k_u": 182,
+   "pred_u": 0.8125,
+   "n_j": 240,
+   "k_j": 181,
+   "pred_j": 0.75
+  },
+  {
+   "cell": [
+    3,
+    1
+   ],
+   "n_u": 360,
+   "k_u": 325,
+   "pred_u": 0.875,
+   "n_j": 360,
+   "k_j": 318,
+   "pred_j": 0.875
+  },
+  {
+   "cell": [
+    3,
+    3
+   ],
+   "n_u": 160,
+   "k_u": 107,
+   "pred_u": 0.65625,
+   "n_j": 160,
+   "k_j": 160,
+   "pred_j": 1.0
+  },
+  {
+   "cell": [
+    4,
+    1
+   ],
+   "n_u": 200,
+   "k_u": 190,
+   "pred_u": 0.9375,
+   "n_j": 200,
+   "k_j": 192,
+   "pred_j": 0.9375
+  }
+ ],
+ "crt": [
+  {
+   "bits": 12,
+   "rule": "uniform",
+   "ratio": 0.9872609599535809,
+   "z": -0.13805525478292843,
+   "exp_hits": 117.44444444444444,
+   "power": true,
+   "n_moduli": 9
+  },
+  {
+   "bits": 12,
+   "rule": "jac_neg",
+   "ratio": null,
+   "note": "no conditioned base found -- EXCLUDED"
+  },
+  {
+   "bits": 13,
+   "rule": "uniform",
+   "ratio": 0.9937307204284842,
+   "z": -0.06651216815016382,
+   "exp_hits": 112.55555555555556,
+   "power": true,
+   "n_moduli": 9
+  },
+  {
+   "bits": 13,
+   "rule": "jac_neg",
+   "ratio": null,
+   "note": "no conditioned base found -- EXCLUDED"
+  },
+  {
+   "bits": 14,
+   "rule": "uniform",
+   "ratio": 1.037994258089133,
+   "z": 0.19223742971189942,
+   "exp_hits": 25.6,
+   "power": true,
+   "n_moduli": 5
+  },
+  {
+   "bits": 14,
+   "rule": "jac_neg",
+   "ratio": null,
+   "note": "no conditioned base found -- EXCLUDED"
+  },
+  {
+   "bits": 15,
+   "rule": "uniform",
+   "ratio": 1.0983032519290126,
+   "z": 0.4740011151366521,
+   "exp_hits": 23.25,
+   "power": true,
+   "n_moduli": 8
+  },
+  {
+   "bits": 15,
+   "rule": "jac_neg",
+   "ratio": null,
+   "note": "no conditioned base found -- EXCLUDED"
+  }
+ ],
+ "q_table": [
+  {
+   "arm": "jac_neg on b",
+   "rejects": "no",
+   "q": 1.0,
+   "c_cond": 0.0,
+   "best_gain": 2.0,
+   "note": "legal; s_C/s_0 is the ONLY unknown"
+  },
+  {
+   "arm": "jac_pos on b",
+   "rejects": "no",
+   "q": 1.0,
+   "c_cond": 0.0,
+   "best_gain": 2.0,
+   "note": "legal; s_C/s_0 is the ONLY unknown"
+  },
+  {
+   "arm": "uniform b",
+   "rejects": "no",
+   "q": 1.0,
+   "c_cond": 0.0,
+   "best_gain": 2.0,
+   "note": "legal; s_C/s_0 is the ONLY unknown"
+  },
+  {
+   "arm": "filter b on (b/p)_3 = +1",
+   "rejects": "yes",
+   "q": 0.3333333333333333,
+   "c_cond": 1.0,
+   "best_gain": 0.5,
+   "note": "rejects 2/3 of bases -- GUARANTEED LOSS by the GAIN law"
+  },
+  {
+   "arm": "filter b on (b/p)_2 = +1 (q = 1/2)",
+   "rejects": "yes",
+   "q": 0.5,
+   "c_cond": 1.0,
+   "best_gain": 0.6666666666666666,
+   "note": "rejects 1/2 of bases -- GUARANTEED LOSS by the GAIN law"
+  },
+  {
+   "arm": "filter a on a Jacobi sign",
+   "rejects": "yes",
+   "q": 0.5,
+   "c_cond": 1.0,
+   "best_gain": 0.6666666666666666,
+   "note": "rejects 1/2 of candidates -- GUARANTEED LOSS by the GAIN law"
+  }
+ ]
+}

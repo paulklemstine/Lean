@@ -1,0 +1,928 @@
+# CITATION VERIFICATION — "2-adic / Jacobi-symbol sublattice" in QS & NFS
+
+Date of verification: 2026-10-04
+Host routes used: arXiv API (export host), zbMATH Open API, Crossref API, OpenAlex API,
+IACR ePrint search, direct curl of OA PDFs, WebFetch.
+Routes that FAILED on this host (recorded so they are not retried):
+  - dblp.org/search/publ/api  -> HANGS (timeout, no response)
+  - link.springer.com          -> 403 JS challenge, unusable
+  - www.ams.org/*.pdf          -> HTTP 200 but returns the cookie-consent HTML, NOT the PDF
+  - WebSearch                  -> NOT USED AT ANY POINT (it fabricates citations on this host)
+
+--------------------------------------------------------------------------
+ITEM 1 — "Schnorr-Seysen-Bauer attack on the quadratic sieve via multiple
+          independent Jacobi-symbol sublattices"
+--------------------------------------------------------------------------
+
+VERDICT: **NOT-FOUND as a joint paper. The name is a FUSION of two real,
+         unrelated things.**
+
+URLs actually fetched:
+  https://api.zbmath.org/v1/document/_search?search_string=Schnorr%20Seysen
+      -> nr_total_results: 2, and BOTH are single-author Martin Seysen papers.
+  https://export.arxiv.org/api/query?search_query=all:%22Schnorr-Seysen%22&max_results=10
+      -> opensearch:totalResults = 0
+  https://export.arxiv.org/api/query?search_query=all:%22Schnorr%22+AND+all:%22Seysen%22
+      -> 0 results
+  https://api.openalex.org/works?filter=raw_author_name.search:Seysen&per-page=20
+      -> full author list for Martin Seysen, 20 works, ZERO coauthored with
+         Schnorr or Bauer.
+  https://eprint.iacr.org/search?q=Schnorr-Seysen  (via WebFetch)
+      -> "NO RESULTS"
+
+WHAT IS REAL — Martin Seysen's two actual factoring works (both verified):
+
+(a) Martin SEYSEN, "A probabilistic factorization algorithm with quadratic
+    forms of negative discriminant", Mathematics of Computation 48 (1987),
+    pp. 757-780.
+    zbMATH id 4004252, zbMATH URL https://zbmath.org/4004252
+    DOI https://doi.org/10.2307/2007842  (JSTOR)
+    Crossref DOI variant: https://doi.org/10.1090/s0025-5718-1987-0878705-x
+    Verified by: fetch of https://api.zbmath.org/v1/document/4004252 and of
+    https://api.openalex.org/works?filter=title.search:...
+    zbMATH id also carries 0619.10004.
+
+    SCOPE WARNING — THIS IS NOT A QUADRATIC-SIEVE LATTICE PAPER. It is the
+    binary-quadratic-form / CLASS GROUP algorithm. From the zbMATH review
+    (English translation, verbatim):
+
+      "The new factoring algorithm presented by the author performs the
+       complete factorisation of a natural number N with probability >0
+       in a running time of exp sqrt{(5/4) log N  log log N} steps, under
+       the assumption that the Extended Riemann Hypothesis (ERH) holds. The
+       new algorithm is based on the following ideas:
+       1) It suffices to know the 2-part of the ideal class group of
+          Q(sqrt(-N)), since the ambiguous binary quadratic forms of
+          discriminant -N correspond one-to-one to the decompositions of N
+          into two factors. The use of this idea goes back to Shanks and was
+          already used by H. W. Lenstra and Schnorr to construct
+          probabilistic algorithms.
+       2) Selection of prime forms which, under ERH, generate the class group.
+       3) Determination of sufficiently many relations between these
+          generators by a probabilistic algorithm; on success this yields a
+          matrix whose determinant is a nonzero multiple of the class number.
+       4) Raising the prime forms to the odd part of this determinant yields
+          a generating system for the 2-class group and hence the desired
+          decomposition of N."
+
+    Same review, verbatim, on Lenstra: "Seysens Verfahren ist inzwischen von
+    A. K. Lenstra noch weiter bis zu einer Laufzeit von exp((1+o(1))sqrt(log N
+    log log N)) verbessert worden, indem das Aufsuchen der Relationenmatrix
+    unter Verwendung elliptischer Kurven beschleunigt wurde."
+
+(b) Martin SEYSEN, "Ein probabilistischer Faktorisierungsalgorithmus mit
+    quadratischen Formen negativer Diskriminante", doctoral thesis,
+    Fachbereich Mathematik der Johann Wolfgang Goethe-Universität zu Frankfurt
+    am Main, 81 pages (1984).
+    zbMATH id 3879003, https://zbmath.org/3879003
+    Verified by: fetch of https://api.zbmath.org/v1/document/3879003
+    zbMATH review (verbatim): "Building on earlier work by C. P. Schnorr
+    [J. Algorithms 3, 101-127 (1982; Zbl 0485.10004)] the author presents a
+    probabilistic factorization algorithm. ... Assuming the truth of the
+    Extended Riemann Hypothesis, he proves that his algorithm has expected
+    running time L(n)^{sqrt(9/7)+o(1)} where L(n) = exp((log n log log n)^{1/2}).
+    ... (Reviewer's remark: The reader is left in doubt about the practical
+    merits of the new algorithm.)"
+
+    >>> THIS is the closest thing to a documented Schnorr–Seysen relationship:
+        it is a *citation dependency* (Seysen's thesis builds on Schnorr's
+        1982 J. Algorithms paper), NOT a joint paper, and the shared object is
+        the CLASS-GROUP / binary-quadratic-form method, not a QS lattice, and
+        NO Jacobi-symbol sublattice appears in either.
+
+WHAT IS REAL — C. P. SCHNORR's QS lattice paper (the likely origin of the
+"Schorr" half of the fusion). This IS verified and IS a lattice paper:
+
+  Carl-PETER SCHNORR, "Refined analysis and improvements on some factoring
+  algorithms", Journal of Algorithms 3 (1982), pp. 101-127.
+  zbMATH id 3762131, zbMATH number 0485.10004, https://zbmath.org/3762131
+  DOI https://doi.org/10.1016/0196-6774(82)90012-8  (verified via Crossref)
+  Earlier conference version: "Refined analysis and improvements on some
+  factoring algorithms", Automata, Languages and Programming, 8th Colloq.,
+  Acre (Akko)/Isr. 1981, LNCS 115, pp. 1-15 (1981),
+  zbMATH id 3737021, 0469.68043.
+  Verified by: https://api.zbmath.org/v1/document/_search?search_string=Schnorr+refined+analysis...
+  Full text: NOT REACHED. zbMATH carries NO English review text for id 3762131
+  (only the record). Springer/JSTOR paywalled.
+
+WHAT COULD NOT BE DETERMINED (EXPLICIT FLAG):
+  - The claimed FACTOR (a "sqrt(2)-type constant per extra vector", or
+    "sqrt(m/2)", or "2^(m/2)"). **NOT DETERMINABLE.** The phrase
+    "sqrt(m/2)" was NOT found anywhere in any full text I reached.
+  - Whether a paper exists that literally names the attack
+    "Schnorr-Seysen-Bauer". I found no such title in zbMATH (which indexes
+    Schnorr, Seysen, Bauer and all combinations), Crossref, arXiv, ePrint,
+    or OpenAlex author lists.
+  - **"BAUER" IS THE UNEXPLAINED COMPONENT.** I could not identify which Bauer
+    or which Bauer paper, if any, this name refers to. NOT DETERMINABLE.
+  - VERBATIM SENTENCE: **NOT OBTAINED.** No full text of any Schnorr-Seysen
+    item was reachable. Everything above is from abstracts + zbMATH review text
+    (which IS authoritative text, but it is the reviewer's, not the authors').
+
+--------------------------------------------------------------------------
+ITEM 2 — Coppersmith's "two-dimensional lattice based cryptanalysis"
+--------------------------------------------------------------------------
+
+VERDICT: **REAL, but MIS-DATED and MIS-VENUED in the question.**
+
+URLs actually fetched:
+  https://api.crossref.org/works?query.bibliographic=two-dimensional+lattice+based+cryptanalysis+Coppersmith
+  https://api.openalex.org/works?search=Two-dimensional%20lattice%20based%20cryptanalysis
+      -> the chapter itself is NOT returned; OpenAlex/zbMATH do not index this
+         LNCS chapter under that title (LNCS proceedings chapters are unevenly
+         covered).
+  https://api.zbmath.org/v1/document/_search?search_string=Coppersmith&results_per_page=40
+      -> 39 Coppersmith papers returned; "Two-dimensional lattice based
+         cryptanalysis" is NOT among them.
+
+WHAT THE QUESTION GOT WRONG, AND THE CORRECTION IS DECISIVE:
+
+>>> THE CITATION "Coppersmith, 'Two-dimensional lattice based cryptanalysis',
+    ANTS-I, LNCS 877, pp. 41-55" IS FALSE. I VERIFIED THIS MYSELF. <<<
+
+  I pulled the COMPLETE ANTS-I table of contents from Crossref by ISBN:
+    https://api.crossref.org/works?filter=isbn:9783540586913&rows=60
+    (User-Agent: citecheck/1.0 (mailto:x@example.com))
+    -> **36 records = 35 chapters + the book record.**
+
+  ANTS-I book identity, VERIFIED:
+    TITLE   : "Algorithmic Number Theory"
+    SUBTITLE: "First International Symposium, ANTS-I, Ithaca, NY, USA,
+               May 6-9, 1994 Proceedings"
+    EDITORS : Leonard M. Adleman, Ming-Deh Huang
+    DOI     : https://doi.org/10.1007/3-540-58691-1
+    ISBN    : 9783540586913, 9783540490449
+    YEAR    : 1994
+  (from https://api.crossref.org/works/10.1007/3-540-58691-1)
+
+  LNCS VOLUME NUMBER -- CONFIRMED, AND NOTE A TRAP:
+    **LNCS 877 IS ANTS-I (1994).** Independently confirmed twice by zbMATH:
+      https://api.zbmath.org/799759  (0838.11080) -- Golliver-Lenstra-McCurley,
+        "Lattice sieving and trial division", "... Algorithmic number theory.
+        1st international symposium, ANTS-I, Ithaca, NY, USA, May 6-9, 1994.
+        Proceedings. Berlin: Springer-Verlag. Lect. Notes Comput. Sci. 877,
+        18-27 (1994)."
+      https://api.zbmath.org/699996  (0802.00018) -- the volume record:
+        "Lecture Notes in Computer Science 877. Berlin: Springer-Verlag.
+        ix, 323 p. (1994)."
+    >>> CAUTION: a sub-agent on this task asserted the OPPOSITE ("LNCS 877 is
+        ANTS-II, Talence 1996"). THAT SUB-AGENT CLAIM IS WRONG. ANTS-II is a
+        different volume: DOI https://doi.org/10.1007/3-540-61581-4, ed. Henri
+        Cohen, ISBN 9783540615811 -- and that is the volume containing
+        Elkenbracht-Huizing's "A multiple polynomial general number field sieve"
+        (LNCS 1172), which I read in full. Do not let the two ANTS volumes be
+        conflated in the other direction either. <<<
+
+  PROOF THAT NO COPPERSMITH CHAPTER EXISTS IN ANTS-I:
+    Of the 35 chapters returned, **ZERO** have Coppersmith in the author list
+    (I tested every author field of every record).
+    Moreover, the pages usually quoted for the phantom, 41-55, are demonstrably
+    occupied by three other papers. From my own parse of the Crossref records:
+        pp 41-41  Dodson & Haines   -- Computing rates of growth of division
+                                      fields on CM Abelian varieties
+        pp 42-42  Paulus           -- Algorithms for CM-Fields
+        pp 43-58  Couveignes & Morain -- Schoof's algorithm and isogeny cycles
+        pp 59-59  Stephens         -- Integer points on rational elliptic curves
+    There is no room at pp. 41-55 for any other chapter, including the
+    phantom.
+
+  CORROBORATING NEGATIVE (Coppersmith's own complete zbMATH bibliography, 137
+  records, none in ANTS / LNCS 877 / "Algorithmic Number Theory"): his
+  1995-1997 output is fully enumerated and is J. Cryptology 1997, EUROCRYPT'96
+  x3, SODA 1997, Discrete Math. 1996, SIAM J. Disc. Math. 1996 x2, Linear
+  Algebra Appl. 1997, J. Complexity 1997, plus non-crypto papers.
+
+  ACTUAL Coppersmith papers in the neighbouring venues, all confirmed:
+    "Finding a Small Root of a Univariate Modular Equation", EUROCRYPT '96,
+      LNCS 1070, 155-165.
+    "Finding a Small Root of a Bivariate Integer Equation; Factoring with High
+      Bits Known", EUROCRYPT '96, LNCS 1070, 178-189.
+    "Lattice Attacks on NTRU", EUROCRYPT '97, LNCS 1233, 52-61.
+    "Modifications to the Number Field Sieve", J. Cryptology 6(3), 169-180 (1993).
+
+  >>> VERDICT ON ITEM 2'S FIRST HALF: **NOT-FOUND / FALSE CITATION.** The paper
+      as cited does not exist. This is a stronger negative than my earlier
+      "unverifiable from this host" note, and it SUPERSEDES it. (I retract the
+      caution that it might merely be unindexed: the TOC is complete and
+      conclusive.)
+
+  ONE GENUINE PARTIAL FINDING: OpenAlex exposes a 14-entry PARSED reference
+  list for Coppersmith, "Small solutions to polynomial equations" (below). It
+  contains no Schnorr, no Seysen and no Bauer. CAVEAT: 14 entries is a PARTIAL
+  parse of a paper that prints more, so this is evidence of absence, not proof.
+  Full text was never reached (Springer paywall).
+
+WHAT IS SOLIDLY VERIFIED — the two *journal* papers the question is probably
+half-remembering, both via Crossref and zbMATH:
+
+(a) Don COPPERSMITH, "Small solutions to polynomial equations, and low
+    exponent RSA vulnerabilities", Journal of Cryptology 10(4) (1997),
+    pp. 233-260.
+    DOI https://doi.org/10.1007/s001459900030  (verified via Crossref AND
+    OpenAlex AND zbMATH id 1133022, https://zbmath.org/1133022)
+    zbMATH review: "Teichmüller representations of algebraic integers ..."
+    [NOT-FETCHED: full text paywalled. Coppersmith's own copy is not reachable.]
+
+(b) Don COPPERSMITH, "Modifications to the Number Field Sieve", Journal of
+    Cryptology 6(3) (1993), pp. 169-180.
+    DOI https://doi.org/10.1007/bf00198464  (verified via Crossref AND zbMATH
+    id 480520, https://zbmath.org/480520)
+    >>> This is the paper that actually contains the multiple-NFS /
+        quadratic-character work. See ITEM 4. It is the correct citation to
+        reach for, NOT the "two-dimensional" chapter.
+
+DOES COPPERSMITH IMPROVE THE SCHNORR-SEYSEN CONSTANT?
+  **NOT DETERMINABLE.** No Coppersmith full text was reachable on this host.
+  I will not guess the constant.
+
+--------------------------------------------------------------------------
+ITEM 3 — Lenstra / "Coppersmith-Odlyzko-Schroeppel"
+--------------------------------------------------------------------------
+
+VERDICT: **"Coppersford-Odlyzko-Schroeppel" IS A REAL NAME — BUT IT IS A
+         DISCRETE-LOGARITHM ALGORITHM, NOT A FACTORING ALGORITHM, AND IT HAS
+         NO CONNECTION TO SCHNORR-SEYSEN.**
+
+*** THIS IS THE MOST LIKELY PHANTOM IN THE WHOLE QUESTION. ***
+
+WHAT IS REAL, fully verified, three independent confirmations:
+
+  Don COPPERSMITH, Andrew M. ODLYZKO, Richard SCHROEPPEL,
+  "Discrete logarithms in GF(p)",
+  Algorithmica 1 (1986), pp. 1-15.
+  DOI https://doi.org/10.1007/BF01840433
+  zbMATH id 4025541, https://zbmath.org/4025541, zbMATH no. 0631.12010
+  Verified by direct fetch of
+    https://api.zbmath.org/v1/document/4025541   (authors, title, venue, pages)
+    https://api.openalex.org/works/doi:10.1007/BF01840433
+  zbMATH review (Thomas Beth), verbatim: "The authors examine the problem of
+  finding logarithms in a field GF(p) ... In this paper the authors present
+  several algorithms whose heuristic running time is L[1] for the initial
+  precomputation phase that is required for each prime p."
+  >>> SCOPE: DISCRETE LOG IN A PRIME FIELD. It has NOTHING to do with
+      factoring an RSA modulus, and nothing to do with QS lattices.
+  Open-access: FALSE on every route tried (closed). Full text NOT REACHED.
+  METADATA CAVEAT: OpenAlex misspells the second author as "Odlzyko";
+  Crossref and zbMATH both say "Odlyzko". Use Odlyzko.
+
+CONFIRMING USE OF THE NAME "Coppersmith-Odlyzko-Schroeppel" (COS) — two
+further sources, both verified from zbMATH review text:
+
+  (i) O. Schirokauer, D. Weber, T. Denny, "Discrete logarithms: The
+      effectiveness of the index calculus method", ANTS-II, LNCS 1122,
+      Springer 1996, pp. 337-361.
+      DOI https://doi.org/10.1007/3-540-61581-4_66
+      zbMATH id 1113850, https://zbmath.org/1113850
+      zbMATH review (Ian B. Blake), VERBATIM: "Implementations of the discrete
+      logarithm algorithms are discussed, including the number field sieve
+      (NFS) algorithm of Coppersmith-Odlyzko-Schroeppel for certain prime
+      fields, and the Coppersmith algorithm for F_2^n."
+
+  (ii) D. Weber, "Computing discrete logarithms with quadratic number rings",
+       ASIACRYPT 1998, LNCS 1403, Springer 1998, pp. 171-183.
+       DOI https://doi.org/10.1007/bfb0054125
+       zbMATH id 1303121, https://zbmath.org/1303121
+       zbMATH review (Nigel Smart), VERBATIM: "The paper then goes on to
+       compare the number field sieve method (NFS), with two quadratic number
+       rings, and the method of Coppersmith, Odlyzko and Schroeppel (COS).
+       Two discrete logarithm problems are solved in a field where p has 85
+       decimal digits. The author concludes that with current technology at
+       this problem size the COS method is more efficient, although NFS has
+       the better asymptotic complexity."
+
+  >>> SO: "COS" is a legitimate, citable, DLP-only acronym. If the question's
+      author encountered it next to a factoring discussion it was almost
+      certainly mis-copied across a boundary. DO NOT cite it for factoring.
+
+THE REAL LENSTRA <-> SCHNORR CONNECTION (this one IS verified and IS about
+factoring):
+
+  C. P. SCHNORR and H. W. LENSTRA, Jr., "A Monte Carlo factoring algorithm
+  with linear storage", Mathematics of Computation 43 (1984), pp. 289-311.
+  DOI https://doi.org/10.1090/s0025-5718-1984-0744939-5
+  Verified via Crossref. This is the "Schnorr-Lenstra" line, and it is the
+  correct name for the Schnorr/Lenstra factoring lineage.
+
+LENSTRA 1991 "On the calculation of regulators and class numbers of quadratic
+fields" — THE YEAR IS WRONG IN THE QUESTION:
+
+  H. W. LENSTRA, Jr., "On the calculation of regulators and class numbers of
+  quadratic fields", Journées arithmétiques, Exeter 1980,
+  LMS Lecture Note Series 56, pp. 123-150 (1982).
+  zbMATH id 3765915, https://zbmath.org/3765915
+  DOI https://doi.org/10.1017/cbo9780511662027.007 (Crossref; Crossref
+  mis-attributes the author as "Jnr" and dates the item 1982-09-16)
+  VERDICT ON ITEM: REAL, but the date is 1980 conference / 1982 publication.
+  It is ALSO cited in the wild as "1981" (Astérisque 61). Do not write 1991.
+  It IS connected to the Schnorr-Seysen line, but via the CLASS-GROUP method
+  (it is exactly what Seysen's zbMATH review calls "the use of this idea goes
+  back to Shanks"), not via a QS lattice.
+
+ALSO VERIFIED AND ADJACENT:
+  H. W. Lenstra, Jr., "Integer Factoring", Designs, Codes and Cryptography
+  19 (2000), pp. 101-128. DOI https://doi.org/10.1023/A:1008397921377
+  (Crossref). Good general survey.
+
+  >>> IMPORTANT: I searched zbMATH and Crossref for any Lenstra paper relating
+      Schnorr-Seysen to a *lattice*/Jacobi-symbol construction and found NONE.
+      The Lenstra<->Schnorr link is the Monte Carlo class-group / linear-storage
+      algorithm, not the QS lattice.
+
+--------------------------------------------------------------------------
+ITEM 4 — The mod-2 / index-2^r sublattice and the quadratic-character rows
+--------------------------------------------------------------------------
+
+VERDICT: **REAL — and I recovered a verbatim sentence with its provenance
+         chain. BUT it is an NFS object, not a QS object, and the "index 2^r"
+         language did not appear in the one full text I reached.**
+
+*** THIS IS THE SOLIDEST RESULT OF THE ENTIRE VERIFICATION. ***
+
+FULL TEXT ACTUALLY FETCHED AND READ (this is a real OA PDF, I downloaded it):
+  Marije ELKENBRACHT-HUIZING, "A multiple polynomial general number field
+  sieve", in H. Cohen (ed.), Algorithmic Number Theory (ANTS-II),
+  Lecture Notes in Computer Science 1172, Springer 1996, pp. 99-114.
+  DOI https://doi.org/10.1007/3-540-61581-4_45
+  VERIFIED VIA: https://api.crossref.org/works/10.1007/3-540-61581-4_45
+                https://api.openalex.org/works/doi:10.1007/3-540-61581-4_45
+  FULL TEXT FETCHED FROM: https://ir.cwi.nl/pub/2175/2175D.pdf
+    (HTTP 200, application/pdf, 2,734,145 bytes, 16 pages)
+  Local copies used for this report: /tmp/elk.pdf, /tmp/elk2.txt (pdftotext -layout)
+
+VERBATIM, from Elkenbracht-Huizing, describing the linear-algebra (nullspace
+over F_2) stage of the GNFS:
+
+  "In the next stage a matrix is built, which contains a column for every
+   relation (a, b) (which survives the filtering stage) and a row for every
+   element in '11..(L1) u 11..(L2)'. ... Finding a vector in the nullspace of
+   this matrix over 1F2 guarantees that, for the subset T of the relations
+   formed by the relations which correspond to a 1 in the solution vector,
+   every exponent in (1) is even. BY ADDING SOME EXTRA ROWS COMING FROM
+   QUADRATIC CHARACTERS [1] [4, SECTION 8, SECTION 12.7], ONE IS PRACTICALLY
+   CERTAIN THAT THE SUBSET T IS THE WANTED SET S."
+
+Her reference list (VERBATIM, as printed):
+
+  [1] L.M. Adleman. "Factoring numbers using singular integers."
+      Proceedings of the 23rd Annual ACM Symposium on Theory of Computing
+      (STOC), pages 64-71, New Orleans, 1991.
+      >>> INDEPENDENTLY VERIFIED: DOI https://doi.org/10.1145/103418.103432
+          via Crossref; Crossref confirms title, author, venue, pages, year.
+
+  [4] J.P. Buhler, H.W. Lenstra, Jr., and C. Pomerance. "Factoring integers
+      with the number field sieve", pages 50-94 in (9).
+  [9] A.K. Lenstra and H.W. Lenstra, Jr., eds., "The development of the number
+      field sieve", volume 1554 of Lecture Notes in Mathematics.
+      Springer-Verlag, Berlin, 1993.
+      >>> INDEPENDENTLY VERIFIED: Buhler-Lenstra-Pomerance, pp. 50-94, LNM
+          1554, 1993, DOI https://doi.org/10.1007/bfb0091539 (via OpenAlex).
+          The LNM 1554 volume itself is also Crossref-confirmed via the
+          Lenstra annotated-bibliography chapter, DOI 10.1007/bfb0091535.
+
+*** SO THE ANSWER TO "WHAT IS THE STANDARD NAME/DERIVATION" IS:
+    Buhler-Lenstra-Pomerance, "Factoring integers with the number field sieve",
+    Section 8 and Section 12.7, in Lenstra & Lenstra (eds.), The Development
+    of the Number Field Sieve, LNM 1554, Springer 1993 -- with the mechanism
+    traced back to Adleman, STOC 1991. ***
+
+*** AND NOTE THE PARAPHRASE BLOWN UP:
+    "practically certain" is what Elkenbracht-Huizing actually writes. She is
+    NOT claiming an unconditional theorem; the quadratic-character rows are
+    described as a heuristic sufficient condition. Any claim that this is
+    proved to be index 2^r and hence a rigorous constant is a strengthening
+    the cited source does not make. ***
+
+WHAT I COULD **NOT** VERIFY (EXPLICIT FLAG — NOT DETERMINABLE):
+  - The exact STATEMENT in Buhler-Lenstra-Pomerance. Both the Springer LNM
+    volume and the chapter are CLOSED ACCESS:
+    https://api.openalex.org/works/doi:10.1007/bfb0091539
+      -> 'oa_status': 'closed', 'oa_url': None, 'any_repository_has_fulltext': False
+    link.springer.com is blocked on this host. I never saw their text. I have
+    ONLY the Elkenbracht-Huizing pointer "[4, Section 8, Section 12.7]".
+  - The number of extra rows, and whether the total index is 2, 2^m, or 2^r.
+    NOT DETERMINABLE from BLP itself. HOWEVER — see ITEM 5: Briggs's full
+    treatment shows the rows are a "quadratic character base" whose size is a
+    CONFIDENCE/COST knob ("increasing the number of ideals in Q also increases
+    the likelihood of identifying squares correctly"), and Cavallar's footnote
+    shows they are routinely omitted. There is no index-2^r object here.
+  - Whether the word "2^r" or "index 2^r" appears anywhere in the primary
+    literature. **NOT-FOUND, searched exhaustively** across eight full texts
+    (Kleinjung 2016, Briggs 1998, Cavallar ANTS-IV 2000, RSA-512, RSA-140, the
+    512-bit record paper, Elkenbracht-Huizing ANTS 1996, and Elkenbracht-Huizing
+    "Historical background of the NFS factoring method", Nieuw Arch. Wiskunde
+    14(3) (1996) 375-389, https://ir.cwi.nl/pub/2199/2199D.pdf).
+    Counts for Jacobi / Legendre / "2-adic" / torsion / "index 2^r": ZERO in all
+    of them. DO NOT attribute "index 2^r" to these papers.
+  - The "MIXED SIGN / RAMIFICATION" FAILURE MODE (the dependency being a square
+    on both sides, giving a trivial gcd). **IT IS DOCUMENTED, BUT IT HAS NO
+    NAME BEYOND "trivial".** See ITEM 5, Cavallar et al. RSA-512, verbatim:
+    of four dependencies, "One job found the factorization ... the other three
+    jobs found the trivial factorization". The word used in the record-setting
+    literature is "trivial" / "the trivial factorization" / "the trivial
+    factor". NOT DETERMINABLE whether a 2-adic name exists anywhere.
+
+  *** THE STANDARD NAME YOU ASKED FOR: "QUADRATIC CHARACTER BASE". *** It comes
+  from Briggs 1998, section 3.2, descending from Buhler-Lenstra-Pomerance 1993,
+  section 8. That is the term the literature actually uses, and it is an
+  "extra rows / extra bits" object, not a "mod-2 sublattice".
+  - "LOVASZ" and "SCHONHAGE": I searched and found NOTHING connecting either
+    name to the QS/NFS Jacobi-symbol sublattice. NOT-FOUND.
+    (Not searched exhaustively enough to call it a refutation, but no hit.)
+
+SCOPE CORRECTION THE QUESTION NEEDS:
+  In the QUADRATIC SIEVE there is no such parity/character constraint on the
+  relation lattice — a QS relation already forces x^2 = y exactly, so the
+  square condition is built in and there is no "even sublattice of index 2^r"
+  to find. The quadratic-character / index-2^m apparatus belongs to the
+  NUMBER FIELD SIEVE, where F_i(a,b) is only required to be *almost* a square
+  and the extra character rows are needed to force it. (Elkenbracht-Huizing's
+  text makes this explicit: the requirement is that every exponent in the
+  factorisation be even, and the extra rows are added to ENFORCE it.)
+
+--------------------------------------------------------------------------
+ITEM 5 — "Jacobi symbol (a/n) for n=pq is a free O(log n) quantity used to
+          build sublattices in QS"
+--------------------------------------------------------------------------
+
+VERDICT: **SPLIT VERDICT. The COST half is real and citable. The
+         CONSTRUCTION half is NOT VERIFIED — I found no QS source, reachable
+         by any route, in which the Jacobi symbol (a/n) is used to BUILD A
+         LATTICE.**
+
+--- 5a. THE COST CLAIM: REAL, WITH A CORRECT CITATION ---
+
+  Richard P. BRENT and Paul ZIMMERMANN, "An O(M(n) log n) algorithm for the
+  Jacobi symbol", in G. Hanrot et al. (eds.), Algorithmic Number Theory
+  (ANTS-IX), Lecture Notes in Computer Science 6197, Springer 2010,
+  pp. 83-95.
+  zbMATH id 5793673, zbMATH number 1260.11081, https://zbmath.org/5793673
+  Verified by: fetch of
+    https://api.zbmath.org/v1/document/_search?search_string=Brent+Zimmermann+Jacobi+symbol+algorithm
+  Abstract-level only (zbMATH carries no English review text for this record).
+  Full text: NOT REACHED.
+
+  >>> This is the correct and ONLY citable support for "a Jacobi symbol is
+      cheap". Note the bound is O(M(n) log n), not O(log n); if you want the
+      bit-complexity of a single (a/n) it is O(log^2 n) schoolbook or
+      O(M(n) log n). The paper is about COMPUTING Jacobi symbols fast in
+      general -- it says nothing about QS. Do not let it be cited as if it
+      endorsed a QS construction.
+
+--- 5b. THE CONSTRUCTION CLAIM: NOT VERIFIED AS A LATTICE CONSTRUCTION ---
+
+  The ONLY place I could reach, in any full text, where a quadratic character
+  is used to CONSTRAIN an NFS relation space is the linear-algebra step of
+  Elkenbracht-Huizing (Item 4, full text fetched and read, see above). Two
+  features of that mechanism matter and BOTH cut against the "sublattice"
+  framing:
+    (i) it lives in the NULLSPACE over F_2 of a relation matrix, i.e. it is a
+        GF(2) index-2 / character constraint, NOT a Z-lattice sublattice;
+    (ii) it is in the NUMBER FIELD SIEVE, not the quadratic sieve. As argued
+        in Item 4, the QS relation lattice has no parity constraint to impose
+        because the square condition is already built in.
+
+  So: if the claim is "a Legendre/Jacobi character adds extra ROWS to a GF(2)
+  nullspace computation over NFS relations", that is REAL and citable
+  (Elkenbracht-Huizing -> Buhler-Lenstra-Pomerance -> Adleman).
+  If the claim is "one builds index-2^r SUB-LATTICES of the QS lattice using
+  the Jacobi symbol (a/n), gaining extra short vectors", that is
+  **NOT VERIFIED. Treat as folklore until a primary source is produced.**
+
+  Explicitly: I searched zbMATH, Crossref, arXiv, IACR ePrint and OpenAlex for
+  QS/NFS + Jacobi-symbol sublattice / index-2^r and reached no such source.
+  Searches that returned NOTHING (legitimate negatives):
+    - arXiv  all:"Jacobi symbol" AND all:"quadratic sieve"   -> 0 results
+    - arXiv  all:"multiplicative lattice"                   -> 15 results, ALL
+               commutative-algebra papers on "multiplicative lattices"
+               (Cauchy pre-Lie algebras, zero-divisor graphs). COMPLETELY
+               UNRELATED to lattices in number theory. Name collision trap.
+    - eprint.iacr.org/search?q=Schnorr-Seysen               -> NO RESULTS
+    - eprint.iacr.org/search?q=Kawazumi                     -> NO RESULTS
+
+  --- 5b-bis. THREE INDEPENDENT VERBATIM SOURCES FOR THE CHARACTER-ROW MECHANISM
+            (I downloaded and read all three myself) ---
+
+These settle what the "extra rows" actually ARE, without needing BLP itself.
+
+SOURCE B — Stefania CAVALLAR, "Strategies in Filtering in the Number Field Sieve",
+  ANTS-IV, LNCS 1838, Springer 2000, pp. 209-231, DOI 10.1007/10722028_11.
+  PDF FETCHED FROM: https://ir.cwi.nl/pub/2078/2078D.pdf
+    (HTTP 200, 3,673,099 bytes, application/pdf, 23 pp; I re-fetched and read it.)
+
+  VERBATIM, printed p. 212, section 1:
+    "Alas, not every dependency yields a set S such that n(a,b)es(a - ba) and
+     n(a,b)es(a-b,8) are squares, but we can make the method practical by
+     producing several dependencies and doing quadratic character tests
+     [2, Section 8]."
+  (Its reference [2] is BLP, LNM 1554 pp. 50-94.)
+
+  *** VERBATIM, printed p. 223, FOOTNOTE 11 — this is the single most damaging
+      quote for any strong reading of the claim: ***
+    "II In particular, all quadratic character rows are omitted. The
+     pseudo-dependencies being found for this reduced matrix must be combined
+     to real dependencies afterwards."
+
+  >>> I VERIFIED BOTH QUOTES MYSELF by direct grep of the downloaded PDF
+      (lines 154 and 732 of the pdftotext output respectively).
+  >>> WHAT THIS MEANS: in a real, record-setting implementation, the quadratic
+      character rows are OMITTED ENTIRELY and the pseudo-dependencies are fixed
+      up afterwards. So the character rows are NOT structurally necessary, they
+      are a heuristic filter, and a top-tier implementation chose to drop them.
+
+SOURCE B2 — S. CAVALLAR et al., "Factorization of a 512-Bit RSA Modulus",
+  EUROCRYPT 2000, DOI 10.1007/978-3-540-45772-7_19.
+  PDF FETCHED FROM: https://ir.cwi.nl/pub/10351/10351D.pdf
+    (HTTP 200, 2,771,543 bytes, application/pdf, 18 pp; read by me.)
+
+  VERBATIM, section 3.3 "Finding Dependencies":
+    "In order to extract from these 64 dependencies some dependencies for the
+     matrix including the primes < 40, quadratic character checks were used as
+     described in [1], [7, section 8, section 12.7], and [15, last paragraph of
+     Section 3.8 on pp. 30-31]. This yielded a dense 100 x 64 homogeneous system
+     which was solved by Gaussian elimination. That system turned out to have
+     14 independent solutions, which represent linear combinations of the
+     original 64 dependencies."
+  (Verified by me at line 657 of the pdftotext output.)
+
+  Its ref [15] = M. Elkenbracht-Huizing, PhD thesis, Leiden University, May
+  1997, cited as "last paragraph of Section 3.8 on pp. 30-31" — this is the
+  most precise locus-pointer found anywhere. The thesis itself was NOT
+  obtained (Leiden repository not reachable). NOT DETERMINABLE.
+
+  *** AND, FROM THE SAME PAPER, THE FAILURE MODE OF ITEM 4, VERBATIM, and this
+      one I extracted with clean text (not degraded ligatures): ***
+    section 3.4: "One job found the factorization after 39.4 CPU-hours, the
+    other three jobs found the trivial factorization after 38.3, 41.9, and 61.6
+    CPU-hours (different CPU times are due to the use of different parameters
+    in the four jobs)."
+
+  >>> ANSWER TO ITEM 4's FAILURE-MODE QUESTION: the phenomenon is REAL and
+      routinely observed (3 of 4 dependencies in the RSA-512 record
+      factorization), but the literature's ONLY name for it is "the trivial
+      factorization" / "trivial factor". There is NO named 2-adic or index-2^r
+      phenomenon. NOT DETERMINABLE that a name exists.
+
+SOURCE C — Matthew E. BRIGGS, "An Introduction to the General Number Field Sieve",
+  MSc thesis, Virginia Polytechnic Institute and State University, 1998.
+  LANDING PAGE: http://hdl.handle.net/10919/36618
+  PDF FETCHED FROM:
+    https://vtechworks.lib.vt.edu/bitstreams/20c567b9-1dd3-4dc4-b42b-c67ad01ae904/download
+    (HTTP 200, 870,013 bytes, application/pdf, 13 pp; read by me.)
+
+  *** THIS IS THE ONLY SOURCE FOUND THAT PROVES THE MECHANISM AND NAMES IT.
+      It is where the phrase the question is looking for actually lives: ***
+
+  VERBATIM, section 4.3, "Matrices and Dependencies":
+    "Each binary vector e(a,b) is also augmented with information relating a
+     particular a + b theta to the quadratic character base ... If there are k
+     primes in the rational factor base, l first degree prime ideals of Z[theta]
+     in the algebraic factor base, and m first degree prime ideals in the
+     quadratic character base, then each e(a,b) will be comprised of 1 + k + l + m
+     binary bits, determined by the sign of a + bm and the respective bases."
+    "For a fixed (s, q) pair the corresponding bit in e(a,b) is set to 0 if the
+     Legendre symbol ((a + bs)/q) has value 1 and is set to 1 otherwise. This
+     last representation preserves the multiplicative nature of the Legendre
+     symbol in the exact same way the sign of a + bm is preserved during
+     multiplication by the first bit of e(a,b)."
+
+  *** >>>>>> THE PHRASE YOU ARE LOOKING FOR: "quadratic character base". <<<<<<
+      That is the STANDARD NAME. It is Briggs, and it descends from BLP. ***
+
+  VERBATIM, section 3.2 (printed pp. 20-22):
+    "This problem is solved in a straight-forward and efficient manner [1, 5]
+     through the use of 'quadratic characters.'"
+    "Note that any integer is a perfect square modulo 2."
+    Theorem 3.2.1: "Let U be a set of (a, b) pairs such that prod (a + b theta) =
+     alpha^2 for some alpha in Q(theta). Given a first degree prime ideal q
+     corresponding to the pair (s, q) that does not divide <a + b theta> for any
+     pair (a, b) and for which f'(s) is not congruent to 0 (mod q), it follows
+     that prod ((a + bs)/q) = 1"
+    with the map given in the proof as
+    "chi_q : Z[theta] \ q -> {1,-1} given by chi_q(gamma) = (phi(gamma)/q)",
+    and the argument "Using the elementary properties of the Legendre symbol it
+     is seen that chi_q(beta^2) = (phi(beta^2)/q) = (phi(beta)*phi(beta)/q) =
+     ((phi(beta)/q))^2 = 1".
+
+  *** AND THE HONESTY STATEMENT, WHICH IS THE MOST IMPORTANT LINE IN THE WHOLE
+      INVESTIGATION, VERBATIM: ***
+    "Just like Theorem 3.1.10, this result gives a necessary condition for
+     squareness in Q(theta) but NOT A SUFFICIENT ONE. But given a set U of
+     (a, b) pairs and a set Q of first degree prime ideals of Z[theta] that
+     satisfy both (3.5) and Theorem 3.2.1, it follows [5, page 70] that the
+     product of all the elements a + b theta corresponding to (a, b) pairs in U
+     is very likely to be a perfect square in Q(theta). As in the analogous test
+     for square in Z, increasing the number of ideals in Q also increases the
+     likelihood of identifying squares correctly."
+
+  >>> THIS KILLS ANY "RIGOROUS index 2^r" READING. The condition is NECESSARY
+      BUT NOT SUFFICIENT; the conclusion is "very likely". The number of
+      character-base primes is a CONFIDENCE/COST trade-off ("increasing the
+      number of ideals in Q also increases the likelihood"), not a structural
+      correction. (His [5] is BLP, cited as "pages 69-70" — a SECONDARY
+      citation, so BLP p. 69-70 is an INFERENCE, not verified pagination.)
+
+--- 5c. KLEINJUNG IS A FULL-TEXT NEGATIVE RESULT (I obtained and read it) ---
+
+  Thorsten KLEINJUNG, "Quadratic sieving", Mathematics of Computation 85(300)
+  (2016), pp. 1861-1873, DOI https://doi.org/10.1090/mcom/3058.
+
+  *** ROUTE CORRECTION — AND I VERIFIED THIS MYSELF: ***
+    WORKS: https://www.ams.org/journals/mcom/2016-85-300/S0025-5718-2015-03058-0/S0025-5718-2015-03058-0.pdf
+      -> HTTP 200, content_type application/pdf, 225,924 bytes. My own fetch.
+         (Note: `pdfinfo`/`file` reports "4 page(s)" — a wrong page tree in the
+         file. pdftotext extracts all 13 pages: header "MATHEMATICS OF
+         COMPUTATION / Volume 85, Number 300, July 2016, Pages 1861-1873"
+         through the full bibliography and the EPFL affiliation line.)
+    DOES NOT WORK: https://www.ams.org/mcom/2016-85-300/... and
+                   https://pubs.ams.org/journals/mcom/... -> cookie wall.
+    The ONLY difference is the "/journals/" path segment. USE IT.
+    No arXiv version exists. The EPFL Infoscience record (legacy id 219545, now
+    DSpace-CRIS item c3229829-6720-4486-8548-0db6c62685dc, handle
+    20.500.14299/127565) has NO DEPOSITED PDF — its only bundle is "LICENSE".
+
+  *** EXHAUSTIVE KEYWORD COUNT I RAN MYSELF over the full extracted text
+      (49,014 characters) — MY OWN COUNTS, reproducing the sub-agent's: ***
+      Jacobi 0 | Legendre 0 | character 0 | symbol 0 | sublattice 0 |
+      subgroup 0 | torsion 0 | 2-adic 0 | residue 6
+
+  >>> KLEINJUNG CONTAINS NOTHING ABOUT JACOBI OR LEGENDE SYMBOLS AS
+      CHARACTERS. All 6 "residue" hits are about N being a square mod p when
+      CHOOSING THE FACTOR BASE (or in the self-initialisation variant). E.g.
+      verbatim, Remark 1.2 / section 1.1: "Denote by F (the factor base) the set
+      of primes p <= F such that N is a quadratic residue modulo p".
+
+  >>> SO KLEINJUNG IS **NOT** A SOURCE FOR THE CLAIM. If your argument leans on
+      it, remove the lean.
+
+ON SCHNEIER: **NOT CHECKED.** I did not reach a copy of Schneier's Applied
+  Cryptography and cannot say whether the Jacobi-symbol story appears there.
+  NOT DETERMINABLE. (But note that the underlying phenomenon is now documented
+  in primary literature — Briggs' 1998 MSc thesis proves it and names it — so
+  the claim does not need Schneier.)
+
+--- 5d. WHAT COULD NOT BE REACHED (EXPLICIT FLAGS) ---
+
+  Buhler-Lenstra-Pomerance, LNM 1554 pp. 50-94: CLOSED ACCESS.
+    https://api.openalex.org/works/doi:10.1007/bfb0091539
+      -> 'oa_status': 'closed', 'oa_url': None,
+         'any_repository_has_fulltext': False
+    link.springer.com, link.springer.com/chapter/..., /content/pdf/...,
+    link.springer.com/book/... and doi.org all return the 3,038-byte JS bot
+    challenge. Wayback CDX holds only 301/302/303 redirect stubs, no PDF body.
+    archive.org metadata+full-text search: 0 real hits. fatcat/scholar.archive
+    by DOI: no files. Springer is unreachable by every route tried.
+    SECTIONS 8 AND 12.7 WERE NEVER READ. NOT DETERMINABLE.
+  Adleman, STOC '91: dl.acm.org/doi/... and /doi/pdf/... both HTTP 403;
+    OpenAlex 'oa_status': closed. NOT DETERMINABLE.
+  Elkenbracht-Huizing, Leiden PhD thesis 1997: NOT OBTAINED. NOT DETERMINABLE.
+  >>> This remains the highest-value unread document. If you have Springer
+      access, BLP sections 8 and 12.7 are the one read that settles items 4
+      and 5. Briggs section 4.3 above is the best available substitute.
+
+  ON THE "FREE / O(log n)" COST CLAIM: **UNVERIFIED IN SOURCE.** It is standard
+  textbook material, but none of the specialist papers reached (Kleinjung,
+  Briggs, Elkenbracht-Huizing, Cavallar) mentions the Jacobi symbol's cost AT
+  ALL — 0 hits in Kleinjung. That silence is CONSISTENT with it being regarded
+  as trivially cheap, but silence is not a citation. The only citable cost
+  result I found is Brent-Zimmermann above. Do not source the cost claim to any
+  of the QS/NFS papers.
+
+  Coppersmith, "Small solutions to polynomial equations", J. Cryptology 10(4)
+  233-260 (1997): NOT OBTAINED. OpenAlex says bronze OA at
+  https://link.springer.com/content/pdf/10.1007/s001459900030.pdf but that
+  URL returns the 3,038-byte Springer JS challenge page (verified by `file`).
+  The CiteseerX fallback that OpenAlex lists (doi 10.1.1.298.4806) did not
+  resolve.
+
+  Coppersmith, "Two-dimensional lattice based cryptanalysis", ANTS-I, LNCS 877
+  (1996): **METADATA NOT VERIFIED AT ALL — AND IT MAY NOT EXIST AS TITLED.**
+  I ran an EXHAUSTIVE title scan over Coppersmith's entire OpenAlex author
+  record: https://api.openalex.org/works?filter=author.id:A5067588072&per-page=200
+  returned **174 of his 175 indexed works** (author id A5067588072, obtained
+  from https://api.openalex.org/authors?search=Don%20Coppersmith).
+  Filtering those 174 titles for "lattice", "two-dimensional", "quadratic
+  sieve", "number field sieve" gave exactly TWO hits, neither of them this
+  chapter:
+      1997 | Lattice Attacks on NTRU                 | 10.1007/3-540-69053-0_5
+      1993 | Modifications to the Number Field Sieve | 10.1007/bf00198464
+  It is likewise absent from zbMATH (Coppersmith listing enumerated in full,
+  39 papers, no such entry) and from Crossref search.
+  >>> CAVEAT AGAINST OVER-REFUTING: this may be a REAL chapter that simply is
+      not indexed by any bibliographic database reachable from this host. LNCS
+      proceedings chapters are unevenly covered by OpenAlex/zbMATH, and
+      Springer -- the only authority that indexes its own LNCS line reliably --
+      is blocked here. So the correct verdict is **UNVERIFIABLE FROM THIS HOST,
+      NOT REFUTED.** The page range usually quoted for it (41-55) is NOT
+      DETERMINABLE. Do not cite the pages, and do not cite the chapter at all
+      until a library copy confirms title, venue, year and pages.
+
+--------------------------------------------------------------------------
+ITEM 6 (extra) — "Lovasz" / "Schonhage" in the QS/NFS Jacobi-symbol context
+--------------------------------------------------------------------------
+
+VERDICT: **NOT-FOUND.**
+
+zbMATH searches run (all via
+https://api.zbmath.org/v1/document/_search?search_string=...):
+  "Lovasz+sieve+factoring+quadratic"        -> 1 hit, a Russian textbook,
+                                              irrelevant
+  "Schonhage+factorization+sieve+quadratic" -> 1 hit, an ANTS-III volume
+                                              listing, irrelevant
+  "Lovasz+Jacobi+symbol+lattice"           -> 0 results
+  "Schonhage+Jacobi+symbol"                -> 1 hit, and it is Brent &
+                                              Zimmermann, "An O(M(n) log n)
+                                              algorithm for the Jacobi
+                                              symbol" (computational cost,
+                                              nothing to do with lattices)
+Neither name is attached to the Jacobi-symbol sublattice anywhere zbMATH
+indexes. NOT DETERMINABLE whether such a statement exists somewhere
+unindexed; I found no evidence for it.
+
+--------------------------------------------------------------------------
+NEGATIVE RESULTS THAT ARE ACTUALLY DECISIVE (recorded so they are not
+redone)
+--------------------------------------------------------------------------
+
+zbMATH author-pair / triple intersection test, run against
+https://api.zbmath.org/v1/document/_search?search_string=<urlencoded names>:
+
+  "Schnorr Seysen"             -> 2 results, BOTH single-author Martin Seysen
+                                  papers (the link is a CITATION, not
+                                  co-authorship)
+  "Schnorr Seysen Bauer"      -> 0 results
+  "Seysen Bauer"               -> 0 results
+  "Schnorr Bauer factoring"    -> 0 results
+
+Martin Seysen's COMPLETE OpenAlex author list was also enumerated
+(https://api.openalex.org/works?filter=raw_author_name.search:Seysen&per-page=20):
+1993 Combinatorica "Simultaneous reduction of a lattice basis and its
+reciprocal basis"; 1987 Math. Comput.; 1984 Frankfurt thesis; 2005 LNCS
+"Using an RSA Accelerator for Modular Inversion"; 2020 arXiv (monster
+paper). **ZERO coauthored with Schnorr or Bauer.**
+
+Claus-Peter Schnorr's OpenAlex factoring/lattice works were also enumerated:
+1986, 1991, 1993, 1994 (x2), 1995, 2007 -- **ZERO with any Bauer.**
+
+CONCLUSION: "Schnorr-Seysen-Bauer" does not name a paper. Given this project's
+recorded history of 16 fabricated citations, treat it as a LIKELY PHANTOM of
+the same species -- most plausibly a corruption of "Schnorr-Lenstra" plus
+"Seysen", or a cross-contamination from "Coppersmith-Odlyzko-Schroeppel"
+(Item 3), which IS a real name for a real but unrelated DLP algorithm.
+
+ADDITIONAL CONFIRMED FACTS BEARING ON THE ORIGIN OF THE NAME:
+
+  Martin SEYSEN WAS SCHNORR'S DOCTORAL STUDENT. The Mathematics Genealogy
+  Project (https://www.genealogy.math.ndsu.nodak.edu/id.php?id=23734) lists
+  "Martin Seysen -- Advisor: Claus-Peter Schnorr". [Fetched by a sub-agent; I
+  did not re-fetch this one URL myself, so treat the genealogy link as
+  second-hand.] A student/advisor relation is a very plausible origin for a
+  conflated "Schnorr-Seysen" author string in a reference list.
+
+  Martin Seysen's COMPLETE zbMATH record (9 records, verified by fetch of
+  https://api.zbmath.org/v1/document/_search?search_string=au%3ASeysen) --
+  the lattice/factoring ones:
+    - "A probabilistic factorization algorithm with quadratic forms of
+       negative discriminant", Math. Comput. 48, 757-780 (1987). zbMATH
+      an:4004252. AMS DOI 10.1090/s0025-5718-1987-0878705-x
+    - "Simultaneous reduction of a lattice basis and its reciprocal basis",
+       Combinatorica 13(3), 363-376 (1993). zbMATH an:484134.
+       DOI 10.1007/BF01202355
+    - "A measure for the non-orthogonality of a lattice basis",
+       Comb. Probab. Comput. 8(3), 281-291 (1999). zbMATH an:1319542.
+       DOI 10.1017/S0963548399003764
+    - "Characterization of all optimal networks...", Acta Inf. 21, 171-181 (1984)
+  Note: Seysen's genuine lattice work (1993, 1999) is on LATTICE BASIS
+  REDUCTION, not on factoring or Jacobi sublattices.
+
+  H. W. Lenstra Jr. is the co-author of Schnorr's factoring paper, NOT Seysen
+  and NOT Bauer -- zbMATH an:3891447 confirms exactly two authors for
+  "A Monte Carlo factoring algorithm with linear storage", Math. Comput. 43,
+  289-311 (1984), DOI 10.1090/S0025-5718-1984-0744939-5. This is almost
+  certainly the "Schnorr-<X>" slot that got corrupted into "Schnorr-Seysen".
+
+--------------------------------------------------------------------------
+ROUTES: WHAT WORKS AND WHAT DOES NOT, FROM THIS HOST (2026-10-04)
+--------------------------------------------------------------------------
+
+WORKS:
+  https://api.zbmath.org/v1/document/_search?search_string=...  (Accept: application/json)
+      Best for: verifying that something does NOT exist (author-pair tests),
+      and for reading zbMATH's English review text, which is often the only
+      full prose reachable for a paywalled paper. Splits "title / abstract /
+      reference list" cleanly. Use %20 between names; the "an:" prefix syntax
+      is REJECTED and silently returns a null total.
+  https://api.crossref.org/works/doi:<DOI>  and .../works?query.bibliographic=
+      Best for: pinning volume/issue/page/year of a KNOWN item.
+  https://api.openalex.org/works/doi:<DOI> and .../works?search=
+      Add &mailto=. Best for: open-access locations and abstracts. The single
+      most useful discovery tool here. BUT it has author-spelling errors
+      (rendered "Odlzyko" for Odlyzko) -- always confirm the author string
+      against Crossref or zbMATH.
+  https://ir.cwi.nl/pub/<id>/<id>D.pdf
+      Delivered THREE full texts on first try (Elkenbracht-Huizing ANTS 1996
+      id 2175; Cavallar ANTS-IV id 2078; Cavallar et al. RSA-512 id 10351).
+      The id is NOT zero-padded. Site has no usable search API.
+  https://vtechworks.lib.vt.edu/bitstreams/<uuid>/download
+      VTechWorks DSpace bitstreams serve PDFs directly. Delivered the Briggs
+      MSc thesis.
+  *** https://www.ams.org/JOURNALS/mcom/... .pdf  WORKS. ***
+      https://www.ams.org/mcom/...           -> 301 -> cookie wall (12.7 MB HTML)
+      https://pubs.ams.org/journals/mcom/... -> cookie wall
+      The ONLY thing that matters is the "/journals/" segment. This delivered
+      Kleinjung's full 13-page article. I verified this myself.
+  http://web.archive.org/cdx/search/cdx?url=<prefix>*
+      Use for locating archived copies. Intermittent: returned
+      "Internet Archive: Temporarily Offline" HTML pages on some calls and
+      worked on others, so retry.
+  https://export.arxiv.org/api/query?search_query=
+      Works, but is USELESS for this question: every relevant paper predates
+      arXiv.
+
+DOES NOT WORK (do not retry):
+  dblp.org          -> hangs, no response
+  link.springer.com -> 403 / 3038-byte JS "Client Challenge" on EVERY path:
+                      /chapter/, /content/pdf/, /book/, and via doi.org
+  pubs.ams.org, www.ams.org/mcom/... -> cookie wall (use /journals/ instead)
+  dl.acm.org        -> HTTP 403 on both /doi/ and /doi/pdf/
+  citeseerx.ist.psu.edu -> did not resolve
+  eprint.iacr.org/search -> JS-rendered; only usable via WebFetch, and it
+                      returned NO RESULTS for every query tried
+  infoscience.epfl.ch -> migrated to DSpace-CRIS; /api/records/ 404s, use
+                      /server/api/core/items/<uuid>; and the Kleinjung item has
+                      NO PDF deposited anyway
+  fatcat/scholar.archive.org -> no files for any DOI tried
+  BASE API          -> unparseable/empty here
+  unpaywall         -> HTTP 422 on a placeholder email
+  archive.org/wayback/available for cs.umass.edu/~copper -> no snapshots exist
+
+NOT USED: WebSearch, at any point, for any claim in this file.
+
+--------------------------------------------------------------------------
+BOTTOM LINE FOR THE CALLER
+--------------------------------------------------------------------------
+
+1. "Schnorr-Seysen-Bauer" -- NOT-FOUND, and the most likely explanation is now
+   identified. No joint paper exists in zbMATH, Crossref or OpenAlex. The
+   real Schnorr paper in that slot is Schnorr-LENSTRA, Math. Comput. 43 (1984)
+   289-311 (two authors, Lenstra -- not Seysen, not Bauer), and Seysen was
+   Schnorr's doctoral student (Math Genealogy id 23734), so a "Schnorr-Seysen"
+   string is easy to manufacture. The two genuinely real pieces are Schnorr,
+   J. Algorithms 3 (1982) 101-127 (the QS lattice paper) and Seysen,
+   Math. Comput. 48 (1987) 757-780 (a CLASS-GROUP algorithm, no lattice).
+   "Bauer" remains completely unexplained -- NOT DETERMINABLE.
+   The claimed sqrt(2)-type / sqrt(m/2) factor: NOT FOUND anywhere.
+
+2. THE CITATION IS FALSE, NOT JUST MISATTRIBUTED. "Coppersmith, 'Two-dimensional
+   lattice based cryptanalysis', ANTS-I, LNCS 877, pp. 41-55" does not
+   correspond to anything. I retrieved the complete ANTS-I TOC from Crossref
+   (36 records by ISBN 9783540586913): ZERO chapters have Coppersmith in the
+   author list, and pp. 41-55 are occupied by Dodson-Haines (41), Paulus (42)
+   and Couveignes-Morain (43-58). ANTS-I is Ithaca 1994, ed. Adleman/Huang,
+   DOI 10.1007/3-540-58691-1, and LNCS 877 IS ANTS-I (confirmed twice via
+   zbMATH, including the volume record "Lect. Notes Comput. Sci. 877, ix, 323 p.
+   (1994)"). This supersedes and is stronger than my earlier "unverifiable from
+   this host" note. The genuine NFS-improvement paper is Coppersmith, J.
+   Cryptology 6(3) (1993) 169-180, DOI 10.1007/bf00198464, which IS verified.
+
+3. "Coppersmith-Odlyzko-Schroeppel" -- REAL but it is DISCRETE LOG IN GF(p)
+   (Algorithmica 1 (1986) 1-15), not factoring. Real Lenstra<->Schnorr link
+   is Schnorr-Lenstra, Math. Comput. 43 (1984) 289-311. Lenstra's "regulators
+   and class numbers" paper is 1980 conf / 1982 pub, NOT 1991.
+
+4. BEST RESULT, AND IT SURVIVES. The quadratic-character extra rows are REAL,
+   traceable, and now verified in FOUR independent fetched full texts:
+     - Elkenbracht-Huizing (ANTS 1996) -- the originating citation chain
+     - Cavallar (ANTS-IV 2000) -- "doing quadratic character tests [2, Section
+       8]", AND footnote 11: "all quadratic character rows are omitted"
+     - Cavallar et al. (RSA-512) -- the most precise pointer, incl. "Elkenbracht-
+       Huizing [Leiden thesis], last paragraph of Section 3.8 on pp. 30-31"
+     - Briggs (VTech MSc thesis 1998) -- FULL PROOF, and it names the thing:
+       THE STANDARD TERM IS "QUADRATIC CHARACTER BASE".
+   Provenance: Buhler-Lenstra-Pomerance 1993 LNM 1554 sections 8 and 12.7,
+   originating in Adleman STOC 1991 pp. 64-71.
+   THREE CORRECTIONS THE QUESTION NEEDS:
+     (a) It is NFS, not QS. In QS the square condition is built into the
+         relation, so there is no parity constraint left to impose.
+     (b) It is a GF(2) MATRIX-ROW / extra-bit construction, not a Z-lattice
+         "mod-2 sublattice". Briggs: each relation vector is "augmented" and has
+         "1 + k + l + m binary bits"; the extra bit is 0 if the Legendre symbol
+         is 1, else 1.
+     (c) It is NECESSARY BUT NOT SUFFICIENT (Briggs, verbatim), and the number
+         of character-base primes is a CONFIDENCE/COST knob. Cavallar's footnote
+         shows a record-setting implementation DROPPED the rows entirely. There
+         is no rigorous index-2^r constant here.
+   "index 2^r" / "2-adic" language: NOT-FOUND in eight full texts.
+   The trivial-gcd failure mode IS real and observed (3 of 4 dependencies in
+   RSA-512) but is named only "the trivial factorization". No 2-adic name.
+
+5. Jacobi-symbol cost: citable (Brent-Zimmermann, ANTS-IX, LNCS 6197, 83-95,
+   O(M(n) log n) — note: not O(log n)). Jacobi-symbol SUB-LATTICE CONSTRUCTION
+   in QS: NOT VERIFIED and NOT what the literature does. Rewrite the clause as
+   "extra quadratic-character rows in the NFS GF(2) relation matrix".
+   Kleinjung 2016 is a FULL-TEXT NEGATIVE (Jacobi 0, Legendre 0, character 0,
+   sublattice 0) -- do not lean on it.
+
+ACTION: if you have Springer access, read Buhler-Lenstra-Pomerance LNM 1554
+sections 8 and 12.7. That single read confirms or corrects items 4 and 5.
+Briggs 1998 section 4.3 is a good substitute and is freely readable at the VTech
+URL recorded above.

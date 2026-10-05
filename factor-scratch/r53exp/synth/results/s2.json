@@ -1,0 +1,408 @@
+{
+ "c1_table": {
+  "(0, 1)": [
+   0,
+   5871,
+   5871
+  ],
+  "(0, 0)": [
+   5871,
+   5871,
+   5871
+  ],
+  "(1, 1)": [
+   4203,
+   4203,
+   4203
+  ],
+  "(1, 0)": [
+   4203,
+   4203,
+   4203
+  ],
+  "(2, 1)": [
+   1356,
+   1356,
+   1356
+  ],
+  "(2, 0)": [
+   1356,
+   1356,
+   1356
+  ],
+  "(3, 1)": [
+   72,
+   72,
+   72
+  ],
+  "(3, 0)": [
+   72,
+   72,
+   72
+  ]
+ },
+ "c2": [
+  {
+   "bits": 12,
+   "k": 2,
+   "rule": "uniform",
+   "pp": 0.0410775,
+   "pq": 0.03851375,
+   "pn": 0.00157625,
+   "ratio": 1.0036787093576527,
+   "exp_hits": 1261,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 12,
+   "k": 2,
+   "rule": "jac_neg",
+   "pp": 0.04354375,
+   "pq": 0.0417825,
+   "pn": 0.00174875,
+   "ratio": 1.0403812634024303,
+   "exp_hits": 1399,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 12,
+   "k": 2,
+   "rule": "jac_pos",
+   "pp": 0.03952625,
+   "pq": 0.04147125,
+   "pn": 0.00159375,
+   "ratio": 1.0285195264705882,
+   "exp_hits": 1275,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 12,
+   "k": 3,
+   "rule": "uniform",
+   "pp": 0.02097,
+   "pq": 0.03129,
+   "pn": 0.00056,
+   "ratio": 1.1716987499999998,
+   "exp_hits": 448,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 12,
+   "k": 3,
+   "rule": "jac_neg",
+   "pp": 0.01638625,
+   "pq": 0.02252625,
+   "pn": 0.0,
+   "ratio": 0.0,
+   "exp_hits": 0,
+   "power": true,
+   "annihilated": true
+  },
+  {
+   "bits": 12,
+   "k": 3,
+   "rule": "jac_pos",
+   "pp": 0.0241075,
+   "pq": 0.02694625,
+   "pn": 0.0009775,
+   "ratio": 0.6645593062659847,
+   "exp_hits": 782,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 13,
+   "k": 2,
+   "rule": "uniform",
+   "pp": 0.0404275,
+   "pq": 0.04337125,
+   "pn": 0.001775,
+   "ratio": 0.9878260334507042,
+   "exp_hits": 1420,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 13,
+   "k": 2,
+   "rule": "jac_neg",
+   "pp": 0.03876375,
+   "pq": 0.0398175,
+   "pn": 0.00160125,
+   "ratio": 0.9639191978922715,
+   "exp_hits": 1281,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 13,
+   "k": 2,
+   "rule": "jac_pos",
+   "pp": 0.040275,
+   "pq": 0.0399475,
+   "pn": 0.0015925,
+   "ratio": 1.0102892072213498,
+   "exp_hits": 1274,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 13,
+   "k": 3,
+   "rule": "uniform",
+   "pp": 0.02216875,
+   "pq": 0.02399125,
+   "pn": 0.00058,
+   "ratio": 0.9169931438577587,
+   "exp_hits": 464,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 13,
+   "k": 3,
+   "rule": "jac_neg",
+   "pp": 0.02085375,
+   "pq": 0.02267375,
+   "pn": 0.0,
+   "ratio": 0.0,
+   "exp_hits": 0,
+   "power": true,
+   "annihilated": true
+  },
+  {
+   "bits": 13,
+   "k": 3,
+   "rule": "jac_pos",
+   "pp": 0.0232725,
+   "pq": 0.0249,
+   "pn": 0.00101,
+   "ratio": 0.5737477722772277,
+   "exp_hits": 808,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 14,
+   "k": 2,
+   "rule": "uniform",
+   "pp": 0.01883875,
+   "pq": 0.02073125,
+   "pn": 0.0003975,
+   "ratio": 0.9825178262578617,
+   "exp_hits": 318,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 14,
+   "k": 2,
+   "rule": "jac_neg",
+   "pp": 0.020865,
+   "pq": 0.02183375,
+   "pn": 0.00041875,
+   "ratio": 1.087907328358209,
+   "exp_hits": 335,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 14,
+   "k": 2,
+   "rule": "jac_pos",
+   "pp": 0.0194725,
+   "pq": 0.0226225,
+   "pn": 0.000445,
+   "ratio": 0.9899250140449439,
+   "exp_hits": 356,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 14,
+   "k": 3,
+   "rule": "uniform",
+   "pp": 0.00896125,
+   "pq": 0.00926625,
+   "pn": 8.875e-05,
+   "ratio": 0.9356302288732394,
+   "exp_hits": 71,
+   "power": true,
+   "annihilated": false
+  },
+  {
+   "bits": 14,
+   "k": 3,
+   "rule": "jac_neg",
+   "pp": 0.01566125,
+   "pq": 0.00548125,
+   "pn": 0.0,
+   "ratio": 0.0,
+   "exp_hits": 0,
+   "power": true,
+   "annihilated": true
+  },
+  {
+   "bits": 14,
+   "k": 3,
+   "rule": "jac_pos",
+   "pp": 0.011455,
+   "pq": 0.00971375,
+   "pn": 0.00021875,
+   "ratio": 0.5086674571428571,
+   "exp_hits": 175,
+   "power": true,
+   "annihilated": false
+  }
+ ],
+ "c3": [
+  {
+   "bits": 16,
+   "k": 2,
+   "rule": "uniform",
+   "usable": 39,
+   "roots": 160,
+   "rate": 0.24375,
+   "exp_hits": 0.975,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": false
+  },
+  {
+   "bits": 16,
+   "k": 2,
+   "rule": "jac_neg",
+   "usable": 39,
+   "roots": 160,
+   "rate": 0.24375,
+   "exp_hits": 0.975,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": false
+  },
+  {
+   "bits": 16,
+   "k": 3,
+   "rule": "uniform",
+   "usable": 0,
+   "roots": 44,
+   "rate": 0.0,
+   "exp_hits": 0.0,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": true
+  },
+  {
+   "bits": 16,
+   "k": 3,
+   "rule": "jac_neg",
+   "usable": 0,
+   "roots": 0,
+   "rate": 0.0,
+   "exp_hits": 0.0,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": true
+  },
+  {
+   "bits": 18,
+   "k": 2,
+   "rule": "uniform",
+   "usable": 22,
+   "roots": 160,
+   "rate": 0.1375,
+   "exp_hits": 0.55,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": false
+  },
+  {
+   "bits": 18,
+   "k": 2,
+   "rule": "jac_neg",
+   "usable": 29,
+   "roots": 160,
+   "rate": 0.18125,
+   "exp_hits": 0.725,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": false
+  },
+  {
+   "bits": 18,
+   "k": 3,
+   "rule": "uniform",
+   "usable": 0,
+   "roots": 40,
+   "rate": 0.0,
+   "exp_hits": 0.0,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": true
+  },
+  {
+   "bits": 18,
+   "k": 3,
+   "rule": "jac_neg",
+   "usable": 0,
+   "roots": 0,
+   "rate": 0.0,
+   "exp_hits": 0.0,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": true
+  },
+  {
+   "bits": 20,
+   "k": 2,
+   "rule": "uniform",
+   "usable": 24,
+   "roots": 160,
+   "rate": 0.15,
+   "exp_hits": 0.6,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": false
+  },
+  {
+   "bits": 20,
+   "k": 2,
+   "rule": "jac_neg",
+   "usable": 27,
+   "roots": 160,
+   "rate": 0.16875,
+   "exp_hits": 0.675,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": false
+  },
+  {
+   "bits": 20,
+   "k": 3,
+   "rule": "uniform",
+   "usable": 0,
+   "roots": 36,
+   "rate": 0.0,
+   "exp_hits": 0.0,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": true
+  },
+  {
+   "bits": 20,
+   "k": 3,
+   "rule": "jac_neg",
+   "usable": 0,
+   "roots": 0,
+   "rate": 0.0,
+   "exp_hits": 0.0,
+   "n_moduli": 40,
+   "power": false,
+   "annihilated": true
+  }
+ ]
+}
