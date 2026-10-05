@@ -89,7 +89,12 @@ distinguishes them and it was not carried forward.**
 
 **This does not contradict the closure — it supports it.** The cost is that 97g/99's conclusion
 (*"this construction fails its own structural test, with the reason identified"*) is
-**over-diagnosed**: the reason is not identified, only the symptom. `Round97g:78` concedes
+**over-diagnosed**: the reason is not identified, only the symptom. ⚠️ **Round 54 qualifies this
+— the comparison may never have been apples-to-apples.** The decidable test speaks to a
+**mod-`p` 2-variable congruence**; 97g's construction works over **ℤ** and is not degenerate
+(recommendation 5, withdrawn below). **So 97g's ℤ-diagnosis may be correct after all, and
+"is 97g's basis genuinely suboptimal?" is OPEN, not resolved in either direction.**
+`Round97g:78` concedes
 *"literature has working multivariate Coppersmith — my basis choice is simply not yet
 H-G-optimal"*, which is the correct framing; the surrounding prose is stronger than the evidence.
 ⚠️ `Round97g:78` is also the one **uncited literature claim** in the thread, in a corpus with a
@@ -314,9 +319,17 @@ live door.
    7-dimensional 32–55-bit lattices.
 4. **Downgrade the smoothness closure** from "zero headroom" to open lead — contradicted in-house
    with a 303σ null control.
-5. **Carry arXiv:2111.14180's decidable test into the multivariate work.** Round 48 implemented it;
-   rounds 97g/99 did not use it and over-diagnosed their failure as a parameter problem. **Cheap,
-   concrete, methodological.**
+5. ~~**Carry arXiv:2111.14180's decidable test into the multivariate work.**~~ **WITHDRAWN by
+   round 54 — the transfer does not instantiate.** Round 48 implemented the test for **2-variable
+   congruences mod `p`** (`x + t·y + a ≡ 0 (mod p)`). The construction rounds 97g/99 actually
+   built works over **ℤ**, from `g(x,y) = (a+x)(b+y) − N` — an exact integer equation, not a
+   congruence — so **the test does not apply to it**, and running it would have produced a clean,
+   confident, **irrelevant** verdict. Worse, the mod-`p` *formulation* of that model is
+   **degenerate**: for fixed `x`, **all `p`** values of `y` satisfy it (vs exactly `1` for the
+   linear form), so it carries no two-variable information for anyone to recover. **The instrument
+   was not neglected through carelessness; it was pointed at a different problem.** See
+   `Round53`→`Round54` notes, `factor-scratch/r54exp/indep/`. **The underlying question — whether
+   97g's ℤ-lattice is genuinely suboptimal — remains OPEN and is not settled either way.**
 6. **Two untouched integers** are the highest-value targets: `Σw > 3/2` (A1) and the rank-2 UMW
    gap bound `t` (A2).
 
