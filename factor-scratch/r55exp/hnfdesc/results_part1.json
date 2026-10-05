@@ -1,0 +1,326 @@
+[
+ {
+  "tag": "smooth-both",
+  "p": 97021,
+  "q": 78079,
+  "N": 7575302659,
+  "bits": 33,
+  "D": -30301210636,
+  "h": 37488,
+  "descent_hit_a": 78079,
+  "descent_gcd": 78079,
+  "descent_forms": 42835,
+  "descent_hit_index": 42835,
+  "descent_capped": false,
+  "descent_secs": 0.826,
+  "p1_works": true,
+  "rho": [
+   {
+    "seed": 11,
+    "factor": 78079,
+    "steps": 511
+   },
+   {
+    "seed": 1237,
+    "factor": 97021,
+    "steps": 255
+   },
+   {
+    "seed": 99991,
+    "factor": 97021,
+    "steps": 255
+   }
+  ],
+  "rho_ok": 3,
+  "rho_med_steps": 255,
+  "sqrt_p": 279
+ },
+ {
+  "tag": "smooth-one",
+  "p": 109201,
+  "q": 65543,
+  "N": 7157361143,
+  "bits": 33,
+  "D": -28629444572,
+  "h": 56896,
+  "descent_hit_a": 65543,
+  "descent_gcd": 65543,
+  "descent_forms": 84077,
+  "descent_hit_index": 84077,
+  "descent_capped": false,
+  "descent_secs": 1.233,
+  "p1_works": true,
+  "rho": [
+   {
+    "seed": 11,
+    "factor": 109201,
+    "steps": 301
+   },
+   {
+    "seed": 1237,
+    "factor": 65543,
+    "steps": 1055
+   },
+   {
+    "seed": 99991,
+    "factor": 65543,
+    "steps": 255
+   }
+  ],
+  "rho_ok": 3,
+  "rho_med_steps": 301,
+  "sqrt_p": 256
+ },
+ {
+  "tag": "rough-both",
+  "p": 123209,
+  "q": 115547,
+  "N": 14236430323,
+  "bits": 34,
+  "D": -56945721292,
+  "h": 48510,
+  "descent_hit_a": 115547,
+  "descent_gcd": 115547,
+  "descent_forms": 59919,
+  "descent_hit_index": 59919,
+  "descent_capped": false,
+  "descent_secs": 1.343,
+  "p1_works": false,
+  "rho": [
+   {
+    "seed": 11,
+    "factor": 123209,
+    "steps": 127
+   },
+   {
+    "seed": 1237,
+    "factor": 123209,
+    "steps": 255
+   },
+   {
+    "seed": 99991,
+    "factor": 123209,
+    "steps": 127
+   }
+  ],
+  "rho_ok": 3,
+  "rho_med_steps": 127,
+  "sqrt_p": 339
+ },
+ {
+  "tag": "smooth-both",
+  "p": 92951,
+  "q": 76231,
+  "N": 7085747681,
+  "bits": 33,
+  "D": -28342990724,
+  "h": 120232,
+  "descent_hit_a": 76231,
+  "descent_gcd": 76231,
+  "descent_forms": 104035,
+  "descent_hit_index": 104035,
+  "descent_capped": false,
+  "descent_secs": 1.149,
+  "p1_works": true,
+  "rho": [
+   {
+    "seed": 11,
+    "factor": 92951,
+    "steps": 521
+   },
+   {
+    "seed": 1237,
+    "factor": 76231,
+    "steps": 127
+   },
+   {
+    "seed": 99991,
+    "factor": 92951,
+    "steps": 63
+   }
+  ],
+  "rho_ok": 3,
+  "rho_med_steps": 127,
+  "sqrt_p": 276
+ },
+ {
+  "tag": "smooth-one",
+  "p": 89101,
+  "q": 67927,
+  "N": 6052363627,
+  "bits": 33,
+  "D": -24209454508,
+  "h": 28386,
+  "descent_hit_a": 67927,
+  "descent_gcd": 67927,
+  "descent_forms": 31545,
+  "descent_hit_index": 31545,
+  "descent_capped": false,
+  "descent_secs": 0.515,
+  "p1_works": true,
+  "rho": [
+   {
+    "seed": 11,
+    "factor": 89101,
+    "steps": 514
+   },
+   {
+    "seed": 1237,
+    "factor": 89101,
+    "steps": 511
+   },
+   {
+    "seed": 99991,
+    "factor": 89101,
+    "steps": 273
+   }
+  ],
+  "rho_ok": 3,
+  "rho_med_steps": 511,
+  "sqrt_p": 260
+ },
+ {
+  "tag": "rough-both",
+  "p": 76463,
+  "q": 67927,
+  "N": 5193902201,
+  "bits": 33,
+  "D": -20775608804,
+  "h": 92640,
+  "descent_hit_a": 67927,
+  "descent_gcd": 67927,
+  "descent_forms": 83251,
+  "descent_hit_index": 83251,
+  "descent_capped": false,
+  "descent_secs": 0.866,
+  "p1_works": false,
+  "rho": [
+   {
+    "seed": 11,
+    "factor": 67927,
+    "steps": 528
+   },
+   {
+    "seed": 1237,
+    "factor": 76463,
+    "steps": 511
+   },
+   {
+    "seed": 99991,
+    "factor": 67927,
+    "steps": 307
+   }
+  ],
+  "rho_ok": 3,
+  "rho_med_steps": 511,
+  "sqrt_p": 260
+ },
+ {
+  "tag": "smooth-both",
+  "p": 82811,
+  "q": 78079,
+  "N": 6465800069,
+  "bits": 33,
+  "D": -25863200276,
+  "h": 97284,
+  "descent_hit_a": 78079,
+  "descent_gcd": 78079,
+  "descent_forms": 90155,
+  "descent_hit_index": 90155,
+  "descent_capped": false,
+  "descent_secs": 1.022,
+  "p1_works": true,
+  "rho": [
+   {
+    "seed": 11,
+    "factor": 78079,
+    "steps": 534
+   },
+   {
+    "seed": 1237,
+    "factor": 82811,
+    "steps": 559
+   },
+   {
+    "seed": 99991,
+    "factor": 82811,
+    "steps": 255
+   }
+  ],
+  "rho_ok": 3,
+  "rho_med_steps": 534,
+  "sqrt_p": 279
+ },
+ {
+  "tag": "smooth-one",
+  "p": 70981,
+  "q": 115931,
+  "N": 8228898311,
+  "bits": 33,
+  "D": -32915593244,
+  "h": 113326,
+  "descent_hit_a": 70981,
+  "descent_gcd": 70981,
+  "descent_forms": 169335,
+  "descent_hit_index": 169335,
+  "descent_capped": false,
+  "descent_secs": 1.484,
+  "p1_works": true,
+  "rho": [
+   {
+    "seed": 11,
+    "factor": 115931,
+    "steps": 530
+   },
+   {
+    "seed": 1237,
+    "factor": 70981,
+    "steps": 511
+   },
+   {
+    "seed": 99991,
+    "factor": 70981,
+    "steps": 511
+   }
+  ],
+  "rho_ok": 3,
+  "rho_med_steps": 511,
+  "sqrt_p": 266
+ },
+ {
+  "tag": "rough-both",
+  "p": 71837,
+  "q": 112543,
+  "N": 8084751491,
+  "bits": 33,
+  "D": -32339005964,
+  "h": 101982,
+  "descent_hit_a": 71837,
+  "descent_gcd": 71837,
+  "descent_forms": 103675,
+  "descent_hit_index": 103675,
+  "descent_capped": false,
+  "descent_secs": 0.71,
+  "p1_works": false,
+  "rho": [
+   {
+    "seed": 11,
+    "factor": 71837,
+    "steps": 591
+   },
+   {
+    "seed": 1237,
+    "factor": 112543,
+    "steps": 565
+   },
+   {
+    "seed": 99991,
+    "factor": 71837,
+    "steps": 268
+   }
+  ],
+  "rho_ok": 3,
+  "rho_med_steps": 565,
+  "sqrt_p": 268
+ }
+]

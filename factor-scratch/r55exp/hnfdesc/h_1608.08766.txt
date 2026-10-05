@@ -1,0 +1,1148 @@
+                                                   A BABYSTEP-GIANTSTEP METHOD FOR FASTER
+                                                     DETERMINISTIC INTEGER FACTORIZATION
+arXiv:1608.08766v6 [math.NT] 6 Jul 2017
+
+
+
+
+                                                                               MARKUS HITTMEIR
+
+
+                                                   Abstract. In 1977, Strassen presented a deterministic and rigorous algorithm
+                                                   for solving the problem of computing the prime factorization of natural num-
+                                                   bers N . His method is based on fast polynomial arithmetic techniques and
+                                                                 e 1/4 ), which has been state of the art for the last forty years.
+                                                   runs in time O(N
+                                                   In this paper, we will combine Strassen’s approach with a babystep-giantstep
+                                                   method to improve the currently best known bound by a superpolynomial
+                                                   factor. The runtime complexity of our algorithm is of the form
+                                                                                                         
+                                                                        Oe N 1/4 exp(−C log N/ log log N ) .
+
+
+
+
+                                                                               1. Introduction
+                                             Let N be any natural number. We consider the problem of computing the
+                                          prime factorization of N . In practice, a large variety of probabilistic and heuristic
+                                          methods is used for this task. We refer the reader to the survey [Len00] and to
+                                          the monographs [Rie94] and [Wag13]. In this paper, we discuss a more theoretical
+                                          aspect of the integer factorization problem and focus on deterministic algorithms
+                                          and their rigorous analysis. We will describe runtime complexities by using the
+                                          bit-complexity model of the multitape Turing machine.
+                                             In [Str77], Strassen used fast polynomial multiplication and multipoint evalu-
+                                          ation techniques to establish a deterministic and rigorous factorization algorithm
+                                          running in O(N 1/4+o(1) ) bit operations. Since the publication of Strassen’s ap-
+                                          proach in 1977, there have been a few refinements of the logarithmic factors in the
+                                          bound for the runtime. Currently, the best known bit-complexity bound is given
+                                          by
+                                                                                N 1/4 log N 
+                                                                         O Mint √
+                                                                                     log log N
+                                          and has been proven by Costa and Harvey in [CH14]. Mint (k) denotes the cost
+                                                                                                        ∗
+                                          of multiplying two ⌈k⌉-bit integers and is in O(k log k · 8log k ), where log∗ k is the
+                                          iterated logarithm (see [HHL16]). Costa and Harvey improved Strassen’s method
+                                          and refined√ the preceding result of Bostan, Gaudry and Schost [BGS07] by the
+                                          factor of log log N . The goal of our paper is to establish a new approach for
+                                          deterministic integer factorization. The main result improves the currently best
+                                          known runtime complexity bound by a factor growing faster than any fixed power
+                                          of log N .
+
+                                             2010 Mathematics Subject Classification. 11A51.
+                                             The author is supported by the Austrian Science Fund (FWF): Project F5504-N26, which is a
+                                          part of the Special Research Program ”Quasi-Monte Carlo Methods: Theory and Applications”.
+                                                                                          1
+2                                   M. HITTMEIR
+
+
+   To describe our approach, we consider the case N = pq, where p and q are
+unknown prime factors and p < q. We will employ a refined babystep-giantstep
+method to solve the discrete logarithm problem aX ≡ aN +1 mod N for a certain
+a ∈ Z coprime to N . The purpose of this procedure is to determine S := p + q,
+which is a solution to this problem due to Euler’s theorem. Knowing S allows us
+to factor N immediately. In our main algorithm, we first compute a lower bound
+for p with Strassen’s approach and then use the resulting upper bound for S in the
+babystep-giantstep method.
+   In addition to the preceding observations, let m ∈ N. We will consider so called
+modular hyperbolas HN,m , which are defined as the sets of solutions (x, y) to the
+congruence equation N ≡ xy mod m. Clearly, the corresponding set LN,m con-
+sisting of the elements x + y mod m for (x, y) ∈ HN,m contains the residue of S
+modulo m. If r is prime, than the cardinality of LN,r is about half of the possible
+residue classes modulo r. Considering all primes up to a suitable bound B, we
+deduce significant information about S.
+   We discuss a brief example. Let N := 7909787 = 3823 · 2069. For r = 5, we have
+N ≡ 2 mod 5 and (1, 2), (2, 1), (3, 4), (4, 3) ∈ HN,5 . Consequently, 2, 3 ∈ LN,5 .
+Considering all primes up to 11 and putting m = 2 · 3 · 5 · 7 · 11, we observe that
+LN,m contains only 40 elements. As a consequence, S mod m is restricted to
+40/2310 = 1.7% of the residue classes modulo m. We may use this fact in our
+refined babystep-giantstep method for determining S itself. This application yields
+the main contribution to our improvement.
+   In our analysis of the logarithmic factors in the runtime complexity of our algo-
+rithm, we will make use of the following notion.
+Definition 1.1. We call a function eint : R → R logarithmic multiplication time, if
+    (1) ⌈k⌉-bit integers can be multiplied in at most O(k · eint (k)) bit operations,
+    (2) eint (k 1/c ) ∈ Θ(eint (k)) for every constant c ∈ N,
+    (3) eint (k) ∈ Ω(log k).
+                                                                               ∗
+   Considering the mentioned bound for Mint (k), one observes that log k · 8log k is a
+logarithmic multiplication time. We are now ready to formulate our main theorem.
+Theorem 1.2. Let N be any natural number. Then the prime factorization of N
+can be computed in
+                                           q                 
+                    1         −C1 log N
+                O N 4 exp                    · eint (N ) log3 N
+                            log (C2 log N )
+bit operations, where C1 = (log 2)/16 and C2 = 0.2103.
+
+   We give a brief overview on the contents of this paper:
+   Section 2: We discuss auxiliary results required in later sections of the paper.
+   Section 3: We adapt recent results concerning Strassen’s approach for usage in
+our methods, especially for the main algorithm in Section 8.
+   Section 4: Let m1 , . . . , md ∈ N be pairwise coprime, let M be their product
+and Ai ⊆ Zmi for i = 1, . . . , d. By the Chinese Remainder Theorem applied to
+the system of congruences modulo the mi , we know that there is an unique set
+A ⊆ ZM determined by the Ai . In this section, we present an asymptotically
+optimal algorithm for computing the elements of A. This procedure is used later
+on to efficiently compute the sets LN,m mentioned above.
+                          BSGS INTEGER FACTORIZATION                              3
+
+
+   Section 5: Here, the key ingredients for the proof of Theorem 1.2 are developed,
+including the study of the modular hyperbolas and the bounds of the cardinality
+of the sets LN,m .
+   Section 6: Two algorithms are discussed in this section. The first one, Theorem
+6.1, is due to Sutherland [Sut07] and improves Shanks’ babystep-giantstep tech-
+nique
+√      for the problem of finding the order of elements modulo N by the factor of
+  log log N . The second, Algorithm 6.2, makes use of Theorem 6.1. It is a suffi-
+ciently fast solution to the following problem: Given a natural number N and some
+δ ∈ R+ , either find a nontrivial factor of N , prove that N is prime, or find an
+element in its multiplicative group whose order is larger than δ.
+   Section 7: Theorem 7.1, one of the key results for the proof of Theorem 1.2,
+is shown. This statement concerns the problem of finding a set of solutions to
+aX ≡ aN +1 mod N containing S.
+   Section 8: The results from previous sections are combined to prove our main
+result. The runtime complexity is analyzed and we also show that Theorem 1.2 is
+a corollary to the slightly stronger statement in Theorem 8.3.
+
+                  2. Elementary and analytical results
+   This section contains auxiliary results. We will discuss elementary lemmas,
+Shank’s babystep-giantstep method for solving the discrete logarithm problem and
+some analytical results about the prime-counting function and Chebyshev’s theta
+function. All of these are either well-known or easy to prove.
+   Throughout the paper, P denotes the set of prime numbers. We call a natural
+number semiprime if and only if it is the product of two distinct primes. Further-
+more, let N0 := N ∪ {0} and Zn := Z/nZ for n ∈ N.
+Lemma 2.1. Let u, v ∈ N such that u ≤ v and assume that we know N := uv and
+S := u + v. Then we can compute u and v in O(Mint (log N )) bit operations.
+           D := v − u and note that S 2 − D2 = 4N . Hence, D is the positive
+Proof. Set √
+solution of S 2 − 4N , and we derive v = (S + D)/2 and u = N/v. Since squaring
+S is most expensive, the number of required bit operations for these computations
+is bounded by O(Mint (log N )) .                                               
+Lemma 2.2. Let N be semiprime with prime factors p and q. If a ∈ Z is coprime
+to N , then ap+q ≡ aN +1 mod N .
+Proof. This is an immediate consequence of Euler’s Theorem and the fact that
+φ(N ) = (p − 1)(q − 1) = N + 1 − (p + q).                                 
+Lemma 2.3. Let N ∈ N and a ∈ Z be coprime. Furthermore, define m := ordN (a).
+Then
+                ordp (a) = m   for all primes p dividing N
+if and only if
+               gcd(N, am/r − 1) = 1    for all primes r dividing m.
+
+Proof. We show that the first statement implies the second. Let r be an arbitrary
+prime dividing m. Then am/r 6≡ 1 mod p for every prime p with ordp (a) = m. But
+since this holds for every prime factor of N , we derive gcd(N, am/r − 1) = 1. The
+prime divisor r of m was arbitrary, hence, the statement follows.
+4                                    M. HITTMEIR
+
+
+   For proving the reverse statement, let p be an arbitrary prime dividing N . We
+want to show that ordp (a) = m. Clearly, we have am ≡ 1 mod p. Therefore, the
+order of a modulo p is a divisor of m. Assume to the contrary that ordp (a) is a
+proper divisor d of m. Then ad ≡ 1 mod p. This implies that some prime divisor
+r of m exists such that am/r ≡ 1 mod p, which contradicts our assumption.       
+   Sections 6 and 7 focus on finding solutions to certain cases of the following com-
+putational problem. We are interested in unconditional and deterministic runtime
+complexity bounds. The following remark discusses the state of the art, the so
+called babystep-giantstep method by Shanks. In the proofs of the results of the
+Sections 6 and 7, we will consider several variants of this idea.
+Problem 2.4. (Constrained Discrete Logarithm Problem, CDLP)
+   Let N ∈ N, 1 ≤ E < T ≤ N and a, b ∈ Z∗N . Find the smallest x ∈ [E, T ] such
+that ax ≡ b mod N, or prove that no such x exists.
+Remark 2.5. (Shanks’ algorithm)
+   We recall Shanks’ babystep-giantstep method, which is a deterministic algorithm
+to solve this problem performing
+                           √
+                        O( T − E · log2 N + log E · Mint (log N ))
+                                √
+bit operations. Let m := ⌈ T − E⌉ and write x = mu + v + E for unknown
+u, v ∈ {0, . . . , m − 1}. We first compute ai aE mod N for i = 0, . . . , m − 1, the
+so called babysteps, which requires m + O(log E) multiplications. We proceed by
+computing a−mj b mod N for j = 0, . . . , m − 1, the so called giantsteps. If we first
+precompute a−m mod N and then use the recursive formula
+                          a−m(j+1) b ≡ a−m a−mj b        mod N,
+this needs O(m) multiplications. We now want to check if one of the giantsteps is
+equal to one of the babysteps. In the multitape Turing machine model, this can be
+done by using merge sort. We denote every number as string of at most ⌈log N ⌉
+bits and sort both the list of babysteps and the list of giantsteps by performing at
+most O(m log m) comparisons, yielding a bit-complexity bounded by O(m log2 N ).
+After applying merge sort, it is easy to see that one is able to find all matches in the
+lists by O(m log N ) bitwise comparisons. For more detailed information on merge
+sort, we refer the reader to [SW11, Chap. 2.2]. For the claimed complexity, see
+Proposition F in [SW11, Page 272].
+    To summarize, we need O(m + log E) group operations for computing the baby-
+and giantsteps and at most O(m log2 N ) bit operations for the sorting and searching
+process. Since one multiplication in Z∗N is bounded by O(Mint (log N )) bit opera-
+tions and Mint (log N ) < log2 N , we deduce the stated running time.
+Definition 2.6. Let x ∈ R+ . We define the prime counting function
+                              π(x) := #{r ≤ x : r ∈ P}
+and Chebyshev’s theta function
+                                            X
+                                ϑ(x) :=              log r.
+                                          r∈P: r≤x
+
+ The Prime Number Theorem states that π(x) ∼ x/ log x, which also implies that
+ϑ(x) − x ∈ o(x). In the following theorem, we consider some explicit estimates for
+both π(x) and ϑ(x).
+                          BSGS INTEGER FACTORIZATION                                5
+
+
+Theorem 2.7. Let x ∈ R+ . We have
+    (1) x/ log x < π(x) for x ≥ 17.
+    (2) ϑ(x) − x < x/(4 log x) for x > 1.
+
+Proof. The first statement is Corollary 1 on page 69 of [RS62]. The second state-
+ment is an immediate consequence of Inequality 5.6a* of Theorem 7* in [Sch76]. 
+
+   In Theorem 7.1, one of the key results of this paper, we will employ the following
+inequality.
+Lemma 2.8. Let x ∈ R+ , x > 1. Then
+                                     log 2       1
+                        ϑ(x) − x <         π(x) − log log x.
+                                       2         2
+
+
+Proof. It is easy to show that, for every x ≥ 20, we have
+                               1                x
+                                 log log x <          .
+                               2             12 log x
+Combining this with the first statement of Theorem 2.7, we deduce that
+                                   
+               x        log 2     1    x     log 2       1
+                    <          −           <       π(x) − log log x
+            4 log x        2      12 log x     2         2
+for every x ≥ 20. From the second statement of Theorem 2.7, it follows that the
+claim is true for x ≥ 20. Since one can easily verify the claim for x < 20, this
+finishes the proof.                                                           
+
+Theorem 2.9. For primes r, we have
+                            Y r−1                  1 
+                                         ∈Θ             .
+                                     r            log B
+                              r≤B
+
+
+
+Proof. This result is called Mertens’ Theorem. A proof can be found in [Sho05,
+Thm. 5.13].                                                                 
+
+  In Section 5, we will need the following statement. It is equivalent to Mertens’
+Theorem.
+Corollary 2.10. For primes r, we have
+                              Y r+1
+                                          ∈ Θ(log B).
+                                     r
+                               r≤B
+
+
+
+Proof. The claim follows from Mertens’ Theorem and the fact that
+                                    
+                Y r+1         Y r−1         Y       1
+                                                       
+                                    =       1 − 2 ∈ Θ(1).
+                      r            r                r
+                 r≤B           r≤B                r≤B
+
+                                                                                   
+6                                    M. HITTMEIR
+
+
+                             3. Strassen’s approach
+   Let us briefly recall Strassen’s idea for factoring natural numbers. Let N ∈ N
+and set d := ⌈N 1/4 ⌉. We want to compute subproducts of the product ⌈N 1/2 ⌉! to
+find a factor of N . For this task, the polynomial
+                           g = (X + 1)(X + 2) · · · (X + d)
+is computed modulo N and evaluated at the points 0, d, 2d, . . . , (d − 1)d by using
+fast polynomial arithmetic techniques. Next, gi := gcd(g(id), N ) is computed for
+i = 0, . . . , d − 1. If N is not a prime, one of these GCDs is nontrivial. If gi0 = N ,
+we obtain a nontrivial factor of N by computing gcd(i0 d + j, N ) for j = 1, . . . , d.
+   As we have already mentioned in the introduction, we will make use of recent
+results that are closely related to Strassen’s approach. First, we will employ a
+theorem of [Hit15] in Algorithm 6.2. Second, we will adapt a proposition of [CH14]
+in Algorithm 8.1, which is our main algorithm for factoring semiprime numbers.
+Theorem 3.1. Let N be a natural number and s, m ∈ N0 such that s, m < N and
+s ≡ p mod m for every prime divisor p of N . Knowing s and m, one can compute
+the prime factorization of N in
+                                    N 1/4    
+                              O Mint √ log N
+                                        m
+bit operations.
+
+Proof. This is Theorem 2.8 in [Hit15]. In the proof, we use another polynomial
+instead of g, taking the additional information about the prime factors of N into
+account. Essentially, we are getting rid of all the factors of ⌈N 1/2 ⌉! which are not
+of the form mj + s, j ∈ N.                                                          
+                                  Q
+   Now let B ∈ R and put Q = r≤B r for prime numbers r. Furthermore, set
+              Q
+ρ = φ(Q) = r≤B (r − 1). For the proof of Theorem 1.2, we adapt the following
+result of Costa and Harvey.
+Theorem 3.2. Let k ≥ 0 and b = 4k ρQ. Assume that b < N and gcd(N, Q) = 1.
+We can find a prime divisor q of N such that q ≤ b, or prove that no such divisor
+exists, in
+                                                                         
+           O Mint (2k ρ log N ) + (Q2 + log(2k ρ))Mint (log N ) log log N
+
+bit operations.
+
+Proof. This is Proposition 9 in [CH14]. The proof is based on the observation that
+if gcd(N, Q) = 1, all multiples of the primes smaller or equal to B cannot be factors
+of N . Again, we replace g by another polynomial to get rid of these numbers, which
+leads to the savings in the runtime complexity.                                    
+
+Corollary 3.3. Let δ ∈ R such that N 1/3 ≤ δ ≤ N/4. We can find a prime divisor
+q of N such that q ≤ δ, or prove that no such divisor exists, in
+                                     √δ log N 
+                              O Mint √
+                                         log log N
+bit operations.
+                            BSGS INTEGER FACTORIZATION                                 7
+
+                1
+Proof. Let B = 19 log N and Q, ρ as above. For Chebyshev’s theta function ϑ(x),
+the Prime Number Theorem yields that ϑ(x) − x ∈ o(x) and therefore
+                       Y
+                  Q=      r = eϑ(B) ∈ O(eB+o(B) ) ⊆ O(N 1/18 ).
+                          r≤B
+
+Note that ρQ < Q ∈ O(N 1/9 ) and let k ≥ 0 such that 4k−1 ρQ < δ ≤ 4k ρQ.
+                     2
+
+After trial division up to B, we either find a prime divisor or we have proven
+that gcd(N, Q) = 1. Assume the latter. We now apply the previous theorem
+with the value b :=p4k ρQ < 4δ ≤ N . Note that b ∈ O(δ) and therefore we have
+      p
+2k ρ = bρ/Q ∈ O       δρ/Q . Using Mertens’ Theorem, we derive that
+                               Y r−1                  
+                         ρ                        1
+                            =          ∈O                .
+                         Q         r         log log N
+                                r≤B
+
+Hence, the first summand in the running time of the theorem is of the claimed
+form.
+√     The second summand is in O((Q2 )1+o(1) ) ⊆ O(N 1/9+o(1) ), but since we have
+  δ ≥ N 1/6 , this is asymptotically negligible.                                
+
+                         4. Optimal Chinese Remaindering
+   Let m1 , . . . , md ∈ N be pairwise coprime and Ai ⊆ Zmi for i = 1, . . . , d. Fur-
+                           Qd
+thermore, define M := i=1 mi . By the Chinese Remainder Theorem, we know
+that there is a unique set A ⊆ ZM determined by the sets Ai . We may define this
+set as
+                                          d
+           (                                                                  )
+                                         Y
+      A := x ∈ ZM ∃(α1 , . . . , αd ) ∈     Ai : x ≡ αi mod mi , 1 ≤ i ≤ d .
+                                         i=1
+In this section, we will discuss an asymptotically optimal algorithm for determining
+the set A. Ignoring implied constants, the method takes the same time to compute
+all its elements as it would take to simply write them down. For i = 1, . . . , d, we
+set κi := |Ai | and Ai = {ai,1 , . . . , ai,κi }. Furthermore, let Mi := M ci /mi , where
+ci := (M/mi )−1 mod mi . With this notation, consider the following procedure.
+Algorithm 4.1. Input: Pairwise coprime mi ∈ N, Ai ⊆ Zmi and κi for i = 1, ..., d,
+where κ1 ≥ κ2 ≥ . . . ≥ κd .
+    Output: The set A ⊆ ZM determined by the Ai due to the CRT.
+                                  Qd
+ 1: Compute M and |A| =             i=1 κi .
+ 2: for i = 1, . . . , d do                             ⊲ Precomputation loop
+ 3:     Compute Mi mod M and set ri = 0.
+ 4:     ∆i,0 ← (ai,1 − ai,κi )Mi mod M
+ 5:     for li = 1, . . . , κi − 1 do
+ 6:        ∆i,li ← (ai,li +1 − ai,li )Mi mod M
+ 7: x1 ← a1,1 M1 + ... + ad,1 Md mod M
+ 8: for ν = 1, . . . , |A| − 1 do                                 ⊲ Main loop
+ 9:     Compute r1 ← r1 + 1 mod κ1 and set µ = 1.
+10:     while rµ = 0 do
+11:        µ←µ+1
+12:        rµ ← rµ + 1 mod κµ
+                          Pµ
+13:     xν+1 ← xν + i=1 ∆i,ri mod M
+8                                     M. HITTMEIR
+
+                                                              Pd
+Theorem 4.2. Algorithm 4.1 is correct. Assuming |A| ≥           i=1 κi ·log M , its runtime
+complexity is bounded by O(|A| · log M ) bit operations.
+Proof. Correctness: We follow Gauss’ approach to find the elements of A. With
+our notation, we have to compute the |A| elements
+(4.1)                a1,l1 M1 + a2,l2 M2 + · · · + ad,ld Md   mod M,
+where li ∈ {1, . . . , κi }. Steps 1-7 are precomputational. To verify correctness, we
+discuss the idea behind the main loop from Step 8 to 13. We start with the value
+x1 = a1,1 M1 + ... + ad,1 Md mod M , which has already been computed in Step 7.
+We now change the value a1,1 to a1,2 in this representation. It is easy to see that
+we may do this by simply computing x2 = x1 + ∆1,1 mod M . Next, we change
+a1,2 to a1,3 by computing x3 = x2 + ∆1,2 mod M . We proceed in this way until we
+reach xκ1 = xκ1 −1 + ∆1,κ1 −1 mod M . In the next run of the loop, we have r1 = 0.
+Consequently, we do not leave the small loop for the values of µ, and a2,1 changes
+to a2,2 . After incrementing r2 , we get
+                         xκ1 +1 = xκ1 + ∆1,0 + ∆2,1      mod M.
+Note that adding ∆1,0 to xκ1 brings back the value a1,κ1 to a1,1 in the representation
+of xκ1 as a sum of the form (4.1). We now proceed by adding the values ∆1,l1 again
+and compute xκ1 +1 , . . . , x2κ1 , where we have to change a2,2 to a2,3 . As soon as we
+have reached a2,κ2 , the value a3,1 has to be changed to a3,2 . Imagine this procedure
+as a clock, where the values of a1,l1 represent a small hand and the values of a2,l2
+represent a bigger hand which is moved every time the small hand has made a
+complete round. The values of a3,l3 represent an even bigger hand, and so on.
+After |A| − 1 runs of the main loop, we have computed all the elements of A.
+   Running time: The cost for Step 1 is bounded by O(d · Mint (log M )) bit opera-
+                                                          Pd
+tions. Since our assumption implies |A| log M ≥ i=1 κi · log2 M ≥ d · Mint (log M ),
+this is negligible. In each run of the loop from Step 2 to 6, we have to perform
+O(κi ) multiplications modulo M . Consequently, the total runtime of this loop is in
+O( di=1 κi · Mint (log M )) bit operations, which is also negligible.
+   P
+   We are left with discussing the complexity of the main loop. Considering the
+precomputation loop, the values ∆i,j are stored on tape in the following order:
+∆1,0 , ∆1,1 , ..., ∆1,κ1 −1 , followed by ∆2,0 , ..., ∆2,κ2 −1 and so on. There are |A| − 1
+runs of the main loop. In each of these runs, we have to increment r1 modulo
+κ1 and add ∆1,r1 to xν . For doing so, we may simply walk along the list of the
+∆1,j . Since addition of numbers smaller than M is in O(log M ) bit operations, the
+cost for these calculations is O(|A| log M ). Furthermore, in every κ1 -th run, we
+additionally have to increment the value of r2 modulo κ2 and add ∆2,r2 to xν . In
+these cases, we also have to account for the cost of seeking to the correct value in
+the list ∆2,0 , ..., ∆2,κ2 −1 and going back to ∆1,0 , which is stored at the beginning of
+the tape. One observes that this can be done by O((κ1 +2κ2 ) log M ) bit operations.
+Since there are at most |A|/κ1 such runs, we may bound the cost by
+                                                             
+                                       κ1 + 2κ2
+                                   O              · |A| log M .
+                                          κ1
+Summing up, the overall bit-complexity bound for the main loop is given by
+                       s−1
+                                                       !            !
+                       X    κ1 + 2(κ2 + · · · + κi+1 )
+             O    1+                                     · |A| log M .
+                       i=1
+                                   κ1 · · · κi
+                                BSGS INTEGER FACTORIZATION                                  9
+
+
+Here, s denotes the largest number such that κs > 1. Note at this point that we
+have κ1 ≥ κ2 ≥ ... ≥ κd . Hence, we derive that
+            s−1                                       s−1                      ∞
+            X   κ1 + 2(κ2 + · · · + κi+1 )            X   (1 + 2i)κ1           X 1 + 2i
+                                             ≤                             ≤
+             i=1
+                           κ1 · · · κi                i=1
+                                                             κ1 · · · κi       i=1
+                                                                                     2i−1
+is constant, which proves the claim.                                                        
+
+Corollary 4.3. There exists an algorithm with the following properties:
+     • Input: Pairwise coprime mi ∈ N, Ai ⊆ Zmi and κi for i = 1, ..., d, where
+        κ1 ≥ κ2 ≥ . . . ≥ κd . Furthermore, a natural number N and a ∈ Z∗N .
+     • Output: The elements axν mod N for xν ∈ A.
+Assuming |A| ≥ di=1 κi ·log M , the runtime complexity of the algorithm is bounded
+                  P
+by O(|A| · Mint (log N )) bit operations.
+
+Proof. We modify the procedure of Algorithm 4.1. After Steps 1-7, we addi-
+tionally precompute ax1 mod N and the values a∆i,li mod N for i = 1, . . . , d
+and li = 1, . . . , κi − 1. We may use a simple square-and-multiply algorithm for
+these modular exponentiations. Since all exponents are bounded by M , the run-
+time
+   Pfor the Steps 1-7 and these    additional precomputations can be bounded by
+      d
+O     i=1 κi · Mint (log N ) log M  bit operations, which is negligible due to our as-
+sumption. We now proceed with the main loop, with the only change that we
+replace the recursive formula for xν+1 in Step 13 by
+                                                      µ
+                                                      Y
+                         xν+1                xν
+                     a           mod N = a        ·         a∆i,ri    mod N.
+                                                      i=1
+
+                                                                                            
+
+                                5. The sets HN,m and LN,m
+   In this section, we describe the core ideas for the proof of Theorem 7.1. We
+will discuss results about the cardinality of certain sets containing the residues of
+divisors and the sums of divisors of natural numbers.
+Definition 5.1. Let N, m ∈ N such that gcd(N, m) = 1. We define the sets
+                     HN,m := {(x, y) ∈ Z2m : N ≡ xy                  mod m}
+and
+                    LN,m := {x + y        mod m : (x, y) ∈ HN,m }.
+
+
+Remark 5.2. The set HN,m is called a modular hyperbola. We refer the reader
+to [Shp12] for sophisticated results about the distribution of its elements. In this
+paper, we only use trivial properties:
+    (1) |HN,m | = φ(m).
+    (2) If N = uv, then (u mod m, v mod m) ∈ HN,m .
+In the following, we will focus on studying LN,m . Note that if N = uv, we clearly
+derive that u + v mod m ∈ LN,m . For this reason, this set will be of interest in
+Section 7.
+10                                      M. HITTMEIR
+
+
+Lemma 5.3. Let N ∈ N and r be an odd prime such that gcd(N, r) = 1. Then
+                             (
+                               (r + 1)/2 if (N |r) = 1,
+                   |LN,r | =
+                               (r − 1)/2 if (N |r) = −1.
+Here, (N |r) denotes the Legendre symbol.
+
+Proof. If (N |r) = 1, then there are two distinct solutions to x2 ≡ N mod r. Let
+a and b be these solutions. Then (a, a) and (b, b) are both elements of HN,r . Let
+(x, y) ∈ HN,r be one of the other r − 3 elements. Then we have (y, x) ∈ HN,r and
+(x, y) 6= (y, x). Since x + y ≡ y + x mod r, we conclude that (x, y) and (y, x) pair
+up to one element in LN,r . Therefore, we deduce
+                                         r−3           r+1
+                              |LN,r | ≤        +2=         .
+                                           2            2
+If (N |r) = −1, we derive that (x, y) 6= (y, x) holds for every element in HN,r . We
+obtain |LN,r | ≤ (r − 1)/2 by using similar arguments as above.
+   Now let (x0 , y0 ) and (x1 , y1 ) be two distinct elements of HN,r . Assuming that
+x0 + y0 ≡ x1 + y1 mod r holds, we easily derive N + y02 ≡ y0 (x1 + y1 ) mod r and,
+hence,
+                         y02 − y0 (x1 + y1 ) + x1 y1 ≡ 0 mod r.
+If we consider this as a quadratic equation in the variable y0 , the solutions are x1
+and y1 . Since the pairs are distinct, y0 = y1 is not possible. Hence, we are left with
+y0 = x1 . We conclude that the only couples of elements of HN,r which pair up to
+one element in LN,r are the symmetrical ones we already considered. This finishes
+the proof.                                                                           
+
+Lemma 5.4. Let N be a natural number and m1 , . . . , md ∈ N be pairwise coprime.
+Furthermore, define m := m1 · · · md . Then LN,m ⊆ Zm is the unique set determined
+by the LN,mi due to the CRT.
+
+Proof. Consider the map
+                                                 d
+                                                 Y
+                                    ψ : LN,m →         LN,mi ,
+                                                 i=1
+                          x 7→ (x    mod m1 , . . . , x   mod md ).
+We first show that ψ is well-defined. Let x ∈ LN,m and i ∈ {1, . . . , d} be arbitrarily
+chosen. By definition, there exists at least one pair (x′ , y ′ ) ∈ HN,m such that
+x ≡ x′ + y ′ mod m. Clearly, (x′ mod mi , y ′ mod mi ) is an element of HN,mi .
+We deduce that the element x mod mi = x′ + y ′ mod mi is in LN,mi , which we
+wanted to prove.
+  As a result of the CRT, ψ is injective. We prove that this map is also surjective.
+                        Qd
+Let (s1 , . . . , sd ) ∈ i=1 LN,mi be arbitrary. For every i ∈ {1, . . . , d}, there exists a
+pair (ui , vi ) in HN,mi such that si ≡ ui + vi mod mi . By the CRT, we exhibit u
+and v such that
+                           u ≡ ui mod mi and v ≡ vi mod mi
+and, hence, N ≡ uv mod mi for every i. This implies that N ≡ uv mod m, and
+s := u + v mod m ∈ LN,m . It is easy to see that ψ(s) = (s1 , . . . , sd ). Therefore, ψ
+is bijective and the statement follows.                                                
+                           BSGS INTEGER FACTORIZATION                               11
+
+
+Theorem 5.5. Let N ∈ N, B ∈ R+ and set Q = 2<r≤B r for prime numbers r.
+                                                 Q
+
+Assume that gcd(N, Q) = 1. Then
+                                                
+                                         Q log B
+                           |LN,Q | ∈ O             ,
+                                          2π(B)
+where π(B) is the prime counting function.
+                                                      Q
+Proof. As a result of Lemma 5.4, we derive |LN,Q | = 2<r≤B |LN,r |. Note that
+Lemma 5.3 implies |LN,r | ≤ (r + 1)/2 for odd primes r. By using Corollary 2.10,
+we conclude that
+                                                         
+                    |LN,Q |  4 Y (r + 1)/2          log B
+                            ≤ ·               ∈O            .
+                      Q      3
+                                r≤B
+                                         r          2π(B)
+                                                                                    
+
+                         6. Order-finding algorithms
+   In this section, we will discuss Sutherland’s improvement of Shanks’ babystep-
+giantstep method for the problem of finding the order of elements in Z∗N . Further-
+more, we will present an algorithm that either finds a nontrivial factor of N , proves
+its primality or yields a ∈ Z∗N whose order is larger than some given bound.
+   Let E = 1 and b = 1. Then Problem 2.4 is about finding the order of a or
+proving that the order is larger than T . The following theorem shows
+                                                                   √ that there is
+a way to asymptotically speed up Shanks’ method by the factor log log N .
+Theorem 6.1. There exists an algorithm with the following properties:
+      • Input: N ∈ N, T ≤ N and a ∈ Z∗N .
+      • Output: If ordN (a) ≤ T , then the output is ordN (a); otherwise, the output
+        is ’ordN (a) > T ’.
+The runtime complexity is bounded by
+                                T 1/2                 
+                             O √              · log2 N
+                                    log log T
+bit operations.
+Proof. Assume that ordN (a) ≤ T . We consider Algorithm 4.1. in [Sut07] for finding
+ordN (a). The idea is to compute
+                                     Q           ⌈logr T ⌉
+                            s := a       r≤B r               mod N
+for primes r and a suitable choice of B. As a result, the order of s is not divisible
+by any prime smaller than B. We may write ordN (s) = mi + j, where m is of
+suitable size and divisible by           Y
+                                    Q :=     r,
+                                                   r≤B
+and j is coprime to Q. We proceed by computing ordN (s). According to Proposition
+4.2. in [Sut07], we may compute suitable babysteps and giantsteps by performing
+O(T 1/2 (log log T )−1/2 ) multiplications modulo N . Combining Sutherland’s result
+with the considerations in Remark 2.5, we deduce the stated runtime for computing
+ordN (s). Knowing the order of s, we may easily derive the order of a.
+   If this procedure does not find ordN (a), it certainly follows that our assumption
+ordN (a) ≤ T is false.                                                              
+12                                  M. HITTMEIR
+
+
+   The following algorithm is a solution to the problem of either finding a nontriv-
+ial factor of a natural number, proving its primality or finding an element in its
+multiplicative group with order larger than some given bound. We will need such
+an element for applying Theorem 7.1 in order to prove Theorem 1.2.
+Algorithm 6.2. Input: N ∈ N and δ ≤ N .
+    Output: The algorithm either returns some a ∈ Z∗N with ordN (a) > δ, or some
+nontrivial factor of N , or ’N is prime’.
+ 1: Set M1 = 1 and a = 2.
+ 2: for e = 1, 2, . . . do
+ 3:     while a ∤ N and aMe ≡ 1 mod N do
+ 4:         a←a+1
+ 5:     if a | N then
+ 6:         Return a as nontrivial factor of N or, if a = N , ’N is prime’.
+ 7:     Apply Theorem 6.1 with T = δ 1/3 .
+ 8:     if ordN (a) is not found then
+ 9:         Apply Theorem 6.1 with T = δ.
+10:         if ordN (a) is not found then
+11:             Return a as element with ordN (a) > δ.
+12:     Set me = ordN (a) and compute the prime factorization of me .
+13:     for each prime r dividing me do
+14:         if gcd(N, ame /r − 1) 6= 1 then
+15:             Return gcd(N, ame /r − 1) as nontrivial factor of N .
+16:     Me+1 ← lcm(Me , me )
+17:     if Me+1 ≥ δ 1/3 then
+18:         Apply Theorem 3.1 with s = 1 and m = Me+1 .
+19:         Return some nontrivial factor of N or ’N is prime’.
+20:     a←a+1
+
+Theorem 6.3. Algorithm 6.2 is correct. Assuming N 2/5 ≤ δ, its runtime complexity
+is bounded by
+                                   δ 1/2
+                                                   
+                                                 2
+                            O √             · log N
+                                  log log δ
+bit operations.
+Proof. Correctness: We first show that, if the algorithm terminates, it yields a
+desired output. If the algorithm stops in Step 6, 11 or 15, it is easy to see that we
+have either determined primality, a nontrivial factor of N or found a ∈ Z∗N such
+that ordN (a) > δ. Let us assume that the algorithm has reached Step 16. Since no
+proper factor has been found in the loop from Step 13 to 15, Lemma 2.3 yields that
+me = ordp (a) for every prime factor p of N . Note that this implies p ≡ 1 mod me .
+Furthermore, this congruence also holds modulo mj for j = 1, . . . , e − 1, because if
+otherwise, N would have been factored in one of the previous runs of the loop. We
+conclude that the congruence p ≡ 1 mod Me+1 holds for every prime factor p of
+N . Hence, Theorem 3.1 is correctly applied in Step 18.
+   We are left with proving that the algorithm eventually terminates. First note
+that at the entry of the main loop in Step 2, it certainly holds that Me is a divisor
+of φ(N ), that Me < δ 1/3 and that bMe ≡ 1 mod N for each b < a. We proceed
+by showing that the while loop in Step 3 and 4 terminates after at most Me runs.
+                           BSGS INTEGER FACTORIZATION                               13
+
+
+Assume to the contrary that this loop runs for Me + 1 different values of a. The
+smallest prime factor p of N is always larger than a, since N has not been factored
+in previous runs. Furthermore, these elements all satisfy aMe ≡ 1 mod N , which
+implies aMe ≡ 1 mod p. But since p is prime, there are at most Me elements in
+Z∗p satisfying this property. As a consequence, we derive a contradiction.
+   We now want to prove that the main loop terminates after at most O(log δ) runs.
+Consider the e-th run of the loop. If no factor is found in Step 5, we have a ∤ N
+and aMe 6≡ 1 mod N in Step 7. If the algorithm does not terminate in Step 11, we
+have found the order of a in Step 7 or Step 9. Note that me does not divide Me
+and, hence, the value of Me+1 computed in Step 16 is at least twice as large as Me .
+As a consequence, this value exceeds δ 1/3 after at most O(log δ) runs and, hence,
+the algorithm eventually terminates.
+   Running time: We start by considering the running time of Step 18. According
+to Theorem 3.1, the cost for this step can be bounded by
+                                     1/4 1+o(1) !
+                                      N
+                                O     √
+                                        Me
+
+bit operations. Since the algorithm reached Step 18, it follows that Me ≥ δ 1/3 .
+Furthermore, we assumed N 2/5 ≤ δ. We conclude
+                              p
+                       N 1/4 / Me ≤ N 1/4 /δ 1/6 ≤ δ 11/24 .
+Hence, the cost for performing Step 18 is asymptotically negligible.
+   We continue by showing that, once the algorithm reaches Step 9, it terminates
+within the claimed running time. Using Theorem 6.1, Step 9 can be performed in
+                                    δ 1/2
+                                                     
+                             O √             · log2 N
+                                   log log δ
+bit operations. If we do not find the order of a, the algorithm terminates. We
+assume that ordN (a) ≤ δ is found. In Step 12, we may compute the divisors of me in
+negligible time by using any factorization algorithm which is at least slightly faster
+than naive trial division. The cost for computing the greatest common divisors
+in Step 14 and the value of Me in Step 16 is negligible. Now note that since
+the algorithm reached Step 9, it follows that me > δ 1/3 . Therefore, we derive
+Me ≥ me > δ 1/3 and the algorithm reaches Step 18, whose running time has
+already been analyzed and is asymptotically negligible.
+   We now consider the complexity of the e-th run of the main loop. One run of the
+while loop in the Steps 3 and 4 can be performed in polynomial time and we have
+already shown that there are at most Me < δ 1/3 runs of this loop. Therefore, its
+overall running time is bounded by O(δ 1/3+o(1) ) bit operations. By Theorem 6.1,
+we may perform Step 7 in O(δ 1/6+o(1) ) bit operations. If ordN (a) is not found, the
+algorithm reaches Step 9 and is going to terminate within the claimed running time.
+We assume that ordN (a) is found. Since me < δ 1/3 , we may use trial division in Step
+12 to compute the divisors of me in O(δ 1/6+o(1) ) bit operations. The computations
+in the Steps 14 and 16 can be performed in polynomial time.
+   We derive that the overall bit-complexity of one complete run of the main loop
+is bounded by O(δ 1/3+o(1) ). Since we have already shown that there are at most
+O(log δ) runs of this loop, we conclude that the algorithm reaches either Step 9 or
+Step 18 in asymptotically negligible time. This finishes the proof.                  
+14                                   M. HITTMEIR
+
+
+Remark 6.4. Concerning Algorithm 6.2, we would like to point out the following:
+   (1) In order to prove Theorem 1.2, it suffices to suppose N 2/5 ≤ δ. However, the
+       arguments in the proof of the running time of the algorithm have shown that
+       this assumption is not optimized. By varying the exponent of δ 1/3 in the
+       Steps 7 and 17 and by comparing the logarithmic factors of the complexity
+       bounds of Theorem 3.1, Theorem 6.1 and the main loop, one should be able
+       to prove the result with an assumption of the form δ ∈ Ω(N 1/3+o(1) ).
+   (2) Note that the purpose of Algorithm 6.2 is entirely theoretical. The proce-
+       dure will not find a factor of N in most cases, at least not for reasonable
+       values of δ. It should be considered as a deterministic and rigorous method
+       for solving the underlying computational problem and finding an element
+       of sufficiently large order.
+
+                        7. On solving aX ≡ aN +1 mod N
+   The following theorem yields a way to improve the standard BSGS technique for
+solving the discrete logarithm problem mentioned in the title. This result will be
+substantial for proving Theorem 1.2 in Section 8.
+Theorem 7.1. There exists an algorithm with the following properties:
+       • Input: N ∈ N, N 1/2 ≤ T ≤ N and a ∈ Z∗N such that ordN (a) ≥ (T /2)2/3 .
+                                                                           √
+       • Output: A set L of integers in [1, O(T )] with |L| ∈ O(T 1/2−ξ(T ) log log T ),
+         where                                    √
+                                            log 4 2
+                                ξ(T ) :=                 .
+                                         log( 12 log T )
+Its bit-complexity is bounded by
+                          O(T 1/2−ξ(T ) log log T · log2 N ).
+                                       p
+
+In the case when N is semiprime with prime factors p and q and p + q ≤ T , we
+have p + q ∈ L.
+
+Proof. Assume that N is semiprime with prime factors p and q and suppose that
+p + q =: S ≤ T . We compute b := aN +1 mod N , which can be done in polynomial
+time. By Lemma 2.2 we have aS ≡ b mod N . Therefore, we want to find a set L
+of solutions to
+                                ax ≡ b mod N
+such that S ∈ L. For this task, we use the results of Section 5 on the residue classes
+containing S to adapt Shanks’ babystep-giantstep method. Discussing asymptotic
+complexities, we will assume that the input T is sufficiently large. Let B = 12 log T .
+For prime numbers r and Chebyshev’s theta function ϑ(x), define
+                                 Y           1 Y    eϑ(B)
+                         Q :=           r=     · r=       .
+                                             2        2
+                                2<r≤B           r≤B
+
+We first want to show that Q is smaller than T 1/2 ·(log B)−1/2 ·2π(B)/2 . Considering
+the expression above, we easily deduce that it suffices to prove that the inequality
+eϑ(B) < T 1/2 · (log B)−1/2 · 2π(B)/2 holds, which is equivalent to
+                                        1             log 2
+                        ϑ(B) < B −        log log B +       π(B).
+                                        2               2
+                            BSGS INTEGER FACTORIZATION                                 15
+
+
+Note that this inequality is true due to Lemma 2.8, which proves the claim. Next, we
+compute a numerical approximation α such that |T 1/2 ·(log B)−1/2 ·2π(B)/2 −α| < 1.
+Find k ∈ N such that 2k−1 Q < α + 1 ≤ 2k Q and define m := 2k Q. Obviously, we
+may derive the value of m in polynomial time. Now perform trial division up to
+B to check if one of the prime divisors of N is smaller than B. If this is the case,
+we have found S itself and the problem is solved. Assume that trial division has
+failed. Then we know that N is coprime to m. Since S ≤ T , we have S = mu + v
+for v := S mod m and some u with
+                                              p
+                   u ∈ {0, 1, . . . , ⌈T 1/2 · log B · 2−π(B)/2 ⌉ − 1}.
+                              √
+Let β be such that |T 1/2 · log B · 2−π(B)/2 − β| < 1. For j = 0, 1, . . . , ⌈β⌉, we
+compute the giantsteps of the form a−mj b mod N , which can be done in
+             1/2 √                                   T 1/2 √log log T
+                   · log B
+                                               
+              T                                                                         
+(7.1)     O                   · M  int (log N )  = O                    · M int (log N )
+                 2π(B)/2                                   2π(B)/2
+bit operations by precomputing the value a−m mod N and using the recursive
+formula a−m(j+1) b ≡ a−m a−mj b mod N .
+    Next, we discuss the computation of the babysteps, where one of them should be
+equal to the value av mod N . We proceed as follows: Note that Lemma 5.4 implies
+that LN,m is determined by LN,2k and LN,r , 2 < r ≤ B. We start by computing
+these sets. Let r be an arbitrary prime with 2 < r ≤ B. In order to find the elements
+of the set LN,r , we first determine HN,r . This can be done easily by evaluating
+(x, x−1 N mod r), where x = 1, 2, . . . , r − 1. We then find the elements of LN,r via
+the definition of these sets. Furthermore, the elements of LN,2k may be computed in
+a similar manner. For applying Corollary 4.3, we have to ensure that these sets are
+stored on tape with decreasing cardinalities. We first compute LN,2k and |LN,2k |.
+By Lemma 5.3, we deduce that r1 > r2 implies |LN,r1 | ≥ |LN,r2 | for odd primes
+r1 , r2 . Hence, we proceed by computing LN,r and |LN,r | for 2 < r ≤ B, starting
+with the set corresponding to the largest prime in this range. By comparing |LN,2k |
+to (r−1)/2 for 2 < r ≤ B, we may put the elements of LN,2k in the right place. The
+total runtime for these tasks is bounded by O(2k + r≤B r) arithmetic operations.
+                                                       P
+Due to our assumption of T being sufficiently large, the cost for these computations
+is negligible and the assumption of Corollary 4.3 is satisfied. Hence, we may use this
+result to compute the elements ai mod N for i ∈ LN,m in O(|LN,m | · Mint (log N ))
+bit operations. Since we have m = 2k Q and since 2k and Q are coprime, by Lemma
+5.4 it also follows that |LN,m | = |LN,2k | · |LN,Q |. Note that |LN,2k | ∈ O(2k ). By
+Theorem 5.5, we derive that
+                                     
+                              m log B                p
+                |LN,m | ∈ O      π(B)
+                                         ⊆ O(T 1/2 · log B · 2−π(B)/2 ).
+                               2
+Since v ∈ LN,m , we conclude that we have computed suitable babysteps and the
+running time for doing so was bounded by (7.1).
+    Set L = ∅. We now apply merge sort to the lists of babysteps and giantsteps.
+As we have suggested in Remark 2.5, we then search for matches. If the giantstep
+a−mj b mod N is equal to the babystep ai mod N , we add the value mj + i to
+L. Since we have assumed ordN (a) ≥ (T /2)2/3 and since it is easy to check that
+(T /2)2/3 > m holds for sufficiently large T , the babysteps are all distinct. As a
+consequence, not more than one value is added to L for every j, which yields
+                                                   p
+                         |L| ∈ O(T 1/2 · 2−π(B)/2 · log log T ).
+16                                  M. HITTMEIR
+
+
+In view of the discussion in Remark 2.5, we conclude that the number of bit oper-
+ations to finish this procedure is bounded by
+                              1/2 √                       
+                               T     · log log T      2
+                           O                     log N .
+                                     2π(B)/2
+Note that L contains S as an element. We are left with the task to discuss the term
+2−π(B)/2 in the bound. By the Prime Number Theorem, we have π(B) ∼ B/ log B.
+The first statement of Theorem 2.7 implies that we have B/ log B − 2 < π(B) for
+B ≥ 2. We conclude that
+                                                  1 log T
+                                                             
+             π(B)                          −   4                     
+                       ⊆ O 2− 2 log B = O 2 log( 2 log T )  = O T −ξ(T ) .
+                                 B                   1
+         O 2− 2
+
+This finishes the proof.                                                           
+
+                           8. Proof of Theorem 1.2
+   Suppose that we want to compute the prime factorization of N ∈ N. First, we
+perform the following preparation step: We want to use Corollary 3.3 and have to
+ensure that all divisors d of N satisfy 4d1/3 ≤ d. Hence, we use trial division up
+to 7 to remove small prime factors from N . Next, we apply Corollary 3.3 to the
+                                           1/3
+resulting number N0 , putting δ0 = ⌈N0 ⌉. If any prime divisor of N0 is found,
+we remove it and denote the resulting number by N1 . We then apply Corollary
+                             1/3
+3.3 to N1 , setting δ1 = ⌈N1 ⌉. We proceed in this way until no more divisors are
+found. Note that the number of prime factors of N is bounded by O(log N ). Since
+δi ≤ ⌈N 1/3 ⌉ for every i ∈ N0 , the bit-complexity of this procedure is bounded by
+                                     N 1/6 log N       
+                            O Mint √                 log N .
+                                         log log N
+Compared to the complexity bound stated in Theorem 1.2, this is asymptotically
+negligible. Let Nk be the number which remains after these computations. Since
+                                   1/3
+no factor smaller or equal to ⌈Nk ⌉ has been found by applying Corollary 3.3, Nk
+does not have more than two prime factors. We may check easily if Nk is a square
+number; if not, Nk has to be a prime or a semiprime number.
+   As a result of this argument, we may restrict our attention to the case where N
+is a prime or a semiprime number. We now consider the following algorithm.
+Algorithm 8.1. Input: A prime or semiprime N ∈ N and a parameter ∆ ∈ R
+satisfying N 2/5 ≤ ∆ ≤ N 1/2 .
+   Output: The prime factorization of N .
+ 1: Apply Corollary 3.3 with δ = ∆.                       ⊲ Use Strassen’s algorithm
+         If a prime factor of N is found, return and stop.
+ 2: Apply Theorem 6.3 with δ = ∆.
+         If a prime factor of N is found or N is proven to be prime, return and stop;
+    otherwise, a ∈ Z∗N with ordN (a) > ∆ is found.
+ 3: Apply Theorem 7.1 with T = N 1/2 + N/∆.              ⊲ Solve aX ≡ aN +1 mod N
+         Let L be the set computed by the algorithm.
+ 4: For every s ∈ L, apply the procedure of Lemma 2.1 to N and s.
+         If a prime factor of N is found, return and stop; otherwise, return that N
+    is prime.
+                           BSGS INTEGER FACTORIZATION                               17
+
+
+   For analyzing the runtime complexity of Algorithm 8.1, we consider the notion
+of logarithmic multiplication time functions eint (k) defined in the introduction. We
+                              ∗
+already know that log k · 8log k is the asymptotically smallest known example for
+such a function, where log∗ k denotes the iterated logarithm:
+                                 (
+                           ∗       0                  if k ≤ 1,
+                        log k :=          ∗
+                                   1 + log (log k) if k > 1.
+Harvey, van der Hoeven and Lecerf deduced this result in [HHL16] by improving
+Fürer’s multiplication algorithm [Für09].
+Lemma 8.2. Algorithm 8.1 is correct. Its runtime complexity is bounded by
+         n        √∆ log N    N  21 −ξ( N ∆) p                    o
+    max O Mint √                 ,O                   log log N · log2 N
+                     log log N           ∆
+bit operations, where
+                                                √
+                                          log 4 2
+                                ξ(x) :=                .
+                                        log( 12 log x)
+
+
+Proof. Correctness: Assume that N is semiprime and has the prime factors p and
+q, where p < q. If p is not found in Step 1, then p > ∆. We deduce q < N/∆,
+which implies S := p + q < N 1/2 + N/∆. Since we have assumed N 2/5 ≤ ∆, we
+are able to apply Theorem 6.3 in Step 2. Assume that N does not get factored. In
+Step 3, we have
+                    T = N 1/2 + N/∆ ≤ N 1/2 + N 3/5 ≤ 2N 3/5 ,
+and we obtain
+                         ordN (a) > ∆ ≥ N 2/5 ≥ (T /2)2/3 .
+Since we have already seen that S ≤ T holds, the set L computed in Step 3 contains
+S as an element. Therefore, N does get factored in Step 4.
+   We have proven that the algorithm will determine a factor of N if the number
+is semiprime. Therefore, if this procedure fails to find a factor, N must be prime.
+We conclude that the algorithm is correct.
+   Running time: The running time of Step 1 is in
+                                      √∆ log N 
+                              O Mint √
+                                         log log N
+bit operations. Note that ∆ ≥ N 2/5 yields O((log log ∆)−1/2 ) ⊆ O((log log N )−1/2 ).
+Hence, the bit-complexity of Step 2 may also be bounded by
+                   ∆1/2                           √∆ log N 
+                O √             · log2 N ⊆ O Mint √                .
+                      log log ∆                        log log N
+Here, we have used (2) and (3) of Definition 1.1. Now since N 2/5 ≤ ∆ ≤ N 1/2 , it
+is easy to see that the bit-complexity of Step 3 is bounded by
+                                      ∆) p
+                             21 −ξ( N                     !
+                             N                            2
+                      O                    log log N · log N .
+                             ∆
+18                                         M. HITTMEIR
+
+
+We consider the running time of Step 4. Theorem 7.1 also yields that the set L
+computed in Step 3 consists of at most
+                                        ∆) p
+                               21 −ξ( N             !
+                               N
+                         O                  log log N
+                               ∆
+
+elements. Since the cost for one run of Lemma 2.1 is in O(Mint (log N )) bit opera-
+tions, this concludes the proof.                                                 
+
+   To finish the proof of Theorem 1.2, we want to find an optimal choice for the
+value ∆ such that the bound shown in Lemma 8.2 is minimal. First note that we
+have supposed that N 2/5 ≤ ∆ ≤ N 1/2 . The choice ∆ = N 1/2 yields the bound
+shown by Costa and Harvey. Now assume ∆ < N 1/2−c for some constant c. Then
+we derive N/∆ > N 1/2+c , and since ξ(N/∆) tends to 0 for increasing values of
+N , it is easy to see that the resulting value of the maximum in Lemma 8.2 is
+asymptotically worse compared to the bound of Costa and Harvey. As a result, we
+know that the optimal choice is of the form ∆ = N 1/2−ε(N ) for some ε(N ) ∈ o(1).
+   Let ε > 0 be arbitrary and define ε′ := 25/4 ε. Note that our last observation
+                                            ′
+implies that we may assume ∆ ≥ N 1/2−ε for sufficiently large input N ≥ Cε . Our
+goal now is to determine an explicit value for ∆. In order to do this, we want to
+solve
+            √                          21 −ξ N 1/2+ε′
+                                                       
+              ∆ log N                 N
+                                                           log log N · log2 N
+                                                          p
+(8.1)       √          · eint (N ) =
+             log log N                ∆
+for ∆. Ignoring implied constants, the left-hand side of (8.1) is the first argument
+of the maximum in Lemma 8.2, where we have applied (1) and (2) of Definition
+1.1. The right-hand side of (8.1) is an upper bound of the second argument of this
+                                                              ′
+maximum, where we have replaced ξ(N/∆) by ξ(N 1/2+ε ). Comparing these two
+sides of the equation, the resulting value of ∆ is optimal; because if we vary ∆, the
+left-hand side is increasing if and only if the right-hand side is decreasing. Equation
+(8.1) can be rewritten as
+                                                ′
+                                                 
+                                  1/2−ξ N 1/2+ε
+                                                                         1
+                                           1/2+ε′
+                          ∆ = N 1−ξ(N               ) · (R ) 1−ξ(N 1/2+ε′ ) ,
+                                                          N
+
+where
+                                       log log N · log N
+                                     RN :=               .
+                                            eint (N )
+We consider these logarithmic factors first. Note that the behaviour of RN depends
+on eint . By using Fürers bound for this function, we immediately derive RN ∈ Ω(1)
+and the rough upper bound RN < log2 N . In any case, we obtain
+                                                                           ′
+                                                                            
+                                                                 ξ N 1/2+ε
+                                    1
+                                          ′                                   ′
+                                 (
+                              1−ξ N 1/2+ε     )                    (
+                                                                1−ξ N 1/2+ε       )
+                            RN                    = RN · RN                           .
+               ′
+                    
+Since ξ N 1/2+ε         tends to 0 for N to infinity, RN ∈ Ω(1) clearly implies
+                                                  ′
+                                                   
+                                        ξ N 1/2+ε
+                                                      ′
+                                              (
+                                       1−ξ N 1/2+ε        )
+                                      RN                      ∈ Ω(1).
+                                  BSGS INTEGER FACTORIZATION                                                 19
+
+
+Furthermore, one easily deduces
+                 ′
+                  
+       ξ N 1/2+ε                                   ′
+                                                    
+                                        2ξ N 1/2+ε                                                    √
+                                                                                                log    2
+              1/2+ε′
+         (
+      1−ξ N            )                   (
+                                        1−ξ N 1/2+ε
+                                                        ′
+                                                            ) = (log N ) log(2−5/4 log(N 1/2+ε′ )) ∈ O(1).
+    RN                     < (log N )
+As a consequence of these estimates, we conclude
+                                                    1
+                                                                ′
+                                               (
+                                           1−ξ N 1/2+ε              )
+                                        RN                              ∈ Θ(RN ).
+We now consider the term
+                                                ′                                       ′
+                                                                                       
+                                  1/2−ξ N 1/2+ε                               ξ N 1/2+ε
+                                                                        1
+                                           1/2+ε′                       2−                  ′
+                               N 1−ξ(N              ) =N                         (
+                                                                             2−2ξ N 1/2+ε       )
+
+and derive
+                  ′                   √                          √
+        ξ(N 1/2+ε )               log 8 2                    log 8 2
+                        =                           =                       .
+      2 − 2ξ(N 1/2+ε′ )   log 2−5/4 log(N 1/2+ε′ )
+                                                  
+                                                      log (2−9/4 + ε) log N
+Hence, any
+                                               1             log 2
+                                                                                                !
+                                               2−
+                              ∆∈Θ N                         (
+                                                    8 log (2−9/4 +ε) log N           ) ·R
+                                                                                         N
+
+
+is an asymptotically optimal value. Since ε was arbitrary, substituting such ∆ on
+the left-hand side of (8.1) finally yields the following result.
+Theorem 8.3. Let ε > 0 be arbitrary and N be any natural number. Then the prime
+factorization of N can be computed in
+                                                 ! q                !
+                   1            −C  log N                        3
+             O N 4 exp                           · eint (N ) log N
+                          log (2−9/4 + ε) log N
+
+bit operations, where C = (log 2)/16 and the only implied constant depends on ε.
+Remark 8.4. For any ε > 0, we may compute an optimal value ∆ε via the formula
+given above. We have already seen that our assumption ∆ε ≥ N 1/2−ε is satisfied
+if N is larger than some computable bound Cε . The bound Cε is increasing if ε
+tends to 0.
+   Setting ε = 0.2103 − 2−9/4 ≈ 7.59 · 10−5 in Theorem 8.3 yields the statement of
+Theorem 1.2 and finishes the proof.
+
+                                               9. Addendum
+  We address two problems concerning refinements of runtime complexities.
+Problem 9.1. In the proof of Theorem 7.1, the choice of B = 12 log T affected the
+runtime complexity bound. Therefore, the question arises whether this choice is
+optimal. The advantage of our method mainly depends on the increase of π(B).
+Hence, B should be chosen as large as possible. Following the arguments in the
+proof, one observes that we cannot set B = 1c log T for any c < 2. In this sense, our
+choice of B is optimal. However, there may be some c(T ) converging to 0 such that
+B = (2 − c(T ))−1 log T works out for sufficiently large T . At this point, it remains
+an open question whether we may improve the complexity bound with this idea.
+20                                       M. HITTMEIR
+
+
+Problem 9.2. We consider the analysis of the running time of Algorithm 8.1 in
+Section 8. For any choice of ε, we use an upper bound and not the actual runtime
+complexity on the right-hand side of equation (8.1) to determine an explicit value
+for ∆. Therefore, the resulting exponent in the runtime complexity is close to
+optimal for small ε, but never best possible. We have started with the observation
+that ∆ = N 1/2−ε(N ) holds for some ε(N ) ∈ o(1). Replacing ε by ε(N ) in our
+estimates, the resulting exponent is of the form
+                                             √
+                          1              log 8 2
+                            −                          .
+                          2 log (2−9/4 + ε(N )) log N
+Instead of starting with ε and computing the lower bound Cε for N discussed in
+Remark 8.4, one could go the other way and ask for given N , what the corresponding
+value ε = ε(N ) is. Unfortunately, determining ε(N ) explicitly and deducing a closed
+formula for the general optimal value of ∆ seems to be infeasible.
+
+Acknowledgement. Special thanks go to an anonymous referee for an extensive
+and most valuable report, which contributed to improve the exposition of this paper.
+
+                                         References
+[BGS07] A. Bostan, P. Gaudry, É. Schost, Linear recurrences with polynomial coefficients and
+      application to integer factorization and Cartier-Manin operator, SIAM J. Comput., 36(6):
+      1777-1806, 2007.
+[CH14] E. Costa, D. Harvey, Faster deterministic integer factorization, Math. Comp., 83: 339-
+      345, 2014.
+[Für09] M. Fürer, Faster integer multiplication, SIAM J. Comput., 39(3): 979-1005, 2009.
+[HHL16] D. Harvey, J. v. d. Hoeven, G. Lecerf, Even faster integer multiplication, J. Complexity,
+      36: 1-30, 2016.
+[Hit15] M. Hittmeir, Deterministic factorization of sums and differences of powers, Math. Comp.,
+      to appear, 2015.
+[Len00] A. K. Lenstra, Integer Factoring, Designs, Codes and Cryptography, 19: 101-128, 2000.
+[Rie94] H. Riesel, Prime Numbers and Computer Methods for Factorization, Progress in Mathe-
+      matics (Volume 126), Second Edition, Birkhäuser Boston, 1994.
+[RS62] J.B. Rosser, L. Schoenfeld, Approximate formulas for some functions of prime numbers,
+      Illinois J. Math., 6: 64-94, 1964.
+[Sch76] L. Schoenfeld, Sharper Bounds for the Chebyshev Functions θ(x) and ψ(x). II, Math.
+      Comp., 30: 337-360, 1976.
+[SW11] R. Sedgewick, K. Wayne, Algorithms, Princeton University, Fourth Edition, Addison-
+      Wesley, 2011.
+[Sho05] V. Shoup, A Computational Introduction to Number Theory and Algebra, Cambridge
+      University Press, 2005.
+[Shp12] I. E. Shparlinski, Modular hyperbolas, Jap. J. Math., 7: 235-294, 2012.
+[Str77] V. Strassen, Einige Resultate über Berechnungskomplexität, Jber. Deutsch. Math.-Verein.,
+      78(1): 1-8, 1976/77.
+[Sut07] A. V. Sutherland, Order Computations in Generic Groups, Doctoral Thesis, Mas-
+      sachusetts Institute of Technology, 2007.
+[Wag13] S.S. Wagstaff Jr., The Joy of Factoring, American Math. Society, Providence, RI, 2013.
+
+Hellbrunnerstraße 34, A-5020 Salzburg
+E-mail address: markus.hittmeir@sbg.ac.at
+

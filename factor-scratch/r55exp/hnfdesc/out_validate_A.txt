@@ -1,0 +1,57 @@
+==============================================================================
+(A) PARI qfbclassno  vs  BRUTE-FORCE enumeration (small D)
+==============================================================================
+  D= -133604  qfbclassno= 240  brute= 240  OK
+  D= -648124  qfbclassno= 228  brute= 228  OK
+  D= -584348  qfbclassno= 276  brute= 276  OK
+  D= -372068  qfbclassno= 192  brute= 192  OK
+  D= -502244  qfbclassno= 376  brute= 376  OK
+  D= -994324  qfbclassno= 244  brute= 244  OK
+  D= -926308  qfbclassno= 144  brute= 144  OK
+  D= -101716  qfbclassno= 128  brute= 128  OK
+  D= -683084  qfbclassno= 702  brute= 702  OK
+  D= -368468  qfbclassno= 192  brute= 192  OK
+  D=  -40252  qfbclassno=  40  brute=  40  OK
+  D=-1072924  qfbclassno= 330  brute= 330  OK
+  D= -120212  qfbclassno= 136  brute= 136  OK
+  D= -530308  qfbclassno= 120  brute= 120  OK
+  D= -480292  qfbclassno= 136  brute= 136  OK
+  D= -272084  qfbclassno= 252  brute= 252  OK
+  D= -204404  qfbclassno= 256  brute= 256  OK
+  D= -762884  qfbclassno= 464  brute= 464  OK
+  ---> 18/18 agree.  sample count = 18
+  ellcard pathology (returns |D|+1?): 0 hits (want 0)
+
+==============================================================================
+(B) THE DESCENDER (desc.py, the code actually used)  vs  qfbclassno
+    Large D -- this is the regime of use.  Every a up to a_cap is
+    enumerated and the total must equal h(D) exactly.
+==============================================================================
+  N=    5101413047 (33b)  h(PARI)=  64666  descender=  64666  OK  unique=True
+  N=   22036874227 (35b)  h(PARI)=  58704  descender=  58704  OK  unique=True
+  N=   24653528659 (35b)  h(PARI)=  64350  descender=  64350  OK  unique=True
+  N=    6764502671 (33b)  h(PARI)= 110250  descender= 110250  OK  unique=True
+  N=   13339093151 (34b)  h(PARI)= 142900  descender= 142900  OK  unique=True
+  N=   24688316291 (35b)  h(PARI)= 130062  descender= 130062  OK  unique=True
+  N=    8997802763 (34b)  h(PARI)=  93918  descender=  93918  OK  unique=True
+  N=    6233191543 (33b)  h(PARI)=  46318  descender=  46318  OK  unique=True
+  ---> 8/8 agree.  sample count = 8
+
+==============================================================================
+(C) DETECTOR controls  (a | 4N, a not in {1,2,4}, 1 < gcd(a,N) < N)
+==============================================================================
+  N=    5101413047  h=  64666  hit=(40879, 40879, 35311)  FIRE (good)
+  N=   22036874227  h=  58704  hit=(90437, 90437, 34263)  FIRE (good)
+  N=   24653528659  h=  64350  hit=(94321, 94321, 37059)  FIRE (good)
+  N=    6764502671  h= 110250  hit=(68329, 68329, 87395)  FIRE (good)
+  POSITIVE control: fired 4/4  (want 4/4)
+  NEG D=-4r (r=22369 prime): non-trivial hits = 0  QUIET (good)
+  NEG D=-4r (r=42487 prime): non-trivial hits = 0  QUIET (good)
+  NEG D=-4r (r=95257 prime): non-trivial hits = 0  QUIET (good)
+  NEGATIVE control: quiet on 3/3  (want 3/3)
+
+==============================================================================
+(D) ellcard pathology probe on this PARI build
+==============================================================================
+  qfbclassno disagreed with brute force on 0/18 discriminants.
+  No |D|+1 fallback observed on any test discriminant.

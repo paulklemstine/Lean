@@ -1,0 +1,122 @@
+[
+ {
+  "bits": 17,
+  "tag": "rough-both",
+  "p": 92399,
+  "q": 102559,
+  "hit_a": 92399,
+  "h": 123608,
+  "forms": 111969,
+  "capped": false
+ },
+ {
+  "bits": 17,
+  "tag": "smooth-one",
+  "p": 117023,
+  "q": 120121,
+  "hit_a": 117023,
+  "h": 76518,
+  "forms": 144231,
+  "capped": false
+ },
+ {
+  "bits": 19,
+  "tag": "rough-both",
+  "p": 326999,
+  "q": 445229,
+  "hit_a": null,
+  "h": 212628,
+  "forms": 141870,
+  "capped": true
+ },
+ {
+  "bits": 19,
+  "tag": "smooth-one",
+  "p": 342929,
+  "q": 473201,
+  "hit_a": null,
+  "h": 205712,
+  "forms": 97802,
+  "capped": true
+ },
+ {
+  "bits": 21,
+  "tag": "rough-both",
+  "p": 1091239,
+  "q": 1559963,
+  "hit_a": null,
+  "h": 1785756,
+  "forms": 261560,
+  "capped": true
+ },
+ {
+  "bits": 21,
+  "tag": "smooth-one",
+  "p": 1051051,
+  "q": 1164343,
+  "hit_a": null,
+  "h": 451308,
+  "forms": 78234,
+  "capped": true
+ },
+ {
+  "bits": 23,
+  "tag": "rough-both",
+  "p": 5956187,
+  "q": 7758977,
+  "hit_a": null,
+  "h": 3772272,
+  "forms": 141336,
+  "capped": true
+ },
+ {
+  "bits": 23,
+  "tag": "smooth-one",
+  "p": 4613701,
+  "q": 7774463,
+  "hit_a": null,
+  "h": 3497580,
+  "forms": 149134,
+  "capped": true
+ },
+ {
+  "bits": 25,
+  "tag": "rough-both",
+  "p": 31988351,
+  "q": 33480731,
+  "hit_a": null,
+  "h": 20300856,
+  "forms": 118816,
+  "capped": true
+ },
+ {
+  "bits": 25,
+  "tag": "smooth-one",
+  "p": 27258433,
+  "q": 32016601,
+  "hit_a": null,
+  "h": 12284480,
+  "forms": 79486,
+  "capped": true
+ },
+ {
+  "bits": 27,
+  "tag": "rough-both",
+  "p": 87050669,
+  "q": 94086367,
+  "hit_a": null,
+  "h": 106843224,
+  "forms": 300444,
+  "capped": true
+ },
+ {
+  "bits": 27,
+  "tag": "smooth-one",
+  "p": 84324241,
+  "q": 102835729,
+  "hit_a": null,
+  "h": 78451464,
+  "forms": 160792,
+  "capped": true
+ }
+]

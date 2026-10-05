@@ -1,0 +1,1006 @@
+ACTA ARITHMETICA
+    102.1 (2002)
+
+
+
+
+              A general framework for subexponential
+                   discrete logarithm algorithms
+                                          by
+
+               Andreas Enge (Palaiseau and Augsburg) and
+                     Pierrick Gaudry (Palaiseau)
+
+    1. Introduction. Every finite abelian group is isomorphic to a direct
+sum of cyclic groups Z/ei Z, where the ei are unique provided that ei+1
+divides ei . Given such a group a natural task is to make this isomorphism
+explicit, hence two fundamental computational problems arise. The first one
+is to determine the order of the group and its structure (i.e. the ei ), and the
+second one is to compute discrete logarithms in it. When those two tasks
+are feasible, most of the questions concerning the group can be transferred
+to the simpler representation.
+    In this paper we assume that the group order is known and we concen-
+trate on the discrete logarithm computation: Given an additively written
+abelian group G, an element g1 ∈ G and another element g2 ∈ hg1 i, the
+problem is to find an integer l such that g2 = lg1 . Obviously, the difficulty
+of the problem depends on the representation of the group. In (Z/N Z, +),
+for instance, the problem reduces to taking an inverse modulo N and can be
+solved in polynomial time by the Euclidean algorithm. In general the prob-
+lem is hard and, following Diffie and Hellman’s and ElGamal’s constructions
+[8, 11], it is possible to base a cryptosystem on it.
+    The first examples of such groups were the multiplicative groups of fi-
+nite fields; it turned out that in this case the discrete logarithm problem
+can be solved in expected subexponential time by so-called “index calculus
+algorithms” (see [28] and the references therein), so that the key size in a
+secure system based on such a group must be relatively large.
+    Other important examples are class groups of number fields [24, 6] and
+Jacobians, i.e. divisor class groups, of elliptic [25, 19] and hyperelliptic [20]
+curves over finite fields.
+     2000 Mathematics Subject Classification: Primary 11Y16; Secondary 11R29, 11R58,
+14G50.
+     Key words and phrases: discrete logarithm, index calculus, class group, subexponen-
+tiality.
+
+                                          [83]
+84                          A. Enge and P. Gaudry
+
+    Extending the “index calculus” method for finite fields, algorithms with
+conjectured or rigorously proven subexponential running time for the dis-
+crete logarithm problem in class groups of number fields [5, 9] and high-genus
+hyperelliptic Jacobians [2, 12] and related structures [26] were devised. How-
+ever, the constants of the running time bounds for these algorithms are
+substantially weaker than for the finite field case. This is due to the fact
+that the index calculus algorithms for class groups proceed by solving both
+computational tasks mentioned in the first paragraph: In a first step, the
+structure of the group under consideration is determined as a product of
+cyclic groups, in a second step, the actual discrete logarithm is computed.
+For the multiplicative groups of finite fields, which are cyclic and of known
+order, the first phase can be omitted.
+    In the present article we close the gap between the running times of
+discrete logarithm algorithms for finite fields and class groups. We provide
+a general framework for solving the discrete logarithm problem in finite
+abelian groups which possess an analogue to the unique prime decompo-
+sition of integers. Our basic additional assumption is that the group be
+cyclic and of known order, which closely follows the special case of finite
+fields. If a certain smoothness assumption is satisfied, our algorithm has a
+provable subexponential expected running time. Examining how the well-
+studied discrete logarithm problem in finite fields fits into our framework,
+we recover the same running time as for the fastest rigorously analysed al-
+gorithms known so far. We obtain corresponding running time results for
+class groups, which constitute a major improvement compared to the above
+mentioned algorithms.
+    The main result of this paper is the following:
+    Theorem 1. There exists a probabilistic algorithm that solves a discrete
+logarithm problem in the Jacobian of a hyperelliptic curve of genus g over
+the finite field Fq when the group is cyclic of known order and g/log q tends
+to infinity. It takes expected time
+                                      √
+                                 Lqg ( 2 + o(1)).
+Assuming the extended Riemann hypothesis, there exists a probabilistic al-
+gorithm that solves the discrete logarithm problem in the class group of an
+imaginary quadratic field of discriminant −D when the group is cyclic of
+known order N . It takes expected time
+                          √
+                      LN ( 2 + o(1)) = LD (1 + o(1)).
+                             √      √
+(Here Lx (c) stands for exp(c log x log log x).)
+   Note that we are interested in algorithms with a provable running time
+only (possibly under the Riemann hypothesis in the number field case),
+whence we do not take into account algorithms of the number field sieve type.
+                    Subexponential discrete logarithm algorithms             85
+
+Such algorithms are conjectured to be asymptotically faster than ours (and
+there are both plausible theoretical considerations and numerical evidence
+to support this conjecture). In any case, they are only available for finite
+fields and not for class groups.
+    The assumption that the group is cyclic and of known order is no re-
+striction from the cryptographic point of view, as knowledge of the group
+order is required for digital signatures and to prove resistance against the
+Pohlig–Hellman attack. However, the discrete logarithm problem often has
+to be solved in a cyclic subgroup, whereas the smoothness assumption can
+only be verified for the full group, which itself may not be cyclic. We show
+that a variant of the algorithm applies to cryptographically suitable sub-
+groups. Moreover, the modifications allow to detect the case that no discrete
+logarithm exists, in which the original algorithm would run forever.
+    We proceed as follows. In Section 2 we introduce the general setting in
+which the algorithm described in Section 3 can be used to compute dis-
+crete logarithms. The subsequent sections are devoted to the analysis of
+the algorithm. We extend some results on sparse linear algebra to evaluate
+the probability that the algorithm succeeds and verify its subexponential
+running time. Along the way, the general considerations are specialised to
+classical examples. Finally, in Section 7 we explain how to adapt the algo-
+rithm for the cases where the group is not cyclic.
+
+    2. Notations and prerequisites. Throughout the paper, we denote
+by Z the set of integers, by N the set of positive integers, by log the natural
+and by log2 the dual logarithm. Let G be an additively written cyclic group
+of known order N , and let ZN denote Z/N Z. In general, one would expect
+that the elements of G are represented by O(log N ) bits and measure algo-
+rithmic complexities as functions of N . It is, however, possible to construct
+groups whose elements are naturally represented by bit strings of length in
+O(log N 0 ) for some N 0 considerably larger than N . For instance, Jacobian
+groups of curves of genus g over F2 are given by Θ(log N 0 ) bits for N 0 = 2g ,
+whereas √the only known lower bound on N in this case is the Hasse–Weil
+bound ( 2 − 1)g ≤ 1. While this situation results in a waste of bandwidth
+for cryptographic applications and is thus unlikely to occur, for preserving
+as much generality as possible we henceforth denote by log N 0 the input
+size of the problem and measure all complexities by functions of log N 0 . It
+turns out that factors polynomial in log N 0 do not affect the subexponential
+running time. Hence to simplify the analysis we follow [14] and for some
+positive function f of N 0 denote by O ∼ (f ) the class of functions which are
+in O(f ) up to a factor bounded by some power of log N 0 .
+    To apply the index calculus idea, G must behave similarly to the natu-
+ral integers or the polynomials over a finite field in that each element of G
+86                           A. Enge and P. Gaudry
+
+admits a unique decomposition into a “sum of primes”. To model this be-
+haviour, assume that there is a free abelian monoid M over a countable set P,
+whose elements are called primes, together with an equivalence relation ∼
+on M which is compatible with its composition law, such that G ≃ M/∼.
+Thus, each element of M has a unique decomposition into a sum of primes.
+Let each element of G be represented by a unique element of M of bit size
+in O∼ (1); then G inherits the unique decomposition property. We assume
+that the arithmetic in G (addition, negation and test for equality) is per-
+formed by manipulating these unique representatives in time polynomial in
+log N 0 . Furthermore, we assume that there is a homomorphism of monoids
+deg: M → R+ , which to each element of M (and thus of G) associates its
+“size”. As M is free over P, any such homomorphism is given by assigning a
+non-negative size to each prime and extending additively. Usually the “size”
+deg m and the bit size of m are closely related in the sense that the latter
+is in Θ(deg m).
+    The setting above was introduced by Knopfmacher [18], who calls M an
+additive arithmetical semigroup and G an arithmetical formation. In addi-
+tion we require that deg p ≥ 1 for p ∈ P and deg g ∈ O ∼ (1) for any g ∈ G.
+This ensures that the number of primes in the decomposition of a group
+element, counting multiplicities, is bounded above by O ∼ (1).
+    For a smoothness bound S ∈ N denote by PS the set of primes of size at
+most S, by nS the cardinality of PS and by n0S the number of elements of
+M of size at most S. From an algorithmic point of view, we demand that
+n0S be finite, that the elements of size at most S can be enumerated in time
+polynomial in S and linear in n0S and that an element m ∈ M can be tested
+for being prime in time polynomial in deg m and linear in n0deg m (by trial
+division by all elements of size smaller than deg m, for instance). Thus, PS
+can be constructed in time polynomial in S and quadratic in n0S . In practice,
+Eratosthenes’s sieve could be used to lower the complexity in n0S ; however,
+the algorithms studied below are at least quadratic in n0S .
+    An element of G is called S-smooth if its decomposition involves only
+primes of PS . As the size of the elements of G is in O ∼ (1), a distinction into
+smooth and non-smooth elements arises only for S ∈ O ∼ (1). For technical
+reasons we assume furthermore that log nS ∈ O∼ (1). We require that ele-
+ments of G can be tested for S-smoothness and, if possible, be decomposed
+into a sum of primes from PS in O∼ (nS ), which usually amounts to trial di-
+vision by the elements of PS . In all cases considered
+                                                p 0     below, the smoothness
+                                             ∼
+test and the decomposition are even in O ( nS ) or O∼ (1), which results
+in better running times.
+    The most efficient smoothness test available for integers to date, which is
+subexponential in log n0S , is non-deterministic and not completely reliable in
+that it may not recognise a smooth element. Thus, we extend our model as
+                     Subexponential discrete logarithm algorithms                 87
+
+follows: The smoothness test rejects all non-smooth elements; it recognises
+a smooth element up to a certain error probability, which may depend on
+the element tested, but does not exceed 1/2.
+    It should be noted that we could work with a more general definition of
+smoothness, which does not involve the notion of the size of an element. Also,
+unique decomposability could be defined in an abstract way, not involving
+the notion of a free abelian monoid. However, the more intuitive definitions
+apply to all groups considered in the literature so far.
+   Examples
+   1. Finite prime fields G = F×
+                               p . Then G can be represented as (N, ·)/∼,
+where m1 ∼ m2 if and only if p | m1 − m2 , and P is the set of natural
+prime numbers. The size of an element is given by its logarithm to base 2,
+deg m = log2 m, and N 0 = N = p − 1.
+    2. Finite fields of characteristic 2, G = F×
+                                               2k
+                                                  . Then G can be represented
+as (F2 [X]\{0}, ·)/∼, where f1 ∼ f2 if and only if f | f1 − f2 for some fixed
+irreducible polynomial f of degree k in F2 [X], and P is the set of irreducible
+polynomials over F2 . The size of an element is given by its usual degree, and
+N 0 = N = 2k − 1.
+    3. Finite fields of the form G = F×  pk
+                                            , p prime. Then G can be represented
+by the polynomials of degree less than k over Fp . Denote by Fp [X]0 the set of
+monic polynomials over Fp . Noticing that any polynomial is the unique prod-
+uct of its leading coefficient and a monic polynomial, G can be represented
+as (N, ·) × (Fp [X]0 , ·)/∼, where (m1 , f1 ) ∼ (m2 , f2 ) if and only if p | m1 − m2
+and f | f1 − f2 for some fixed irreducible polynomial f of degree k over Fp .
+The set of primes P is given by the union of the set of natural primes and
+the set of monic irreducible polynomials over Fp , each embedded into the
+cartesian product. The size of an element is deg(m1 , f1 ) = log2 m1 + deg f1 ,
+and N 0 = N = pk − 1. Notice that these definitions are compatible with
+Examples 1 and 2.
+    4. Class groups of number fields. Let K be a number field and O its ring
+of integers. Then the class group G of K is defined as M/∼, where M is the
+set of ideals of O (a free abelian monoid over the set P of prime ideals), and
+∼ is induced by the submonoid of principal ideals. The size of an ideal is
+given by the logarithm of its norm. If K has unit rank 0, then each ideal
+class contains a unique so-called reduced ideal, which can be computed in
+polynomial time from any representative of the class as long as (K : Q) is
+fixed. This reduced ideal then constitutes the canonical representative for
+the class.                                                    √
+    In particular, the case of imaginary quadratic
+                                           √        fields Q( D) of discrim-
+inant D < 0 is covered. Let ω = (D + D)/2 with minimal polynomial
+88                            A. Enge and P. Gaudry
+
+X 2 − DX + (D 2 − D)/4 be an element generating an integral power basis.
+Then PS can be constructed by enumerating all rational primes p ≤ 2S and
+solving the equation yp2 − Dyp + (D2 − D)/4 ≡ 0 (mod p), which can be done
+in expected polynomial time by a probabilistic algorithm. If this equation
+does not have a solution, then p is inert and pO is a principal prime ideal,
+whence it may be omitted from the factor base. If the equation has the
+double solution yp = 0, then p is ramified and (p, ω) is the only prime ideal
+above p in O. Finally, if the equation has two solutions yp and y p , then p is
+splitting and p = (p, ω − yp ) and p = (p, ω − y p ) are the two prime ideals
+above p in O.
+    A reduced ideal a = (a, ω−b) with a | b2 −Db+(D 2 − D)/4 is S-smooth if
+and only if all prime divisors of a are bounded above by 2S . Let p be a prime
+divisor of a and ν the exponent of p in a. Then, as the ideal is reduced, it can
+be shown that p is not inert, so there is an ideal of the form p = (p, ω − yp )
+above p in O. If yp ≡ b (mod p), then the ideal occurs with multiplicity ν in
+the decomposition of a, otherwise, p occurs with multiplicity ν. Thus, the
+smoothness test and the decomposition of class group elements into primes is
+completely reduced to the same problems over the rational integers. Again,
+we let N 0 = N .
+    5. Jacobians of curves over finite fields. Let C ∈ Fq [X, Y ] be a plane
+irreducible projective curve, and G its Jacobian. Fix a divisor O of degree 1,
+and let P denote the set of all P − (deg P )O with a prime divisor P . The size
+of such an element of P is given by deg P . Then G ≃ M/∼, where M is the
+free monoid over P and ∼ is induced by the submonoid of principal divisors.
+If the prime at infinity of Fq [X] is totally ramified in the function field of the
+curve, we may choose O as the prime divisor at infinity, and the Jacobian is
+isomorphic to the ideal class group of the integral closure of Fq [X, Y ] in the
+function field. Of particular interest is the case of hyperelliptic curves, which
+constitute the function field analogue of quadratic number fields. A hyper-
+elliptic curve of genus g over Fq is the smooth projective model of a plane
+curve of the form
+                                H = Y 2 + hY − f
+with h ∈ Fq [X] of degree at most g and f ∈ Fq [X] monic of degree 2g + 1
+or 2g + 2.
+    If deg f = 2g + 1, the prime at infinity is ramified and the representation
+of the hyperelliptic curve by H is called imaginary. The use of such curves in
+cryptography has been suggested by Koblitz [20]. Each divisor class of a hy-
+perelliptic Jacobian in imaginary representation contains a unique reduced
+divisor div(a, b) which corresponds to the ideal (a, Y − b) of Fq [X, Y ]/(H)
+and satisfies a, b ∈ Fq [X], deg b < deg a ≤ g and a | b2 + bh − f . Its size is
+deg a. So the input size of the problem is O(log N 0 ) for N 0 = q g . The as-
+                      Subexponential discrete logarithm algorithms             89
+
+sumption that N ∈ O ∼ (N 0 ) holds since N ≤ (2g + 1)q g . For q a prime, this
+bound is due to Artin ([3], §24, Formula (8)), whose arguments are easily
+extended to the general case replacing the Artin character by the general
+quadratic character. Given a divisor div(a0 , b0 ), the canonical reduced repre-
+sentative in its class can be computed in time polynomial in N 0 . The set PS
+can be constructed by enumerating all irreducible polynomials p ∈ Fq [X]
+of degree at most S and solving the equation yp2 + hyp − f ≡ 0 (mod p)
+in expected polynomial time by a probabilistic algorithm. All further steps
+are completely analogous to the case of imaginary quadratic number fields.
+The only difference is that testing for smoothness and decomposing a group
+element into primes is reduced to the corresponding problems over the uni-
+variate polynomials instead of the rational integers.
+    For deg f = 2g + 2, the prime at infinity is splitting and H is called
+a real representation of the curve. Its Jacobian is no longer isomorphic to
+the ideal class group of Fq [X, Y ]/(H). Instead of working in the Jacobian,
+it has been suggested to base cryptosystems on discrete logarithms in the
+so called infrastructure of the curve [33, 27]. It has been observed in [29]
+that at least in odd characteristic a constant field extension of degree at
+most 2g + 2 allows one to transform a real representation into an equivalent
+imaginary representation. Thus we restrict our presentation to imaginary
+curves.
+
+    3. Algorithm. We describe the algorithm for a cyclic group whose order
+is known and not necessarily prime. Unlike in the Pohlig–Hellman method
+we do not split the discrete logarithm problem into a series of problems
+in subgroups of prime order. In fact, we need to work in the full group to
+guarantee a provable proportion of smooth elements, and the generalisation
+of the algorithm to subgroups poses challenges which are discussed in Sec-
+tion 7. However, we factor the group order to facilitate the linear algebra
+step.
+    The algorithm takes as input a generator g1 of a cyclic group G of order
+N and another element g2 ∈ G. It outputs logg1 g2 , i.e. an integer l ∈
+{0, . . . , N − 1} such that g2 = lg1 .
+      1. Choose a smoothness bound S and construct the factor base PS =
+         {p1 , . . . , pn } with n = nS . Set k = dlog2 n + log2 log2 N e + 1.
+                                              n×(2kn)
+      2. Construct a matrix A = (aij ) ∈ ZN     as follows: For j = 1, . . . , kn,
+         select randomly and uniformly αj , βj ∈ ZN until αj g1 + βj g2 is S-
+         smooth, and write
+                                                  n
+                                                  X
+(1)                           α j g1 + β j g2 =         aij pi .
+                                                  i=1
+90                                A. Enge and P. Gaudry
+
+        For j = kn + 1, . . . , 2kn, write j = (k + l)n + m with 0 ≤ l ≤ k − 1,
+        1 ≤ m ≤ n, and select randomly and uniformly αj , βj ∈ ZN until
+        αj g1 + βj g2 − pm is S-smooth; then write
+                                                  n
+                                                  X                 n
+                                                                    X
+(2)                 α j g1 + β j g2 = p m +              bij pi =          aij pi .
+                                                  i=1               i=1
+
+        (In practice, one would only create a few more than n columns of the
+        first type, see [15]. The second type of columns and the constant k are
+        merely needed to make a rigorous proof of the running time possible.)
+      3. By the randomised procedure described in Section 4, try to find a
+         non-zero vector γ = (γ1 , . . . , γ2kn ) ∈ Ker A. (During this step N is
+         factored.) If the procedure fails, return to Step 2.
+           P
+      4. If 2kn
+              j=1 βj γj is invertible in ZN , then output
+
+                                      2kn
+                                     X                     2kn
+                                                      −1  X           
+                                 −            βj γj                αj γj ;
+                                        j=1                  j=1
+
+       otherwise return to Step 2.
+   If the algorithm halts in Step 4, then it outputs the correct discrete
+logarithm of g2 to the base g1 . The fact that γ ∈ Ker A means that
+                                 2kn
+                                 X
+                          0=            aij γj        ∀i = 1, . . . , n;
+                                  j=1
+
+multiplying these equations by pi and summing them up yields
+                  2kn  X
+                  X     n                 2kn
+                                          X              2kn
+                                                          X         
+             0=               aij pi γj =      αj γj g1 +      β j γj g 2 .
+                  j=1   i=1                      j=1                       j=1
+                                                                                      P2kn
+As g1 and g2 are both of N -torsion, multiplying by the inverse of                     j=1 βj γj
+in ZN , if it exists, shows the correctness of the result.
+
+    4. Linear algebra. As rank A ≤ n, it is possible to find a non-zero
+vector γ ∈ Ker A. How this is done, however, needs further explanation. On
+one hand, it is desirable to exploit the sparse structure of the matrix, which
+has only O ∼ (1) entries per column, and the corresponding algorithms are
+prone to failure with a certain probability. On the other hand, a complication
+is introduced by the fact that N need not be prime, so that ZN may not be
+a field.
+    To exploit the matrix sparseness, one may use a randomised Lanczos
+algorithm; we rely on the following trivial corollary of Theorem 6.2 in [10].
+                    Subexponential discrete logarithm algorithms              91
+
+    Theorem 2. Let Fq be the finite field with q elements and let A ∈ Fqn×d
+be a matrix of rank r with ω non-zero entries and b ∈ Fnq . There is a proba-
+bilistic algorithm which either returns a vector x ∈ Fdq such that Ax = b or
+reports failure. The algorithm requires O(r(ω + d)) operations in Fq and has
+a failure probability of at most (11d2 − d)/(2(q − 1)).
+     Moreover, the solution vector returned by the algorithm can be made
+to vary uniformly over all possible solutions by randomising the right hand
+side in the following way (in fact, this randomisation is already part of the
+algorithm in [10]): Choose y ∈ Fdq according to a uniform distribution, solve
+Ax = b + Ay and let x = x − y. If y varied over a fixed class of Fdq /Ker A,
+then x would not depend on y, and x would be distributed uniformly over
+the solution space x+Ker A of the equation. Hence, the same assertion holds
+when y does not belong to a fixed class.
+     When q is small compared to d, it is not possible to apply the theorem
+directly. Instead, one may switch to a field extension. While this idea does
+not seem to be new—it was used, for instance, in the implementation of
+[21], see also [17]—we did not find it detailed in the literature and thus
+expand on the topic. In particular, it is possible to maintain the uniform
+distribution over the solution vectors. In the situation of Theorem 2, let
+p be the characteristic of Fq , ν = min{l : q l > 11d2 , p - l} and q 0 = q ν .
+Then q ν−2 ≤ 11d2 , so that q 0 ∈ O(d2 q 2 ). We would like to solve a matrix
+equation over Fq0 and project the solution onto a solution x ∈ Fdq of Ax = b.
+For projection, one may use the trace function Tr : Fq0 → Fq , which is a
+homomorphism of Fq -vector spaces and acts on Fq as multiplication by ν.
+Let b0 = ν 0 b ∈ Fdq with νν 0 ≡ 1 (mod p), so that νb0 = b. The value ν 0 exists
+because gcd(ν, p) = 1 and can be computed by the extended Euclidean
+algorithm in time O(log ν log p), which as well as the multiplication of b by
+ν 0 is negligible compared to the following linear algebra step. Solve Ax0 = b0
+by the algorithm in [10]. The success probability for this step is at least
+                                    11d2 − d    1
+                               1−              ≥ .
+                                    2(q 0 − 1)  2
+Let x = Tr(x0 ). Then from the linearity of the trace we deduce that Ax =
+Tr(Ax0 ) = Tr(b0 ) = νb0 = b. Moreover, any solution x ∈ Fdq of Ax = b can be
+obtained in this way, and all of them have the same probability of occurring.
+Namely, for a given solution x, the set of solutions to Ax0 = b0 over Fdq0 which
+map to x under the trace function is given by ν 0 x + (Ker A ∩ Ker Tr), whose
+cardinality (q 0 )dim(Ker A∩Ker Tr) is independent of x. Thus, we have shown the
+following result:
+    Theorem 3. Let A ∈ Fqn×d be a matrix of rank r with ω non-zero en-
+tries and b ∈ Fnq . There is a probabilistic algorithm which either returns a
+92                             A. Enge and P. Gaudry
+
+vector x ∈ Fdq such that Ax = b or reports failure. The running time of the
+algorithm is in O(r(ω + d) log2 (dq)), and its failure probability is at most
+1/2. Moreover , the resulting vector is uniformly distributed over all possible
+solutions.
+    This solves the linear algebra step if N is prime. Otherwise, one factors
+N , computes γ modulo pν for all pν k N and combines the results by the
+Chinese Remainder Theorem. The computations modulo pν may be broken
+up into ν iterations modulo p via a lifting procedure: Suppose that a non-zero
+solution γ1 ∈ {0, . . . , pe − 1}2kn is known to the equation Ax ≡ 0 (mod pe ),
+for instance Aγ1 = pe δ with δ ∈ Z2kn . Assume that there is a solution γ2 of
+Ax ≡ δ (mod p). Then pe γ2 −γ1 is a non-zero solution of Ax ≡ 0 (mod pe+1 ).
+If all computations modulo a prime return a random vector according to a
+uniform distribution over all possible solutions, then the combined result
+varies uniformly over the kernel of A.
+    Considering the elementary divisor form of the matrix A, however, it is
+easily seen that the lifting procedure may fail if (and only if) rankQ A 6=
+rankZp A because then the matrix equation Ax ≡ δ (mod p) need not have a
+solution. This is the reason why, following [31], we create the matrix A in a
+special way, generating many more than the n+1 columns one would expect
+to need in practice and introducing the canonical basis elements pm into the
+matrix. Indeed, it is proved in Lemma 4.1 and the subsequent remark of [31]
+that with high probability the matrix has full rank over Zp . We recall this
+lemma with our notations.
+    Lemma 4. Let V be a vector space over a field F with dim V = n < ∞.
+Let S be a finite set of vectors in V and b1 , . . . , bn a basis for V . Let
+k ∈ N. We make 2kn independent choices of elements from S with an arbi-
+trary probability distribution over S, labelling the chosen vectors v1 , . . . , vkn ,
+w1 , . . . , wkn , and we denote by V 0 the subspace of V spanned by v1 , . . . , vkn ,
+and the vectors bj + w(j−1)k+i for j = 1, . . . , n and i = 1, . . . , k. Then with
+probability at least 1 − n/2k−1 we have V = V 0 .
+    In our case, the vector space V is the space of column vectors of size n
+with coefficients in Zp , the basis is the canonical basis, and the set S is the
+set of all column vectors representing a smooth element of G. We see that
+the vectors generating V 0 correspond precisely to the vectors forming the
+matrix A. Hence the probability that the lifting is possible on Zp is at least
+1 − n/2k−1 . There are at most (log2 N )/2 distinct primes p whose squares
+divide N , thus the probability that the lifting is possible for all of them is
+at least 1 − (n log2 N )/2k ≥ 1/2 for our choice of k. In this case, repeating
+log2 (2 log2 N ) times the algorithm of Theorem 3, we obtain a solution of one
+problem modulo a prime with probability at least
+                    Subexponential discrete logarithm algorithms             93
+
+                                  1                      1
+                      1−                       =1−            .
+                           2log2 (2 log2 N )         2 log2 N
+As at most log2 N single problems have to be solved, we get a solution mod-
+ulo N with probability at least 1/2. Altogether, Step 3 is thus successful with
+a probability of at least 1/4, in which case the output vector is uniformly
+distributed over the kernel.
+
+    5. Success probability and running time. To estimate the success
+probability of the algorithm during one run of Steps 2 to 4, we assume
+that Step 2 has been accomplished successfully, the study of this step being
+postponed to the running time analysis below.
+    As shown above, Step 3 succeeds with probability at least 1/4. The
+                           P
+algorithm may also fail if 2knj=1 βj γj is not invertible in ZN in Step 4. How-
+ever, this happens with a sufficiently low probability. For given j ≤ kn and
+any βj , as g1 is a generator of G and αj is uniformly distributed, the el-
+ement αj g1 + βj g2 is uniformly distributed over all group elements. The
+same holds for j > kn and αj g1 + βj g2 − pm . Consequently, the matrix A
+and the vector β are independent random variables, so that γ and β are
+also independent. Let p be a prime divisor of N . As γ is uniformly dis-
+tributed over all vectors of the kernel, the probability that γ 6≡ 0 (mod p) is
+at least 1 − 1/p. Then the orthogonal space of γ mod p in Z2kn has dimen-
+sion 2kn − 1, and the conditional probability
+                                           P that β mod p is not orthogonal
+to γ mod p is at least 1 − 1/p. Hence 2kn     j=1 βj γj is invertible in ZN with
+                     Q
+probability at least p|N (1 − 1/p) = (ϕ(N )/N )2 . From (3.41) in [32] we
+                                      2
+
+have ϕ(N )/N ∈ Ω(1/log log N ).
+    Thus, the total success probability for one run of Steps 2 to 4 is in
+                                                
+                                         1
+                               Ω                   .
+                                   (log log N )2
+    In accordance with Section 2, denote by n0 = n0S the number of elements
+of the monoid M whose sizes are bounded above by S.
+    With the assumptions set forth in Section 2, PS can be constructed in
+O∼ (n02 ) time.
+    Denote by NS the number of S-smooth elements of G, and let ts and
+td be upper bounds on the expected time needed for a smoothness test
+and the decomposition of a smooth group element into a sum of primes,
+respectively. The time needed for computing one linear combination of g1
+and g2 and testing for smoothness is in O ∼ (ts ); this has to be repeated
+an expected N/NS times until a smooth element is obtained. This smooth
+element is recognised with a probability of at least 1/2, so that no more
+than two repetitions of the previous procedure are needed on average until
+94                              A. Enge and P. Gaudry
+
+a column of the matrix can be filled. So the total time used in Step 2 is in
+                                                        
+                 ∼      N                  ∼    N          2
+               O n        ts + t d     ⊆O n         ts + n
+                       NS                       NS
+as 2kn, td ∈ O∼ (n).
+    Let tf be a time bound for factoring N . As explained in Section 4, Step 3
+requires log2 (2 log2 N ) log2 N ∈ O∼ (1) executions of the algorithm behind
+Theorem 3. The number of entries in each column of A is in O ∼ (1), so that
+Step 3 needs O ∼ (tf + n2 ) time.
+    Finally, Step 4 can be performed in O ∼ (n) time.
+    As only O((log log N )2 ) ⊆ O∼ (1) repetitions of Steps 2 to 4 are needed
+on average and n ≤ n0 , the total running time of the algorithm is in
+                                                 
+                              ∼       02    0 N
+(3)                         O tf + n + n        ts .
+                                             NS
+(In all cases under consideration, n and n0 differ only by polynomial factors in
+log N 0 , i.e. O ∼ (n) = O ∼ (n0 ), so that we do not lose anything when replacing
+n by n0 .)
+     Examples
+    1. G = F×p , p prime. With deterministic   algorithms due to Pollard and
+                                      ∼
+                                          √
+Strassen [30, 37] we have ts ∈ O ( n ). A more efficient probabilistic
+                                             0
+
+method has been proved using hyperelliptic curves. The test of [22] recog-
+nises (and decomposes) a smooth number with probability at least 1/2 in
+time ts ∈ O∼ (Ln0 (2/3, c)), where L is the subexponential function as defined
+in Section 6 and c some positive constant. Thus, the total running time is in
+                                                      
+                        ∼         02    0           N
+                      O tf + n + n Ln0 (2/3, c)          .
+                                                   NS
+    2. G = F×
+            2k
+               . Now ts ∈ O∼ (1), as a smoothness test can be performed in
+deterministic polynomial time by computing the distinct degree factorisation
+of the polynomial representing the group element. Precisely, let f ∈ F2 [X]0
+be the element to be tested, and g = f /gcd(f, f 0 ) its square-free part. Then
+                                         i
+f is S-smooth if and only if g is. As X 2 − X is the product of all irreducible
+polynomials of degree dividing i in F2 [X]0 , the latter is the case if and only if
+                                         i
+                    g = lcm({gcd(g, X 2 − X) : i = 1, . . . , S}).
+                i
+Computing X 2 − X mod g by successive squaring and reduction modulo g,
+this can be tested in time polynomial in S and deg f ∈ O(log N ). Thus, the
+total running time of the algorithm is in
+                                              
+                            ∼        02    0 N
+                           O tf + n + n          .
+                                            NS
+                   Subexponential discrete logarithm algorithms            95
+
+    3. G = Fpk , p prime. An element (m, f ) ∈ N × Fp [X]0 is S-smooth if
+and only if m and f are S-smooth. The smoothness of m can be tested in
+O∼ (Lp (2/3, c)) time as mentioned in Example 1. The smoothness of f can
+again be checked by distinct degree factorisation in O ∼ (1) time. Thus, the
+total running time of the algorithm is in
+                                                     
+                        ∼         02    0          N
+                       O tf + n + n Lp (2/3, c)         .
+                                                 NS
+    4. Class groups of imaginary quadratic number fields. As the smoothness
+test and the decomposition into primes are reduced to the case of natural
+integers, the analysis of Example 1 shows that the running time is in
+                                                     
+                        ∼        02    0            N
+                      O tf + n + n Ln0 (2/3, c)          .
+                                                  NS
+    5. Jacobians of hyperelliptic curves. Now the smoothness test and the
+decomposition are reduced to the case of monic polynomials, and the anal-
+ysis of Example 2 carries over and shows that the running time is in
+                                               
+                             ∼        02    0 N
+                            O tf + n + n          .
+                                             NS
+
+   6. Subexponentiality. Recall the definition of the subexponential
+function with respect to the input size log N 0 and parameters α ∈ (0, 1)
+and c > 0:
+                                          0 α          0 1−α
+                    LN 0 (α, c) = ec(log N ) (log log N ) .
+The smaller α, the closer this function is to the polynomial LN 0 (0, dce) =
+(log N 0 )dce in log N 0 . All rigorously proven subexponential algorithms for
+discrete logarithms, and also the algorithm of this article, have α = 1/2.
+Thus we simplify the notation by omitting the first parameter when it is
+1/2. We state the simple relations
+                      LN 0 (c1 ) · LN 0 (c2 ) = LN 0 (c1 + c2 )
+and
+                 LN 0 (c1 ) + LN 0 (c2 ) ∈ Θ(LN 0 (max(c1 , c2 ))).
+Furthermore, functions in O ∼ (1) or O(LN 0 (α, c)) for α < 1/2 are contained
+in LN 0 (o(1)), where o(1) stands for the set of real-valued functions tending
+to zero as N 0 → ∞.
+    Assume that we have a smoothness result of the following form: The
+bound S can be chosen such that
+         n0 ∈ O(LN 0 (% + o(1))) and        N/NS ∈ O(LN 0 (σ + o(1)))
+for some constants %, σ > 0.
+    The assumption N ∈ O ∼ (N 0 ) implies that LN (c) ∈ O(LN 0 (c) + o(1)).
+Taking into account that N can be factored in expected O(LN (1 + o(1))) ⊆
+96                         A. Enge and P. Gaudry
+
+O(LN 0 (1 + o(1))) time by the algorithm presented in [23] and introducing
+an exponent τ such that ts ∈ O∼ (n0 τ ), we can specialise (3) to obtain
+                 O(LN 0 (max(1, 2%, (1 + τ )% + σ) + o(1))).
+In fact, the constants for all examples presented below are worse than 1
+anyway, so that the need for factoring N has no influence on our running
+time bounds.
+     Examples
+    1. G = F×              0
+             p , p prime; N = N = p − 1. With the usual notation ψ(x, y)
+for the number of integers between 1 and x all prime factors of which are
+not larger than y, we have
+                             N        N
+                                =            .
+                             NS    ψ(N, 2S )
+Let S = dlog(LN (%))e, so that n0 = 2S ∈ [LN (%), 2LN (%)]. Then Lemma 3.1
+in [31] shows that N/NS ∈ O(LN (σ + o(1))) with σ = 1/(2%). Moreover
+from n0 ∈ O(LN (%)) we deduce Ln0 (2/3, c) ∈ LN (o(1)). The running time of
+the algorithm is thus in
+                                                   
+                                          1
+                  O LN max 2%, % + , 1 + o(1)
+                                         2%
+                                        √
+for any % > 0; the optimal choice % = 1/ 2 yields a running time in
+                                   √
+                            O(LN ( 2 + o(1))).
+This is precisely the complexity of the fastest known algorithm described
+in [31].
+   2. G = F× 2k
+                ; N 0 = N = 2k − 1. Denote by Nq (d, m) the number of monic
+polynomials of degree d over Fq all prime factors of which have degree at
+most m. Then
+                              N          2k
+                                  ≤               .
+                             NS     N2 (k − 1, S)
+Let S = dlog(LN (%))e, so that n0 ∈ Θ(LN (%)). Theorem 2.1 of [4] shows
+that
+                                                    s
+                      2k−1              k−1       1   log N     1p
+  N2 (k − 1, S) ∈ (1+o(1))u for u =            ≤              ≤     log N .
+                   u                      S       % log log N   %
+Thus, a few computations reveal that
+                  N                              1
+                     ∈ O(LN (σ + o(1))) for σ =    ,
+                  NS                            2%
+and the running time of the algorithm is in
+                                            
+                                         1
+                 O LN max 2%, % + , 1 + o(1)
+                                        2%
+                     Subexponential discrete logarithm algorithms           97
+                                        √
+for any % > 0. The optimal choice % = 1/ 2 again yields a running time in
+                                  √
+                           O(LN ( 2 + o(1))),
+which corresponds to the fastest known algorithms described in [31] and [4].
+   3. G = Fpk , p prime; N 0 = N = pk −1. Notice first that in the polynomial
+representation we have chosen, it is impossible to obtain a subexponential
+running time for fixed k ≥ 2 and p → ∞. If we let S = 0, then only the
+constants have a chance of being smooth, and
+                                  N    pk − 1
+                                     ≥        ≥ pk−1
+                                  NS   p−1
+is exponential in N . If S ≥ 1, then all p monic linear polynomials are con-
+tained in the factor base, which is thus of exponential size. Hence, we must
+restrict our attention to instances in which p is sufficiently small compared
+to k.
+    Letting S = dlogp (LN (%))e, we obtain the estimate
+                                                                  
+          N          p            pk−1                     1
+             ≤               ·              ∈ O   pL N       + o(1)
+         NS     ψ(p − 1, 2S ) Np (k − 1, S)               2%
+as in Example 2, which introduces an unwanted factor of p. Moreover, since
+we have to round up S, it need not be true any more that n0 ∈ O(LN (%)).
+In fact,
+                         S
+                         X
+                 0
+                n =            |{f ∈ F0p [X] : deg f = i}|
+                         i=0
+                         ·|{m ∈ {1, . . . , p − 1} : log2 m ≤ S − i}|
+                         S
+                         X
+                     =         pi min{p − 1, 2S−i }
+                         i=0
+                         S−1
+                         X
+                     ≤         pi+1 + pS ∈ O(pS ) ⊆ O(pLN (%)).
+                         i=0
+
+    For a first special result we consider the case p ∈ O(log N ) or more gen-
+erally p ∈ O ∼ (1), which implies n0 ∈ O∼ (LN (%)) and Lp (2/3, c) ∈ LN (o(1)).
+So the running time analysis of Example 2 carries over without modification.
+    More generally, we must ensure that p is subexponential in log N =
+k log p. Following the ideas in [12], we consider
+                                           √      the case k ≥ ϑ log p for some
+positive constant ϑ, in which p ≤ LN (1/ ϑ). Then
+                                                                  
+      0                  1              N               1     1
+     n ∈ O LN % + √              and        ∈ O LN        + √ + o(1)
+                          ϑ             NS             2%      ϑ
+98                           A. Enge and P. Gaudry
+
+for the same value of S as above, Lp (2/3, c) ∈ LN (o(1)) and the total running
+time is in
+                                                            
+                                    2        1    2
+            O LN max 2% + √ , % +              + √ , 1 + o(1) .
+                                     ϑ      2%     ϑ
+                               √
+The optimal choice for % is 2/2, which yields a running time of
+                                                 
+                                   √      2
+                         O LN        2 + √ + o(1) .
+                                           ϑ
+Asymptotically for ϑ → ∞ (e.g., for p fixed), we recover the running time
+of Example 2.
+    In [1], Adleman and DeMarrais describe an algorithm with conjectured
+subexponential running time for p > k. They represent the field as the
+ring of integers of a number field modulo a prime ideal. See also [34]. It
+is an interesting open question whether there is a provably subexponential
+algorithm for all finite fields using possibly such a representation.
+    4. Class groups of imaginary quadratic number fields. Let D denote the
+discriminant of the number field. It is shown in [35], Proposition 4.4, that
+assuming the generalised Riemann hypothesis,
+                                   
+            N               1
+                ∈ O L|D|      + o(1)      for S = dlog L|D| (c)e.
+            NS             4c
+Due to a theorem of   √ Siegel’s [36], log |D| ∈ (2 + o(1)) log N so that
+L|D| (c + o(1)) = LN ( 2c + o(1)). Letting S = dlog LN (%)e, we deduce
+                                                          
+                                    N              1
+             n ∈ O(LN (%)) and          ∈ O LN       + o(1) .
+                                   NS             2%
+Repeating the analysis of Example 1 shows that our algorithm has a running
+time in                  √
+                   O(LN ( 2 + o(1))) = O(L|D| (1 + o(1)))
+under the √generalised Riemann hypothesis. This improves the running time
+of O(L|D| ( 2 + o(1))) of the algorithm described in [16] for determining the
+class group structure without any previous information.
+    5. Jacobians of hyperelliptic curves. Recall that N 0 = q g . Letting S =
+dlogq Lqg (%)e, we have n ≤ 2qLqg (%). Again, we follow [12] and consider
+only instances
+       √        with g ≥ ϑ log q for some positive constant ϑ, so that q ≤
+Lqg (1/ ϑ). It is shown in [13] that then NS ≥ q g Lqg (−1/(2%)), so that
+                            0                          
+                  N      ∼ N                     1
+                     ∈O             ⊆ O Lq   g       + o(1) ,
+                  NS         NS                 2%
+and the running time of the algorithm is in
+                                                          
+                                  2        1       1
+            O Lqg max 2% + √ , % +             + √ , 1 + o(1) .
+                                   ϑ      2%        ϑ
+                    Subexponential discrete logarithm algorithms                99
+
+A similar analysis to that of Example 3 shows that the optimal choice of
+% is
+                √ r                     r             r
+                    2     1   1      1        1    1       1
+            min       ,     +    − √      =     +     −      ,
+                   2      2 4ϑ 2 ϑ            2 4ϑ        4ϑ
+which yields an overall running time of
+                    r                  r          
+                         √          1       1
+                O Lq   g    2   1+      +       + o(1) .
+                                   2ϑ      2ϑ
+This improves considerably on the running time of
+                          r          r             
+                         5          3       3
+               O Lq g √        1+     +         + o(1)
+                          6        2ϑ      2ϑ
+in [12], and asymptotically for ϑ → ∞ (e.g., for q constant), the constant of
+the subexponential function is again the same as in Example 2.
+    Hence, our algorithm shows that cryptosystems based on high-genus hy-
+perelliptic Jacobians are significantly weaker than expected so far, in par-
+ticular they offer no security gain when compared to cryptosystems in finite
+fields of comparable size.
+
+    7. Cyclic subgroups. Unlike finite fields, many groups of crypto-
+graphic interest do not have a cyclic structure. For instance the number
+of cyclic factors of hyperelliptic Jacobians can be up to twice as large as
+the genus. Hence it is an important task to compute discrete logarithms in
+a cyclic subgroup H = hg1 i of a given abelian group G. From a heuristic
+point of view, this does not pose any problems: The algorithm in its for-
+mulation of Section 3 remains applicable. With the usual assumption that
+smoothness and membership in a subgroup are independent concepts, i.e.
+the proportion of smooth elements is the same in H as in G, the running
+time analysis carries over from the group to its subgroup. However, we are
+concerned with provable running times in this article, and the smoothness
+results presented so far apply exclusively to the full groups under considera-
+tion. In this section, we discuss a few approaches to deal with this situation.
+    Perturbing with elements of the complement. The simplest situation
+arises when gcd(|H|, |G|/|H|) = 1; then H admits a complement H 0 in
+G, i.e., G = H × H 0 . Assume that it is possible to select independently
+elements hj of H 0 according to a uniform distribution in time polynomial
+in log N 0 . This is for instance the case if we can select random elements
+in G, because multiplying a uniformly distributed element of G by |G|/|H|
+yields a uniformly distributed element of H 0 . Another favourable situation
+is the case where we know a basis of H 0 . (In this context, we understand
+by a basis of H 0 a set {b1 , . . . , br } such that H 0 is equal to the direct sum
+100                              A. Enge and P. Gaudry
+
+hb1 i × . . . × hbr i. The cardinality r of a basis is not an invariant of H 0 , but
+it is bounded above by log2 |H 0 |.)
+     Then αj g1 + βj g2 + hj is uniformly distributed over G, independently
+of β, so that the algorithm may be carried out with these group elements
+instead of αj g1 + βj g2 . If it is successful, then
+           2kn
+          X                 2kn
+                             X               2kn
+                                               X
+                 αj γj g 1 +      βj γj g2 = −     γj hj ∈ H ∩ H 0 = {0},
+           j=1                j=1                     j=1
+
+so that
+                                      2kn
+                                     X                   2kn
+                                                    −1  X               
+                        logg1 g2 =          βj γj                 αj γj
+                                      j=1                   j=1
+
+as before. Also, the running time analysis remains unchanged.
+    While this situation seems to be very special, it is typical for crypto-
+graphic applications in which H is supposed to have large prime order and
+the cofactor |G|/|H| is small, so that |H| and |G|/|H| are automatically
+coprime. Moreover, for |G|/|H| polynomial in log N 0 , the structure and, in
+particular, a basis of H 0 ≃ G/H can be determined in polynomial time (see,
+for instance, [7]), and the assumptions of this subsection are satisfied.
+    Using a basis for G. Assume that a basis {b1 , . . . , br } of G along with
+the orders e1 , . . . , er of its elements are known. Then the discrete logarithm
+problem can be solved in two steps. Instead of directly writing g2 as a
+multiple of g1 we first express g1 as a linear combination of the basis elements
+and then proceed in the same way for g2 . The discrete logarithm can be
+computed by a few operations modulo the ei .
+    In order to write g1 in terms of the bi , a slight variation of the algorithm
+allows one to use the smoothness   P         properties. For given j ≤ kn, pick random
+elements
+    P      α  ij and   β j until     α ij bi + βj g1 is S-smooth and write this Pelement
+as     aij pi . Similarly, for j > kn pick random elements until                  αij bi +
+βj g1 − pm is S-smooth. Here again, the elements of G which are tested for
+smoothness are distributed uniformly and independently of β, so that the
+same analysis as in Section 5 can be carried out. Hence with high probability
+a non-zero vector P      of the kernel is obtained and g1 is expressed
+                                                                     P         as a linear
+combination g1 =            γi bi . The same process yields g2 =       δi bi . Now try to
+solve the system of modular equations δi ≡ lγi (mod ei ). If this is possible,
+then l is the correct discrete logarithm of g2 with respect to g1 . Otherwise, g2
+does not lie in the cyclic subgroup generated by g1 . In this case, which does
+not occur in the cryptographic setting, the original algorithm of Section 3
+would run forever without giving proof of the non-existence of the discrete
+logarithm. Thus, the ability to detect this case is an additional advantage
+of the modified algorithm.
+                       Subexponential discrete logarithm algorithms                  101
+
+    8. Conclusions. We have presented a generic probabilistic algorithm
+for computing discrete logarithm in cyclic groups of known order in which
+a notion of smoothness is available. Many groups suggested for cryptosys-
+tems fit into this context. The running time of the algorithm can be analysed
+rigorously without any heuristic assumptions. The analysis leads to a subex-
+ponential complexity as soon as a certain smoothness assumption is satisfied.
+In particular, we recover the running time bounds of the fastest algorithms
+with proven complexity for finite fields and obtain substantial improvements
+over the previously known algorithms for class groups. This theoretical re-
+sult is backed by a recent implementation of the algorithm for hyperelliptic
+Jacobians, which shows that even curves of a rather small genus are insecure
+in a cryptographic context [15].
+    When examining subexponential algorithms, it is common to distinguish
+between inefficient methods with a provable running time and practical
+methods with a conjectured running time. Our algorithm breaks with this
+tradition. It is the fastest known algorithm for the discrete logarithm prob-
+lem in hyperelliptic Jacobians both in theory and in practice. In fact, the
+implementation of [15] was the starting point of our study, and while the
+modifications described in this article are necessary to prove the running
+time, they do not alter the nature of the algorithm fundamentally.
+    In general, the groups we are concerned with are not cyclic, but we
+have shown that suitable modifications allow one to apply the algorithm
+to a wide class of non-cyclic groups, preserving the subexponential running
+time. Among these are all groups of cryptographic interest. In particular,
+the analysis of the algorithm remains valid when a basis of G is known. It is
+thus an interesting question whether a basis can be built if only the group
+order and its factorisation are known. In the case that the order is square-
+free, an obvious probabilistic method constructs a basis. If the primes which
+occur with multiplicity are of polynomial size, they can be dealt with by
+an exhaustive construction. Considering the remaining case of a power of a
+large prime, it seems plausible that the notion of smoothness available in the
+group should allow constructing a probabilistic algorithm for determining
+the basis.
+    Acknowledgements. The results of this article form part of the au-
+thors’ doctoral theses; we thank our respective supervisors, Dieter Jung-
+nickel and François Morain, for their continuous support and useful sugges-
+tions.
+
+                                      References
+
+ [1]   L. M. Adleman and J. DeMarrais, A subexponential algorithm for discrete logarithms
+       over all finite fields, Math. Comp. 61 (1993), 1–15.
+102                               A. Enge and P. Gaudry
+
+ [2]   L. M. Adleman, J. DeMarrais and M.-D. Huang, A subexponential algorithm for
+       discrete logarithms over the rational subgroup of the Jacobians of large genus hy-
+       perelliptic curves over finite fields, in: L. M. Adleman and M.-D. Huang (eds.),
+       Algorithmic Number Theory, Lecture Notes in Comput. Sci. 877, Springer, Berlin,
+       1994, 28–40.
+ [3]   E. Artin, Quadratische Körper im Gebiete der höheren Kongruenzen II , Math. Z.
+       19 (1924), 207–246.
+ [4]   R. L. Bender and C. Pomerance, Rigorous discrete logarithm computations in finite
+       fields via smooth polynomials, in: D. A. Buell and J. T. Teitelbaum (eds.), Compu-
+       tational Perspectives on Number Theory: Proceedings of a Conference in Honor of
+       A. O. L. Atkin, Stud. Adv. Math. 7, Amer. Math. Soc., 1998, 221–232.
+ [5]   J. Buchmann, A subexponential algorithm for the determination of class groups and
+       regulators of algebraic number fields, in: C. Goldstein (ed.), Séminaire de Théorie
+       des Nombres, Paris 1988–1989, Progr. in Math. 91, Birkhäuser, Boston, 1990, 27–41.
+ [6]   J. Buchmann and H. C. Williams, A key-exchange system based on imaginary
+       quadratic fields, J. Cryptology 1 (1988), 107–118.
+ [7]   H. Cohen, A Course in Computational Algebraic Number Theory, Grad. Texts in
+       Math. 138, Springer, New York, 1993.
+ [8]   W. Diffie and M. E. Hellman, New directions in cryptography, IEEE Trans. Inform.
+       Theory 22 (1976), 644–655.
+ [9]   S. Düllmann, Ein Algorithmus zur Bestimmung der Klassengruppe positiv definiter
+       binärer quadratischer Formen, PhD thesis, Universität des Saarlandes, Saarbrücken,
+       1991.
+[10]   W. Eberly and E. Kaltofen, On randomized Lanczos algorithms, in: W. W. Küchlin
+       (ed.), ISSAC 97—Proceedings of the 1997 International Symposium on Symbolic
+       and Algebraic Computation, ACM Press, 1997, 176–183.
+[11]   T. ElGamal, A public key cryptosystem and a signature scheme based on discrete
+       logarithms, IEEE Trans. Inform. Theory 31 (1985), 469–472.
+[12]   A. Enge, Computing discrete logarithms in high-genus hyperelliptic Jacobians in
+       provably subexponential time, Math. Comp., to appear.
+[13]   A. Enge and A. Stein, Smooth ideals in hyperelliptic function fields, ibid., to appear.
+[14]   J. von zur Gathen and J. Gerhard, Modern Computer Algebra, Cambridge Univ.
+       Press, 1999.
+[15]   P. Gaudry, An algorithm for solving the discrete log problem on hyperelliptic curves,
+       in: B. Preneel (ed.), Advances in Cryptology — EUROCRYPT 2000, Lecture Notes
+       in Comput. Sci. 1807, Springer, Berlin, 2000, 19–34.
+[16]   J. L. Hafner and K. S. McCurley, A rigorous subexponential algorithm for compu-
+       tation of class groups, J. Amer. Math. Soc. 2 (1989), 837–850.
+[17]   E. Kaltofen and B. D. Saunders, On Wiedemann’s method of solving sparse linear
+       systems, in: H. F. Mattson, T. Mora and T. R. N. Rao (eds.), Applied Algebra,
+       Algebraic Algorithms and Error-Correcting Codes, Lecture Notes in Comput. Sci.
+       539, Springer, Berlin, 1991, 29–38.
+[18]   J. Knopfmacher, Abstract Analytic Number Theory, North-Holland Math. Library
+       12, North-Holland, Amsterdam, 1975.
+[19]   N. Koblitz, Elliptic curve cryptosystems, Math. Comp. 48 (1987), 203–209.
+[20]   —, Hyperelliptic cryptosystems, J. Cryptology 1 (1989), 139–150.
+[21]   B. A. LaMacchia and A. M. Odlyzko, Solving large sparse linear systems over finite
+       fields, in: A. J. Menezes and S. A. Vanstone (eds.), Advances in Cryptology—
+       CRYPTO ’90, Lecture Notes in Comput. Sci. 537, Springer, Berlin, 1991, 109–133.
+                        Subexponential discrete logarithm algorithms                       103
+
+[22]   H. W. Lenstra, Jr., J. Pila and C. Pomerance, A hyperelliptic smoothness test, I ,
+       Philos. Trans. Roy. Soc. London Ser. A 345 (1993), 397–408.
+[23]   H. W. Lenstra, Jr. and C. Pomerance, A rigorous time bound for factoring integers,
+       J. Amer. Math. Soc. 5 (1992), 483–516.
+[24]   K. S. McCurley, Cryptographic key distribution and computation in class groups, in:
+       R. A. Mollin (ed.), Number Theory and Applications, NATO Adv. Sci. Inst. Ser. C
+       Math. Phys. Sci. 265, Kluwer, Dordrecht, 1989, 459–479.
+[25]   V. S. Miller, Use of elliptic curves in cryptography, in: H. C. Williams (ed.), Ad-
+       vances in Cryptology—CRYPTO ’85, Lecture Notes in Comput. Sci. 218, Springer,
+       Berlin, 1986, 417–426.
+[26]   V. Müller, A. Stein and C. Thiel, Computing discrete logarithms in real quadratic
+       congruence function fields of large genus, Math. Comp. 68 (1999), 807–822.
+[27]   V. Müller, S. Vanstone and R. Zuccherato, Discrete logarithm based cryptosystems
+       in quadratic function fields of characteristic 2 , Des. Codes Cryptogr. 14 (1998),
+       159–178.
+[28]   A. Odlyzko, Discrete logarithms: The past and the future, ibid. 19 (2000), 129–145.
+[29]   S. Paulus and H.-G. Rück, Real and imaginary quadratic representations of hyper-
+       elliptic function fields, Math. Comp. 68 (1999), 1233–1241.
+[30]   J. M. Pollard, Theorems on factorization and primality testing, Proc. Cambridge
+       Philos. Soc. 76 (1974), 521–528.
+[31]   C. Pomerance, Fast, rigorous factorization and discrete logarithm algorithms, in:
+       D. S. Johnson et al. (eds.), Discrete Algorithms and Complexity (Kyoto, 1986),
+       Perspectives in Computing 15, Academic Press, Orlando, 1987, 119–143.
+[32]   J. B. Rosser and L. Schoenfeld, Approximate formulas for some functions of prime
+       numbers, Illinois J. Math. 6 (1962), 64–94.
+[33]   R. Scheidler, A. Stein and H. C. Williams, Key-exchange in real quadratic congru-
+       ence function fields, Des. Codes Cryptogr. 7 (1996), 153–174.
+[34]   I. A. Semaev, Computation of discrete logarithms in an arbitrary finite field , Discrete
+       Math. Appl. 5 (1995), 107–116.
+[35]   M. Seysen, A probabilistic factorization algorithm with quadratic forms of negative
+       discriminant, Math. Comp. 48 (1987), 757–780.
+[36]   C. L. Siegel, Über die Classenzahl quadratischer Zahlkörper , Acta Arith. 1 (1936),
+       83–86.
+[37]   V. Strassen, Einige Resultate über Berechnungskomplexität, Jahresber. Deutsch.
+       Math.-Verein. 78 (1976), 1–8.
+
+LIX                                                    Lehrstuhl für Diskrete Mathematik
+École Polytechnique                                 Optimierung und Operations Research
+91128 Palaiseau Cedex, France                                         Universität Augsburg
+E-mail: enge@lix.polytechnique.fr                            86135 Augsburg, Deutschland
+        gaudry@lix.polytechnique.fr
+
+
+                                    Received on 20.2.2001                               (3979)
+

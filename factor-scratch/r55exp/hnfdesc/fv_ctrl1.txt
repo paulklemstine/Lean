@@ -1,0 +1,59 @@
+SEED=20251004 BITS=17 Y=10000  (N < 2^40, all generated locally)
+
+====================================================================================================================
+PER-CELL TABLE (never pooled only)
+====================================================================================================================
+tag            h(-4N) desc forms  rho med    ratio  sqrt(p)    p-1 gcd==fac   secs
+--------------------------------------------------------------------------------------------------------------------
+smooth-both     37488      32092      255      126      279   True     True   0.92
+smooth-one      56896      42098      301      140      256   True     True   1.36
+rough-both      48510      44968      127      354      339  False     True   1.61
+smooth-both    120232     104035      127      819      276   True     True   1.85
+smooth-one      28386      23656      511       46      260   True     True   0.63
+rough-both      92640      83251      511      163      260  False     True   0.96
+smooth-both     97284      90155      534      169      279   True     True   1.04
+smooth-one     113326      84582      511      166      266   True     True   1.62
+rough-both     101982      77806      565      138      268  False     True   1.46
+smooth-both     50616      41317      511       81      279   True     True   0.97
+smooth-one     145824     132185      511      259      310   True     True   1.68
+rough-both     100158      80930      255      317      289  False     True    1.5
+smooth-both     44456      36305      127      286      276   True     True   0.95
+smooth-one     113484      88724      511      174      268   True     True   2.04
+rough-both      60714      49976      519       96      282  False     True   0.77
+smooth-both     36234      33452      255      131      266   True     True   0.91
+smooth-one     135408     125443      255      492      302   True     True   0.99
+rough-both      90558      77212      255      303      322  False     True   0.98
+smooth-both     40356      30063      511       59      279   True     True   0.72
+smooth-one      65752      56005      511      110      279   True     True   1.13
+rough-both      83420      69411      255      272      282  False     True   1.19
+smooth-both     26410      24376      255       96      257   True     True   0.91
+smooth-one     171398     125302      255      491      257   True     True   2.24
+rough-both      44328      34968      255      137      271  False     True   1.19
+
+rows = 24  (each row is one independent instance; no pooling of the verdict)
+
+(A) MAGNITUDE: descent_forms / rho_median_steps
+    n=24  min=46x  median=166x  max=819x
+    -> the descent is 46x-819x MORE work than rho.
+       A rho-disguise would have to be ~1000x CHEAPER. It is not.
+
+(B) DISCRIMINATION: Spearman rank correlation of descent work vs
+    class number h(-4N):   rho_s = +0.977   (n=24)
+    sqrt(p) (rho-predictor): rho_s = +0.230   (n=24)
+    h(-4N)/rho_steps vs forms: rho_s = +0.710   (n=24)
+
+(C) ADVERSARIAL CELLS -- does the descent still work where smoothness fails?
+    smooth-both  n=8   descent recovered factor 8/8   p-1 method works 8/8
+                 *** UNDERPOWERED cell (n=8 < 20) ***
+    smooth-one   n=8   descent recovered factor 8/8   p-1 method works 8/8
+                 *** UNDERPOWERED cell (n=8 < 20) ***
+    rough-both   n=8   descent recovered factor 8/8   p-1 method works 0/8
+                 *** UNDERPOWERED cell (n=8 < 20) ***
+
+(D) DETECTOR CONTROLS
+    NEG D=-4r (r=65537 prime): non-trivial a-divides-D hits = 0  QUIET (good)
+    NEG D=-4r (r=131101 prime): non-trivial a-divides-D hits = 0  QUIET (good)
+    POS control: descent recovered a factor on 4/4 (want 4/4)
+    NEG control: stayed quiet on 2/2 (want 2/2)
+
+wrote results_part2.json

@@ -1,0 +1,3 @@
+CORRECTED forms/h (primitivity fixed, uncapped)
+bits=34 min(p,q)=92399     hit_a=92399     forms=111969   h=123608   forms/h=0.906 [1s]
+bits=38 min(p,q)=309371    hit_a=309371    forms=117401   h=152852   forms/h=0.768 [2s]

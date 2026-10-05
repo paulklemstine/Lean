@@ -1,0 +1,561 @@
+                                                                 A TIME-SPACE TRADEOFF FOR
+                                                    LEHMAN’S DETERMINISTIC INTEGER FACTORIZATION METHOD
+
+                                                                                            MARKUS HITTMEIR
+arXiv:2006.16729v2 [math.NT] 30 Oct 2020
+
+
+
+
+                                                   Abstract. Fermat’s well-known factorization algorithm is based on finding a representation of natural
+                                                   numbers N as the difference of squares. In 1895, Lawrence generalized this idea and applied it to multiples
+                                                   kN of the original number. A systematic approach to choose suitable values for k was introduced by
+                                                   Lehman in 1974, which resulted in the first deterministic factorization algorithm considerably faster
+                                                   than trial division. In this paper, we construct a time-space tradeoff for Lawrence’s generalization and
+                                                   apply it together with Lehman’s result to obtain a deterministic integer factorization algorithm with
+                                                   runtime complexity O(N 2/9+o(1) ). This is the first exponential improvement since the establishment of
+                                                   the O(N 1/4+o(1) ) bound in 1977.
+
+
+
+
+                                                                                             1. Introduction
+
+                                             We consider the problem of computing the prime factorization of natural numbers N . There is a large
+                                           variety of probabilistic and heuristic factorization methods achieving subexponential complexity. We refer
+                                           the reader to the survey [Len00] and to the monographs [Rie94] and [Wag13]. The focus of the present paper
+                                           is a more theoretical aspect of the integer factorization problem, which concerns deterministic algorithms
+                                           and their rigorous analysis. We will describe runtime complexities by using the bit-complexity model of
+                                           the multitape Turing machine [Pap94].
+                                              In [Str77], Strassen used fast polynomial multiplication and multipoint evaluation techniques to establish
+                                           a deterministic and rigorous factorization algorithm running in time O(N 1/4+o(1) ) bit operations. Since the
+                                           publication of Strassen’s approach in 1977, there have been a few refinements of the runtime complexity.
+                                           However, none of these improvements has been able to reduce the exponent 1/4. The best of these bounds
+                                                                                                                         
+                                           has been proved in [Hit18] and is given by O e N 1/4 exp(−C log N/ log log N ) for a positive constant C,
+                                                     e
+                                           where the O-notation is used to omit logarithmic factors. The contribution of this paper is to finally break
+                                           the 1/4-exponent threshold for deterministic integer factorization by proving the following theorem.
+
+                                           Theorem 1.1. There exists
+                                                                    an algorithm to
+                                                                                     deterministically
+                                                                                                       compute the prime factorization of any
+                                                                         2/9    5/3
+                                           natural number N in O Mint N      log N log N bit operations.
+
+                                             Mint (k) denotes the cost of multiplying two ⌈k⌉-bit integers. Following [BGS07, p.1782], we assume that
+                                                                  Mint (k)   Mint (k ′ )
+                                           (1.1)                           ≤             if k ≤ k ′ and Mint (kk ′ ) ≤ k 2 Mint (k ′ )
+                                                                     k          k′
+                                           throughout the paper. Due to recent improvements ([HH19]), Mint (k) may be bounded by O(k log k).
+                                             For the sake of simplicity, we will now consider N = pq, where p and q are distinct primes. In order to
+                                           prove Theorem 1.1, we will establish a time-space tradeoff for Fermat’s well-known factorization method
+                                           and its generalizations by Lawrence ([Law95]) and Lehman ([Leh74]). Fermat’s method is a special-purpose
+
+                                              2010 Mathematics Subject Classification. 11Y05.
+                                              SBA Research (SBA-K1) is a COMET Centre within the framework of COMET – Competence Centers for Excellent
+                                           Technologies Programme and funded by BMK, BMDW, and the federal state of Vienna. The COMET Programme is
+                                           managed by FFG.
+                                                                                                       1
+2                                               M. HITTMEIR
+
+
+algorithm first described in 1643. The idea of the procedure is based on the fact that (p+q)2 −(q−p)2 = 4N .
+                                                                                √
+If the prime difference ∆ := q − p is small, the number S := p + q is close to 2 N . In fact, one proves that
+                                                     √        ∆2
+                                          0<S−2 N <                .
+                                                           4N 1/2
+                                                                √
+In the algorithm, we hence try to find S by computing (z + ⌈2 N ⌉)2 − 4N for z = 0, 1, 2, 3 . . . and checking
+if one of those numbers is equal to a square. If this procedure indeed yields an equality of the form
+       √                                                                                √
+(z + ⌈2 N ⌉)2 − 4N = y 2 , we may obtain a proper factor of N by computing gcd(z + ⌈2 N ⌉ − y, N ).
+Lawrence’s generalization works in a similar manner, but is based on finding linear combinations ap + bq of
+the prime factors of N . In 1974, Lehman published a deterministic factorization method running in time
+ e 1/3 ), thus being significantly faster than trial division. The algorithm applies Lawrence’s approach in
+O(N
+a systematic manner and relies on suitable lower and upper bounds for the linear combinations ap + bq
+(see Theorem 2.1). All pairs (a, b) in a certain range are checked, and the bounds for the corresponding
+linear combinations vary depending on the size of the value of ab.
+   In our improvement, we utilize Lehman’s theorem and elaborate on an idea from [Hit18]. There, it was
+shown that αS ≡ αN +1 mod N holds for every α coprime to N . Subsequently, this congruence has been
+used to search for S = p + q. In Lemma 4.2 of the present paper, we will extend this statement to the
+linear combinations ap + bq used by Lehman. As a consequence, we are able to construct two sets B and S
+which are disjoint modulo N , but not disjoint modulo p or q. In order to find the corresponding collision
+and, hence, a proper factor of N , we will adapt the already mentioned factorization scheme by Strassen.
+The application of efficient polynomial arithmetic techniques together with Lehman’s bounds lead to the
+runtime complexity stated in Theorem 1.1.
+  The remainder of the paper is organized as follows: In Section 2, we discuss two theorems important to
+our improvement, one of which is Lehman’s result. In Section 3, we consider our adaptation of Strassen’s
+factorization scheme and introduce the concept of revealing subsets. Section 4 contains the core idea of
+this paper, namely the time-space tradeoff for Lawrence’s algorithm. In Section 5, we explain our strategy
+for applying Lehman’s bounds. Finally, Section 6 puts all the pieces together and finishes the proof.
+
+                                          2. Preliminary Work
+
+  This short section discusses two preliminary results our improvement is based on. Throughout the
+paper, we will use the notations N = {1, 2, 3, . . .} and Zn := Z/nZ for n ∈ N. The first and most
+important ingredient of our algorithm is the following theorem, which was proved in [Leh74]. Lehman
+                                                                                      e 1/3 ). Compared
+applied it with η ∈ O(N 1/3 ) to obtain a new factorization technique running in time O(N
+to trial division, this was a major improvement.
+
+Theorem 2.1. [Lehman, 1974] Suppose that N ∈ N is odd and η is an integer such that 1 ≤ η < N 1/2 . If
+N = pq, where p and q are primes and
+                                                    1/2
+                                        (N/(η + 1))       < p ≤ N 1/2 ,
+
+then there are non-negative integers x, y and k such that
+
+                                     x2 − y 2 = 4kN, 1 ≤ k ≤ η,
+                                                                N 1/2
+(2.1)                                0 ≤ x − (4kN )1/2 ≤                   .
+                                                            4k 1/2 (η + 1)
+These integers are of the form x = ap + bq, y = |ap − bq| and k = ab, where a, b ∈ N.
+                                 IMPROVING DETERMINISTIC FACTORIZATION                                          3
+
+
+   Lehman used Lawrence’s approach systematically and searched for linear combinations of the prime
+divisors of N . The idea is to divide the interval [0, 1] into parts, where each part corresponds to a fraction
+a/b. Considering many such fractions, the goal is to find the best approximation for q/p. This implies
+that the value of |ap − bq| is sufficiently small such that the inequality (2.1) holds true. The shape of x, y
+and k is shown in (4.6) of Lehman’s proof in [Leh74, p.641] and is not part of the original formulation of
+the theorem. However, it is crucial for our application of the result.
+  Our second ingredient is a deterministic algorithm for finding elements of large order modulo N . We
+will need such an element in our application of the already mentioned Lemma 4.2. The following result
+has been proved in [Hit18, Theorem 6.3].
+
+Theorem 2.2. [Hittmeir, 2018] Let N ∈ N and δ be an integer such that N 2/5 ≤ δ ≤ N . There exists an
+algorithm that either returns some α ∈ Z∗N with ordN (α) > δ, or some nontrivial factor of N , or proves
+N prime. Its runtime complexity is bounded by
+                                              1/2          
+                                               δ log2 N
+                                           O √
+                                                  log log δ
+bit operations.
+
+  In this algorithm, we apply the standard babystep-giantstep procedure to compute small orders of
+elements α ∈ Z∗N . If m := ordN (α) is actually found, we try to find a factor of N via gcd(N, αm/r − 1) for
+every r | m. If this fails, we know that m | p − 1 for every prime divisor p of N . Repeating this process
+for various values of α, we either find an element of sufficiently large order or obtain enough information
+about the factorization of p − 1 for p | N such that factoring N directly is feasible.
+
+                                           3. Revealing Subsets
+
+  We briefly recall Strassen’s idea for factoring natural numbers. Let N ∈ N and set d := ⌈N 1/4 ⌉. We
+want to compute subproducts of the product ⌈N 1/2 ⌉! to find a factor of N . For this task, the polynomial
+f = (X + 1)(X + 2) · · · (X + d) is computed modulo N and evaluated at the points 0, d, 2d, . . . , (d − 1)d
+by using fast polynomial arithmetic techniques. In the next step, gi := gcd(f (id), N ) is computed for
+i = 0, . . . , d − 1. If N is not a prime, one of these GCDs is not equal to 1. If gi0 = N , we obtain a
+nontrivial factor of N by computing gcd(i0 d + j, N ) for j = 1, . . . , d.
+  In this paper, we will apply Strassen’s idea in a generalized setting. We will still use linear polynomials
+as factors of f , but with different sets of zeros. Similarly, we will use different sets of evaluation points for
+computing the GCDs. The following definition clarifies the conditions under which such sets will reveal
+a factor of N in the same way the original procedure of Strassen does. Subsequently, we formulate the
+corresponding algorithm.
+
+Definition 3.1. Let N ∈ N. A pair of subsets B and S of Z∗N is called revealing if the following two
+conditions hold:
+    (1) B and S are disjoint modulo N .
+    (2) If N is composite, then there is a nontrivial divisor v of N such that B and S are not disjoint
+        modulo v.
+
+Algorithm 3.2. Input: A natural number N and a pair of disjoint subsets B and S of Z∗N . We denote
+B = {bi : 1 ≤ i ≤ β} and S = {sj : 1 ≤ j ≤ σ}.
+4                                                     M. HITTMEIR
+
+                          Qβ
+    1: Compute f :=          i=1 (X − bi ).
+    2: Compute f (s1 ), f (s2 ), . . . , f (sσ ).
+    3: for j = 1, . . . , σ do
+    4:      Compute γj := gcd(f (sj ), N ).
+    5:      if 1 < γj < N then return γj .
+    6:      if γj = N then
+    7:          for i = 1, . . . , β do
+    8:             Compute γj,i := gcd(sj − bi , N ).
+    9:               if γj,i > 1 then return γj,i .
+10: Return “No factor found”
+
+   In the subsequent sections, we will employ Algorithm 3.2 with different choices for B and S. We now
+prove correctness and analyze the runtime of the procedure.
+Lemma 3.3. Algorithm 3.2 runs in time O (Mint (δ log N ) log N ) , where δ := max{β, σ}. If N is composite
+and B and S are revealing, it returns a nontrivial factor of N .
+
+Proof. We first prove correctness. Let N be composite and B and S be revealing subsets. There are
+elements bi′ ∈ B and sj ′ ∈ S such that bi′ ≡ sj ′ mod v for some nontrivial divisor v of N . As a result, one
+easily observes that γj ′ > 1 in Step 4 of the algorithm. If γj ′ < N , the algorithm returns a correct output
+in Step 5. If γj ′ = N , then γj ′ ,i′ in Step 8 will be a nontrivial factor of N , since B and S are disjoint
+modulo N . In this case, the algorithm terminates in Step 9.
+   We now discuss the runtime complexity. Since B and S are subsets of Z∗N , we have δ < N . In the Steps
+1 and 2, we use the subproduct-tree algorithm to compute f and apply multipoint-evaluation techniques
+to obtain the the values f (sj ) for j = 1, . . . , σ. Detailed information about these procedures can be
+found in [GG03, Chap.10]. The complexity is bounded by O(M(δ) log N ), where M(k) denotes the cost
+of multiplying two polynomials of degree less than k in Z∗N . Applying Lemma 3 in [BGS07] with m = 1,
+this reduces to a bit-complexity of O (Mint (δ log N ) log N ). We now consider the complexity of the GCD
+computations in the Steps 3-10. The fact that B and S are disjoint modulo N implies that we only reach
+the loop in Step 7 in cases where the algorithm terminates by returning a factor in Step 9. As a result, the
+number of computed GCDs is bounded by O(δ). Since the (extended) GCD of two bit-size k integers can be
+obtained in time O(Mint (k) log k) (see [BGS07, p.1783]), the complexity of the Steps 3-10 is negligible. 
+
+   One observes that we obtain the original approach of Strassen as a special case. We will apply it in
+form of the following corollary.
+Corollary 3.4. Let N ∈ N and ∆ ∈ N with ∆ ≤ N 1/2 . We can find a nontrivial divisor ℓ of N such that
+                                                                      
+ℓ ≤ ∆, or prove that no such divisor exists, in O Mint ∆1/2 log N log N bit operations.
+
+Proof. Assume that N is sufficiently large and let d = ⌈∆1/2 ⌉. We note that 1 ≤ d < N and the subsets
+B = {−i : 0 ≤ i ≤ d − 1} and S = {dj : 1 ≤ j ≤ d} of Z∗N are disjoint. One easily shows that they are
+revealing if and only if there is a nontrivial divisor ℓ of N with ℓ ≤ ∆. We now apply Lemma 3.3.  
+
+   Prior to the application of Algorithm 3.2, we always have to make sure that the input subsets are
+revealing in the sense of Definition 3.1. In order to prepare two lists of elements in Z∗N for the application
+of Algorithm 3.2, we will use the following lemma. Note that the notion of indexed lists refers to lists where
+each element is stored together with an index, which we assume to be an integer or a tupel of integers.
+                                 IMPROVING DETERMINISTIC FACTORIZATION                                          5
+
+
+Lemma 3.5. Let N ∈ N and L1 and L2 be two indexed lists of elements in Z∗N and indices of bit size
+O(log N ). Moreover, assume that the elements of L1 are all distinct. We may compute the set M of all
+the pairs of indices (i, j) for which the element with index i in L1 is equal to the element with index j in
+L2 . The bit-complexity is bounded by O(δ log2 N ), where δ is the maximum of the lengths of the lists.
+
+Proof. In the multitape Turing machine model, we use merge sort to solve this task. We denote every
+number in the lists as string of at most O(log N ) bits and sort both L1 and L2 by performing at most
+O(δ log δ) comparisons, yielding a bit-complexity bounded by O(δ log2 N ). After applying merge sort, it is
+easy to see that one is able to find all matches in the lists in O(δ log N ) bit operations. For more detailed
+information on merge sort, we refer the reader to [SW11, Chap. 2.2]. For the claimed complexity, see
+Proposition F in [SW11, Page 272].                                                                              
+
+                        4. Time-Space Tradeoff for Lawrence’s algorithm
+
+   Let N ∈ N and u and v = N/u be nontrivial divisors of N . As discussed in the introduction, Fermat’s
+                                                                                                  √
+factorization algorithm searches for S = u + v by checking if i2 − 4N is a square for each i ≥ ⌈2 N ⌉.
+Lawrence ([Law95]) first noted that, since the equality (au + bv)2 − (au − bv)2 = 4abN holds true for all
+                                                                                            √
+a, b ∈ N, we can try to find any linear combination of u and v, not only S. For each i ≥ ⌈2 abN ⌉, we
+check if i2 − 4abN is a square number. As in Fermat’s original approach, we have
+                                                 √         (au − bv)2
+(4.1)                             0 < au + bv − 2 abN <       √       ,
+                                                             4 abN
+hence finding au + bv works best if |au − bv| is relatively small or, in other words, if a/b is a good
+approximation of v/u. The following lemma shows how to factorize N , given that we know au + bv.
+
+Lemma 4.1. Let N ∈ N and u and v = N/u be unknown nontrivial divisors of N . Given as input positive
+numbers a, b, L ∈ O(N ) such that a and b are coprime to N , we may test if L = au + bv or L = bu + av,
+and if so compute u and v, in O(Mint (log N )) bit operations.
+
+Proof. We compute the roots r1 and r2 of the polynomial X 2 − LX + abN. One easily checks that either
+r1 /a or r1 /b is equal to one of the factors of N . Since all involved quantities have O(log N ) bits, we achieve
+the claimed runtime complexity by using the quadratic formula.                                                  
+
+  In this section, we introduce a time-space tradeoff for Lawrence’s extension for semiprime numbers N .
+The extension is based on the following lemma, which may be considered as a generalization of the fact
+that αp+q ≡ αN +1 mod N for every α ∈ Z∗N .
+
+Lemma 4.2. Let N be semiprime with the distinct factors p and q. Furthermore, let a, b ∈ Z, α ∈ Z∗N
+and set t := αbN +a (mod N ). We have αap+bq ≡ t mod p and αbp+aq ≡ t mod q.
+
+Proof. The first congruence follows from the fact that p ≡ 1 mod p − 1 and, hence,
+                                  ap + bq ≡ a + bpq ≡ a + bN       mod p − 1.
+The proof of the second congruence is similar.                                                                  
+
+  Setting t := αbN +a (mod N ) introduces an asymmetry of a and b and defines which congruence in
+Lemma 4.2 holds modulo which prime factor. The following arguments show how to find ap + bq by
+considering the first congruence modulo p. However, they may easily be modified to fit the search for
+bp + aq via the congruence modulo q. In the subsequent theorem, we search for both quantities at once.
+6                                                    M. HITTMEIR
+
+                         √                         √
+    Let x0 = ap + bq − ⌈2 abN ⌉ and t0 := αbN +a−⌈2 abN ⌉ (mod N ). From Lemma 4.2, it follows that
+αx0 ≡ t0 mod p. Now let Λ ∈ N such that x0 < Λ. For example, Λ may be taken from inequality (4.1)
+or Lehman’s bound in Theorem 2.1. Let m = ⌈Λ1/2 ⌉ and write x0 = ml0 + r0 for unknown numbers
+l0 , r0 ∈ {0, 1, . . . , m − 1}. We then have
+(4.2)                                           αr0 ≡ α−ml0 t0   mod p.
+
+Our goal is to solve (4.2) in order to find l0 and r0 and obtain a proper factor of N . However, (4.2) is a
+congruence modulo an unknown prime factor. We will hence employ the approach discussed in Section 3,
+which allows us to prove the following result.
+
+Theorem 4.3. Let N and Λ be natural numbers. There is an algorithm that takes as input α ∈ Z∗N such
+that ordN (α) > ⌈Λ1/2 ⌉ and positive integers a, b ∈ O(N ) which are coprime to N . Its runtime complexity
+is bounded by                                                 
+                                      O Mint Λ1/2 log N log N .
+                                                                 √                         √
+If N is semiprime with distinct factors p and q, and ap + bq − ⌈2 abN ⌉ < Λ or bp + aq − ⌈2 abN ⌉ < Λ
+holds, the algorithm returns p and q.
+                                                √                           √
+Proof. Put m = ⌈Λ1/2 ⌉ and let x0 = ap + bq − ⌈2 abN ⌉ and x1 = bp + aq − ⌈2 abN ⌉. Our assumptions
+imply that x0 < Λ or x1 < Λ holds, and we will use Lemma 4.2 to search for them simultaneously. W.l.o.g.,
+we assume that x0 < Λ and x0 = ml0 + r0 for unknown numbers l0 , r0 ∈ {0, 1, . . . , m − 1}. Before applying
+Algorithm 3.2, we perform D. Shanks’ babystep-giantstep method to search for matches of the form (4.2),
+but modulo N instead of modulo p. We start by computing t0 in time O(Mint (log N ) log N ) via the Square-
+and-Multiply algorithm. Next, we compute the lists of the babysteps αi (mod N ) for 0 ≤ i ≤ m − 1 and
+the giantsteps α−mj t0 (mod N ) for 0 ≤ j ≤ m − 1. Note that these elements should be stored together
+with their indices i and j. It is easy to see that this can be done by performing O(m) multiplications
+modulo N , which is asymptotically negligible.
+  In the next step of the algorithm, we compute gi := gcd(N, αi − 1 (mod N )) for i = 1, . . . , m − 1. The
+computation of m GCDs of numbers bounded by O(N ) can be done in O(m · Mint (log N ) log log N ) bit
+operations, which is also negligible. Since we assumed ordN (α) > m, it follows that gi < N for every i.
+As a result, we either find a factor of N or we obtain gi = 1 for every i. If we do not find a factor, we
+know that ordp (α) ≥ m and ordq (α) ≥ m. We now suppose this is the case. Since our assumptions on the
+order of α modulo N imply that all the babysteps are distinct, we may apply Lemma 3.5 to compute the
+set M of pairs of indices corresponding to the matches between the babysteps and the giantsteps. The
+runtime is bounded by O(m log2 N ), which again is negligible. Moreover, we deduce that |M| ≤ m. For
+                                                                                                     √
+each solution (i′ , j ′ ) in M, we check if mj ′ + i′ = x0 . This can be done by using mj ′ + i′ + ⌈2 abN ⌉ as
+candidate for L in Lemma 4.1. Assume that we do not find p and q. The lower bounds on the order of
+                                     ′                                       ′
+α modulo p and modulo q imply that αi is the only babystep that matches α−mj t0 modulo the prime
+                                                                                  ′
+factors of N . It follows that j ′ 6= l0 . As a result, we delete the element α−mj t0 (mod N ) from the list
+of giantsteps. The overall runtime complexity for these applications of Lemma 4.1 can be bounded by
+O(m · Mint (log N )), and hence is negligible.
+   If we have not found a factor at this point, we define the set B consisting of the babysteps and the
+set S consisting of the remaining giantsteps. Note that the list of giantsteps may have contained several
+instances of the same element in Z∗N , stored together with different indices. In the sets B and S, we
+ignore multiplicities and do not longer keep track of the indices. Clearly, B and S are disjoint modulo
+                                   IMPROVING DETERMINISTIC FACTORIZATION                                        7
+
+
+N . Moreover, we point out that the set of giantsteps is not empty, as it must still contain the element
+α−ml0 t0 (mod N ). It follows that the two sets are not disjoint modulo p or not disjoint modulo q. We
+conclude that B and S are a pair of revealing subsets of Z∗N . We hence may apply Lemma 3.3 and the
+claim follows.                                                                                   
+
+
+                                       5. Utilizing Lehman’s bound
+
+  We now discuss the application of Lehman’s bound (2.1) in Theorem 2.1, which is at the core of our
+improvement. In the following, we suppose that N is a prime or a semiprime number. A procedure for
+reducing the factorization of any natural number to the factorization of primes and semiprimes will be
+discussed at the beginning of the next section. Assuming that N = pq, our goal is to find the number x
+which satisfies the bound (2.1). As discussed in Section 2, this number is of the shape x = ap + bq. We
+consider all possible values of k = ab in the interval [1, η] and apply the time-space tradeoff established
+in Theorem 4.3 to compute the factors of N . We have to account for the fact that said approach cannot
+search for all decompositions of a fixed 1 ≤ k ≤ η at once. Instead, we have to go through all (a, b) with
+1 ≤ ab ≤ η. However, we will see that the effect on the runtime complexity is marginal. Moreover, we
+may assume that a ≤ b, since our procedure still searches for ap + bq and bp + aq at once.
+   In addition, we split the interval [1, η] into [1, ξ] and (ξ, η], employing different strategies for the pairs
+(a, b) depending on whether ab is in the first or the second range. This idea is based on the fact that
+Lehman’s bound (2.1) is large for smaller values of k ≤ ξ, which allows for an effective application of the
+procedure in Theorem 4.3 for every single pair (a, b). However, for larger values of k > ξ, the bound (2.1)
+                                                                                                   √
+is decreasing rapidly. In this case, we are able to denote all remaining candidates for x as δ + ⌈2 kN ⌉ for
+some sufficiently small δ, and we will require only one more run of an approach similar to the one taken
+in Theorem 4.3 to find x and, hence, the prime factors p and q.
+   Both parameters ξ and η have a strong impact on the final runtime complexity and will be optimized
+later. Based on the explanations above, we now suggest the following algorithm for a time-space tradeoff
+of Lehman’s algorithm.
+
+Algorithm 5.1. Input: A natural number N and two integers ξ and η such that 1 ≤ ξ ≤ η < N 1/4 and
+            1/2
+(N/(η + 1))       < p ≤ N 1/2 . Moreover, an element α ∈ Z∗N such that ordN (α) > ⌈N 1/2 /(ξ 1/2 η)⌉.
+ 1: For every (a, b) with a ≤ b and ab ≤ ξ, apply Theorem 4.3 with Lehman’s bound (2.1), i.e.
+                                                        
+                                               N 1/2                  N 1/2
+                                     Λa,b :=                 >                    .
+                                             (ab)1/2 η           4(ab)1/2 (η + 1)
+    If a factor is found, stop.
+ 2: Construct two indexed lists: L1 consists of αi (mod N ) with the indices i = 0, 1, ..., ⌈N 1/2 /(ξ 1/2 η))⌉.
+                               √
+    L2 consists of αbN +a−⌈2 abN ⌉ (mod N ) with the indices (a, b), where we consider all (a, b) satisfying
+    a ≤ b and ξ < ab ≤ η.
+ 3: Compute gcd(N, αi − 1 (mod N )) for i = 0, 1, ..., ⌈N 1/2 /(ξ 1/2 η))⌉. If a factor is found, stop.
+ 4: Apply Lemma 3.5 to L1 and L2 . For every element (i′ , (a′ , b′ )) in the resulting set M, apply Lemma
+                           √
+    4.1 with L = i′ + ⌈2 a′ b′ N ⌉ as candidate. If a factor is found, stop. If not, delete the element with
+    index (a′ , b′ ) from L2 .
+ 5: Let B be the set of the elements in L1 and S the set of the remaining elements in L2 . Apply Algorithm
+    3.2 to B and S.
+8                                                              M. HITTMEIR
+
+
+Lemma 5.2. The bit-complexity of Algorithm 5.1 is bounded by
+          1/4 3/4                           1/2                                             
+           N ξ log ξ                            N
+   O Mint                log N log N + Mint             log N log N + Mint (η log η log N ) log N .
+                η 1/2                           ξ 1/2 η
+If N is semiprime with distinct factors p and q, it returns a prime factor of N .
+
+Proof. In order to prove correctness, we let ā and b̄ such that x := āp + b̄q and k := āb̄ in Theorem 2.1. If
+k ≤ ξ, one easily checks that p and q will be found in the corresponding run of Step 1. Just note that our
+                                                                                             1/2
+assumptions imply ordN (α) > ⌈N 1/2 /(ξ 1/2 η)⌉ > ⌈N 1/4 /η 1/2 ⌉ ≥ Λa,b for all (a, b), hence Theorem 4.3 is
+applied correctly. We also point out that it suffices to consider the pairs (a, b) with a ≤ b, since Theorem
+4.3 searches for both ap + bq and bp + aq at once.
+   We now assume that ξ < k ≤ η. In this case, note that Lehman’s bound (2.1) implies that we may
+                 √
+write x = δ + ⌈2 kN ⌉ for some
+                                                          1/2 
+                                                N 1/2     N
+                                    0 ≤ δ ≤ 1/2         < 1/2 .
+                                             4k (η + 1)   ξ η
+                                                 √
+As a result, we derive αδ ≡ αb̄N +ā−⌈2 kN ⌉ mod p. In Step 2, we construct indexed lists modulo N such
+that there is a collision modulo p which corresponds to this congruence. The remainder of the algorithm
+and the following arguments are similar to the approach we took in the proof of Theorem 4.3. The goal is
+to end up with a pair of revealing subsets in Z∗N . In Step 3, we either find a prime factor of N or make sure
+that both ordp (α) and ordq (α) are greater or equal to ⌈N 1/2 /(ξ 1/2 η)⌉. In Step 4, we search for matches
+between L1 and L2 modulo N and check if the corresponding indices yield candidates that are equal to
+x. The lower bounds on the order of α modulo p and modulo q imply that at most one babystep matches
+each giantstep modulo these prime factors. Since we delete all matching elements from L2 in Step 4, the
+sets B and S in Step 5 are disjoint modulo N . Moreover, the fact that no factor has been found at this
+point implies that the element corresponding to (ā, b̄) is still in S. Of course, the element αδ (mod N ) is
+in B, and the desired result follows.
+    We proceed by considering the runtime complexity of the algorithm. For Step 1, we consider Theorem
+4.3 and the sum over all (a, b) with a ≤ b and ab ≤ ξ. Hence, we write
+           ⌊ξ 1/2 ⌋ ⌊ξ/a⌋
+            X X                                    X⌋ ⌊ξ/a⌋
+                                                    ⌊ξ
+                                                         X         
+                                                                   1/2                                        
+                                  1/2                                                      N 1/4
+                            Mint Λa,b log N log N =           Mint                                    log N       log N
+            a=1    b=a                                            a=1        b=a
+                                                                                        (ab)1/4 η 1/2
+                                                                                                           
+                                                                                     ⌊ξ 1/2 ⌋
+                                                                       N 1/4
+                                                                             log N    X 1 ⌊ξ/a⌋    X 1
+                                                              ≤ Mint              ·                         log N,
+                                                                          η 1/2       a=1
+                                                                                              a1/4 b=a b1/4
+
+where we have used that Mint (k) + Mint (k ′ ) ≤ Mint (k + k ′ ) holds for all k, k ′ , which follows from the first
+assumption in (1.1). Now by considering
+                                ⌊ξ 1/2 ⌋
+                                 X             ⌊ξ/a⌋
+                                               X                  ⌊ξ 1/2 ⌋
+                                                                   X               Z ⌊ξ/a⌋
+                                           1            1                     1
+                                                              ≤                    t−1/4 dt
+                                 a=1
+                                     a1/4              b1/4      a=1
+                                                                       a 1/4
+                                                                              0
+                                               b=a
+                                                                   1/2         
+                                                                    ⌊ξ
+                                                                     X⌋ ξ 3/4
+                                                              ∈ O               ⊆ O(ξ 3/4 log ξ),
+                                                                     a=1
+                                                                             a
+
+we are able to obtain the first summand in our claimed runtime complexity bound. For estimating the
+runtime complexity of the Steps 2-4, let κ denote the maximum of the lengths of the two lists L1 and L2 .
+                                IMPROVING DETERMINISTIC FACTORIZATION                                        9
+
+
+We first note that the length of L2 is certainly no more than the number of pairs (a, b) with 1 ≤ ab ≤ η,
+which is bounded by
+                                    ⌊η 1/2 ⌋ ⌊η/a⌋        ⌊η 1/2 ⌋
+                                     X X                   X η
+                                                     1≤          ∈ O(η log η).
+                                     a=1                   a=1
+                                                               a
+                                            b=1
+
+Therefore, it follows that
+                                                1/2              
+                                                 N
+                                      κ ∈ O max          , η log η    .
+                                                 ξ 1/2 η
+Since all exponents in Step 2 are in O(N 2 ), the construction of the two lists via the well-known Square-
+and-Multiply algorithm is finished after at most O(κ·Mint (log N ) log N ) bit operations, which is negligible.
+The computation of the GCDs in Step 3 is finished after at most O(κ·Mint (log N ) log log N ) bit operations.
+The complexity for applying Lemma 3.5 in Step 4 is O(κ log2 N ), which is also negligible due to the fact
+that k ≤ Mint (k) is true for all k. The same holds for the cost of applying Lemma 4.1 with all possible
+candidates, which may be bounded by O(κ · Mint (log N )). Finally, the runtime complexity for Step 5 is a
+result of Lemma 3.3, which finishes the proof.                                                               
+
+                                        6. Proof of Theorem 1.1
+
+  Let N be any natural number. We start by performing the following preparation step: We apply
+Corollary 3.4 to N , putting ∆0 = ⌈N 1/3 ⌉. If any divisor of N is found, we remove it and denote the
+                                                                                          1/3
+resulting number by N1 . We then apply Corollary 3.4 to N1 , setting ∆1 = ⌈N1 ⌉. We proceed in this
+way until no more divisors are found. The number of factors of N obtained in this manner is bounded by
+O(log N ). Since ∆i ≤ ⌈N 1/3 ⌉ for every i ∈ N0 , the bit-complexity of this procedure is at most
+                                                                 
+                                      O Mint N 1/6 log N log2 N .
+
+Compared to the complexity bound stated in Theorem 1.1, this is asymptotically negligible. Moreover,
+note that the factors of N obtained in this preparation step are bounded by O(N 1/3 ). Hence, we may
+compute their complete prime factorizations in negligible time by further applications of Corollary 3.4.
+                                                                                                    1/3
+Let Nk be the number which remains after these computations. Since no factor smaller or equal to ⌈Nk ⌉
+has been found by applying Corollary 3.4, Nk does not have more than two prime factors. We may check
+easily if Nk is a square number; if not, Nk has to be a prime or a semiprime number.
+   For the remainder of the proof, we may hence suppose that N is either prime or N = pq such that p, q
+are distinct primes. We now run the following procedure.
+
+Algorithm 6.1. Input: A prime or semiprime N , ξ := ⌈N 1/9 / log2/3 N ⌉ and η := ⌈N 2/9 / log1/3 N ⌉.
+  Output: The prime factorization of N .
+                                                     1/2
+ 1: Apply Corollary 3.4 with ∆ = ⌈(N/(η + 1))              ⌉. If a factor is found, return and stop.
+ 2: Apply Theorem 2.2 with δ = ⌈N 2/5 ⌉. If a factor of N is found or N is proved to be prime, return and
+    stop; otherwise, α ∈ Z∗N is found such that ordN (α) > ⌈N 2/5 ⌉.
+ 3: Apply Algorithm 5.1 with ξ, η and the element α found in Step 2. If no factor is found, return that N
+    is prime.
+
+  Note that, for sufficiently large inputs N , we have ordN (α) > N 2/5 ≫ N 1/2 /(ξ 1/2 η) and the parameters
+                                                                                                           1/2
+ξ and η satisfy the assumptions of Algorithm 5.1. In Step 1, we make sure that p > (N/(η + 1))
+holds. As a result, Lemma 5.2 implies that the procedure above finds the factors of a semiprime number.
+10                                                     M. HITTMEIR
+
+
+Therefore, if we do not find any proper factors, N must be prime. We conclude that the algorithm is
+correct and are left with the final task to analyze the runtime complexity.
+                                                                  
+   The runtime of Step 1 is bounded by O Mint ∆1/2 log N log N ⊆ O(N    e 7/36 ), which is asymptotically
+neglible. The same is true for Step 2, which runs in time
+                                               1/5         
+                                               N     log2 N
+                                           O √                .
+                                                  log log N
+We now show that our choice of ξ and η optimizes the runtime complexity of Step 3. Considering the
+three summands in Lemma 5.2, one easily observes that the best possible choice for ξ and η is obtained
+by solving
+                                                       N 1/2     N 1/4 ξ 3/4 log ξ
+(6.1)                                      η log η =           =
+                                                       ξ 1/2 η        η 1/2
+under O-notation. Assuming that both log η and log ξ are in O(log N ), we solve η 2 = N 1/2 /(ξ 1/2 log N )
+and η 3/2 = N 1/4 ξ 3/4 for ξ and η. It is easy to check that our choice of these parameters is a solution to
+these equations, and that the three terms in (6.1) are all equal to N 2/9 log2/3 N under O-notation. As a
+result, the overall bit-complexity of Step 3 may be bounded by
+                                                                 
+                                      O Mint N 2/9 log5/3 N log N ,
+and the claim follows.                                                                                                   
+
+                                                  Acknowledgment
+
+   I want to thank an anonymous referee for the helpful and most valuable suggestions in the report on
+the first version of this paper.
+
+                                                       References
+[BGS07] A. Bostan, P. Gaudry, É. Schost, Linear recurrences with polynomial coefficients and application to integer factor-
+      ization and Cartier-Manin operator, SIAM J. Comput., 36(6): 1777-1806, 2007.
+[CH14] E. Costa, D. Harvey, Faster deterministic integer factorization, Math. Comp., 83: 339-345, 2014.
+[GG03] J. Gerhard, J. von zur Gathen, Modern Computer Algebra, Second Edition, Cambridge University Press, 2003.
+[HH19] D. Harvey, J. van der Hoeven, Integer multiplication in time O(n log n), hal-02070778, 2019.
+[Hit18] M. Hittmeir, A babystep-giantstep method for faster deterministic integer factorization, Math. Comp., 87(314):
+      2915–2935, 2018.
+[Law95] F.W. Lawrence, Factorisation of numbers, Messenger of Math., 24: 100–109, 1895.
+[Leh74] R.S. Lehman, Factoring Large Integers, Math. Comp., 28(126): 637–646, 1974.
+[Len00] A. K. Lenstra, Integer Factoring, Designs, Codes and Cryptography, 19: 101-128, 2000.
+[Pap94] C. H. Papadimitriou, Computational complexity, Addison-Wesley Publishing Com- pany, Reading, MA, 1994.
+[Rie94] H. Riesel, Prime Numbers and Computer Methods for Factorization, Progress in Mathematics (Volume 126), Second
+      Edition, Birkhäuser Boston, 1994.
+[SW11] R. Sedgewick, K. Wayne, Algorithms, Princeton University, Fourth Edition, Addison-Wesley, 2011.
+[Sho05] V. Shoup, A Computational Introduction to Number Theory and Algebra, Cambridge University Press, 2005.
+[Str77] V. Strassen, Einige Resultate über Berechnungskomplexität, Jber. Deutsch. Math.-Verein., 78(1): 1–8, 1976/77.
+[Wag13] S.S. Wagstaff Jr., The Joy of Factoring, American Math. Society, Providence, RI, 2013.
+
+
+     Current address: SBA Research, Floragasse 7, A-1040 Vienna
+     Email address: mhittmeir@sba-research.org
+
