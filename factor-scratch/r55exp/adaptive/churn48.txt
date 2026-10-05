@@ -1,0 +1,15 @@
+    10/60 (75s)
+    20/60 (155s)
+    30/60 (222s)
+    40/60 (289s)
+    50/60 (359s)
+    60/60 (438s)
+
+### n=48 T=60 kspan=3  (SAME instances for both grids)
+  mmax=10: factored AT n/4 39/60 (65.0%); at some k below n/4 17/60 (28.3%)
+  mmax=16: factored AT n/4 46/60 (76.7%); at some k below n/4 27/60 (45.0%)
+
+  mmax=10 TAIL (factored ONLY below n/4)      : 1/60 = 1.7%
+  ...also factored AT n/4 once mmax=16         : 0/1 = 0%
+  mmax=16 TAIL (survivors)                     : 4/60 = 6.7%
+  ==> GENUINE distribution survives   (rule >=60%, observed 0%)

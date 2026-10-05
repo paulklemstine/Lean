@@ -1,0 +1,5 @@
+### n=80  T=60  k span = n/4-3..n/4
+  mmax=10 ( 81 cells/k, 49s): k=n/4 11/60 (18.3%)   ANY k 14/60 (23.3%)   ADDED below n/4 3/60
+      per-depth hits: d=0:11/60  d=1:6/60  d=2:3/60  d=3:3/60
+  mmax=16 (225 cells/k, 834s): k=n/4 15/60 (25.0%)   ANY k 17/60 (28.3%)   ADDED below n/4 2/60
+      per-depth hits: d=0:15/60  d=1:4/60  d=2:2/60  d=3:2/60

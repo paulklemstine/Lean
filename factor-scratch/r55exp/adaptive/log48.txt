@@ -1,0 +1,22 @@
+  n=48: 10/200 instances
+  n=48: 20/200 instances
+  n=48: 30/200 instances
+  n=48: 40/200 instances
+  n=48: 50/200 instances
+  n=48: 60/200 instances
+  n=48: 70/200 instances
+  n=48: 80/200 instances
+  n=48: 90/200 instances
+  n=48: 100/200 instances
+  n=48: 110/200 instances
+  n=48: 120/200 instances
+  n=48: 130/200 instances
+  n=48: 140/200 instances
+  n=48: 150/200 instances
+  n=48: 160/200 instances
+  n=48: 170/200 instances
+  n=48: 180/200 instances
+  n=48: 190/200 instances
+  n=48: 200/200 instances
+  wrote /home/raver1975/lean/factor-scratch/r55exp/adaptive/sw48.json (3.4 MB)
+n=48 T=200 done in 274s

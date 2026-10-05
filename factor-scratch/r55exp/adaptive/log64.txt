@@ -1,0 +1,22 @@
+  n=64: 10/200 instances
+  n=64: 20/200 instances
+  n=64: 30/200 instances
+  n=64: 40/200 instances
+  n=64: 50/200 instances
+  n=64: 60/200 instances
+  n=64: 70/200 instances
+  n=64: 80/200 instances
+  n=64: 90/200 instances
+  n=64: 100/200 instances
+  n=64: 110/200 instances
+  n=64: 120/200 instances
+  n=64: 130/200 instances
+  n=64: 140/200 instances
+  n=64: 150/200 instances
+  n=64: 160/200 instances
+  n=64: 170/200 instances
+  n=64: 180/200 instances
+  n=64: 190/200 instances
+  n=64: 200/200 instances
+  wrote /home/raver1975/lean/factor-scratch/r55exp/adaptive/sw64.json (3.3 MB)
+n=64 T=200 done in 261s

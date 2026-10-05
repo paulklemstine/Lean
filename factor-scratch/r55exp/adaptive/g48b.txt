@@ -1,0 +1,3 @@
+  n=48 m=20, t=2..20 (197 solves,    10s): factored at k=n/4  26/30 = 86.7%
+  n=48 m=26, t=2..26 (224 solves,    27s): factored at k=n/4  26/30 = 86.7%
+  n=48 m=34, t=2..34 (252 solves,   121s): factored at k=n/4  26/30 = 86.7%
