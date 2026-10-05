@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/k7RIIbrx5nCAWtuw3/oHf0gOpX4</id>
+  <title>arXiv Query: search_query=au:"Hittmeir" AND cat:math.NT&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-10-05T02:44:58Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=au:%22Hittmeir%22+AND+cat:math.NT&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>13</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2205.10074v1</id>
+    <title>Integer factorization as subset-sum problem</title>
+    <updated>2022-05-20T10:41:52Z</updated>
+    <link href="https://arxiv.org/abs/2205.10074v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.10074v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper elaborates on a sieving technique that has first been applied in 2018 for improving bounds on deterministic integer factorization. We will generalize the sieve in order to obtain a polynomial-time reduction from integer factorization to a specific instance of the multiple-choice subset-sum problem. As an application, we will improve upon special purpose factorization algorithms for integers composed of divisors with small difference. In particular, we will refine the runtime complexity of Fermat's factorization algorithm by a large subexponential factor. Our first procedure is deterministic, rigorous, easy to implement and has negligible space complexity. Our second procedure is heuristically faster than the first, but has non-negligible space complexity.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-20T10:41:52Z</published>
+    <arxiv:comment>22 pages (including appendix)</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1016/j.jnt.2023.02.010</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jnt.2023.02.010" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1707.04919v3</id>
+    <title>A reduction of integer factorization to modular tetration</title>
+    <updated>2018-02-13T11:12:33Z</updated>
+    <link href="https://arxiv.org/abs/1707.04919v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1707.04919v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $a,k\in\mathbb{N}$. For the $k-1$-th iterate of the exponential function $x\mapsto a^x$, also known as tetration, we write \[ ^k a:=a^{a^{.^{.^{.^{a}}}}}. \] In this paper, we show how an efficient algorithm for tetration modulo natural numbers $N$ may be used to compute the prime factorization of $N$. In particular, we prove that the problem of computing the squarefree part of integers is deterministically polynomial-time reducible to modular tetration.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-07-16T17:28:56Z</published>
+    <arxiv:comment>18 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1142/S0129054120500197</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/S0129054120500197" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.01626v3</id>
+    <title>Fine-grained deterministic hardness of the shortest vector problem</title>
+    <updated>2026-03-23T10:25:02Z</updated>
+    <link href="https://arxiv.org/abs/2511.01626v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.01626v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $γ$-$\mathsf{GapSVP}_p$ be the decision version of the shortest vector problem in the $\ell_p$-norm with approximation factor $γ$, let $n$ be the lattice rank and $0&lt;\varepsilon\leq 1$. We prove that there is no algorithm that solves $(2-\varepsilon)$-$\mathsf{GapSVP}_p$ uniformly for all $p\in\mathbb{N}$ in time\[
+  2^{2^{o(p)}}\cdot 2^{o(n)},\] unless the Exponential Time Hypothesis is false. The proof is based on a deterministic Karp reduction from a constrained variant of the subset-sum problem to $\mathsf{GapSVP}_p$ for fixed $p$. While most hardness results for the shortest vector problem in finite norms rely on randomized reductions, our method is entirely deterministic. As a consequence, we also obtain a deterministic Karp reduction from the standard subset-sum problem to $(2-\varepsilon)$-$\mathsf{GapSVP}_{\infty}$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-03T14:37:28Z</published>
+    <arxiv:comment>14 pages. v3: Reformulation of main results</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.13018v1</id>
+    <title>Multi-target hyperbolic sieves and elliptic trace obstructions</title>
+    <updated>2026-06-11T07:53:39Z</updated>
+    <link href="https://arxiv.org/abs/2606.13018v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.13018v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $N=pq$ be a semiprime and let $\ell\nmid Na$ be an odd prime. The hyperbolic sieve set $H_a(N;\ell)=\{ax+Nx^{-1}:x\in\mathbb F_\ell^*\}$ contains the residue of the linear form $ap+q$ modulo $\ell$ and has exact cardinality $(\ell+χ(aN))/2$, where $χ$ is the Legendre symbol modulo $\ell$. We study simultaneous sieving for several linear forms and give a complete local analysis of the two-target primitive-root case proposed in connection with deterministic integer factorization. For two distinct coefficients $a,b$, with $A=4aN$ and $B=4bN$, we prove an exact formula for $|H_a(N;\ell)\cup H_b(N;\ell)|$ in terms of the degree-four character sum \[ K(A,B)=\sum_{z\in\mathbb F_\ell}χ((z^2-A)(z^2-B)).\] For a smooth projective genus-one curve $E/\mathbb{F}_\ell$, we write $t_E=\ell+1-\#E(\mathbb{F}_\ell)$ for its Frobenius trace. With this convention, $K(A,B)$ is the Frobenius trace, up to sign and an additive constant, of the genus-one curve $Y^2=(X^2-A)(X^2-B)$. Hence Hasse--Weil gives a uniform $O(\sqrt\ell)$ error from the main term $3\ell/4$, and negative traces explain the counterexamples to the pointwise bound $3\ell/4+1$. We also prove a multi-target estimate \[\left|\left|\bigcup_{j=1}^k H_{a_j}(N;\ell)\right|-\ell(1-2^{-k})\right|\le (k-1+2^{-k})\sqrt\ell+k\] for distinct coefficients $a_1,\ldots,a_k$, together with the corresponding CRT product bound. Finally, for special-shape inputs $N=u^rv$, we study the $r$-power-constrained image $H_{a,r}(N;\ell)$ and determine its exact size by an elementary involution argument. These results recast the proposed local sieve questions as explicit finite-field statements with verified local tests.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-11T07:53:39Z</published>
+    <arxiv:comment>23 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Pantelimon Stănică</name>
+    </author>
+    <author>
+      <name>Erik Mulder</name>
+    </author>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1604.07791v3</id>
+    <title>Computational aspects of rational residuosity</title>
+    <updated>2017-07-16T13:33:34Z</updated>
+    <link href="https://arxiv.org/abs/1604.07791v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1604.07791v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we consider an extension of Jacobi's symbol, the so called rational $2^k$-th power residue symbol. In Section 3, we prove a novel generalization of Zolotarev's lemma. In Sections 4, 5 and 6, we show that several hard computational problems are polynomial-time reducible to computing these residue symbols, such as getting nontrivial information about factors of semiprime numbers. We also derive criteria concerning the Quadratic Residuosity Problem.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-04-26T18:55:31Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1142/S1793042118500380</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/S1793042118500380" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.11105v1</id>
+    <title>A log-log speedup for exponent one-fifth deterministic integer factorisation</title>
+    <updated>2021-05-24T05:56:43Z</updated>
+    <link href="https://arxiv.org/abs/2105.11105v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.11105v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building on techniques recently introduced by the second author, and further developed by the first author, we show that a positive integer $N$ may be rigorously and deterministically factored into primes in at most \[ O\left( \frac{N^{1/5} \log^{16/5} N}{(\log\log N)^{3/5}}\right) \] bit operations. This improves on the previous best known result by a factor of $(\log \log N)^{3/5}$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-24T05:56:43Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>David Harvey</name>
+    </author>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1090/mcom/3708</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/mcom/3708" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.16729v2</id>
+    <title>A time-space tradeoff for Lehman's deterministic integer factorization method</title>
+    <updated>2020-10-30T11:59:12Z</updated>
+    <link href="https://arxiv.org/abs/2006.16729v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.16729v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Fermat's well-known factorization algorithm is based on finding a representation of natural numbers $N$ as the difference of squares. In 1895, Lawrence generalized this idea and applied it to multiples $kN$ of the original number. A systematic approach to choose suitable values for $k$ was introduced by Lehman in 1974, which resulted in the first deterministic factorization algorithm considerably faster than trial division. In this paper, we construct a time-space tradeoff for Lawrence's generalization and apply it together with Lehman's result to obtain a deterministic integer factorization algorithm with runtime complexity $O(N^{2/9+o(1)})$. This is the first exponential improvement since the establishment of the $O(N^{1/4+o(1)})$ bound in 1977.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-30T12:37:55Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1090/mcom/3623</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/mcom/3623" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1512.06401v1</id>
+    <title>Deterministic factorization of sums and differences of powers</title>
+    <updated>2015-12-20T17:06:30Z</updated>
+    <link href="https://arxiv.org/abs/1512.06401v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1512.06401v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $a,b\in \mathbb{N}$ be fixed and coprime such that $a&gt;b$, and let $N$ be any number of the form $a^n\pm b^n$, $n\in\mathbb{N}$. We will generalize a result of Bostan, Gaudry and Schost and prove that we may compute the prime factorization of $N$ in \[ \mathcal{O}(\text{M}_{\text{int}}(N^{1/4}\sqrt{\log N})), \] $\text{M}_{\text{int}}(k)$ denoting the cost for multiplying two $k$-bit integers. This result is better than the currently best known general bound for the runtime complexity for deterministic integer factorization.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-12-20T17:06:30Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1090/mcom/3197</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/mcom/3197" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.10529v2</id>
+    <title>Smooth Subsum Search: A heuristic for practical integer factorization</title>
+    <updated>2023-07-11T11:58:43Z</updated>
+    <link href="https://arxiv.org/abs/2301.10529v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.10529v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The two currently fastest general-purpose integer factorization algorithms are the Quadratic Sieve and the Number Field Sieve. Both techniques are used to find so-called smooth values of certain polynomials, i.e., values that factor completely over a set of small primes (the factor base). As the names of the methods suggest, a sieving procedure is used for the task of quickly identifying smooth values among the candidates in a certain range. While the Number Field Sieve is asymptotically faster, the Quadratic Sieve is still considered the most efficient factorization technique for numbers up to around 100 digits. In this paper, we challenge the Quadratic Sieve by presenting a novel approach based on representing smoothness candidates as sums that are always divisible by several of the primes in the factor base. The resulting values are generally smaller than those considered in the Quadratic Sieve, increasing the likelihood of them being smooth. Using the fastest implementations of the Self-initializing Quadratic Sieve in Python as benchmarks, a Python implementation of our approach runs consistently 5 to 7 times faster for numbers with 45-100 digits, and around 10 times faster for numbers with 30-40 digits. We discuss several avenues for further improvements and applications of the technique.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-25T11:34:15Z</published>
+    <arxiv:comment>23 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1142/s0129054123500296</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/s0129054123500296" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.12401v1</id>
+    <title>A deterministic algorithm for finding $r$-power divisors</title>
+    <updated>2022-02-24T22:49:37Z</updated>
+    <link href="https://arxiv.org/abs/2202.12401v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.12401v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building on work of Boneh, Durfee and Howgrave-Graham, we present a deterministic algorithm that provably finds all integers $p$ such that $p^r \mathrel| N$ in time $O(N^{1/4r+ε})$ for any $ε&gt; 0$. For example, the algorithm can be used to test squarefreeness of $N$ in time $O(N^{1/8+ε})$; previously, the best rigorous bound for this problem was $O(N^{1/6+ε})$, achieved via the Pollard--Strassen method.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-24T22:49:37Z</published>
+    <arxiv:comment>16 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>David Harvey</name>
+    </author>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1007/s40993-022-00387-w</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s40993-022-00387-w" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1608.08766v6</id>
+    <title>A babystep-giantstep method for faster deterministic integer factorization</title>
+    <updated>2017-07-06T22:23:54Z</updated>
+    <link href="https://arxiv.org/abs/1608.08766v6" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1608.08766v6" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 1977, Strassen presented a deterministic and rigorous algorithm for solving the problem of computing the prime factorization of natural numbers $N$. His method is based on fast polynomial arithmetic techniques and runs in time $\widetilde{O}(N^{1/4})$, which has been state of the art for the last forty years. In this paper, we will combine Strassen's approach with a babystep-giantstep method to improve the currently best known bound by a superpolynomial factor. The runtime complexity of our algorithm is of the form \[ \widetilde{O}\left(N^{1/4}\exp(-C\log N/\log\log N)\right). \]</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-08-31T08:32:44Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1090/mcom/3313</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/mcom/3313" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1501.03078v4</id>
+    <title>Digit Polynomials and their application to integer factorization</title>
+    <updated>2015-12-20T20:51:42Z</updated>
+    <link href="https://arxiv.org/abs/1501.03078v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1501.03078v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents the concept of digit polynomials, which leads to a deterministic and unconditional integer factorization algorithm with the runtime complexity $\mathcal{O}(N^{1/4+ε})$. Strassen's well known factoring approach is a special case of our method. We will also consider a possibility to improve upon the complexity bound.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-01-13T17:05:13Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.11131v2</id>
+    <title>Deterministic methods for finding elements of large multiplicative order</title>
+    <updated>2026-06-05T05:04:50Z</updated>
+    <link href="https://arxiv.org/abs/2601.11131v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.11131v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We revisit the problem of rigorously and deterministically finding elements of large order in the multiplicative group of integers modulo a natural number $N$. Solving this problem is an essential step in several recent deterministic algorithms for factoring $N$, including the currently fastest ones. In 2018, the second author gave an algorithm that for a given target order $D \geq N^{2/5}$, finds either an element of order exceeding $D$, or a nontrivial divisor of $N$, or proves that $N$ is prime. The running time was \[ O\left(\frac{D^{1/2}}{(\log \log D)^{1/2}} \log^2 N \right) \] bit operations, asymptotically the same as the cost of computing the order of a single element using Sutherland's optimisation of the classical babystep-giantstep method. Subsequent work by several authors weakened the hypothesis $D \geq N^{2/5}$ to $D \geq N^{1/6}$. In this paper, we show that the hypothesis may be dropped altogether. Moreover, if $N$ is prime, we can guarantee returning an element of order exceeding $D$, rather than a proof that $N$ is prime.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-16T09:45:56Z</published>
+    <arxiv:comment>13 pages; slightly improved main complexity bound</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>David Harvey</name>
+    </author>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+  </entry>
+</feed>

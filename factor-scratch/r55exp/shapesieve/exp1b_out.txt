@@ -1,0 +1,48 @@
+==============================================================================
+exp1b  SIEVING DOMAIN, CORRECTED   seed=20261004
+       N ~ 2^24, M = 200000 so M^2 >> N: the modulus IS in the room
+==============================================================================
+
+Sanity gate (the bug that killed exp1):
+   M^2 = 40000000000 , typical N ~ 2^24 = 16777216 , M^2/N ~ 2384.2  -> wraps: True
+
+--- P1b.1  SURVIVAL RATE, B = 60 (all factors > B) ---
+     family           cells median    min       max       sd        exp hits/cell
+     Mertens baseline prod(1-1/q), q<=60 = 0.13378   [REFERENCE]
+     pq generic       10    0.13359   0.13317   0.13418   0.00032   26728
+                      cells: 0.1336 0.1336 0.1335 0.1335 0.1341 0.1342 0.1339 0.1333 0.1336 0.1332
+     a^2 b            10    0.13388   0.13293   0.13472   0.00050   26759
+                      cells: 0.1329 0.1347 0.1342 0.1334 0.1339 0.1334 0.1339 0.1339 0.1341 0.1336
+     a^3 b            10    0.13395   0.13316   0.13481   0.00057   26809
+                      cells: 0.1335 0.1340 0.1339 0.1347 0.1340 0.1348 0.1332 0.1339 0.1336 0.1348
+     NEG CTRL pq'     10    0.13369   0.13287   0.13446   0.00045   26732
+                      cells: 0.1335 0.1337 0.1341 0.1338 0.1336 0.1333 0.1329 0.1339 0.1345 0.1333
+     POS CTRL a=5<=B  10    0.13355   0.13292   0.13506   0.00063   26716
+                      cells: 0.1336 0.1330 0.1336 0.1351 0.1329 0.1331 0.1338 0.1332 0.1336 0.1340
+
+--- P1b.2  POSITIVE CONTROL: raise B past the shape factor ---
+     Now B = 4096 > a = 5 for the POS CTRL family. The shape factor is
+     INSIDE the factor base, so the sieve MUST become shape-sensitive.
+     B = 60   
+       pq generic         median=0.13359  cells: 0.1336 0.1336 0.1335 0.1335 0.1341 0.1342
+       POS CTRL a=5<=B    median=0.13332  cells: 0.1336 0.1330 0.1336 0.1351 0.1329 0.1331
+       -> shape/generic ratio = 0.9980   detector FIRES? NO
+     B = 512  
+       pq generic         median=0.08874  cells: 0.0880 0.0887 0.0888 0.0871 0.0899 0.0894
+       POS CTRL a=5<=B    median=0.08824  cells: 0.0884 0.0877 0.0876 0.0897 0.0888 0.0881
+       -> shape/generic ratio = 0.9943   detector FIRES? NO
+     B = 4096 
+       pq generic         median=0.06634  cells: 0.0673 0.0653 0.0643 0.0667 0.0659 0.0673
+       POS CTRL a=5<=B    median=0.06502  cells: 0.0641 0.0651 0.0665 0.0663 0.0649 0.0639
+       -> shape/generic ratio = 0.9802   detector FIRES? NO
+
+--- P1b.3  CONCLUSION CELL TABLE ---
+     family           ratio/pq   verdict      B regime      
+     pq generic       1.0000     shape-BLIND  B<a (a>B)     
+     a^2 b            1.0021     shape-BLIND  B<a (a>B)     
+     a^3 b            1.0027     shape-BLIND  B<a (a>B)     
+     NEG CTRL pq'     1.0007     shape-BLIND  B<a (a>B)     
+     POS CTRL a=5<=B  0.9997     shape-BLIND  B<a (a>B)     
+     POS CTRL a=5     0.9997     shape-BLIND  a=5>B=60      
+
+OUTPUT SIGNATURE (run-twice check): 3c0c41fe4073b375

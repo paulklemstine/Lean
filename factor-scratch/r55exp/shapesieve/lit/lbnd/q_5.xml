@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/f6BQ9+bZrHUaf0UggRKQPmuXqDs</id>
+  <title>arXiv Query: search_query=all:"index calculus" AND all:"lower bound"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-10-05T02:49:45Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22index+calculus%22+AND+all:%22lower+bound%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2402.11269v1</id>
+    <title>A New Approach to Generic Lower Bounds: Classical/Quantum MDL, Quantum Factoring, and More</title>
+    <updated>2024-02-17T13:00:47Z</updated>
+    <link href="https://arxiv.org/abs/2402.11269v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.11269v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies the limitations of the generic approaches to solving cryptographic problems in classical and quantum settings in various models.
+  - In the classical generic group model (GGM), we find simple alternative proofs for the lower bounds of variants of the discrete logarithm (DL) problem: the multiple-instance DL and one-more DL problems (and their mixture). We also re-prove the unknown-order GGM lower bounds, such as the order finding, root extraction, and repeated squaring.
+  - In the quantum generic group model (QGGM), we study the complexity of variants of the discrete logarithm. We prove the logarithm DL lower bound in the QGGM even for the composite order setting. We also prove an asymptotically tight lower bound for the multiple-instance DL problem. Both results resolve the open problems suggested in a recent work by Hhan, Yamakawa, and Yun.
+  - In the quantum generic ring model we newly suggested, we give the logarithmic lower bound for the order-finding algorithms, an important step for Shor's algorithm. We also give a logarithmic lower bound for a certain generic factoring algorithm outputting relatively small integers, which includes a modified version of Regev's algorithm.
+  - Finally, we prove a lower bound for the basic index calculus method for solving the DL problem in a new idealized group model regarding smooth numbers.
+  The quantum lower bounds in both models allow certain (different) types of classical preprocessing. All of the proofs are significantly simpler than the previous proofs and are through a single tool, the so-called compression lemma, along with linear algebra tools. Our use of this lemma may be of independent interest.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-17T13:00:47Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Minki Hhan</name>
+    </author>
+  </entry>
+</feed>

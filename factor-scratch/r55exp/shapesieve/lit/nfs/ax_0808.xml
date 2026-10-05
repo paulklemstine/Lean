@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/s/WGAv0b3lW00X5sRUjmhOXfEHA</id>
+  <title>arXiv Query: search_query=&amp;id_list=0808.0469&amp;start=0&amp;max_results=10</title>
+  <updated>2026-10-05T02:50:24Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=10&amp;id_list=0808.0469" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/0808.0469v2</id>
+    <title>Non-degeneracy of Pollard Rho Collisions</title>
+    <updated>2008-08-31T16:24:38Z</updated>
+    <link href="https://arxiv.org/abs/0808.0469v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0808.0469v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The Pollard Rho algorithm is a widely used algorithm for solving discrete logarithms on general cyclic groups, including elliptic curves. Recently the first nontrivial runtime estimates were provided for it, culminating in a sharp O(sqrt(n)) bound for the collision time on a cyclic group of order n. In this paper we show that for n satisfying a mild arithmetic condition, the collisions guaranteed by these results are nondegenerate with high probability: that is, the Pollard Rho algorithm successfully finds the discrete logarithm.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-08-04T17:46:39Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Stephen D. Miller</name>
+    </author>
+    <author>
+      <name>Ramarathnam Venkatesan</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,397 @@
+- - - - - - - - - - - - - CWIQ-rly - - - - - - - - - - - - - - -
+
+
+
+
+9Quarterly                                        Volume 11 (1) 1998, pp. 75 - 82
+
+
+
+
+  An Explicit Runge-Kutta Method of Order Twenty-five
+                                 B.P. Sommeijer
+                               CWI, P.O. Box 94079,
+                        1090 GB Amsterdam, The Netherlands
+
+
+
+
+1. PROLOGUE
+This note was written on the occasion of the twenty-fifth anniversary of Prof.
+dr. P.J. van der Houwen's stay at our institute. It was written, merely to
+contribute to the festive joy of that celebration, without having any other
+pretensions.
+    On this jubilee we have concentrated on the number 25 and asked ourselves:
+is there anything special about 25? Mathematically speaking, this number is
+not very spectacular; it is not even a prime. On the other hand, it is a square
+itself and at the same time the sum of 2 squares. Furthermore, it is the only
+square that is two less than a cube (a result due to FERMAT, cf. (8]), and
+moreover, 25 is the only integer of the form nk which can be written in the
+form (n - 1)! + 1 (proved by LIOUVILLE, cf. (8]).
+    Leaving the field of number theory and taking into account the celebrator's
+major interest, one is automatically led into the direction of Runge-Kutta (RK)
+methods. What have Runge-Kutta methods in common with the number 25?
+Maybe the fact that Kutta died on the 25th of December, or possibly that
+Nystrom came up in 1925 with an extension to RK methods? Do there exist RK
+methods with 25 stages? Or, even more extravagant, has ever before someone
+wasted his time by constructing an (explicit) RK method of order 25? Since I
+am not aware of the existence of such a method, I will construct one. However,
+it should be noted that the recreational character of such a product cannot be
+overemphasized.
+
+2. INTRODUCTION
+There is, and now I am serious again, a market for high-order methods to inte-
+grate the initial-value problem for the (nonstiff) ordinary differential equation
+(ODE)
+
+    d%tt = f(y(t)), t?: to.                                                   (1)
+
+
+                                        75
+             order of the RK method     conditions to be satisfied
+
+                       1                             1
+                       2                             2
+                       4                             8
+                       7                            85
+                      10                          1205
+                      15                       141,083
+                      20                   20,247,374
+                      25                3,231, 706,871
+
+
+                                  TABLE l.
+
+
+    For example, problems in the field of astronomy usually have to be solved
+with high accuracy demands. This requirement is, in general, more efficiently
+fulfilled by using a method of high order. Concentrating on the class of explicit
+RK methods (cf. [l, p.152]), the difficulties in constructing such a method grow
+exponentially with the order. This is because the number of nonlinear algebraic
+equations to satisfy the order conditions is a rapidly increasing function of the
+order and, to solve this system is far from trivial. In Table 1, we give an idea
+of the dimension of this system. The next question is: how many parameters
+do we need in order to satisfy this huge amount of conditions; or, in other
+words, how many stages are at least required? This problem has now been
+solved up to and including order 8 (see BUTCHER [l, p.194]). For higher orders
+it is still an open question. For example, starting with an s-stage explicit
+RK method providing s(s + 1)/2 free parameters, HAIRER [4] succeeded in
+satisfying the 1205 conditions for order 10 using only 17 stages, i.e., with 153
+parameters. Within the class of explicit RK methods, this is the highest order
+obtained. This lOth-order method earned Hairer an entry in the Guinness Book
+of Records.
+    Here we will present an explicit RK method of order 25 using 313 stages.
+This is certainly not the least number of stages to obtain this order. Al-
+though the minimal number is unknown, upperbounds provided by COOPER
+& VERNER [2] and by GRAGG [3] state that such a scheme can be constructed
+with at most 170 stages.
+    Starting with 313 stages, we obtain 49141 free parameters which appears to
+be sufficient to satisfy the (approximately) 3 · 109 order conditions. Moreover,
+45228 of these parameters are set to zero. Among the remaining 3913 pa-
+rameters many equal numbers occur. Summarizing, the scheme is completely
+determined by specifying only 182 parameters.
+
+
+
+                                      76
+- - - - - - - - - - - - , .·. 0 - . t y _ _ _._
+
+
+
+3. CONSTRUCTION
+The construction of the method of order 25 does not follow the classical ap-
+proach (since the number of order conditions is unmanageable, of course) but is
+obtained by iterating an implicit RK method. The construction is completely
+described in [5] and will be reproduced here in condensed form (the description
+is given for a scalar differential equation; however, the extension to a system
+of ODEs is straightforward).
+    Let Yn denote an approximation to the exact solution y(t) of the ODE at
+t = tn. Then, one step of the s-stage, implicit Runge-Kutta method
+                      8
+
+     k; = f(Yn + h L:>iikJ),     i = 1,2, .. . ,s,
+                    J=;,1                                                   (2)
+     Yn+I   =Y11 + h j=l
+                     I: bjkj
+advances the solution from t,. to tn + h, h being the stepsize. The parameters
+a;j and bi completely determine the RK method.     Therefore, such methods are
+usually represented by their so-called Butcher tableau [l, p.163]
+                            A= (a;1)
+                                                                           (3)
+
+
+It is well known that the order of accuracy of the method (2) is maximal
+(relative to the number of stages s) when the RK method is of the so-called
+Gauss-Legendre type; in that case, the order is equal to 2s. Therefore, our
+starting point for the construction of an RK method of order 25 will be a
+Gauss-Legendre method (with 13 stages). In the following, A and b, both of
+dimension 13, will correspond to this method.
+    Introducing the vector k .- (k1 , ... ,k 13f, the RK method (2) can be
+written compactly as
+
+     k = f (y,.e + hAk),
+                                                                           (2')
+
+
+
+where e denotes the unit vector of dimension 13. Furthermore, we make the
+convention that for any vector v = (vi), f (v) denotes the vector with entries
+f(vJ). From (2'), we observe that k is implicitly defined. To solve for this
+vector, the following iteration process is proposed
+
+
+                                                                          (4a)
+     k(j) = f(yne + hAk(j-l)),      j   = 1, 2, ... , 24 .
+                                         77
+------------                         CWIQ-rted~ - - - - - - - - - - - - - -
+
+Together with
+
+     Yn+1   = Yn + hbrk{24)'                                                 (4b)
+
+this defines a new method for the integration of the ODE (1) over one step.
+Notice that the method { (4a), (4b)} is an RK method of explicit type, since k(j)
+is explicitly expressed in terms of k(j-l). Since in each 'iteration' we gain one
+order (see also [7]), it is easy to show that this scheme is of order 25 indeed.
+    The Butcher tableau of the method {(4a),(4b)} has the form
+
+             0
+             A    0
+             0    A    0
+                  0    A    0
+                                                                             (4')
+
+             0                   0     A     0
+
+
+            or                         or    bT
+
+where 0 and or respectively denote a matrix and a vector (both of dimension
+13) with zero entries. In this method we have 25·13 = 325 stages. However, the
+first 13 stages (represented by the 0-matrix in the first row) are identical and
+thus require only one !-evaluation. Hence, this scheme counts for 24 · 13 + 1 =
+313 !-evaluations. The generating Butcher tableau (3) of the underlying Gauss-
+Legendre method completely determines the scheme { (4a), (4b)} and is given
+in the Appendix.
+     Finally, we make two observations:
+ (i) in each 'iteration' in (4a) we need the evaluation of f(v) with v = Yne +
+     hAk(j-i), which requires 13 calls to the derivative function f. However, it
+     should be observed that the components of v are known prior to all these
+     calls. Consequently, these derivatives can be calculated concurrently. Thus,
+     on a computer architecture possessing (at least) 13 parallel processors, one
+     iteration in (4a) requires effectively the time needed for the calculation of
+     one single !-evaluation. In this way the method {(4a),(4b)} counts for 25
+     effective ]-evaluations to yield order 25.
+(ii) another observation is that, apart from the final result Yn+i calculated in
+     (4b), we can easily construct an 'embedded' approximation by calculating
+     y(m) = Yn + hbrk{m) for some m < 24. This does not require additional
+     !-evaluations since k(m) has already been computed in order to continue
+     the iteration process. This embedded reference solution can he used to
+     equip the method with an error control strategy (cf. [5] for details).
+
+
+
+                                        78
+------------                                   CWIQ~ - - - - - - - - - - - -
+
+Rl{.i                              Hairer 10                          iterated Gauss25
+
+
+
+h             CD      "£/          h       CD              "£/        h     CD          "Lfseq     "Lfparal
+11200        9.6      48000        1/4         JO.I        4080       3      9.1       6260        SOO
+1/400        10.8     96000        1/8         12.8        8160       512   I0.7       7512        600
+1/800        12.0    192000        1/16        15.9     16320         2     12.8       9390        750
+1/3200       14.4    768000        1/20        16.8     20400               19.9       18780       1500
+1/12800 16.8        3072000
+
+
+                                                TABLE 2.
+
+
+
+
+4. SOME TEST RESULTS
+As a first example, we consider Euler's equation of motion [6]
+
+        Y~ = Y2Y3,               Y1(0) = 0,
+
+        Y~ = -Y1Y3,              Y2(0) = 1,       0 :'.S t :'.S 60.
+
+
+
+We will apply the 'classical' 4th-order RK method (1, p.181] to this problem as
+well as the lOth-order method of HAIRER [4] and the iterated Gauss-Legendre
+method {(4a),(4b)} of order 25.
+   In Table 2, CD denotes the number of correct digits in the solution at the
+end point of the integration interval, i.e., CD:= - log 10 (11 global error 11 00 ) and
+Ef denotes the total number of /-evaluations required by the various methods.
+
+    The second example is provided by the orbit equation [6]
+
+                                           Y1(0) = 1- c,
+
+                                           Y2(0) = 0,
+                                                                      0 :'.S t ~ 20,    c = 0.3.
+              I          Yi                y3(0)      = 0,
+             Y3 = - (YI + y5)3/2 ,
+              I             Y2             y4 (0) = [(l + c)/(1 - c:)]1l 2 •
+             Y4   = - (yf + y5)3/2 '
+The results obtained by the three methods are given in Table 3.
+
+
+
+
+                                                      79
+- - - - - - - - - - - - - CWIQ..-.ly - - - - - - - - - - - - - - -
+
+
+
+
+          RK4                       Hairer10                  iterated Gauss2s
+
+  h      CD       !./          h    CD           !.f   h      CD     'i:.fseq   '£/para/
+ 1132    5.2      2560        1/2   2.0         680     4     2.8    1565         125
+ 11128   7.8     10240        114   5.6         1360    2     6.9    3130        250
+ 11512   10.2    40960        1/8   9.4        2720           13.4   6260        500
+ 1/2048 12.6    163840        1/16 12.8        5440     1/2   19.3   12520      1000
+ 118192 15.0    655360        1132 15.6        10880
+
+
+                                    TABLE 3.
+
+
+
+
+5. CONCLUSIONS
+From these tables it is clear that the high-order schemes are much more ef-
+ficient than the 4th-order method in case the problem has to be solved with
+high accuracy demands. Comparing the lOth-order method of Hairer with the
+iterated Gauss-Legendre method of order 25, run on a sequential computer,
+we see that Hairer's method is more efficient, unless a global error is required
+smaller than approximately 10- 14 . However, matters are different when par-
+allel computers are used. In that case, the number of /-evaluations required
+by the iterated Gauss-Legendre method (i.e., "5:,fparat) is only a fraction of the
+number required by Hairer's method, especially in the high-accuracy range.
+
+6. EPILOGUE
+We have shown that it is very simple to construct an explicit Runge-Kutta
+method of order 25. In fact, following this approach, it is straightforward to
+obtain methods of arbitrarily high order (hence, no matter how many years a
+jubilee is celebrating, a suitable present is now available).
+    It is of course questionable whether as high an order as 25 is realistic within
+the field of the numerical solution of ODEs. However, since this idea of con-
+structing parallel methods can also be exploited to solve the special higher-order
+differential equation dky(t)/dtk = f(y(t)), (k 2::: 2), it may prove to be useful to
+obtain efficient parallel methods of a realistic order (10, say) for this type of
+problems.
+
+
+REFERENCES
+1. J.C. BUTCHER (1987). The numerical analysis of ordinary differential equa-
+   tions, Runge-Kutta and general linear methods, Wiley, Chichester-New
+   York-Brisbane-Toronto-Singapore.
+
+
+
+                                          80
+2. G.J. Corn•ER and J.H. \'EH'iF.H (
+         SIA'.\I .t J\;nuwr. Anal. 13. pp.
+   W .B. GHAC<: (          On e.i:in.xmu.•i·wm
+            SIA\I J. !'<imwr. Anai. 2, pp. 384.,Hl:l.
+4. E. HA!HER              A
+           21. pp. 47 59.
+5. P.J. \'AN DER HOl'WEN                                       Purnlid il.emtum
+                               uu·t.lwdN 1mth                 J.
+   l\fat.h. 29, pp. 11 l 127.
+u. T.E.           W.H. ENfUUHT, 13.l\l      FELLEN and A.E. SEDG\.V!CI<
+                 numerical methods for                                SIA:\'! J.
+   Nu.rner. Anal. 9. pp. 603-637.
+7. K.R. .JACKSON and S.P. l'\orsett (
+   appear.
+8. D. WELLS (1986). The
+   bers, Penguin Books.
+
+
+
+
+                                       81
+                                                 CWI 0•-rly      -----1---------------
+APPENDIX.          The Butcher tableau (3) of the 13-point Gauss-Legendre RK
+method
+  .0101210011913289698800     -.0037730715853257311764       .002785615756062805405 I       -.0022182703840461272747
+  .0018030646911529192477     -.0014642861839759720637       .0011721943452337661279        -.0009135829254769469143
+  .0006827077750145270710     -.0004778468253280570450       .0002999626252594454610        -.OOO 1525762992120453365
+  .0000435604600183718815
+
+  .0219001283175295116522     .0230303749594321119786        -.0060433198254482344595       .0040236767556734102487
+  -.0030424947262263454871    .0023820349877676374508        -.0018672464008113139925       .0014364746482838592671
+  -.0010644224460113069929    .0007408522314171861495        -.0004633455397879408874       .0002 35 1390881966003699
+  -.0000670516615041579008
+
+  .0194299477196462080139     .0500695755432635923426        .0347183775549468096159        -.0078630320673086857063
+  .0048527461585535623446     -.0034840033366076844759       .0026090624296 798342871       -.0019537207684109716373
+  .0014232950875334562740     -.0009797335329876508772       .0006083550590297416472        -.0003073594525034566440
+  .0000874442385 I 02884182
+
+  .0207461084445201329865     .0439800566806027462386        .0755663734121840834839        .0445 36495 1904864345700
+  -.0092209168426018347116    .0053546508856877483582        -.0036552267998513166322       .0026044290023489437552
+  -.0018420098947617049274    .0012446081221076741624        -.0007637502357566112599       .0003831038927983370379
+  -.0001085915779347433835
+
+  .0198907528982510605465     .0474094387268283867543        .0661938972977 494572895       .096977 429397685 7866966
+  .0519540118842221255781     -.0100633070332503760077       .0055344249147495185851        -.0035852200828572027741
+  .00240894627535956901 77    -.0015790246382069436958       .0009511199314348668008        -.0004718412911307997820
+  .0001329962009411245521
+
+  .0205039757594727670061     .0450910064519209141654        .0715749421921594625400        .0848574338709379334337
+  .1131500570931065592704     .056570795065 7243096030       -.0103514560922495229753       .005 39400389969417161 I 7
+  -.0032926276990788138011    .0020503890674033608806        -.001199028848645 7998032      .0005847990952091114488
+  -.0001634478332218504130
+
+  .0200379395811026762773     .0468004290851373722985        .0678786934544959035977        .0918730747240793403196
+  .0989622717612276794984     .1232140251350561942458        .0581378883077184775486        -.0100724350036075750397
+  .0049457520072165716579     -.0028000843431064711796       .0015580616553977156341        -.0007396791662731483413
+  .0002040628015552634827
+
+  .0204054502158797901730     .0454759508236551125084        .0706357839585394190350        .0870226013135695082594
+  .1072006514675230649573     .1077475862317544475943        .1266272327076864780725        .0565 707950657243096030
+  -.0092420333246623081142    .0042155565100349357064        -.0021381870822658433082       .0009697434669433097918
+  -.0002619733768148272461
+
+  .0201090061817168152079     .0465325912099950237392        .0684856351784587524310        .0906520150191798128359
+ .I 014990774930846821386     . I 16 72681 02143058219802    .1107413517006874365122        .1232048971646989952138
+ .OS 19540118842221255781     -.0079044390167129175566       .0032428578121441619423        -.0013486888079641627971
+ .0003512494844068792135
+
+ .0203505939605926831435      .0456 776460260658869194       .0702005053456502304916        .087828382258865 1949777
+ . I 05 7500336632059560836   .1105371611290996754509        .1199310034152882717295        .1077869392457608708479
+ .1131289406110460858678      .0445364951904864345700        -.0061296183022904642521       .0020806932382614777186
+ -.0005041060618621932265
+
+ .0201545581441476513418      .0463681093713676806012        .0688284000508638775845        .0900527239139605200173
+ . I 024847286809107948821    .1150953108998595908434        .1136667141857571208102        .1166255934680563036820
+ .0990552776098906888116      .0969360224482815548464        .0347183775549468096159        -.0040088256243993683854
+ .0008120546630117317461
+
+ .0203090540441620976608      .04582561 08306676235872       .069900 I 00649681 560 I 193   .0883321381495556829903
+ .I 049724462144555581494     .1117051154831647599387        .1181430230162482690900        . I I 0759555143680981 755 l
+ .I 069505184946705966435     .0850493136252994588912        .0754800749353418536914        .0230303749594321119786
+ -.0016581259348715718922
+
+ .0201984419226395678785      .0462133262180762692938        .0691367924846341737705        .0895 5083 72063009261853
+ .1032253159934297240849      .1140551730569255661207        .1151035822702031889690        .1146058763154245912701
+ . I 021049590772913319083    .0912912607650189964149        .0666511393538308138266        .0498338215041899551337
+ .0101210011913289698800
+
+
+ .0202420023826579397600      .0460607499188642239573        .0694367551098936192317        .089072990380972869140 I
+ .1039080237684442511561      .1131415901314486192062        .1162757766154369550971        .1131415901314486192062
+ .1039080237684442511561      .089072990380972869140 I       .0694367551098936192317        .0460607499188642239573
+ .0202420023826579397600
+
+
+
+
+                                                        82
+

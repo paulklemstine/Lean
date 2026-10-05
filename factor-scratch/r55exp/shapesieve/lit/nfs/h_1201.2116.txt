@@ -1,0 +1,342 @@
+                                                  FASTER DETERMINISTIC INTEGER FACTORIZATION
+
+                                                                     EDGAR COSTA AND DAVID HARVEY
+arXiv:1201.2116v1 [math.NT] 10 Jan 2012
+
+
+
+
+                                                   Abstract. The best known unconditional deterministic complexity bound
+                                                   for computing the prime factorization of an integer N is O(Mint (N 1/4 log N )),
+                                                   where Mint (k) denotes the cost of multiplying k-bit integers. This result is due
+                                                   to Bostan–Gaudry–Schost, following the Pollard–Strassen
+                                                                                                    √          approach. We show
+                                                   that this bound can be improved by a factor of log log N .
+
+
+                                                                                1. Introduction
+                                             In this paper we consider unconditional deterministic complexity bounds for
+                                          computing the prime factorization of a positive integer N . Complexity refers to bit
+                                          complexity, in the sense of the multitape Turing machine model [Pap94].
+                                             The best known bounds for this problem are all of the shape O(N 1/4+ε ). The
+                                          simplest algorithm achieving such a bound is due to Strassen [Str77]. Its complexity
+                                          is analyzed in [BGS07] and shown to be
+                                                                          O(Mint (N 1/4 log N ) log N ),
+                                          where Mint (k) denotes the cost of multiplying k-bit integers. (The best known
+                                          bound for Mint (k) is Mint (k) = O(k log k 2log k ) where log∗ k denotes the iterated
+                                                                                         ∗
+
+
+                                          logarithm [Für09].) Bostan, Gaudry and Schost [BGS07] improved this further to
+                                                                              O(Mint (N 1/4 log N )).
+                                          Our main result is the following refinement.
+                                          Theorem 1. There exists a deterministic algorithm that computes the prime fac-
+                                          torization of a positive integer N in
+                                                                                1/4        
+                                                                                 N     log N
+                                                                         O Mint √
+                                                                                   log log N
+                                          bit operations.
+                                             To explain the main idea of our algorithm, we recall Strassen’s approach. Con-
+                                          sider the simplest situation where N is a product of two distinct primes, say N = pq,
+                                          p < q. Let K = ⌊N 1/2 ⌋. Since p ≤ K and q > K we have gcd(K! mod N, N ) = p,
+                                          so it suffices to compute K! mod N . To simplify further, assume that K = L2 for
+                                          some integer L. Strassen observes that
+                                                                     K! = f (0)f (L)f (2L) · · · f ((L − 1)L)
+                                          where
+                                                                       f (x) = (x + 1)(x + 2) · · · (x + L).
+
+                                            The first author was partially supported by FCT doctoral grant SFRH/BD/69914/2010.
+                                            The second author was partially supported by the Australian Research Council, DECRA Grant
+                                          DE120101293.
+                                                                                          1
+2                             EDGAR COSTA AND DAVID HARVEY
+
+
+He computes f (x) in (Z/N Z)[x] using a product tree, and then evaluates f (x)
+at 0, L, . . . , (L − 1)L using a fast multipoint evaluation algorithm. The overall
+complexity is quasilinear in L = O(N 1/4 ). The algorithm of [BGS07] evaluates the
+same product, but uses a more involved evaluation scheme that saves a factor of
+O(log L).
+   Our key observation is that K! has many terms that do not contribute any useful
+information. For example, it is easy to extract factors of 2 from N . Once this is
+done, we may assume N is odd, so any remaining factors must be odd. Thus we
+                                                            ′
+should replace√ K! by a product of the form 1×3×5×· · ·×K . This immediately saves
+a factor of 2 in Strassen’s algorithm (or in the Bostan–Gaudry–Schost algorithm).
+   More generally, we may select a bound B and remove from N all prime factors
+bounded by B, and then replace the factorial by a generalized factorial that omits
+all integers divisible by any of these primes. This is a similar idea to the ‘factorial
+sieving’ performed in [CDP97]. Our contribution is to show that the algorithm of
+[BGS07] can be modified to handle such generalized factorials. Choosing a larger B
+leads to greater savings, but also imposes a cost due to the more complex pattern of
+integers removed from the generalized factorial. Optimizing the choice of B leads
+to the bound given in Theorem 1.
+   All of the factorization algorithms mentioned above (including ours) are of the-
+oretical interest only, and none of them are remotely practical. If we allow proba-
+bilistic algorithms, or complexity arguments that depend on unproved hypotheses
+such as the Riemann Hypothesis, then much better bounds can be achieved. For
+this we refer the reader to the excellent survey [CP05].
+
+        2. Fast polynomial evaluation on arithmetic progressions
+   In this section R denotes a ring, in which we can multiply and sum elements in m
+bit operations, and for which polynomials in R[x] of degree d can be multiplied in
+M(d) bit operations. We will only provide high-level descriptions of all algorithms
+and skip the details of their corresponding Turing machine implementations. We
+assume that M(d) behaves reasonably, in particular that M(dd′ ) ≥ dM(d′ ), and so
+M(d) ≥ dm. In the next section we will specialize to the case R = Z/N Z.
+   We will often use the following standard result without comment. For a proof
+see [BGS07, Lemma 1].
+Lemma 2. Suppose that r1 , . . . , rd are invertible in R. Given r1 , . . . , rd and (r1 . . . rd )−1 ,
+we may compute r1−1 , . . . , rd−1 in O(dm) bit operations.
+   Our basic tool will be [BGS07, Theorem 5], which is given as Proposition 4
+below. To state it, we introduce the following notation.
+Definition 3. Let α, β ∈ R and d ≥ 1. We say that h(α, β, d) is satisfied if the
+elements
+                 β,   2, . . . , d,   (α − dβ), (α − (d − 1)β), . . . , (α + dβ)
+are invertible in R, and we put
+                d(α, β, d) = β2 · · · d(α − dβ)(α − (d − 1)β) · · · (α + dβ).
+    Thus h(α, β, d) holds if and only if d(α, β, d) is invertible.
+                  FASTER DETERMINISTIC INTEGER FACTORIZATION                          3
+
+
+Proposition 4. Let α, β ∈ R and d ≥ 1. Assume that h(α, β, d) holds, and that
+the inverse of d(α, β, d) is known. Let F be a polynomial in R[x] of degree at most
+d. Given
+                                F (0), F (β), . . . , F (dβ),
+we may compute
+                            F (α), F (α + β), . . . , F (α + dβ)
+in O(M(d)) bit operations.
+Proof. See [BGS07, Theorem 5]; the proof is based on the Lagrange interpolation
+formula. We emphasize that the coefficients of F (x) are not part of the input. 
+   Let H ∈ R[x] be a polynomial of degree ρ ≥ 1. In Section 3 we will be interested
+in evaluating the polynomial
+                      Hk (x) = H(x)H(x + 1) · · · H(x + k − 1)
+on a certain arithmetic progression. Theorem 8 of [BGS07] gives an efficient solution
+to this problem for ρ = 1. The following two results generalize this to the case ρ ≥ 1.
+Proposition 5. Let β ∈ R and k ≥ 1. Assume that
+                        h(k, β, kρ)   and    h((kρ + 1)β, β, kρ)
+both hold and that the inverses of
+                        d(k, β, kρ)   and    d((kρ + 1)β, β, kρ)
+are known. Given
+                             Hk (0), Hk (β), . . . , Hk (kρβ),
+we may compute
+                         H2k (0), H2k (β), . . . , H2k (2kρβ)
+in O(M(kρ)) bit operations.
+Proof. We start by applying Proposition 4 with α = k and d = kρ to the known
+values of Hk (x) to obtain
+                         Hk (k), Hk (β + k), . . . , Hk (kρβ + k)
+in O(M(kρ)) bit operations. Since
+                              H2k (x) = Hk (x)Hk (x + k)
+we may multiply these to obtain
+                            H2k (0), H2k (β), . . . , H2k (kρβ)
+in (kρ + 1)m = O(M(kρ)) bit operations.
+   We now apply Proposition 4 to the original values again, this time with α =
+(kρ + 1)β, to obtain
+                Hk ((kρ + 1)β), Hk ((kρ + 2)β), . . . , Hk ((2kρ + 1)β).
+A final application of Proposition 4 with α = k yields
+          Hk ((kρ + 1)β + k), Hk ((kρ + 2)β + k), . . . , Hk ((2kρ + 1)β + k).
+As above we can multiply these to obtain
+               H2k ((kρ + 1)β), H2k ((kρ + 2)β), . . . , H2k ((2kρ + 1)β).
+Discarding the last value, we have the desired output. The total complexity is
+O(M(kρ)) bit operations.                                                    
+4                          EDGAR COSTA AND DAVID HARVEY
+
+
+   In Proposition 7, we will apply the previous result recursively. The following
+definition consolidates the required invertibility conditions.
+Definition 6. Let r ≥ 1. We say that H(2r , β, ρ) holds if h(2i , β, 2i ρ) and h((2i ρ +
+1)β, β, 2i ρ) hold for each 0 ≤ i < r. We write
+                                    r−1
+                                    Y
+                   D(2r , β, ρ) =         d(2i , β, 2i ρ)d((2i ρ + 1)β, β, 2i ρ).
+                                    i=0
+
+    As before, H(2 , β, ρ) holds if and only if D(2r , β, ρ) is invertible.
+                   r
+
+
+Proposition 7. Assume that H(2r , β, ρ) holds and that the inverse of D(2r , β, ρ)
+is known. Let k = 2r . We may compute
+                               Hk (0), Hk (β), . . . , Hk (kρβ)
+in O(M(kρ) + ρ2 m) bit operations.
+Proof. We first compute H(x) at x = 0, β, . . . , ρβ. This can be done in O(ρ2 m)
+bit operations. (This can be improved to O(M(ρ) log ρ) using standard multipoint
+evaluation techniques, but we will not use this.)
+   We then apply Proposition 5 successively for k = 1, 2, 4, . . . , 2r−1 . The cost at
+the ith step is O(M(2i ρ)) bit operations. At the ith step, we need to supply the
+inverses of
+                     d(2i , β, 2i ρ) and d((2i ρ + 1)β, β, 2i ρ).
+Computing each product can be done in O(2i ρm) bit operations, and with the
+inverse of D(2r , β, ρ) we can compute the inverses sought; all this can be done in
+O(kρm) bit operations. The total complexity is
+        O(ρ2 m + kρm + M(ρ) + M(2ρ) + · · · + M(2r−1 ρ)) = O(ρ2 m + M(kρ))
+bit operations.                                                                       
+
+                    3. Application to integer factorization
+   We now specialize to R = Z/N Z. Elements of R are represented in the standard
+way using bitstrings of length O(log N ). We have m = O(Mint (log N )), and M(d) =
+O(Mint (d log(dN ))) using Kronecker substitution [Sch82]. If d = O(N ), which for
+us will always be the case, this simplifies to M(d) = O(Mint (d log N )). The inverse
+of an element of R, if it exists, may be computed in time O(Mint (log N ) log log N )
+using a fast extended GCD algorithm [Möl08].
+   Let B > 2 be a parameter; an optimal value for B will be chosen later on. Let
+                                           Y
+                                    Q=          p.
+                                                  p<B
+                                                 p prime
+
+We will apply the results of the previous section to the polynomial
+                                                Q
+                                                Y
+                                H(x) =                (Qx + j),
+                                                j=1
+                                              (j,Q)=1
+                             Q
+which has degree ρ = φ(Q) = p<B (p − 1).
+  We start with an auxiliary result.
+                  FASTER DETERMINISTIC INTEGER FACTORIZATION                             5
+
+
+Lemma 8. Let f0 , . . . , fk−1 ∈ Z/N Z. Then we can decide if all fi are invertible
+modulo N and, if not, find a noninvertible fi in
+                    O(k Mint (log N ) + log k Mint (log N ) log log N )
+bit operations.
+Proof. See [BGS07, Lemma 12]. The idea is to apply the GCD to the subproduct
+tree formed by the fi .                                                   
+   The core of our algorithm comes next.
+Proposition 9. Let r ≥ 0 and b = 4r ρQ. Assume that b < N and that (N, Q) = 1.
+We can find a prime divisor ℓ of N such that ℓ ≤ b, or prove that no such divisor
+exists, in
+           O Mint (2r ρ log N ) + (Q2 + log(2r ρ))Mint (log N ) log log N
+                                                                          
+
+bit operations.
+Proof. We first list the integers 1 ≤ j < Q such that (j, Q) = 1, by computing (j, Q)
+for each candidate j. Noting that Q < N , this uses O(Q Mint (log N ) log log N ) bit
+operations. Using this list, we compute the coefficients of H(x); the naive algorithm
+for this uses O(ρ2 Mint (log N )) bit operations.
+   In the algorithm described below, we will test various elements of Z/N Z for
+invertibility. If at any stage we encounter a noninvertible x with x ≤ b, then we
+are done. Indeed, to find a suitable prime √      divisor of N it suffices to perform trial
+division of √x by the integers
+                           √      2  ≤ ℓ ≤    b with
+                                                p    (ℓ, Q) = 1. The number of such ℓ is
+at most ρ⌈ b/Q⌉ ≤ ρ( b/Q + 1) = 2 ρ ρ/Q + ρ = O(2r ρ), so the cost of these
+                                            r
+
+trial divisions is O(2r ρMint (log N )) = O(Mint (2r ρ log N )).
+   We would like to apply Proposition 7 to H(x) with k = β = 2r . We must first
+verify that H(2r , 2r , ρ) is satisfied. This is equivalent to invertibility of
+                                       2, 3, . . . , (2r ρ + 1)
+and
+                  (2i − 2i ρ2r ), (2i − (2i ρ − 1)2r ), . . . , (2i + 2i ρ2r )
+for each 0 ≤ i ≤ r − 1. These integers are all bounded (in absolute value) by b, and
+there are O(2r ρ) of them. By Lemma 8 we may prove they are invertible, or find a
+noninvertible one, in
+                  O(2r ρMint (log N ) + log(2r ρ)Mint (log N ) log log N )
+bit operations. Computing D(2r , 2r , ρ) requires O(2r ρMint (log N )) bit operations,
+and finding its inverse has negligible cost. Proposition 7 then computes
+                             Hk (0), Hk (k), . . . , Hk ((kρ − 1)k)
+using
+                           O(Mint (2r ρ log N ) + ρ2 Mint (log N ))
+bit operations.
+   By construction we have
+                    kρ−1
+                     Y                 kρ−1
+                                        Y       kQ
+                                                Y                     b
+                                                                      Y
+(1)                        Hk (ik) =                  (ikQ + j) =             j.
+                    i=0                 i=0     j=1                   j=1
+                                              (j,Q)=1               (j,Q)=1
+6                           EDGAR COSTA AND DAVID HARVEY
+
+
+If any of the Hk (ik) are noninvertible, by Lemma 8 we may find one in
+                  O(2r ρMint (log N ) + log(2r ρ)Mint (log N ) log log N )
+bit operations. In this case we may find a noninvertible integer bounded by b within
+the same time bound, since Hk (ik) is itself a product of O(kρ) integers bounded
+by b. Otherwise we have proved that (1) is invertible, and we are finished.       
+                                     1
+     of Theorem 1. We will take B = 11
+ProofP                                 log N . By the prime number theorem we
+have p<x log p = x + o(x) [MV07, Theorem 6.9], so
+                       Y
+                  Q=       p = O(N (1+o(1))/11 ) = O(N 1/10 ).
+                            p<B
+
+   We may remove any factors of N bounded by B with negligble cost, so we may
+assume that (N, Q) = 1.
+   We now apply Proposition 9, starting with b = ρQ (r = 0). If we find a prime
+divisor ℓ ≤ b, we remove it from N and repeat. Otherwise
+                                                  √      we quadruple b (increment
+r) and repeat. We continue until we reach b ≥ N ; the last iteration has r = r0
+where                                        √
+                                 r0 = ⌈log4 ( N /ρQ)⌉.
+   To analyze the overall complexity, observe that when we apply the algorithm for
+a given b, all prime divisors ℓ ≤ b/4 have already been found and removed. Since
+their product is bounded by N , the number of runs of the algorithm for a given b
+is bounded by O(log N/ log b). Therefore the complexity is
+        r0
+                                                                                 !
+       X     log N             r              2      r
+                                                                                
+   O                  Mint (2 ρ log N ) + (Q + log(2 ρ))Mint (log N ) log log N    .
+       r=0
+           log(4r ρQ)
+
+   Since Q2 = O(N 1/5 ) and r0 = O(log N ), the second term is bounded by
+O(N 1/5 log3+ε N ). To estimate the first term, we split the sum into r ≤ r0 /2
+and r > r0 /2. For the terms with r ≤ r0 /2, we have 2r = O(N 1/8 /(ρQ)1/4 ) =
+O(N 1/8 /ρ1/2 ) so 2r ρ = O(N 1/8 ρ1/2 ) = O(N 1/8+1/20 ) = O(N 1/5 ); thus the sum
+is bounded by (log N )2 (N 1/5 log N )1+ε . So far these contributions are negligible.
+The main contribution comes from the terms r > r0 /2. For these r we have
+4r ρQ ≥ N 1/4 , so log N/ log(4r ρQ) = O(1), and the sum is bounded by
+               X
+                      O(Mint (2r ρ log N )) = O(Mint (2r0 ρ log N ))
+            r0 /2<r≤r0
+
+                                             = O(Mint (N 1/4 (ρ/Q)1/2 log N )).
+But by Mertens’ theorem [MV07, Theorem 2.7],
+                                                       
+                ρ    Y p−1           1               1
+                   =         =O            =O               ,
+                Q         p        log B        log log N
+                         p<B
+
+and the desired result follows.                                                            
+
+                                       References
+[BGS07] Alin Bostan, Pierrick Gaudry, and Éric Schost. Linear recurrences with polynomial
+        coefficients and application to integer factorization and Cartier-Manin operator. SIAM
+        J. Comput., 36(6):1777–1806, 2007.
+[CDP97] Richard Crandall, Karl Dilcher, and Carl Pomerance. A search for Wieferich and Wilson
+        primes. Math. Comp., 66(217):433–449, 1997.
+                     FASTER DETERMINISTIC INTEGER FACTORIZATION                                 7
+
+
+[CP05]     Richard Crandall and Carl Pomerance. Prime numbers. Springer, New York, second
+           edition, 2005. A computational perspective.
+[Für09]   Martin Fürer. Faster integer multiplication. SIAM J. Comput., 39(3):979–1005, 2009.
+[Möl08]   Niels Möller. On Schönhage’s algorithm and subquadratic integer GCD computation.
+           Math. Comp., 77(261):589–607 (electronic), 2008.
+[MV07]     Hugh L. Montgomery and Robert C. Vaughan. Multiplicative number theory. I. Clas-
+           sical theory, volume 97 of Cambridge Studies in Advanced Mathematics. Cambridge
+           University Press, Cambridge, 2007.
+[Pap94]    Christos H. Papadimitriou. Computational complexity. Addison-Wesley Publishing Com-
+           pany, Reading, MA, 1994.
+[Sch82]    Arnold Schönhage. Asymptotically fast algorithms for the numerical multiplication
+           and division of polynomials with complex coefficients. In Computer algebra (Marseille,
+           1982), volume 144 of Lecture Notes in Comput. Sci., pages 3–15. Springer, Berlin, 1982.
+[Str77]    Volker Strassen. Einige Resultate über Berechnungskomplexität. Jber. Deutsch. Math.-
+           Verein., 78(1):1–8, 1976/77.
+
+   (Edgar Costa) Courant Institute of Mathematical Sciences, New York University,
+251 Mercer Street, New York, N.Y. 10012-1185, U.S.A
+   E-mail address: edgarcosta@nyu.edu
+
+  (David Harvey) School of Mathematics and Statistics, University of New South Wales,
+Sydney NSW 2052, Australia
+  E-mail address: d.harvey@unsw.edu.au
+

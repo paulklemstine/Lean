@@ -1,0 +1,328 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/VsU6ZAj74kanBE/xos+dMt56yH4</id>
+  <title>arXiv Query: search_query=all:"smoothness test"&amp;id_list=&amp;start=0&amp;max_results=15</title>
+  <updated>2026-10-05T02:53:42Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22smoothness+test%22&amp;start=0&amp;max_results=15&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>15</opensearch:itemsPerPage>
+  <opensearch:totalResults>137</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1809.02691v1</id>
+    <title>The smoothness test for a density function</title>
+    <updated>2018-09-07T21:51:25Z</updated>
+    <link href="https://arxiv.org/abs/1809.02691v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1809.02691v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The problem of testing hypothesis that a density function has no more than $μ$ derivatives versus it has more than $μ$ derivatives is considered. For a solution, the $L^2$ norms of wavelet orthogonal projections on some orthogonal "differences" of spaces from a multiresolution analysis is used. For the construction of the smoothness test an asymptotic distribution of a smoothness estimator is used. To analyze that asymptotic distribution, a new technique of enrichment procedure is proposed. The finite sample behaviour of the smoothness test is demonstrated in a numerical experiment in case of determination if a density function is continues or discontinues.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-09-07T21:51:25Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <arxiv:journal_ref>Nonlinear Analysis Volume 104, July 2014, Pages 21-39</arxiv:journal_ref>
+    <author>
+      <name>Bogdan Ćmiel</name>
+    </author>
+    <author>
+      <name>Karol Dziedziul</name>
+    </author>
+    <author>
+      <name>Barbara Wolnik</name>
+    </author>
+    <arxiv:doi>10.1016/j.na.2014.03.004</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.na.2014.03.004" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1602.04522v1</id>
+    <title>A smoothness test for higher codimensions</title>
+    <updated>2016-02-14T22:54:45Z</updated>
+    <link href="https://arxiv.org/abs/1602.04522v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1602.04522v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Based on an idea in Hironaka's proof of resolution of singularities, we present an algorithmic smoothness test for algebraic varieties. The test is inherently parallel and does not involve the calculation of codimension-sized minors of the Jacobian matrix of the variety. We also describe a hybrid method which combines the new method with the Jacobian criterion, thus making use of the strengths of both approaches. We have implemented all algorithms in the computer algebra system Singular, and compare the different approaches with respect to timings and memory usage. The test examples originate from questions in algebraic geometry, where the use of the Jacobian criterion is impractical due to the number and size of the minors involved.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-02-14T22:54:45Z</published>
+    <arxiv:comment>12 pages, 4 algorithms</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <arxiv:journal_ref>Journal of Symbolic Computation 86, 153-165 (2018)</arxiv:journal_ref>
+    <author>
+      <name>Janko Boehm</name>
+    </author>
+    <author>
+      <name>Anne Frühbis-Krüger</name>
+    </author>
+    <arxiv:doi>10.1016/j.jsc.2017.05.001</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jsc.2017.05.001" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.06601v1</id>
+    <title>Spectral smooth tests for goodness-of-fit</title>
+    <updated>2023-08-12T15:58:19Z</updated>
+    <link href="https://arxiv.org/abs/2308.06601v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.06601v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Goodness-of-fit tests are crucial tools for assessing the validity of statistical models. In this paper, we introduce a novel approach, the Spectral Smooth Test (SST), that generalizes Neyman's smooth test to high-dimensional data settings. While conventional goodness-of-fit tests for univariate data are well-established, extending them to high dimensions, such as images, trajectories, and SNPs, poses significant challenges. Our proposed SST leverages spectral bases, which adapt naturally to the geometry of feature spaces, to model multivariate distributions. Unlike traditional orthogonal bases, these spectral bases are tailored to the data distribution, enabling more effective function modeling. The SST framework offers a principled way to estimate the underlying model, thereby providing actionable insights even when the null hypothesis is rejected. We present experimental results demonstrating the robustness of SST across various tuning parameter choices and compare its performance against other goodness-of-fit tests. Furthermore, we apply SST to the MNIST dataset as a real-world example, showcasing its effectiveness in high-dimensional scenarios.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-12T15:58:19Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Victor Candido Reis</name>
+    </author>
+    <author>
+      <name>Rafael Izbicki</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2112.05623v3</id>
+    <title>Smooth test for equality of copulas</title>
+    <updated>2023-12-06T17:55:21Z</updated>
+    <link href="https://arxiv.org/abs/2112.05623v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2112.05623v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A smooth test to simultaneously compare $K$ copulas, where $K \geq 2$ is proposed. The $K$ observed populations can be paired, and the test statistic is constructed based on the differences between moment sequences, called copula coefficients. These coefficients characterize the copulas, even when the copula densities may not exist. The procedure employs a two-step data-driven procedure. In the initial step, the most significantly different coefficients are selected for all pairs of populations. The subsequent step utilizes these coefficients to identify populations that exhibit significant differences. To demonstrate the effectiveness of the method, we provide illustrations through numerical studies and application to two real datasets.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-12-10T15:59:00Z</published>
+    <arxiv:comment>49 pages, 7 figures and 14 tables</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Yves Ismaël Ngounou Bakam</name>
+    </author>
+    <author>
+      <name>Denys Pommeret</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.04849v4</id>
+    <title>Data-driven Smooth Tests for Normality in ANOVA When the Number of Groups is Large</title>
+    <updated>2026-03-28T15:51:57Z</updated>
+    <link href="https://arxiv.org/abs/2110.04849v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.04849v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The normality assumption for random errors is fundamental in the analysis of variance (ANOVA) models. However, it is rarely subjected to formal testing in practice, and theoretically justified procedures are largely unavailable, especially when the number of groups diverges. In this paper, we develop Neyman's smooth tests for assessing normality in a broad class of ANOVA models, allowing the number of groups to diverge. The proposed test statistics are constructed via the Gaussian probability integral transformation of ANOVA residuals. We show that using residuals induces non-negligible parameter estimation effects, whose structure depends on the underlying ANOVA model and plays a crucial role in shaping the form of the test statistics and their asymptotic behavior. Under the null hypothesis of normality, the resulting statistics follow an asymptotic Chi-square distribution, with degrees of freedom determined by the order of the smooth test (i.e., the number of components included in the smooth test). We further propose a modified Schwarz's selection rule to automatically determine the order, thereby yielding fully data-driven smooth tests that require no additional tuning parameters. Simulation studies and a real-data example indicate that the proposed tests perform well in practice and are readily applicable.</summary>
+    <category term="econ.EM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-10T16:37:55Z</published>
+    <arxiv:primary_category term="econ.EM"/>
+    <author>
+      <name>Peiwen Jia</name>
+    </author>
+    <author>
+      <name>Xiaojun Song</name>
+    </author>
+    <author>
+      <name>Haoyu Wei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.01973v4</id>
+    <title>A New Class of Asymptotically Distribution-Free Smooth Tests</title>
+    <updated>2026-05-31T18:02:36Z</updated>
+    <link href="https://arxiv.org/abs/2508.01973v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.01973v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This article demonstrates how recent developments in the theory of empirical processes allow us to construct a new family of asymptotically distribution-free smooth tests. Their distribution-free property is preserved even when the parameters are estimated, model selection is performed, and the sample size is only moderately large. A computationally efficient alternative to the classical parametric bootstrap is also discussed.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-04T01:15:07Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Xiangyu Zhang</name>
+    </author>
+    <author>
+      <name>Sara Algeri</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/astro-ph/0611065v1</id>
+    <title>Gaussian analysis of the CMB with the smooth tests of goodness of fit</title>
+    <updated>2006-11-02T17:01:02Z</updated>
+    <link href="https://arxiv.org/abs/astro-ph/0611065v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/astro-ph/0611065v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The study of the Gaussianity of the cosmic microwave background (CMB) radiation is a key topic to understand the process of structure formation in the Universe. In this paper, we review a very useful tool to perform this type of analysis, the Rayner &amp; Best smooth tests of goodness of fit. We describe how the method has been adapted for its application to imaging and interferometric observations of the CMB and comment on some recent and future applications of this technique to CMB data.</summary>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2006-11-02T17:01:02Z</published>
+    <arxiv:comment>8 pages. To appear in "Highlights of Spanish Astrophysics IV" (Springer, eds. F. Figueras, J.M. Girart, M. Hernanz, C. Jordi). Proceedings of the VII Scientific Meeting of the Spanish Astronomical Society (SEA), held in Barcelona, September 12-15, 2006</arxiv:comment>
+    <arxiv:primary_category term="astro-ph"/>
+    <author>
+      <name>R. B. Barreiro</name>
+    </author>
+    <author>
+      <name>J. A. Rubino-Martin</name>
+    </author>
+    <author>
+      <name>E. Martinez-Gonzalez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1509.03459v2</id>
+    <title>Two-Sample Smooth Tests for the Equality of Distributions</title>
+    <updated>2015-09-14T10:25:27Z</updated>
+    <link href="https://arxiv.org/abs/1509.03459v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1509.03459v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper considers the problem of testing the equality of two unspecified distributions. The classical omnibus tests such as the Kolmogorov-Smirnov and Cramèr-von Mises are known to suffer from low power against essentially all but location-scale alternatives. We propose a new two-sample test that modifies the Neyman's smooth test and extend it to the multivariate case based on the idea of projection pursue. The asymptotic null property of the test and its power against local alternatives are studied. The multiplier bootstrap method is employed to compute the critical value of the multivariate test. We establish validity of the bootstrap approximation in the case where the dimension is allowed to grow with the sample size. Numerical studies show that the new testing procedures perform well even for small sample sizes and are powerful in detecting local features or high-frequency components.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-09-11T11:10:56Z</published>
+    <arxiv:comment>40 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Wen-Xin Zhou</name>
+    </author>
+    <author>
+      <name>Chao Zheng</name>
+    </author>
+    <author>
+      <name>Zhen Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1203.3275v4</id>
+    <title>Macroscopic pair correlation of the Riemann zeroes for smooth test functions</title>
+    <updated>2014-08-09T02:53:53Z</updated>
+    <link href="https://arxiv.org/abs/1203.3275v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1203.3275v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>On the assumption of the Riemann hypothesis, we show that over a class of sufficiently smooth test functions, a measure conjectured by Bogomolny and Keating coincides to a very small error with the actual pair correlation measure for zeroes of the Riemann zeta function. Our result extends the well known result of Montgomery that over the same class of test functions the pair correlation measure coincides (to a larger error term) with that of the Gaussian Unitary Ensemble (GUE). The restriction of test functions remains stringent, but we are nonetheless able to detect, at a microscopically blurred resolution, macroscopic troughs in the pair correlation measure.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-03-15T06:38:03Z</published>
+    <arxiv:comment>19 pages, 1 figure. Incorporates referee suggestions</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Q J Math (2013) 64 (4): 1197-1219</arxiv:journal_ref>
+    <author>
+      <name>Brad Rodgers</name>
+    </author>
+    <arxiv:doi>10.1093/qmath/has024</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/qmath/has024" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.00520v1</id>
+    <title>Smooths Tests of Goodness-of-fit for the Newcomb-Benford distribution</title>
+    <updated>2020-03-01T16:51:34Z</updated>
+    <link href="https://arxiv.org/abs/2003.00520v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.00520v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Newcomb-Benford probability distribution is becoming very popular in many areas using statistics, notably in fraud detection. In such contexts, it is important to be able to determine if a data set arises from this distribution while controlling the risk of a Type 1 error, i.e. falsely identifying a fraud, and a Type 2 error, i.e. not detecting that a fraud occurred. The statistical tool to do this work is a goodness-of-fit test. For the Newcomb-Benford distribution, the most popular such test is Pearson's chi-square test whose power, related to the Type 2 error, is known to be weak. Consequently, other tests have been recently introduced. The goal of the present work is to build new goodness-of-fit tests for this distribution, based on the smooth test principle. These tests are then compared to some of their competitors. It turns out that the proposals of the paper are globally preferable to existing tests and should be seriously considered in fraud detection contexts, among others.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-01T16:51:34Z</published>
+    <arxiv:comment>in French</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>G. R. Ducharme</name>
+    </author>
+    <author>
+      <name>S. Kaci</name>
+    </author>
+    <author>
+      <name>C. Vovor-Dassu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1808.09727v1</id>
+    <title>Towards Massively Parallel Computations in Algebraic Geometry</title>
+    <updated>2018-08-29T11:08:14Z</updated>
+    <link href="https://arxiv.org/abs/1808.09727v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1808.09727v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Introducing parallelism and exploring its use is still a fundamental challenge for the computer algebra community. In high performance numerical simulation, on the other hand, transparent environments for distributed computing which follow the principle of separating coordination and computation have been a success story for many years. In this paper, we explore the potential of using this principle in the context of computer algebra. More precisely, we combine two well-established systems: The mathematics we are interested in is implemented in the computer algebra system Singular, whose focus is on polynomial computations, while the coordination is left to the workflow management system GPI-Space, which relies on Petri nets as its mathematical modeling language, and has been successfully used for coordinating the parallel execution (autoparallelization) of academic codes as well as for commercial software in application areas such as seismic data processing. The result of our efforts is a major step towards a framework for massively parallel computations in the application areas of Singular, specifically in commutative algebra and algebraic geometry. As a first test case for this framework, we have modeled and implemented a hybrid smoothness test for algebraic varieties which combines ideas from Hironaka's celebrated desingularization proof with the classical Jacobian criterion. Applying our implementation to two examples originating from current research in algebraic geometry, one of which cannot be handled by other means, we illustrate the behavior of the smoothness test within our framework, and investigate how the computations scale up to 256 cores.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-08-29T11:08:14Z</published>
+    <arxiv:comment>39 pages, 5 figures, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Janko Boehm</name>
+    </author>
+    <author>
+      <name>Wolfram Decker</name>
+    </author>
+    <author>
+      <name>Anne Frühbis-Krüger</name>
+    </author>
+    <author>
+      <name>Franz-Josef Pfreundt</name>
+    </author>
+    <author>
+      <name>Mirko Rahn</name>
+    </author>
+    <author>
+      <name>Lukas Ristau</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1812.08268v2</id>
+    <title>A multivariate central limit theorem for Lipschitz and smooth test functions</title>
+    <updated>2019-01-02T10:00:14Z</updated>
+    <link href="https://arxiv.org/abs/1812.08268v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1812.08268v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide an abstract multivariate central limit theorem with the Lindeberg-type error bounded in terms of Lipschitz functions (Wasserstein 1-distance) or functions with bounded second or third derivatives. The result is proved by means of Stein's method. For sums of i.i.d. random vectors with finite third absolute moment, the optimal rate of convergence is established (that is, we eliminate the logarithmic factor in the case of Lipschitz test functions). We indicate how the result could be applied to certain other dependence structures, but do not derive bounds explicitly.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-12-19T22:09:12Z</published>
+    <arxiv:comment>26 pages</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Martin Raič</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.05263v2</id>
+    <title>Specification testing for regressions: an approach bridging between local smoothing and global smoothing methods</title>
+    <updated>2017-10-17T02:50:59Z</updated>
+    <link href="https://arxiv.org/abs/1710.05263v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.05263v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For regression models, most of existing specification tests can be categorized into the class of local smoothing tests and of global smoothing tests. Compared with global smoothing tests, local smoothing tests can only detect local alternatives distinct from the null hypothesis at a much slower rate when the dimension of predictor vector is high, but can be more sensitive to oscillating alternatives. In this paper, we suggest a projection-based test to bridge between the local and global smoothing-based methodologies such that the test can benefit from the advantages of these two types of tests. The test construction is based on a kernel estimation-based method and the resulting test becomes a distance-based test with a closed form. The asymptotic properties are investigated. Simulations and a real data analysis are conducted to evaluate the performance of the test in finite sample cases.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-15T02:17:47Z</published>
+    <arxiv:comment>31 pages</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Lingzhu Li</name>
+    </author>
+    <author>
+      <name>Lixing Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/astro-ph/0310706v1</id>
+    <title>Tests of Gaussianity</title>
+    <updated>2003-10-24T10:48:00Z</updated>
+    <link href="https://arxiv.org/abs/astro-ph/0310706v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/astro-ph/0310706v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We review two powerful methods to test the Gaussianity of the cosmic microwave background (CMB): one based on the distribution of spherical wavelet coefficients and the other on smooth tests of goodness-of-fit. The spherical wavelet families proposed to analyse the CMB are the Haar and the Mexican Hat ones. The latter is preferred for detecting non-Gaussian homogeneous and isotropic primordial models containing some amount of skewness or kurtosis. Smooth tests of goodness-of-fit have recently been introduced in the field showing some interesting properties. We will discuss the smooth tests of goodness-of-fit developed by Rayner and Best for the univariate as well as for the multivariate analysis.</summary>
+    <category term="astro-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2003-10-24T10:48:00Z</published>
+    <arxiv:comment>Proceedings of "The Cosmic Microwave Background and its Polarization", New Astronomy Reviews, (eds. S. Hanany and K.A. Olive), in press</arxiv:comment>
+    <arxiv:primary_category term="astro-ph"/>
+    <author>
+      <name>A. M. Aliaga</name>
+    </author>
+    <author>
+      <name>E. Martinez-Gonzalez</name>
+    </author>
+    <author>
+      <name>L. Cayon</name>
+    </author>
+    <author>
+      <name>F. Argueso</name>
+    </author>
+    <author>
+      <name>J. L. Sanz</name>
+    </author>
+    <author>
+      <name>R. B. Barreiro</name>
+    </author>
+    <author>
+      <name>J. E. Gallegos</name>
+    </author>
+    <arxiv:doi>10.1016/j.newar.2003.09.004</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.newar.2003.09.004" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.19654v1</id>
+    <title>Derived representation schemes with arbitrary coefficients and associative smoothness</title>
+    <updated>2026-07-22T01:21:50Z</updated>
+    <link href="https://arxiv.org/abs/2607.19654v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.19654v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study associative smoothness through representation homology with coefficients in arbitrary finite-dimensional algebras. We prove that the higher representation homology of a finitely generated formally smooth algebra with arbitrary finite-dimensional coefficients vanishes. We further show that allowing arbitrary coefficients yields a strictly stronger smoothness test: suitable non-matrix coefficients detect nonsmoothness in situations where matrix coefficients do not. These results raise the question of whether representation homology with arbitrary coefficients furnishes a homotopical characterization of associative smoothness in the spirit of the derived Kontsevich-Rosenberg principle. For finite-dimensional algebras, we prove that representation homology with arbitrary coefficients completely characterizes formal smoothness, providing supporting evidence for this philosophy.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.KT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-22T01:21:50Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Guanyu Li</name>
+    </author>
+  </entry>
+</feed>

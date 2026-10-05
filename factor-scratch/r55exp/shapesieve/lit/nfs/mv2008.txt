@@ -1,0 +1,448 @@
+                                                  Non-degeneracy of Pollard Rho Collisions
+arXiv:0808.0469v2 [math.NT] 31 Aug 2008
+
+
+
+
+                                                    Stephen D. Miller∗ and Ramarathnam Venkatesan
+                                                                           August 31, 2008
+
+
+                                                                                Abstract
+                                                      The Pollard ρ algorithm is a widely used algorithm for solving
+                                                  discrete logarithms on general cyclic groups, including elliptic curves.
+                                                  Recently the first nontrivial runtime estimates were provided for it,
+                                                                             √
+                                                  culminating in a sharp O( n) bound for the collision time on a cyclic
+                                                  group of order n [4]. In this paper we show that for n satisfying a mild
+                                                  arithmetic condition, the collisions guaranteed by these results are
+                                                  nondegenerate with high probability: that is, the Pollard ρ algorithm
+                                                  successfully finds the discrete logarithm.
+                                                     Keywords: Pollard Rho algorithm, discrete logarithm, random walk,
+                                                  expander graph, collision time, mixing time, spectral analysis.
+
+
+                                          1       Introduction
+                                          The Pollard ρ algorithm is, to date, the leading algorithm for solving discrete
+                                          logarithm problems on general groups, including elliptic curves. The algo-
+                                          rithm can be stated as follows. Let G be a cyclic group of order n generated
+                                          by the element g; n may assumed to be a large prime because of the Pohlig-
+                                          Hellman reduction [1]. Let h = g y be the element whose discrete logarithm
+                                          y 6= 1 (unknown) is to be found, and let x0 = h or a random power g r1 hr2
+                                          (which turns out to be only slightly less general). Let G = S1 ∪ S2 ∪ S3 be a
+                                          random partition of G into three disjoint subsets, in which each element has
+                                              Partially supported by NSF grant DMS-0601009 and an Alfred P. Sloan Foundation
+                                              ∗
+
+                                          Fellowship.
+
+
+
+                                                                                     1
+a 1/3 probability of belonging to each Sj .1 Define an iteration xk+1 = f (xk ),
+where                              
+                                    gx , x ∈ S1 ;
+                        f (x) =      hx , x ∈ S2 ;                        (1.1)
+                                    2
+                                     x , x ∈ S3 .
+At each stage xk may be written as g ak y+bk , where the coefficients ak , bk ∈
+Z/nZ are known. Iterate until a collision of values xk = xℓ has been found,
+and if the collision is “non-degenerate” (meaning (ak , bk ) 6= (aℓ , bℓ )), solve for
+the discrete logarithm using the formula y = abℓk−b  k
+                                                   −aℓ√
+                                                       .
+    The algorithm is conjectured to run in time O( n) with high probability.
+It is the only such algorithm which uses small memory and which works for
+general groups. Though faster algorithms are known for specific incarnations
+of cyclic groups2 , a theorem of Victor Shoup [7] asserts that no algorithm on a
+general group can be faster – aside from improving the implied multiplicative
+constant. For it to be successful, two things must happen:
+                                             √
+   1. A collision must be found in time O( n).
+   2. This collision must be non-degenerate.
+Item 1 has been the subject of a number of recent papers, before which there
+were√ no nontrivial bounds on the runtime at all. First, a collision time of
+O( n(log n)3 ) was shown√ in [5], which was successively improved by [3] and
+[4] to the optimal O( n) bound.
+     The purpose of this paper is to address Item 2 for the Pollard ρ algorithm
+(it is, however, settled for some variants of Pollard ρ, as in [2]). Unfortunately
+as of yet we are unable to make the result unconditional, for it depends on
+the multiplicative order of 2 modulo n (the least positive integer k such that
+2k ≡ 1 (mod n)). We prove the following result, which is a complete runtime
+analysis for almost all group orders n:
+   1
+     In practice, the assignment is accomplished using a hash function which is expected to
+behave randomly, as storing the partitions themselves would take up too much memory.
+A formal model would assume a cryptographically strong pseudo-random function whose
+underlying cryptographic primitive would have a security estimate exceeding the runtime
+of the Pollard Rho algorithm. Such implementation details to justify the random walk
+model used in our analysis are well understood.
+   2
+     For example, index calculus provides a subexponential algorithm on the group F∗p ,
+which is abstractly isomorphic to a cyclic group of order n = p − 1. Note that this is
+not itself an example of a prime order cyclic group as treated above: one must apply the
+Pohlig-Hellman reduction first.
+
+                                            2
+1.2 Theorem. Consider the Pollard ρ algorithm as above on a group G = hgi
+of prime order n, starting at a random point x0 = g r1 hr2 . Suppose that
+the multiplicative order of 2 modulo n is at least c0 (log n)3 , where c0 is the
+absolute constant coming from Proposition 2.18. Then any Pollard ρ collision
+                                                                              2
+occurring before time T is nondegenerate with probability at least 1 − 23 Tn2 .
+In particular, the
+                √ collisions guaranteed by [4] to occur with high probability
+within time O( n) are nondegenerate with probability at least 1 − O( n1 ).
+Remarks: 1) Though the probability of nondegeneracy is heuristically higher
+than that of collisions, in practice it has been much more difficult to prove
+nondegeneracy.
+     2) The multiplicative order of 2 modulo n is typically quite large, e.g. it
+equals n − 1 if 2 generates (Z/nZ)∗ , which it frequently does. There do exist
+primes with multiplicative order the size of log n (e.g. Fermat and Mersenne
+primes), but those disobeying the condition in the theorem are quite rare.
+Indeed, we show in Lemma 3.3 that at most O((log X)5 ) such primes p exist
+in the range X ≤ p ≤ 2X.
+     3) Even if 2 has small multiplicative order modulo n, there is always
+a prime ℓ = O((log n)6 (log log n)) which has multiplicative order at least
+c0 (log n)3 . This is because a cyclic group has at most L2 elements of order
+≤ L. (We thank the referee for supplying this argument.) If the Pollard ρ
+algorithm is modified to replace the squaring step by x 7→ xℓ instead, the
+analysis here√and in [3–5] applies and gives a completely rigorous proof of
+the same O( n) runtime, with the same 1 − O( n1 ) success rate.
+     4) The reason we need to assume a random starting point, unlike in [5],
+is that we cannot rule out degeneracies in collisions occurring within the
+first few steps. Lemma 3.1, in particular, applies only to random starting
+points. Once the algorithm has proceeded for c0 (log n)3 steps a random point
+is reached regardless of the starting point, but we cannot guarantee a random
+position before then.
+     The strategy of the proof starts with the viewpoint that the Pollard ρ iter-
+ation can be modeled as a pseudo-random walk on the “Pollard ρ graph”: the
+graph whose vertices are elements of G, and whose (directed) edges have the
+form
+                             x −→ xg, xh, or x2 .                          (1.3)
+Indeed, until a collision occurs the iteration by (1.1) is in fact a random
+walk, because the destination from a vertex x depends only on its random
+assignment to one of the Sj ; however, it is important that the walk is no
+
+                                       3
+longer random after this point, for it enters a loop. The coefficients (ak , bk ) ∈
+(Z/nZ)2 meanwhile likewise can be modeled as a random walk (until the time
+of collision) on the following “Pollard ρ coefficient graph”:
+                     (a, b) −→ (a + 1, b), (a, b + 1), or (2a, 2b).              (1.4)
+This graph maps onto the graph (1.3) by (a, b) 7→ g ay+b , where y is the (secret
+and unknown) exponent of h = g y .
+    Our argument has two main ingredients. The first is a spectral upper
+bound on the mixing time of this graph, which roughly speaking shows that
+the coefficients (ak , bk ) become equidistributed after a small number of steps.
+This is very similar to the argument in [5] to guarantee collisions among the
+xk . That alone, however, is not enough to show nondegeneracy: it is impor-
+tant to note that undirected 3-regular graphs can have this equidistribution
+feature, while simultaneously having (ak , bk ) equaling (ak+2 , bk+2 ) with prob-
+ability ≥ 1/3 (for example, going backwards on the edge just traveled). The
+second ingredient, an estimate on the number of short cycles, handles this.
+It is this part which depends on the condition on the multiplicative order of
+2 modulo n, and hence which is not completely general.
+    We conclude this section with the proof of Theorem 1.2, which depends
+on estimates of the last two sections. Section 2, roughly speaking, deals
+with long random walks, while Section 3 with short random walks. The
+condition on the multiplicative order of 2 modulo n is needed to make sure
+their intervals of applicability overlap.
+Proof of Theorem 1.2. Once a collision occurs, all future collisions are non-
+degenerate if and only if the first one was; this is because of the invertibility
+of the steps in (1.4). Thus, it suffices to assume that no collision has oc-
+curred until time T , which allows us to model the coefficients (ak , bk ), k ≤ T ,
+using a random walk on (1.4). Because the starting point x0 = g r1 hr2 is
+uniformly distributed and walk up to time T is random, the values of each
+(ak , bk ) are themselves uniformly distributed. We show in Proposition 2.18
+and Lemma 3.1 that for any m > 0 and a random point (a, b) ∈ (Z/nZ)2 ,
+a random walk of length m starting at (a, b) ends at (a, b) with probabil-
+ity at most 23 n12 . By the union bounds, the probability of a degeneracy
+(ak , bk ) = (aℓ , bℓ ) occurring for some distinct k, ℓ ≤ T is bounded above by
+              X                                      X 3 1              3 T2
+                     P [(ak , bk ) = (aℓ , bℓ )] ≤                  <        .   (1.5)
+             k,ℓ≤T                                   k,ℓ≤T
+                                                             2 n2       2 n2
+              k6=ℓ                                   k6=ℓ
+
+
+                                             4
+    It is a pleasure to acknowledge Ravi Montenegro, Ze’ev Rudnick, Adi
+Shamir, and Prasad Tetali for their helpful discussions. We also thank Curt
+McMullen for helpful comments concerning the remark at the end of Sec-
+tion 2, and the anonymous referee for their suggestions for improving the
+paper, in particular Remark 3 above.
+
+
+2      Mixing time estimates
+Let A denote the adjacency operator of the graph (1.4): it is defined on
+complex-valued functions f on (Z/nZ)2 by the formula
+
+               Af (a, b) = f (2a, 2b) + f (a + 1, b) + f (a, b + 1) .       (2.1)
+
+Such functions themselves form a complex vector space of dimension n2 ,
+which is equipped with the usual inner product and norm
+                     X
+      hf1 , f2 i =         f1 (a, b) f2 (a, b) , kf k2 = hf, f i . (2.2)
+                         a,b ∈ Z/nZ
+
+
+Of special interest to us is the restriction of A to 1⊥ , the orthogonal comple-
+ment of the constant function 1 (the functions on the graph whose average
+value is zero). The following result relates the operator norm properties of
+this restriction of A, to the mixing properties of the random walk on the
+graph:
+2.3 Lemma. ([5, Lemma 2.1]) Let Γ denote a directed graph on the vertex
+set V , having both d directed edges entering and exiting each vertex (including
+multiplicity). Suppose that there exists a constant µ < d such that kAf k ≤
+µkf k for all f ∈ 1⊥ . Let S be an arbitrary subset of V . Then the number of
+                      log(2n)
+paths of length r ≥ log(d/µ)  which start from any given vertex and end in S is
+              |S|            |S|
+between 21 dr |V |
+                   and 23 dr |V |
+                                  .
+    Thus sufficiently long random walks hit a set S with probability between
+1 |S|         |S|
+2 |V |
+       and 32 |V |
+                   , independent of their starting point. Unfortunately this Lemma
+does not apply directly to our situation, because it can happen that kAf k =
+kf k for some functions f . However, to show that random walks mix it suffices
+to work two steps at a time; fortunately, a nontrivial operator norm estimate
+
+                                         5
+applies to A2 instead, which corresponds to the adjacency operator for the
+graph on (Z/nZ)2 with edges
+
+  (a, b) −→ (4a, 4b), (2a + 1, 2b), (2a, 2b + 1), (2a + 2, 2b), (2a, 2b + 2),
+               (a + 1, b + 1), (a + 1, b + 1), (a + 2, b), or (a, b + 2). (2.4)
+
+2.5 Proposition. With A denoting the adjacency operator of the graph (1.4)
+and the standing assumption that n is an odd prime, there exists an absolute
+constant c > 0 such that
+                                         2
+                                     c
+                  2
+               kA f k ≤      3−              kf k , f ∈ 1⊥ .           (2.6)
+                                 (log n)2
+
+Proof. Any function f on the vertices may be expanded in terms of the
+additive characters χk,ℓ (x, y) = e2πi(kx+ℓy)/n :
+                                      X
+                             f =             ck,ℓ χk,ℓ .        (2.7)
+                                   k,ℓ ∈ Z/nZ
+
+
+The condition that f ∈ 1⊥ is equivalent to c0,0 = 0. The action of A on the
+character χk,ℓ is given by
+
+                          A χk,ℓ = dk,ℓ χk,ℓ + χ2k,2ℓ ,                      (2.8)
+
+where
+                              dk,ℓ = e2πik/n + e2πiℓ/n .                     (2.9)
+Thus A is the sum of the diagonal operator D : χk,ℓ 7→ dk,ℓ χk,ℓ and the
+permutation operator P : χk,ℓ 7→ χ2k,2ℓ . The adjoint of A under the inner
+product (2.2) is A∗ = D + P −1 . Let us write
+      2             2
+   A∗ A2 = (D + P −1 D + DP −1 + P −2 )(D 2 + P D + DP + P 2)
+                                                                            (2.10)
+         = X1 + X2 ,
+                2
+where X1 = D P D + DP , and X2 is the remaining sum of 14 terms from
+the expansion of the first line. Because |dk,ℓ| = 2| cos( π(k−ℓ)
+                                                            n
+                                                                 )| ≤ 2 and in fact
+equals 2 when k = ℓ, the operator norms of D and D are kDk = kDk = 2.
+Likewise kP k = kP −1 k = 1, because P preserves norms. It follows from the
+
+
+                                         6
+sum of 14 terms defining X2 that kX2 k ≤ 71. Using this fact and Cauchy-
+Schwartz, we get the bound
+                           2                                      2
+  kA2 f k2 = hf, A∗ A2 f i ≤ 71 kf k2 + |hf, (D P D + DP )f i| .                                  (2.11)
+In order to prove (2.6) it now suffices to show the bound
+                                                 
+           2                                c
+    |hf, (D P D + DP )f i| ≤       10 −             kf k2
+                                         (log n)2
+                                
+                                            c
+                                                         X                                       (2.12)
+                                                     2
+                             =     10 −             n                                |ck,ℓ |2 ,
+                                         (log n)2
+                                                                      (k,ℓ)6=(0,0)
+
+for some absolute constant c > 0. Here we have used (2.7) as well as the
+inner product relation
+                                       2
+                                       n , (k, ℓ) = (k ′ , ℓ′ )
+                  hχk,ℓ , χk′ ,ℓ′ i =                             (2.13)
+                                       0 , otherwise.
+Since
+        2                                                               2
+   (D P D + DP )χk,ℓ = µk,ℓ χ2k,2ℓ ,               µk,ℓ = d2k,2ℓ dk,ℓ + d2k,2ℓ ,                  (2.14)
+we have that
+                   2                              X
+         |hf, (D P D + DP )f i| ≤ n2                         |ck,ℓ | |c2k,2ℓ | |µk,ℓ| .           (2.15)
+                                              (k,ℓ)6=(0,0)
+
+We now group the indices (k, ℓ) 6= (0, 0) into the n + 1 lines through the
+origin in (Z/nZ)2 . Using the bounds
+            |µk,ℓ | ≤ 8 + 2| cos 2(k−ℓ)π
+                                    n
+                                         |,       for the lines with k 6= ℓ ,
+                                                                                                  (2.16)
+         |µk,k | ≤ 6 + 4| cos kπ
+                               n
+                                 |,
+and the fact that 2 is invertible modulo n, the desired bound (2.12) reduces
+to the estimates
+         Xn−1             n−1
+                          X
+              xk x2k ≤        x2k                   and
+             k=1               k=1
+ n−1                                               n−1
+                                         c′
+ X                                               X
+       xk x2k | cos πk
+                    n
+                       |   ≤       1−                        x2k , for some absolute c′ > 0,
+ k=1
+                                      (log n)2      k=1
+                                                                             (2.17)
+for any real numbers x1 , . . . , xn−1 . The first inequality follows from xk x2k ≤
+1
+2
+  (x2k + x22k ), and the second is proven in [5, Prop. 3.1].
+
+                                              7
+    Combining these, we have shown
+2.18 Proposition. There exists an absolute positive constant c0 such that
+the number of paths of length r ≥ c0 (log n)3 on the graph (1.4) which begin
+                                                                      r           r
+at the vertex (a, b) and end at the vertex (a′ , b′ ) is between 12 n3 2 and 32 n3 2 . In
+particular, the probability of a random walk of length r ≥ c0 (log n)3 ending
+at its starting point is at most 23 n12 .
+Remarks: This mixing time estimate for the random walk can also be proven
+using the method of canonical paths from [6].
+    Interestingly, the mixing time estimate for the Pollard ρ graph (1.3) in [5]
+does not need the step x → xh: the steps x 7→ xg and x 7→ x2 suffice. This
+follows from the same method of proof, and is suggested by the heuristic that
+the x 7→ xh step is approximated by the other two. However, the Pollard
+ρ coefficient graph does not rapidly mix unless all three steps in (1.4) are
+present. In any case, all three steps are necessary for the execution of the
+Pollard ρ algorithm.
+
+
+3     Trace estimates
+3.1 Lemma. If k ≥ 1 is less than the multiplicative order of 2 modulo n,
+then there are precisely 3k −2k closed cycles on the graph (1.4) of length k. In
+particular, if (a, b) is a random point in (Z/nZ)2 , the probability is at most
+ 1
+n2
+   that a random walk of length k which starts at (a, b) also ends at (a, b).
+   The number of such cycles is also given by tr Ak , where A is the adjacency
+operator of the graph. The above estimate, however, does not seem to follow
+from the spectral techniques of the previous section.
+Proof. Every path involves either doubling the coefficients (a, b), or adding
+1 to one of them. Thus all paths of length k starting from the vertex (x, y)
+have the form
+                     T : (x, y) 7→ 2s (x, y) + (u, v) ,                  (3.2)
+where s ≤ k equals the number of doubling steps in the path, and u, v ∈ Z/nZ
+are independent of x and y . (This characterization obviously holds for k = 1,
+and in general by induction.) A closed cycle is equivalent to a fixed point for
+T . Of the 3k possible paths starting from (x, y), exactly 2k have s = 0. For
+those walks, (u, v) 6= (0, 0) since all steps are of the form (a, b) 7→ (a + 1, b)
+or (a, b + 1). Thus T has no fixed points in this situation.
+
+                                           8
+   However, if s 6= 0 then 2s is not congruent to 1 modulo n because of
+the multiplicative order condition. In this situation, T has exactly one fixed
+point. The closed cycles come from these 3k − 2k cases.
+   This concludes the estimates necessary for the proof of Theorem 1.2. We
+conclude with the following lemma, which shows that primes for which 2 has
+multiplicative order smaller than its condition c0 (log n)3 are extremely rare.
+
+3.3 Lemma. Let X > 0, c > 0, and B the set of primes p in the inter-
+val [X, 2X] such that the multiplicative order of 2 modulo p is bounded by
+c(log X)3 . Then the size of B is bounded by
+
+                                         c2 log(2)
+                             |B| ≤                 (log X)5 .                                  (3.4)
+                                              2
+                                                                                           k
+                                                                     Q
+Proof. The condition on p ∈ B states that p divides                       k≤c(log X)3 (2       − 1).
+Primality therefore implies that
+                     Y               Y
+                         p divides         (2k − 1) ,                                          (3.5)
+                       p∈B                     k ≤ c(log X)3
+
+
+and in particular satisfies
+                          Y                      Y
+              X |B| ≤       p ≤                           (2k − 1) ≤ 2E ,                      (3.6)
+                             p∈B          k ≤ c(log X)3
+
+
+with                               X                     1 2
+                     E =                       k ≤         c (log X)6 ,                        (3.7)
+                                                         2
+                               k ≤ c(log X)3
+
+implying (3.4).
+   In fact this proof shows something slightly stronger, that the bound (3.4)
+holds for the number of primes at least X whose multiplicative order is
+bounded by c(log X)3 .
+
+
+References
+[1] Stephen C. Pohlig and Martin E. Hellman, An improved algorithm for computing
+    logarithms over GF(p) and its cryptographic significance, IEEE Trans. Information
+    Theory IT-24 (1978), no. 1, 106–110.
+
+                                               9
+[2] Jeremy Horwitz and Ramarathnam Venkatesan, Random Cayley digraphs and the
+    discrete logarithm, Algorithmic number theory (Sydney, 2002), 2002, pp. 416–430.
+[3] J.-H. Kim, R. Montenegro, and P. Tetali, Near Optimal Bounds for Collision in
+    Pollard Rho for Discrete Log, Proceedings of the 48th Annual IEEE Symposium on
+    Foundations of Computer Science (FOCS 2007), 2007, pp. 215–223.
+[4] J.-H. Kim, R. Montenegro, Y. Peres, and P. Tetali, A Birthday Paradox for Markov
+    chains, with an optimal bound for collision in Pollard Rho for Discrete Logarithm, Al-
+    gorithmic number theory, Lecture Notes in Comput. Sci., vol. 5011, Springer, Berlin,
+    2008, pp. 402–415.
+[5] Stephen D. Miller and Ramarathnam Venkatesan, Spectral analysis of Pollard rho
+    collisions, Algorithmic number theory, Lecture Notes in Comput. Sci., vol. 4076,
+    Springer, Berlin, 2006, pp. 573–581.
+[6] Ravi Montenegro and Prasad Tetali, Mathematical Aspects of Mixing Times in
+    Markov Chains, Foundations and Trends in Theoretical Computer Science, 2006.
+[7] Victor Shoup, Lower bounds for discrete logarithms and related problems, Advances
+    in cryptology—EUROCRYPT ’97 (Konstanz), 1997, pp. 256–266. Updated version
+    at http://www.shoup.net/papers/dlbounds1.pdf.
+
+
+
+
+Addresses:
+Stephen D. Miller
+Department of Mathematics
+110 Frelinghuysen Road
+Rutgers, The State University of New Jersey
+Piscataway, NJ 08854
+miller@math.rutgers.edu
+Ramarathnam Venkatesan
+Microsoft Research Cryptography and Anti-Piracy Group
+1 Microsoft Way
+Redmond, WA 98052
+    and
+Cryptography, Security and Applied Mathematics Group
+Microsoft Research India
+Scientia - 196/36 2nd Main
+Sadashivnagar, Bangalore 560 080, India
+venkie@microsoft.com
+
+
+                                           10
+

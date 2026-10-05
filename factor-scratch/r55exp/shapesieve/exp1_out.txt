@@ -1,0 +1,56 @@
+==============================================================================
+exp1  DOES THE SHAPE OF N CHANGE THE SIEVING DOMAIN?  seed=20261004
+     all N < 2^40, generated locally, nothing cryptographic
+==============================================================================
+
+Setup: B=60 (primes 2..60), M=20000 candidates u in [0,M).
+
+--- P1.4  SURVIVAL RATE per cell (per-cell, never pooled) ---
+     surv = #{u<M : gcd(u^2 mod N, P_B)=1}; rate = surv/M
+     family             cells median    min       max       sd        expected hits/cell
+     pq (generic)       12   0.13105   0.13105   0.13105   0.00000   2621
+     a^2 b              12   0.13105   0.13105   0.13105   0.00000   2621
+     a^3 b              12   0.13105   0.13105   0.13105   0.00000   2621
+     a^2 b (a~20b)      12   0.13105   0.13105   0.13105   0.00000   2621
+     POS CTRL 2^12*m    12   0.13105   0.13105   0.13105   0.00000   2621
+     NEG CTRL pq'       12   0.13105   0.13105   0.13105   0.00000   2621
+
+--- P1.1  IS THE SURVIVAL RATE SHAPE-DEPENDENT? ---
+     family             median rate  ratio to pq  verdict   
+     pq (generic)       0.13105      1.0000       SAME (shape-blind)
+     a^2 b              0.13105      1.0000       SAME (shape-blind)
+     a^3 b              0.13105      1.0000       SAME (shape-blind)
+     a^2 b (a~20b)      0.13105      1.0000       SAME (shape-blind)
+     POS CTRL 2^12*m    0.13105      1.0000       SAME (shape-blind)
+     NEG CTRL pq'       0.13105      1.0000       SAME (shape-blind)
+
+--- P1.2  POSITIVE CONTROL: does the detector EVER fire? ---
+     POS CTRL 2^12*m ratio to pq = 1.0000  -> detector FIRES? NO -- EXP1 IS VACUOUS
+     cell     N           surv      rate     
+     2^12*m   508523024384 2621      0.13105  
+     2^12*m   326343053312 2621      0.13105  
+     2^12*m   320432828416 2621      0.13105  
+     2^12*m   449387155456 2621      0.13105  
+     2^12*m   452989718528 2621      0.13105  
+     2^12*m   290447306752 2621      0.13105  
+
+--- P1.3  NEGATIVE CONTROL: two generic batches must agree ---
+     NEG CTRL pq' ratio to pq = 1.0000  -> detector QUIET? YES
+     cell     N           surv      rate     
+     pq'      888367771547 2621      0.13105  
+     pq'      1005500705813 2621      0.13105  
+     pq'      593034950149 2621      0.13105  
+     pq'      461205845417 2621      0.13105  
+     pq'      811114199543 2621      0.13105  
+     pq'      698352700709 2621      0.13105  
+
+--- P1.5  Do the residues N mod q (q<=B) carry shape information? ---
+     family             mean(N mod q) var        med var   
+     pq (generic)       10.765     114.557    114.557   
+     a^2 b              13.118     138.678    138.678   
+     a^3 b              12.588     132.931    132.931   
+     a^2 b (a~20b)      12.735     158.069    158.069   
+     POS CTRL 2^12*m    12.529     147.453    147.453   
+     NEG CTRL pq'       11.618     123.740    123.740   
+
+OUTPUT SIGNATURE (run-twice check): 514f73f97e76e6bd

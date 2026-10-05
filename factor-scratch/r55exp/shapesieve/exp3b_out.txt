@@ -1,0 +1,136 @@
+==============================================================================
+exp3b  MEASURED SHAPE-SENSITIVITY THRESHOLD (numpy/SPF)   seed=20261004
+       N in [1048576, 4194304), M = 60000, M^2/maxN = 3433 -> wraps
+       all moduli generated locally; none of cryptographic interest
+==============================================================================
+
+Family inventory (10 cells each)
+   pq generic         minFac [1087, 1151, 1223] N bits 21..22
+   NEG CTRL pq'       minFac [1181, 1223, 1319] N bits 21..22
+   a^2 b (a~2^6)      minFac [37, 41, 47] N bits 21..22
+   a^3 b (a~2^5)      minFac [29, 31, 37] N bits 21..21
+   a^4 b (a~2^4)      minFac [13, 17]   N bits 21..22
+   POS CTRL a=5       minFac [5]        N bits 21..22
+   POS CTRL a=7       minFac [7]        N bits 21..22
+   PROBE minFac=61    minFac [61]       N bits 22..22
+
+SPF sieve built for [0, 2^22)  [0.0 s]
+
+SELF-TEST: smooth_flag (1 pass) vs smooth_flag_slow (reference)
+   B=60    range<2^19 agree=True  (fast=28724, ref=28724)
+   B=256   range<2^19 agree=True  (fast=105277, ref=105277)
+   B=1024  range<2^19 agree=True  (fast=208571, ref=208571)
+
+============================================================================
+B = 60      85206 of 4194304 values below 2^22 are B-smooth (2.031%)
+  family             minFac    median    min       max       exp hits   
+  pq generic         1087      0.03860   0.03733   0.04805   2426       
+                     cells: 0.0454 0.0382 0.0373 0.0481 0.0390 0.0417 0.0380 0.0381 0.0404 0.0381
+  NEG CTRL pq'       1181      0.04095   0.03727   0.04532   2453       
+                     cells: 0.0428 0.0373 0.0401 0.0425 0.0421 0.0407 0.0453 0.0412 0.0377 0.0392
+  a^2 b (a~2^6)      37        0.04657   0.03680   0.05617   2838       
+                     cells: 0.0462 0.0496 0.0368 0.0440 0.0467 0.0458 0.0529 0.0486 0.0562 0.0464
+  a^3 b (a~2^5)      29        0.05464   0.04797   0.05985   3270       
+                     cells: 0.0536 0.0568 0.0539 0.0561 0.0530 0.0583 0.0480 0.0599 0.0554 0.0502
+  a^4 b (a~2^4)      13        0.05193   0.04865   0.06485   3155       
+                     cells: 0.0649 0.0537 0.0502 0.0487 0.0537 0.0487 0.0487 0.0537 0.0537 0.0502
+  POS CTRL a=5       5         0.04999   0.04593   0.05677   3011       
+                     cells: 0.0459 0.0496 0.0478 0.0514 0.0504 0.0466 0.0479 0.0568 0.0550 0.0504
+  POS CTRL a=7       7         0.05208   0.04868   0.05473   3101       
+                     cells: 0.0511 0.0489 0.0514 0.0528 0.0487 0.0547 0.0488 0.0529 0.0537 0.0540
+  PROBE minFac=61    61        0.03704   0.03487   0.04020   2225       
+                     cells: 0.0361 0.0369 0.0402 0.0385 0.0372 0.0372 0.0349 0.0350 0.0387 0.0362
+  ------------------------------------------------------------------------
+  family             ratio    channel    verdict
+  pq generic         1.0000   -          (reference)
+  NEG CTRL pq'       1.0609   CLOSED     shape-blind [minFac>B]
+  a^2 b (a~2^6)      1.2064   OPEN       SHAPE-SENSITIVE  <== FIRES
+  a^3 b (a~2^5)      1.4156   OPEN       SHAPE-SENSITIVE  <== FIRES
+  a^4 b (a~2^4)      1.3452   OPEN       SHAPE-SENSITIVE  <== FIRES
+  POS CTRL a=5       1.2951   OPEN       SHAPE-SENSITIVE  <== FIRES
+  POS CTRL a=7       1.3493   OPEN       SHAPE-SENSITIVE  <== FIRES
+  PROBE minFac=61    0.9596   CLOSED     shape-blind [minFac>B]
+
+============================================================================
+B = 256     439305 of 4194304 values below 2^22 are B-smooth (10.474%)
+  family             minFac    median    min       max       exp hits   
+  pq generic         1087      0.14129   0.13564   0.16184   8684       
+                     cells: 0.1579 0.1407 0.1356 0.1618 0.1395 0.1489 0.1419 0.1380 0.1445 0.1385
+  NEG CTRL pq'       1181      0.14457   0.13405   0.15284   8608       
+                     cells: 0.1528 0.1361 0.1478 0.1387 0.1500 0.1484 0.1490 0.1413 0.1365 0.1341
+  a^2 b (a~2^6)      37        0.15273   0.14027   0.17825   9268       
+                     cells: 0.1518 0.1564 0.1403 0.1439 0.1482 0.1449 0.1692 0.1582 0.1783 0.1536
+  a^3 b (a~2^5)      29        0.17346   0.15490   0.17905   10224      
+                     cells: 0.1736 0.1775 0.1676 0.1754 0.1656 0.1786 0.1549 0.1791 0.1733 0.1583
+  a^4 b (a~2^4)      13        0.16184   0.15485   0.19452   9836       
+                     cells: 0.1945 0.1665 0.1572 0.1549 0.1665 0.1549 0.1549 0.1665 0.1665 0.1572
+  POS CTRL a=5       5         0.16619   0.15724   0.17975   9963       
+                     cells: 0.1572 0.1646 0.1593 0.1701 0.1678 0.1576 0.1610 0.1798 0.1752 0.1679
+  POS CTRL a=7       7         0.16784   0.15507   0.17684   10005      
+                     cells: 0.1682 0.1595 0.1629 0.1690 0.1620 0.1768 0.1551 0.1675 0.1703 0.1762
+  PROBE minFac=61    61        0.13552   0.12639   0.14580   8109       
+                     cells: 0.1283 0.1413 0.1458 0.1371 0.1277 0.1407 0.1292 0.1264 0.1412 0.1339
+  ------------------------------------------------------------------------
+  family             ratio    channel    verdict
+  pq generic         1.0000   -          (reference)
+  NEG CTRL pq'       1.0232   CLOSED     shape-blind [minFac>B]
+  a^2 b (a~2^6)      1.0810   OPEN       SHAPE-SENSITIVE  <== FIRES
+  a^3 b (a~2^5)      1.2277   OPEN       SHAPE-SENSITIVE  <== FIRES
+  a^4 b (a~2^4)      1.1455   OPEN       SHAPE-SENSITIVE  <== FIRES
+  POS CTRL a=5       1.1763   OPEN       SHAPE-SENSITIVE  <== FIRES
+  POS CTRL a=7       1.1879   OPEN       SHAPE-SENSITIVE  <== FIRES
+  PROBE minFac=61    0.9592   OPEN       channel OPEN, but quiet
+
+============================================================================
+B = 1024    1060019 of 4194304 values below 2^22 are B-smooth (25.273%)
+  family             minFac    median    min       max       exp hits   
+  pq generic         1087      0.30201   0.28989   0.33087   18456      
+                     cells: 0.3309 0.3018 0.2899 0.3298 0.3002 0.3166 0.3022 0.3010 0.3060 0.2977
+  NEG CTRL pq'       1181      0.30871   0.28369   0.31742   18276      
+                     cells: 0.3174 0.2921 0.3126 0.2959 0.3145 0.3150 0.3155 0.3048 0.2946 0.2837
+  a^2 b (a~2^6)      37        0.31550   0.29564   0.35309   19119      
+                     cells: 0.3131 0.3230 0.2956 0.2984 0.3119 0.3055 0.3432 0.3249 0.3531 0.3179
+  a^3 b (a~2^5)      29        0.34441   0.32141   0.35594   20481      
+                     cells: 0.3442 0.3525 0.3382 0.3464 0.3332 0.3549 0.3214 0.3559 0.3446 0.3222
+  a^4 b (a~2^4)      13        0.32256   0.31567   0.37576   19616      
+                     cells: 0.3758 0.3282 0.3170 0.3157 0.3282 0.3157 0.3157 0.3282 0.3282 0.3170
+  POS CTRL a=5       5         0.33443   0.31587   0.35256   19980      
+                     cells: 0.3159 0.3331 0.3255 0.3392 0.3388 0.3177 0.3254 0.3526 0.3463 0.3358
+  POS CTRL a=7       7         0.33130   0.31316   0.34867   19885      
+                     cells: 0.3320 0.3196 0.3267 0.3354 0.3256 0.3487 0.3132 0.3306 0.3363 0.3462
+  PROBE minFac=61    61        0.29260   0.27750   0.30709   17486      
+                     cells: 0.2814 0.2993 0.3071 0.2934 0.2806 0.3013 0.2807 0.2775 0.3013 0.2918
+  ------------------------------------------------------------------------
+  family             ratio    channel    verdict
+  pq generic         1.0000   -          (reference)
+  NEG CTRL pq'       1.0222   CLOSED     shape-blind [minFac>B]
+  a^2 b (a~2^6)      1.0447   OPEN       channel OPEN, but quiet
+  a^3 b (a~2^5)      1.1404   OPEN       SHAPE-SENSITIVE  <== FIRES
+  a^4 b (a~2^4)      1.0681   OPEN       SHAPE-SENSITIVE  <== FIRES
+  POS CTRL a=5       1.1074   OPEN       SHAPE-SENSITIVE  <== FIRES
+  POS CTRL a=7       1.0970   OPEN       SHAPE-SENSITIVE  <== FIRES
+  PROBE minFac=61    0.9688   OPEN       channel OPEN, but quiet
+
+============================================================================
+VERDICT TABLE  ratio of median B-smooth rate to generic pq
+  family             minFac    B=60      B=256     B=1024   
+  pq generic         1087      1.0000    1.0000    1.0000   
+  NEG CTRL pq'       1181      1.0609    1.0232    1.0222   
+  a^2 b (a~2^6)      37        1.2064    1.0810    1.0447   
+  a^3 b (a~2^5)      29        1.4156    1.2277    1.1404   
+  a^4 b (a~2^4)      13        1.3452    1.1455    1.0681   
+  POS CTRL a=5       5         1.2951    1.1763    1.1074   
+  POS CTRL a=7       7         1.3493    1.1879    1.0970   
+  PROBE minFac=61    61        0.9596    0.9592    0.9688   
+
+PREDICTION CHECKS
+  P3b.2 POS CTRL a=5     ratio at B=1024:   1.1074  FIRES(>=3)? NO -- VACUOUS DETECTOR
+  P3b.2 POS CTRL a=7     ratio at B=1024:   1.0970  FIRES(>=3)? NO -- VACUOUS DETECTOR
+  P3b.3 NEG CTRL ratio: 1.0222 -> QUIET? YES
+  P3b.4 PROBE minFac=61: B=60 (below channel) ratio 0.9596 ; B=1024 (above) 0.9688
+        predicted ~1 below, >1 above -> INCONSISTENT
+  P3b.1 all minFac>B families at B=60:
+        NEG CTRL pq'       minFac=1181 ratio=1.0609  *** SENSITIVE ***
+        PROBE minFac=61    minFac=61   ratio=0.9596  shape-blind
+
+OUTPUT SIGNATURE (run-twice check): 55c9d4b08abe4138

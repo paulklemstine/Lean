@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/G5y+6Wm/hGmk7NuM1x9Jc4431SQ</id>
+  <title>arXiv Query: search_query=all:"hardness" AND all:"factoring integers"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-10-05T02:49:59Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22hardness%22+AND+all:%22factoring+integers%22&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>8</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2503.10588v1</id>
+    <title>Experimental factoring integers using fixed-point-QAOA with a trapped-ion quantum processor</title>
+    <updated>2025-03-13T17:40:07Z</updated>
+    <link href="https://arxiv.org/abs/2503.10588v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.10588v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factoring integers is considered as a computationally-hard problem for classical methods, whereas there exists polynomial-time Shor's quantum algorithm for solving this task. However, requirements for running the Shor's algorithm for realistic tasks, which are beyond the capabilities of existing and upcoming generations of quantum computing devices, motivates to search for alternative approaches. In this work, we experimentally demonstrate factoring of the integer with a trapped ion quantum processor using the Schnorr approach and a modified version of quantum approximate optimization algorithm (QAOA). The key difference of our approach in comparison with the recently proposed QAOA-based factoring method is the use of the fixed-point feature, which relies on the use of universal parameters. We present experimental results on factoring $1591=37\times43$ using 6 qubits as well as simulation results for $74425657=9521\times7817$ with 10 qubits and $35183361263263=4194191\times8388593$ with 15 qubits. Alongside, we present all the necessary details for reproducing our results and analysis of the performance of the factoring method, the scalability of this approach both in classical and quantum domain still requires further studies.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-13T17:40:07Z</published>
+    <arxiv:comment>4 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Quantum Inf. Comput. 25, 369 (2025)</arxiv:journal_ref>
+    <author>
+      <name>Ilia V. Zalivako</name>
+    </author>
+    <author>
+      <name>Andrey Yu. Chernyavskiy</name>
+    </author>
+    <author>
+      <name>Anastasiia S. Nikolaeva</name>
+    </author>
+    <author>
+      <name>Alexander S. Borisenko</name>
+    </author>
+    <author>
+      <name>Nikita V. Semenin</name>
+    </author>
+    <author>
+      <name>Kristina P. Galstyan</name>
+    </author>
+    <author>
+      <name>Andrey E. Korolkov</name>
+    </author>
+    <author>
+      <name>Sergey V. Grebnev</name>
+    </author>
+    <author>
+      <name>Evgeniy O. Kiktenko</name>
+    </author>
+    <author>
+      <name>Ksenia Yu. Khabarova</name>
+    </author>
+    <author>
+      <name>Aleksey K. Fedorov</name>
+    </author>
+    <author>
+      <name>Ilya A. Semerikov</name>
+    </author>
+    <author>
+      <name>Nikolay N. Kolachevsky</name>
+    </author>
+    <arxiv:doi>10.2478/qic-2025-0021</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2478/qic-2025-0021" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0708.1192v2</id>
+    <title>The hardness of computing an eigenform</title>
+    <updated>2007-08-13T19:04:09Z</updated>
+    <link href="https://arxiv.org/abs/0708.1192v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0708.1192v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  In this article, we give evidence that computing Fourier coefficients of the Hecke eigenforms for composite indices is no easier than factoring integers. In particular, we show that the existence of a polynomial time algorithm that, given n, computes the n-th Fourier coefficient of a (fixed) Hecke eigenform implies that we can factor most RSA moduli (numbers that are products of two distinct primes) in polynomial time.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2007-08-08T23:35:23Z</published>
+    <arxiv:comment>5 Pages (corrected a typo in statement of Theorem 2.1)</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Eric Bach</name>
+    </author>
+    <author>
+      <name>Denis Charles</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.06130v1</id>
+    <title>Fast square-free decomposition of integers using class groups</title>
+    <updated>2023-08-11T13:38:23Z</updated>
+    <link href="https://arxiv.org/abs/2308.06130v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.06130v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $n=a^2b$, where $b$ is square-free. In this paper we present an algorithm based on class groups of binary quadratic forms that finds the square-free decomposition of $n$, i.e. $a$ and $b$, in heuristic expected time: $$ \widetilde{\mathcal{O}}(L_{b}[1/2,1] \ln(n) + L_{b}[1/2,1/2] \ln(n)^2). $$ If $a,b$ are both primes of roughly the same cryptographic size, then our method is currently the fastest known method to factor $n$. This has applications in cryptography, since some cryptosystems rely on the hardness of factoring integers of this form.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-11T13:38:23Z</published>
+    <arxiv:comment>43 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Erik Mulder</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/quant-ph/9508027v2</id>
+    <title>Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum Computer</title>
+    <updated>1996-01-25T22:55:00Z</updated>
+    <link href="https://arxiv.org/abs/quant-ph/9508027v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/quant-ph/9508027v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  A digital computer is generally believed to be an efficient universal computing device; that is, it is believed able to simulate any physical computing device with an increase in computation time of at most a polynomial factor. This may not be true when quantum mechanics is taken into consideration. This paper considers factoring integers and finding discrete logarithms, two problems which are generally thought to be hard on a classical computer and have been used as the basis of several proposed cryptosystems. Efficient randomized algorithms are given for these two problems on a hypothetical quantum computer. These algorithms take a number of steps polynomial in the input size, e.g., the number of digits of the integer to be factored.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1995-08-30T14:11:00Z</published>
+    <arxiv:comment>28 pages, LaTeX. This is an expanded version of a paper that appeared in the Proceedings of the 35th Annual Symposium on Foundations of Computer Science, Santa Fe, NM, Nov. 20--22, 1994. Minor revisions made January, 1996</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>SIAM J.Sci.Statist.Comput. 26 (1997) 1484</arxiv:journal_ref>
+    <author>
+      <name>Peter W. Shor</name>
+      <arxiv:affiliation>AT&amp;T Research</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1137/S0097539795293172</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1137/S0097539795293172" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1212.2622v2</id>
+    <title>Boson Sampling on a Photonic Chip</title>
+    <updated>2013-05-27T17:41:11Z</updated>
+    <link href="https://arxiv.org/abs/1212.2622v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1212.2622v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While universal quantum computers ideally solve problems such as factoring integers exponentially more efficiently than classical machines, the formidable challenges in building such devices motivate the demonstration of simpler, problem-specific algorithms that still promise a quantum speedup. We construct a quantum boson sampling machine (QBSM) to sample the output distribution resulting from the nonclassical interference of photons in an integrated photonic circuit, a problem thought to be exponentially hard to solve classically. Unlike universal quantum computation, boson sampling merely requires indistinguishable photons, linear state evolution, and detectors. We benchmark our QBSM with three and four photons and analyze sources of sampling inaccuracy. Our studies pave the way to larger devices that could offer the first definitive quantum-enhanced computation.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-12-11T20:50:10Z</published>
+    <arxiv:comment>Main text: 5 pages, 4 figures. Supp Info: 6 pages</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>Science 339 798-801 (2013)</arxiv:journal_ref>
+    <author>
+      <name>Justin B. Spring</name>
+    </author>
+    <author>
+      <name>Benjamin J. Metcalf</name>
+    </author>
+    <author>
+      <name>Peter C. Humphreys</name>
+    </author>
+    <author>
+      <name>W. Steven Kolthammer</name>
+    </author>
+    <author>
+      <name>Xian-Min Jin</name>
+    </author>
+    <author>
+      <name>Marco Barbieri</name>
+    </author>
+    <author>
+      <name>Animesh Datta</name>
+    </author>
+    <author>
+      <name>Nicholas Thomas-Peter</name>
+    </author>
+    <author>
+      <name>Nathan K. Langford</name>
+    </author>
+    <author>
+      <name>Dmytro Kundys</name>
+    </author>
+    <author>
+      <name>James C. Gates</name>
+    </author>
+    <author>
+      <name>Brian J. Smith</name>
+    </author>
+    <author>
+      <name>Peter G. R. Smith</name>
+    </author>
+    <author>
+      <name>Ian A. Walmsley</name>
+    </author>
+    <arxiv:doi>10.1126/science.1231692</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1126/science.1231692" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1009.3214v2</id>
+    <title>Computing sparse multiples of polynomials</title>
+    <updated>2011-01-01T21:08:52Z</updated>
+    <link href="https://arxiv.org/abs/1009.3214v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1009.3214v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of finding a sparse multiple of a polynomial. Given f in F[x] of degree d over a field F, and a desired sparsity t, our goal is to determine if there exists a multiple h in F[x] of f such that h has at most t non-zero terms, and if so, to find such an h. When F=Q and t is constant, we give a polynomial-time algorithm in d and the size of coefficients in h. When F is a finite field, we show that the problem is at least as hard as determining the multiplicative order of elements in an extension field of F (a problem thought to have complexity similar to that of factoring integers), and this lower bound is tight when t=2.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-09-16T16:21:15Z</published>
+    <arxiv:comment>Extended abstract appears in Proc. ISAAC 2010, pp. 266-278, LNCS 6506</arxiv:comment>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Mark Giesbrecht</name>
+    </author>
+    <author>
+      <name>Daniel S. Roche</name>
+    </author>
+    <author>
+      <name>Hrushikesh Tilak</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1112.2012v1</id>
+    <title>Lie algebra conjugacy</title>
+    <updated>2011-12-09T03:24:19Z</updated>
+    <link href="https://arxiv.org/abs/1112.2012v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1112.2012v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the problem of matrix Lie algebra conjugacy. Lie algebras arise centrally in areas as diverse as differential equations, particle physics, group theory, and the Mulmuley--Sohoni Geometric Complexity Theory program. A matrix Lie algebra is a set L of matrices such that $A, B\in L$ implies $AB - BA \in L$. Two matrix Lie algebras are conjugate if there is an invertible matrix $M$ such that $L_1 = M L_2 M^{-1}$.
+  We show that certain cases of Lie algebra conjugacy are equivalent to graph isomorphism. On the other hand, we give polynomial-time algorithms for other cases of Lie algebra conjugacy, which allow us to essentially derandomize a recent result of Kayal on affine equivalence of polynomials. Affine equivalence is related to many complexity problems such as factoring integers, graph isomorphism, matrix multiplication, and permanent versus determinant.
+  Specifically, we show:
+  Abelian Lie algebra conjugacy is equivalent to the code equivalence problem, and hence is as hard as graph isomorphism.
+  Abelian Lie algebra conjugacy of $n \times n$ matrices can be solved in poly(n) time when the Lie algebras have dimension O(1).
+  Semisimple Lie algebra conjugacy is equivalent to graph isomorphism. A Lie algebra is semisimple if it is a direct sum of simple Lie algebras.
+  Semisimple Lie algebra conjugacy of $n \times n$ matrices can be solved in polynomial time when the Lie algebras consist of only $O(\log n)$ simple direct summands.
+  Conjugacy of completely reducible Lie algebras---that is, a direct sum of an abelian and a semisimple Lie algebra---can be solved in polynomial time when the abelian part has dimension O(1) and the semisimple part has $O(\log n)$ simple direct summands.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-12-09T03:24:19Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Joshua A. Grochow</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.11830v1</id>
+    <title>Oracle Separations in the Fourier Hierarchy</title>
+    <updated>2026-09-10T17:23:35Z</updated>
+    <link href="https://arxiv.org/abs/2609.11830v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.11830v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Fourier hierarchy $\mathrm{FH}_0\subseteq\mathrm{FH}_1\subseteq\mathrm{FH}_2\subseteq\cdots$, introduced by Shi (TCS 2005), measures a quantum computation by the number of Hadamard layers it uses. Between two layers the circuit may permute basis states and attach phases, but it may not create superposition; the layers are its only source of interference. The first level is exactly $\mathrm{BPP}$, while the second already solves Simon's problem and, through phase estimation, factors integers. Shi conjectured that every additional layer strictly increases computational power, and asked, as a first step, for oracle separations between consecutive levels. To our knowledge, the question was open at every level $k\ge2$.
+  We prove that for every constant $k\ge2$ there is an oracle relative to which $\mathrm{FH}_k\subsetneq\mathrm{FH}_{k+1}$. The separating problem is built from Forrelation (Aaronson and Ambainis, STOC 2015): the level above solves it with a constant number of queries, whereas at level $k$ it stays hard even for circuits making exponentially many queries. This holds for both of the usual ways of giving a circuit access to an oracle, the phase oracle and the standard oracle, which writes its answer into a register. The two are not interchangeable: relative to an oracle, the standard oracle is strictly more powerful at the same number of layers. We also separate the union of all the levels from $\mathrm{BQP}$ relative to an oracle.
+  The lower bounds rest on a structural property of the hierarchy: the number of Hadamard layers limits how adaptively a circuit can query its oracle. With a phase oracle, a circuit with $k$ layers is reproduced exactly by an algorithm making only $k-1$ rounds of parallel queries, which brings known lower bounds for such algorithms to bear. The standard oracle lets a circuit branch on earlier answers, and that case needs a separate argument.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-10T17:23:35Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Atul Mantri</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/vrUwffCw0I9/YD3caVQLxX3NnMI</id>
+  <title>arXiv Query: search_query=all:deterministic OR all:integer OR all:factorisation OR all:Harvey&amp;id_list=&amp;start=0&amp;max_results=8</title>
+  <updated>2026-10-05T02:44:36Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:deterministic+OR+(all:integer+OR+(all:factorisation+OR+all:Harvey))&amp;start=0&amp;max_results=8&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>8</opensearch:itemsPerPage>
+  <opensearch:totalResults>99709</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2010.05450v1</id>
+    <title>An exponent one-fifth algorithm for deterministic integer factorisation</title>
+    <updated>2020-10-12T04:53:21Z</updated>
+    <link href="https://arxiv.org/abs/2010.05450v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.05450v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Hittmeir recently presented a deterministic algorithm that provably computes the prime factorisation of a positive integer $N$ in $N^{2/9+o(1)}$ bit operations. Prior to this breakthrough, the best known complexity bound for this problem was $N^{1/4+o(1)}$, a result going back to the 1970s. In this paper we push Hittmeir's techniques further, obtaining a rigorous, deterministic factoring algorithm with complexity $N^{1/5+o(1)}$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-12T04:53:21Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>David Harvey</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1308.2891v3</id>
+    <title>Deterministic Integer Factorization Algorithms</title>
+    <updated>2022-04-22T14:15:08Z</updated>
+    <link href="https://arxiv.org/abs/1308.2891v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1308.2891v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A new integer deterministic factorization algorithm, rated at arithmetic operations to $O(N^{1/6+\varepsilon})$ arithmetic operations, is presented in this note. Equivalently, given the least $(\log N)/6$ bits of a factor of the balanced integer $N = pq$, where $p$ and $q$ are primes, the algorithm factors the integer in polynomial time $O(\log(N)^c)$, with $c \geq 0$ constant, and $\varepsilon &gt; 0$ an arbitrarily small number. It improves the current deterministic factorization algorithm, rated at arithmetic operations to $O(N^{1/5+\varepsilon})$ arithmetic operations.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-08-05T22:06:03Z</published>
+    <arxiv:comment>Ten Pages. Keywords: Integer Factoring, Fermat Method, Deterministic Algorithm, Algorithm Complexity, Exponential Time, Polynomial Time</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>N. A. Carella</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1806.01785v1</id>
+    <title>Evaluation of matrix factorisation approaches for muscle synergy extraction</title>
+    <updated>2018-06-04T16:23:53Z</updated>
+    <link href="https://arxiv.org/abs/1806.01785v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1806.01785v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The muscle synergy concept provides a widely-accepted paradigm to break down the complexity of motor control. In order to identify the synergies, different matrix factorisation techniques have been used in a repertoire of fields such as prosthesis control and biomechanical and clinical studies. However, the relevance of these matrix factorisation techniques is still open for discussion since there is no ground truth for the underlying synergies. Here, we evaluate factorisation techniques and investigate the factors that affect the quality of estimated synergies. We compared commonly used matrix factorisation methods: Principal component analysis (PCA), Independent component analysis (ICA), Non-negative matrix factorization (NMF) and second-order blind identification (SOBI). Publicly available real data were used to assess the synergies extracted by each factorisation method in the classification of wrist movements. Synthetic datasets were utilised to explore the effect of muscle synergy sparsity, level of noise and number of channels on the extracted synergies. Results suggest that the sparse synergy model and a higher number of channels would result in better-estimated synergies. Without dimensionality reduction, SOBI showed better results than other factorisation methods. This suggests that SOBI would be an alternative when a limited number of electrodes is available but its performance was still poor in that case. Otherwise, NMF had the best performance when the number of channels was higher than the number of synergies. Therefore, NMF would be the best method for muscle synergy extraction.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="q-bio.QM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-06-04T16:23:53Z</published>
+    <arxiv:comment>Keywords: Muscle synergy; Matrix factorisation; Surface electromyogram; Non-negative matrix factorisation; Second-order blind identification; Principal component analysis; Independent component analysis</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <arxiv:journal_ref>Medical Engineering &amp; Physics, Volume 57, 2018, Pages 51-60, ISSN 1350-4533</arxiv:journal_ref>
+    <author>
+      <name>Ahmed Ebied</name>
+    </author>
+    <author>
+      <name>Eli Kinney-Lang</name>
+    </author>
+    <author>
+      <name>Loukianos Spyrou</name>
+    </author>
+    <author>
+      <name>Javier Escudero</name>
+    </author>
+    <arxiv:doi>10.1016/J.MEDENGPHY.2018.04.003</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/J.MEDENGPHY.2018.04.003" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.11105v1</id>
+    <title>A log-log speedup for exponent one-fifth deterministic integer factorisation</title>
+    <updated>2021-05-24T05:56:43Z</updated>
+    <link href="https://arxiv.org/abs/2105.11105v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.11105v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building on techniques recently introduced by the second author, and further developed by the first author, we show that a positive integer $N$ may be rigorously and deterministically factored into primes in at most \[ O\left( \frac{N^{1/5} \log^{16/5} N}{(\log\log N)^{3/5}}\right) \] bit operations. This improves on the previous best known result by a factor of $(\log \log N)^{3/5}$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-24T05:56:43Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>David Harvey</name>
+    </author>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+    <arxiv:doi>10.1090/mcom/3708</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/mcom/3708" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1201.2116v1</id>
+    <title>Faster deterministic integer factorization</title>
+    <updated>2012-01-10T17:19:03Z</updated>
+    <link href="https://arxiv.org/abs/1201.2116v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1201.2116v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The best known unconditional deterministic complexity bound for computing the prime factorization of an integer N is O(M_int(N^(1/4) log N)), where M_int(k) denotes the cost of multiplying k-bit integers. This result is due to Bostan--Gaudry--Schost, following the Pollard--Strassen approach. We show that this bound can be improved by a factor of (log log N)^(1/2).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-01-10T17:19:03Z</published>
+    <arxiv:comment>7 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Edgar Costa</name>
+    </author>
+    <author>
+      <name>David Harvey</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0101154v1</id>
+    <title>On the monad of proper factorisation systems in categories</title>
+    <updated>2001-01-18T18:26:53Z</updated>
+    <link href="https://arxiv.org/abs/math/0101154v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0101154v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  It is known that factorisation systems in categories can be viewed as unitary pseudo algebras for the "squaring" monad in Cat.
+  We show in this note that an analogous fact holds for proper (i.e., epi-mono) factorisation systems and a suitable quotient of the former monad, deriving from a construct introduced by P. Freyd for stable homotopy.
+  Structural similarities of the previous monad with the path endofunctor of topological spaces are considered.</summary>
+    <category term="math.CT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2001-01-18T18:26:53Z</published>
+    <arxiv:comment>8 pages. Key Words: Factorisation systems, 2-monads, Eilenberg-Moore algebras, pseudo algebras</arxiv:comment>
+    <arxiv:primary_category term="math.CT"/>
+    <author>
+      <name>Marco Grandis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.09741v2</id>
+    <title>Boundaries, Vermas, and Factorisation</title>
+    <updated>2020-11-04T19:41:51Z</updated>
+    <link href="https://arxiv.org/abs/2010.09741v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.09741v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We revisit the factorisation of supersymmetric partition functions of 3d $\mathcal{N}=4$ gauge theories. The building blocks are hemisphere partition functions of a class of UV $\mathcal{N}=(2,2)$ boundary conditions that mimic the presence of isolated vacua at infinity in the presence of real mass and FI parameters. These building blocks can be unambiguously defined and computed using supersymmetric localisation. We show that certain limits of these hemisphere partition functions coincide with characters of lowest weight Verma modules over the quantised Higgs and Coulomb branch chiral rings. This leads to expressions for the superconformal index, twisted index and $S^3$ partition function in terms of such characters. On the way we uncover new connections between boundary 't Hooft anomalies, hemisphere partition functions and lowest weights of Verma modules.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-19T18:00:05Z</published>
+    <arxiv:comment>33+17 pages, 3 figures. v2: added citations, minor revision of squashed sphere factorisation section</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <author>
+      <name>Mathew Bullimore</name>
+    </author>
+    <author>
+      <name>Samuel Crew</name>
+    </author>
+    <author>
+      <name>Daniel Zhang</name>
+    </author>
+    <arxiv:doi>10.1007/JHEP04(2021)263</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/JHEP04(2021)263" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1402.3246v1</id>
+    <title>Computing Hasse-Witt matrices of hyperelliptic curves in average polynomial time</title>
+    <updated>2014-02-13T18:30:36Z</updated>
+    <link href="https://arxiv.org/abs/1402.3246v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1402.3246v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present an efficient algorithm to compute the Hasse-Witt matrix of a hyperelliptic curve C/Q modulo all primes of good reduction up to a given bound N, based on the average polynomial-time algorithm recently introduced by Harvey. An implementation for hyperelliptic curves of genus 2 and 3 is more than an order of magnitude faster than alternative methods for N = 2^26.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-02-13T18:30:36Z</published>
+    <arxiv:comment>17 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>LMS Journal of Computation and Mathematics 17 (2014), 257-273</arxiv:journal_ref>
+    <author>
+      <name>David Harvey</name>
+    </author>
+    <author>
+      <name>Andrew V. Sutherland</name>
+    </author>
+    <arxiv:doi>10.1112/S1461157014000187</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1112/S1461157014000187" title="doi"/>
+  </entry>
+</feed>

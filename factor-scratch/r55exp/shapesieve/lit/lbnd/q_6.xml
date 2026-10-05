@@ -1,0 +1,429 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/LqHKJARlj9JiWaJcKIEcX3JqywA</id>
+  <title>arXiv Query: search_query=abs:factoring AND abs:"lower bound" AND abs:smooth&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-10-05T02:49:49Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:factoring+AND+(abs:%22lower+bound%22+AND+abs:smooth)&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>253</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2512.10825v3</id>
+    <title>An Elementary Proof of the Near Optimality of LogSumExp Smoothing</title>
+    <updated>2026-07-13T02:19:03Z</updated>
+    <link href="https://arxiv.org/abs/2512.10825v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.10825v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the design of smoothings of the (coordinate-wise) max function in $\mathbb{R}^d$ in the infinity norm. The LogSumExp function $f(x)=\ln(\sum^d_i\exp(x_i))$ provides a classical smoothing, differing from the max function in value by at most $\ln(d)$. We provide an elementary construction of a lower bound, establishing that every overestimating smoothing of the max function must differ by at least $\sim 0.8145\ln(d)$. Hence, LogSumExp is optimal up to small constant factors. However, we provide strictly stronger smoothings showing the entropy-based LogSumExp approach is not exactly optimal. In small dimensions, we propose exactly optimal smoothings, attaining our lower bound.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-11T17:17:48Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Thabo Samakhoana</name>
+    </author>
+    <author>
+      <name>Benjamin Grimmer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.18289v2</id>
+    <title>The minimal exponent of cones over smooth complete intersection projective varieties</title>
+    <updated>2025-03-11T02:50:55Z</updated>
+    <link href="https://arxiv.org/abs/2404.18289v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.18289v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We compute the minimal exponent of the affine cone over a complete intersection of smooth projective hypersurfaces intersecting transversely. The upper bound for the minimal exponent is proved, more generally, in the weighted homogeneous setting, while the lower bound is deduced from a general lower bound in terms of a strong factorizing resolution in the sense of Bravo and Villamayor.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-28T19:30:29Z</published>
+    <arxiv:comment>14 pages; v.2: minor typos fixed to agree with the published version</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <arxiv:journal_ref>Rev. Roumaine Math. Pures Appel. 70 (2025), 1-2, 33-47</arxiv:journal_ref>
+    <author>
+      <name>Qianyu Chen</name>
+    </author>
+    <author>
+      <name>Bradley Dirks</name>
+    </author>
+    <author>
+      <name>Mircea Mustaţă</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/9807102v2</id>
+    <title>Lower Bounds for the Number of Smooth Values of a Polynomial</title>
+    <updated>2002-06-19T19:47:10Z</updated>
+    <link href="https://arxiv.org/abs/math/9807102v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/9807102v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We investigate the problem of showing that the values of a given polynomial are smooth (i.e., have no large prime factors) a positive proportion of the time. Although some results exist that bound the number of smooth values of a polynomial from above, a corresponding lower bound of the correct order of magnitude has hitherto been established only in a few special cases. The purpose of this paper is to provide such a lower bound for an arbitrary polynomial. Various generalizations to subsets of the set of values taken by a polynomial are also obtained.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1998-07-20T14:22:22Z</published>
+    <arxiv:comment>24 pages. During the submission process, in communication with Cecile Dartyge and Gerald Tenenbaum a different approach to the problem was discovered, and the new results superseded the results in this paper. Consequently, this paper has remained unpublished. Our article appeared as "Polynomial Values Free of Large Prime Factors" in Periodica Math. Hungarica 43 (2001), no. 1-2, 111-119</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Greg Martin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.05138v2</id>
+    <title>On the Oracle Complexity of Higher-Order Smooth Non-Convex Finite-Sum Optimization</title>
+    <updated>2021-07-02T13:23:36Z</updated>
+    <link href="https://arxiv.org/abs/2103.05138v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.05138v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove lower bounds for higher-order methods in smooth non-convex finite-sum optimization. Our contribution is threefold: We first show that a deterministic algorithm cannot profit from the finite-sum structure of the objective, and that simulating a pth-order regularized method on the whole function by constructing exact gradient information is optimal up to constant factors. We further show lower bounds for randomized algorithms and compare them with the best known upper bounds. To address some gaps between the bounds, we propose a new second-order smoothness assumption that can be seen as an analogue of the first-order mean-squared smoothness assumption. We prove that it is sufficient to ensure state-of-the-art convergence guarantees, while allowing for a sharper lower bound.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-08T23:33:58Z</published>
+    <arxiv:comment>Added missing upper bound assumption on n in Theorems 4.7 and 4.10</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Nicolas Emmenegger</name>
+    </author>
+    <author>
+      <name>Rasmus Kyng</name>
+    </author>
+    <author>
+      <name>Ahad N. Zehmakan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.10589v1</id>
+    <title>A lower bound for the variance in arithmetic progressions of some multiplicative functions close to $1$</title>
+    <updated>2021-02-21T11:53:17Z</updated>
+    <link href="https://arxiv.org/abs/2102.10589v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.10589v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate lower bounds for the variance in arithmetic progressions of certain multiplicative functions "close" to $1$. Specifically, we consider $α_N$-fold divisor functions, when $α_N$ is a sequence of positive real numbers approaching $1$ in a suitable way or $α_N=1$, and the indicator of $y$-smooth numbers, for suitably large parameters $y$. As a corollary, we will strengthen a previous author's result on the first subject and obtain matching lower bounds to some Barban-Davenport-Halberstam type theorems for $y$-smooth numbers. Incidentally, we will also find a lower bound for the variance in arithmetic progressions of the prime factors counting functions $ω(n)$ and $Ω(n)$.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-21T11:53:17Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Daniele Mastrostefano</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1903.01927v1</id>
+    <title>Local differential privacy: Elbow effect in optimal density estimation and adaptation over Besov ellipsoids</title>
+    <updated>2019-03-05T16:33:51Z</updated>
+    <link href="https://arxiv.org/abs/1903.01927v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1903.01927v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We address the problem of non-parametric density estimation under the additional constraint that only privatised data are allowed to be published and available for inference. For this purpose, we adopt a recent generalisation of classical minimax theory to the framework of local $α$-differential privacy and provide a lower bound on the rate of convergence over Besov spaces $B^s_{pq}$ under mean integrated $\mathbb L^r$-risk. This lower bound is deteriorated compared to the standard setup without privacy, and reveals a twofold elbow effect. In order to fulfil the privacy requirement, we suggest adding suitably scaled Laplace noise to empirical wavelet coefficients. Upper bounds within (at most) a logarithmic factor are derived under the assumption that $α$ stays bounded as $n$ increases: A linear but non-adaptive wavelet estimator is shown to attain the lower bound whenever $p \geq r$ but provides a slower rate of convergence otherwise. An adaptive non-linear wavelet estimator with appropriately chosen smoothing parameters and thresholding is shown to attain the lower bound within a logarithmic factor for all cases.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-03-05T16:33:51Z</published>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Cristina Butucea</name>
+    </author>
+    <author>
+      <name>Amandine Dubois</name>
+    </author>
+    <author>
+      <name>Martin Kroll</name>
+    </author>
+    <author>
+      <name>Adrien Saumard</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2104.08708v1</id>
+    <title>Complexity Lower Bounds for Nonconvex-Strongly-Concave Min-Max Optimization</title>
+    <updated>2021-04-18T04:30:01Z</updated>
+    <link href="https://arxiv.org/abs/2104.08708v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2104.08708v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide a first-order oracle complexity lower bound for finding stationary points of min-max optimization problems where the objective function is smooth, nonconvex in the minimization variable, and strongly concave in the maximization variable. We establish a lower bound of $Ω\left(\sqrtκε^{-2}\right)$ for deterministic oracles, where $ε$ defines the level of approximate stationarity and $κ$ is the condition number. Our analysis shows that the upper bound achieved in (Lin et al., 2020b) is optimal in the $ε$ and $κ$ dependence up to logarithmic factors. For stochastic oracles, we provide a lower bound of $Ω\left(\sqrtκε^{-2} + κ^{1/3}ε^{-4}\right)$. It suggests that there is a significant gap between the upper bound $\mathcal{O}(κ^3 ε^{-4})$ in (Lin et al., 2020a) and our lower bound in the condition number dependence.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-04-18T04:30:01Z</published>
+    <arxiv:comment>20 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Haochuan Li</name>
+    </author>
+    <author>
+      <name>Yi Tian</name>
+    </author>
+    <author>
+      <name>Jingzhao Zhang</name>
+    </author>
+    <author>
+      <name>Ali Jadbabaie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.05392v3</id>
+    <title>Tight Lower Bounds for Combinatorial Multi-Armed Bandits</title>
+    <updated>2020-07-16T11:26:58Z</updated>
+    <link href="https://arxiv.org/abs/2002.05392v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.05392v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Combinatorial Multi-Armed Bandit problem is a sequential decision-making problem in which an agent selects a set of arms on each round, observes feedback for each of these arms and aims to maximize a known reward function of the arms it chose. While previous work proved regret upper bounds in this setting for general reward functions, only a few works provided matching lower bounds, all for specific reward functions. In this work, we prove regret lower bounds for combinatorial bandits that hold under mild assumptions for all smooth reward functions. We derive both problem-dependent and problem-independent bounds and show that the recently proposed Gini-weighted smoothness parameter (Merlis and Mannor, 2019) also determines the lower bounds for monotone reward functions. Notably, this implies that our lower bounds are tight up to log-factors.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-13T08:53:43Z</published>
+    <arxiv:comment>Accepted to COLT 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Nadav Merlis</name>
+    </author>
+    <author>
+      <name>Shie Mannor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.03990v2</id>
+    <title>Tight Heavy-Tailed Complexity Bounds for Optimizing Polyak--Łojasiewicz Objectives</title>
+    <updated>2026-09-26T14:33:58Z</updated>
+    <link href="https://arxiv.org/abs/2609.03990v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.03990v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study optimizing $L$-smooth and $μ$-Polyak-Lojasiewicz (PL) objectives with unbiased stochastic gradients under $α$-heavy-tailed noise ($1&lt;α\le 2$). In the unrestricted high-dimensional setting, we establish the noise-adaptive lower bound for attaining $ε$-suboptimal function value. Under the generalized mirror-PL condition, we propose a centered-clipped mirror-descent method that achieves a high-probability upper bound matching the lower bound up to logarithmic factors. We further provide the improved tight stochastic complexity in fixed dimensions.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-03T15:25:25Z</published>
+    <arxiv:comment>Under review</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Weiming Ou</name>
+    </author>
+    <author>
+      <name>Xiao Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.27476v1</id>
+    <title>Entropy-Smooth Convex Optimization Cannot Be Accelerated</title>
+    <updated>2026-07-29T21:34:12Z</updated>
+    <link href="https://arxiv.org/abs/2607.27476v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.27476v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove an $Ω(L/T)$ lower bound for the convergence rate of minimization in the class of functions that are convex and $L$-smooth relative to negative entropy on the standard $d$-simplex, valid for every first-order method when $d = Ω(T^2)$. In particular, this shows that mirror descent is optimal up to a logarithmic factor in this class. This may be surprising due to the fact that accelerated methods are readily available under the assumption of smoothness in $\ell_1$-norm. While Dragomir et al. (Mathematical Programming, 2022) have already showed that acceleration might be impossible under relative smoothness, their prox-function is pathological and constructed together with the hard instance. In contrast, we show non-acceleration for a specific prox-function with particularly favorable structure. We also extend the result to the quantum setting, proving the same lower bound in the class of functions $L$-smooth relative to negative von Neumann entropy on the spectrahedron of $d \times d$ Hermitian positive-semidefinite matrices with unit trace.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-29T21:34:12Z</published>
+    <arxiv:comment>19 pages</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Jacob M. Aguirre</name>
+    </author>
+    <author>
+      <name>Dmitrii M. Ostrovskii</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/gr-qc/9706006v2</id>
+    <title>Quantum inequalities in two dimensional Minkowski spacetime</title>
+    <updated>1997-07-16T18:14:39Z</updated>
+    <link href="https://arxiv.org/abs/gr-qc/9706006v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/gr-qc/9706006v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We generalize some results of Ford and Roman constraining the possible behaviors of renormalized expected stress-energy tensors of a free massless scalar field in two dimensional Minkowski spacetime. Ford and Roman showed that the energy density measured by an inertial observer, when averaged with respect to that observers proper time by integrating against some weighting function, is bounded below by a negative lower bound proportional to the reciprocal of the square of the averaging timescale. However, the proof required a particular choice for the weighting function. We extend the Ford-Roman result in two ways: (i) We calculate the optimum (maximum possible) lower bound and characterize the state which achieves this lower bound; the optimum lower bound differs by a factor of three from the bound derived by Ford and Roman for their choice of smearing function. (ii) We calculate the lower bound for arbitrary, smooth positive weighting functions. We also derive similar lower bounds on the spatial average of energy density at a fixed moment of time.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1997-06-02T23:35:39Z</published>
+    <arxiv:comment>6 pages, no figures, uses revtex 3.1 macros, to appear in Phys Rev D. Minor revisions and generalizations added 7/16/97</arxiv:comment>
+    <arxiv:primary_category term="gr-qc"/>
+    <arxiv:journal_ref>Phys.Rev. D56 (1997) 4922-4926</arxiv:journal_ref>
+    <author>
+      <name>Eanna E. Flanagan</name>
+      <arxiv:affiliation>Cornell</arxiv:affiliation>
+    </author>
+    <arxiv:doi>10.1103/PhysRevD.56.4922</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/PhysRevD.56.4922" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.02628v1</id>
+    <title>Distributed MST: A Smoothed Analysis</title>
+    <updated>2019-11-06T21:05:52Z</updated>
+    <link href="https://arxiv.org/abs/1911.02628v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.02628v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study smoothed analysis of distributed graph algorithms, focusing on the fundamental minimum spanning tree (MST) problem. With the goal of studying the time complexity of distributed MST as a function of the "perturbation" of the input graph, we posit a {\em smoothing model} that is parameterized by a smoothing parameter $0 \leq ε(n) \leq 1$ which controls the amount of {\em random} edges that can be added to an input graph $G$ per round. Informally, $ε(n)$ is the probability (typically a small function of $n$, e.g., $n^{-\frac{1}{4}}$) that a random edge can be added to a node per round. The added random edges, once they are added, can be used (only) for communication.
+  We show upper and lower bounds on the time complexity of distributed MST in the above smoothing model. We present a distributed algorithm that, with high probability,\footnote{Throughout, with high probability (whp) means with probability at least $1 - n^{-c}$, for some fixed, positive constant $c$.} computes an MST and runs in $\tilde{O}(\min\{\frac{1}{\sqrt{ε(n)}} 2^{O(\sqrt{\log n})}, D + \sqrt{n}\})$ rounds\footnote{The notation $\tilde{O}$ hides a $\polylog(n)$ factor and $\tildeΩ$ hides a $\frac{1}{\polylog{(n)}}$ factor, where $n$ is the number of nodes of the graph.} where $ε$ is the smoothing parameter, $D$ is the network diameter and $n$ is the network size. To complement our upper bound, we also show a lower bound of $\tildeΩ(\min\{\frac{1}{\sqrt{ε(n)}}, D+\sqrt{n}\})$. We note that the upper and lower bounds essentially match except for a multiplicative $2^{O(\sqrt{\log n})} \polylog(n)$ factor.
+  Our work can be considered as a first step in understanding the smoothed complexity of distributed graph algorithms.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-06T21:05:52Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Soumyottam Chatterjee</name>
+    </author>
+    <author>
+      <name>Gopal Pandurangan</name>
+    </author>
+    <author>
+      <name>Nguyen Dinh Pham</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.09740v2</id>
+    <title>On the oracle complexity of smooth strongly convex minimization</title>
+    <updated>2021-06-14T19:53:52Z</updated>
+    <link href="https://arxiv.org/abs/2101.09740v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.09740v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We construct a family of functions suitable for establishing lower bounds on the oracle complexity of first-order minimization of smooth strongly-convex functions. Based on this construction, we derive new lower bounds on the complexity of strongly-convex minimization under various inaccuracy criteria. The new bounds match the known upper bounds up to a constant factor, and when the inaccuracy of a solution is measured by its distance to the solution set, the new lower bound exactly matches the upper bound obtained by the recent Information-Theoretic Exact Method by the same authors, thereby establishing the exact oracle complexity for this class of problems.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-24T16:20:53Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Yoel Drori</name>
+    </author>
+    <author>
+      <name>Adrien Taylor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.10733v4</id>
+    <title>The complexity of smooth words over binary alphabets</title>
+    <updated>2026-06-16T09:44:13Z</updated>
+    <link href="https://arxiv.org/abs/2603.10733v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.10733v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Smooth words over an alphabet of non-negative integers $\{a,b\}$ are infinite words that are infinitely derivable, the emblematic example being the Oldenburger-Kolakoski word over $\{1,2\}$. The main way to study their language is to consider a finite version of smooth words that we call f-smooth words. In this paper we prove that the f-smooth words are exactly the factors of smooth words, and we make progress towards the conjecture of Sing that the complexity of f-smooth words over $\{a,b\}$ grows like $Θ\left(n^{\log(a+b)/\log((a+b)/2)}\right)$: we prove it over even alphabets, we prove the lower bound over any binary alphabet and we improve the known upper bound over odd alphabets.</summary>
+    <category term="cs.FL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-11T13:06:44Z</published>
+    <arxiv:primary_category term="cs.FL"/>
+    <author>
+      <name>Julien Cassaigne</name>
+    </author>
+    <author>
+      <name>Raphaël Henry</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.12453v2</id>
+    <title>Efficient First Order Method for Saddle Point Problems with Higher Order Smoothness</title>
+    <updated>2024-12-07T05:12:58Z</updated>
+    <link href="https://arxiv.org/abs/2304.12453v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.12453v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies the complexity of finding approximate stationary points for the smooth nonconvex-strongly-concave (NC-SC) saddle point problem: $\min_x\max_yf(x,y)$. Under the standard first-order smoothness conditions where $f$ is $\ell$-smooth in both arguments and $μ_y$-strongly concave in $y$, existing literature shows that the optimal complexity for first-order methods to obtain an $ε$-stationary point is $\tilde{O}\big(\sqrt{κ_y}\ellε^{-2}\big)$, where $κ_y=\ell/μ_y$ is the condition number. However, when $Φ(x):=\max_y f(x,y)$ has $L_2$-Lipschitz continuous Hessian in addition, we derive a first-order algorithm with an $\tilde{O}\big(\sqrt{κ_y}\ell^{1/2}L_2^{1/4}ε^{-7/4}\big)$ complexity by designing an accelerated proximal point algorithm enhanced with the "Convex Until Proven Guilty" technique. Moreover, an improved $Ω\big(\sqrt{κ_y}\ell^{3/7}L_2^{2/7}ε^{-12/7}\big)$ lower bound for first-order method is also derived for sufficiently small $ε$. As a result, given the second-order smoothness of the problem, the complexity of our method improves the state-of-the-art result by a factor of $\tilde{O}\big(\big(\frac{\ell^2}{L_2ε}\big)^{1/4}\big)$, while almost matching the lower bound except for a small $\tilde{O}\big(\big(\frac{\ell^2}{L_2ε}\big)^{1/28}\big)$ factor.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-24T21:14:10Z</published>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Nuozhou Wang</name>
+    </author>
+    <author>
+      <name>Junyu Zhang</name>
+    </author>
+    <author>
+      <name>Shuzhong Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1810.01053v3</id>
+    <title>Decentralized Accelerated Gradient Methods With Increasing Penalty Parameters</title>
+    <updated>2020-08-18T13:11:48Z</updated>
+    <link href="https://arxiv.org/abs/1810.01053v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1810.01053v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we study the communication and (sub)gradient computation costs in distributed optimization and give a sharp complexity analysis for the proposed distributed accelerated gradient methods. We present two algorithms based on the framework of the accelerated penalty method with increasing penalty parameters. Our first algorithm is for smooth distributed optimization and it obtains the near optimal $O\left(\sqrt{\frac{L}{ε(1-σ_2(W))}}\log\frac{1}ε\right)$ communication complexity and the optimal $O\left(\sqrt{\frac{L}ε}\right)$ gradient computation complexity for $L$-smooth convex problems, where $σ_2(W)$ denotes the second largest singular value of the weight matrix $W$ associated to the network and $ε$ is the target accuracy. When the problem is $μ$-strongly convex and $L$-smooth, our algorithm has the near optimal $O\left(\sqrt{\frac{L}{μ(1-σ_2(W))}}\log^2\frac{1}ε\right)$ complexity for communications and the optimal $O\left(\sqrt{\frac{L}μ}\log\frac{1}ε\right)$ complexity for gradient computations. Our communication complexities are only worse by a factor of $\left(\log\frac{1}ε\right)$ than the lower bounds for the smooth distributed optimization. %As far as we know, our method is the first to achieve both communication and gradient computation lower bounds up to an extra logarithm factor for smooth distributed optimization. Our second algorithm is designed for non-smooth distributed optimization and it achieves both the optimal $O\left(\frac{1}{ε\sqrt{1-σ_2(W)}}\right)$ communication complexity and $O\left(\frac{1}{ε^2}\right)$ subgradient computation complexity, which match the communication and subgradient computation complexity lower bounds for non-smooth distributed optimization.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-10-02T03:38:58Z</published>
+    <arxiv:comment>The previous name of this paper was "A Sharp Convergence Rate Analysis for Distributed Accelerated Gradient Methods". The contents are consistent</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Huan Li</name>
+    </author>
+    <author>
+      <name>Cong Fang</name>
+    </author>
+    <author>
+      <name>Wotao Yin</name>
+    </author>
+    <author>
+      <name>Zhouchen Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.07160v2</id>
+    <title>Tighter Lower Bounds for Shuffling SGD: Random Permutations and Beyond</title>
+    <updated>2023-06-09T08:30:56Z</updated>
+    <link href="https://arxiv.org/abs/2303.07160v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.07160v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study convergence lower bounds of without-replacement stochastic gradient descent (SGD) for solving smooth (strongly-)convex finite-sum minimization problems. Unlike most existing results focusing on final iterate lower bounds in terms of the number of components $n$ and the number of epochs $K$, we seek bounds for arbitrary weighted average iterates that are tight in all factors including the condition number $κ$. For SGD with Random Reshuffling, we present lower bounds that have tighter $κ$ dependencies than existing bounds. Our results are the first to perfectly close the gap between lower and upper bounds for weighted average iterates in both strongly-convex and convex cases. We also prove weighted average iterate lower bounds for arbitrary permutation-based SGD, which apply to all variants that carefully choose the best permutation. Our bounds improve the existing bounds in factors of $n$ and $κ$ and thereby match the upper bounds shown for a recently proposed algorithm called GraB.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-13T14:35:55Z</published>
+    <arxiv:comment>58 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jaeyoung Cha</name>
+    </author>
+    <author>
+      <name>Jaewook Lee</name>
+    </author>
+    <author>
+      <name>Chulhee Yun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.00045v2</id>
+    <title>Dense Weak Hiding: Closing Complexity Gaps in Nonconvex and PL Finite-Sum Optimization under Individual Smoothness</title>
+    <updated>2026-09-13T03:44:45Z</updated>
+    <link href="https://arxiv.org/abs/2609.00045v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.00045v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Under individual smoothness, the optimal incremental first-order oracle (IFO) complexity of nonconvex finite-sum optimization is open. Known algorithms use $O(n+\sqrt n\,ΔL_{\max}/\varepsilon^2)$ calls, while existing lower bounds miss the factor $\sqrt n$ in the second term. We prove the matching lower bound $Ω(n+\sqrt n\,ΔL_{\max}/\varepsilon^2)$ for randomized IFO algorithms, including those that choose component indices and query points from the full preceding history. Thus PAGE and SPIDER are minimax optimal up to universal constants under individual and mean-squared smoothness.
+  Under the global Polyak--Lojasiewicz (PL) condition, we use a similar idea to obtain an $Ω(n+κ_{\max}\sqrt n\log(Δ/\varepsilon))$ lower bound for large $κ_{\max}$. Existing PL lower bounds have focused only on relatively large $κ$. For the previously unexplored regime $κ_{\max}&lt;\sqrt n$, we discover a new rate, $Ω(n+n\log(Δ/\varepsilon)/(1+\log(\sqrt n/κ_{\max})))$. This lower bound motivates our Restarted PAGE algorithm, whose upper bound matches the new rate for small $κ_{\max}$ and recovers the standard PAGE rate for large $κ_{\max}$, showing that both bounds are nearly tight.
+  Our lower bounds use the proposed dense weak hiding construction. It spreads each hidden direction across all components, so an individual IFO query reveals only weak information while the full average preserves the direction. Unrevealed stages remain inactive even for arbitrary query points, forcing many calls to expose a stage before substantial progress is possible. Balancing this revelation cost against the number of stages allowed by individual smoothness yields the missing $\sqrt n$ factor.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-30T02:47:24Z</published>
+    <arxiv:comment>55 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Yuxing Peng</name>
+    </author>
+    <author>
+      <name>Zhiqing Tang</name>
+    </author>
+    <author>
+      <name>Weijia Jia</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.17770v2</id>
+    <title>Lower Complexity Bounds of First-order Methods for Affinely Constrained Composite Non-convex Problems</title>
+    <updated>2025-05-13T01:34:40Z</updated>
+    <link href="https://arxiv.org/abs/2502.17770v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.17770v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many recent studies on first-order methods (FOMs) focus on \emph{composite non-convex non-smooth} optimization with linear and/or nonlinear function constraints. Upper (or worst-case) complexity bounds have been established for these methods. However, little can be claimed about their optimality as no lower bound is known, except for a few special \emph{smooth non-convex} cases. In this paper, we make the first attempt to establish lower complexity bounds of FOMs for solving a class of composite non-convex non-smooth optimization with linear constraints. Assuming two different first-order oracles, we establish lower complexity bounds of FOMs to produce a (near) $ε$-stationary point of a problem (and its reformulation) in the considered problem class, for any given tolerance $ε&gt;0$. Our lower bounds indicate that the existence of a non-smooth convex regularizer can evidently increase the difficulty of an affinely constrained regularized problem over its nonregularized counterpart. In addition, we show that our lower bound of FOMs with the second oracle is tight, with a difference of up to a logarithmic factor from an upper complexity bound established in the extended arXiv version of this paper.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-25T02:03:38Z</published>
+    <arxiv:comment>accepted by Mathematics of operations research</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Wei Liu</name>
+    </author>
+    <author>
+      <name>Qihang Lin</name>
+    </author>
+    <author>
+      <name>Yangyang Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.03665v2</id>
+    <title>Lower Bounds and Nearly Optimal Algorithms in Distributed Learning with Communication Compression</title>
+    <updated>2022-10-11T17:46:49Z</updated>
+    <link href="https://arxiv.org/abs/2206.03665v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.03665v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in distributed optimization and learning have shown that communication compression is one of the most effective means of reducing communication. While there have been many results on convergence rates under communication compression, a theoretical lower bound is still missing.
+  Analyses of algorithms with communication compression have attributed convergence to two abstract properties: the unbiased property or the contractive property. They can be applied with either unidirectional compression (only messages from workers to server are compressed) or bidirectional compression. In this paper, we consider distributed stochastic algorithms for minimizing smooth and non-convex objective functions under communication compression. We establish a convergence lower bound for algorithms whether using unbiased or contractive compressors in unidirection or bidirection. To close the gap between the lower bound and the existing upper bounds, we further propose an algorithm, NEOLITHIC, which almost reaches our lower bound (up to logarithm factors) under mild conditions. Our results also show that using contractive bidirectional compression can yield iterative methods that converge as fast as those using unbiased unidirectional compression. The experimental results validate our findings.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-08T03:36:34Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Xinmeng Huang</name>
+    </author>
+    <author>
+      <name>Yiming Chen</name>
+    </author>
+    <author>
+      <name>Wotao Yin</name>
+    </author>
+    <author>
+      <name>Kun Yuan</name>
+    </author>
+  </entry>
+</feed>
