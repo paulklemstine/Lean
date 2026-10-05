@@ -1,5 +1,13 @@
 # Round 109c — the exact 2-modulus IFP lattice (Feng–Nitaj–Pan / May–Ritzenhofen)
 
+> ⚠️ **Framing corrected in round 109d.** The bound `γ > 4α(1−√α)` reported here is
+> the **GIFP** bound (shared bits at arbitrary/differing positions). For the plain
+> **LSB** case the sharpest known bound is the smaller `γ > 2α − 2α²` (Lu et al.
+> 2016). So `4α(1−√α)` is **not** the best-known IFP bound; it is best for the
+> generalized setting. Also, the oracle reveals only the relation
+> `p₁ ≡ p₂ (mod 2^t)` (confirmed against the primary source). Read `109d` for the
+> full verified progression and the authors' own open gap (`4α(1−√α) → 2α−2α²`).
+
 **2026-10-04. NO new factoring algorithm claimed.** This round implements, from
 the primary source, the **exact** 2-modulus lattice behind the subtle
 Implicit-Factorization bound, and records a **critical correction** to the premise

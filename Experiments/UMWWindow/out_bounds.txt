@@ -1,0 +1,31 @@
+IFP/GIFP bound progression (gamma = shared bits / n, alpha = cofactor bits / n)
+  NOTE: alpha + gamma <= 1 (the p-prime needs enough unshared bits).
+  A factorable configuration needs the two p's to SHARE gamma*n bits
+
+  alpha = 0.25  (q = 512 bits, p = 1536 bits)
+    May-Ritzenhofen (LSB)      gamma>0.5000  => share 1024.0 bits of p
+    Sarkar-Maitra (LSB)        gamma>0.4375  => share  896.0 bits of p
+    Lu et al. (LSB) BEST       gamma>0.3750  => share  768.0 bits of p
+    Peng (middle)              gamma>0.8125  => share 1664.0 bits of p
+    Wang (middle)              gamma>0.5000  => share 1024.0 bits of p
+    Feng-Nitaj-Pan GIFP        gamma>0.5000  => share 1024.0 bits of p
+    -> GIFP needs 0.5000, best LSB 0.3750; gap = +0.1250  (OPEN: paper's stated problem)
+
+  alpha = 0.3  (q = 614 bits, p = 1434 bits)
+    May-Ritzenhofen (LSB)      gamma>0.6000  => share 1228.8 bits of p
+    Sarkar-Maitra (LSB)        gamma>0.5100  => share 1044.5 bits of p
+    Lu et al. (LSB) BEST       gamma>0.4200  => share  860.2 bits of p
+    Peng (middle)              gamma>0.9300  => share 1904.6 bits of p
+    Wang (middle)              gamma>0.5427  => share 1111.5 bits of p
+    Feng-Nitaj-Pan GIFP        gamma>0.5427  => share 1111.5 bits of p
+    -> GIFP needs 0.5427, best LSB 0.4200; gap = +0.1227  (OPEN: paper's stated problem)
+
+  alpha = 0.35  (q = 717 bits, p = 1331 bits)
+    May-Ritzenhofen (LSB)      gamma>0.7000  => share 1433.6 bits of p
+    Sarkar-Maitra (LSB)        gamma>0.5775  => share 1182.7 bits of p
+    Lu et al. (LSB) BEST       gamma>0.4550  => share  931.8 bits of p
+    Peng (middle)              gamma>1.0325  => share 2114.6 bits of p
+    Wang (middle)              gamma>0.5717  => share 1170.9 bits of p
+    Feng-Nitaj-Pan GIFP        gamma>0.5717  => share 1170.9 bits of p
+    -> GIFP needs 0.5717, best LSB 0.4550; gap = +0.1167  (OPEN: paper's stated problem)
+
