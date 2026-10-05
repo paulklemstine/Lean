@@ -96,3 +96,54 @@ Write your experiment under `factor-scratch/r112/<your-axis>/`. End with a short
 `RESULT.md` containing: the claim, the falsifier, the exact command to reproduce,
 the verified counts (twice, seeded), and an honest verdict. Do not commit — the
 lead will review before anything lands.
+---
+
+# ROUND 113 ADDENDUM — read this, it supersedes §1 where they conflict
+
+r112 ran 8 novel mechanisms (7 closed, 0 improvements) and 4 verification axes.
+The verification axes found everything worth finding. **Weight your effort
+accordingly: an axis that re-measures a standing result with a proper control is
+worth more than a tenth new mechanism.**
+
+## THE #1 TRAP: vacuous evidence (found in r112, cost us a whole published claim)
+
+**Every GIFP instance at n=200 is trivially factorable.** `|q2| = alpha*n`, so at
+n=200, alpha=0.1 the small factor is 20 bits and PARI does `factor(N)` in
+**0.006 s**. The campaign published "20/20 verified" for that, and the attack it
+credited was ~8000x SLOWER than doing nothing clever.
+
+**Rule, non-negotiable:** beside EVERY success count, report what the trivial
+baseline does on the same input (`factorint`, `factor(N)`, trial division).
+- baseline solves it -> your claim is a CORRECTNESS TEST, not evidence;
+- **small factors (< ~2^40 bits) make any factoring claim vacuous.**
+
+Corollary: a ground-truth check confirms your ARITHMETIC. It never confirms that
+your ATTACK did the work.
+
+## Size rules
+- Any factoring claim needs `|small factor| > 2^40 bits` to mean anything, and
+  ideally the baseline must FAIL on the instance. Build that in from the start.
+- The GIFP mechanism IS real at n=800 (3/3 while PARI ran >4 min). That is the one
+  live positive in the campaign. Everything at n=200 is decoration.
+
+## Seed rules (r112 produced FOUR wrong conclusions from small counts)
+- **>=12 seeds** at any parameter point where the outcome may be marginal. 4
+  cannot distinguish a rate of 0.8 from 0.2.
+- **Report a RATE, not pass/fail.** A 0/4 against someone's 3/3 is a seed problem
+  until proven otherwise.
+- Boundary counts are not reproducible at 8 seeds (the same cell gave 3/8 then 5/8).
+
+## Never publish a null without a positive control
+If your probe reports the phenomenon ABSENT everywhere, check it also reports it
+PRESENT at a point where you know it is present. r112 had two probes that
+declared a known-WORKING case infeasible; both were self-refuting.
+
+## Two-sided parameters
+`gifp.sage`'s `t` and `s` must be searched JOINTLY. `t=ceil` fixes some m and
+BREAKS others (m=4 and m=7 go 4/4 -> 0/4). There is no one-sided closed-form fix.
+
+## Do not
+- import or reuse r110-r112 harnesses for a verification claim -- write your own
+  from the primary source, or you inherit their bugs;
+- cite a source you have not fetched, with a verbatim quote (16 phantoms so far);
+- commit. The lead reviews before anything lands.
