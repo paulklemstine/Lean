@@ -46,6 +46,31 @@ gives the **exact** algorithm:
   variable identifications from memory — **precisely the round-109b failure mode.**
   I stopped rather than ship a re-derivation I could not validate.
 
+### 1b. A real diagnosis of *why* the Python port fails (round 109f)
+
+I made one substantive debugging step, which is worth recording because it
+**narrows the blocker to a specific, nameable gap**:
+
+* The authors' recovery reads `p₂` from the **denominator of a rational
+  coefficient** of the reduced basis. Such denominators appear **only if the LLL
+  is performed over ℚ** (their `dense_matrix().LLL()` over `QQ`), not over ℤ.
+  My first port used `fpylll`'s integer LLL — which provably destroys exactly the
+  denominators the recovery needs.
+* I then implemented an **exact rational LLL** (`qlll.py`, Gram–Schmidt over
+  `Fraction`, matching Sage's QQ LLL) and re-ran. The pipeline now completes —
+  but the recovered basis is **entirely integral (zero fractional
+  coefficients)**, so no `p₂` appears even well above the threshold.
+
+> **So the blocker is now precise:** the reduced basis my rational LLL produces
+> does not exhibit the rational structure the authors' recovery depends on. The
+> discrepancy is in the **reconstruction/unscale step** (how `X^a Y^b Z^c`
+> column factors are applied and inverted), not in the shift polynomials — which
+> match the authors' code line-for-line, and whose quotient-ring handling I
+> verified separately. Closing this needs the authors' Sage `LLL`/`reconstruct`
+> semantics, which I cannot run here.
+
+This is progress on the blocker (a nameable cause), **not** a verification.
+
 > **The round-104 guard, seventh firing, in its most important form:** I declined
 > to claim a threshold I had not verified end-to-end. The authors' code is the
 > only trustworthy oracle here, and it needs Sage.
