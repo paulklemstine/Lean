@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-10-04T22:31:47Z",
-  "count": 197,
+  "archived_at": "2026-10-05T07:13:34Z",
+  "count": 198,
   "directions": [
     {
       "id": "fd_3695",
@@ -7813,6 +7813,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 227
+    },
+    {
+      "id": "fd_3549",
+      "title": "FACT round-38 #3 — POSITIONAL-FILTER: position pays 5.19x, the stratum beyond the residue cap is live (paper 137)",
+      "description": "Round-38 #3 (exp 467, assessment v246). Paper 132's open residual item (1), measured.\n\n**POSITION-PAYS-5.19X** (positional-cap guess <2x REFUTED): sqrt-descending visitation order — literally Fermat's order applied to divisibility tests — gives a sham-controlled **5.1936x** expected trial-division speedup (sham 1.65x; real/sham = 3.16x).\n\nTwo separable mechanisms with OPPOSITE gradients across balance strata q/p ∈ {1–1.25, 1.25–2, 2–4}:\n(a) Fermat-type balance bet: **20.67× / 4.74× / 1.97×** — concentrated at near-squares;\n(b) learned range-truncation (finite-pool feasibility r ≥ N/2^17 revealed by magnitude): 4.35× / 4.73× / **6.91×**.\n\nThe learned Bayes ordering (3.37x test-only) refuted the smooth-posterior collapse claim at the pool's truncation edge (the d1≡ascending designed check still passed 30000/30000). Honest computable frontier = plain sqrt-descending; the learned selector's edge was train-inflation.\n\nThe barrier map now reads: residues cap at 4/3 (theorem, paper 132); position pays 5.19x here (measurement, mechanism decomposed) — separated by exactly the uniform-marginal lemma's scope. Accounting: expected divisibility-test counts (information), not wall-clock.\n\nLedger (7) incl. ML#4 self-refutation disclosed and a vacuous feature caught.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp467_positional_filter.py + result.json, seed 20260821, n=30k × 5 batches.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "5a7633ee",
+      "timestamp": "2026-08-22T03:08:29.725146+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.66,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-04T15:55:24.380165+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 234
     }
   ]
 }
