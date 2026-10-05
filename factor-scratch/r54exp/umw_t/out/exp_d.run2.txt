@@ -1,0 +1,18 @@
+=== CONTROL: checker itself ===
+  POS  A=[1..100], n=100 -> ok=True (expect True)   OK
+  NEG  A missing 7, n=10 -> ok=False first_fail=7 (expect False,7) OK
+
+=== The t-large CONSTRUCTED gap vs the n-divisor property ===
+  n=2^15=     32768 L=   32 k=t=   5 | test n'=3000: n-divisor=False first_missing=0
+      |A|=1024  max|A|=1463384148029  min|A|=0  max|A| <= exp(n^(1/3))? True
+  n=2^18=    262144 L=   64 k=t=  10 | test n'=3000: n-divisor=False first_missing=0
+      |A|=4096  max|A|=2967000320678039431633987713  min|A|=0  max|A| <= exp(n^(1/3))? True
+  n=2^21=   2097152 L=  128 k=t=  17 | test n'=3000: n-divisor=False first_missing=0
+      |A|=16384  max|A|=165564889648863260908331952871582197310971228832926661  min|A|=0  max|A| <= exp(n^(1/3))? True
+
+=== TENSION CHECK: can ANY small gap be both n-divisor and t-large? ===
+  A=[1..24] n=24: n-divisor=True (expect True)
+  A=[1..48] n=48: n-divisor=True (expect True)
+  A=[1..96] n=96: n-divisor=True (expect True)
+
+wrote out/exp_d.json

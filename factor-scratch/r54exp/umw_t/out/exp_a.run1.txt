@@ -1,0 +1,22 @@
+
+=== n=2^24=2^24  L=2^8  sqrt(n)=4096 ===
+  band primes |P0| = 166   lambda=sum 1/p = 0.04920
+  rigorous size upper bound on t : 32.4
+  rep0: differences=261120  dropped(p|gcd)=0  t_max=3
+        frac t=0: 0.9529   frac t=1: 0.04579   frac t>=2: 0.001302
+  rep1: differences=261120  dropped(p|gcd)=0  t_max=3
+        frac t=0: 0.9522   frac t=1: 0.04660   frac t>=2: 0.001241
+  rep2: differences=261120  dropped(p|gcd)=0  t_max=3
+        frac t=0: 0.9525   frac t=1: 0.04656   frac t>=2: 0.000973
+
+=== n=2^30=2^30  L=2^10  sqrt(n)=32768 ===
+  band primes |P0| = 1062   lambda=sum 1/p = 0.03950
+  rigorous size upper bound on t : 102.6
+  rep0: differences=4190208  dropped(p|gcd)=0  t_max=3
+        frac t=0: 0.9607   frac t=1: 0.03851   frac t>=2: 0.000793
+  rep1: differences=4190208  dropped(p|gcd)=0  t_max=3
+        frac t=0: 0.9615   frac t=1: 0.03774   frac t>=2: 0.000757
+  rep2: differences=4190208  dropped(p|gcd)=0  t_max=3
+        frac t=0: 0.9614   frac t=1: 0.03777   frac t>=2: 0.000807
+
+wrote out/exp_a.json

@@ -1,0 +1,391 @@
+Refuting a Conjecture of Umans and Wang on
+Arithmetic-Progression Divisor Covers
+Xinjie He∗
+
+Amit Sahai†
+
+August 10, 2026
+
+arXiv:2608.06681v1 [math.NT] 7 Aug 2026
+
+Abstract
+An n-divisor set is a finite set of positive integers containing a multiple of every integer
+from 1 through n. Umans and Wang proposed, as the arithmetic-progression version of
+their Strong (α, β)-Divisor Conjecture, an n-divisor arithmetic progression having at most
+n2β terms, each of magnitude at most exp(nα ). We√prove unconditionally that an n-divisor
+arithmetic progression of height H with log H = o( n) must have length
+!
+r
+8
+n3/4
+L≥
+− o(1) √
+.
+27
+log n
+Consequently, the arithmetic-progression version is false whenever α < 1/2 and β < 3/8.
+In particular, it is false at the proposed point (α, β) = (1/3, 1/3), even if both bounds
+√ are
+relaxed by no(1) at the exponent level. The proof uses primes in a fixed band below n to
+turn semiprime divisibility into a finite incidence structure. An elementary bounded-degree
+linear-space estimate then gives the result. This theorem concerns the one-dimensional
+arithmetic-progression version only; it does not disprove the higher-rank Strong Divisor
+Conjecture.
+
+1
+
+Introduction and statement of results
+
+For n ∈ Z>0 , a finite set A ⊂ Z>0 has the n-divisor property if every d ∈ {1, . . . , n} divides at
+least one member of A. Umans and Wang introduced conjectures asking for n-divisor sets with
+additional difference-set structure and small height [4]. Proposition 3.4 and Section 6 of their
+paper single out a formally stronger sufficient statement: for infinitely many n, there should be a
+positive arithmetic progression
+A = {b + ic : 0 ≤ i < L},
+
+L ≤ n2β ,
+
+whose members have magnitude at most exp(nα ) and which has the n-divisor property. They
+call this the Arithmetic Progression Version of the Strong (α, β)-Divisor Conjecture. It is an
+informally named version rather than a separately numbered conjecture.
+Our main theorem gives a quantitative obstruction to every such progression of sub-square-root
+logarithmic height.
+∗
+†
+
+University of California, Los Angeles. Email: xinjieh@math.ucla.edu.
+University of California, Los Angeles. Email: sahai@cs.ucla.edu.
+
+1
+
+Theorem 1.1 (Quantitative AP lower bound). Let n tend to infinity through any unbounded
+sequence, and for each such n let
+An = {bn + icn : 0 ≤ i < Ln } ⊂ Z>0
+be an arithmetic progression with bn , cn ∈ Z and with the n-divisor property. Put Hn = max An .
+If
+√
+log Hn = o( n),
+then
+r
+
+!
+
+n3/4
+√
+.
+(1)
+log n
+p
+p
+Equivalently, for every ε > 0, inequality (1) holds with 8/27 − ε in place of 8/27 − o(1) for
+all sufficiently large n in the sequence.
+Ln ≥
+
+8
+− o(1)
+27
+
+Corollary 1.2 (Exponent exclusion). Fix α, β ≥ 0 with
+3
+β< .
+8
+
+1
+α< ,
+2
+
+There is no unbounded sequence of integers n admitting positive n-divisor arithmetic progressions
+satisfying
+
+Ln ≤ n2β+o(1) ,
+Hn ≤ exp nα+o(1) .
+In particular, for every sufficiently large n there is no such progression under the stronger literal
+bounds Ln ≤ n2β and Hn ≤ exp(nα ).
+Taking α = β = 1/3 disproves the Arithmetic Progression Version at the one-third point,
+including its exponent-level relaxation. The proof is unconditional. Its only analytic input is the
+prime number theorem, used in the standard equivalent forms
+X
+x
+,
+ϑ(x) :=
+log p ∼ x;
+π(x) ∼
+log x
+p≤x
+
+see, for example, [2, Chapter 6]. The finite-incidence estimate is proved below. It is related in
+spirit to classical finite-linear-space arguments such as those of de Bruijn and Erdős [1], but no
+external incidence theorem is required.
+
+Discovery using Codex
+The proof was discovered in an OpenAI Codex run using the gpt-5.6-sol model with reasoning
+effort set to ultra; see [3]. Codex also produced the initial write-up. Subsequent human review
+verified the proof, reviewed the citations, and revised the exposition. All named authors approve
+the final manuscript and take responsibility for its claims and any remaining errors.
+
+Acknowledgments
+The prompting strategy for the Codex discovery run borrowed several design ideas from the
+UCLA Moonshot Harness project [5].
+2
+
+Reproducibility
+The mathematical argument is self-contained and does not rely on computer-assisted calculations
+or on access to the Codex transcript. The model identifier and reasoning setting of the discovery
+run are recorded in the preceding disclosure.
+
+2
+
+A bounded-degree linear-space lemma
+
+By a block we mean an indexed proper subset Bj ⊊ V in an indexed family B = (Bj )j∈J . Blocks
+with distinct indices may be identical as subsets.
+Lemma 2.1 (Bounded-degree linear cover). Let V be a finite set of v ≥ 2 points, and let
+B = (Bj )j∈J be an indexed family of blocks. Suppose that
+1. for every two distinct points p, q ∈ V , there exists a block Bj containing both p and q;
+2. blocks with distinct indices intersect in at most one point; and
+3. every point lies in at most ∆ blocks.
+Then
+v ≤ ∆(∆ − 1) + 1.
+
+(2)
+
+Proof. First fix a block Bj . Since it is proper, choose u ∈ V \ Bj . For every q ∈ Bj , the
+pair-covering assumption supplies a block containing u and q. The blocks obtained for distinct
+q have distinct indices: otherwise one of them would meet Bj in at least two points. All these
+blocks contain u, so |Bj | ≤ ∆.
+Now fix u ∈ V . The at most ∆ blocks containing u together contain every other point of V .
+Each such block has at most ∆ − 1 points other than u. Therefore
+v − 1 ≤ ∆(∆ − 1),
+which is (2).
+
+3
+
+Primes just below the square-root scale
+
+We first prove a lower bound associated with any fixed prime band. The constant in Theorem 1.1
+will follow by optimizing the band.
+Lemma 3.1 (A fixed-band lower bound). Under the hypotheses of Theorem 1.1, fix real constants
+0 < a < b ≤ 1. Then
+ p
+ n3/4
+Ln ≥ a 2(b − a) − o(1) √
+.
+(3)
+log n
+√
+Proof. Write x = n, and suppress the subscript n. A decreasing nonconstant progression can
+be reversed, so it may be written
+A = {u + ic : 0 ≤ i < L},
+
+u, c ∈ Z>0 ,
+
+u + (L − 1)c = H.
+
+If the progression has only one distinct term, then the n-divisor property implies
+lcm(1, . . . , n) | H.
+3
+
+√
+The prime number theorem gives log lcm(1, . . . , n) = (1 + o(1))n, contradicting log H = o( n).
+We may therefore assume L ≥ 2 and c ≥ 1. In particular, c ≤ H.
+Let
+P0 = {p prime : ax ≤ p ≤ bx},
+P = {p ∈ P0 : p ∤ c}.
+By the prime number theorem,
+|P0 | = (b − a + o(1))
+X
+
+x
+,
+log x
+
+log p = (b − a + o(1)) x.
+
+(4)
+(5)
+
+p∈P0
+
+The number of primes in P0 dividing c is at most
+
+
+log c
+log H
+x
+,
+≤
+=o
+log(ax)
+log(ax)
+log x
+and
+
+
+X
+p∈P0
+p|c
+
+
+
+Y 
+log p = log
+p
+
+ ≤ log c ≤ log H = o(x).
+p∈P0
+p|c
+
+Consequently, if v = |P|, then
+v = (b − a + o(1))
+
+x
+,
+log x
+
+X
+
+log p = (b − a + o(1)) x.
+
+(6)
+
+p∈P
+
+If L > a2 n, then (3) is immediate. We henceforth assume L ≤ a2 n. For every progression
+index i, define
+Bi := {p ∈ P : p | u + ic}.
+We check the hypotheses of Lemma 2.1.
+First, every pair of distinct primes p, q ∈ P lies in some block: indeed,
+pq ≤ b2 n ≤ n,
+so the n-divisor property supplies a progression term divisible by pq.
+Second, two differently indexed blocks meet in at most one point. If distinct p, q belonged to
+both Bi and Bj , with i ̸= j, then
+pq | (i − j)c.
+Since p, q ∤ c, this implies pq | i − j. But
+0 < |i − j| < L ≤ a2 n ≤ pq,
+a contradiction.
+Third, every block is proper. If some Bi were all of P, the product of the distinct primes in P
+would divide u + ic. By (6), this would imply
+X
+log(u + ic) ≥
+log p = (b − a + o(1)) x,
+p∈P
+
+4
+
+contrary to log(u + ic) ≤ log H = o(x).
+Finally, let ∆ be the actual maximum point degree. For p ∈ P, the congruence
+u + ic ≡ 0
+
+(mod p)
+
+selects one residue class of indices modulo p, because p ∤ c. Therefore
+∆≤1+
+
+L
+.
+ax
+
+(7)
+
+Put t = L/(ax). Lemma 2.1 and (7) give
+v ≤ ∆(∆ − 1) + 1 ≤ t2 + t + 1.
+Since v → ∞, this forces
+
+√
+t≥
+
+√
+4v − 3 − 1
+= (1 − o(1)) v.
+2
+
+Using (6) and log x = 21 log n, we obtain
+s
+
+(b − a)x
+log x
+ p
+ n3/4
+,
+= a 2(b − a) − o(1) √
+log n
+
+L ≥ (a − o(1))x
+
+which proves (3).
+Proof of Theorem 1.1. Take b = 1 and a = 2/3 in Lemma 3.1. The coefficient in (3) is
+r
+p
+8
+a 2(b − a) =
+.
+27
+√
+The use of the endpoint b = 1 is legitimate: for distinct primes p, q ≤ n, one still has pq ≤ n,
+exactly the range covered by the n-divisor property. The lemma now gives (1) directly.
+
+4
+
+Consequences and scope
+
+Proof of Corollary 1.2. Suppose, to the contrary, that qualifying progressions exist along an
+unbounded sequence of n. Since α < 1/2,
+√
+log Hn ≤ nα+o(1) = o( n),
+so Theorem 1.1 applies. On the other hand, β < 3/8 gives
+!
+n3/4
+2β+o(1)
+n
+=o √
+,
+log n
+contradicting the theorem’s lower bound for Ln .
+
+5
+
+At the one-third point this gives the promised unconditional conclusion: there is no unbounded
+sequence of positive n-divisor arithmetic progressions with
+
+Ln ≤ n2/3+o(1) ,
+Hn ≤ exp n1/3+o(1) .
+Natural floor or ceiling choices in the number of terms are absorbed by the o(1). Indexing the
+progression from 0 or from 1 merely changes its initial term.
+Remark 4.1 (Positivity and zero). The n-divisor property in Definition 3.1 of Umans and Wang
+is explicitly defined for sets of positive integers. Thus zero is not an admissible progression term
+or divisor witness here. Allowing zero as a witness would make the condition vacuous, since every
+positive integer divides zero. A constant progression reduces to the singleton case treated in the
+proof.
+Remark 4.2 (What has and has not been disproved). Proposition 3.4 of Umans and Wang [4] shows
+that the Arithmetic Progression Version implies the Strong (α, β)-Divisor Conjecture; no converse
+is asserted. The result above consequently does not disprove the full Strong (1/3, 1/3)-Divisor
+Conjecture. A difference of two higher-rank generalized arithmetic progressions need not be a
+one-dimensional progression. The decisive step above uses
+(u + ic) − (u + jc) = (i − j)c.
+For a rank-two progression, the corresponding difference contains two independent coefficients,
+and the at-most-one-intersection argument does not follow.
+√
+Remark 4.3 (Endpoints). Theorem 1.1 does not cover the case log H = O(
+n), and Corollary 1.2
+√
+makes no claim when βp= 3/8. Indeed, the lower bound L ≫ n3/4 / log n does not exclude
+L ≤ n3/4 . The constant 8/27 is the outcome of the fixed-band argument and is not claimed to
+be optimal.
+
+References
+[1] N. G. de Bruijn and P. Erdős, On a combinatorial problem, Proceedings of the Section of Sciences of
+the Koninklijke Nederlandse Akademie van Wetenschappen te Amsterdam 51 (1948), no. 10, 1277–1279;
+also published in Indagationes Mathematicae 10 (1948), 421–423.
+[2] H. L. Montgomery and R. C. Vaughan, Multiplicative Number Theory I: Classical Theory, Cambridge
+Studies in Advanced Mathematics, vol. 97, Cambridge University Press, Cambridge, 2007.
+[3] OpenAI, GPT-5.6: Frontier intelligence that scales with your ambition, July 9, 2026, https:
+//openai.com/index/gpt-5-6/ (accessed August 1, 2026).
+[4] C. Umans and S. Wang, A number-theoretic conjecture implying faster algorithms for polynomial
+factorization and integer factorization, arXiv:2511.10851v1 (2025).
+[5] J. Zhang, X. He, H. Chae, E. Jiang, E. Ji, A. Taylor, Y. Kou, R. Raghavan, V. Sahai, K. Hess, Y. Lu,
+I. Hair, K.-W. Chang† , R. Meka† , V. Peng† , A. Sahai† , T. Tao† , and W. Wang† , UCLA Moonshot
+Harness, 2026. † Principal investigators, listed at the end in alphabetical order by last name.
+
+6
+
+

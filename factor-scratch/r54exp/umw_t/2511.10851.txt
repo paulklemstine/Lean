@@ -1,0 +1,1427 @@
+A number-theoretic conjecture implying
+faster algorithms for polynomial factorization
+and integer factorization
+arXiv:2511.10851v1 [cs.DS] 13 Nov 2025
+
+Chris Umans∗
+Caltech
+
+Siki Wang†
+Caltech
+
+November 17, 2025
+
+Abstract
+The fastest known algorithm for factoring a degree n univariate polynomial over
+a finite field Fq runs in time O(n3/2+o(1) poly log q), and there is a reason to believe
+that the 3/2 exponent represents a “barrier” inherent in algorithms that employ a
+so-called baby-steps-giant-steps strategy. In this paper, we propose a new strategy
+with the potential to overcome the 3/2 barrier. In doing so we are led to a numbertheoretic conjecture, one form of which is that there are sets S, T of cardinality nβ ,
+consisting of positive integers of magnitude at most exp(nα ), such that every integer
+i ∈ [n] divides s − t for some s ∈ S, t ∈ T . Achieving α + β ≤ 1 + o(1) is trivial; we
+show that achieving α, β < 1/2 (together with an assumption that S, T are structured)
+implies an improvement to the exponent 3/2 for univariate polynomial factorization.
+Achieving α = β = 1/3 is best-possible and would imply an exponent 4/3 algorithm
+for univariate polynomial factorization. Interestingly, a second consequence would be
+a reduction of the current-best exponent for deterministic (exponential) algorithms for
+factoring integers, from 1/5 to 1/6.
+
+∗
+†
+
+Computing & Mathematical Sciences Department. Supported by a Simons Investigator Grant.
+Computing & Mathematical Sciences Department. Supported by Umans’ Simons Investigator Grant.
+
+1
+
+Introduction
+
+We are interested in the fundamental problem of factoring univariate polynomials over finite
+fields. In other words, given a polynomial f (X) ∈ Fq [X] of degree n, given by its coefficients,
+we wish to produce irreducible polynomials f1 , f2 , . . . fk such that f = f1 f2 . . . fk . This is a
+classic problem in computer algebra, and polynomial-time algorithms have been known since
+Berlekamp’s algorithm in 1970 [Ber70]. Since then, there has been a significant amount of
+work on algorithms for this central problem (see surveys [vzGP01], [Kal03], [vzG06]). A key
+development due to Kaltofen and Shoup in 1998 [KS98] was the first sub-quadratic algorithm
+for this problem. The current best exponent is 3/2, achieved by Kedlaya and Umans [KU11]
+via a new nearly-linear-time algorithm for modular composition.
+These asymptotically fastest algorithms use the framework pioneered by Cantor and
+Zassenhaus [CZ81], in which there are three main steps to produce the full factorization
+of f (X) into irreducibles: squarefree factorization, distinct-degree factorization, and equaldegree factorization. The first and third of these steps have algorithms that run in time
+e
+O(n)poly
+log(q) [KU11]; distinct-degree factorization is thus the algorithmic bottleneck. This
+problem is described precisely as follows:
+Problem 1.1 (Distinct-Degree Factorization). Given a monic, squarefree polynomial f ∈
+Fq [X] of degree n, output factors f1 , f2 , ..., fn ∈ Fq [X], where f = f1 f2 · · · fn and each fi is
+either 1 or the product of degree-i irreducible polynomials.
+As mentioned, the best-known exponent for Distinct-Degree Factorization is 3/2 [KU11].
+i
+The key algebraic fact used in the algorithm is that the polynomial gi (X) = X q − X is
+the product of all monic irreducible polynomials of degree dividing i. Computing the GCD
+of f with gi (X) for i = 1, 2, . . . , n then gives the distinct-degree factorization. Using fast
+modular composition, each such GCD can be computed using a nearly linear number of Fq
+operations. Since there are n of these GCDs, however, the algorithm remains quadratic.
+To achieve subquadratic running time, a baby-steps-giant-steps approach is used in [KU11],
+Q
+following [KS98], to compute the product ni=1 gi (X) mod f (X) (and products of contiguous
+e 3/2 ) F -operations. This remains the key idea in the bestsubsets of these factors) in O(n
+q
+known algorithms. Indeed, going beyond this algorithmic idea seems to be something of
+a “barrier” – as [GNU16] give an assortment of problems whose best-known algorithm has
+exponent 3/2 together with reductions between them and polynomial factorization. In this
+sense, all of these problems are stuck at exponent 3/2 due to the need to go beyond the core
+baby-steps-giant-steps algorithmic motif.
+i
+In this paper, we observe that instead of computing the GCD of f (X) with X q − X
+A
+for various i ∈ [n], we can compute the GCD with X q − X for A as large as exp(n1/3 ) (if
+our target is an exponent-4/3 algorithm). Such a high degree polynomial may be computed
+modulo f (X) by repeated modular composition. Thus a single GCD can “strip off” many
+1
+
+more than a single distinct-degree factor; it can strip off all those whose associated degree
+divides A, in one shot. Making this new idea work in conjunction with the baby-stepsgiant-steps approach to beat exponent 3/2 leads to the number-theoretic conjecture of the
+paper’s title. The substantive new ideas required by this approach are the subject of the
+next three sections. Our main theorem (Theorem 4.9) gives a randomized algorithm for
+polynomial factorization with an exponent that depends on the parameters of the numbertheoretic conjecture; it has the potential to reach exponent 4/3 if the conjecture is true for
+best-possible parameters.
+Outline. In Section 2 we describe a general framework for computing the Distinct-Degree
+Factorization. This leads us to formulate the main number-theoretic conjecture (and variants) in Section 3. The main algorithmic content is in Section 4 which shows how the
+number-theoretic conjecture can be used to produce the components needed by the general
+framework. Section 5 then applies the same ideas to integer factorization. Finally, in Section
+6 we discuss the conjecture, and suggest some questions for future work.
+
+1.1
+
+Preliminaries
+
+e
+In this paper we use the notation O(·)
+to suppress polylogarithmic factors. We use the fact
+e
+that certain key operations on polynomials in Fq [X] of degree n can be performed in O(n)
+time: multiplication, division with remainder, GCD, and multipoint evaluation (see, e.g.,
+[vzGG13]).
+e
+We also use the result from [KU11] that modular composition can be performed in O(n)
+time. This is the operation of computing f (g(X)) mod h(X) where f, g, h have degree n.
+Modular composition allows us to raise X to large powers of q modulo a polynomial f (X)
+very efficiently, as captured in the following proposition:
+
+Proposition 1.2. Given h(X) ∈ Fq [X] of degree n, and an integer a ≥ 0, the polynomial
+a
+e
+X q mod h(X) can be computed in time O(n)(log
+q + log a).
+Proof. We first compute X q mod h(X) by repeated squaring, then compose the result with
+2i
+itself modulo h(X) repeatedly to get X q mod h(X) for i = 0, 1, . . . , ⌊log2 a⌋. After noting
+that
+ s
+  t
+
+s+t
+(mod h(X))
+X q ≡ X q mod h(X) ◦ X q mod h(X)
+a
+
+i
+
+we can produce X q mod h(X) by composing a subset of the X q mod h(X) polynomials
+(corresponding to those i for which a mod 2i+1 = 1).
+A key observation is the following:
+
+2
+
+Lemma 1.3. Let s, t be non-negative integers, and let h(X) ∈ Fq [X] be monic and squarefree.
+Then
+s
+t
+gcd(X q − X q , h(X))
+consists of exactly the irreducible factors of h whose degree divides |s − t|, and possibly a
+scalar factor of −1.
+s
+
+t
+
+s−t
+
+t
+
+s
+
+t
+
+Proof. If s ≥ t, we have that (X q − X q ) = (X q − X)q ; otherwise (X q − X q ) =
+t−s
+s
+|s−t|
+s
+t
+(X − X q )q so the difference or its negation is a power of X q
+− X. Thus X q − X q is
+a power of a polynomial that is the product of exactly the irreducibles whose degree divides
+|s − t| (possibly multiplied by −1). The lemma follows.
+
+2
+
+The framework
+
+In this section we describe a general framework for distinct-degree factorization, which captures the previous best algorithms. Our new algorithm is also described within this framework.
+The input is a monic, squarefree polynomial of degree n. All of the polynomials discussed
+below are polynomials in the ring Fq [X].
+Theorem 2.1. Suppose we have k = k(n) polynomials g1 (X), g2 (X), . . . , gk (X), and γ ≥ 0
+for which the following hold:
+1. every monic squarefree polynomial of degree n divides
+
+Qk
+
+i=1 gi (X), and
+
+2. given a monic squarefree polynomial h(X) with deg(h) ≤ n and integers a ≤ b, we can
+compute the interval polynomial
+b
+Y
+
+gi (X) mod h(X)
+
+i=a
+
+e
+in time O(deg(h)
+· nγ ) · poly log q, and
+
+3. given a monic squarefree polynomial h(X) of degree at most n, and an integer i, we can
+e
+compute the distinct-degree factorization of gcd(h, gi ) in time O(deg(h)
+· nγ ) · poly log q.
+Then there is a randomized algorithm for computing the distinct degree factorization that
+e 1+γ log(k(n))) · poly log q.
+runs in time O(n
+The proof implements a strategy we call recursive splitting. We first describe how the
+previous algorithm of Kedlaya and Umans fits into this framework with k(n) = n and
+i
+γ = 1/2: we define gi (X) = X q − X. It is an elementary algebra fact that gi (X) is the
+3
+
+product of all monic, irreducible polynomials whose degree divides i. Thus, Property 1 holds.
+For Property 2, Kedlaya and Umans use the baby-steps-giant-steps approach to show that
+the interval polynomials can be computed in the required time (details not repeated here).
+Finally, for Property 3, we use the well-known Divisor Bound: that the number of distinct
+positive integer divisors of an integer i is at most exp(log i/ log log i) = io(1) . By computing
+a
+
+gcd(h(X), X q − X)
+for a running over these divisors in increasing order, we can compute the distinct-degree
+factorization of gcd(h, gi ) in time
+e
+e
+O(deg(h)
+· io(1) ) · poly log q ≤ O(deg(h)
+· nγ ) · poly log q
+
+as required.
+Proof of Theorem 2.1. We are given f (X) ∈ Fq [X] of degree n. Our algorithm recursively
+splits f (X) into factors, ending with each factor being the product of irreducibles of a single
+degree. Each recursive call comes with an interval (a, b) (with 1 ≤ a ≤ b ≤ k) and the invariQ
+ant that the polynomial to be factored divides the interval polynomial bi=a gi (X). Initially,
+the interval is (1, k) and Property 1 guarantees the invariant for the input polynomial f (X).
+The base case of the recursive algorithm is when a = b. In this case we return the
+distinct-degree factorization of gcd(f (X), ga (X)).
+Otherwise, let c = ⌊(a + b)/2⌋ be the midpoint of the interval (a, b). We compute the
+polynomial
+flower (X) = gcd(f (X),
+
+c
+Y
+
+gi (X)).
+
+i=a
+
+There are three cases. If flower = 1 then f divides bi=c+1 gi and we recursively split f with
+the interval set to (c + 1, b). If flower = f then we recursively split f with the interval set to
+(a, c). Otherwise flower is a non-trival factor of f , and we recursively split flower with the
+interval set to (a, c) and fupper = f /flower with the interval set to (c + 1, b). In all cases
+the invariant is maintained.
+Let T (d, r) be the running time of this procedure when the input polynomial has degree
+d, and the interval has length r = b − a + 1. We claim that for all d ≤ n
+Q
+
+γ
+e
+T (d, r) ≤ (log(2r)) · O(dn
+) · poly log q.
+
+The proof is by induction on r. The claim is true by Property 3 when r = 1. The recursive
+step (computing the interval polynomial, and one GCD) costs
+γ
+e
+O(dn
+) · poly log q
+
+4
+
+by Property 2, plus the time to recursively split f with an interval of length r/2 (in the first
+two cases), or the time to recursively split flower and fupper each with an interval of length
+r/2 (in the third case). By induction, this additional cost is
+γ
+e
+log(2(r/2)) · O(dn
+) · poly log q
+
+in the first two cases, and
+γ
+γ
+e
+e
+log(2(r/2)) · O(deg(f
+lower )n ) · poly log q + log(2(r/2)) · O(deg(fupper )n ) · poly log q
+
+in the third case. Since deg(flower ) + deg(fupper ) ≤ d, this is upper bounded by
+γ
+e
+log(2(r/2)) · O(dn
+) · poly log q.
+
+Thus in all cases the overall time is at most
+γ
+γ
+γ
+e
+e
+e
+O(dn
+) · poly log q + (log(2r) − 1) · O(dn
+) · poly log q ≤ (log(2r) · O(dn
+) · poly log q
+
+as claimed1 .
+e 1+γ log(k(n))) · poly log q
+The running time of the entire algorithm is T (n, k(n)) ≤ O(n
+as required. Note that in the final output, each reported factor consists of irreducibles of
+a given degree, although there may be multiple reported factors with irreducibles of that
+degree. We can simply group these to produce the final distinct-degree factorization.
+
+3
+
+A number-theoretic conjecture
+
+In this section we introduce a family of number-theoretic conjectures, and in the following
+two sections, we show how, if true, they can be used to produce algorithms for polynomial
+factorization and integer factorization with exponents that beat the current best-known. We
+begin with a definition:
+Definition 3.1. (n-divisor property) A set A of positive integers satisfies the n-divisor
+property if for all i ∈ {1, . . . , n}, there exists a ∈ A such that i | a.
+We will be interested in minimizing both the magnitude of the integers in A and the
+cardinality of A. Of course the set {1, 2, . . . , n} trivially satisfies the n-divisor property; a
+slightly more interesting fact is that the set {⌊n/2⌋, . . . , n} of cardinality ⌈n/2⌉ satisfies the
+n-divisor property. More generally, without any further constraints, it is easy to satisfy the
+γ
+e
+For ease of exposition, we have not made explicit the function of d, n, q written as O(dn
+) · poly log q.
+To make the induction formally correct we should fix one explicit function that is simultaneously an upper
+bound for each occurrence of the expression in this proof, and ensure that that function is convex in d.
+1
+
+5
+
+divisor property with sets of cardinality m consisting of integers of magnitude at most nn/m .
+This is close to tight, since the product of primes less than n – which has magnitude exp(n)
+– must divide the product of the integers in A, implying that some element of A must have
+magnitude exp(n)1/m .
+Our main family of conjectures demands that the set A have a difference-set structure.
+We further parameterize the magnitude and cardinality by α, β as follows:
+Conjecture 3.2. ((α, β)-Divisor Conjecture) For infinitely many n there exist subsets S, T ⊆
+Z+ such that the set of pairwise differences
+A = {s − t | s ∈ S, t ∈ T }
+satisfies the n-divisor property, and
+1. all elements of S, T have magnitude at most exp(nα )
+2. |S|, |T | ≤ nβ
+Expressing the argument above in terms of α, β yields the constraint α ≥ 1 − 2β; we do
+not know if α = 1 − 2β is achievable. In fact, we do not even know if α < 1 − β is achievable
+(whereas α = 1 − β + o(1) is easy by partitioning [n] into nβ sets of size n1−β each, and
+taking S to be the products of the integers in each of these parts, and T = {0}).
+Achieving α < 1 − β is an important challenge that forces one to make use of both sets
+S, T (unlike the construction above which “uses” only one), and we might hope that such a
+construction would produce structured sets S, T . To be useful algorithmically in our intended
+settings, we need S and T to have the structure of generalized arithmetic progressions:
+Conjecture 3.3. (Strong (α, β)-Divisor Conjecture) For infinitely many n there exist subsets S, T ⊆ Z+ such that the set of pairwise differences
+A = {s − t | s ∈ S, t ∈ T }
+satisfies the n-divisor property, with
+1. all elements of S, T have magnitude at most exp(nα )
+2. |S|, |T | ≤ nβ
+3. There exist c, c′ ≤ no(1) such that
+S = {S1 + ... + Sc }, T = {T1 + ... + Tc′ }.
+where the Si , Tj are arithmetic progressions.
+6
+
+An interesting fact is that if there are sets A satisfying the n-divisor property with
+|A| = n2β and with integers of magnitude exp(nα ) and A itself is an arithmetic progression,
+then the Strong (α, β)-Divisor Conjecture is true, as captured by the following proposition:
+Proposition 3.4. Suppose that for infinitely many n, there exists a set A satisfying the
+n-divisor property with A being an arithmetic progression, |A| ≤ n2β , and having elements
+of magnitude at most exp(nα ). Then the Strong (α, β)-Divisor Conjecture is true.
+Proof. Since A is an arithmetic progression, there exist b ≥ 0 and c > 0 such that
+A = {b + ic : 0 ≤ i ≤ n2β }.
+We define S = {b + i⌈nβ ⌉c : 0 ≤ i ≤ nβ } and T = {ic : 0 ≤ i ≤ nβ }. Since any nonnegative
+i less than n2β can be written as i = i1 ⌈nβ ⌉ − i0 with 0 ≤ i1 , i0 ≤ nβ , we find that every
+element b + ic ∈ A can be written as s − t with s = b + i1 nβ c ∈ S and t = i0 c ∈ T . The
+proposition follows.
+Indeed the set A = {1, 2, . . . , n} trivially satisfies the n-divisor property, and via the
+above proposition the Strong (α, β)-Divisor Conjecture is true for all α > 0 and β = 1/2.
+As we will see in the next section, this already implies an exponent 3/2 algorithm in our
+framework.
+
+4
+
+Using the conjecture to factor polynomials in Fq [X]
+
+In this section we show that the Strong (α, β)-Divisor Conjecture yields polynomials gi (X)
+meeting the requirements of Theorem 2.1. As we remarked, proving the Strong (α, β)-Divisor
+Conjecture for any α < 1 − β is a challenge (and on the cusp of what is trivially true). We
+will see in our main theorem (Theorem 4.8) that proving the conjecture for α < 1 − β leads
+to a subquadratic algorithm, and proving the conjecture for α, β < 1/2 would lead to a
+factoring algorithm with exponent strictly less than 3/2, beating the current best-known
+algorithm. The best exponent possible in this framework is 4/3, achieved when α = β = 1/3
+(recall that α must be at least 1 − 2β).
+For the remainder of this section, we assume that the Strong (α, β)-Divisor Conjecture
+s
+t
+holds for fixed α, β. The polynomials gi (X) needed for Theorem 2.1 are taken to be X q −X q
+for s ∈ S, t ∈ T .
+The ordering of the gi (X) polynomials is important. We associate g0 , . . . , g|S|·|T |−1 with
+the S ×T as follows: if s0 , . . . s|S|−1 is an enumeration of S and t0 , . . . , t|T |−1 is an enumeration
+of T then we set
+sj
+t
+gj+ℓ|S| (X) = X q − X q ℓ
+(1)
+for 0 ≤ j ≤ |S| − 1 and 0 ≤ ℓ ≤ |T | − 1.
+7
+
+Proposition 4.1. Suppose that the Strong (α, β)-Divisor Conjecture holds, and that polynomials gi (X) are defined as in Equation (1). Then every monic squarefree polynomial of
+Q
+degree n divides i gi (X).
+Proof. Let f (X) be a monic squarefree polynomial of degree n. We argue that every (monic)
+irreducible factor of f (X) divides some gi (X). Let d ≤ n be the degree of an irreducible
+factor h(X). By the n-divisor property of the set S − T , there is some s ∈ S, t ∈ T for which
+d|(s − t) (and hence d divides their absolute value). Let gi (X) be the polynomial associated
+with the pair (s, t). Then Lemma 1.3 implies that gcd(gi , f ) contains h as an irreducible
+factor, and hence h divides gi .
+
+4.1
+
+Computing the interval polynomials
+
+In this subsection we show how to compute the interval polynomials to satisfy Property 2
+of Theorem 2.1, assuming the Strong (α, β)-Divisor Conjecture. Our first lemma shows how
+u
+to efficiently compute the polynomials X q mod h(X) for all u ∈ S ∪ T .
+Lemma 4.2. Suppose that the Strong (α, β)-Divisor Conjecture holds, and fix h(X) ∈ Fq [X]
+α+o(1)
+e
+of degree d ≤ n. There is a procedure running in O(d(n
++ nβ )) · poly log q time that
+produces
+u
+X q mod h(X)
+for all u ∈ S ∪ T .
+Proof. Recall that S = S1 + · · · + Sc for c ≤ no(1) , where
+Si = {ai + jbi : j = 0, 1, . . . , di }
+for integers ai ≥ 0, bi > 0 and di ≥ 0. Observe that we can compute the polynomials
+a +jb
+a
+b
+X q i i mod h(X) for j = 0, 1, . . . , di by first computing X q i and X q i , and then composing
+the first repeatedly with the second, di times, with all computations done modulo h(X).
+u
+Repeating for i = 1, 2, . . . , c we obtain the polynomials X q i for all ui ∈ Si , and for all Si .
+Finally, for each (u1 , u2 , . . . , uc ) ∈ S1 × S2 × · · · × Sc we compute
+u
+
+u
+
+Xq 1 ◦ Xq 2 ◦ · · · ◦ Xq
+
+uc
+
+(mod h(X)).
+
+u
+
+This gives X q mod h(X) for every u ∈ S, and we need only to repeat for T to obtain
+the desired set of polynomials. The overall cost is O(d) log q to compute X q mod h(X) by
+repeated squaring, and then
+c
+X
+
+(⌈log ai ⌉ + ⌈log bi ⌉ + (di + 1)) + |S|
+
+i=1
+
+8
+
+α+o(1)
+e
+modular compositions (using Proposition 1.2), for a total cost of O(d(n
++nβ ))·poly log q.
+Q
+Here we used the fact that ai , bi ≤ exp(nα ) and i (di + 1) = |S| ≤ nβ .
+
+Now, we show how to efficiently compute a specified interval polynomial. This proof uses
+as a key step the baby-steps-giant-steps method of Kaltofen and Shoup [KS98].
+Lemma 4.3. Suppose that the Strong (α, β)-Divisor Conjecture holds, and let the polynomials gi (X) be as defined in Equation (1). Fix h(X) ∈ Fq [X] of degree d ≤ n and a specified
+u
+interval a ≤ b. Given the polynomials X q mod h(X) for each u ∈ S ∪T , there is a procedure
+that produces the interval polynomial
+b
+Y
+
+gi (X) mod h(X)
+
+i=a
+β
+e
+in time O(dn
+) · poly log q.
+
+Proof. We observe that the integer interval (a, b) is the union of three disjoint sets. Writing
+a, b in base-|S| we have a = a0 + a1 |S| and b = b0 + b1 |S|. The three sets are then:
+Qleft = {a0 , a0 + 1, . . . , |S| − 1} + a1 |S|
+Qmiddle = {(a1 + 1)|S|, . . . , b1 |S|}
+Qright = {0, 1, . . . , b0 } + b1 |S|
+
+The first set has cardinality |S| − a0 , the second has cardinality (b1 − a1 )|S| (or zero if
+a1 = b1 ), and the third set has cardinality b1 + 1. Since the first and third have size at most
+nβ , we can afford to produce the associated polynomials one by one. The set Qmiddle may
+have size up to n2β so we will use a different strategy to produce the product of its associated
+polynomials.
+sj
+t
+Recall from Equation (1) that gj+ℓ|S| (X) = X q − X q ℓ . We produce the polynomials
+associated with Qleft by taking the difference of the polynomials
+sa +1
+
+sa
+
+Xq 0 , Xq 0 , . . . , Xq
+
+s|S|−1
+
+ta
+
+with xq 1 (all modulo h(X)). Similarly, we produce the polynomials associated with Qright
+by taking the difference of the polynomials
+s
+
+sb
+
+s
+
+Xq 0 , Xq 1 , . . . , Xq 0
+tb
+
+with xq 1 (all modulo h(X)).
+
+9
+
+Since all the polynomials involved so far are given (in the statement of the lemma),
+producing the polynomials associated with Qleft and Qright takes O(|S|) operations on
+degree d polynomials. We take the product of all of them modulo h(X) with an additional
+O(|S|) operations on degree d polynomials.
+All that remains is to compute the product associated with Qmiddle . For this we use
+the idea of Kaltofen and Shoup [KS98]. Over the ring R = Fq [X]/h(X)[Z], we form the
+following polynomial of degree at most |T |
+p(Z) =
+
+b1
+Y
+
+tj
+
+(Z − X q )
+
+j=a1 +1
+tj
+
+which entails O(|T |) operations in the ring R since each X q mod h(X) is given. We then
+s
+e
+evaluate p(Z) at X q for all s ∈ S using fast multipoint evaluation, which entails O(|S|
++|T |)
+s
+q
+operations in the ring R, since each X mod h(X) is given. Finally we take the product of
+these evaluations, again expending at most O(|S|) operations in the ring R. Altogether, we
+obtain the ring element:
+b1
+Y
+
+Y
+
+s
+
+tj
+
+(X q − X q )
+
+(mod h(X)).
+
+s∈S j=a1 +1
+
+We now multiply this polynomial with the polynomials associated with Qleft and Qright ,
+all modulo h(X), which completes the proof.
+Combining Lemma 4.2 and Lemma 4.3, we obtain:
+Theorem 4.4. Suppose that the Strong (α, β)-Divisor Conjecture holds, and that polynomials
+gi (X) are defined as in Equation (1). Then given a monic squarefree polynomial h(X) with
+deg(h) ≤ n and integers a ≤ b, the interval polynomial
+b
+Y
+
+gi (X) mod h(X)
+
+i=a
+
+e
+can be produced in time O(deg(h)
+· nmax(α,β)+o(1) ) · poly log q.
+
+Thus the Strong (α, β)-Divisor Conjecture implies that Property 2 of Theorem 2.1 holds
+with γ = max(α, β) + o(1).
+
+4.2
+
+Distinct-degree factorization of gcd(h, gi )
+s
+
+t
+
+Recall that gi (X) = X q − X q for some s ∈ S, t ∈ T , and that gcd(h, gi ) consists of exactly
+the irreducibles of h whose degree divides |s − t|. Set P = |s − t|.
+10
+
+If P has only few distinct divisors, then we could split off from h the irreducibles of those
+degrees, one after the other. But it could be that P has many distinct divisors, if P is the
+product of small primes. For example, P might be the product of the first ≈ nα primes,
+and then well-known results on the density of smooth integers tell us that P would have
+Ω(n) distinct divisors between 1 and n. So we cannot, in general, afford to try all candidate
+divisors d and split off the associated distinct-degree factor of h – this would take time at
+e α deg(h)). Instead, we
+least Ω(n) deg(h) in the worst case, while we are shooting for O(n
+adopt a randomized strategy, described in this section.
+Throughout this section, set w(X) = gcd(h(X), gi (X)), and let d ≤ n be its degree; the
+α
+e
+polynomial w can be computed initially at a cost of O(deg(h)n
+) · poly log q. Let P be the
+d-smooth part of |s − t|; i.e., the product of all prime factors of |s − t| that are at most d.
+Note that this can be computed easily by trial division, and that any degree of an irreducible
+factor of w that divides |s − t| also divides P . Let R be the multiset of P ’s prime factors.
+Our algorithm is recursive, and in the main step we will either split w non-trivially into
+w′ (X) and w(X)/w′ (X), with deg(w′ ) a substantial fraction of d, or reduce the cardinality
+of R, or both. This gives rise below to the following two-variable recurrence (in two different
+ways, in Lemma 4.6 and Theorem 4.8).
+Lemma 4.5. Let f, g be non-decreasing, non-negative functions, and let f be a convex function on R>0 . Fix 1/2 > ϵ > 0 and integers A, B ≥ 1. Consider the following recurrence:
+
+g(b)
+
+
+
+
+if a ≤ A
+if b ≤ B
+T (a, b) = f (a)
+
+
+′
+′
+ f (a)g(b) + max (T (a , b − 1) + T (a − a , b)) otherwise
+′
+ϵa≤a ≤a
+
+Then for all a, b > 0 we have T (a, b) ≤ f (2a)g(b) log1/(1−ϵ) (a)b.
+Proof. The proof is by induction on a and b. The base cases hold by definition. For the
+induction step with a > A and b > B, we have
+T (a, b) ≤ f (a)g(b) + T (a′ , b − 1) + T (a − a′ , b)
+≤ f (a)g(b) + f (2a′ )g(b − 1) log1/(1−ϵ) (a′ )(b − 1) + f (2(a − a′ ))g(b) log1/(1−ϵ) (a − a′ )b
+≤ f (a)g(b) + f (2a′ )g(b) log1/(1−ϵ) (a)(b − 1) + f (2(a − a′ ))g(b) log1/(1−ϵ) (a − a′ )b
+≤ f (a)g(b) + (f (2a′ ) + f (2(a − a′ )))g(b) log1/(1−ϵ) (a)b
+−f (2a′ )g(b) − f (2(a − a′ ))g(b)
+≤ f (a)g(b) + f (2a)g(b) log1/(1−ϵ) (a)b − (f (2a′ ) + f (2(a − a′ )))g(b)
+≤ f (2a)g(b) log1/(1−ϵ) (a)b
+where the third-to-last inequality used that log1/(1−ϵ) (a−a′ ) ≤ log1/(1−ϵ) (a)−1, the second-tolast inequality used the convexity of f , and the last inequality used that f (2a′ )+f (2(a−a′ )) ≥
+11
+
+f (a) (because either 2a′ or 2(a − a′ ) is at least a, their average).
+One easier case occurs when |R| is at most poly log n. In this case we can compute the
+distinct degree factorization of w(X) deterministically as follows:
+Lemma 4.6. Fix an integer P of magnitude exp(nα ), and let R be the multiset of P ’s
+prime factors, in their multiplicity. Let w(X) be a monic, squarefree polynomial of degree
+d ≤ n, whose irreducible degrees each divide P . There is an algorithm that produces the
+α
+e
+distinct-degree factorization of w(X) in time O(dn
+|R|3 ) · poly log q.
+Proof. We recursively compute the distinct-degree factorization of w(X). In each recursive
+call, we hold a multiset R with the guarantee that the degree of each irreducible factor of w
+Q
+is a divisor of r∈R r. In each step, either the degree d is reduced by at least a (1 − 1/|R|)
+factor, or the multiset of prime factors R shrinks. The complete recursive algorithm is as
+follows:
+Algorithm 1 DDF(w, R)
+Input: polynomial w(X) of degree d, a multiset of prime factors R
+Q
+Guarantee: the degrees of the irreducible factors of w divide r∈R r
+Output: the distinct-degree factorization of w(X)
+1: if d = 1 then
+2:
+output w(X) = X − a, a ∈ Fq
+3: else if |R| = 1 then
+4:
+output w(X)
+5: else
+Q
+6:
+set P = r∈R r
+7:
+set w1 = w
+8:
+for r ∈ R do
+P/r
+9:
+wr (X) = gcd(X q − X, w(X))
+10:
+w1 = w1 / gcd(w1 , wr )
+11:
+end for
+12: end if
+13: find w ′ ∈ {w1 } ∪ {wr : r ∈ R} of maximum degree
+14: if w ′ = w1 then
+15:
+output w′ (X)
+16:
+return DDF(w/w′ , R) (if w′ ̸= w)
+17: else
+18:
+return DDF(w′ , R \ {r}), and DDF(w/w′ , R) (if w′ ̸= w)
+19: end if
+There are two base cases handled in lines (1- 4): if d = 1 then w(X) = X − a for some
+a ∈ Fq ; if |R| = 1, then it consists of a single prime p and w(X) is the product of irreducible
+polynomials of degree p. In both cases w is trivially its distinct-degree factorization by itself.
+12
+
+Q
+
+In lines (6 - 11) we set P = r∈R r and the algorithm produces w1 which is exactly
+the product of irreducibles of w of degree P , if there are any. It does so by removing the
+distinct-degree factors whose associated degree is a proper divisor of P .
+A key observation is that in line (13) the selected polynomial w′ has degree d′ at least
+d/(|R| + 1). This is because each irreducible factor of w occurs in at least one of these
+polynomials (it either has degree P and it occurs in w1 , or it has a degree that is a proper
+divisor of P , and it occurs in at least one of the wr polynomials). The bound on d′ follows
+from a pigeonhole argument.
+The recursive calls proceed to compute the distinct-degree factorization of w/w′ (unless
+it equals 1). In the case that w′ = w1 , we additionally output w′ which is itself the remaining
+distinct-degree factor. Otherwise, we recursively compute the distinct degree factorization
+of w′ = wr , and we know that the degrees of its irreducible factors divide P/r, so we can
+remove one copy of r from the multiset R when making the recursive call.
+Let T (d, c) denote the running time of this procedure on input (w, R), where w(X) has
+degree d and the multiset R has cardinality c. As noted, if d = 1 or c = 1 we simply output
+w(X). The work in lines (6 - 11) costs
+e · nα ) · poly log q
+O(d
+P/r
+
+for each r ∈ R, which includes the cost of computing X q − X mod w(X) (by repeated
+squaring and modular compositions), and the subsequent GCDs. The two recursive calls cost
+e
+e α )·poly log q,
+T (d′ , c−1) and T (d−d′ , c). By Lemma 4.5 (with f (d) = O(d)
+and g(c) = c· O(n
+and ϵ = 1/(|R| + 1)) we conclude that
+e · cnα ) · poly log q · log
+T (d, c) ≤ O(d
+1/(1−ϵ) (d)c
+
+and after noting that log1/(1−ϵ) d ≤ (1/ϵ) ln d = (|R| + 1) ln d, the overall running time of
+T (d, |R|) is as claimed.
+In general, |R| may be as large as nα , and then we need a different strategy. In this case
+we repeatedly pick a random subset of R that splits off distinct degree factors whose degree
+is at least a constant fraction of the degree remaining.
+Lemma 4.7. Fix an integer P of magnitude exp(nα ) and let R be the multiset of P ’s prime
+factors, in their multiplicity. Let w(X) be a monic, squarefree polynomial of degree d ≤ n,
+whose irreducible degrees each divide P . Set p = (1/2)1/ log n . Pick a random subset R′ ⊆ R
+Q
+of cardinality ⌈p|R|⌉ and set P ′ = r∈R′ r. Then
+
+
+
+
+
+
+Pr deg gcd X
+
+qP
+
+
+
+′
+
+− X, w(X)
+
+provided |R| ≥ 4 log2 n.
+13
+
+
+
+≥ d/8 ≥ 1/8
+
+Proof. Let w1 , . . . , wk be the distinct-degree factors of w and let d1 , d2 , . . . , dk be their associated degrees (so each wi is the product of irreducibles of degree di ). For each i define Ri to
+Q
+be the (multi-)subset of R for which r∈Ri r = di . Let Ii be the indicator random variable
+P
+for the event that Ri ⊆ R′ and set I = ki=1 deg(wi )Ii . Set c = |R| and c′ = |R′ |. We have
+
+′
+
+Pr[Ri ⊆ R ] =
+
+c−|Ri |
+c′ −|Ri |
+ 
+c
+c′
+
+
+
+≥
+
+c′ − |Ri |
+c
+
+!|Ri |
+
+|Ri |
+≥ p−
+c
+
+!|Ri |
+
+≥ p|Ri | −
+
+|Ri |2
+≥ 1/2 − 1/4
+c
+
+by our choice of p, and the fact that |Ri | ≤ log n and c ≥ 4 log2 n. Thus by linearity of
+expectation, E[I] ≥ d/4. By an averaging argument, Pr[I < d/8] < 7/8, and the lemma
+follows.
+Our final algorithm produces the complete distinct-degree factorization of w(X), invoking
+Lemma 4.6 when |R| shrinks below 4 log2 n.
+Theorem 4.8. Fix an integer P of magnitude exp(nα ). Let w(X) be a monic, squarefree
+polynomial of degree d ≤ n, whose irreducible degrees each divide P . There is a randomized
+α
+e
+algorithm that produces the distinct-degree factorization of w(X) in time O(dn
+)poly log q.
+Proof. Let R be the multiset of P ’s prime factors, in their multiplicity, and let p be as defined
+in Lemma 4.7. We recursively compute the distinct-degree factorization of w(X). In each
+recursive call, we hold a multiset R with the guarantee that the degree of each irreducible
+Q
+factor of w is a divisor of r∈R r. In each step, either the degree d is reduced by at least a
+constant factor, or the multiset of prime factors R shrinks by a p factor.
+If d = 1 then we return w and we are done. If |R| ≤ 4 log2 n then we invoke Lemma
+Q
+4.6 and we are done. Otherwise, we pick R′ ⊆ R randomly and define P ′ = r∈R′ r as in
+P′
+Lemma 4.7. Compute w′ (X) = gcd(X q − X, w(X)) and set d′ = deg(w′ ). By Lemma 4.7,
+with probability at least 1/8, we have d′ ≥ d/8. We check this condition and repeat if it
+fails to hold. Repeating O(log n) times drives the probability of failure down to 1/poly(n),
+so that by a union bound, the overall algorithm, which invokes this randomized step fewer
+than poly(n) times, succeeds with at least constant probability.
+At this point we recursively compute the distinct-degree factorization of w′ (X) with R
+replaced by R′ , and the distinct-degree factorization of w(X)/w′ (X) with R unchanged (we
+don’t make the second recursive call if w = w′ ).
+Let T (d, c) denote the running time of this procedure on input (w, R), where w(X) has
+degree d and c = ⌈log1/p |R|⌉ (note that in the present analysis c is O(log |R|), instead of
+|R| as it was in the proof of Lemma 4.6). If d = 1 we simply return w; if |R| ≤ 4 log2 n, we
+e
+e α (4 log2 n)3 ) · poly log q.
+invoke Lemma 4.6 at cost f (d) = O(d)
+· O(n
+e · nα ) · poly log q to account
+The main step costs O(c) ≤ O(nα ) to select R′ ⊆ R and O(d
+′
+P
+for computing X q − X mod w(X) (by repeated squaring and modular compositions), and
+14
+
+the subsequent GCD, up to O(log n) times. The two recursive calls cost T (d′ , c − 1) and
+e
+e α )·poly log q,
+T (d−d′ , c) (or just T (d′ , c−1) if d′ = d). By Lemma 4.5 (with f (d) = O(d)·
+O(n
+g(c) = c, and ϵ = 1/8) we conclude that
+e · cnα ) · poly log q · log (d)c
+T (d, c) ≤ O(d
+8/7
+
+and thus the overall running time is at most T (d, log1/p |R|), which is as claimed, after noting
+that log1/p |R| ≤ O(log n) ln |R|.
+Thus the Strong (α, β)-Divisor Conjecture implies that Property 3 of Theorem 2.1 holds
+with γ = α. We note also that by taking P to be the product of primes less than nα the
+theorem gives an unconditional, randomized, distinct-degree factorization algorithm that
+succeeds on polynomials whose irreducible degrees are nα -smooth, which may be of independent interest.
+Altogether, by plugging Proposition 4.1, Theorem 4.4, and Theorem 4.8, into Theorem
+2.1 we obtain:
+Theorem 4.9 (main). Suppose that the Strong (α, β)-Divisor Conjecture holds. Then there
+is a randomized algorithm that computes the distinct-degree factorization of a monic squaree 1+max(α,β)+o(1) ) · poly log q.
+free polynomial of degree n in time O(n
+
+5
+
+Using the conjecture to factor integers
+
+In this section, we show that essentially the same ideas as used in Section 4 can be used
+to give deterministic factoring algorithms for integers. In this regime, the state-of-the-art
+γ
+e
+algorithms are exponential algorithms with running time of the form O(N
+) for 0 < γ < 1,
+where N is the integer to be factored. This contrasts with randomized integer factoring which
+γ
+e
+is heuristically exp(O(log
+N )) time (e.g. the Number Field Sieve). The trivial trial division
+e
+method has running time O(N 1/2 ), and classic results of Pollard [Pol74] and Strassen [Str77]
+1/4
+e
+give O(N
+). Recent work has improved the exponent from 1/4 to 1/5 using additional
+ideas [Har21]. If a version of our strong (α, β)-Divisor Conjecture is true for α, β = 1/3,
+we show that this improves the exponent further to 1/6, and would give a deterministic
+algorithm with the best known running time.
+In order to apply the conjecture, we need to assume an additional property. It is likely
+that if the conjecture is true, the construction of the structured sets S, T would be done
+in such a way that the different divisors in the n-Divisor property would be allocated to
+the various s − t differences in a prescribed or “known” fashion. In this case it is plausible
+to expect an efficient deterministic function which lists the prime factors of a given s − t
+e α ). For ease of exposition, we give a name to the version of the
+difference, in time O(n
+conjecture which presumes the existence of such a function, as follows:
+15
+
+Conjecture 5.1. (Strong Prefactored (α, β)-Divisor Conjecture) For infinitely many n,
+there exists subsets S, T ⊆ Z+ that satisfy the requirements of Conjecture 3.3. Moreover, for
+every integer s − t with s ∈ S, t ∈ T , its prime factorization can be output in deterministic
+e α ).
+time O(n
+As we will see, if the Strong Prefactored (α, β)-Divisor Conjecture holds for α, β < 2/5
+then there exists a determinstic algorithm to factor integers that beats the current-best
+exponent of 1/5; if the conjecture holds for α, β = 1/3 (which is best possible), then the
+exponent is 1/6.
+
+5.1
+
+The framework
+
+For the remainder of this section, we will use the fact that common operations on integers n,
+such as addition, multiplication, division with remainder, and computing GCD run in time
+e
+O(log
+n). As a standard reference, see [vzGG13].
+We now describe a general framework for integer factorization. This is the analogue
+of Theorem 2.1, except for the added assumption that for every Ai , its prime factors are
+efficient to produce.
+Theorem 5.2. Let n = ⌊N 1/2 ⌋. Suppose we have k = k(n) integers A1 , A2 , . . . , Ak , and
+γ ≥ 0 for which the following hold:
+1. every integer ≤ n divides
+
+Qk
+
+i=1 Ai , and
+
+2. given d ≤ N and integers a ≤ b, we can compute the interval product
+b
+Y
+
+Ai mod d
+
+i=a
+
+e
+in time O(log
+d · nγ ), and
+
+3. given an integer i, there exists a function f that returns the prime factors of Ai in time
+e γ ).
+O(n
+Then there is a deterministic algorithm to compute the prime factorization of N in time
+γ/2
+e
+O(N
+log(k(n))).
+Proof. Initially, we set N0 = gcd( ki=1 Ai , N ). This can be computed within the claimed
+time bound by Property 2 and a GCD.
+To produce N ’s prime factorization, we use recursive splitting to eventually obtain at most
+Q ′
+′
+k = O(⌈log N0 ⌉) pairs of integers (Ai , di ), where Ai ∈ {A1 , ..., Ak }, di |Ai , and ki=1 di = N0 .
+Note that this is not yet the final factorization of N ; however it is true that for every prime
+p ≤ n that divides N , it occurs as a factor of some di , by Property 1.
+Q
+
+16
+
+We now obtain the list of primes that divide N0 . To do this, for each i we obtain prime
+factors of Ai by Property 3, and check for each prime p, whether p | di . This step takes
+e α ) by the fact that A has magnitude exp(nα ), and there are at most O(⌈log N ⌉) pairs.
+O(n
+i
+0
+Once we have this set of primes, we trial divide each with N for at most O(⌈log N ⌉)
+e
+rounds to determine its multiplicity in N . This step cost at most O(⌈log
+N ⌉2 ). Combining
+this multiset of primes with the (at most 1) prime factor of N which is greater than n gives
+the full factorization of N .
+Now, all that remains is to prove we can obtain the required set {(Ai , di )} using recursive
+splitting. The argument then proceeds similarly to that of Theorem 2.1. During each
+recursive call, we keep track of the interval (a, b) while maintaining the invariant that its
+Q
+input d divides bi=a Ai . Initially, the interval is (1, k) and the initial input d = N0 satisfies
+the invariant by definition.
+The base case of the recursive algorithm is when a = b. In this case, we just return
+the pair (Aa , gcd(Aa , d)). Otherwise, let c = ⌊(a + b)/2⌋ be the midpoint. We compute the
+integer
+!
+dlower = gcd
+
+c
+Y
+
+Ai , d .
+
+i=a
+
+Just like the proof of Theorem 2.1, if dlower = 1 then d divides bi=c+1 Ai and we
+recursively split d with the interval set to (c + 1, b). If dlower = d then we recursively split d
+with the interval set to (a, c). Otherwise dlower is a non-trivial factor of d, and we recursively
+split dlower with the interval set to (a, c) and dupper = d/dlower with the interval set to
+(c + 1, b).
+We now analyze the running time. Let T (d, r) be the running time of this procedure
+when the input integer is d ≤ N0 , and the interval has length r = b − a + 1. We claim that
+for all d,
+e
+T (d, r) ≤ log(2r) · O(log
+d · nγ ).
+Q
+
+The proof is by induction on r. The claim is true when r = 1. The recursive step (computing
+e
+the product dlower , and one GCD) costs O(log
+d · nγ ) by Property 2, plus the time to
+recursively split d with an interval of length r/2 (in the first two cases), or the time to
+recursively split dlower and dupper each with an interval of length r/2 (in the third case).
+By induction, this additional cost is
+e
+log(2 · r/2) · O(log
+d · nγ )
+
+in the first two cases, and
+γ
+γ
+e
+e
+log(2 · r/2) · O(log(d
+lower )n ) + log(2 · r/2) · O(log(dupper )n )
+
+17
+
+in the third case. Since dlower · dupper = d, in all cases the overall time is upperbounded by
+e
+e
+e
+O(log
+d · nγ ) + (log 2r − 1)O(log
+d · nγ ) ≤ log(2r) · O(log
+d · nγ )
+
+which satisfies the inductive hypothesis.
+
+5.2
+
+Computing
+
+Qb
+i=a Ai mod d fast
+
+In this section, we show that the the Strong (α, β)-Divisor Conjecture yields interval products
+Qb
+i=a Ai that can be computed fast, which satisfies Property 2 of Theorem 5.2. To utilize
+the structure of the sets S and T in the the Strong (α, β)-Divisor Conjecture, we use the
+ordering (described in the previous section) on A = {s − t | s ∈ S, t ∈ T }: if s0 , . . . s|S|−1 is
+an enumeration of S and t0 , . . . , t|T |−1 is an enumeration of T , we set
+Aj+ℓ|S| = sj − tℓ
+
+(2)
+
+for 0 ≤ j ≤ |S| − 1 and 0 ≤ ℓ ≤ |T | − 1.
+Similar to polynomial factorization, we now want to show that it is efficient to obtain
+Q
+the set of integers S ∪ T modulo d, which gives us a way to compute any interval bi=a Ai
+within the required budget.
+Lemma 5.3. Suppose that the Strong (α, β)-Divisor Conjecture holds, and fix a positive
+e
+integer d ≤ n. There is a procedure running in O((log
+d)(nα+o(1) + nβ )) time that produces
+u mod d for all u ∈ S ∪ T .
+Proof. See Appendix.
+Lemma 5.4. Suppose that the Strong (α, β)-Divisor Conjecture holds. Fix a positive integer
+d ≤ n and a specified interval a ≤ b. Given the integers u mod d for all u ∈ S ∪ T , there is
+a procedure that produces
+b
+Y
+
+Ai mod d
+
+i=a
+
+e
+in time O((log
+d)nβ ).
+
+Proof. See Appendix.
+Altogether, if we assume the Strong Prefactored (α, β)-Divisor Conjecture, combining
+Lemma 5.3, Lemma 5.4 with Theorem 5.2, for γ = max(α, β) + o(1), we obtain an unconditional, deterministic algorithm for integer factorization.
+
+18
+
+Theorem 5.5 (main – integer factoring). Suppose that the Strong Prefactored (α, β)-Divisor
+Conjecture holds. Then there is a deterministic algorithm that computes the prime factormax(α,β)/2+o(1)
+e
+ization of an integer N in time O(N
+).
+
+6
+
+The arithmetic progression version of the conjecture
+
+The formally strongest version of the Strong (α, β)-Divisor Conjecture is that there are
+arithmetic progressions A of cardinality n2β , whose elements have magnitude exp(nα ), that
+satisfy the n-divisor property. We call this the “Arithmetic Progression Version” of the
+conjecture. Proposition 3.4 shows that the Arithmetic Progression Version implies the Strong
+(α, β)-Divisor Conjecture. Thus, if one is to disprove a version of the conjecture, the easiest
+version to attack is the arithmetic progression one. Here we make some observations that
+may be useful in studying this version.
+First, recall that such an arithmetic progression A = {b + ic : 1 ≤ i ≤ n2β } satisfying the
+n-Divisor Property yields an improved exponent for polynomial factorization if α, β < 1/2.
+One observation is that b ̸= 0 is necessary for non-triviality. For if b = 0 then we have that
+every prime p < n divides ic for some i ≤ n2β , and this requires c to be the product of all
+primes between n2β and n, which is a number of magnitude exp(n − o(1)) when β < 1/2.
+It is also necessary that (b + c) ≥ exp(n1−2β ) as we have argued in Section 3. Although it
+seems unlikely, we cannot rule out the possibility that the Arithmetic Progression Version
+may hold with b ≤ exp(O(n1−2β )) and c = 1!
+Certain subsets of integers in [n] are easy to handle: for example, by choosing c to be the
+least common multiple of all positive integers of magnitude at most nα , and b = 0, it is easy
+to see that the arithmetic progression A = {b + ic : 1 ≤ i ≤ n2β } contains multiples of each
+integer that can be written xy where x ≤ n2β and y ≤ nα . On the other hand, some subsets
+of integers seem difficult. Two challenging sets of integers are (1) the primes in [n], and (2)
+composites xy where x, y are in the range [n1/2−ϵ , n1/2 ] for a constant ϵ > 0.
+A useful fact is that different arithmetic progressions containing multiples of different
+subsets of integers can be combined into a single generalized arithmetic progression:
+Lemma 6.1. Let A1 = {b1 + ic1 : 1 ≤ i ≤ ℓ1 } and A2 = {b2 + ic2 : 1 ≤ i ≤ ℓ2 } be two
+arithmetic progressions. Then the generalized arithmetic progression
+A = {c1 b2 + i(c1 c2 ) + j(c2 b1 − c1 b2 ) : 1 ≤ i ≤ max(ℓ1 , ℓ2 ), 0 ≤ j ≤ 1}
+contains multiples of x if A1 or A2 does.
+Proof. Suppose x divides b1 + ic1 for some i. Then the (i, 1) term in A, which equals
+c2 b1 + i(c1 c2 ) = c2 (b1 + ic1 ) is also divisible by x. Similarly, if x divides b2 + ic2 for some i,
+then the (i, 0) term in A, which equals c1 b2 + i(c1 c2 ) = c1 (b2 + ic2 ) is divisible by x.
+19
+
+One can combine a constant number of arithmetic progressions, of length n2β and with
+coefficient magnitude exp(nα ), in this fashion, and the magnitude of the coefficients increases
+from exp(nα ) to only exp(O(nα )), and the size of the arithmetic progression increases from
+n2β to only O(n2β ). It is not hard to extend Proposition 3.4 to generalized arithmetic
+progressions of this form; i.e., ones where the generalized arithmetic progression is the sum
+of one “long” arithmetic progression and a constant number of others of constant length.
+Thus solving the problem separately for constantly many subsets of the integers in [n] is a
+potential route to proving the Strong (α, β)-Divisor Conjecture.
+As mentioned, the subset of primes in [n] is a particularly challenging case. Here we have
+a interesting characterization:
+Lemma 6.2. Let U be the product of primes in [n]. Given a factorization U = U1 U2 · · · Uℓ ,
+define Ti to be the multiplicative inverse of U/Ui (mod Ui ), and define Vi = (U/Ui )Ti . There
+is an arithmetic progression A = {b + ic : 1 ≤ i ≤ ℓ} containing multiples of each prime in
+[n], iff there is a factorization U = U1 U2 · · · Uℓ and integers b, c for which
+c·
+
+ℓ
+X
+
+!
+
+iVi + b ≡ 0
+
+(mod U ).
+
+(3)
+
+i=1
+
+Proof. One direction is easy: if U = U1 U2 · · · Uℓ is a factorization for which there exist
+integers b, c such that Equation (3) holds, then by considering the equation modulo Ui we
+see that ci + b ≡ 0 (mod Ui ) and thus each prime factor of Ui divides the i-th term in the
+arithmetic progression A.
+In the other direction, we start with the assumption that each prime in [n] divides some
+term in the arithmetic progression A = {b + ic : 1 ≤ i ≤ ℓ}. Let U = U1 U2 · · · Uℓ be a
+consistent factorization in the sense that p | Ui implies p divides the i-th term in A. We
+claim that every p ∈ [n] divides
+!
+c·
+
+ℓ
+X
+
+iVi + b
+
+(4)
+
+i=1
+
+and hence it equals 0 modulo U by the Chinese Remainder Theorem. As above, we see that
+modulo Ui , expression (4) is equivalent to ci + b, and hence it is divisible by every p that
+divides Ui , by our choice of the factorization to be consistent. Since every prime p ∈ [n]
+divides some Ui , this argument gives us that every such p divides expression (4). Thus it
+equals 0 modulo U as claimed.
+Note that the parenthesized quantity in Equation (3) is, in general, of magnitude comparable to U , which is exp(n), while we wish for b, c ≤ exp(nα ). Thus we are asking for
+a “small” affine transformation of a “large” quantity to equal a multiple of U . The design
+freedom is in the choice of the factorization of U , which determines the “large” quantity.
+
+20
+
+If such a factorization is not possible, then this would disprove the Arithmetic Progression
+Version of the Strong (α, β)-Divisor Conjecture.
+Finally we note that if the Arithmetic Progression Version of the conjecture is true, then
+it cannot be true “too generically” in the sense expressed in the following lemma:
+Lemma 6.3. Suppose for all positive integers A1 , A2 , . . . , Aℓ with Ai ≤ M , there exist positive integers A′1 , A′2 , . . . , A′ℓ′ in arithmetic progression, with A′j ≤ M ′ , such that for all i,
+there exists j such that Ai |A′j . Then either ℓ′ ≥ M Ω(1) or M ′ ≥ M log log M .
+This rules out the hope that one could (for example) argue the existence of an arithmetic
+progression starting only from an arbitrary partition of [n] into n1−2β sets, setting Ai to be
+the product of the integers in the i-th part, and “embedding” these factors into an arithmetic
+progression with parameters that do not degrade by much. Interestingly, this lemma leaves
+open the possibility that the parameter M could degrade only mildly, which would still be
+suitable for our application. Is the bound in the lemma tight? If so, we would achieve
+exponent 4/3 via Theorem 4.9; we expect however that it is not tight, and that one would
+need to use more specific number-theoretic properties of the partition that would make it
+amenable to appearing as factors of an arithmetic progression.
+Proof. The proof is by counting two ways. The number of possible Ai sequences is at least
+exp(ℓ log2 M ). If the A′j form an arithmetic progression {b + jc} then we can specify the
+original Ai sequence by writing down b, c, and for each i the associated j for which Ai |A′j
+together with a specification of that divisor of A′j . Since by the Divisor Bound there are at
+most exp(log x/ log log x) distinct divisors of an integer x, an upper bound on the number of
+possible Ai sequences is in total, at most:
+log M ′
+exp 2 log2 M ′ + ℓ log2 ℓ′ +
+log log M ′
+
+!!
+
+,
+
+(which is exponential in the length of the description we specified above). If ℓ′ ≤ M o(1) and
+M ′ ≤ M log log M then this quantity is smaller than exp(ℓ log2 M ), a contradiction.
+
+7
+
+Conclusions and open problems
+
+It is certainly possible that the Arithmetic Progression Version of the Strong (α, β)-Divisor
+Conjecture is false, and the same could be true for any or all of the other variants. Even
+though some variants of the conjecture may turn out to be false, we note that there is still
+room for the ideas and algorithmic machinery in this paper to lead to improved algorithms
+for factoring polynomials and integers. This is because certain generalizations of the main
+conjectures are possible, and these generalizations could be true even if the versions we
+21
+
+have discussed here are false. For example, one can replace the requirement that S, T are
+generalized arithmetic progressions with the more general requirement that they have short
+addition sequences. This generalization of the classic addition chains was introduced by
+Knuth in [Knu97] (§4.6.3 problem 32) and by Downey, Leong and Sethi in [DLS81], and
+some nontrivial results are known in [DLS81] and [DL80]. Addition sequences are sufficient
+because Lemma 4.2 remains true if S, T have short addition sequences, with generalized
+arithmetic progressions being just one example of a suitably short addition sequence.
+Beyond directly proving or refuting the main conjectures, we highlight the case mentioned
+in Section 6, of finding a length-n2β arithmetic progression consisting of integers of magnitude
+exp(nα ) that contains multiples of the composites xy with x, y in the range [n1/2−ϵ , n1/2 ], for
+a constant ϵ > 0. Perhaps one can find a characterization similar to Lemma 6.2 for this
+subset of integers. Alternatively, can one give a reduction to the “prime case” discussed in
+Lemma 6.2? It would be interesting to establish that the prime case is the “hardest” case
+formally.
+On the algorithmic side, we wonder whether a deterministic version of Theorem 4.8 is
+possible. This would make our overall algorithm for distinct-degree factorization deterministic; the other algorithms (including the best-known exponent 3/2 one) for this problem
+are deterministic. We still wouldn’t obtain fast deterministic algorithms for polynomial factorization, because the known equal-degree factorization algorithms are randomized, but
+derandomizing Theorem 4.8 is still an interesting challenge by itself.
+Finally, it remains open to find a nearly-linear time algorithm for univariate polynomial
+factorization over a finite field, with or without the number-theoretic conjecture, which can
+prove exponent 4/3 at best.
+
+References
+[Ber70]
+
+E. R. Berlekamp. Factoring polynomials over large finite fields. Mathematics of
+Computation, 24(111):713, Jul 1970.
+
+[CZ81]
+
+David G. Cantor and Hans Zassenhaus. A new algorithm for factoring polynomials
+over finite fields. Mathematics of Computation, 36(154):587, Apr 1981.
+
+[DL80]
+
+David Dobkin and Richard J. Lipton. Addition chain methods for the evaluation
+of specific polynomials. SIAM Journal on Computing, 9(1):121–125, Feb 1980.
+
+[DLS81]
+
+Peter Downey, Benton Leong, and Ravi Sethi. Computing sequences with addition
+chains. SIAM Journal on Computing, 10(3):638–646, Aug 1981.
+
+[GNU16] Zeyu Guo, Anand Kumar Narayanan, and Chris Umans. Algebraic problems
+equivalent to beating exponent 3/2 for polynomial factorization over finite fields.
+22
+
+41st International Symposium on Mathematical Foundations of Computer Science,
+pages 47:1–47:14, 2016.
+[Har21]
+
+David Harvey. An exponent one-fifth algorithm for deterministic integer factorisation. Mathematics of Computation, 90(332):2937–2950, Jun 2021.
+
+[Kal03]
+
+Erich Kaltofen. Polynomial factorization. Proceedings of the 2003 international
+symposium on Symbolic and algebraic computation, page 3–4, Aug 2003.
+
+[Knu97]
+
+Donald E. Knuth. The Art of Computer Programming, volume 2. Addison-Wesley,
+3 edition, 1997.
+
+[KS98]
+
+Erich Kaltofen and Victor Shoup. Subquadratic-time factoring of polynomials
+over finite fields. Mathematics of Computation, 67(223):1179–1197, 1998.
+
+[KU11]
+
+Kiran S. Kedlaya and Christopher Umans. Fast polynomial factorization and
+modular composition. SIAM Journal on Computing, 40(6):1767–1802, Jan 2011.
+
+[Pol74]
+
+J. M. Pollard. Theorems on factorization and primality testing. Mathematical
+Proceedings of the Cambridge Philosophical Society, 76(3):521–528, Nov 1974.
+
+[Str77]
+
+V. Strassen. Einige resultate uber berechnungskomplexitat. Jber. Deutsch. Math.Verein., 1(78):1–8, 1977.
+
+[vzG06]
+
+Joachim von zur Gathen. Who was who in polynomial factorization. Proceedings of
+the 2006 international symposium on Symbolic and algebraic computation, page 2,
+Jul 2006.
+
+[vzGG13] Joachim von zur Gathen and Jürgen Gerhard. Modern computer algebra. Cambridge University Press, 2013.
+[vzGP01] Joachim von zur Gathen and Daniel Panario. Factoring polynomials over finite
+fields: A survey. Journal of Symbolic Computation, 31(1–2):3–17, Jan 2001.
+
+A
+
+Deferred proofs
+
+A.1
+
+Proof of Lemma 5.3
+
+Recall that S = S1 + · · · + Sc for c ≤ no(1) , where
+Si = {ai + jbi : j = 0, 1, . . . , di }
+
+23
+
+for integers ai ≥ 0, bi > 0 and di ≥ 0. We can compute ai + jbi mod d for j = 0, 1, . . . , di by
+first computing ai mod d, bj mod d, and then add the second to the first di times modulo d.
+Repeating for i = 1, 2, . . . , c we obtain ui mod d for all ui ∈ Si , and for all Si . Finally, to
+obtain all u ∈ S we do
+u mod d = (u1 mod d) + . . . + (uc mod d)
+
+mod d
+
+and we repeat the same procedure for T . The overall cost is
+c
+X
+
+(⌈log ai ⌉ + ⌈log bi ⌉ + (di + 1)) + |S|
+
+i=1
+
+e
+modulo d. We obtain a total cost of O((log
+d)(nα+o(1) + nβ )). Here we used the fact that
+Q
+ai , bi ≤ exp(nα ) and i (di + 1) = |S| ≤ nβ .
+
+A.2
+
+Proof of Lemma 5.4
+
+Writing a, b in base-|S| we have a = a0 + a1 |S| and b = b0 + b1 |S|. we divide integers
+{Aa , ..., Ab } into three sets with the following indices
+Qleft = {a0 , a0 + 1, . . . , |S| − 1} + a1 |S|
+Qmiddle = {(a1 + 1)|S|, . . . , b1 |S|}
+Qright = {0, 1, . . . , b0 } + b1 |S|
+
+The first and third set have cardinality at most |S|. We can produce the product of all
+e
+the integers modulo d using Lemma 5.3. This takes time O((log
+d)nβ ). All that remains is
+to compute the product modulo d associated with Qmiddle . We again use fast multipoint
+evaluation, this time forming a polynomial of degree at most |T | over Z/dZ:
+b1
+Y
+
+p(Z) =
+
+(Z − tj ).
+
+j=a1 +1
+
+We then evaluate p(Z) at s for all s ∈ S using fast multipoint evaluation, which entails
+e
+O(|S|
++ |T |) operations in the ring Z/dZ. Then, we take the product of these evaluations
+using O(|S|) operations. Altogether, we obtain the ring element:
+Y
+
+b1
+Y
+
+(s − tj ) mod d.
+
+s∈S j=a1 +1
+
+24
+
+Multiply this product with those associated with Qleft and Qright will produce
+d, which completes the proof.
+
+25
+
+Qb
+
+i=a Ai mod
+
+

@@ -1,0 +1,18 @@
+band primes 12 in (120, 181]
+V1 want=1: brute=1 fast=1  MATCH=True  dropped=0
+V1 want=2: brute=2 fast=2  MATCH=True  dropped=0
+V1 want=3: brute=3 fast=3  MATCH=True  dropped=0
+V1 want=5: brute=5 fast=5  MATCH=True  dropped=0
+V2 rep0 a1=242036 a2=-956492: brute=1 fast=1 MATCH=True ndiff=960 (expected 960)
+V2 rep1 a1=813085 a2=-119375: brute=1 fast=1 MATCH=True ndiff=960 (expected 960)
+V2 rep2 a1=510492 a2=-663467: brute=2 fast=2 MATCH=True ndiff=960 (expected 960)
+V2 rep3 a1=369979 a2=451237: brute=1 fast=1 MATCH=True ndiff=960 (expected 960)
+--- V4 degenerate guards (expect RAISE, not a number) ---
+V4 a1==0 (rank-1 in disguise): is_degenerate=True raised=True OK=True
+V4 a2==0 (rank-1 in disguise): is_degenerate=True raised=True OK=True
+V4 a1=2*a2 (degenerate ratio): is_degenerate=True raised=True OK=True
+--- V4b nondegenerate controls ---
+V4b construction: is_degenerate=False raised=False t=1 OK=True
+V4b generic: is_degenerate=False raised=False t=1 OK=True
+
+ALL VERIFIED

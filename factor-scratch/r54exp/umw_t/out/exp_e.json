@@ -1,0 +1,54 @@
+[
+ {
+  "k_bits": 15,
+  "n": 32768,
+  "L": 32,
+  "k": 5,
+  "tmax": 5,
+  "ntest": 5000,
+  "coverage": 0.37239999999999995,
+  "first_missing": 71,
+  "n_missing": 3138,
+  "minA": 1,
+  "sizeA": 1024
+ },
+ {
+  "k_bits": 18,
+  "n": 262144,
+  "L": 64,
+  "k": 10,
+  "tmax": 10,
+  "ntest": 5000,
+  "coverage": 0.7874,
+  "first_missing": 243,
+  "n_missing": 1063,
+  "minA": 1,
+  "sizeA": 4096
+ },
+ {
+  "k_bits": 21,
+  "n": 2097152,
+  "L": 128,
+  "k": 17,
+  "tmax": 17,
+  "ntest": 5000,
+  "coverage": 0.955,
+  "first_missing": 427,
+  "n_missing": 225,
+  "minA": 1,
+  "sizeA": 16384
+ },
+ {
+  "k_bits": 24,
+  "n": 16777216,
+  "L": 256,
+  "k": 31,
+  "tmax": 31,
+  "ntest": 5000,
+  "coverage": 0.9746,
+  "first_missing": 268,
+  "n_missing": 127,
+  "minA": 1,
+  "sizeA": 65536
+ }
+]

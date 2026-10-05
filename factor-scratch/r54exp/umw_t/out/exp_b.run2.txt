@@ -1,0 +1,24 @@
+
+=== n=2^15 ~ 3.277e+04  L=32  |P|=12  budget(log M)=28.5  k_max=5 ===
+    predicted t from construction ~ k_max; rigorous size bound t <= log(2e^(n^a))/log(a*sqrt n) = 6.8
+  frac=0.25: k=1 logM=     4.8  t_max=    1  (POS ok=True)   NEG control a2' -> t=2 (ok=True)  degenerate=False dropped=0
+  frac=0.5: k=2 logM=     9.7  t_max=    2  (POS ok=True)   NEG control a2' -> t=2 (ok=True)  degenerate=False dropped=0
+  frac=0.75: k=3 logM=    14.6  t_max=    3  (POS ok=True)   NEG control a2' -> t=2 (ok=True)  degenerate=False dropped=0
+  frac=1.0: k=5 logM=    24.6  t_max=    5  (POS ok=True)   NEG control a2' -> t=2 (ok=True)  degenerate=False dropped=0
+
+=== n=2^18 ~ 2.621e+05  L=64  |P|=29  budget(log M)=59.8  k_max=10 ===
+    predicted t from construction ~ k_max; rigorous size bound t <= log(2e^(n^a))/log(a*sqrt n) = 11.1
+  frac=0.25: k=2 logM=    11.7  t_max=    2  (POS ok=True)   NEG control a2' -> t=2 (ok=True)  degenerate=False dropped=0
+  frac=0.5: k=5 logM=    29.4  t_max=    5  (POS ok=True)   NEG control a2' -> t=2 (ok=True)  degenerate=False dropped=0
+  frac=0.75: k=7 logM=    41.2  t_max=    7  (POS ok=True)   NEG control a2' -> t=2 (ok=True)  degenerate=False dropped=0
+  frac=1.0: k=10 logM=    59.1  t_max=   10  (POS ok=True)   NEG control a2' -> t=2 (ok=True)  degenerate=False dropped=0
+
+=== n=2^24 ~ 1.678e+07  L=256  |P|=166  budget(log M)=250.5  k_max=31 ===
+    predicted t from construction ~ k_max; rigorous size bound t <= log(2e^(n^a))/log(a*sqrt n) = 32.4
+  frac=0.25: k=7 logM=    55.5  t_max=    7  (POS ok=True)   NEG control a2' -> t=2 (ok=True)  degenerate=False dropped=0
+  frac=0.5: k=15 logM=   119.0  t_max=   15  (POS ok=True)   NEG control a2' -> t=3 (ok=True)  degenerate=False dropped=0
+  frac=0.75: k=23 logM=   182.7  t_max=   23  (POS ok=True)   NEG control a2' -> t=3 (ok=True)  degenerate=False dropped=0
+  frac=1.0: k=31 logM=   246.6  t_max=   31  (POS ok=True)   NEG control a2' -> t=3 (ok=True)  degenerate=False dropped=0
+
+CONTROLS: ALL PASS
+wrote out/exp_b.json

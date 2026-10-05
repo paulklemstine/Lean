@@ -1,0 +1,30 @@
+=== A. RIGOROUS SIZE BOUND on t (Q1) ===
+  If t band primes p_1..p_t each divide D = a1*di + a2*dj, and each p >= a*x
+  with x=floor(sqrt n), a=2/3, then (a*x)^t <= |D| <= 2*max|A| <= 2*exp(n^alpha).
+  Hence  t <= log(2 exp(n^alpha)) / log(a sqrt n)  =  Theta(n^alpha / log n).
+  At (alpha,beta)=(1/3,1/3):  t <= (2+o(1)) n^(1/3)/log n.
+
+   n=2^   30: log2(t_bound) ~      7.09  -> t ~ 2^7.1   (n^(1/6) = 2^5.0)   t/n^(1/6) = 2^2.09
+   n=2^   60: log2(t_bound) ~     16.09  -> t ~ 2^16.1   (n^(1/6) = 2^10.0)   t/n^(1/6) = 2^6.09
+   n=2^  120: log2(t_bound) ~     35.09  -> t ~ 2^35.1   (n^(1/6) = 2^20.0)   t/n^(1/6) = 2^15.09
+   n=2^  256: log2(t_bound) ~     79.33  -> t ~ 2^79.3   (n^(1/6) = 2^42.7)   t/n^(1/6) = 2^36.67
+   n=2^ 1024: log2(t_bound) ~    333.33  -> t ~ 2^333.3   (n^(1/6) = 2^170.7)   t/n^(1/6) = 2^162.67
+   n=2^ 2048: log2(t_bound) ~    673.67  -> t ~ 2^673.7   (n^(1/6) = 2^341.3)   t/n^(1/6) = 2^332.33
+
+  => t_bound / n^(1/6) = 2^(bits/6 - log2(bits/2) + 1) -> grows without
+     bound in bits. So the SIZE budget alone already permits t >> n^(1/6)
+     at RSA scale (n=2^2048: t_bound ~ 2^674 vs n^(1/6)=2^341).
+
+=== B. Does the construction even TRY to be n-divisor? ===
+  A = {1 + i + (M-1)j}.  For d | M we get d | A whenever i+j is right;
+  for d with a factor outside M, A mod d = 1 + i + (M-1)j must be 0 mod d,
+  a 2-variable congruence. With |i|,|j| < L << d the box simply misses.
+   n=2^18: L=64 k=10  d in [1,5000] with gcd(d,M)=1 and d>2L: 4741  -> these are structurally unreachable by the box
+   n=2^24: L=256 k=31  d in [1,5000] with gcd(d,M)=1 and d>2L: 4457  -> these are structurally unreachable by the box
+  (this is the mechanism; it is not a proof that no other construction works)
+
+=== C. CONTRAST: random n-divisor-agnostic gaps (Q1, random) ===
+   random gaps at n=2^24: t values = [2, 2, 2, 3, 3]  (mean 2.40)
+   constructed gap at n=2^24: t = 31 (exp_c)
+   => t is NOT a constant; it ranges from ~1-3 (random) to ~n^(1/3)/log n
+      (adversarial). Measuring it is meaningful: it is not saturated, not vacuous.

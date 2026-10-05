@@ -1,0 +1,14 @@
+CONTROL POS A=[1..100] n=100 n-divisor=True OK
+CONTROL NEG missing 7 -> False first=7 OK
+
+=== b0 = 1 repair: n-divisor + large t? ===
+  n=2^15=    32768 L=  32 t=   5 |A|=   1024 min|A|=1 | coverage of [1,5000] =  37.24%  first_missing=71
+  n=2^18=   262144 L=  64 t=  10 |A|=   4096 min|A|=1 | coverage of [1,5000] =  78.74%  first_missing=243
+  n=2^21=  2097152 L= 128 t=  17 |A|=  16384 min|A|=1 | coverage of [1,5000] =  95.50%  first_missing=427
+  n=2^24= 16777216 L= 256 t=  31 |A|=  65536 min|A|=1 | coverage of [1,5000] =  97.46%  first_missing=268
+
+=== CONTROL: an ACTUAL n-divisor rank-2 gap at tiny n (existence) ===
+  A={i + 97*j : 1<=i<=96, 0<=j<4}  size=384  coverage of [1,96] = 100.00%  first_missing=-1
+  -> this IS an n-divisor rank-2 gap (rank-2 because 97 > L1)
+
+wrote out/exp_e.json

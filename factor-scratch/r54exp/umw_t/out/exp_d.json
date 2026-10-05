@@ -1,0 +1,35 @@
+[
+ {
+  "k_bits": 15,
+  "n": 32768,
+  "L": 32,
+  "k": 5,
+  "tmax": 5,
+  "ntest": 3000,
+  "ndiv": false,
+  "first_missing": 0,
+  "sizeA": 1024
+ },
+ {
+  "k_bits": 18,
+  "n": 262144,
+  "L": 64,
+  "k": 10,
+  "tmax": 10,
+  "ntest": 3000,
+  "ndiv": false,
+  "first_missing": 0,
+  "sizeA": 4096
+ },
+ {
+  "k_bits": 21,
+  "n": 2097152,
+  "L": 128,
+  "k": 17,
+  "tmax": 17,
+  "ntest": 3000,
+  "ndiv": false,
+  "first_missing": 0,
+  "sizeA": 16384
+ }
+]
