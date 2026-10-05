@@ -71,6 +71,32 @@ I made one substantive debugging step, which is worth recording because it
 
 This is progress on the blocker (a nameable cause), **not** a verification.
 
+### 1c. Round 109f — reading the authors' code pinpoints the exact divergence
+
+I read `gifp.sage` (`create_lattice`, `reconstruct_polynomials`,
+`find_roots_groebner`) directly. The pipeline is:
+
+1. `L[row,col] = coeff(monomial) * monomial(X,Y,Z)` — **integer** LLL.
+2. reconstruct: `poly = L[row,col]*monomial // monomial(bounds)` — **integer**
+   coefficients; drop rows with `norm²·w ≥ modular²`; divide out `f`.
+3. insert `z·w − N₂`; **Gröbner basis over ℚ (lex)**; when `|GB| == nvars`,
+   take univariate factors and their **rational roots** → `w₀ = p₂`.
+
+Two corrections to my earlier diagnosis:
+* The denominators do **not** come from the LLL (which is over integers). They come
+  from the **Gröbner basis over ℚ** of the reconstructed (integer) polynomials.
+  My `qlll.py` rational-LLL was solving a non-problem.
+* The quotient lift `w → N₂/z` **eliminates `w`**, so the reconstructed polynomials
+  are functions of `(x,y,z)` only. A univariate-`w` root emerges **only after** the
+  Gröbner basis eliminates `x,y,z` using `z·w = N₂`.
+
+**Why my port still fails (the real blocker).** My integer-LLL does **not** produce
+the specific short vectors the recovery needs (the authors use Sage's
+`dense_matrix().LLL()` over ℚ with a specific monomial ordering, and rely on the
+Gröbner heuristic being satisfiable *after* discarding the largest rows). Faithfully
+replicating Sage's LLL output — which the `p₂` denominator-trick is sensitive to —
+is the missing piece, and I cannot run or faithfully reproduce it here.
+
 > **The round-104 guard, seventh firing, in its most important form:** I declined
 > to claim a threshold I had not verified end-to-end. The authors' code is the
 > only trustworthy oracle here, and it needs Sage.
