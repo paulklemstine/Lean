@@ -78,3 +78,46 @@ the swept harness before believing the physics — then vary a knob you have *no
 been sweeping, to break the shared dependence. Every one of my nulls this round
 (`no_gb` at α≥0.15, the two failed feasibility probes, the "no_factor" rows)
 was the *same* t-collapse wearing different clothes.
+## Appendendum: the α = 0.15 rescue is real, but do NOT read it at 4 seeds
+
+I re-measured the retracted α-dependence claim at fixed `t=3`, got 0/4 at
+α = 0.15, and briefly had a direct conflict with the wall agent's 3/3. Resolved
+by sweeping 12 seeds per configuration:
+
+| α=0.15 config | verified |
+|---|---|
+| γ=0.6617, m=4, t=3, s=0 | **11/12** |
+| γ=0.6617, m=6, t=3, s=0 | **11/12** |
+| γ=0.6617, m=4, t=3, s=1 | **12/12** |
+| γ=0.66,   m=4, t=3, s=0 | **8/12** |
+| γ=0.66,   m=6, t=3, s=0 | **12/12** |
+| γ=0.66,   m=4, t=3, s=1 | **11/12** |
+
+So α=0.15 with a non-collapsing `t` factors at **~85–100%** — the wall agent was
+right and my 4-seed recheck was simply underpowered near the tight end of the
+feasible γ range, where success is real but not certain.
+
+This is the **fourth** time this round that a small seed count produced a wrong
+conclusion — after 13/40→12/40, the two broken feasibility probes, and the
+kernel/trivial `g` mismatch. Near a parameter boundary the success rate is
+neither 0 nor 1, and 4 trials cannot tell those apart.
+
+**Rule:** at any parameter point where the outcome is expected to be marginal,
+use ≥12 seeds before writing a count, and report the rate rather than a
+pass/fail. A 0/4 against someone's 3/3 is a seed problem until proven otherwise.
+
+### Corrected α-dependence (measured at t=3, 4 seeds/point — read as coarse)
+
+| α \ ratio | 1.4× | 1.6× | 1.8× |
+|---|---|---|---|
+| 0.05 | 3/4 | 3/4 | 4/4 |
+| 0.10 | 0/4 | 0/4 | 4/4 |
+| 0.15 | 0/4 | 0/4 | 0/4 |
+| 0.20 | 0/4 | infeasible | infeasible |
+
+The direction survives at coarse resolution (higher α needs higher γ), but at
+α=0.15 the 1.8× point is 0/4 here and 11/12 at γ=0.6617 in the 12-seed sweep —
+i.e. this grid is sitting exactly on the boundary and the 4-seed cells are not
+trustworthy. **The r111 "shape is wrong" claim remains unresolved**, not
+confirmed and not refuted; it needs the ≥12-seed treatment everywhere before it
+should be restated in any document.

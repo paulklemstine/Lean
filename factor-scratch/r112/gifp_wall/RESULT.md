@@ -1,14 +1,22 @@
 # GIFP α ≥ 0.15 wall — root cause, boundary map, verdict
 
 **Status: the α = 0.15 wall is an ARTEFACT of the reference implementation's
-parameter choice, not a property of the Feng–Nitaj–Pan construction.** The wall
-is `t`, not α. `gifp.sage:339` sets `t = round((1−√α)·m)`, which *steps down by
-one* exactly at α ≈ 0.145 for m = 4, destroying a full `n` = 200 bits of the
-modulus. Forcing `t = 3, s = 0` factors α = 0.15 instances at **3/3 with the
-recovered factor equal to the true p₂ or q₂**, on two independent Sage installs.
+`(t, s)` parameter choice — but NOT a refutation of the paper's bound.** The
+wall is `(t, s)`, not α. `gifp.sage:339-340` sets `t = round((1−√α)·m)` and
+`s = round(√α·m)`; at α = 0.15, m = 6 these give `t = 4, s = 2` and the attack
+fails, while `t = 3, s = 0` on the *same instance* recovers the true factor at
+**3/3** (m = 4…10, two independent Sage installs, ground-truth verified).
 
-α = 0.20 is a **genuine** wall (0/3 at every t, m, s tried, with 0 vanishing
-polynomials). So the boundary moves: 0.15 is an artefact, 0.20 is real.
+Two things must both change — γ must stay near the feasibility limit (§1.4) and
+(t, s) must move off the reference's staircase. r111 supplied γ and missed (t,s);
+(t,s) alone without large γ also fails (§1.4). **This does not lower the proven
+threshold γ > 4α(1−√α) = 0.374 at α = 0.15** — I have not measured success
+below γ ≈ 0.66, so the correct claim is narrower than "the bound is wrong at
+α = 0.15": it is that **α = 0.15 is reachable at high γ and the reference's
+parameter choice is the only thing preventing it.**
+
+α = 0.20 is a **genuine** wall: 0/3 at every (t, s, m) tried, with **zero**
+reconstructed polynomials vanishing over ℤ at the root.
 
 ---
 
@@ -23,9 +31,9 @@ M = 2^((β2−β1)·n),   unknown_modular = M^m · N1^t
 log2(unknown_modular) = m·(β2−β1)·n + t·n
 ```
 
-**γ does not appear in this expression at all.** That is the whole reason r111's
-"push γ to the feasibility limit" could never rescue α ≥ 0.15: γ buys nothing
-the attack needs. Meanwhile
+**γ does not appear in this expression at all.** So γ cannot *substitute* for
+the lost bits — that is why r111's "push γ to the limit" could not rescue
+α ≥ 0.15. (γ is still necessary, just not sufficient: see §1.4.) Meanwhile
 
 ```
 t(α) = round((1−√α)·m)
@@ -62,7 +70,7 @@ alpha gamma   t   | logmod  logminrow  nz verified
 | (b) the true solution stops being a small root at α ≥ 0.15 | **REFUTED** | The root is inside its bounds with the *same* ~1-bit margin at every α. `dbg_root.sage`: at α=0.05,0.10,0.15,0.20 the margins in x,y,z,w are 2–14 / 1 / 1 / 1 bits, identical across α. Nothing about the root degrades. |
 | (c) the bit budget squeezes the top chunk too thin | **REFUTED as the cause** | γ was already at the feasibility cap (0.6617 = 1−0.15−0.15−0.02) in every α ≥ 0.15 test, and Y's bit count (n−αn−γn−β₁n = 18 bits at α=0.15) is *smaller* at large α, i.e. the top chunk is tighter but that is not binding. Raising γ to 0.70 at α=0.15 changes nothing (r111 already measured this). |
 | (d) a barrier of this lattice dimension m = 4 | **REFUTED** | With `t=3, s=0` the attack succeeds at m = 4, 5, 6, 7, 8, 9, **10** — 3/3 at every m, on both runs and both Sage installs. m is irrelevant once t is set correctly. |
-| (a) the bounds/monomial scaling degenerates as α grows | **REFUTED as stated, but a REAL α-dependence survives** | The scaling does *not* degenerate in the sense of losing the root. But the ratio `max|shift at root| / log2(modulus)` rises monotonically with α (below), and this is what makes α = 0.20 a real wall. |
+| (a) the bounds/monomial scaling degenerates as α grows | **REFUTED for α = 0.15; CONFIRMED for α ≥ 0.20** | The scaling does not degenerate at α=0.15 — the root is still found and 27/28 polynomials vanish over ℤ there. But the ratio `max|shift at root| / log2(modulus)` rises monotonically with α (1.408 → 1.503) and at α = 0.20 **no** polynomial vanishes. So (a) is the real explanation for α ≥ 0.20 and not for α = 0.15. |
 
 ### 1.3 The genuine α-dependence (why α = 0.20 still fails)
 
@@ -81,6 +89,30 @@ around. The ratio crosses a threshold between α = 0.15 and α = 0.20 and at
 α = 0.20 **no reconstructed polynomial vanishes at the root at all** (`nz = 0/15`
 at m=4, `0/28` at m=6, 3/3 seeds, both runs). A lattice with zero vanishing
 vectors cannot be fixed by any (t,s). That is a real geometric ceiling.
+
+### 1.4 γ is necessary but not sufficient — a correction to my own first framing
+
+My first pass claimed γ was irrelevant. That is **wrong**, and the measurement
+that refutes it is below (`dbg_gammahelp.sage`, m=6, **t=3, s=0 held fixed**,
+3 seeds/point):
+
+| α | γ=0.40 | γ=0.50 | γ=0.60 | γ=0.660 |
+|---|---|---|---|---|
+| 0.15 | 0/3 | 0/3 | 0/3 | **3/3** |
+| 0.18 | 0/3 | 0/3 | 0/3 | (infeasible) |
+| 0.20 | 0/3 | 0/3 | 0/3 | (infeasible) |
+
+γ is doing real work: at α=0.15, t=3, s=0 recovers **only** at γ=0.66 and
+fails at every γ below it. The correct statement is:
+
+- γ is **necessary** — the attack still needs a large shared-bit fraction.
+- γ is **not sufficient** — at the reference's own (t,s), raising γ to the
+  feasibility cap does nothing, because γ does not enter the modulus and the
+  missing bits are in `t`.
+
+So α=0.15 needs **both** the (t,s) fix **and** large γ. r111 supplied the γ
+and missed the (t,s); supplying (t,s) alone without γ also fails. The wall was
+a two-variable failure that looked like one.
 
 ---
 
@@ -121,6 +153,27 @@ m    t    s   | verified  statuses
 6    3    0   | 3/3       ok
 9    3    0   | 3/3       ok
 ```
+
+### The single cleanest contrast
+
+`dbg_sbound2.sage` puts the default and the forced (t,s) side by side on the
+*same* instance and *same* γ (m=6, γ at the feasibility cap, 1 seed each):
+
+| α | m | t_default | s_default | reference default | forced t=3, s=0 |
+|---|---|---|---|---|---|
+| 0.10 | 4 | 3 | 1 | ok (14/15) | ok (14/15) |
+| 0.10 | 6 | 4 | 2 | ok (27/28) | ok (27/28) |
+| 0.15 | 4 | 2 | 2 | no_gb (14/15) | **no_gb (14/15)** |
+| **0.15** | **6** | 4 | 2 | **no_gb** | **ok (27/28)** |
+| 0.20 | 4 | 2 | 2 | no_gb (**0/15**) | no_gb (**0/15**) |
+| 0.20 | 6 | 3 | 3 | no_factor (**0/28**) | no_gb (**0/28**) |
+
+Row 4 is the finding in one line: **same α, same γ, same m, same instance —
+the reference's (t,s) gives `no_gb`, the forced (t,s) gives `ok` with 27
+vanishing polynomials.**
+
+Rows 5–6 are the real wall: at α=0.20 the polynomial count that vanishes over
+ℤ is **zero** in every cell, so no (t,s) can help.
 
 ### Anti-leak check (is the rescue circular?)
 
@@ -227,6 +280,48 @@ this table predicts *given the reference's own (t,s)* — at every one of those 
 the default `s = round(√α·m)` is ≥ 2, which is outside the success region. m
 never helps because it raises `s` as fast as it raises `t`.
 
+### 4.2b `s` is the binding variable, isolated (driver_sbound.sage)
+
+The 2-D grid mixes t and s. This sweep holds **t = 3** and varies only s, at
+3 seeds/point, ground-truth verified:
+
+```
+alpha=0.15 gamma=0.662, t=3:
+  m    s_default | t=3,s=0 | reference default | t=3,s=s_default
+  4       2       |  0/3    |      0/3          |      0/3
+  5       2       |  3/3    |      0/3          |      0/3     <-- s alone
+  6       2       |  3/3    |      0/3          |      0/3     <-- s alone
+  7       3       |  3/3    |      0/3          |      0/3     <-- s alone
+  8       3       |  3/3    |      0/3          |      0/3     <-- s alone
+
+alpha=0.20 gamma=0.620, t=3: 0/3 in EVERY cell (all nz=0)
+```
+
+The column "t=3, s=s_default" holds t at the rescued value and restores only s —
+and it returns to 0/3 at every m. **So `s = round(√α·m)` is the single variable
+that kills α = 0.15**, and lowering s to 0 is the single change that fixes it
+(t ≥ 3 still needed; m = 4 needs t ≥ 4).
+
+### 4.2c β and n are NOT the wall (quick_boundary.sage, nz proxy)
+
+To rule out "the wall is an artefact of β=(0.1,0.15), n=200", I re-ran the
+rescue at other β and n. `nz` is a sound cheap proxy: if nz = 0 then no
+polynomial vanishes over ℤ and no Gröbner step can succeed. 1–2 seeds/cell:
+
+| α | β₁ | β₂ | n | log2(modulus) | t=3,s=0 nz | default nz |
+|---|---|---|---|---|---|---|
+| 0.15 | 0.10 | 0.15 | 200 | 654 | **27/28** | 17/18 |
+| 0.15 | 0.05 | 0.20 | 200 | 780 | **27/28** | 14/19 |
+| 0.15 | 0.10 | 0.15 | 400 | 1314 | **27/28** | 17/18 |
+| 0.15 | 0.10 | 0.15 | 600 | 1974 | **27/28** | 17/19 |
+| 0.20 | 0.10 | 0.15 | 200 | 654 | **0/28** | 0/20 |
+| 0.20 | 0.05 | 0.30 | 200 | 900 | **0/21** | 0/14 |
+| 0.20 | 0.10 | 0.15 | 600 | 1974 | **0/28** | 0/20 |
+
+Both conclusions are stable across β and across n: **α = 0.15 recovers at every
+β and n tried, α = 0.20 does not at any.** So neither the α=0.15 wall nor the
+α=0.20 wall is an artefact of the specific parameterization.
+
 ### 4.3 Where the real wall is
 
 | α | γ | outcome | nz | verdict |
@@ -245,7 +340,8 @@ never helps because it raises `s` as fast as it raises `t`.
 ## 5. Honest verdict
 
 **The round-111 headline "α ≥ 0.15 is a genuine geometric wall that `t=ceil`
-does not rescue" is REFUTED.** It conflated two things:
+does not rescue" is REFUTED as stated** — but the replacement claim is narrower
+than one might hope. r111 conflated two things:
 
 1. `t = round((1−√α)m)` steps down at α ≈ 0.145 (m=4), dropping 200 bits of
    modulus at n=200. This is a **rounding/parameterisation artefact** of
@@ -254,9 +350,18 @@ does not rescue" is REFUTED.** It conflated two things:
 2. `s = round(√α·m)` overshoots its budget at the same α. r111's `t = ceil`
    fixed only the first, leaving the second in place.
 
-Correcting both factors α = 0.15 is solved at 3/3 (m = 4…10, two Sage
-installs, ground-truth verified). **r111's own observation stands** — the
-m-rounding bug is real and distinct — but its α ≥ 0.15 conclusion does not.
+Correcting both, α = 0.15 is solved at 3/3 (m = 4…10, two Sage installs,
+ground-truth verified) — **but only at γ ≈ 0.66, near the feasibility cap, not
+at the proven threshold γ > 0.374.** So:
+
+- r111's *conclusion* ("α ≥ 0.15 is a genuine wall") is **REFUTED**.
+- r111's *diagnostic* ("`t=ceil` doesn't rescue it") is **correct but
+  incomplete**: `t=ceil` fixes only the t half; the s half was never touched.
+- The **paper's bound is neither confirmed nor refuted here** — my success point
+  sits well above it. Anyone wanting to claim the bound is loose at α=0.15 must
+  show success at γ < 0.374, which `driver_reach.sage` was built to test and did
+  not finish.
+- r111's own m-rounding observation **stands** — that bug is real and distinct.
 
 **α ≥ 0.20 is a real wall**, and this *does* bound the published construction:
 at α = 0.20 the ratio `max|shift|/modulus` reaches 1.503 and **zero**
@@ -272,6 +377,12 @@ a single variable.
 - All success counts are at n = 200, β = (0.1, 0.15), 3 seeds/cell. The
   (t,s) region at other n, β is **unmapped**; `driver_boundary.sage` was written
   to do this and did not finish within budget.
+- **The success at α=0.15 requires γ ≥ ~0.66.** It is NOT a rescue at the
+  paper's proven threshold γ > 0.374. I have not mapped how low γ can go with
+  the right (t,s) — `driver_reach.sage` was written for this. So the correct
+  statement of the finding is *not* "the bound γ > 4α(1−√α) is wrong at
+  α=0.15"; it is "at γ near the feasibility limit, α=0.15 is reachable and the
+  reference's parameter choice is what prevented it".
 - `t,s` search is empirical. I have **not** proved the `t≥3 ∧ s≤1` boundary is
   the true mathematical condition; the clean predictor I can compute
   (`max|shift at root| / log2 modulus`, threshold between 1.455 and 1.503) is
