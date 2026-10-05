@@ -229,8 +229,16 @@ cd factor-scratch/r55exp/hnfdesc
 python3 gen.py       # instance generation, cells incl. adversarial rough-both
 python3 desc.py      # the descent
 python3 control.py   # rho-disguise control (last column is wall-clock, not reproducible)
-python3 scaling.py   # cost scaling   [slow]
+# scaling.py DOES NOT TERMINATE in reasonable time (killed at 900 s) and NOTHING
+# PUBLISHED DEPENDS ON IT: the forms/h figures are the two recomputed rows in §8b,
+# and the cost table is exponent arithmetic, not measurement.
 ```
+
+⚠️ **`scaling.py` is listed for completeness only — it did not complete here (killed at
+900 s).** No published figure derives from it: the `forms/h` values are the two
+independently recomputed rows in §8b, and the §6 cost table is **exponent arithmetic**,
+not measurement. **The one output it did produce before being killed is the discarded
+artefact of error E4** — the `1.85 → 0.030` collapse that was my own `a_cap`.
 
 Dependencies: Python 3.12, `sympy`, PARI/GP (`qfbclassno`). ⚠️ **PARI hazard from
 this programme's record: `ellcard` silently returns `N+1` on composite `N`.** The
