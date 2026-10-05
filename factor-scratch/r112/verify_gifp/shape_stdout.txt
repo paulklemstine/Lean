@@ -1,0 +1,28 @@
+/tmp/mamba/envs/sage/lib/python3.11/random.py:362: DeprecationWarning: randrange() will raise TypeError in the future
+  return self.randrange(a, b+1)
+### CLAIM3 shape: ratio gamma/[4a(1-sqrt a)]  n=200 m=4, 8 seeds
+  a=0.05 thr=0.15528 ratio=1.0 gamma=0.15500 -> 0/8 {'no_gb': 6, 'skip_gen': 1, 'gb_len4': 1}
+  a=0.05 thr=0.15528 ratio=1.2 gamma=0.18500 -> 0/8 {'gb_len4': 3, 'no_gb': 5}
+  a=0.05 thr=0.15528 ratio=1.4 gamma=0.21500 -> 2/8 {'no_gb': 6, 'gb_len4': 2}
+  a=0.05 thr=0.15528 ratio=1.6 gamma=0.25000 -> 8/8 {'gb_len4': 8}
+  a=0.05 thr=0.15528 ratio=1.8 gamma=0.28000 -> 7/8 {'no_gb': 1, 'gb_len4': 7}
+  a=0.05 thr=0.15528 ratio=2.0 gamma=0.31000 -> 8/8 {'gb_len4': 8}
+  a=0.10 thr=0.27351 ratio=1.0 gamma=0.27500 -> 0/8 {'gb_len4': 3, 'no_gb': 5}
+  a=0.10 thr=0.27351 ratio=1.2 gamma=0.33000 -> 0/8 {'no_gb': 7, 'gb_len4': 1}
+  a=0.10 thr=0.27351 ratio=1.4 gamma=0.38500 -> 0/8 {'no_gb': 5, 'gb_len4': 3}
+  a=0.10 thr=0.27351 ratio=1.6 gamma=0.44000 -> 3/8 {'gb_len4': 3, 'no_gb': 5}
+  a=0.10 thr=0.27351 ratio=1.8 gamma=0.49000 -> 8/8 {'gb_len4': 8}
+  a=0.10 thr=0.27351 ratio=2.0 gamma=0.54500 -> 0/8 {'skip_gen': 8}
+  a=0.15 thr=0.36762 ratio=1.0 gamma=0.37000 -> 0/8 {'no_gb': 8}
+  a=0.15 thr=0.36762 ratio=1.2 gamma=0.44000 -> 0/8 {'no_gb': 8}
+  a=0.15 thr=0.36762 ratio=1.4 gamma=0.51500 -> 0/8 {'no_gb': 8}
+  a=0.15 thr=0.36762 ratio=1.6 gamma=0.59000 -> 0/8 {'no_gb': 8}
+  a=0.15 thr=0.36762 ratio=1.8 gamma=0.66000 -> 0/8 {'no_gb': 8}
+  a=0.15 thr=0.36762 ratio=2.0 gamma=0.73500 -> 0/8 {'skip_infeasible': 8}
+  a=0.20 thr=0.44223 ratio=1.0 gamma=0.44000 -> 0/8 {'no_gb': 8}
+  a=0.20 thr=0.44223 ratio=1.2 gamma=0.53000 -> 0/8 {'no_gb': 8}
+  a=0.20 thr=0.44223 ratio=1.4 gamma=0.62000 -> 0/8 {'no_gb': 8}
+  a=0.20 thr=0.44223 ratio=1.6 gamma=0.71000 -> 0/8 {'skip_infeasible': 8}
+  a=0.20 thr=0.44223 ratio=1.8 gamma=0.79500 -> 0/8 {'skip_infeasible': 8}
+  a=0.20 thr=0.44223 ratio=2.0 gamma=0.88500 -> 0/8 {'skip_infeasible': 8}
+ {'skip_infeasible': 8}

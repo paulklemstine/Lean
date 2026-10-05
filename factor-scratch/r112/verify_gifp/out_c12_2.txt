@@ -1,0 +1,4 @@
+### CLAIM1/2 alpha=0.10 m=4 n=200
+  gamma=0.20 [below] 0/10 {'no_gb': 6, 'gb_len4': 4}
+  gamma=0.30 [below] 0/10 {'no_gb': 9, 'gb_len4': 1}
+  gamma=0.70 [ABOVE] 20/20 {'gb_len4': 20}

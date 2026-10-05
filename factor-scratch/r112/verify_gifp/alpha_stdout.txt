@@ -1,0 +1,8 @@
+### CLAIM4 alpha>=0.15 wall, n=200 m=4
+  a=0.15 gamma=0.50 -> 0/8 {'no_gb': 8}
+  a=0.15 gamma=0.60 -> 0/8 {'no_gb': 8}
+  a=0.15 gamma=0.65 -> 0/8 {'no_gb': 8}
+  a=0.15 gamma=0.68 -> 0/8 {'no_gb': 8}
+  a=0.20 gamma=0.50 -> 0/8 {'no_gb': 8}
+  a=0.20 gamma=0.60 -> 0/8 {'no_gb': 8}
+  a=0.25 gamma=0.50 -> 0/8 {'no_gb': 8}
