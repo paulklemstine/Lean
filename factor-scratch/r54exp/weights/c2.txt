@@ -1,0 +1,65 @@
+cross-validation vs exp_balance: PASS (all four N-terms tie at 1/5)
+==============================================================================
+P6/P7 : CLOSURE -- improving row 1 leaves the total at 1/5
+==============================================================================
+      a     b  Sum w | row1 pred |   row2 |   TOTAL |       r*       m* | binding
+  ----------------------------------------------------------------------------
+    1/2     1    3/2 |       1/5 |    1/5 |     1/5 |      1/5      1/5 | interior,m_floor,pairs,screen   <-- STILL 1/5
+    1/2   3/2      2 |       1/6 |    1/5 |     1/5 |      1/5     2/15 | interior,pairs,screen   <-- STILL 1/5
+    3/4   5/4      2 |       1/6 |    1/5 |     1/5 |      1/5     3/25 | interior,pairs,screen   <-- STILL 1/5
+      1     1      2 |       1/6 |    1/5 |     1/5 |      1/5     1/10 | interior,pairs,screen   <-- STILL 1/5
+    1/2     2    5/2 |       1/7 |    1/5 |     1/5 |      1/5     1/10 | interior,pairs,screen   <-- STILL 1/5
+    3/4   7/4    5/2 |       1/7 |    1/5 |     1/5 |      1/5 103/1200 | pairs,screen   <-- STILL 1/5
+
+  Row-2 optimum is CONSTANT at 1/5 for every row-1 weight,
+  because row 2 = {screen (N/r)^{1/4}, pairs r} contains no m at all.
+  So the total exponent can never fall below 1/5 while row 2 stands.
+
+==============================================================================
+P8 : NEGATIVE CONTROL -- improve row 2 too, and the total DOES drop
+==============================================================================
+   theta  row2 pred |  TOTAL at Harvey weights | binding
+  ------------------------------------------------------------
+     1/2        1/5 |                      1/5 | interior,m_floor,pairs,screen
+    5/11       5/27 |                      1/5 | interior,m_floor,pairs
+     2/5        1/6 |                      1/5 | interior,m_floor,pairs
+     1/3        1/7 |                      1/5 | interior,m_floor,pairs
+     1/4        1/9 |                      1/5 | interior,m_floor,pairs
+
+  theta = 1/2 is Strassen. Smaller theta = a faster small-factor screen.
+  The closure in P7 is therefore SPECIFIC to row 2, not a modelling artefact.
+
+==============================================================================
+P9 : the gap against the corpus's 1/6 claim
+==============================================================================
+  corpus claims  Sigma w = 2  =>  exponent 1/6 = 1/6
+  actual total at Sigma w = 2, Strassen screen:  1/5
+  binding terms: ['interior', 'pairs', 'screen']
+  GAP = -1/30  (the claim is missed by exactly this much)
+  to actually reach 1/6, theta must fall to 2/5 = 4/5
+    = theta <= 2/5
+  i.e. a small-factor screen of cost M^2/5, against Strassen's M^0.5.
+
+==============================================================================
+P10 : EMPIRICAL -- do the weights 1 (pairs) and -1/2 (candidates) hold?
+==============================================================================
+  Locally generated semiprimes only, n < 2^40. No RSA-scale factoring.
+
+   n (bits)        r |    #pairs   exp(#pairs vs r) |       #cands   exp(#cands vs N)
+  --------------------------------------------------------------------------
+         28       19 |        60             1.3905 |          147             0.3379   (6 cells)
+         30       37 |       142             1.3725 |          571             0.3529   (6 cells)
+         32       46 |       186             1.3649 |          929             0.3570   (6 cells)
+         34       69 |       304             1.3502 |         2184             0.3626   (6 cells)
+         36      117 |       578             1.3354 |         6299             0.3676   (6 cells)
+         38       78 |       356             1.3485 |         2804             0.3639   (6 cells)
+         40      123 |       613             1.3338 |         7034             0.3681   (6 cells)
+  TOTAL CELLS = 42   (nonzero check: OK)
+
+  pair-count exponent vs r:  min=1.3171  max=1.3905  (predicted -> 1.0, weight 1)
+  cand-count exponent vs N:  min=0.3379  max=0.3727  (predicted ~ 2/5 = 0.4 at r=N^0.2)
+
+  NOTE the honest scope: the candidate exponent 2/5 is the TOTAL count at
+  fixed r=N^{1/5}. The WEIGHT on r is what Remark 3.4's r^{-1/2} gives,
+  which is a symbolic fact about the paper's own displayed sum, not a
+  measured slope here. No measurement is extrapolated to the NFS regime.

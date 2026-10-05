@@ -1,0 +1,84 @@
+==============================================================================
+P11 : the total is max(row1, row2) -- BOTH rows must improve
+==============================================================================
+    Sum w (row1)  theta (screen) |    row1    row2     MAX | verdict
+  --------------------------------------------------------------------
+             3/2             1/2 |     1/5     1/5     1/5 | STILL 1/5
+               2             1/2 |     1/6     1/5     1/5 | STILL 1/5
+               2             2/5 |     1/6     1/6     1/6 | below 1/5  <-- BOTH rows moved
+             3/2             2/5 |     1/5     1/6     1/5 | STILL 1/5
+               3             2/5 |     1/8     1/6     1/6 | below 1/5  <-- BOTH rows moved
+               3             1/4 |     1/8     1/9     1/8 | below 1/5  <-- BOTH rows moved
+               2            3/10 |     1/6    3/23     1/6 | below 1/5  <-- BOTH rows moved
+
+  rows 1 and 2 are independent constraints on DIFFERENT parameters:
+    row 1 (BSGS)   is balanced in (r, m)   -- depends on w_r, w_m
+    row 2 (screen) is balanced in r alone   -- depends only on theta
+  and row 2's optimum does not involve m, while row 1's optimum is
+  attained at the r that row 2 also pins. Hence max, not min.
+
+==============================================================================
+P12 : what each target needs, per row
+==============================================================================
+   target |   row1 Sum w |  row2 theta | note
+  ----------------------------------------------------------
+      1/5 |          5/2 |         1/2 | Harvey: w=3/2, th=1/2
+      1/6 |            3 |         2/5 | Harvey: w=3/2, th=1/2
+      1/8 |            4 |         2/7 | Harvey: w=3/2, th=1/2
+
+  1/6 needs BOTH  Sum w: 3/2 -> 2   AND  theta: 1/2 -> 2/5
+  1/8 needs BOTH  Sum w: 3/2 -> 3   AND  theta: 1/2 -> 1/3
+  theta is the exponent of the SMALL-FACTOR SCREEN (Prop 2.5, cost M^theta).
+  Strassen gives theta=1/2. 1/6 would need a screen at theta=2/5.
+
+==============================================================================
+P13/P14/P15/P16 : faithful Alg 4.2 at small scale (n < 2^40, local semiprimes)
+==============================================================================
+   bits              n     r     m |   #pairs    #cands                 result | W(r)/N^(1/5)
+  --------------------------------------------------------------------------------------------
+     26         643417     2    15 |        3        14            FACTORED OK |        1.172
+     28       61456691     6    36 |       14        63            FACTORED OK |        2.132
+     30      115988111     8    41 |       20        70                   none |        2.195
+     32      428815391    12    53 |       35       100            FACTORED OK |        2.534
+     34    10572051691    31   101 |      113       193            FACTORED OK |        3.026
+     36    32561912881    44   127 |      176       256            FACTORED OK |        3.411
+     38    16586537431    36   111 |      140       220            FACTORED OK |        3.254
+     40   150603293251    70   172 |      312       360            FACTORED OK |        3.907
+
+  P13 cells = 8, factored correctly = 7   (nonzero check: OK)
+  P16 cands/pairs ratio range: 1.2 .. 4.7
+       (model: cands ~ N^{1/2}/(r^{1/2}m), pairs ~ r; ratio ~ N^{1/2} r^{-3/2}/m)
+
+  P14 NEGATIVE CONTROL: same code on a PRIME input must report no factors.
+    prime, 26 bits, n=26409281: found=None  (expected None)  ok=True
+    prime, 32 bits, n=2563823921: found=None  (expected None)  ok=True
+    prime, 40 bits, n=229177195613: found=None  (expected None)  ok=True
+
+  P15 argmin_r, with the CORRECT objective.
+      Two earlier versions of this test FAILED, and the reasons are
+      recorded rather than hidden:
+        v1: minimised W = #pairs + #cands over ALL r.  VACUOUS -- small r
+             gives jmax = 0, so W collapses while covering NOTHING.
+        v2: restricted to successful r, but still used the SUM with unit
+             weights.  Harvey's cost is a MAX, and it has a third term,
+             the screen (N/r)^{1/4}, which DECREASES in r.  A unit-weight
+             sum therefore always prefers the smallest usable r, and gave
+             r*/N^(1/5) ~ 0.06-0.22.  The metric was wrong, not the model.
+      v3 below uses Harvey's actual max-cost, including the screen term.
+
+    n = 348083669 (34 bits)  N^(1/5) = 51.1  m = 51   successful r: 31/398
+      argmin Harvey-cost over SUCCESSFUL r: r*=21  cost=70
+        r*/N^(1/5) = 0.41    cost*/N^(1/5) = 1.37   (predicted both ~ 1)
+        binding term at r*: pairs
+    n = 16521231511 (36 bits)  N^(1/5) = 110.6  m = 111   successful r: 142/398
+      argmin Harvey-cost over SUCCESSFUL r: r*=46  cost=186
+        r*/N^(1/5) = 0.42    cost*/N^(1/5) = 1.68   (predicted both ~ 1)
+        binding term at r*: pairs
+    n = 13171108277 (38 bits)  N^(1/5) = 105.7  m = 106   successful r: 89/398
+      argmin Harvey-cost over SUCCESSFUL r: r*=44  cost=178
+        r*/N^(1/5) = 0.42    cost*/N^(1/5) = 1.68   (predicted both ~ 1)
+        binding term at r*: pairs
+    n = 114104081629 (40 bits)  N^(1/5) = 162.7  m = 163   successful r: 32/398
+      argmin Harvey-cost over SUCCESSFUL r: r*=33  cost=453
+        r*/N^(1/5) = 0.20    cost*/N^(1/5) = 2.78   (predicted both ~ 1)
+        binding term at r*: pairs
