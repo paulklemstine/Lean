@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-10-05T07:13:34Z",
-  "count": 198,
+  "archived_at": "2026-10-05T22:47:22Z",
+  "count": 199,
   "directions": [
     {
       "id": "fd_3695",
@@ -7853,6 +7853,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 234
+    },
+    {
+      "id": "fd_3550",
+      "title": "FACT round-38 #2 — TOY-QS-YIELD: the sieve's advantage is the survivor filter; relation pool is QR-restricted random (paper 136)",
+      "description": "Round-38 #2 (exp 470, assessment v245). First direct measurement of the sieve's algorithmic advantage — paper 130's open residual.\n\n**H1 CONFIRMED**: the sieve's advantage over naive trial division is EXACTLY the constant survivor-filtering factor — A_total 13.68–20.51x across six cells (N up to 2^32), A/pi_FB flat at 0.12–0.22, no scale-emergent growth. Mechanism measured: ~100 divisions/value → ~2 log-adds/value + division of survivors only.\n\n**H2 REFUTED, refining paper 130**: the rho(u)x0.90 model overpredicts QS relation yield ~1.55x at u_med~3 (0/6 in band). Reading: p | x²−N forces (N|p)=+1 EXACTLY — B-smoothness of relations lives on the QR-restricted prime pool, raising effective-u by lnB/(lnB−ln2), predicting ratios 0.44–0.52 (observed 0.54–0.76, cross-cell corr 0.72). Paper 130's gap=1 stands at its measured regime (u∈[2,3], v≤2^23); beyond it the pool is random-equivalent to QR-RESTRICTED integers.\n\nStretch: GF(2) elimination on collected relations actually factored N = 103764863 = 9127 × 11369. Independent brute-force subrange: 338/338 exact, advantage 14.07x vs full-window 15.29.\n\nLedger (9): two substantive bugs caught ONLY by the brute-force cross-check because the gate's prediction shared their omission (circular self-referential gates) — Hensel-lifted prime-power lines restored ~20% of relations; per-root inverse fix; mixed-base u inflation caught in smoke.\n\nFollow-up queued: direct x²−N smoothness vs QR-restricted reference pool at u∈[3,4].\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp470_toy_qs_yield.py + exp470_verify.py + result.json, seed 20260821.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "b573b2a4",
+      "timestamp": "2026-08-22T03:08:29.726590+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.66,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-04T22:32:39.093766+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 233
     }
   ]
 }

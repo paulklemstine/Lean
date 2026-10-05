@@ -1642,6 +1642,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Title:** FACT r114: A PHANTOM LOCAL EVIDENCE FILE \u2014 the yoked-code refutation cited `r45/axis7/yoked_parallel.md` (592 lines), a file that was never committed, and the whole `factor-scratch/r45/axis7/` directory never existed\n\n**Labels:** approved-direction\n\n---\n\n## New species: the fabrication was local, not bibliographic\n\nThis campaign has 16+ known **phantom citations** \u2014 invented references to papers that\ndo not exist. Round 114 found a **seventeenth failure of a different kind**: an invented\nreference to a **local evidence file**, made convincing by a precise invented line count.\n\nThe memory entry `quantum-factoring-gap-yoked-parallel` was anchored on two files:\n\n| Cited as | Location cited | Reality |\n|---|---|---|\n| \"the survey in \u2026\" | `~/factor-scratch/r45/axis7/quantum_resources.md` | **does not exist** |\n| \"found it fails, for three independent reasons (\u2026)\" | `~/factor-scratch/r45/axis7/yoked_parallel.md`, **592 lines** | **does not exist** |\n\n## Verification \u2014 two independent ways\n\n**1. Filesystem.** The directory is absent and nothing matching exists anywhere:\n\n```bash\n$ ls factor-scratch/r45/axis7/\nls: cannot access 'factor-scratch/r45/axis7/': No such file or directory\n$ find . -name \"*yoked*\" -not -path \"./.git/*\"\n(no output)\n$ find . -name \"quantum_resources*\" -not -path \"./.git/*\"\n(no output)\n$ find factor-scratch/r45 -name \"*.md\"\n(no output \u2014 r45 contains no markdown at all)\n```\n\n**2. Full git history.** All 8,862 commits, every branch:\n\n```bash\n$ git rev-list --all --count\n8862\n$ git log --all --diff-filter=A --name-only --pretty=format: -- 'factor-scratch/r45/axis7/*'\n(no output)\n$ git log --all --name-only --pretty=format: -- 'factor-scratch/r45/**'\n(no output \u2014 NO path under factor-scratch/r45 was EVER committed)\n$ git log --all --name-only --pretty=format: -- '*quantum_resources*'\n(no output)\n```\n\nSo this is not a deleted file. **The entire `factor-scratch/r45/axis7/` directory is\nfictional.**\n\n## Why this one matters more than the usual phantom\n\n**The conclusion was correct; only the provenance was fabricated.** Round 114's quantum\nscout independently re-derived the refutation *from the primary sources* and reached the\nsame conclusion \u2014 so the entry's content stands, while its cited evidence never existed.\n\nThat is the inverse of the usual failure and strictly harder to catch: a right answer with\na fake citation looks correct to every downstream reader, and unlike a wrong claim it will\nnever be caught by a result being contradicted. The invented **\"592 lines\"** is what makes\nit convincing \u2014 a fabricated file would normally be cited vaguely; the line count is a\nfabricated *specific*, of exactly the kind that has fooled this campaign before.\n\n**Second refutation it enables.** The entry claimed *\"no paper connects the yoked-code\nresult to the parallelisation result.\"* **That is false.** Pinnacle's reference [8] *is*\nGidney arXiv:2505.15917 \u2014 the rho-parallelisation is built directly on top of the paper\ncontaining the 61% cold store. The two were already joined in the literature.\n\n## What IS verified (re-derived from primary sources, r114)\n\n| Claim | Status |\n|---|---|\n| Gidney 2025 = arXiv:2505.15917 | VERIFIED (v1 only, no v2) |\n| \"61% cold storage\" | VERIFIED \u2014 **61.30%**, arithmetic reproduced exactly |\n| Yoked code, 430 physical qubits per logical | VERIFIED (Gidney p18) |\n| Yoked code's identity | **UPGRADED** \u2014 it is peer-reviewed: Gidney, Newman, Brooks, Jones, *\"Yoked surface codes\"*, **Nature Communications 16, 4498** (14 May 2025), DOI `10.1038/s41467-025-59714-1`. Not a preprint, as this campaign recorded it. |\n| Pinnacle = arXiv:2602.11457 | VERIFIED (Riverlane, 12 Feb 2026) |\n| Pinnacle needs a read-only input register | VERIFIED (Sec. V.B.3) |\n| \"No paper joins them\" | **REFUTED** \u2014 Pinnacle ref [8] *is* Gidney |\n\n## The substantive result: the fusion is self-defeating\n\nRe-derived independently, the yoked-code / rho-parallelisation fusion **fails**, and the\nreason is structural rather than quantitative:\n\n- **The yoked code prices IDLE qubits.** 61.3% of Gidney's machine is cold storage\n  (550,400 / 897,864). rho-parallelisation multiplies the **working registers**, which are\n  operated on continuously and therefore *cannot* use the yoked code. The marginal cost of\n  one extra working register is ~206,856 physical qubits, of which the yoked code\n  contributes **exactly 0**.\n- **The enabling interface does not exist.** Pinnacle needs a non-destructive,\n  concurrently shared CNOT-control port; the yoked paper says cold qubits \"could not be\n  immediately operated upon\" and access hallways are blocked during measurement. Gidney\n  flagged this himself (p20) as future work.\n- **Pinnacle dominates it.** Best fusion point ~1.97e6 / 1.10e6 qubit-days versus\n  Pinnacle's 9.45e5 and 3.33e5; Pinnacle's working register is 21,630 physical qubits\n  versus the fusion's 206,856 \u2014 **9.6x denser.**\n\n**Verdict: REFUTED.** The \"clearest unexploited gap found anywhere in this campaign\" was\nnot a gap. It was an artifact of two papers being read separately.\n\n## Reproduction\n\n```bash\nls factor-scratch/r45/axis7/                                  # No such file\nfind . -name \"*yoked*\" -not -path \"./.git/*\"                  # empty\nfind factor-scratch/r45 -name \"*.md\"                          # empty\ngit rev-list --all --count                                    # 8862\ngit log --all --diff-filter=A --name-only --pretty=format: -- 'factor-scratch/r45/axis7/*'\ngit log --all --name-only --pretty=format: -- 'factor-scratch/r45/**'\n```\n\nFull report: `factor-scratch/r114/qrs/RESULT.md`\n\n## Threats to validity\n\n1. The refutation of the fusion was **re-derived independently by an agent reading the\n   papers directly**, and agrees with the original entry's content \u2014 so the *content* is\n   double-sourced. The *provenance* is not.\n2. We did **not** obtain Gidney's or Pinnacle's full PDFs through the agents' usual routes\n   in every case; the load-bearing numbers (61.30%, 430:1) are quoted with page citations\n   from the scout's fetch and were arithmetically reproduced, but a reader should re-verify\n   against the PDFs before relying on the decimals.\n3. `git log --diff-filter=A` shows files **added**; a file added outside git and later\n   committed under a different path would not appear. The `find` and\n   `git log --all -- 'factor-scratch/r45/**'` results independently rule this out for\n   these paths.\n\n## Process change this forces\n\n**Cite local evidence the way we cite papers: with a command that proves it exists.**\nThe habit that would have caught this in one second:\n\n```bash\ntest -f <cited-path> && wc -l <cited-path>\n```\n\nA cited local file that cannot be `wc -l`'d did not do any work.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5165",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-10-05T22:47:55.869419+00:00",
+    "title": "FACT r114: A PHANTOM LOCAL EVIDENCE FILE -- the yoked-code refutation cited r45/axis7/yoked_parallel.md (592 lines), never committed, and the whole factor-scratch/r45/axis7/ directory never existed"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Title:** FACT r114: GIFP is NOT a factoring method \u2014 it is a two-modulus weak-keygen attack, our instances are PLANTED, and its open problem was published in 2024\n\n**Labels:** approved-direction\n\n---\n\n## The retraction\n\nRounds 110\u2013113 treated **GIFP** as a novel factoring method with an unknown scaling\nlaw toward RSA-2048, and recorded one live positive:\n\n> GIFP recovers `p\u2082` at n=800 in 3/3 while PARI `factor(N)` on the same instance ran\n> >4 minutes without success. \u2014 r112\n\n**That result is a correct measurement about a synthetic instance the experiment\nitself builds. It is not evidence about factoring, and the scaling question it\ngenerated was ill-posed.**\n\n## 1. GIFP = Generalized *Implicit* Factorization Problem\n\nFeng, Nadi, Pietrzak, *Solving the Generalized Implicit Factorization Problem*, SAC\n2023, LNCS pp. 369\u2013384, DOI `10.1007/978-3-031-53368-6_18`; ePrint 2023/1562;\narXiv 2304.08718. Verbatim, arXiv v3 \u00a73.1 (p. 7):\n\n> **Definition 3 (GIFP(n, \u03b1, \u03b3)).** Given two n-bit RSA moduli N\u2081 = p\u2081q\u2081 and\n> N\u2082 = p\u2082q\u2082, where q\u2081 and q\u2082 are \u03b1n-bit, assume that p\u2081 and p\u2082 share \u03b3n consecutive\n> bits, where the shared bits may be located in different positions of p\u2081 and p\u2082.\n> \u2026 asks to factor N\u2081 and N\u2082.\n\nSo it is **two moduli at once**, it needs **unbalanced** primes (p.13: *\"N\u2081 and N\u2082\nare unbalanced moduli\"*), and it is **heuristic** (p.6: *\"Since our attack in\nSection 3 relies on Assumption 1, it is heuristic.\"*).\n\n## 2. Our instances plant the secret the attack is supposed to recover\n\nThe attacker is **not** given the shared block \u2014 that is what \"implicit\" means (p.2:\n*\"given the implicit information that p\u2081 and p\u2082 share \u03b3n of their consecutive least\nsignificant bits\"*). It must recover it, traversing an O(n\u00b2) position grid (p.7).\n\nBut the reference generator `gifp.sage` (the authors' own code) embeds one\n`share_bit` integer **verbatim into both** larger primes:\n\n```python\nshare_bit = ZZ(randint(2**(share_bit_length-1)+1, 2**share_bit_length-1))\np1 = random_blum_prime(MSB4p1*2**(gamma+beta1) + share_bit*2**(beta1_bit_length) + ...)\np2 = random_blum_prime(MSB4p2*2**(gamma+beta2) + share_bit*2**(beta2_bit_length) + ...)\n```\n\nVerified empirically by running the authors' generator at n=800, \u03b1=0.20, \u03b3=0.05 and\nre-slicing the primes:\n\n```\nshare_bit = 40 bits, offset 520\nblock in p1  : 1001110101110001100111010101111100011000\nshare_bit    : 1001110101110001100111010101111100011000\nblock in p2  : 1001110101110001100111010101111100011000\np1 contains share_bit verbatim : True\np2 contains share_bit verbatim : True\n```\n\n**Our instances are outside the paper's own threat model.**\n\n## 3. The open problem was already solved\n\nGIFP names its own open problem (p.4, p.13): *\"can we improve our bound 4\u03b1(1\u2212\u221a\u03b1)\nfor GIFP to 2\u03b1\u22122\u03b1\u00b2 or even better?\"* That is:\n\n> Ran Zhang, Jingguo Bi, Lixiang Li, Haipeng Peng. *An **optimal bound** for factoring\n> unbalanced RSA moduli by solving Generalized Implicit Factorization Problem.*\n> **J. Supercomputing 81** (2024). DOI `10.1007/s11227-024-06478-y`\n\nExistence verified via Crossref + OpenAlex; **the improved bound itself is paywalled\nand we did not read it.**\n\n## 4. A live defect in the reference code\n\n`gifp.sage:11` documents `alpha` as *\"the ratio of the bit length of the **larger**\nprime\"*, but `gifp.sage:36-37` computes `p = (1-alpha)*n`, `q = alpha*n`. **The\ndocstring is wrong.** Our runs used the code's convention (`|q\u2082| = \u03b1\u00b7n`, matching the\nr112 measurement), but anyone reading the docstring has every \u03b1 inverted.\n\n## What this kills\n\n- GIFP as a factoring method with an open scaling law.\n- The n=800 \"3/3 vs PARI >4 min\" result as evidence about factoring.\n- The \"\u03b1 \u2265 0.15 GIFP wall\" as a statement about integer factoring \u2014 it is a boundary in\n  a planted-secret regime.\n- The 4.3-order \"regime gap\" to RSA-2048 as something raising n could close.\n\n## What survives\n\nThe weak-keygen **class** is legitimate; the paper's own motivation is\n*\"we need to avoid situations where the system that creates RSA keys lack entropy.\"*\nThe correct research question is not a GIFP scaling law but:\n\n> **Which real key generations actually produce the shared-bit condition, and at what\n> bit lengths?**\n\nThat is a probability question about key generation \u2014 two independently generated\n(1\u2212\u03b1)n-bit primes share any window of length w with probability \u2248 (number of\nwindows)\u00b72^(\u2212w), so sharing becomes impossible once w \u2273 log\u2082(n). At n=2048 the\nattack's required shared block 4\u03b1(1\u2212\u221a\u03b1)\u00b7n is a fixed *fraction* of n, orders of\nmagnitude above that threshold. Companion analysis in progress.\n\n## Threats to validity\n\n1. The **ePrint PDF was never accessed** (Cloudflare CAPTCHA on every route). All\n   quotes are from arXiv v3, the post-SAC revision, whose abstract is reworded.\n2. The **Springer camera-ready was not read** (paywalled).\n3. The **content of the 2024 improvement is unverified** \u2014 only its existence, title,\n   authorship and venue.\n4. The empirical check is **one instance, one parameter point**. The planted block is\n   a structural property visible in the generator source, so one instance suffices.\n5. The **paper never mentions CTF**; that framing comes from the reference repo's\n   README (D\u00b3CTF 2024). We therefore make the narrower claim: *our* instances are\n   planted and outside the threat model.\n6. **We do not claim GIFP is worthless.** It is a peer-reviewed theorem about a real\n   weakness class. What is retracted is our use of it as a factoring method.\n\n## Reproduction\n\n```bash\n/home/raver1975/sage_mamba/envs/sage/bin/sage \\\n    /home/raver1975/lean/factor-scratch/r114/gifp_planted_bit_audit.sage\nsed -n '35p;40,41p' /home/raver1975/lean/Experiments/UMWWindow/gifp_ref/gifp.sage\nsed -n '11p;36,37p' /home/raver1975/lean/Experiments/UMWWindow/gifp_ref/gifp.sage\n```\n\nFull paper: `factor-scratch/r114/papers/R114_gifp_retraction.md`",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_5166",
+    "priority_score": 1000.0,
+    "research_mode": "team",
+    "source_exp_id": "github",
+    "status": "available",
+    "timestamp": "2026-10-05T22:47:55.870989+00:00",
+    "title": "FACT r114: GIFP is NOT a factoring method -- it is a two-modulus weak-keygen attack, our instances are PLANTED, and its open problem was published in 2024"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalizes a quantum random walk on the Berggren Pythagorean tree where constructive interference at energy spectrum minima collapses the state onto factors of N.",
     "domains": [
       "Pythagorean",
@@ -3777,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "b573b2a4",
-    "description": "Round-38 #2 (exp 470, assessment v245). First direct measurement of the sieve's algorithmic advantage \u2014 paper 130's open residual.\n\n**H1 CONFIRMED**: the sieve's advantage over naive trial division is EXACTLY the constant survivor-filtering factor \u2014 A_total 13.68\u201320.51x across six cells (N up to 2^32), A/pi_FB flat at 0.12\u20130.22, no scale-emergent growth. Mechanism measured: ~100 divisions/value \u2192 ~2 log-adds/value + division of survivors only.\n\n**H2 REFUTED, refining paper 130**: the rho(u)x0.90 model overpredicts QS relation yield ~1.55x at u_med~3 (0/6 in band). Reading: p | x\u00b2\u2212N forces (N|p)=+1 EXACTLY \u2014 B-smoothness of relations lives on the QR-restricted prime pool, raising effective-u by lnB/(lnB\u2212ln2), predicting ratios 0.44\u20130.52 (observed 0.54\u20130.76, cross-cell corr 0.72). Paper 130's gap=1 stands at its measured regime (u\u2208[2,3], v\u22642^23); beyond it the pool is random-equivalent to QR-RESTRICTED integers.\n\nStretch: GF(2) elimination on collected relations actually factored N = 103764863 = 9127 \u00d7 11369. Independent brute-force subrange: 338/338 exact, advantage 14.07x vs full-window 15.29.\n\nLedger (9): two substantive bugs caught ONLY by the brute-force cross-check because the gate's prediction shared their omission (circular self-referential gates) \u2014 Hensel-lifted prime-power lines restored ~20% of relations; per-root inverse fix; mixed-base u inflation caught in smoke.\n\nFollow-up queued: direct x\u00b2\u2212N smoothness vs QR-restricted reference pool at u\u2208[3,4].\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp470_toy_qs_yield.py + exp470_verify.py + result.json, seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3550",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T03:08:29.726590+00:00",
-    "title": "FACT round-38 #2 \u2014 TOY-QS-YIELD: the sieve's advantage is the survivor filter; relation pool is QR-restricted random (paper 136)"
-  },
-  {
     "consumed_by_exp_id": "0f53319e",
     "description": "Round-38 #1 (exp 469, assessment v244). The abelian ladder's ninth rung.\n\n**FULL-PINNING-AT-DEGREE-NINE**: Q(\u03b6\u2081\u2089)\u207a (degree 9, C\u2089, conductor 19) confirms every pre-stated prediction:\n- Types = coset orders in C\u2081\u2088/{\u00b11} \u2245 C\u2089; densities {1/9, 2/9, 6/9} matched to 2e-4 on 295,946 unramified primes.\n- I(p mod 19; T) = H(T) = 1.2244 bits EXACTLY (per-class degenerate; perm z = +0.00); thickening structural; coprime control flat.\n- Polynomial cross-check 400/400 via factor-degree PATTERNS over GF(p): [1\u2079]/[3,3,3]/[9] \u2014 the nr readout is lossy at degree 9 (orders 3 and 9 both fix zero roots; only the pattern separates them).\n- Semiprime: I(N mod 19; pair) = 0.5330 vs exact enumeration law 0.5302; which-factor extra 0.00053 (null); split-count projection 0.0746 \u2248 Is(9) \u2014 new n=9 entries of the g/Is tables.\n\nLedger: v1 crosscheck doubly wrong (order-3 Frobenius fixes ZERO roots; unvalidated hand Horner) \u2192 sympy patterns; min\u00b73+max pair-code collision caught live (paper-100 lesson); inline takeover after upstream agent timeout.\n\nThe abelian full-pinning law now spans degrees 2,3,4,5,6,8,9 \u2014 every rung measured, no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp469_degree_nine.py + exp469_result.json, seed 20260821.",
     "domains": [
@@ -3807,16 +3820,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-38 #1 \u2014 DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6da44148",
     "description": "Round-37 #6 (exp 463, assessment v243). First simultaneous re-measurement of the ENTIRE type-channel master table \u2014 15 canonical fields, one protocol, one seed, 295,946 unramified primes/field < 2^22, law values computed fresh from explicit permutation groups.\n\n**H0 \u2014 PRECISION HOLDS**: global max |I_meas \u2212 I_law| = **0.00048 bits**, 20x inside the pre-stated 0.01 budget. No flags.\n\n- Every recorded headline reproduced within max(0.01, 3\u03c3).\n- The one anomaly diagnosed: S3d's historical 1.0078 vs exact law 1.0000 (simultaneous remeasurement 0.9998\u00b10.001) = small-population plug-in bias on the sparse 229-class dial \u2014 not physics, not dictionary drift.\n- Fresh law constants matched hand-derived values to 6 decimals on all 10 groups (incl. D4 = 1.655639, A4 = 0.918296).\n- Controls: thickening \u22120.00044; coprime flatness below null bias floor on six fields; sympy ground truth 0 mismatches \u00d715 fields; abelian dictionaries 100%.\n\nThe lab's ~128-paper measurement record is internally consistent to 5e-4 bits \u2014 extending the reproducibility-audit line (papers 97/103) from stored-seed re-runs to cross-field simultaneous measurement.\n\nLedger: 7 catches, ALL before results (D4 generator \u2192 S4 closure exposed by hand constants; F20 seeded as C5; LSB/MSB exponent mismatch; q\u00b2|disc ramified test; ...).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp463_precision.py + exp463_result.json + exp463_full_run.log, seed 20260821.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3552",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T03:08:29.729074+00:00",
     "title": "FACT round-37 #6 \u2014 CHEBOTAREV-PRECISION: the master table reproduces simultaneously, max deviation 0.00048 bits (paper 134)"
   },
@@ -36066,6 +36080,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-04T22:31:46.704405+00:00",
     "title": "Mirror-Pair Covering Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The smoothness probability of x^2-N should follow a Dickman-type function for primes of Chebotarev density 1/2 counted with multiplicity 2, not rho(u). This would explain the 1.55x overprediction of the rho(u)*0.90 model at u~3.\n\nFor non-square N and fixed u in [3,4], #{x in [sqrt N, sqrt N + M] : x^2-N is B-smooth}/M ~ C_N * rho_{1/2}(u), where u rho_{1/2}'(u) = -(1/2) rho_{1/2}(u-1) with matching initial data, and C_N is the product of local root-count corrections.\n\nCompare the measured x^2-N smoothness against rho_{1/2}(u) and a QR-restricted reference pool at u in [3,4] across 6+ moduli (the queued follow-up); formalize the Buchstab recursion over the admissible class.\n\nGives a corrected yield model for QS parameter selection and closes paper 130's residual beyond u=3.\n\nThe QR restriction is not the whole correction; higher-order local factors (prime powers, p=2) dominate.",
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_5162",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b573b2a4",
+    "status": "available",
+    "timestamp": "2026-10-05T22:47:20.813085+00:00",
+    "title": "Half-Density Dickman Law for QS Relations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalise card_nontrivial_sqrt_semiprime from N=pq to N with k distinct odd prime factors: exactly 2 of the 2^k square roots of a unit square are trivial.\n\nFor N = p_1...p_k (distinct odd primes) and y a unit mod N, #{x : x^2 = y^2} = 2^k and #{x : x^2 = y^2, x != +-y} = 2^k - 2.\n\nFormalize by induction on k using ZMod.chineseRemainder; check numerically on random squarefree N.\n\nd independent dependencies fail with probability 2^{d(1-k)}, a formal failure bound for the QS endgame.\n\nOnly possible if the CRT sign vectors fail to be independent, which would contradict CRT.",
+    "domains": [
+      "Computation",
+      "NumberTheory"
+    ],
+    "id": "fd_5163",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b573b2a4",
+    "status": "available",
+    "timestamp": "2026-10-05T22:47:21.315349+00:00",
+    "title": "Dependency Coin-Flip Law for Multi-Prime Moduli"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The log accumulator is a complete invariant of the smooth part. The exact threshold at height floor(log2 v) should therefore be the minimal-survivor rule that loses no relation, making H1's constant advantage optimal among accumulator-only sieves.\n\nAny decision rule depending only on (sieveLog S K v, log v) that accepts every S-smooth v accepts at least the set {v : sieveLog S K v = log v} when K >= log2 v, and the advantage ratio is Theta(|S| / (2 sum_{p in S} 1/(p-1) + |S| * smooth fraction)).\n\nFormalize the rule class and prove minimality from sieve_accepts_iff; compare the predicted advantage against the measured A_total 13.68-20.51x.\n\nThe measured advantage is the best possible for log sieves, so further speedups must come from changing the polynomial family (MPQS).\n\nSome accumulator-only rule beats exactness, e.g. by exploiting large-prime variants.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5164",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "b573b2a4",
+    "status": "available",
+    "timestamp": "2026-10-05T22:47:21.826282+00:00",
+    "title": "Survivor-Filter Optimality of the Exact Log Threshold"
   },
   {
     "consumed_by_exp_id": "",

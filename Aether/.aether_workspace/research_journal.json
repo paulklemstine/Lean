@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "217690eb",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nDerived from this cycle's results in `Catalog/MachineLearning/QRResidual/`\n(`BlockCeiling.lean`, `NeighborNull.lean`, `PermutationNull.lean`,\n`MeasurableCeiling.lean`).\n\nWhat this",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-26T03:19:58",
-      "title": "FACT round-83 #4 — NEIGHBOR-SMOOTHNESS-COVARIATE (exp 585): H0 NOTHING-BEYOND-QR — local factorizati"
-    },
-    {
       "cycle_id": "733effba",
       "domain": "Algebra",
       "key_insight": "# Future Directions — after the H0 window-geometry cycle (exp 581 / paper 231)\n\n## What this cycle established\n\nThree Lean files (`Catalog/Algebra/HumpWindowGeometry.lean`,\n`Catalog/Algebra/HumpFitted",
@@ -2501,6 +2491,16 @@
       "theorem_count": 58,
       "timestamp": "2026-10-05T07:13:48",
       "title": "FACT round-38 #3 — POSITIONAL-FILTER: position pays 5.19x, the stratum beyond the residue cap is liv"
+    },
+    {
+      "cycle_id": "b573b2a4",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — after TOY-QS-YIELD (exp 470, round 38 #2)\n\n## What this cycle established (all in Lean, no `sorry`)\n* `Computation/ToyQSHenselLines.lean`\n  * Hensel lifting over ℤ.\n  * Exactly *",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-10-05T22:47:37",
+      "title": "FACT round-38 #2 — TOY-QS-YIELD: the sieve's advantage is the survivor filter; relation pool is QR-r"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-05T07:13:48",
+  "last_updated": "2026-10-05T22:47:37",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "05a687ab",
-        "quality": 0.82,
-        "theorems": 76,
-        "title": "Formalize normalized gap and pair-correlation statistics for finite spectra."
-      },
-      {
         "cycle_id": "128c5007",
         "quality": 0.74,
         "theorems": 30,
@@ -3327,6 +3321,12 @@
         "quality": 0.82,
         "theorems": 60,
         "title": "FACT round-30 #2 — SD-WALL-TEST: the hinted view is factor-blind too (paper 102)"
+      },
+      {
+        "cycle_id": "b573b2a4",
+        "quality": 0.66,
+        "theorems": 11,
+        "title": "FACT round-38 #2 — TOY-QS-YIELD: the sieve's advantage is the survivor filter; r"
       }
     ],
     "Cryptography": [
