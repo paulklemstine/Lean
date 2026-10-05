@@ -11735,6 +11735,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Signed seeds and G-gradings on cluster algebras' and formalize its key results. Abstract: The theory of cluster algebras is closely connected to the theory of total positivity; indeed, the desire to better understand total positivity was one of the main motivations for Fomin and Zelevinsky's introduction of cluster algebras [arXiv:math/0104151]. In particular, any cluster variety whose coordinate ring has a cluster structure has a natural notion of positive part: the subset of the variety where all cluster variables are positive. In this paper, we explain that there are other signed cells contained in cluster varieties that are equally natural from a cluster-theoretic point of view. These come from signed seeds, which can be thought of as a $\\mathbb{Z}/2\\mathbb{Z}$-grading on cluster variables, and which were introduced in [arXiv:2310.17727] in the context of the amplituhedron. More generally, given any abelian group $G$, we introduce the notion of a $G$-graded seed for a cluster algebra, which is a way of assigning elements of $G$ to each cluster variable which is compatib",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5161",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2610.03612v1",
+    "status": "available",
+    "timestamp": "2026-10-05T16:13:08.948327+00:00",
+    "title": "ArXiv paper: Signed seeds and G-gradings on cluster algebras"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domain_bridges": [],
     "domains": [
