@@ -75,11 +75,21 @@ def pollard_rho_baseline(N, p, q, budget_q, rng, seed=0):
 
 def main():
     out = dict(cells=[])
-    for bits_p, seed in [(40, 1), (40, 2), (44, 1), (44, 2)]:
+    # p=40 bits makes rho cost ~40*2^20 = 4e7 pure-Python gcd steps, which
+    # overran the wall clock.  p<=32 keeps rho at ~1e5 steps (well inside
+    # budget) while still giving sqrt(p) >> the old 20000 cap, so the
+    # control genuinely factors.
+    for bits_p, seed in [(28, 1), (28, 2), (30, 1), (30, 2), (32, 1), (32, 2)]:
         rng = random.Random(seed)
         p, q, N = gen_semiprime(2 * bits_p, seed, beta=0.5)
         assert p * q == N
-        budget = 20000
+        # BUDGET DEFECT FIX: the first run used budget=20000 while
+        # sqrt(p) ~ 2^20 for a 40-bit p, so BOTH arms exhausted without
+        # factoring -- a void run, not a null.  That is the "a parameter I
+        # chose manufactured the result I was hunting" failure.  The budget
+        # is now derived from p so rho MUST succeed: that success is the
+        # mandatory negative control proving the harness can factor at all.
+        budget = 12 * math.isqrt(p)
         t0 = time.time()
         qo, fo, mo = legendre_oracle_factor(N, p, q, budget, rng)
         t1 = time.time()

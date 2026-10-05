@@ -1,37 +1,40 @@
 #!/usr/bin/env python3
 """
-CANDIDATE C -- Is a real NFS relation matrix structurally distinguishable from
-a RANDOM GF(2) matrix, in a way that recombination could exploit?
+CANDIDATE C -- Is a REAL relation matrix structurally distinguishable from a
+RANDOM GF(2) matrix, in the statistic that recombination actually uses?
 
 THE MECHANISM (a recombination scheme, distinct from Coppersmith/p+1/ECM).
-Standard NFS recombination: m relations -> GF(2) elimination -> nullspace vectors
--> hash each vector's square part -> two equal square parts give
-gcd(a-b, N) that splits N.  The claim worth testing is that real NFS relations
-are NOT independent random vectors (they come from a 2-parameter (a,b) family
-hitting a smoothness condition), so the nullspace might carry structure that
-changes the collision process.
+Recombination = m relations -> GF(2) elimination -> nullspace vectors -> hash
+each vector's square part -> two equal square parts give gcd(a-b,N) splitting
+N.  The claim worth testing: real relations are NOT independent random vectors,
+so the nullspace may carry structure a smarter recombination could exploit.
 
-FALSIFIER (cheapest possible): if the collision process on the real NFS
-nullspace is statistically indistinguishable from a RANDOM GF(2) matrix of the
-same shape, there is no exploitable structure and the direction is closed.
-This is a NULL-RESULT test, run before any recombination rule is invented --
-inventing R1/R2 first and then looking for a win is how this campaign
-manufactures results.
+FALSIFIER (cheapest possible, run BEFORE inventing any new rule): if the
+collision process on the real nullspace is statistically indistinguishable
+from a random GF(2) matrix of identical (m,n) shape, there is no exploitable
+structure and the direction is closed.
 
-MANDATORY CONTROL: the SAME collision statistic is computed on a random GF(2)
-matrix of identical (m, n) shape.  A harness that cannot separate real from
-random has no power to detect structure.
+MANDATORY CONTROL: the SAME statistic is computed on a random GF(2) matrix of
+identical shape.  A harness that cannot separate real from random has no power
+to detect structure at all.
 
-NOTE ON A DEFECT FOUND WHILE WRITING THIS: the first draft implemented two
-named recombination rules (R1 two-way, R2 three-way) that turned out to share
-the same collision code path -- the "control" would have been a re-derivation
-through the same expression, the exact failure in
-four-verification-failures-that-all-looked-fine item 2.  Deleted; replaced by
-a single collision statistic compared against an independent random matrix.
+DEFECT FOUND WHILE WRITING THIS (recorded, not hidden): the first draft
+implemented two "different" recombination rules R1 (two-way) and R2 (three-way)
+that turned out to share the same collision code path.  That is the
+"control reuses the logic under test" failure from
+four-verification-failures-that-all-looked-fine item 2 -- the control would
+have been a re-derivation through the same expression.  Deleted and replaced
+by a single collision statistic against an INDEPENDENT random matrix.
 
-SCOPE LIMIT stated BEFORE the run: even a positive here is a CONSTANT factor.
-It cannot change the L[1/3] exponent.  Run at small N because that is where a
-full relation collection is affordable.
+SECOND DEFECT, ALSO RECORDED: the first run collected 0/3 relations and I
+nearly read that as "no structure".  It was a parameter failure -- cubic
+Montgomery at N=2^60 with a factor base of 2^8.6 gives u = ln F/ln B = 11,
+where Dickman is ~1e-11.  A 0/3 relation count is a VOID harness, not a null.
+Rebuilt on the quadratic sieve, which reaches u ~ 3 at this size.  The
+yield is printed explicitly so this cannot recur silently.
+
+SCOPE LIMIT stated before the run: even a positive here is a CONSTANT factor.
+It cannot change the L[1/3] exponent.
 """
 import sys, json, time, random
 from math import gcd
@@ -39,68 +42,63 @@ from sympy import primerange
 from common112 import gen_semiprime
 
 
-# ---------------------------------------------------------------- GF(2) elim
 def nullspace_basis(M, ncols):
-    """Basis of {x : M x = 0} over GF(2), via RREF.  Independent of any
-    recombination code -- this is pure linear algebra."""
-    Mf = [row[:] for row in M]
-    m = len(Mf)
-    piv = []
-    r = 0
-    for c in range(ncols):
+    """Basis of {y in GF(2)^m : M^T y = 0} -- the nullspace OVER RELATIONS.
+
+    DEFECT FIXED.  The first version computed {x : M x = 0}, the nullspace
+    over the factor-base COLUMNS.  Recombination needs the LEFT nullspace:
+    a subset of RELATIONS whose product has all-even exponents.  Computing
+    the wrong nullspace gave "real nullity 77, random nullity 0" -- an
+    artefact of the real matrix being rank-deficient for unrelated reasons,
+    not a statement about recombination.  Transposed now.
+
+    Implementation: reduce M (m x n) to RREF tracking the row operations on
+    an identity of size m, so the left nullspace falls out as the
+    combinations that reduce to zero.
+    """
+    m = len(M)
+    n = ncols
+    # augment with m x m identity to track combinations of the m rows
+    A = [list(M[i]) + [1 if j == i else 0 for j in range(m)] for i in range(m)]
+    piv, r = [], 0
+    for c in range(n):
         pr = None
         for i in range(r, m):
-            if Mf[i][c]:
+            if A[i][c]:
                 pr = i
                 break
         if pr is None:
             continue
-        Mf[r], Mf[pr] = Mf[pr], Mf[r]
+        A[r], A[pr] = A[pr], A[r]
         for i in range(m):
-            if i != r and Mf[i][c]:
-                Mf[i] = [a ^ b for a, b in zip(Mf[i], Mf[r])]
+            if i != r and A[i][c]:
+                A[i] = [a ^ b for a, b in zip(A[i], A[r])]
         piv.append(c)
         r += 1
         if r == m:
             break
-    pivset = set(piv)
-    free = [c for c in range(ncols) if c not in pivset]
-    basis = []
-    for f in free:
-        v = [0] * ncols
-        v[f] = 1
-        for i, pc in enumerate(piv):
-            v[pc] = Mf[i][f]
-        basis.append(v)
+    # rows r..m-1 of A have zero in the first n columns -> they ARE left-null
+    basis = [A[i][n:n + m] for i in range(r, m)]
     return basis, r
 
 
-def collect_nfs_relations(N, fb, boxA, boxB, need, rng):
-    """Cubic Montgomery NFS: N = d^3 + c, F(x,y) = (d x + y)^3 + c, F(1,0)=N.
-
-    Smoothness is EXACT trial division over fb.  No Dickman, no approximation.
-    """
-    d = int(round(N ** (1.0 / 3)))
-    while d ** 3 > N:
-        d -= 1
-    while (d + 1) ** 3 <= N:
-        d += 1
-    c = N - d ** 3
-    assert d ** 3 + c == N, "f(1) != N"
-    assert c != 0
+def qs_relations(N, D, fb, xmax, want, rng):
+    """Quadratic sieve relations: x^2 - D y^2 = F,  F FB-smooth.
+    Smoothness is EXACT trial division -- no Dickman, no approximation."""
+    fbl = list(fb)
     rels = []
     tries = 0
-    cap = need * 3000
-    while len(rels) < need and tries < cap:
+    cap = want * 400
+    while len(rels) < want and tries < cap:
         tries += 1
-        x = rng.randrange(1, boxA)
-        y = rng.randrange(0, boxB)
-        v = (d * x + y) ** 3 + c
-        if v <= 1:
+        x = rng.randrange(1, xmax)
+        y = rng.randrange(1, xmax)
+        val = x * x - D * y * y
+        if val <= 0:
             continue
-        rem = v
-        exps = [0] * len(fb)
-        for i, pr in enumerate(fb):
+        rem = val
+        exps = [0] * len(fbl)
+        for i, pr in enumerate(fbl):
             if pr > rem:
                 break
             if rem % pr == 0:
@@ -111,37 +109,38 @@ def collect_nfs_relations(N, fb, boxA, boxB, need, rng):
                 exps[i] = e
         if rem != 1:
             continue
-        rels.append((exps, x, y, v))
-    return rels, tries, d, c
+        rels.append((exps, x, y, val))
+    return rels, tries
 
 
-def square_part_key(vec, fb):
-    """The square class of the integer prod fb[i]**vec[i]:
-    the set of primes appearing to an ODD exponent."""
-    return frozenset(i for i, e in enumerate(vec) if e)
+def rel_value(vec, rels, fb):
+    """Integer value of the relation formed by the subset `vec` of relations,
+    with its exponent parity recorded."""
+    tot = 1
+    par = [0] * len(fb)
+    for i, e in enumerate(vec):
+        if not e:
+            continue
+        exps = rels[i][0]
+        tot *= rels[i][3]
+        for j, x in enumerate(exps):
+            par[j] ^= (x & 1)
+    return tot, par
 
 
-def collision_stats(M, ncols, fb, N, seed):
-    """Fraction of nullspace vectors whose square part collides with an earlier
-    one, and whether any collision yields a genuine split.  This is the
-    statistic compared real-vs-random."""
+def stats(M, ncols, fb, N, rels):
     basis, rank = nullspace_basis(M, ncols)
     seen = {}
-    coll = 0
-    splits = 0
+    coll = splits = 0
+    vals = []
     for idx, vec in enumerate(basis):
-        key = square_part_key(vec, fb)
+        val, par = rel_value(vec, rels, fb)
+        vals.append((val, par))
+        key = frozenset(j for j, e in enumerate(par) if e)   # square class
         if key in seen:
             coll += 1
-            a = 1
-            for i, e in enumerate(vec):
-                if e:
-                    a *= fb[i] ** e
-            b = 1
-            for i, e in enumerate(basis[seen[key]]):
-                if e:
-                    b *= fb[i] ** e
-            g = gcd(a - b, N)
+            b_val, _ = vals[seen[key]]
+            g = gcd(val - b_val, N)
             if 1 < g < N:
                 splits += 1
         else:
@@ -154,36 +153,36 @@ def collision_stats(M, ncols, fb, N, seed):
 
 def main():
     out = dict(cells=[])
-    cfgs = [(60, 1, 3), (60, 2, 3)]          # (N bits, seed, target rels)
-    for Nbits, seed, need in cfgs:
+    for Nbits, seed in [(48, 1), (48, 2), (52, 1), (52, 2)]:
         rng = random.Random(seed)
         p, q, N = gen_semiprime(Nbits, seed, beta=0.5)
         assert p * q == N and N.bit_length() == Nbits
-        BB = 400
-        fb = list(primerange(2, BB))
-        rels, tries, d, c = collect_nfs_relations(
-            N, fb, boxA=4000, boxB=4000, need=need, rng=rng)
-        if len(rels) < need:
-            out["cells"].append(dict(Nbits=Nbits, seed=seed,
-                                     err="relation collection stalled",
-                                     got=len(rels), tries=tries))
-            print("N=%d seed=%d: only %d/%d relations" %
-                  (Nbits, seed, len(rels), need), flush=True)
+        D = 1
+        while any(D % r == 0 for r in (4, 9, 5, 7, 11, 13, 17, 19, 23, 29, 31)):
+            D += 1
+        fb = list(primerange(2, 2000))
+        want = len(fb) + 20
+        rels, tries = qs_relations(N, D, fb, xmax=1 << 18, want=want, rng=rng)
+        yld = len(rels) / max(1, tries)
+        if len(rels) < want:
+            out["cells"].append(dict(Nbits=Nbits, seed=seed, err="stalled",
+                                     got=len(rels), want=want, yield_=yld))
+            print("N=%d seed=%d VOID: only %d/%d relations (yield %.2e)" %
+                  (Nbits, seed, len(rels), want, yld), flush=True)
             continue
         M = [[e % 2 for e in exps] for exps, x, y, v in rels]
-        real = collision_stats(M, len(fb), fb, N, seed)
-        # NULL CONTROL: same shape, random GF(2) rows
-        rng2 = random.Random(seed * 7 + 1)
+        real = stats(M, len(fb), fb, N, rels)
+        rng2 = random.Random(seed * 31 + 5)
         Mr = [[rng2.randrange(2) for _ in range(len(fb))] for _ in rels]
-        rand = collision_stats(Mr, len(fb), fb, N, seed)
-        out["cells"].append(dict(Nbits=Nbits, seed=seed, d=d, c=c, BB=BB,
-                                 n_rels=len(rels), tries=tries,
+        rand = stats(Mr, len(fb), fb, N, rels)
+        out["cells"].append(dict(Nbits=Nbits, seed=seed, D=D, n_fb=len(fb),
+                                 n_rels=len(rels), tries=tries, yield_=yld,
                                  real=real, random=rand))
-        print("N=%d seed=%d rels=%d  REAL nullity=%d collrate=%.4f splits=%d"
-              "  |  RANDOM nullity=%d collrate=%.4f splits=%d" %
-              (Nbits, seed, len(rels), real["nullity"], real["collision_rate"],
-               real["splits"], rand["nullity"], rand["collision_rate"],
-               rand["splits"]), flush=True)
+        print("N=%d seed=%d rels=%d/%d yield=%.2e | REAL null=%d coll=%.4f "
+              "splits=%d | RAND null=%d coll=%.4f splits=%d" %
+              (Nbits, seed, len(rels), want, yld, real["nullity"],
+               real["collision_rate"], real["splits"], rand["nullity"],
+               rand["collision_rate"], rand["splits"]), flush=True)
     fn = ("/home/raver1975/lean/factor-scratch/r112/novel_mechanisms/"
           "out_C_recomb.json")
     json.dump(out, open(fn, "w"), indent=1)

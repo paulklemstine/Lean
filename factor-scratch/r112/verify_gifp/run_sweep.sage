@@ -1,5 +1,5 @@
 import time,sys,json
-LOGF=sys.argv[-2] if sys.argv[-2].endswith('.log') else None
+LOGF=sys.argv[-1] if sys.argv[-1].endswith('.log') else None
 _p=print
 def print(*a,**k):
     _p(*a,**k)

@@ -1,0 +1,15 @@
+### CLAIM5 m-resonance vs t rounding, alpha=0.10 gamma=0.50
+  m=2 t=round -> 0/8 {'no_gb': 8}
+  m=2 t=ceil  -> 0/8 {'no_gb': 8}
+  m=3 t=round -> 0/8 {'no_gb': 8}
+  m=3 t=ceil  -> 8/8 {'gb_len4': 8}
+  m=4 t=round -> 7/8 {'gb_len4': 7, 'skip_gen': 1}
+  m=4 t=ceil  -> 0/8 {'no_gb': 8}
+  m=5 t=round -> 0/8 {'no_gb': 8}
+  m=5 t=ceil  -> 0/8 {'no_gb': 8}
+  m=6 t=round -> 0/8 {'no_gb': 8}
+  m=6 t=ceil  -> 8/8 {'gb_len4': 8}
+  m=7 t=round -> 8/8 {'gb_len4': 8}
+  m=7 t=ceil  -> 0/8 {'no_gb': 8}
+  m=8 t=round -> 0/8 {'no_gb': 8}
+  m=8 t=ceil  -> 8/8 {'gb_len4': 8}

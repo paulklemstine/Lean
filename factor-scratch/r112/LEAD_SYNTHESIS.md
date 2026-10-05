@@ -121,3 +121,50 @@ i.e. this grid is sitting exactly on the boundary and the 4-seed cells are not
 trustworthy. **The r111 "shape is wrong" claim remains unresolved**, not
 confirmed and not refuted; it needs the ≥12-seed treatment everywhere before it
 should be restated in any document.
+
+## Addendum 2: the bound is LOOSE, not WRONG (verified independently)
+
+The wall agent's refined claim: with corrected (t,s), α=0.15 needs
+γ ≈ 0.59–0.62 ≈ **1.6–1.7× the proven threshold** — the same looseness r110
+measured at α=0.10. That would REFUTE r111's "the bound's shape is wrong".
+
+My own sweep at α=0.15, (t,s) corrected, m=4, **12 seeds/point**:
+
+| γ | ratio to proven 0.3676 | verified |
+|---|---|---|
+| 0.40 | 1.09× | 0/12 |
+| 0.45 | 1.22× | 0/12 |
+| 0.50 | 1.36× | 0/12 |
+| 0.59 | 1.60× | 0/11 |
+| 0.62 | 1.69× | **6/12** |
+| 0.66 | 1.80× | **11/12** |
+
+**Monotone, and never below the proven threshold.** The direct falsifier the
+wall agent named — "anyone claiming the bound is wrong must show success below
+γ = 0.374" — I do not see, and neither does the agent.
+
+**Therefore r111's headline claim is REFUTED, not merely retracted.** The bound
+γ > 4α(1−√α) is *sufficient-but-loose by ≈1.6–1.7×* in both regimes tested, and
+its functional form is not contradicted. What r111 actually measured was a
+two-variable failure — reference (t,s) broken AND γ below threshold — that
+looked like a single α-dependent wall.
+
+### Revised standing of the GIFP line
+
+- The bound is **necessary** (fails well below threshold at both α) and
+  **not sufficient** (needs ≈1.6–1.7× it even with (t,s) fixed).
+- **α ≈ 0.19–0.20 is a genuine geometric ceiling** — zero vanishing polynomials
+  at every (t,s,m,β,n) tried, stable to n=600. This one does bound the
+  published construction.
+- **α = 0.17–0.18 is a third, distinct failure**: lattice healthy (27/28
+  vanishing) but Gröbner never closes. No (t,s) fixes it.
+- Three separate ceilings, which r111's single "0/8 everywhere" table merged:
+  parameter bug (α≤0.15), Gröbner closure (α≈0.17–0.18), geometry (α≥0.19).
+
+### The wall agent also found an independent bug worth recording
+
+`gifp.sage:341` uses `M^m·p1^t`, but the r110/r111 sweeps used `M^m·N1^t` — an
+overstatement of 28–99 bits, so some `nz` rows in those tables were not
+justified. It does not change the verdicts above (all accepted factors were
+ground-truth checked), but the intermediate `nz` counts in r110/r111 should be
+treated as unreliable.

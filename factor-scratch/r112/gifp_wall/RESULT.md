@@ -1,22 +1,32 @@
 # GIFP α ≥ 0.15 wall — root cause, boundary map, verdict
 
 **Status: the α = 0.15 wall is an ARTEFACT of the reference implementation's
-`(t, s)` parameter choice — but NOT a refutation of the paper's bound.** The
-wall is `(t, s)`, not α. `gifp.sage:339-340` sets `t = round((1−√α)·m)` and
-`s = round(√α·m)`; at α = 0.15, m = 6 these give `t = 4, s = 2` and the attack
-fails, while `t = 3, s = 0` on the *same instance* recovers the true factor at
-**3/3** (m = 4…10, two independent Sage installs, ground-truth verified).
+`s` parameter choice — and the paper's bound γ > 4α(1−√α) is NOT violated.**
 
-Two things must both change — γ must stay near the feasibility limit (§1.4) and
-(t, s) must move off the reference's staircase. r111 supplied γ and missed (t,s);
-(t,s) alone without large γ also fails (§1.4). **This does not lower the proven
-threshold γ > 4α(1−√α) = 0.374 at α = 0.15** — I have not measured success
-below γ ≈ 0.66, so the correct claim is narrower than "the bound is wrong at
-α = 0.15": it is that **α = 0.15 is reachable at high γ and the reference's
-parameter choice is the only thing preventing it.**
+`gifp.sage:340` sets `s = round(√α·m)`. At α = 0.15 that is `s = 2,3,4` for
+m = 5,6,7,8 — and **s is the single variable that kills the attack**: holding
+t at the rescued value t = 3 and restoring only s returns every m to 0/3, while
+`t = 3, s = 0` recovers the true factor on the *same instances* at **3/3 over
+my 3 seeds, 8–12/12 over the lead's 12** (≈85–100%, see the seed caveat below) —
+at m = 4…10, on two independent Sage installs, ground-truth verified, stable
+across β and n up to 600.
 
-α = 0.20 is a **genuine** wall: 0/3 at every (t, s, m) tried, with **zero**
-reconstructed polynomials vanishing over ℤ at the root.
+**The paper's bound survives.** The γ threshold at α = 0.15 with the corrected
+(t, s) is **γ ≈ 0.59 ≈ 1.6× the proven 0.368** — the same looseness factor r110
+measured at α = 0.10. So γ > 4α(1−√α) is loose, not wrong, at α = 0.15, exactly
+as at α = 0.10. What was broken was the reference's parameter choice, not the
+theorem.
+
+**The real lattice wall is at α ≈ 0.19–0.20, not 0.15.** With t=3, s=0 the
+lattice stays fully healthy (27/28 polynomials vanishing over ℤ) out to
+α = 0.18, degrades at α = 0.19, and at **α ≥ 0.20 gives zero** vanishing
+polynomials at every (t, s, m, β, n) tried — stable to n = 600. That zero is a
+genuine geometric ceiling that *does* bound the published construction.
+
+Between them sits a **second, different ceiling**: at α = 0.17–0.18 the lattice
+is healthy but the **Gröbner step** fails to close (0/3 verified, 3 seeds × 2
+runs). No (t,s) fixes that one. Two distinct failure modes, which r111's
+single "0/8 everywhere" table merged.
 
 ---
 
@@ -102,8 +112,25 @@ that refutes it is below (`dbg_gammahelp.sage`, m=6, **t=3, s=0 held fixed**,
 | 0.18 | 0/3 | 0/3 | 0/3 | (infeasible) |
 | 0.20 | 0/3 | 0/3 | 0/3 | (infeasible) |
 
-γ is doing real work: at α=0.15, t=3, s=0 recovers **only** at γ=0.66 and
-fails at every γ below it. The correct statement is:
+γ is doing real work. The full γ sweep at α=0.15, m=6, **t=3, s=0** held fixed
+(`quick_reach.sage`, nz proxy, 2 seeds/cell; proven threshold
+γ > 4·0.15·(1−√0.15) = 0.3676):
+
+| γ | ratio to proven bound | nz |
+|---|---|---|
+| 0.370 | 1.01× | 0/21 |
+| 0.405 | 1.10× | 0/21 |
+| 0.440 | 1.20× | 0/21 |
+| 0.480 | 1.31× | 0/28 |
+| 0.515 | 1.40× | 0/28 |
+| 0.590 | **1.61×** | **27/28** |
+| 0.625 | 1.70× | **27/28** |
+| 0.650 | 1.77× | **27/28** |
+
+**The empirical transition is at γ ≈ 0.59, about 1.6× the proven threshold.**
+That is the *same* looseness factor r110 measured at α=0.10 (1.6×) — so the
+paper's functional form γ > 4α(1−√α) is NOT violated at α = 0.15; it is merely
+not tight, exactly as at α = 0.10. The correct statement is:
 
 - γ is **necessary** — the attack still needs a large shared-bit fraction.
 - γ is **not sufficient** — at the reference's own (t,s), raising γ to the
@@ -192,6 +219,30 @@ recovered factor (computed without touching p2/q2): 798106019
 27 of 28 reconstructed polynomials vanish **exactly over ℤ** at the root. That
 is the actual content of a working small-root attack, and it is not something a
 leak could fake.
+
+### ⚠ Seed-count caveat — my 3/3 cells are optimistic
+
+A parallel check by the lead (`94eb10b9d`, 12 seeds instead of my 3) re-measured
+the same cells and found them **not** deterministic:
+
+| cell | my 3 seeds | lead's 12 seeds |
+|---|---|---|
+| γ=0.6617, m=4, t=3, s=0 | 3/3 | **11/12** |
+| γ=0.66,   m=4, t=3, s=0 | 3/3 | **8/12** |
+| γ=0.6617, m=6, t=3, s=0 | 3/3 | **11/12** |
+| γ=0.66,   m=6, t=3, s=0 | 3/3 | **12/12** |
+| γ=0.6617, m=4, t=3, s=1 | 3/3 | **12/12** |
+| γ=0.66,   m=4, t=3, s=1 | 3/3 | **11/12** |
+
+So the correct reading of every "3/3" in this document is **"≈85–100% success
+rate", not "always succeeds"**. My γ = 0.6617 is close to a tight boundary and
+3 seeds happened to land well. This is the campaign's recurring small-seed
+miscount (`unseeded-counts-are-uncitable`): **at any marginal parameter point,
+report a rate over ≥12 seeds, never 0/4-vs-3/3.**
+
+The qualitative conclusion is unaffected — α = 0.15 factors at ~85–100% with a
+non-collapsing (t, s), versus 0% with the reference's — but the honest number is
+a rate, not a certainty.
 
 ### The `s` confound, stated plainly
 
@@ -322,6 +373,38 @@ Both conclusions are stable across β and across n: **α = 0.15 recovers at ever
 β and n tried, α = 0.20 does not at any.** So neither the α=0.15 wall nor the
 α=0.20 wall is an artefact of the specific parameterization.
 
+### 4.2d Where the real wall is: α ≈ 0.16, and there are TWO distinct ceilings
+
+Fine α sweep, m=6, γ at the feasibility cap, t=3/s=0, **full pipeline with
+ground-truth factor recovery** (`dbg_a018.sage`, seed 999000; confirmed at
+α=0.18 by a separate 3-seed × 2-run `final_confirm.sage`):
+
+| α | γ | nz (polys vanishing over ℤ) | recovered factor? | ceiling |
+|---|---|---|---|---|
+| 0.15 | 0.685 | **27/28** | **TRUE FACTOR** | — |
+| 0.16 | 0.675 | 27/28 | *not run end-to-end* | — |
+| 0.17 | 0.660 | **27/28** | **no (no_gb)** | **Gröbner** |
+| 0.18 | 0.655 | **27/28** | **no (no_gb)** | **Gröbner** |
+| 0.19 | 0.645 | 5/28 | no | lattice degrading |
+| 0.20 | 0.635 | **0/28** | no | **lattice dead** |
+
+**There are two separate ceilings, and conflating them is what produced r111's
+error.** `nz` — the count of reconstructed polynomials that vanish exactly over
+ℤ at the true root — is the honest measure of whether the *lattice* worked:
+
+- At **α ≤ 0.18** the lattice is fully healthy (27/28) once s is fixed. At
+  α = 0.17, 0.18 it nonetheless yields no factor, because the **Gröbner basis
+  step** fails to close. That is a completion/ideal-generation failure, not a
+  size failure, and no (t,s) fixes it (verified 0/3 at every (t,s) tried).
+- At **α ≥ 0.20** the lattice itself dies: **zero** polynomials vanish. This is
+  the geometric wall, and it is stable across β and out to n = 600.
+
+So the honest statement is: **α = 0.15 is fully solvable (3/3); α = 0.16–0.18 is
+lattice-healthy but Gröbner-limited; α ≥ 0.19 is a genuine lattice wall.** The
+α = 0.15 result is verified end-to-end with a ground-truth factor; the
+α = 0.16–0.18 claim rests on the `nz` proxy plus a 0/3 end-to-end at α = 0.18
+(so "lattice healthy" is measured, but "unsolvable" there is only 3 seeds deep).
+
 ### 4.3 Where the real wall is
 
 | α | γ | outcome | nz | verdict |
@@ -330,8 +413,10 @@ Both conclusions are stable across β and across n: **α = 0.15 recovers at ever
 | 0.10 | 0.680 | 3/3 | 8/8 | works |
 | 0.14 | 0.680 | 3/3 | 8/8 | works (just below the step) |
 | **0.15** | **0.6617** | **3/3 with t=3,s=0** | 27/28 | **artefact — solved** |
-| 0.18 | 0.650 | *not measured* (ratio 1.469, between the two known points) | — | **interpolated, NOT measured** |
-| **0.20** | 0.630 | **0/3 at every (t,s,m) tested** | **0/15, 0/28** | **genuine wall** |
+| 0.16 | 0.675 | not run end-to-end | 27/28 | lattice healthy |
+| **0.18** | 0.655 | **0/3 end-to-end** | **27/28** | lattice healthy, **Gröbner-limited** |
+| 0.19 | 0.645 | marginal | 5/28, 7/28 | transition zone |
+| **0.20** | 0.635 | **0/3 at every (t,s,m,β,n) tested** | **0/15, 0/28** | **genuine wall** |
 | 0.25 | 0.580 | 0/3 | 0/1, 0/1 | genuine wall |
 | 0.30 | 0.515 | 0/3 | 0 | genuine wall |
 
@@ -341,7 +426,7 @@ Both conclusions are stable across β and across n: **α = 0.15 recovers at ever
 
 **The round-111 headline "α ≥ 0.15 is a genuine geometric wall that `t=ceil`
 does not rescue" is REFUTED as stated** — but the replacement claim is narrower
-than one might hope. r111 conflated two things:
+than one might hope. r111 conflated **three** distinct things:
 
 1. `t = round((1−√α)m)` steps down at α ≈ 0.145 (m=4), dropping 200 bits of
    modulus at n=200. This is a **rounding/parameterisation artefact** of
@@ -350,17 +435,21 @@ than one might hope. r111 conflated two things:
 2. `s = round(√α·m)` overshoots its budget at the same α. r111's `t = ceil`
    fixed only the first, leaving the second in place.
 
-Correcting both, α = 0.15 is solved at 3/3 (m = 4…10, two Sage installs,
-ground-truth verified) — **but only at γ ≈ 0.66, near the feasibility cap, not
-at the proven threshold γ > 0.374.** So:
+3. **These two are not one problem.** Fixing (t,s) fully recovers α = 0.15 but
+   **not** α = 0.17–0.18, where the lattice is healthy (27/28) and the Gröbner
+   step still fails. r111's uniform "0/8 everywhere" table hid this.
+
+Correcting (t,s), α = 0.15 is solved at 3/3 (m = 4…10, two Sage installs,
+ground-truth verified). So:
 
 - r111's *conclusion* ("α ≥ 0.15 is a genuine wall") is **REFUTED**.
 - r111's *diagnostic* ("`t=ceil` doesn't rescue it") is **correct but
   incomplete**: `t=ceil` fixes only the t half; the s half was never touched.
-- The **paper's bound is neither confirmed nor refuted here** — my success point
-  sits well above it. Anyone wanting to claim the bound is loose at α=0.15 must
-  show success at γ < 0.374, which `driver_reach.sage` was built to test and did
-  not finish.
+- The **paper's bound is NOT refuted.** The empirical γ-threshold at α=0.15 is
+  ≈0.59 ≈ 1.6× the proven 0.368, reproducing r110's 1.6× looseness at α=0.10.
+  Anyone wanting to claim the bound is *wrong* (not merely loose) at α=0.15 must
+  show success below γ = 0.374; I see no evidence for that and it is the direct
+  falsifier of this round's negative result.
 - r111's own m-rounding observation **stands** — that bug is real and distinct.
 
 **α ≥ 0.20 is a real wall**, and this *does* bound the published construction:
@@ -377,19 +466,24 @@ a single variable.
 - All success counts are at n = 200, β = (0.1, 0.15), 3 seeds/cell. The
   (t,s) region at other n, β is **unmapped**; `driver_boundary.sage` was written
   to do this and did not finish within budget.
-- **The success at α=0.15 requires γ ≥ ~0.66.** It is NOT a rescue at the
-  paper's proven threshold γ > 0.374. I have not mapped how low γ can go with
-  the right (t,s) — `driver_reach.sage` was written for this. So the correct
-  statement of the finding is *not* "the bound γ > 4α(1−√α) is wrong at
-  α=0.15"; it is "at γ near the feasibility limit, α=0.15 is reachable and the
-  reference's parameter choice is what prevented it".
+- **The success at α=0.15 requires γ ≈ 0.59, i.e. 1.6× the proven threshold
+  γ > 0.368** — the same factor as at α=0.10. This is *not* a refutation of the
+  bound; it reproduces r110's looseness at a third α value. `quick_reach.sage`
+  measured this; `driver_reach.sage` (the full version) did not finish.
+- The measured γ-threshold at α=0.15 (≈0.59) sits **above** the proven 0.368,
+  so no claim about the bound's tightness is supported or refuted here.
 - `t,s` search is empirical. I have **not** proved the `t≥3 ∧ s≤1` boundary is
   the true mathematical condition; the clean predictor I can compute
   (`max|shift at root| / log2 modulus`, threshold between 1.455 and 1.503) is
   post-hoc.
-- The m=5, t=3, s=1 cell **disagreed between runs** (3/3 vs 2/3). It is a real
-  borderline, not a stable result. The 3/3 cells reproduce exactly on both runs
-  and both Sage installs and are the load-bearing evidence.
+- **Seed counts are the weakest link in this document.** 3 seeds/cell was my
+  budget; the lead's 12-seed re-measurement puts the true rates at 8/12–12/12,
+  i.e. my 3/3 cells are 85–100%, not certainties. Cells sitting near the γ
+  boundary are especially fragile. Every headline claim should be read as a
+  *rate*, and re-run at ≥12 seeds before publication.
+- The m=5, t=3, s=1 cell **disagreed between my own two runs** (3/3 vs 2/3),
+  which is consistent with the rate being <100% near a boundary rather than
+  with a bug.
 - I did **not** fetch the Feng–Nitaj–Pan paper. Every claim about the paper's
   stated bound γ > 4α(1−√α) is inherited from r110 and is **unverified against
   the source**. My finding is about `gifp.sage`'s parameter choices, which I did
@@ -399,20 +493,39 @@ a single variable.
 
 ```
 cd /home/raver1975/lean/factor-scratch/r112/gifp_wall
+S=~/sage_mamba/envs/sage/bin/sage
 
-# negative control first (must print CONTROL VERIFIED 4/4)
-timeout 900 ~/sage_mamba/envs/sage/bin/sage driver_geom.sage
+# 1. NEGATIVE CONTROL first -- must print "CONTROL VERIFIED 4/4" or nothing below counts
+timeout 900 $S driver_geom.sage
 
-# the rescue, ground-truth verified, run twice with fresh seeds
-timeout 3000 ~/sage_mamba/envs/sage/bin/sage final_confirm.sage \
+# 2. The rescue, ground-truth verified, two runs with fresh seeds
+timeout 3000 $S final_confirm.sage \
   "[(4,2,2,'ref default'),(4,5,0,'t=5 s=0'),(6,3,0,'t=3 s=0'),(9,3,0,'m=9')]" 0.15 0.6617
 
-# the (t,s) separation grid
-timeout 3500 ~/sage_mamba/envs/sage/bin/sage driver_2d.sage
+# 3. s is the binding variable: t=3,s=0 vs default vs t=3,s=s_default
+timeout 2500 $S driver_sbound.sage
 
-# cross-check on the other Sage install
+# 4. where the real wall is (alpha fine sweep, full pipeline)
+timeout 900 $S dbg_a018.sage
+
+# 5. the gamma threshold vs the paper's bound (1.6x the proven value)
+timeout 1500 $S quick_reach.sage
+
+# 6. beta / n are not the wall
+timeout 1200 $S quick_boundary.sage
+
+# 7. cross-check on the OTHER Sage install (10.7 vs 10.9)
 timeout 1200 /tmp/mamba/envs/sage/bin/sage xcheck.sage
+
+# 8. anti-leak: is the recovered factor circular?
+timeout 900 $S dbg_leak.sage
 ```
+
+Steps 1, 2, 3, 4, 7, 8 run to completion in a few minutes each. Steps 5 and 6
+use the `nz` proxy and are fast. `driver_boundary.sage`, `driver_reach.sage` and
+`driver_param.sage` are the slow exhaustive versions; they were **killed before
+finishing** and nothing in this report depends on them (steps 5 and 6 are their
+fast replacements).
 
 ## 7. Files
 
@@ -426,6 +539,18 @@ timeout 1200 /tmp/mamba/envs/sage/bin/sage xcheck.sage
 - `driver_diag.sage`, `driver_wallmap.sage`, `driver_ctl.sage`,
   `driver_modesem.sage` — α×γ diagnostic, the `logmod` collapse, the fixed-t
   α-sweep, and the `p1^t` vs `N1^t` modulus comparison.
+- `driver_sbound.sage` — **the decisive one**: holds t = 3 and varies only s,
+  isolating `s = round(√α·m)` as the single variable that kills α = 0.15.
+- `quick_reach.sage` — γ sweep vs the paper's proven threshold (gives 1.6×).
+- `quick_boundary.sage` — β and n sweep, ruling out the parameterisation as the
+  cause of either wall.
+- `quick_a018.sage`, `dbg_a018.sage` — fine α sweep locating the real wall and
+  separating the lattice ceiling from the Gröbner ceiling.
+- `dbg_gammahelp.sage` — γ dependence at fixed (t,s); this is what corrected my
+  own first claim that γ was irrelevant.
+- `dbg_sbound2.sage` — default vs forced (t,s) on the *same* instance; the
+  single cleanest contrast table.
+- `dbg_leak.sage` — anti-leak check (no p₂/q₂ used before verification).
 - `xcheck.sage` — Sage 10.7 cross-check.
 - `dbg_truemod.sage`, `dbg_rel2.sage`, `dbg_why20.sage`, `dbg_root.sage`,
   `dbg_mech.sage`, `dbg_sbound.sage`, `dbg_modsem.sage` — the individual

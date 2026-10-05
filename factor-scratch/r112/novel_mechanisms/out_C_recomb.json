@@ -1,0 +1,104 @@
+{
+ "cells": [
+  {
+   "Nbits": 48,
+   "seed": 1,
+   "D": 1,
+   "n_fb": 303,
+   "n_rels": 323,
+   "tries": 2236,
+   "yield_": 0.14445438282647585,
+   "real": {
+    "rank": 226,
+    "nullity": 97,
+    "collisions": 96,
+    "collision_rate": 0.9896907216494846,
+    "splits": 0,
+    "distinct_keys": 1
+   },
+   "random": {
+    "rank": 303,
+    "nullity": 20,
+    "collisions": 0,
+    "collision_rate": 0.0,
+    "splits": 0,
+    "distinct_keys": 20
+   }
+  },
+  {
+   "Nbits": 48,
+   "seed": 2,
+   "D": 1,
+   "n_fb": 303,
+   "n_rels": 323,
+   "tries": 2308,
+   "yield_": 0.13994800693240902,
+   "real": {
+    "rank": 224,
+    "nullity": 99,
+    "collisions": 98,
+    "collision_rate": 0.98989898989899,
+    "splits": 0,
+    "distinct_keys": 1
+   },
+   "random": {
+    "rank": 303,
+    "nullity": 20,
+    "collisions": 0,
+    "collision_rate": 0.0,
+    "splits": 0,
+    "distinct_keys": 20
+   }
+  },
+  {
+   "Nbits": 52,
+   "seed": 1,
+   "D": 1,
+   "n_fb": 303,
+   "n_rels": 323,
+   "tries": 2236,
+   "yield_": 0.14445438282647585,
+   "real": {
+    "rank": 226,
+    "nullity": 97,
+    "collisions": 96,
+    "collision_rate": 0.9896907216494846,
+    "splits": 0,
+    "distinct_keys": 1
+   },
+   "random": {
+    "rank": 303,
+    "nullity": 20,
+    "collisions": 0,
+    "collision_rate": 0.0,
+    "splits": 0,
+    "distinct_keys": 20
+   }
+  },
+  {
+   "Nbits": 52,
+   "seed": 2,
+   "D": 1,
+   "n_fb": 303,
+   "n_rels": 323,
+   "tries": 2308,
+   "yield_": 0.13994800693240902,
+   "real": {
+    "rank": 224,
+    "nullity": 99,
+    "collisions": 98,
+    "collision_rate": 0.98989898989899,
+    "splits": 0,
+    "distinct_keys": 1
+   },
+   "random": {
+    "rank": 303,
+    "nullity": 20,
+    "collisions": 0,
+    "collision_rate": 0.0,
+    "splits": 0,
+    "distinct_keys": 20
+   }
+  }
+ ]
+}

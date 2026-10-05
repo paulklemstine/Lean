@@ -1,0 +1,6 @@
+{
+ "cells": [],
+ "ntrials": 300,
+ "hits": 0,
+ "prediction": "special-form density at 256 bits is <= 2^-64; 0 hits is the PREDICTED result, not a surprise"
+}

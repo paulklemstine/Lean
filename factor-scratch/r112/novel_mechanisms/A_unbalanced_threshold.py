@@ -40,10 +40,16 @@ from common112 import gen_semiprime, verified_factor
 
 # (m, t) grid.  dim = m + t for degree 1.  The closed axis needed dim 52
 # (m=t=26) at the N=2^128 boundary, so the grid must REACH there.
+# COST NOTE (measured, not assumed): at N=2^128 a dim-52 reduction is 14.8s,
+# dim-76 is 13.4s, dim-84 is 23.0s, and exact root extraction is ~3s PER
+# REDUCED VECTOR.  An earlier grid reaching dim 100 therefore needed >10 min
+# for a single FAILING cell and the pilot printed nothing in 590 s -- a
+# harness that timed out silently, not a null result.  Grid is now capped
+# where the closed axis says the boundary lives (dim 52 at N=2^128) with a
+# margin, and MAXVEC is cut to 3 because one success is all a cell needs.
 GRID = [(10, 10), (14, 14), (18, 18), (22, 22), (26, 26),
-        (26, 34), (30, 30), (30, 40), (34, 34), (34, 46),
-        (38, 38), (38, 50), (42, 42), (46, 46), (26, 60), (50, 50)]
-MAXVEC = 8
+        (30, 30), (34, 34), (30, 40), (38, 38), (34, 46), (42, 42)]
+MAXVEC = 3
 
 
 def cell(N, p, unk, budget_s):
@@ -67,6 +73,9 @@ def cell(N, p, unk, budget_s):
         rows, scale = univariate_lattice(f, N, X, m, t)
         R = reduce_fpylll(rows, delta=0.99)
         for row in R[:MAXVEC]:
+            if time.time() - t0 > budget_s:
+                return dict(unk=unk, found=False, budget_out=True,
+                            seconds=round(time.time() - t0, 1), tried=(m, t))
             pv = [row[c] // scale[c] for c in range(len(row))]
             for r in integer_roots(pv, -X, X):
                 val = poly_eval(f, r)
@@ -101,12 +110,17 @@ def main():
         predA = beta ** 2 * logN                 # unknown bits, PRED-A
         predB = (beta / 2.0) * logN             # unknown bits, PRED-B
         # candidate unknowns bracketing both predictions, integers only
-        lo = int(math.floor(min(predA, predB))) - 2
-        hi = int(math.ceil(max(predA, predB))) + 2
-        unknowns = sorted({u for u in range(max(1, lo), min(pb - 1, hi) + 1)})
-        # CONTROL sibling: far below BOTH thresholds, must work
-        known_good = max(1, int(math.floor(min(predA, predB))) - 6)
-        grid = [known_good] + unknowns
+        # Only the DISCRIMINATING values matter: the two predictions differ,
+        # so a binary decision near each is what answers the question.  A
+        # full sweep here is pure cost.
+        ua = int(math.floor(predA))
+        ub = int(math.floor(predB))
+        unknowns = sorted({u for u in (ua, ua + 1, ub, ub + 1) if 1 <= u < pb})
+        # CONTROL sibling: comfortably below BOTH thresholds, must work.
+        # Clamped: an earlier version used max(1, floor(min)-6) which is 2 for
+        # pb=32 -- a degenerate X=4 lattice that is not a threshold test at all.
+        known_good = max(6, int(math.floor(min(predA, predB))) - 4)
+        grid = [known_good] + [u for u in unknowns if u < pb - 1]
         for unk in grid:
             r = cell(N, p, unk, a.budget)
             r.update(pb=pb, qb=qb, beta=round(beta, 4),
