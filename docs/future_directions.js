@@ -8494,6 +8494,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Pellarin's Identity, Carlitz Period, and Anderson Generating Functions over Arbitrary Curves' and formalize its key results. Abstract: Let \\(A\\) be the coefficient ring of a smooth projective curve over \\(\\mathbb{F}_q\\) with a closed point at infinity of arbitrary degree \\(\\mathrm{N}=\u00b0(\\infty)\\ge 1\\), and let \\(\\varphi\\) be a rank-one Drinfeld \\(A\\)-module. In this paper, we prove three main results concerning the module of special functions and its relation to Pellarin's \\(\\mathcal L(1)\\)-series. First, the module \\(\\mathrm{sf}(\\varphi)\\) of special functions contains a Tate-algebra unit exactly when it is free of rank one, equivalently when its period lattice is isomorphic to the module of regular differentials. This settles the Gazda--Maurischat conjecture. The proof evaluates Cauchy kernels; on the period lattice all such evaluations agree, and their common characteristic residue recovers the period. Second, for suitable isogeny data to a principal-period target \\(\u03c8\\), a strictly normalized shtuka product, together with one characteristic residue, gives an explicit formula for the fundamental period \\(\\tilde\u03c0\\) (t",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_5148",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.03134v1",
+    "status": "available",
+    "timestamp": "2026-10-05T01:15:26.949303+00:00",
+    "title": "ArXiv paper: Pellarin's Identity, Carlitz Period, and Anderson Generating Functions over Arbitrary Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Non-freezing of the proximity digraph and non-pseudostable convergence in heterogeneous Hegselmann--Krause models: Counterexamples to conjectures and results of Mirtabatabaei and Bullo' and formalize its key results. Abstract: In 2012, Mirtabatabaei and Bullo studied heterogeneous Hegselmann--Krause models of opinion dynamics, where different agents may have different confidence or influence bounds. They conjectured that opinion vectors always converge, a fundamental problem that remains open. In support of this main conjecture they gave some partial results and made some auxiliary conjectures. Here we give counterexamples to two of these auxiliary conjectures, and even to one theorem in their paper. We explain why these disproved conjectures and false theorem nevertheless likely remain valid for almost all initial opinion vectors. In the last section (Section 7), we describe the role of AI in the production of the results in this paper.",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "fd_5148",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.03229v1",
+    "status": "available",
+    "timestamp": "2026-10-05T01:15:30.349274+00:00",
+    "title": "ArXiv paper: Non-freezing of the proximity digraph and non-pseudostable convergence in heterogeneous Hegselmann--Krause models: Counterexamples to conjectures and results of Mirtabatabaei and Bullo"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
