@@ -1,0 +1,1347 @@
+                                            One-shot distillation with constant overhead using catalysts
+                                                                              Kun Fang ∗1 and Zi-Wen Liu †2
+                                                          1
+                                                           School of Data Science, The Chinese University of Hong Kong, Shenzhen,
+                                                                                 Guangdong, 518172, China
+                                                       2
+                                                         Yau Mathematical Sciences Center, Tsinghua University, Beijing 100084, China
+
+
+                                                                                      September 3, 2026
+arXiv:2410.14547v3 [quant-ph] 2 Sep 2026
+
+
+
+
+                                                                                            Abstract
+                                                         Quantum resource distillation is a fundamental task in quantum information sci-
+                                                     ence and technology. Minimizing the overhead of distillation is crucial for the realiza-
+                                                     tion of quantum computation and other technologies. Here we explicitly demonstrate
+                                                     how, for general quantum resources, suitably designed quantum catalysts (i.e., auxil-
+                                                     iary systems that remain unchanged before and after the process) enable distillation
+                                                     with constant overhead in the practical one-shot setting, thereby overcoming the es-
+                                                     tablished logarithmic lower bound for one-shot distillation overhead. In particular, for
+                                                     magic state distillation, our catalysis method paves a path for tackling the diverging
+                                                     batch size problem associated with code-based low-overhead protocols by enabling
+                                                     arbitrary reduction of the protocol size for any desired accuracy. Notably, this yields
+                                                     constant-overhead magic state distillation with controllable protocol size. Further-
+                                                     more, we demonstrate a tunable spacetime trade-off between overhead and success
+                                                     probability enabled by catalysts which offers significant versatility for practical imple-
+                                                     mentation. Finally, we extend catalysis techniques to dynamical quantum resources
+                                                     and show that channel mutual information determines one-shot catalytic channel
+                                                     transformation, thereby advancing our understanding for both dynamical catalysis
+                                                     and information theory.
+
+
+                                           1        Introduction
+                                           Quantum technologies hold the potential of offering revolutionary advantages over clas-
+                                           sical methods in crucial technological tasks including computation and communication,
+                                           driven by accurate manipulation of various kinds of quantum resources including quan-
+                                           tum entanglement [1], quantum coherence [2], and nonstabilizerness/“magic” [3]. How-
+                                           ever, the fragile nature of quantum information resources presents a formidable challenge,
+                                           as the microscopic systems are highly susceptible to various sources of interference such
+                                           as environmental noises and control imperfections [4]. These noise and error effects can
+                                           significantly undermine the effectiveness and security of quantum computation and com-
+                                           munication, thereby limiting the scalability and applicability of quantum technologies.
+                                           In addressing these challenges, quantum resource distillation [3, 5]—which entails con-
+                                           verting noisy quantum resources into a smaller amount of purer ones with certain free
+                                           operations—has emerged as a ubiquitously important procedure. For instance, magic state
+                                           distillation [3, 6–18] is of major interest in quantum computation as a leading scheme for
+                                           the implementation of logical non-Clifford gates, which constitutes the main bottleneck in
+                                               ∗
+                                                   kunfang@cuhk.edu.cn
+                                               †
+                                                   zwliu0@tsinghua.edu.cn
+
+
+                                                                                                 1
+building fault-tolerant quantum computers. Other notable examples include entanglement
+distillation [5, 19–21] and coherence distillation [22–25] which play key roles in quantum
+communication, networking and cryptography.
+    Given the wide importance of resource distillation procedures, optimizing their effi-
+ciency constitutes a vital problem for quantum information technology. More specifically,
+the main goal is to reduce the distillation overhead, i.e., the amount of noisy inputs needed
+to produce certain desired outputs, for which the key figure of merit is the exponent γ in
+the O(logγ (1/ε)) asymptotic scaling with respect to target error rate ε as ε → 0. Mainly
+for theoretical interest and simplicity, researchers have traditionally focused on the ide-
+alized infinite-shot setting where one considers an average notion of overhead over an
+uncontrollably large amount of outputs. In particular, there have been intensive efforts
+and advances that gradually reduce the average overhead of magic state distillation since
+the earliest proposal achieving γ ≈ 2.46 [3]. It was long conjectured and believed that γ
+cannot be reduced to below one [7]; however, striking breakthroughs in recent years have
+broken this barrier, achieving sublogarithmic average overhead [8, 9] and culminating in
+recent results that eventually attain (almost) constant average overhead [14–16, 18].
+    Nonetheless, in realistic scenarios, both the number of available inputs and the desired
+outputs are always finite. This corresponds to the one-shot regime which is fundamen-
+tally distinct from the above infinite-shot setting and directly captures resource-processing
+tasks in practice. In this practical setting, the recent universal no-go theorems for resource
+purification (which applies to virtually any type of resource including entanglement, co-
+herence, asymmetry, thermal nonequilibrium, and magic) [11, 12] rigorously imply the
+existence of a γ ≥ 1 barrier, i.e., a logarithmic lower bound on distillation overhead.
+Notably, although there exist protocols achieving sublogarithmic average overhead in the
+asymptotic setting (as mentioned above), they inevitably suffer from a common “batch size
+problem” from a practical perspective: they usually involve a prohibitively large number
+of states or dimensions (e.g., the Hastings–Haah sublogarithmic protocol [8] works with
+a code that entails ≥ 258 input and ≥ 244 output states), and the protocol volume must
+diverge rapidly as ε → 0, which incurs enormous practical costs.
+    In this work, we introduce a distillation scheme utilizing the idea of quantum catalysis,
+a phenomenon analogous to chemical catalysis where catalysts can facilitate reactions by
+providing alternative pathways with lower activation energies, demonstrating how it helps
+circumvent the above limitations. In the realm of quantum information, the catalysis
+phenomenon involves an auxiliary quantum system, namely the catalyst, which partic-
+ipates in the transformation process, enabling transformations that would otherwise be
+unachievable while remaining unaltered before and after the process and thus can be
+reused. Quantum catalysis was first discussed in the context of entanglement transforma-
+tion [26] more than two decades
+                            √      ago.√For example,
+                                                   √ by the√majorization criterion [27, 28],
+an entangled√state |ψ1 ⟩ =
+                         √ 0.4|00⟩+√ 0.4|11⟩+ 0.1|22⟩+ 0.1|33⟩ cannot be transformed
+into |ψ2 ⟩ = 0.5|00⟩ + 0.25|11⟩ + 0.25|22⟩ via local quantum√operations√and classical
+communication. However, there exists a catalyst state |ϕ⟩ = 0.6|44⟩ + 0.4|55⟩ that
+enables the exact transformation from |ψ1 ⟩ ⊗ |ϕ⟩ to |ψ2 ⟩ ⊗ |ϕ⟩. Beyond entanglement ma-
+nipulation, quantum catalysis has since been extensively studied across various resource
+theories, including quantum coherence [29, 30], thermodynamics [31–33], purity [34] and
+magic [35–37]. This area remains active as evidenced by recent works [32,38–42], with com-
+prehensive reviews available in Refs. [43, 44]. While catalytic methods are widely useful,
+recent studies have also revealed fundamental limitations of their power, e.g., they can-
+not overcome bound entanglement [45], and cannot increase distillable entanglement [46].
+These “negative” results highlight that whether catalysis can introduce advantages for a
+certain task is a nontrivial question [47]. Furthermore, existing literature on distillation
+mostly focuses on the distillation rate, namely how much pure target resource can be
+
+
+                                              2
+Figure 1: Comparison of distillation overhead logγ (1/ε) across different settings. A fun-
+damental no-go limit of γ ≥ 1 has been shown to exist for one-shot (unassisted) distil-
+lation [11, 12]. We show in this work that this limit can be surpassed with the aid of
+quantum catalysts.
+
+
+extracted from a fixed amount of noisy input resource. This is conceptually dual to the
+overhead considered in this work, where the aim is to minimize the amount of input for
+some given target.
+    The main contribution of this work is to demonstrate the effectiveness of catalytic
+methods in enhancing distillation efficiency, particularly highlighting their striking capa-
+bility to arbitrarily reduce one-shot distillation overhead, which is unknown before. This,
+in some sense, completes the picture of distillation overhead optimization. Specifically, we
+establish a general and rigorous ordering of resource overheads for one-shot (unassisted),
+multi-shot average, and one-shot catalytic distillation settings, as illustrated in Fig. 1, by
+showing how any multi-shot distillation protocol can be converted into a one-shot catalytic
+protocol while maintaining the overhead by designing suitable catalysts with reusability
+guarantees. In particular, our catalytic approach can be applied to make the batch size
+of any protocol arbitrarily small (e.g., an n-to-m protocol can be converted into a ⌈n/m⌉-
+to-1 protocol) for any accuracy. Through magic state distillation, this provides a strategy
+for alleviating the qubit cost in fault-tolerant quantum computation. Furthermore, we
+demonstrate that the failure probability and overhead, corresponding to time and space
+costs respectively, can be traded for each other with the help of catalysts. Notably, we
+prove that the optimal constant for constant-overhead magic state distillation can even
+be reduced to 1 at the price of sacrificing the success probability by a constant factor,
+pushing the efficiency of distillation to its ultimate limit. Lastly, we extend the catalytic
+technique to the channel (dynamical) setting. As an application, we provide a one-shot
+operational interpretation of channel mutual information, showing that it determines the
+catalytic convertibility of quantum channels and thereby resolving the channel version of
+a conjecture of Wilming [33]. In Fig. 2, we illustrate the fundamental advantages of our
+catalytic methods more clearly, including a comparison with prominent existing distil-
+lation protocols. Furthermore, from a practical perspective, our catalytic schemes offer
+substantial flexibility in experiment and architecture design by enabling one to freely tai-
+lor the qubit and time costs to suit specific hardware features or capabilities. It is worth
+noting that our protocols consist of quite simple operations and are thus expected to be
+particularly friendly for experiments.
+
+
+2     Results
+2.1   Preliminaries: general resource theory and distillation overhead
+To present our results in a rigorous and unified manner, we shall adopt the language of
+general resource theory, a framework that finds great success in studying different quantum
+
+
+                                              3
+  Distillation                                                                      Task: finite-output distillation
+   overhead                                                              # inputs
+(input/output)                                         Normal            needed
+                         [Bravyi-Kitaev]                MSD
+                                                      protocols                      (Superlinearly diverging)
+
+ O(log(1/ϵ))
+                      (Any resource theory)
+                          Non-catalytic:
+                            Forbidden           [Hastings-Haah]
+                                                                                                           Known methods
+
+                 Catalytic                           [Wills-Hsieh-
+        O(1) ★                                        Yamasaki]                                                   (Bounded)
+
+                                                                                                   Constant-overhead MSD
+            1
+                      Catalytic                                                                               +
+                 ★ Probabilistic
+                                                                                                    Our catalytic scheme
+                  1                Constant           Diverging
+                                                                                                log(1/ϵ)
+                                     Batch size
+ (a)                               (output number)                        (b)
+
+Figure 2: Illustration of the fundamental advantages of our catalytic scheme over existing
+distillation methods. (a) A distillation overhead versus batch size diagram. Due to the
+no-go theorems in Refs. [11, 12], for virtually any well-behaved resource theory, at least
+one of the following must hold for non-catalytic protocols (where ϵ denotes the target
+error rate): i) the distillation overhead is at least logarithmic, i.e., Ω(log(1/ϵ)); ii) the
+distillation cannot be one-shot, that is, the batch size (number of outputs) must diverge
+as ϵ decreases (which we refer to as the “batch size problem”). Consequently, the lower-
+left region is fundamentally forbidden (highlighted in red). For the particularly important
+case of magic state distillation, normal protocols achieve neither (i) nor (ii) and there-
+fore fall in the upper-right region; the logarithmic-overhead barrier [7] was only recently
+overcome by e.g., Hastings–Haah [8] and Wills–Hsieh–Yamasaki [14], which are regarded
+as major breakthroughs, yet they necessarily suffer from the batch size problem. Our
+catalytic strategy enables one to bypass these barriers and simultaneously achieve (i) and
+(ii): for example, our catalytic strategy can make the batch size of the constant-overhead
+protocol [14] arbitrarily small while preserving the constant overhead (Sec. 2.3), and by
+allowing probabilistic success we can further achieve arbitrarily small overhead (Sec. 2.4).
+(b) For finite-output distillation tasks, existing protocols methods require a superlinearly
+diverging amount of input resources with respect to log(1/ϵ) decreases, whereas our cat-
+alytic magic state distillation schemes can achieve arbitrarily small ϵ with finite input
+resources.
+
+
+resource features in recent years (background and setup can be found in e.g. Refs. [10, 11,
+48, 49]). A standard resource theory is defined by a set of free operations O and a set of
+free states F ⊆ D (the complement of which are resource states) where D denotes the set
+of all density matrices. Taking the magic theory as an example, F consists of stabilizer
+states, and Clifford operations are a standard choice of O. Generally speaking, F and O
+can be adaptively defined, leading to a wide variety of meaningful resource theories, as
+long as they follow a golden rule: any free operation can only map a free state to another
+free state, i.e. E(ρ) ∈ F , ∀ρ ∈ F , ∀E ∈ O.
+    The general goal of distillation tasks is to transform noisy resources into pure ones
+by some protocol represented by a free operation. In practice, we are also interested in
+protocols that only produce desired outputs with a certain probability (e.g. protocols based
+on error correction, which work upon passing the syndrome measurements). To encompass
+such probabilistic cases, consider the generalization of free operations O to the class of
+free subnormalized quantum operations, i.e., completely positive and trace-nonincreasing
+maps Osub := {L | ∀ρ ∈ F , ∃ p ≥ 0, ψ ∈ F , s.t. L(ρ) = p · ψ}. A free probabilistic
+protocol that transforms ρ to γ with probability p is modelled by a quantum operation
+EA→XB (ρA ) = |0⟩⟨0|X ⊗ LA→B (ρA ) + |1⟩⟨1|X ⊗ GA→B (ρA ), where L, G ∈ Osub . Here X is
+
+
+                                                                     4
+an external flag register that keeps track of whether the protocol succeeds (0) or not (1);
+then L ∈ Osub represents the successful transformation such that LA→B (ρA ) = pγB where
+p = Tr[L(ρ)]. The case where L is a completely positive trace-preserving (CPTP) map
+and thus p = 1 corresponds to a deterministic protocol.
+   As already emphasized in the introduction, previous research on distillation overhead
+has focused on the asymptotic average overhead in the infinite-shot limit for simplicity,
+whereas the one-shot setting with controllable output size is practically more relevant and
+constitutes the main target in this work.
+   Now we lay down formal definitions of the different types of overhead. Denote the
+space for the source and target states as S, and the ancillary system that supports the
+catalyst as A. For any two quantum states ρ, σ ∈ D(S), define their trace distance by
+                                                                         (ε,p)
+∆(ρ, σ) := ∥ρ−σ∥1 /2 with ∥·∥1 being the trace norm. Denote ρ⊗n −−−→ σ ⊗m if there exists
+a resource transformation protocol L ∈ Osub such that L(ρ⊗n ) = p · η m with η m ∈ D(S m )
+and ∆(ηim , σ) ≤ ε for all i ∈ {1, · · · , m}, where η m is some (not necessarily product) state
+in the m-copy space and ηim is the i-th marginal of η m . Here we follow the convention in
+distillation studies and focus on the error of each marginal states [3,7]. Since pure targets
+are typically of interest, this is equivalent to defining the error over the global states.
+
+Definition 1 (Unassisted overhead). Let ρ, σ ∈ D(S) be two arbitrary quantum states.
+Considering ρ and σ as the primitive (source) state and target state of distillation respec-
+tively, the (conventional unassisted notions of) one-shot distillation overhead Cε,p and
+multi-shot average distillation overhead C ε,p are defined as
+
+                                                      (ε,p)
+                         Cε,p (ρ, σ) := min{n : ρ⊗n −−−→ σ},                                   (1)
+                                                              (ε,p)
+                         C ε,p (ρ, σ) := min{⌈n/m⌉ : ρ⊗n −−−→ σ ⊗m },                          (2)
+
+respectively.
+                                       (ε,p)
+   Furthermore, denote ρ⊗n ⊗ ω −−−→ σ ⊗ ω if there exists a transformation protocol
+L ∈ Osub and a catalyst ω ∈ D(A) such that L(ρ⊗n ⊗ ω) = p · ν with ν ∈ D(SA),
+∆(νS , σS ) ≤ ε and νA = ωA , where νA , νS are two marginals of ν.
+
+Definition 2 (One-shot catalytic distillation overhead). Let ρ, σ ∈ D(S) be two arbitrary
+quantum states. Considering ρ and σ as the primitive (source) state and target state of
+distillation respectively, the one-shot catalytic distillation overhead C
+                                                                        eε,p is defined as
+                                                                        
+                                           ⊗n       (ε,p)
+                   Cε,p (ρ, σ) := min n : ρ ⊗ ω −−−→ σ ⊗ ω, ∃ ω ∈ D .
+                   e                                                                       (3)
+
+    The standard distillation setting of usual interest is to distill copies of less noisy versions
+of some target pure state by consuming more copies of more noisy versions of this target
+state, namely, σ is pure and n ≥ m. For example, the typical task in magic state distillation
+is to distill less but better T states from noisy ones.
+    Previous results on distillation overhead are mainly bounds on the multi-shot average
+notion obtained by taking the asymptotic limit n, m → ∞ which corresponds to the
+idealistic infinite-resource scenario. In contrast, the one-shot setting captures the practical
+finite-resource scenario. With the above notations, the no-go theorem of Ref. [11] sets the
+logarithmic fundamental limit Cε,p (ρ, σ) = Ω(log(1/ε)) for ordinary unassisted one-shot
+distillation overhead. Our aim here is to demonstrate how the catalytic version C          eε,p can
+break this barrier while maintaining the one-shot nature.
+
+
+
+
+                                                5
+2.2    General theory: one-shot catalytic resource distillation
+Now we introduce our main results. All proofs and technical analysis are deferred to
+the Methods section. Here, we deal with the standard distillation setting where more
+source states are consumed to distill less pure target states, namely, σ is pure and n ≥
+m. Axiomatically, it is assumed that appending free systems, discarding and permuting
+subsystems, and classically controlled free operations are free, and no other properties of
+the resource theory are needed, rendering the framework highly flexible and applicable to
+most relevant theories.
+     Since a one-shot distillation protocol can be regarded as a multi-shot distillation proto-
+col with further conditions, it follows directly that C ε,p (ρ, σ) ≤ Cε,p (ρ, σ) for any quantum
+states ρ and σ. Here we adapt a catalysis technique originally proposed in Ref. [50] for
+LOCC (local operations with classical communication) transformations of quantum en-
+tanglement (further explored in recent works such as [30, 32, 33, 38–42]) to our general
+transformation task, which involves an unequal number of source and target states. This
+is achieved by regrouping the source states into blocks and embedding the target state
+into a larger space. Particularly, we show that any multi-shot distillation protocol from
+ρ⊗n to σ ⊗m can effectively be turned into a one-shot catalytic protocol from ρ⌈n/m⌉ ⊗ ω
+to σ ⊗ ω with the same parameters. Here, the catalyst ω plays a crucial role by enabling
+new transformation pathways that are otherwise unattainable and absorbing part of the
+complexity of the transformation process. Although the catalyst temporarily participates
+in the transformation, it is fully restored afterward. As a result, we have the inequality
+Ceε,p (ρ, σ) ≤ C ε,p (ρ, σ). In conclusion, the general relation of distillation overhead across
+different settings is as follows:
+
+Theorem 3 . For any quantum states ρ and σ, target error ε ∈ [0, 1] and success probability
+                                          eε,p (ρ, σ) ≤ C ε,p (ρ, σ) ≤ Cε,p (ρ, σ). In particular,
+p ∈ [0, 1], the following relation holds: C
+any multi-shot distillation protocol can be turned into an one-shot catalytic distillation
+protocol with the same overhead, implying the first inequality.
+
+    It is worth noting that the catalyst technique has been studied in the context of
+distillation before. However, previous works focused on optimizing the output resource
+that can be extracted from some fixed noisy input, for which known results are negative.
+For instance, it has been shown that catalysts cannot overcome bound entanglement [45]
+and cannot increase distillable entanglement [46]. In contrast, this work is intended to
+initiate a different perspective by establishing the advantages of catalysts in enhancing
+distillation overhead, where the aim is to minimize the amount of noisy input required
+to achieve a desired target. Theorem 3 establishes a foundational result in this new
+direction, demonstrating the potential of catalysts to reduce the distillation overhead for
+the first time. In the sections that follow, we confirm the effectiveness of catalysts in this
+regard through concrete examples, particularly in the context of magic state distillation,
+highlighting their capability to surpass previously established limits.
+    A key advantage of using a catalyst is its recoverability after the transformation,
+allowing for repeated reuse. We now provide a theoretical guarantee that the catalyst can
+be reused indefinitely without any degradation in its expected performance.
+
+Theorem 4 . For a deterministic one-shot catalytic resource distillation procedure, after
+l ≥ 1 repeated uses of the catalyst ωA , we obtain a joint state νS1 S2 ···Sl A such that the
+catalyst is exactly returned on its marginal νA = ωA and the target states νS1 = νS2 =
+· · · = νSl with error ∆(νSi , σS ) ≤ ε for all i ∈ {1, · · · , l}.
+
+    An apparent subtlety is that the catalyst may exhibit correlations with the remaining
+systems. However, when addressing distillation tasks aimed at pure target states which
+
+
+                                                6
+is typically the case of interest, the correlation between the obtained target state and
+the remaining systems is under control. This can be made explicit by applying Lemma
+8 from the Supplemental Material of Ref. [46], which states that an error threshold on
+the target state ∆(νS , |ϕ⟩⟨ϕ|S ) ≤ ε ensures that the correlation between the target state
+                                                                     √
+and the catalyst remains small, with ∆(νSA , |ϕ⟩⟨ϕ|S ⊗ νA ) ≤ ε + 3 ε. Consequently, any
+intermediate usage of the target state and the catalyst will have a negligible impact on the
+other systems. In the following, we give a further improved bound for this fact through a
+simplified proof.
+                                                                          √
+Lemma 5 . Suppose ∆(νS , |ϕ⟩⟨ϕ|S ) ≤ ε, then ∆(νSA , |ϕ⟩⟨ϕ|S ⊗ νA ) ≤ 2 ε.
+    We also note that the catalyst is guaranteed to remain effective in deterministic proto-
+cols, while for probabilistic ones there is a risk of losing the validity of the catalyst when
+the transformation fails which arises from the probabilistic nature of multi-shot protocols.
+Nevertheless, it is guaranteed that the probability of losing the catalyst in the converted
+one-shot catalytic protocol is no greater than p if the multi-shot protocol fails with prob-
+ability p. Moreover, the failure probability is finite and can be significantly suppressed by
+e.g. concatenation, and there are ways to make probabilistic distillation protocols deter-
+ministic [53]. Finally, we stress that the magic state distillation protocols we apply later
+are already deterministic [14], so the aforementioned risk is not present.
+
+2.3    Applications in magic state distillation
+As a potential resolution to the non-Clifford gate bottleneck of fault-tolerant quantum
+computing, magic state distillation has been a subject of extensive study since Bravyi and
+Kitaev’s proposal in 2005 [3]. The primary focus is to reduce the resource overhead of
+magic state distillation, with numerous improvements achieved over the years [3, 7–9, 14–
+18, 54–57].
+    It was conjectured [7] and long believed that the overhead exponent γ cannot be
+reduced to below one. In the one-shot setting, this can indeed be proven by applying the
+universal no-go theorem for resource purification in Ref. [11]. Remarkably, Hastings and
+Haah first found a code that achieves an average overhead of n/m = O(logγ (1/ε)) for γ ≈
+0.678 [8], and very recent progress further shows that the exponent can be made arbitrarily
+close to 0 or even to equal 0, namely achieving constant average overhead [14–16]. As
+explained, despite these advances, the low overhead in these protocols comes with the
+serious problem that they require uncontrollably large batch sizes as ε tends to zero. By
+applying the catalytic conversion established in Theorem 3, we can turn the low-overhead
+distillation protocols into one-shot counterparts that achieves arbitrary accuracy with an
+arbitrary amount of (even only one) target states. This provides a way to circumvent the
+fundamental limit of Ω(log(1/ε)) for one-shot distillation [11].
+Corollary 6 . There exist one-shot catalytic magic state distillation protocols that achieve
+any given target error with certainty (i.e., success probability 1) and constant overhead.
+In particular, by Theorem 4, the catalyst can be reused indefinitely without degradation
+in its performance.
+     As discussed, the correlation between the catalyst and the obtained target state can be
+made sufficiently small. A related result by Rubboli and Tomamichel [58] indicates that
+making such residual correlations arbitrarily small requires a divergent amount of resources
+in the catalyst if the resource theory has multiplicative maximum fidelity of resource (i.e.,
+F̂ (ρ1 ⊗ ρ2 ) = F̂ (ρ1 ) · F̂ (ρ2 ), where F̂ (ρ) := maxσ∈F F (ρ, σ) with F being the normal state
+fidelity). However, the maximum fidelity in magic theory (also named stabilizer fidelity) is
+known to be non-multiplicative [59, Section 6.2]. It remains an interesting open question
+whether in magic theory it is possible to find exotic catalysts with a finite amount of magic
+that achieve vanishing residual correlations or error.
+
+                                                7
+2.4   Catalytic spacetime conversion: trading success probability for re-
+      duced overhead
+In distillation tasks, the resource overhead essentially represents the space requirement,
+characterizing the size of quantum systems that need to be coherently manipulated in
+a single experiment. On the other hand, the success probability is associated with the
+number of experimental repetitions needed to accomplish the tasks and thus determines
+the time cost. As the size of the qubits and coherent control is limited, especially in
+the near term, it is usually more feasible to scale up an experiment by repeating the
+experiment multiple times rather than conducting it with larger systems in fewer trials.
+By leveraging quantum catalysis, we enable a trade-off between space and time, allowing
+the resource burden to be shifted from qubit overhead to time.
+    More specifically, we show that if a transformation from ρ⊗n to σ ⊗m is achievable with
+success probability p, then a catalytic transformation from ρ⊗k to σ can also be achieved
+with success probability pm/⌈n/k⌉, for any 1 ≤ k ≤ n/m, effectively trading time for
+space. Notably, by setting k = 1, we obtain a one-shot catalytic distillation protocol with
+unit overhead and success probability pm/n, in which case the overhead is minimized to
+its extreme.
+
+Theorem 7 . Suppose there exists a distillation protocol transforming ρ⊗n to σ ⊗m with
+success probability p and target error ε. Then it holds for any 1 ≤ k ≤ n/m that
+C ε,pm⌈n/k⌉−1 (ρ, σ) ≤ k. In particular, Cε,pm/n (ρ, σ) = 1.
+ e                                       e
+
+    It should be noted that trading success probability for overhead is not always possible
+without the use of a catalyst, which underscores the significance of Theorem 7. Consider
+an example task of entanglement distillation where the goal is to transform a noisy en-
+tangled state ρ (e.g., an isotropic state) into a Bell state ψ with success probability p′
+and target error ε′ . There exist nontrivial forbidden tuples (p′ , ε′ ) according to the no-go
+theorems established in Refs. [11, 60], which are nevertheless achievable in the average
+case using the hashing protocol [61]: ρ⊗mr can be transformed into ψ ⊗m with arbitrarily
+small target error and success probability 1 for certain r and m, where 1/r corresponds
+to the hashing bound. This shows that achieving a multi-copy transformation does not
+necessarily guarantee the feasibility of a one-shot transformation by simply compromising
+the success probability, even when p′ is chosen to be close to zero. Yet, this trade-off can
+always be achieved with the aid of a catalyst by our result.
+    As mentioned, very recent works [14–16] demonstrated that magic state distillation
+can be achieved with constant overhead in the asymptotic limit but left the question of
+optimality of this constant open for future investigation. In particular, the protocol in
+Ref. [14] achieves p = 1 and n/m = O(1). By applying Theorem 7, we find that the
+optimal constant can be ultimately reduced to 1 with the aid of a catalyst, at the expense
+of compromising the success probability by a constant factor.
+
+Corollary 8 . There exist one-shot catalytic magic state distillation protocols that achieve
+any given target error with constant success probability using only one copy of the source
+magic state (i.e., constant overhead 1). In particular, by Theorem 4, the catalyst can be
+reused indefinitely without degradation in its performance.
+
+2.5   Channel catalytic transformation theory
+The concept of catalytic transformation can also be extended to the manipulation of
+quantum channels, which correspond to dynamical resources that play a crucial role in
+e.g. quantum communication and quantum error correction [12,62–69]. In this section, we
+extend the catalysis technique to the channel setting.
+
+
+                                              8
+    Let L(A → B) be the set of all linear maps from Hilbert space A to Hilbert space B.
+Let CPTP(A → B) be the set of all quantum channels (i.e., completely positive and trace-
+preserving maps) from A to B. The most general transformation of a quantum channel
+is described by a superchannel, which is a linear map that maps quantum channels to
+quantum channels and has a physical realization with pre- and post-processing on the
+quantum channel upon which it acts. More specifically, Π is a superchannel [63] if there
+exists a Hilbert space E with |E| ≤ |A0 ||B0 | and two CPTP maps Γpre ∈ CPTP(B0 →
+A0 E) and Γpost ∈ CPTP(A1 E → B1 ) such that for all linear map Ψ ∈ L(A0 → A1 ), it
+holds that Π[Ψ] = Γpost ◦ (Ψ ⊗ IE ) ◦ Γpre .
+    Before addressing catalytic channel manipulation, we first need to clarify the definition
+of a reduced channel. It is known that if a bipartite channel satisfies the non-signaling
+(NS) condition TrB2 ◦NA1 A2 →B1 B2 = TrB2 ◦NA1 A2 →B1 B2 ◦ RπA2 where Rπ is a replacer
+channel that sends any input to a fixed state π, then we can define a unique channel such
+that TrB2 ◦NA1 A2 →B1 B2 = NA1 →B1 ◦ TrA2 . This channel is given by
+
+                       NA1 →B1 (·) := TrB2 NA1 A2 →B1 B2 ((·) ⊗ πA2 ).                   (4)
+
+By the NS assumption, it can be easily verified that the definition in (4) is independent
+of the choice of π. Therefore, without loss of generality, we can always take π to be the
+maximally mixed state of appropriate dimension. See also discussions in Ref. [70, Section
+2.2]. More generally, if the channel NA1 A2 →B1 B2 does not satisfy the NS condition, we can
+still define a linear map via (4), which is clearly a quantum channel from A1 → B1 . The
+only difference is that the channel will depend on the choice of π.
+     Define the error between quantum channels N and M to be ∆(N , M) := 21 ∥N −
+M∥⋄ where ∥E∥⋄ := supk∈N sup∥X∥1 ≤1 ∥E ⊗ Ik (X)∥1 denotes the diamond norm [71]. We
+formally characterize catalytic channel transformations as follows.
+
+Definition 9 . Let N ∈ CPTP(A → B) and M ∈ CPTP(A′ → B ′ ) be two quantum
+channels. We say N can be catalytically transformed to M with target error ε if there
+exists a free superchannel Π and a channel C ∈ CPTP(X → Y ) such that the output
+channel P := Πn [N ⊗ Cn ] ∈ CPTP(A′ X → B ′ Y ) satisfies
+
+              PX→Y = CX→Y ,      and    ∆(PA′ X→B ′ Y , MA′ →B ′ ⊗ CX→Y ) ≤ ε,           (5)
+
+where PX→Y (·) := TrB ′ PA′ X→B ′ Y ((·)⊗πA′ ). Moreover, we say N can be (asymptotically)
+catalytically transformed to M if there exists a sequence of superchannels Πn and a
+sequence of catalyst channel Cn such that N ⊗n can be catalytically transformed to M⊗n
+with error εn and limn→∞ εn = 0.
+
+    The first condition in (5) implies that after the coding strategy Π, the transmission
+scheme PX→Y (·) functions the same as the channel C. That is, the functioning of C
+is not affected by the coding, thus it serves as a catalyst channel. The second con-
+dition in (5) implies that the correlation between the source channel and the catalyst
+channel is within a target error. This particularly implies that the reduced channel
+PA′ →B ′ (·) := TrY PA′ X→B ′ Y ((·) ⊗ πX ) will function approximately as M, in the sense
+that ∆(PA′ →B ′ , MA′ →B ) ≤ ε (see Lemma 13 in Methods).
+    With the above definition, we are now ready to discuss quantum channel simulation.
+By the well-known quantum reverse Shannon theorem [62], we know that channel manipu-
+lation under entanglement-assisted or NS-assisted codes is reversible. This, in particular,
+implies that N can be asymptotically transformed to M with unit rate if and only if
+I(N ) ≥ I(M), where I(N ) := supφRA I(B : R)NA→B (φRA ) is the quantum channel mutual
+information and I(B : R)ρ = S(ρB ) + S(ρR ) − S(ρBR ) with S(ρ) = − Tr ρ log ρ, giving an
+operational meaning of channel mutual information in the conventional i.i.d. setting.
+
+
+                                             9
+    Extending the catalysis technique for quantum states, we obtain the following result
+which shows that N can be catalytically transformed to one M if and only if I(N ) ≥ I(M)
+given free entanglement and catalyst channels, thereby addressing the channel version of
+the open question raised in Ref. [33] regarding whether mutual information determines
+the convertibility of quantum channels.
+
+Theorem 10 . Let N , M ∈ CPTP(A → B) be two quantum channels. Then N can be
+catalytically transformed to M with entanglement-assisted or NS-assisted codes if and
+only if I(N ) ≥ I(M).
+
+    This endows the channel mutual information with an operational meaning in terms
+of catalytic transformation at the one-shot level, enriching our understanding of quantum
+catalysis from a fundamental information-theoretic perspective.
+
+
+3    Discussion
+In this work, we considered quantum resource distillation with the assistance of catalysis
+and presented universal protocols with rigorous efficiency and reusability guarantees that
+surpass known fundamental limitations of one-shot distillation overhead. Our results
+highlight the utility and power of catalytic methods in enabling flexible configuration of
+different types of resources in quantum information processing tasks, which has strong
+practical appeal. Specifically, in the context of magic state distillation, our methods
+provide an experimentally viable strategy for optimizing the cost of fault-tolerant quantum
+computing.
+    There remain various subtle issues that may arise in practical implementations, includ-
+ing noise and correlation effects on the catalysts, which warrant further investigation and
+optimization. An important step forward is to study the benefits and challenges in im-
+plementing our catalytic distillation protocols with regard to specific experimental setups.
+These protocols are anticipated to be highly experiment-friendly due to the simplicity of
+required operations, specifically, classically controlled operations and relabeling or possi-
+bly collective movements that are e.g. natively efficient with the reconfigurable atom array
+platform, which emerged as a promising candidate for experimental fault-tolerant quan-
+tum computing recently [72] with unique advantages in overcoming the crucial non-Clifford
+gate barrier [73].
+    Regarding the fundamental theory of catalytic distillation, an important avenue for
+further study is to relax the requirement of exact catalyst preservation and instead allow
+the catalyst to be returned only approximately, in the spirit of entanglement embez-
+zling [74–77]. We expect that this more flexible setting would allow further improvements
+of specific parameters of catalytic protocols, including the overhead constant and the size
+of catalyst for a given target error. In addition, while the catalysts used in this work gen-
+erally have a size comparable to the system in multi-shot protocols, necessitating coherent
+manipulations of large quantum systems, the prospect of designing smaller, more efficient
+catalysts remains an open and valuable direction. Conversely, the fundamental bounds on
+the catalyst size under certain target parameters are also compelling problems to further
+investigate (see Sec. 2.3 for relevant discussion).
+    Moreover, given the connection between magic state distillation and quantum error-
+correcting (QEC) codes, our results may also provide new perspectives on catalytic QEC
+codes [78, 79]. Finally, extending these results to continuous variable systems and con-
+ducting a systematic study of channel theory remain promising directions for future work.
+
+
+
+
+                                             10
+4     Methods
+In this section, we provide proofs and technical analysis of the main results.
+
+4.1   Proof of Theorem 3
+The second inequality follows from their definitions. We now prove the first inequality
+by constructing an explicit catalytic transformation with the desired performance. As
+mentioned, the catalyst structure we use here was originally proposed in Ref. [50] in
+the context of LOCC transformations of quantum entanglement. As mentioned, while
+similar catalyst structures have been used in various contexts recently [30, 32, 33, 38–42],
+existing works mostly consider the transformation of source states to an equal number of
+target states. Here we adapt the strategy to the distillation of general resource types with
+arbitrary numbers of input and output states, to show that any multi-shot distillation
+protocol that transforms ρ⊗n to σ ⊗m can be turned into an one-shot catalytic protocol
+that transforms ρ⌈n/m⌉ ⊗ ω to σ ⊗ ω with the same parameters (which then implies the
+inequalities in the theorem statement). In the proof, we present the procedure in a general
+and rigorous manner, and provide an illustrative example of its steps in Fig. 3. Consider
+any protocol L ∈ Osub such that L(ρ⊗n ) = pη m and ∆(ηim , σ) ≤ ε for all i ∈ {1, · · · , m},
+where η m ∈ D(S m ) and ηim is the i-th marginal of η m . For our purposes, we prepare m
+blocks of quantum states, each block containing k = ⌈n/m⌉ copies of ρ. We denote a full
+block by ζ = ρ⊗k . Since mk = m⌈n/m⌉ ≥ n, we have a free operation L1 such that
+                    L1 (ζ ⊗m ) = L1 (ρ⊗mk ) = pη m    and    ∆(ηim , σ) ≤ ε,                (6)
+for all i ∈ {1, · · · , m}. This can be done by simply discarding the residual mk − n copies
+of the source states and then performing the transformation L on ρ⊗n . Note that ηm
+and σ ⊗m live in D(S m ), but we can embed them into a larger space D((S k )m ) so that
+the individual subsystem matches the space of ζ. More precisely, consider embedding
+                ⊗(k−1)
+E(·) = (·) ⊗ πS           where π ∈ F is a free state, and let η̂ m = E ⊗m (η m ) and σ̂ = E(σ).
+Consider L2 = E ◦ L1 we get a transformation
+                           L2 (ζ ⊗m ) = pη̂ m   and   ∆(η̂im , σ̂) ≤ ε,                     (7)
+where η̂im is the marginal state on the i-th system and the inequality follows since trace
+distance is invariant under our embedding.
+                                                                                      m be
+    Now, we construct a catalyst ω to transform ζ to σ̂ within the given error. Let η̂1:i
+the marginal state of η̂m on the first i systems. Consider the catalyst
+                                      m
+                                  1 X ⊗i−1         m
+                            ω :=          ζ    ⊗ η̂1:m−i ⊗ |i⟩⟨i|,                        (8)
+                                  m
+                                      i=1
+where |i⟩⟨i| ∈ D(F ) are states in a classical flag register F . This gives an overall state
+                                            m
+                                      1 X ⊗i   m
+                            ζ ⊗ω =       ζ ⊗ η̂1:m−i ⊗ |i⟩⟨i|.                              (9)
+                                      m
+                                         i=1
+We now aim to usePthis catalyst to complete the desired transformation. Let P0 (·) :=
+P0 (·)P0 with P0 := m−1
+                      i=1 |i⟩⟨i| and P1 (·) := P1 (·)P1 with P1 := |m⟩⟨m| be two projecting
+maps on the flag register F . First, performing a classically controlled transformation
+I ⊗ P0 + p1 L2 ⊗ P1 on ζ ⊗ ω, we get
+                                               
+                                     1
+                   ν1 := I ⊗ P0 + L2 ⊗ P1 (ζ ⊗ ω)                                      (10)
+                                     p
+                             m−1
+                         1 X ⊗i   m               1
+                       =    ζ ⊗ η̂1:m−i ⊗ |i⟩⟨i| + η̂ m ⊗ |m⟩⟨m|,                          (11)
+                         m                        m
+                             i=1
+
+
+                                                11
+where I is an identity map. This succeeds with probability p. Note that this transfor-
+mation is simply an one-way LOCC operation [51], where we measure the classical flag
+register and feed forward the classical outcome to adaptively apply the quantum opera-
+tion I or L2 . Therefore, this classically controlled operation is clearly free. Second, by
+cyclically permuting the classical registers of ν1 such that i → i + 1 and m → 1, we get
+                                      m
+                                   1 X ⊗i−1     m
+                           ν2 :=      ζ     ⊗ η̂1:m−i+1 ⊗ |i⟩⟨i|.                         (12)
+                                   m
+                                     i=1
+
+Third, permuting the quantum registers in a similar way such that i → i + 1 and m → 1,
+we get the resulting state ν3 . Note that ν3 and ν2 are the same state but with different
+system orders. Finally, note that the embedding operation is reversible by removing the
+ancillary registers. Denote E −1 (·) = TrS k−1 (·) to be the reverse embedding operation and
+ν := E −1 ⊗ I ⊗m−1 (ν3 ) be the final state after reverse embedding.
+    After these transformations, we can show that (i) the marginal state on the first system
+of ν is our target state satisfying the target error; (ii) the marginal state on the last m − 1
+systems of ν is exactly the catalyst ω. For the first claim, the marginal state on the first
+system of ν (or equivalently, the marginal state on the last system of ν2 after reverse
+embedding) is given by
+                                             m                m
+                                                     !
+                                          1 X              1 X m
+                             ν ′ := E −1         η̂im =         ηi .                       (13)
+                                          m               m
+                                           i=1             i=1
+
+Since ∆(ηim , σ) ≤ ε we have ∆(ν ′ , σ) ≤ ε by the convexity of trace distance. The second
+claim is evident by checking that the first m − 1 systems of ν2 gives ω in Eq. (8). This
+gives a one-shot catalytic distillation protocol with the same performance in target error
+ε and success probability p, thereby completing the proof.
+
+4.2   Proof of Theorem 4
+Let T = S k be the systems on the source state and ζT = ρ⊗k      S . Let L be the catalytic
+transformation. In the first round, we get LT A→S1 A (ζT ⊗ωA ) = νS1 A with ∆(νS1 , σS1 ) ≤ ε,
+and νA = ωA . Then we apply L again to a fresh copy of the source state ζT together
+with the catalyst and leave the state on the system S1 untouched. Denote the output
+systems as S2 A where S2 is isomorphic to S1 . This gives the global state LT A→S2 A (ζT ⊗
+νS1 A ). Then we can check the catalyst on the system A by TrS2 S1 LT A→S2 A (ζT ⊗ νS1 A ) =
+TrS2 LT A→S2 A (ζT ⊗ωA ) = ωA . So the marginal state on the catalytic system is unchanged.
+We can also check the target state on the system S2 by TrS1 A LT A→S2 A (ζT ⊗ νS1 A ) =
+TrA LT A→S2 A (ζT ⊗ ωA ) = TrA LT A→S1 A (ζT ⊗ ωA ) = νS1 , which means that the marginal
+state we distill remains exactly the same as in the first round. The stated result is obtained
+by applying the above process repeatedly l times.
+
+4.3   Proof of Lemma 5
+                    p
+Let F (ρ, σ) = Tr ρ1/2 σρ1/2 be    √ the fidelity. Since ∆(νS , |ϕ⟩⟨ϕ|S ) ≤ ε, we have the
+relation that F (νS , |ϕ⟩⟨ϕ|S ) ≥ 1 − ε. As νSA is an extension of νS , by Uhlmann’s
+theorem [52], there exists an extension of |ϕ⟩⟨ϕ|S such that its fidelity with νSA is the
+same as F (νS , |ϕ⟩⟨ϕ|S ). However, since |ϕ⟩⟨ϕ|S is a pure state, its extension can only be in
+the form of a tensor product. Therefore, we can assume its extension as |ϕ⟩⟨ϕ|S ⊗ µA such
+that F (νSA , |ϕ⟩⟨ϕ|S ⊗ µA ) = F (νS , |ϕ⟩⟨ϕ|S ). By
+                                                  √ the data processing inequality of fidelity,
+we get F (νA , µA ) ≥ F (νSA , |ϕ⟩⟨ϕ|S ⊗ µA ) ≥ 1 − ε. This implies that ∆(νSA , |ϕ⟩⟨ϕ|S ⊗
+        √                        √
+µA ) ≤ ε and ∆(νA , µA ) ≤ ε. By the triangle inequality of trace distance, we have
+                                                                                       √
+∆(νSA , |ϕ⟩⟨ϕ|S ⊗ νA ) ≤ ∆(νSA , |ϕ⟩⟨ϕ|S ⊗ µA ) + ∆(|ϕ⟩⟨ϕ|S ⊗ µA , |ϕ⟩⟨ϕ|S ⊗ νA ) ≤ 2 ε.
+
+                                              12
+Figure 3: An illustration for the steps of our catalytic procedure used to prove Theorem 3.
+In this example, n = 15, m = 5, and hence k = 3. Each dot represents a quantum state on
+the system S 3 . Red dots correspond to groups of states ζ = ρ⊗3 ∈ D(S 3 ), while blue dots
+represent embedded states σ̂ = σ ⊗ π ⊗2 ∈ D(S 3 ) that match the system of ζ. The overall
+quantum state is a mixture of rows, each labeled with a classical register. Suppose we
+have a 15-to-5 distillation protocol. In the first step, a classically controlled free operation
+is applied, using this protocol to transform the last row from ζ ⊗5 = ρ⊗15 to σ̂ ⊗5 . The
+second step involves cyclically permuting the classical registers (i.e., the rows of dots),
+and the third step involves cyclically permuting the quantum registers (i.e., the columns
+of dots). Overall, this gives a 3-to-1 catalytic distillation protocol from ζ = ρ⊗3 to σ̂
+(which is equivalent to σ by tracing out the free states π ⊗2 ). The dashed boxes highlight
+the catalyst state, showing that it remains unchanged before and after the transformation.
+
+
+4.4   Proof of Theorem 7
+Let L ∈ Osub be a resource distillation protocol that transforms n copies of the source state
+ρS to m (m ≤ n) copies of the target state σS with success probability p and within target
+error ε. That is, there exists a quantum state η m ∈ D(S m ), such that L(ρ⊗n ) = pη m
+and ∆(ηim , σ) ≤ ε for all i ∈ {1, · · · , m}, where ηim is the i-th marginal of η m . Then we
+can consider g = ⌈n/k⌉ ≥ m groups of ζ = ρ⊗k . Since gk = k ⌈n/k⌉ ≥ n, there exists
+a free operation L1 such that L1 (ζ ⊗g ) = L1 (ρ⊗gk ) = pη m and ∆(ηim , σ) ≤ ε, for any
+i ∈ {1, · · · , m}. This can be done by simply abandoning the residual gk − n copies of the
+source states and then performing the transformation L on ρ⊗n . Then we need to prove
+that there exists a catalytic transformation L′ that transforms one copy of ζ to one copy
+of σ with success probability pm/g and within target error ε. An illustration for the steps
+of the procedure is given in Fig. 4.
+     Before the actual transformation, we need to perform two embedding steps to ensure
+that the systems match. First, as ζ ∈ D(S k ) and σ ∈ D(S), we need to embed σ into a
+                                                       ⊗(k−1)
+larger space by using the embedding E(·) = (·) ⊗ πS           where π ∈ F is a free state. Let
+η̂ m = E ⊗m (η m ) and σ̂ = E(σ). Then, since m ≤ g, we need to do a second embedding
+to compensate this system mismatching by using free states. Moreover, to avoid mixing
+the free state with our target state which could compromise the final fidelity, we need to
+append the free states on an orthogonal Hilbert space so that we can distinguish them
+via projective measurements later. More explicitly, let θ be a free state on the system S k .
+We embed it into a joint Hilbert space T = S k W by θ̃T = θS k ⊗ |1⟩⟨1|W . We then embed
+ζ, σ̂ ∈ D(S k ) into the larger space T by ζ̃T = ζS k ⊗ |0⟩⟨0|W and σ̃T = σ̂S k ⊗ |0⟩⟨0|W ,
+respectively. Similarly, we embed η̂ m into D(T m ) by η̃ m = η̂ m ⊗ |0⟩⟨0|W m .
+     Then there exists a distillation protocol L2 that transforms ζ̃ ⊗g ∈ D(T g ) to η̃m ⊗
+θ̃⊗g−m ∈ D(T g ). Let η̃1:i
+                          m be the marginal state of η̃ on the first i systems and η̃ m be the
+                                                        m                              i
+
+
+
+                                              13
+marginal state on the i-th system. Define the following catalyst state on D(T g−1 F ) with
+classical register F :
+           g−m−1                                  g
+         1 X ⊗i−1       m     ⊗g−m−i            1 X ⊗i−1     m
+    ω :=         ζ̃ ⊗ η̃ ⊗ θ̃        ⊗ |i⟩⟨i| +     ζ̃   ⊗ η̃1:g−i ⊗ |i⟩⟨i|.                                  (14)
+         g                                      g
+                      i=1                                                i=g−m
+
+Note that for m = g or m = g − 1 the first term vanishes. We have the overall state on
+D(T g F ),
+                   g−m−1                                  g
+                 1 X ⊗i         m     ⊗g−m−i            1 X ⊗i     m
+        ζ̃ ⊗ ω =         ζ̃ ⊗ η̃ ⊗ θ̃        ⊗ |i⟩⟨i| +     ζ̃ ⊗ η̃1:g−i ⊗ |i⟩⟨i|.                            (15)
+                 g                                      g
+                            i=1                                            i=g−m
+
+
+Let P0 (·) := P0 (·)P0 with P0 := g−1
+                                 P
+                                    i=1 |i⟩⟨i| and P1 (·) := P1 (·)P1 with P1 := |g⟩⟨g| be two
+projecting maps on the flag register F . We then proceed with the following steps. First,
+performing a classically controlled transformation I ⊗ P0 + p1 L2 ⊗ P1 on ζ̃ ⊗ ω, we obtain
+                                             
+                                      1
+                       ν1 :=  I ⊗ P0 + L2 ⊗ P1 (ζ̃ ⊗ ω)                                                       (16)
+                                      p
+                                  g−m−1
+                                1 X ⊗i
+                            =           ζ̃ ⊗ η̃ m ⊗ θ̃⊗g−m−i ⊗ |i⟩⟨i|                                         (17)
+                                g
+                                    i=1
+                                       g−1
+                                    1  X                                  1
+                                +               ζ̃ ⊗i ⊗ η̃1:g−i
+                                                          m
+                                                                ⊗ |i⟩⟨i| + η̃ m ⊗ θ̃⊗g−m ⊗ |g⟩⟨g|.            (18)
+                                    g                                     g
+                                        i=g−m
+
+As explained in the proof of Theorem 3, this procedure is a free operation. Second, by
+cyclically permuting the classical registers of ν1 such that i → i + 1 and g → 1, we get
+            g−m                                                          g
+        1 X ⊗i−1                                1                        X
+  ν2 :=    ζ̃    ⊗ η̃ m ⊗ θ̃⊗g−m−i+1 ⊗ |i⟩⟨i| +                                  ζ̃ ⊗i−1 ⊗ η̃1:g−i+1
+                                                                                             m
+                                                                                                     ⊗ |i⟩⟨i|. (19)
+        g                                       g
+            i=1                                                       i=g−m+1
+
+Third, permuting the quantum registers in a similar way such that i → i + 1 and g → 1,
+we get the resulting state ν3 . Note that ν3 and ν2 are the same state but with different
+system orders. Then we can check that the last g − 1 quantum systems of ν3 returns the
+catalyst, or equivalently, we can check the first g − 1 systems of ν2 and get
+         g−m                                                       g
+        1 X ⊗i−1                              1                    X
+           ζ̃    ⊗ η̃ m ⊗ θ̃⊗g−m−i ⊗ |i⟩⟨i| +                              ζ̃ ⊗i−1 ⊗ η̃1:g−i
+                                                                                       m
+                                                                                             ⊗ |i⟩⟨i| = ω.    (20)
+        g                                     g
+          i=1                                                    i=g−m+1
+
+The first quantum system of ν3 or equivalently the last quantum system of ν2 gives our
+target state:
+            g−m                     g                                                              m
+    ′ 1 X      1                    X               m               m                             1 X m
+  ν =     θ̃ +                               m
+                                           η̃g−i+1 = ν ′′ +      1−     θ̃,       with   ν ′′ =      η̃i .    (21)
+      g        g                                         g          g                             m
+                i=1             i=g−m+1                                                              i=1
+
+             1 Pm           1 Pm
+Since ν ′′ = m         m
+                 i=1 η̃i = m
+                                       m
+                                 i=1 η̂i ⊗ |0⟩⟨0|W and θ̃ = θS k ⊗ |1⟩⟨1|W are orthogonal,
+we can perform a projective measurement on the flag system W to distinguish these two
+states. So we will have a probability m/g to obtain the state ν ′′ . Finally, as all appended
+                                                       ′′′   −1          ′′     1 Pm
+states are uncorrelated to the target system , we get ν = E (TrW ν ) = m i=1 ηim by
+removing all the appended systems for free. Since ∆(ηim , σ) ≤ ε, we have ∆(ν ′′′ , σ) ≤ ε
+by the convexity of trace distance. This concludes the proof.
+
+
+                                                              14
+Figure 4: An illustration for the steps of our catalytic procedure used to prove Theorem 7,
+for the case where n = 5, m = 2, and k = 1. Each dot represents a quantum state on the
+system T . Red dots correspond to the embedded source state ρ̃ ∈ D(T ), while blue dots
+represent the embedded target state σ̃ ∈ D(T ). Grey dots represent the embedded free
+state θ̃ ∈ D(T ), which is orthogonal to σ̃. The overall quantum state is a mixture of rows,
+each labeled with a classical register. Suppose we have a 5-to-2 distillation protocol with
+success probability p. In the first step, a classically controlled free operation is applied,
+transforming the last row from ρ̃⊗5 to σ̃ ⊗2 ⊗ θ̃⊗3 with success probability p. The second
+step involves cyclically permuting the classical registers (i.e., the rows of dots), and the
+third step involves cyclically permuting the quantum registers (i.e., the columns of dots).
+Since σ̃ is orthogonal to θ̃, we can perform projective measurement and post-select σ̃ with
+success probabilty 2/5. Overall, this gives a 1-to-1 catalytic distillation protocol from ρ to
+σ with success probability 2p/5. The dashed boxes highlight the catalyst state, showing
+that it remains unchanged before and after the transformation.
+
+
+    Some remarks concerning our above result are in order. First, the catalyst construction
+extends beyond the standard ones in Refs. [30,32,33,38–42,50]. Appending the free state θ
+on the orthogonal subspace is crucial here, as it allows the target state to be post-selected
+after the projective measurement, ensuring that the fidelity is not compromised in the
+final step. Second, the catalyst used in the proof is not unique. Other options could also
+work in the same manner, such as
+        g−m                                               g
+      1 X ⊗i−1                                   1        X
+ ω=      ζ̃        m
+               ⊗ η̃1:m−1 ⊗ θ̃⊗g−m−i+1 ⊗ |i⟩⟨i| +                 ζ̃ ⊗i−1 ⊗ η̃1:g−i
+                                                                             m
+                                                                                   ⊗ |i⟩⟨i|. (22)
+      g                                          g
+         i=1                                           i=g−m+1
+
+Interestingly, such a catalyst is independent on the target state η̃ m if m = 1. Third,
+if p = 1, the catalyst is always returned on the marginal before the post-selection on
+the target system. So its status is preserved by ignoring the measurement outcome and
+therefore can be reused in the subsequent distillation rounds.
+
+4.5   Proof of Theorem 10
+The proof of this result requires the following lemmas.
+Lemma 11 . For any quantum channel N and superchannel Π, the output channel Π(N )
+satisfies I(Π(N )) ≤ I(N ).
+Proof. This can be understood from the existing operational interpretation of a channel’s
+mutual information, which represents its entanglement-assisted quantum capacity. Since
+the channel Π(N ) is noisier than N , it results in reduced communication capability. A
+similar argument is provided in Ref. [67, Remark 5].
+
+                                             15
+   Moreover, the quantum channel mutual information is continuous with respect to the
+diamond norm.
+
+Lemma 12 . Let N , M ∈ CPTP(A → B) and dAB be the dimension of A ⊗ B. If
+∥N − M∥⋄ ≤ ε, it holds that
+
+                        |I(N ) − I(M)| ≤ 3ε log dAB + 3h2 (ε) := f (ε).                  (23)
+
+Proof. For any δ > 0, choose φ1 and φ2 be such that |I(N ) − I(B : R)N (φ1 ) | ≤ δ
+and |I(M) − I(B : R)N (φ2 ) | ≤ δ where dR = dA . Since ∥N − M∥⋄ ≤ ε, we have
+∥N (φ1 ) − M(φ1 )∥1 ≤ ε and ∥N (φ2 ) − M(φ2 )∥1 ≤ ε. Recall the Fannes inequality
+|S(ρ) − S(ψ)| ≤ ε log d + h2 (ε) if ∥ρ − ψ∥1 ≤ ε. We have the continuity of the quantum
+mutual information as
+
+         |I(B : R)ρ − I(B : R)ψ |
+                       ≤ |S(ρB ) − S(ψB )| + |S(ρR ) − S(ψR )| + |S(ρBR ) − S(ψBR )|     (24)
+                       ≤ 3ε log dAB + 3h2 (ε) := f (ε).                                  (25)
+
+if ∥ρBR − ψBR ∥1 ≤ ε. Putting everything together, we have
+
+           I(N ) − δ ≤ I(B : R)N (φ1 ) ≤ I(B : R)M(φ1 ) + f (ε) ≤ I(M) + f (ε),          (26)
+           I(M) − δ ≤ I(B : R)M(φ2 ) ≤ I(B : R)N (φ2 ) + f (ε) ≤ I(N ) + f (ε).          (27)
+
+So we get |I(N ) − I(M)| ≤ δ + f (ε). Since δ can be made arbitrarily small, we get
+|I(N ) − I(M)| ≤ f (ε).
+
+Lemma 13 . Let P ∈ CPTP(A′ X → B ′ Y ), M ∈ CPTP(A′ → B ′ ), and C ∈ CPTP(X →
+Y ). Let PA′ →B ′ (·) := TrY PA′ X→B ′ Y ((·) ⊗ πX ) be the reduced channel of P on the system
+A′ . If ∆(PA′ X→B ′ Y , MA′ →B ′ ⊗ CX→Y ) ≤ ε, then ∆(PA′ →B ′ , MA′ →B ′ ) ≤ ε.
+
+Proof. This can be checked as follows:
+
+  ∥PA′ →B ′ − MA′ →B ′ ∥⋄
+            = sup ∥PA′ →B ′ (ρRA′ ) − MA′ →B ′ (ρRA′ )∥1                                 (28)
+              ρRA′
+
+            = sup ∥ TrY PA′ X→B ′ Y (ρRA′ ⊗ πX ) − MA′ →B ′ (ρRA′ )∥1                    (29)
+              ρRA′
+
+            = sup ∥ TrY {PA′ X→B ′ Y (ρRA′ ⊗ πX ) − MA′ →B ′ (ρRA′ ) ⊗ CX→Y (πX )} ∥1    (30)
+              ρRA′
+
+            ≤ sup ∥PA′ X→B ′ Y (ρRA′ ⊗ πX ) − MA′ →B ′ (ρRA′ ) ⊗ CX→Y (πX )∥1            (31)
+              ρRA′
+
+            ≤ sup ∥PA′ X→B ′ Y (ρRA′ X ) − MA′ →B ′ ⊗ CX→Y (ρRA′ X )∥1                   (32)
+              ρRA′ X
+
+            = ∥PA′ X→B ′ Y − MA′ →B ′ ⊗ CX→Y ∥⋄ ,                                        (33)
+
+where the first inequality follows by the data-processing inequality of trace norm and the
+second inequality follows by relaxing the input state to all quantum states on RA′ X.
+
+   We are now ready to prove Theorem 10. We first show the “only if” direction. Suppose
+N can be catalytically transformed to M. For any ε > 0, there exists a catalyst channel
+Cn and a code Πn such that ∆(Πn (N ⊗ Cn ), M ⊗ Cn ) ≤ ε. By the continuity of the channel
+mutual information and the monotonicity in Lemma 12 and Lemma 11, we get
+
+               I(M ⊗ Cn ) ≤ I(Πn (N ⊗ Cn )) + f (2ε) ≤ I(N ⊗ Cn ) + f (2ε).              (34)
+
+
+                                              16
+Then by the additivity of channel mutual information, we get I(M) ≤ I(N ) + f (2ε).
+Since the inequality holds for arbitrary ε, we get I(M) ≤ I(N ).
+   Then we prove the “if” direction. That is, if I(N ) ≥ I(M) we can find a sequence
+of Πn and Cn that catalytically transform N to M. By the reversibility of the channel
+simulation, we know that for any given ε, there exists entanglement-assisted or NS-assisted
+transformations such that
+
+                         Πn (N ⊗n ) = P n              and    ∥P n − M⊗n ∥⋄ ≤ ε.                (35)
+
+Note that P n ∈ CPTP(An → B n ). Define the reduced channel on the first i systems as
+                           n
+                          P1:i (·) := TrBi+1:n PAnn →B n ((·) ⊗ πAi+1:n ),                      (36)
+       n := P n . Now consider a catalyst channel
+where P1:n
+                                             n
+                                     1 X ⊗k−1    n
+                            Cn :=       N     ⊗ P1:n−k ⊗ |k⟩⟨k|.                                (37)
+                                     n
+                                         k=1
+
+Then the overall channel is given by
+                                                  n
+                                   1 X ⊗k  n
+                          N ⊗ Cn =    N ⊗ P1:n−k ⊗ |k⟩⟨k|.                                      (38)
+                                   n
+                                                 k=1
+
+Let Q0 (·) := Q0 (·)Q0 with Q0 := n−1
+                                  P
+                                     i=1 |i⟩⟨i| and Q1 (·) := Q1 (·)Q1 with Q1 := |n⟩⟨n|
+be two projecting maps on the flag register F . First, performing a classically controlled
+transformation I ⊗ Q0 + Πn ⊗ Q1 , we get
+                             n−1
+                        1 X ⊗k  n               1
+                   G1 =    N ⊗ P1:n−k ⊗ |k⟩⟨k| + P n ⊗ |n⟩⟨n|.                                  (39)
+                        n                       n
+                             k=1
+
+Next, we relabel the classical registers i → i + 1 and n → 1 and get
+                                         n
+                                   1 X ⊗k−1    n
+                           G2 =       N     ⊗ P1:n−k+1 ⊗ |k⟩⟨k|.                                (40)
+                                   n
+                                     k=1
+
+Then performing a cyclic permutation SAn and SB n on the input and the output, respec-
+tively, such that i → i + 1 and n → 1, we get
+                             n
+                         1X
+                  G3 =      SB n ◦ (N ⊗k−1 ⊗ P1:n−k+1
+                                              n
+                                                      ) ◦ SAn ⊗ |k⟩⟨k|.                         (41)
+                         n
+                           k=1
+
+Then we claim that G3 returns Cn on its marginal and ∥G3 − M ⊗ Cn ∥⋄ ≤ 2ε. The first
+claim is equivalent to check the first n − 1 reduced channel of G2 ,
+                                             n
+                                     1X
+        TrBn ◦ G2 ((·) ⊗ πAn ) =        TrBn N ⊗k−1 ⊗ P1:n−k+1
+                                                       n
+                                                               ((·) ⊗ πAn ) ⊗ |k⟩⟨k|            (42)
+                                     n
+                                         k=1
+                                          n
+                                     1   X
+                                 =               N ⊗k−1 ⊗ TrBn P1:n−k+1
+                                                                n
+                                                                        ((·) ⊗ πAn ) ⊗ |k⟩⟨k|   (43)
+                                     n
+                                         k=1
+                                          n
+                                     1   X
+                                 =               N ⊗k−1 ⊗ P1:n−k
+                                                           n
+                                                                 (·) ⊗ |k⟩⟨k|                   (44)
+                                     n
+                                         k=1
+                                 = Cn .                                                         (45)
+
+
+                                                         17
+Note that the second last equality holds by the definition of Pin and here πAn and TrBn are
+                                                        n
+effectively acting on the last systems of the channel P1:n−k+1  , which is also the n − k + 1
+                                       n
+system in the original definition of P1:n−k+1 . Since the diamond norm is invariant under
+system permutation, the second claim is equivalent to check ∥G2 − Cn ⊗ M∥⋄ ≤ 2ε. This
+can be shown as follows:
+
+  ∥G2 − Cn ⊗ M∥⋄
+              n                                         n
+        1 X ⊗k−1    n                  1 X ⊗k−1    n
+    =      N     ⊗ P1:n−k+1 ⊗ |k⟩⟨k| −    N     ⊗ P1:n−k ⊗ M ⊗ |k⟩⟨k|                   (46)
+        n                              n
+             k=1                                       k=1                          ⋄
+         n
+        1X
+    =              N ⊗k−1 ⊗ P1:n−k+1
+                             n
+                                     − N ⊗k−1 ⊗ P1:n−k
+                                                 n
+                                                       ⊗M                               (47)
+        n                                                        ⋄
+            k=1
+             n
+        1   X
+                    n          n
+    =              P1:n−k+1 − P1:n−k ⊗M ⋄                                               (48)
+        n
+            k=1
+             n                                    n
+        1   X                                1X n
+    ≤               n
+                  ∥P1:n−k+1 − M⊗n−k+1 ∥⋄ +     ∥P1:n−k ⊗ M − M⊗n−k+1 ∥⋄                 (49)
+        n                                    n
+            k=1                                  k=1
+             n                                    n
+        1   X                                1   X
+    =               n
+                  ∥P1:n−k+1 − M⊗n−k+1 ∥⋄ +               n
+                                                       ∥P1:n−k − M⊗n−k ∥⋄               (50)
+        n                                    n
+            k=1                                  k=1
+    ≤ 2ε.                                                                               (51)
+
+where the first inequality follows by the triangle inequality of diamond norm and the last
+inequality follows from the assumption of ∥P n − M⊗n ∥⋄ ≤ ε and the monotonicity of
+diamond norm by taking reduced channel in Lemma 13. As this holds for arbitrary ε, we
+can take ε to be vanishingly small and conclude the proof.
+
+
+Data availability
+No datasets were generated or analyzed during the current study.
+
+
+References
+ [1] R. Horodecki, P. Horodecki, M. Horodecki, and K. Horodecki, “Quantum entangle-
+     ment,” Rev. Mod. Phys., vol. 81, pp. 865–942, Jun 2009.
+
+ [2] A. Streltsov, G. Adesso, and M. B. Plenio, “Colloquium: Quantum coherence as a
+     resource,” Rev. Mod. Phys., vol. 89, p. 041003, Oct 2017.
+
+ [3] S. Bravyi and A. Kitaev, “Universal quantum computation with ideal clifford gates
+     and noisy ancillas,” Phys. Rev. A, vol. 71, p. 022316, Feb 2005.
+
+ [4] J. Preskill, “Quantum Computing in the NISQ era and beyond,” Quantum, vol. 2,
+     p. 79, Aug. 2018.
+
+ [5] C. H. Bennett, G. Brassard, S. Popescu, B. Schumacher, J. A. Smolin, and W. K.
+     Wootters, “Purification of noisy entanglement and faithful teleportation via noisy
+     channels,” Phys. Rev. Lett., vol. 76, no. 5, p. 722, 1996.
+
+ [6] E. T. Campbell and D. E. Browne, “Bound states for magic state distillation in
+     fault-tolerant quantum computation,” Phys. Rev. Lett., vol. 104, no. 3, p. 030503,
+     2010.
+
+
+                                                 18
+ [7] S. Bravyi and J. Haah, “Magic-state distillation with low overhead,” Phys. Rev. A,
+     vol. 86, p. 052329, Nov 2012.
+
+ [8] M. B. Hastings and J. Haah, “Distillation with sublogarithmic overhead,” Phys. Rev.
+     Lett., vol. 120, p. 050504, Jan 2018.
+
+ [9] A. Krishna and J.-P. Tillich, “Towards low overhead magic state distillation,” Phys.
+     Rev. Lett., vol. 123, p. 070507, Aug 2019.
+
+[10] Z.-W. Liu, K. Bu, and R. Takagi, “One-shot operational quantum resource theory,”
+     Phys. Rev. Lett., vol. 123, p. 020401, Jul 2019.
+
+[11] K. Fang and Z.-W. Liu, “No-go theorems for quantum resource purification,” Phys.
+     Rev. Lett., vol. 125, p. 060405, Aug 2020.
+
+[12] K. Fang and Z.-W. Liu, “No-go theorems for quantum resource purification: New
+     approach and channel theory,” PRX Quantum, vol. 3, p. 010337, Mar 2022.
+
+[13] Z.-W. Liu and A. Winter, “Many-body quantum magic,” PRX Quantum, vol. 3,
+     p. 020333, May 2022.
+
+[14] A. Wills, M.-H. Hsieh, and H. Yamasaki, “Constant-overhead magic state distilla-
+     tion,” Nature Physics, Sep 2025.
+
+[15] L. Golowich and V. Guruswami, “Asymptotically good quantum codes with transver-
+     sal non-clifford gates,” in Proceedings of the 57th Annual ACM Symposium on Theory
+     of Computing, STOC ’25, (New York, NY, USA), p. 707–717, Association for Com-
+     puting Machinery, 2025.
+
+[16] Q. T. Nguyen, “Good binary quantum codes with transversal ccz gate,” in Proceedings
+     of the 57th Annual ACM Symposium on Theory of Computing, STOC ’25, (New York,
+     NY, USA), p. 697–706, Association for Computing Machinery, 2025.
+
+[17] S.-H. Lee, F. Thomsen, N. Fazio, B. J. Brown, and S. D. Bartlett, “Low-overhead
+     magic state distillation with color codes,” PRX Quantum, vol. 6, p. 030317, Jul 2025.
+
+[18] L. Golowich and T.-C. Lin, “Quantum LDPC Codes with Transversal Non-Clifford
+     Gates via Products of Algebraic Codes,” in Proceedings of the 57th Annual ACM
+     Symposium on Theory of Computing, STOC ’25, (New York, NY, USA), p. 689–696,
+     Association for Computing Machinery, 2025.
+
+[19] C. H. Bennett, H. J. Bernstein, S. Popescu, and B. Schumacher, “Concentrating
+     partial entanglement by local operations,” Phys. Rev. A, vol. 53, pp. 2046–2052, Apr
+     1996.
+
+[20] C. H. Bennett, D. P. DiVincenzo, J. A. Smolin, and W. K. Wootters, “Mixed-state
+     entanglement and quantum error correction,” Phys. Rev. A, vol. 54, pp. 3824–3851,
+     Nov 1996.
+
+[21] K. Fang, X. Wang, M. Tomamichel, and R. Duan, “Non-asymptotic entanglement
+     distillation,” IEEE Trans. Inf. Theory, pp. 1–1, 2019.
+
+[22] A. Winter and D. Yang, “Operational resource theory of coherence,” Phys. Rev. Lett.,
+     vol. 116, p. 120404, Mar 2016.
+
+[23] K. Fang, X. Wang, L. Lami, B. Regula, and G. Adesso, “Probabilistic Distillation of
+     Quantum Coherence,” Phys. Rev. Lett., vol. 121, p. 070404, aug 2018.
+
+
+                                           19
+[24] B. Regula, K. Fang, X. Wang, and G. Adesso, “One-shot coherence distillation,”
+     Phys. Rev. Lett., vol. 121, p. 010401, Jul 2018.
+
+[25] M. Hayashi, K. Fang, and K. Wang, “Finite block length analysis on quantum coher-
+     ence distillation and incoherent randomness extraction,” IEEE Trans. Inf. Theory,
+     vol. 67, no. 6, pp. 3926–3944, 2021.
+
+[26] D. Jonathan and M. B. Plenio, “Entanglement-assisted local manipulation of pure
+     quantum states,” Phys. Rev. Lett., vol. 83, no. 17, p. 3566, 1999.
+
+[27] M. A. Nielsen, “Conditions for a class of entanglement transformations,” Phys. Rev.
+     Lett., vol. 83, pp. 436–439, Jul 1999.
+
+[28] M. A. Nielsen, “An introduction to majorization and its applications to quantum me-
+     chanics,” Lecture Notes, Department of Physics, University of Queensland, Australia,
+     vol. 53, 2002.
+
+[29] J. Aberg, “Catalytic coherence,” Phys. Rev. Lett., vol. 113, no. 15, p. 150402, 2014.
+
+[30] R. Takagi and N. Shiraishi, “Correlation in catalysts enables arbitrary manipulation
+     of quantum coherence,” Phys. Rev. Lett., vol. 128, p. 240501, Jun 2022.
+
+[31] M. P. Müller, “Correlating thermal machines and the second law at the nanoscale,”
+     Phys. Rev. X, vol. 8, no. 4, p. 041051, 2018.
+
+[32] N. Shiraishi and T. Sagawa, “Quantum thermodynamics of correlated-catalytic state
+     conversion at small scale,” Phys. Rev. Lett., vol. 126, p. 150502, Apr 2021.
+
+[33] H. Wilming, “Entropy and reversible catalysis,” Phys. Rev. Lett., vol. 127, p. 260402,
+     Dec 2021.
+
+[34] P. Boes, J. Eisert, R. Gallego, M. P. Müller, and H. Wilming, “Von neumann entropy
+     from unitarity,” Phys. Rev. Lett., vol. 122, no. 21, p. 210402, 2019.
+
+[35] E. T. Campbell, “Catalysis and activation of magic states in fault-tolerant architec-
+     tures,” Phys. Rev. A, vol. 83, no. 3, p. 032317, 2011.
+
+[36] C. Gidney, “Halving the cost of quantum addition,” Quantum, vol. 2, p. 74, 2018.
+
+[37] M. Beverland, E. Campbell, M. Howard, and V. Kliuchnikov, “Lower bounds on the
+     non-clifford resources for quantum computations,” Quantum Science and Technology,
+     vol. 5, no. 3, p. 035009, 2020.
+
+[38] P. Char, D. Chakraborty, A. Bhar, I. Chattopadhyay, and D. Sarkar, “Catalytic
+     transformations in coherence theory,” Phys. Rev. A, vol. 107, no. 1, p. 012404, 2023.
+
+[39] C. Datta, R. Ganardi, T. V. Kondra, and A. Streltsov, “Is there a finite complete set
+     of monotones in any quantum resource theory?,” Phys. Rev. Lett., vol. 130, no. 24,
+     p. 240204, 2023.
+
+[40] T. V. Kondra, C. Datta, and A. Streltsov, “Catalytic transformations of pure entan-
+     gled states,” Phys. Rev. Lett., vol. 127, p. 150503, Oct 2021.
+
+[41] P. Lipka-Bartosik and P. Skrzypczyk, “Catalytic quantum teleportation,” Phys. Rev.
+     Lett., vol. 127, p. 080502, Aug 2021.
+
+[42] J. Bavaresco, N. Brunner, A. Girardin, P. Lipka-Bartosik, and P. Sekatski, “Catalytic
+     activation of bell nonlocality,” Phys. Rev. Lett., pp. –, Sep 2025.
+
+                                            20
+[43] C. Datta, T. V. Kondra, M. Miller, and A. Streltsov, “Catalysis of entanglement and
+     other quantum resources,” Rep. Prog. Phys, 2023.
+
+[44] P. Lipka-Bartosik, H. Wilming, and N. H. Ng, “Catalysis in quantum information
+     theory,” Rev. Mod. Phys., vol. 96, no. 2, p. 025005, 2024.
+
+[45] L. Lami, B. Regula, and A. Streltsov, “No-go theorem for entanglement distillation
+     using catalysis,” Phys. Rev. A, vol. 109, May 2024.
+
+[46] R. Ganardi, T. V. Kondra, and A. Streltsov, “Catalytic and asymptotic equivalence
+     for quantum entanglement,” Phys. Rev. Lett., vol. 133, p. 250201, Dec 2024.
+
+[47] M. Karvonen, “Neither contextuality nor nonlocality admits catalysts,” Phys. Rev.
+     Lett., vol. 127, no. 16, p. 160402, 2021.
+
+[48] E. Chitambar and G. Gour, “Quantum resource theories,” Rev. Mod. Phys., vol. 91,
+     p. 025001, Apr 2019.
+
+[49] R. Takagi and B. Regula, “General resource theories in quantum mechanics and
+     beyond: Operational characterization via discrimination tasks,” Phys. Rev. X, vol. 9,
+     p. 031053, Sep 2019.
+
+[50] R. Duan, Y. Feng, X. Li, and M. Ying, “Multiple-copy entanglement transformation
+     and entanglement catalysis,” Phys. Rev. A, vol. 71, no. 4, p. 042319, 2005.
+
+[51] E. Chitambar, D. Leung, L. Mančinska, M. Ozols, and A. Winter, “Everything you
+     always wanted to know about locc (but were afraid to ask),” Communications in
+     Mathematical Physics, vol. 328, p. 303–326, Mar. 2014.
+
+[52] A. Uhlmann, “The “transition probability” in the state space of a∗ -algebra,” Reports
+     on Mathematical Physics, vol. 9, no. 2, pp. 273–279, 1976.
+
+[53] S. Heußen, “Magic state distillation without measurements and post-selection,” 2025.
+
+[54] J. Haah and M. B. Hastings, “Codes and Protocols for Distilling T , controlled-S, and
+     Toffoli Gates,” Quantum, vol. 2, p. 71, June 2018.
+
+[55] A. M. Meier, B. Eastin, and E. Knill, “Magic-state distillation with the four-qubit
+     code,” Quantum Inf. Comput., vol. 13, no. 3-4, pp. 195–209, 2013.
+
+[56] E. T. Campbell, H. Anwar, and D. E. Browne, “Magic-state distillation in all prime
+     dimensions using quantum reed-muller codes,” Phys. Rev. X, vol. 2, no. 4, p. 041021,
+     2012.
+
+[57] C. Jones, “Multilevel distillation of magic states for quantum computing,” Phys. Rev.
+     A, vol. 87, no. 4, p. 042305, 2013.
+
+[58] R. Rubboli and M. Tomamichel, “Fundamental limits on correlated catalytic state
+     transformations,” Phys. Rev. Lett., vol. 129, no. 12, p. 120506, 2022.
+
+[59] S. Bravyi, D. Browne, P. Calpin, E. Campbell, D. Gosset, and M. Howard, “Simu-
+     lation of quantum circuits by low-rank stabilizer decompositions,” Quantum, vol. 3,
+     p. 181, Sept. 2019.
+
+[60] B. Regula, “Probabilistic transformations of quantum resources,” Phys. Rev. Lett.,
+     vol. 128, p. 110505, Mar 2022.
+
+
+
+                                           21
+[61] I. Devetak and A. Winter, “Distillation of secret key and entanglement from quantum
+     states,” Proc. R. Soc. A., vol. 461, no. 2053, pp. 207–235, 2005.
+
+[62] C. H. Bennett, I. Devetak, A. W. Harrow, P. W. Shor, and A. Winter, “The quantum
+     reverse shannon theorem and resource tradeoffs for simulating quantum channels,”
+     IEEE Trans. Inf. Theory, vol. 60, p. 2926–2959, May 2014.
+
+[63] G. Gour, “Comparison of quantum channels by superchannels,” IEEE Trans. Inf.
+     Theory, vol. 65, no. 9, pp. 5880–5904, 2019.
+
+[64] Z.-W. Liu and A. Winter, “Resource theories of quantum channels and the universal
+     role of resource erasure,” arXiv e-prints, p. arXiv:1904.04201, Apr 2019.
+
+[65] Y. Liu and X. Yuan, “Operational resource theory of quantum channels,” Phys. Rev.
+     Res., vol. 2, p. 012035, Feb 2020.
+
+[66] K. Fang, X. Wang, M. Tomamichel, and M. Berta, “Quantum channel simulation and
+     the channel’s smooth max-information,” in 2018 IEEE International Symposium on
+     Information Theory (ISIT), pp. 2326–2330, IEEE, 2018.
+
+[67] K. Fang, X. Wang, M. Tomamichel, and M. Berta, “Quantum channel simulation
+     and the channel’s smooth max-information,” IEEE Trans. Inf. Theory, vol. 66, no. 4,
+     pp. 2129–2140, 2019.
+
+[68] G. Gour and C. M. Scandolo, “Dynamical entanglement,” Physical Review Letters,
+     vol. 125, no. 18, p. 180505, 2020.
+
+[69] B. Regula and R. Takagi, “Fundamental limitations on distillation of quantum channel
+     resources,” Nature Communications, vol. 12, July 2021.
+
+[70] M. Berta, F. Borderi, O. Fawzi, and V. B. Scholz, “Semidefinite programming hier-
+     archies for constrained bilinear optimization,” Mathematical Programming, pp. 1–49,
+     2022.
+
+[71] A. Y. Kitaev, “Quantum computations: algorithms and error correction,” Russian
+     Mathematical Surveys, vol. 52, no. 6, p. 1191, 1997.
+
+[72] D. Bluvstein, S. J. Evered, A. A. Geim, S. H. Li, H. Zhou, T. Manovitz, S. Ebadi,
+     M. Cain, M. Kalinowski, D. Hangleiter, J. P. Bonilla Ataides, N. Maskara, I. Cong,
+     X. Gao, P. Sales Rodriguez, T. Karolyshyn, G. Semeghini, M. J. Gullans, M. Greiner,
+     V. Vuletić, and M. D. Lukin, “Logical quantum processor based on reconfigurable
+     atom arrays,” Nature, vol. 626, p. 58–65, Dec. 2023.
+
+[73] Y. Wang, Y. Wang, Y.-A. Chen, W. Zhang, T. Zhang, J. Hu, W. Chen, Y. Gu,
+     and Z.-W. Liu, “Efficient fault-tolerant implementations of non-clifford gates with
+     reconfigurable atom arrays,” npj Quantum Information, vol. 10, Dec. 2024.
+
+[74] W. van Dam and P. Hayden, “Universal entanglement transformations without com-
+     munication,” Physical Review A, vol. 67, no. 6, p. 060302, 2003.
+
+[75] D. Leung, B. Toner, and J. Watrous, “Coherent state exchange in multi-prover quan-
+     tum interactive proof systems,” Chicago Journal of Theoretical Computer Science,
+     vol. 11, no. 2013, p. 1, 2013.
+
+[76] D. Leung and B. Wang, “Characteristics of universal embezzling families,” Physical
+     Review A, vol. 90, p. 042331, Oct 2014.
+
+
+                                           22
+[77] E. Zanoni, T. Theurer, and G. Gour, “Complete characterization of entanglement
+     embezzlement,” Quantum, vol. 8, p. 1368, 2024.
+
+[78] T. Brun, I. Devetak, and M.-H. Hsieh, “Correcting quantum errors with entangle-
+     ment,” Science, vol. 314, no. 5798, pp. 436–439, 2006.
+
+[79] T. A. Brun, I. Devetak, and M.-H. Hsieh, “Catalytic quantum error correction,”
+     IEEE Trans. Inf. Theory, vol. 60, no. 6, pp. 3073–3089, 2014.
+
+
+Acknowledgements
+We thank Hayata Yamasaki for pointing out the deterministic nature of their magic
+state distillation protocols described in Ref. [14]. K.F. is supported in part by the
+National Natural Science Foundation of China (Grant No. 92470113 and 12404569),
+the Shenzhen Science and Technology Program (Grant No. QNXMB20250701091826036
+and JCYJ20240813113519025), the Shenzhen Fundamental Research Program (Grant
+No. JCYJ20241202124023031), the General R&D Projects of 1+1+1 CUHK-CUHK(SZ)-
+GDST Joint Collaboration Fund (Grant No. GRDP2025-022), and the University Devel-
+opment Fund (Grant No. UDF01003565). Z.-W.L. is supported in part by NSFC under
+Grant No. 12475023, Dushi program, and a startup funding from YMSC.
+
+
+
+
+                                         23
+

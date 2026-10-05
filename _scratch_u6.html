@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- new favicon config and versions by realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/favicon-16x16.png">
+<link rel="manifest" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/site.webmanifest">
+<link rel="mask-icon" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/safari-pinned-tab.svg" color="#b31b1b">
+<link rel="shortcut icon" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/favicon.ico">
+<meta name="msapplication-TileColor" content="#b31b1b">
+<meta name="msapplication-config" content="images/icons/browserconfig.xml">
+<meta name="theme-color" content="#b31b1b">
+<!-- end favicon config -->
+<title>Search | arXiv e-print repository</title>
+<script defer src="https://static.arxiv.org/static/base/1.0.0a5/fontawesome-free-5.11.2-web/js/all.js"></script>
+<link rel="stylesheet" href="https://static.arxiv.org/static/base/1.0.0a5/css/arxivstyle.css" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    messageStyle: "none",
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true,
+      ignoreClass: '.*',
+      processClass: 'mathjax.*'
+    },
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js", "noErrors.js"],
+        noErrors: {
+          inlineDelimiters: ["$","$"],
+          multiLine: false,
+          style: {
+            "font-size": "normal",
+            "border": ""
+          }
+        }
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src='//static.arxiv.org/MathJax-2.7.3/MathJax.js'></script>
+<script src="https://static.arxiv.org/static/base/1.0.0a5/js/notification.js"></script>
+
+    
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/base/1.0.1/css/arxiv-header-footer.css?v=20260626" />
+  <script defer src="https://static.arxiv.org/static/base/1.0.1/js/arxiv-header.js?v=20260626"></script>
+  <link rel="stylesheet" href="https://static.arxiv.org/static/search/0.5.6/css/bulma-tooltip.min.css" />
+  <link rel="stylesheet" href="https://static.arxiv.org/static/search/0.5.6/css/search.css" />
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+    crossorigin="anonymous"></script>
+
+  <script src="https://static.arxiv.org/static/search/0.5.6/js/fieldset.js"></script>
+  <style>
+  radio#cf-customfield_11400 {
+    display: none;
+  }
+  /* Render the spinout .ds-site-footer standalone / full-bleed. search extends the
+     legacy base, whose bare wrapping <footer> (in base/base.html, outside any
+     overridable block — so it can't be removed from here) is styled by
+     arxivstyle.css with a grey background (hsl(0,0%,95%)) + 1em 2em padding,
+     boxing our warm-wash footer inside a second grey band. display:contents drops
+     the wrapper's box entirely (cleaner than zeroing individual properties) so
+     .ds-site-footer renders in its place; it inherits flex-shrink:0 from the same
+     legacy `footer` rule, so the sticky footer still works. Search-specific
+     legacy-base integration; the shared chrome CSS stays byte-identical to the SSOT. */
+  body > footer {
+    display: contents;
+  }
+  </style>
+
+  </head>
+  <body>
+  
+  
+  <header><a href="#main-container" class="is-sr-only">Skip to main content</a>
+    <div class="ds-announcement" id="announcement-banner" role="region" aria-label="Announcement" data-banner-name="spinout-nonprofit">
+  <img class="ds-announcement-glyph" src="https://static.arxiv.org/static/base/1.0.1/images/icons/smileybones-small.svg" alt="" aria-hidden="true">
+  <span class="ds-announcement-text">arXiv is now an independent nonprofit!</span>
+  <a class="ds-announcement-link" href="https://info.arxiv.org/about">Learn more</a>
+  <button type="button" class="ds-announcement-close" aria-label="Dismiss announcement">&times;</button>
+</div>
+<header class="ds-site-header">
+  <a href="https://arxiv.org/" class="ds-site-header-logo" aria-label="archive home">
+    <img src="https://static.arxiv.org/static/base/1.0.1/images/arxiv-logo-primary-light.svg" alt="archive">
+  </a>
+  <button type="button" id="ds-nav-toggle" class="ds-site-header-nav-toggle"
+    aria-label="Open menu" aria-controls="ds-site-header-nav" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <nav class="ds-site-header-nav" id="ds-site-header-nav" aria-label="Main navigation">
+    <a id="arxiv-search-toggle" href="/search" aria-controls="arxiv-search-overlay" aria-expanded="false">
+      <svg class="ds-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      Search
+    </a>
+    <a href="https://arxiv.org/user/create">Submit</a>
+    <a href="https://info.arxiv.org/about/donate.html">Donate</a>
+    <span class="ds-site-header-divider" aria-hidden="true"></span>
+    <a href="https://arxiv.org/login" class="ds-site-header-login">Log in</a>
+  </nav>
+</header>
+
+<div class="arxiv-search-overlay" id="arxiv-search-overlay" hidden>
+  <div class="arxiv-search-panel" role="search">
+    <form method="GET" action="/search">
+      <label for="arxiv-search-input" class="is-sr-only">Search arXiv</label>
+      <input type="text" name="query" id="arxiv-search-input" autocomplete="off"
+        placeholder="Search papers by title, author, abstract, or ID...">
+      <input type="hidden" name="searchtype" value="all">
+      <input type="hidden" name="source" value="header">
+    </form>
+    <div class="arxiv-search-hint">
+      Press Enter to search &middot; <a href="/search/advanced">Advanced search</a>
+    </div>
+  </div>
+</div>
+
+  </header>
+  <main class="container" id="main-container">
+    
+
+
+    
+  <div class="level is-marginless">
+    <div class="level-left">
+      <h1 class="title is-clearfix">
+    
+        Showing 1&ndash;9 of 9 results for all: <span class="mathjax">quantum algorithm factoring polynomials finite fields</span>
+    
+</h1>
+    </div>
+    <div class="level-right is-hidden-mobile">
+      <!-- feedback for mobile is moved to footer -->
+      <span class="help" style="display: inline-block;"><a href="https://github.com/arXiv/arxiv-search/releases">Search v0.5.6 released 2020-02-24</a>&nbsp;&nbsp;</span>
+    </div>
+  </div>
+    <div class="content">
+      
+  <form method="GET" action="/search/"  aria-role="search">
+    
+
+    
+    <div class="field has-addons-tablet">
+      <div class="control is-expanded">
+        <label for="query" class="hidden-label">Search term or terms</label>
+        
+          <input class="input is-medium" id="query" name="query" placeholder="Search term..." type="text" value="quantum algorithm factoring polynomials finite fields">
+        
+        
+      </div>
+      <div class="select control is-medium">
+        <label class="is-hidden" for="searchtype">Field</label>
+        <select class="is-medium" id="searchtype" name="searchtype"><option selected value="all">All fields</option><option value="title">Title</option><option value="author">Author(s)</option><option value="abstract">Abstract</option><option value="comments">Comments</option><option value="journal_ref">Journal reference</option><option value="acm_class">ACM classification</option><option value="msc_class">MSC classification</option><option value="report_num">Report number</option><option value="paper_id">arXiv identifier</option><option value="doi">DOI</option><option value="orcid">ORCID</option><option value="license">License (URI)</option><option value="author_id">arXiv author ID</option><option value="help">Help pages</option><option value="full_text">Full text</option></select>
+      </div>
+      <div class="control">
+          <button class="button is-link is-medium">Search</button>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control is-size-7">
+        
+        <label class="radio">
+          <input checked id="abstracts-0" name="abstracts" type="radio" value="show"> Show abstracts
+        </label>
+        
+        <label class="radio">
+          <input id="abstracts-1" name="abstracts" type="radio" value="hide"> Hide abstracts
+        </label>
+        
+      </div>
+    </div>
+    <div class="is-clearfix" style="height: 2.5em"> 
+      <div class="is-pulled-right">
+        
+        <a href="/search/advanced?terms-0-term=quantum+algorithm+factoring+polynomials+finite+fields&amp;terms-0-field=all&amp;size=50&amp;order=-announced_date_first">Advanced Search</a>
+        
+      </div>
+    </div>
+    <input type="hidden" name="order" value="-announced_date_first">
+    <input type="hidden" name="size" value="50">
+  </form>
+
+  
+
+  
+      
+<div class="level breathe-horizontal">
+  <div class="level-left">
+    <form method="GET" action="/search/">
+      <div style="display: none;">
+        
+          
+            <select id="searchtype" name="searchtype"><option selected value="all">All fields</option><option value="title">Title</option><option value="author">Author(s)</option><option value="abstract">Abstract</option><option value="comments">Comments</option><option value="journal_ref">Journal reference</option><option value="acm_class">ACM classification</option><option value="msc_class">MSC classification</option><option value="report_num">Report number</option><option value="paper_id">arXiv identifier</option><option value="doi">DOI</option><option value="orcid">ORCID</option><option value="license">License (URI)</option><option value="author_id">arXiv author ID</option><option value="help">Help pages</option><option value="full_text">Full text</option></select>
+          
+        
+          
+            <input id="query" name="query" type="text" value="quantum algorithm factoring polynomials finite fields">
+          
+        
+          
+        
+          
+        
+          
+            <ul id="abstracts"><li><input checked id="abstracts-0" name="abstracts" type="radio" value="show"> <label for="abstracts-0">Show abstracts</label></li><li><input id="abstracts-1" name="abstracts" type="radio" value="hide"> <label for="abstracts-1">Hide abstracts</label></li></ul>
+          
+        
+      </div>
+      <div class="box field is-grouped is-grouped-multiline level-item">
+        <div class="control">
+          <span class="select is-small">
+            <select id="size" name="size"><option value="25">25</option><option selected value="50">50</option><option value="100">100</option><option value="200">200</option></select>
+          </span>
+          <label for="size">results per page</label>.
+        </div>
+        <div class="control">
+          <label for="order">Sort results by</label>
+          <span class="select is-small">
+            <select id="order" name="order"><option selected value="-announced_date_first">Announcement date (newest first)</option><option value="announced_date_first">Announcement date (oldest first)</option><option value="-submitted_date">Submission date (newest first)</option><option value="submitted_date">Submission date (oldest first)</option><option value="">Relevance</option></select>
+          </span>
+        </div>
+        <div class="control">
+          <button class="button is-small is-link">Go</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+      
+
+
+
+
+<ol class="breathe-horizontal" start="1"> 
+
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2609.09035">arXiv:2609.09035</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2609.09035">pdf</a>, <a href="https://arxiv.org/ps/2609.09035">ps</a>, <a href="https://arxiv.org/format/2609.09035">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Data Structures and Algorithms">cs.DS</span>
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Optimization and Control">math.OC</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Near-Optimal <span class="search-hit mathjax">Quantum</span> Lower Bounds for Convex Optimization via Fourier Rank
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Augustino%2C+B">Brandon Augustino</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Chakrabarti%2C+S">Shouvanik Chakrabarti</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Fontana%2C+E">Enrico Fontana</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Herman%2C+D">Dylan Herman</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Kim%2C+J+L">Junhyung Lyle Kim</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Ozgul%2C+G">Guneykan Ozgul</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Voronova%2C+N">Nadezhda Voronova</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2609.09035v1-abstract-short" style="display: inline;">
+        We establish a near-linear <span class="search-hit mathjax">quantum</span> query lower bound for high-accuracy convex optimization over an explicit family of $n$-dimensional ellipsoids. We focus on linear optimization with an explicitly given objective, where the feasible set is accessed through a membership oracle. We show that any <span class="search-hit mathjax">algorithm</span> that, for every&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2609.09035v1-abstract-full').style.display = 'inline'; document.getElementById('2609.09035v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2609.09035v1-abstract-full" style="display: none;">
+        We establish a near-linear <span class="search-hit mathjax">quantum</span> query lower bound for high-accuracy convex optimization over an explicit family of $n$-dimensional ellipsoids. We focus on linear optimization with an explicitly given objective, where the feasible set is accessed through a membership oracle. We show that any <span class="search-hit mathjax">algorithm</span> that, for every unit linear objective, returns an exactly feasible point with additive objective error $Θ(n^{-2})$ requires $Ω\!\left(\frac{n}{\log n\,\log\log n}\right)$ membership queries. The same lower bound can be shown to hold if the returned point is only required to be approximately feasible, within $Θ(n^{-2})$ distance from the feasible set. This resolves, up to logarithmic <span class="search-hit mathjax">factors</span>, an open question posed by Chakrabarti, Childs, Li, and Wu~(\textit{<span class="search-hit mathjax">Quantum</span>}, 2020) and by van Apeldoorn, Gilyén, Gribling, and de Wolf~(\textit{<span class="search-hit mathjax">Quantum</span>}, 2020). Coupled with the upper bounds in these papers, the query complexity of high-accuracy convex optimization is characterized tightly up to logarithmic <span class="search-hit mathjax">factors</span>. The proof is built around a lower bound for determinant computation that is derived via a novel <span class="search-hit mathjax">polynomial</span> method based on Fourier-rank. In the continuous matrix phase-query model, computing the determinant of a real $n\times n$ matrix requires at least $n/2$ matrix-vector product queries. The construction also yields an $Ω(n)$ phase-query lower bound for estimating the minimum eigenvalue of a real symmetric $n\times n$ matrix to additive accuracy $Θ(n^{-2})$. These results extend the determinant and minimum-eigenvalue lower bounds of Childs, Hung, and Li~(ICALP 2021) from <span class="search-hit mathjax">finite</span> <span class="search-hit mathjax">fields</span> to the real-valued setting. Based on the same constructions, we also prove a near-optimal gradient-query lower bound for constant-accuracy optimization of smooth and strongly convex functions.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2609.09035v1-abstract-full').style.display = 'none'; document.getElementById('2609.09035v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 8 September, 2026; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> September 2026.
+      
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2607.29590">arXiv:2607.29590</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2607.29590">pdf</a>, <a href="https://arxiv.org/ps/2607.29590">ps</a>, <a href="https://arxiv.org/format/2607.29590">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Statistical Mechanics">cond-mat.stat-mech</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Disordered Systems and Neural Networks">cond-mat.dis-nn</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Spindrift: Learning <span class="search-hit mathjax">quantum</span> degeneracy from thermal purity in restricted path integral Monte Carlo
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Frost%2C+J+M">Jarvist Moore Frost</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2607.29590v2-abstract-short" style="display: inline;">
+        &hellip;path integral Monte Carlo (RPIMC) sidesteps the fluctuating Fermion sign problem by confining paths within nodal regions of a trial density matrix, thereby recovering <span class="search-hit mathjax">polynomial</span> scaling. However, this nodal surface must be provided from elsewhere; unless it is exact, it introduces a fixed-node energy error.
+  Here we introduce \textsc{Spindrift}, a Variation&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2607.29590v2-abstract-full').style.display = 'inline'; document.getElementById('2607.29590v2-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2607.29590v2-abstract-full" style="display: none;">
+        Restricted path integral Monte Carlo (RPIMC) sidesteps the fluctuating Fermion sign problem by confining paths within nodal regions of a trial density matrix, thereby recovering <span class="search-hit mathjax">polynomial</span> scaling. However, this nodal surface must be provided from elsewhere; unless it is exact, it introduces a fixed-node energy error.
+  Here we introduce \textsc{Spindrift}, a Variational Density Matrix approach that learns the many-body Fermionic density matrix from a regularised Bloch residual, evaluated on samples drawn by a restricted Worm <span class="search-hit mathjax">algorithm</span>. Motivated by the `purity&#39; of <span class="search-hit mathjax">quantum</span> statistical mechanics at high temperature (where kinetic energy dominates), we train the density matrix along an imaginary-time (descending temperature) curriculum from an exact infinite-temperature heat-kernel starting point, learning the condensation of <span class="search-hit mathjax">quantum</span> correlations as temperature drops, through successive corrections to the previous reference. We parametrise our model with a permutation-equivariant continuous normalising flow to generate quasi-particle backflow trajectories, modulated by a symmetric Jastrow <span class="search-hit mathjax">factor</span>. This architecture guarantees exact Fermionic antisymmetry and spatial symmetry throughout training.
+  Simulating $N=3$ interacting Fermions in a two-dimensional harmonic trap, we demonstrate stable curriculum training. The learnt velocity <span class="search-hit mathjax">field</span> smoothly deforms the nodal structure away from the free-particle reference. Open-Worm G-sector trapping provides a natural diagnostic for nodal accuracy.
+  \textsc{Spindrift} systematically lowers the restricted energy relative to the free-particle reference across all temperatures and successfully reproduces the benchmark energy at $β=1$, establishing a stable, physics-informed framework for <span class="search-hit mathjax">finite</span>-temperature <span class="search-hit mathjax">quantum</span> Monte Carlo where the nodal structure is learnt self-consistently.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2607.29590v2-abstract-full').style.display = 'none'; document.getElementById('2607.29590v2-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 3 August, 2026; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 31 July, 2026;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> July 2026.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">13 pages, 3 figures</span>
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2607.02751">arXiv:2607.02751</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2607.02751">pdf</a>, <a href="https://arxiv.org/ps/2607.02751">ps</a>, <a href="https://arxiv.org/format/2607.02751">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Symbolic Computation">cs.SC</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        On <span class="search-hit mathjax">Factoring</span> <span class="search-hit mathjax">Quantum</span>-Plane Skew <span class="search-hit mathjax">Polynomials</span> over $\mathbb{Q}(ω)(t)$
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Giesbrecht%2C+M">Mark Giesbrecht</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2607.02751v1-abstract-short" style="display: inline;">
+        We study <span class="search-hit mathjax">algorithms</span> for <span class="search-hit mathjax">factorization</span> in the <span class="search-hit mathjax">quantum</span> plane of (dilation) skew <span class="search-hit mathjax">polynomials</span> over a function <span class="search-hit mathjax">field</span> of a cyclotomic <span class="search-hit mathjax">field</span>: \[
+  \mathsf{R}=\mathsf{K&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2607.02751v1-abstract-full').style.display = 'inline'; document.getElementById('2607.02751v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2607.02751v1-abstract-full" style="display: none;">
+        We study <span class="search-hit mathjax">algorithms</span> for <span class="search-hit mathjax">factorization</span> in the <span class="search-hit mathjax">quantum</span> plane of (dilation) skew <span class="search-hit mathjax">polynomials</span> over a function <span class="search-hit mathjax">field</span> of a cyclotomic <span class="search-hit mathjax">field</span>: \[
+  \mathsf{R}=\mathsf{K}(t)[x;σ], \qquad \mathsf{K}=\mathbb{Q}(ω),
+  \qquad σ(t)=ωt, \] where $ω\in\mathbb{C}$ is a primitive $m$-th root of unity. We start with the established approach through central elements and <span class="search-hit mathjax">factor</span> the central left multiples, staying in characteristic zero, to obtain a partial decomposition. A two-level modular approach is proposed: specialize a central parameter to good algebraic values, study the resulting cyclic algebras over number <span class="search-hit mathjax">fields</span>, and then reduce further at good inert primes so that fast <span class="search-hit mathjax">finite</span>-<span class="search-hit mathjax">field</span> skew-<span class="search-hit mathjax">factorization</span> <span class="search-hit mathjax">algorithms</span> apply. A prototype SageMath implementation is provided to experiment with the <span class="search-hit mathjax">algorithms</span>. We then look at the effect of extending the <span class="search-hit mathjax">field</span> of constants from $\mathbb{Q}(ω)$ to $\bar{\mathbb{Q}}$, an algebraic closure of $\mathbb{Q}$, and <span class="search-hit mathjax">factoring</span> over ${\bar{\mathbb{Q}}}(t)[x;σ]$. In this case we show <span class="search-hit mathjax">factorization</span> is decidable in the exact algebraic model based on <span class="search-hit mathjax">finite</span> extensions.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2607.02751v1-abstract-full').style.display = 'none'; document.getElementById('2607.02751v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 2 July, 2026; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> July 2026.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">To appear in Computer Algebra and Scientific Computation conference, August 31-September 4, Bath, UK</span>
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2304.08376">arXiv:2304.08376</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2304.08376">pdf</a>, <a href="https://arxiv.org/ps/2304.08376">ps</a>, <a href="https://arxiv.org/format/2304.08376">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Computational Complexity">cs.CC</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Zero sum subsequences and hidden subgroups
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Imran%2C+M">Muhammad Imran</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Ivanyos%2C+G">Gabor Ivanyos</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2304.08376v1-abstract-short" style="display: inline;">
+        &hellip;in the quotient groups by the members of a central series, eventually to its image in the commutative quotient of the original group; and then using an abelian hidden subgroup <span class="search-hit mathjax">algorithm</span> to determine this image. Knowing this image allows one to descend to a proper subgroup unless the hidden subgroup is the full group. The transformation relies on finding zero&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2304.08376v1-abstract-full').style.display = 'inline'; document.getElementById('2304.08376v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2304.08376v1-abstract-full" style="display: none;">
+        We propose a method for solving the hidden subgroup problem in nilpotent groups. The main idea is iteratively transforming the hidden subgroup to its images in the quotient groups by the members of a central series, eventually to its image in the commutative quotient of the original group; and then using an abelian hidden subgroup <span class="search-hit mathjax">algorithm</span> to determine this image. Knowing this image allows one to descend to a proper subgroup unless the hidden subgroup is the full group. The transformation relies on finding zero sum subsequences of sufficiently large sequences of vectors over <span class="search-hit mathjax">finite</span> prime <span class="search-hit mathjax">fields</span>. We present a new deterministic <span class="search-hit mathjax">polynomial</span> time <span class="search-hit mathjax">algorithm</span> for the latter problem in the case when the size of the <span class="search-hit mathjax">field</span> is constant. The consequence is a <span class="search-hit mathjax">polynomial</span> time exact <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">algorithm</span> for the hidden subgroup problem in nilpotent groups having constant nilpotency class and whose order only have prime <span class="search-hit mathjax">factors</span> also bounded by a constant.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2304.08376v1-abstract-full').style.display = 'none'; document.getElementById('2304.08376v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 17 April, 2023; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> April 2023.
+      
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2210.11552">arXiv:2210.11552</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2210.11552">pdf</a>, <a href="https://arxiv.org/ps/2210.11552">ps</a>, <a href="https://arxiv.org/format/2210.11552">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        An Efficient <span class="search-hit mathjax">Quantum</span> Decoder for Prime-Power <span class="search-hit mathjax">Fields</span>
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Eldar%2C+L">Lior Eldar</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2210.11552v2-abstract-short" style="display: inline;">
+        We consider a version of the nearest-codeword problem on <span class="search-hit mathjax">finite</span> <span class="search-hit mathjax">fields</span> $\mathbb{F}_q$ using the Manhattan distance, an analog of the Hamming metric for non-binary alphabets. Similarly to other lattice related problems, this problem is NP-hard even up to constant <span class="search-hit mathjax">factor</span> approximat&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2210.11552v2-abstract-full').style.display = 'inline'; document.getElementById('2210.11552v2-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2210.11552v2-abstract-full" style="display: none;">
+        We consider a version of the nearest-codeword problem on <span class="search-hit mathjax">finite</span> <span class="search-hit mathjax">fields</span> $\mathbb{F}_q$ using the Manhattan distance, an analog of the Hamming metric for non-binary alphabets. Similarly to other lattice related problems, this problem is NP-hard even up to constant <span class="search-hit mathjax">factor</span> approximation. We show, however, that for $q = p^m$ where $p$ is small relative to the code block-size $n$, there is a <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">algorithm</span> that solves the problem in time ${\rm poly}(n)$, for approximation <span class="search-hit mathjax">factor</span> $1/n^2$, for any $p$. On the other hand, to the best of our knowledge, classical <span class="search-hit mathjax">algorithms</span> can efficiently solve the problem only for much smaller inverse <span class="search-hit mathjax">polynomial</span> <span class="search-hit mathjax">factors</span>. Hence, the decoder provides an exponential improvement over classical <span class="search-hit mathjax">algorithms</span>, and places limitations on the cryptographic security of large-alphabet extensions of code-based cryptosystems like Classic McEliece.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2210.11552v2-abstract-full').style.display = 'none'; document.getElementById('2210.11552v2-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 12 September, 2023; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 20 October, 2022;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> October 2022.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">Clarifying the mapping between $\mathbb{F}_q$ and $\mathbb{Z}_q$, slightly worse parameters for the proposed <span class="search-hit mathjax">algorithm</span>, exponential speed-up over classical algorithms remains</span>
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2209.11650">arXiv:2209.11650</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2209.11650">pdf</a>, <a href="https://arxiv.org/ps/2209.11650">ps</a>, <a href="https://arxiv.org/format/2209.11650">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Cryptography and Security">cs.CR</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Computational Complexity">cs.CC</span>
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Algebraic Geometry">math.AG</span>
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Number Theory">math.NT</span>
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        An Algebraic-Geometry Approach to Prime <span class="search-hit mathjax">Factorization</span>
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Montina%2C+A">Alberto Montina</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Wolf%2C+S">Stefan Wolf</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2209.11650v1-abstract-short" style="display: inline;">
+        New <span class="search-hit mathjax">algorithms</span> for prime&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2209.11650v1-abstract-full').style.display = 'inline'; document.getElementById('2209.11650v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2209.11650v1-abstract-full" style="display: none;">
+        New <span class="search-hit mathjax">algorithms</span> for prime <span class="search-hit mathjax">factorization</span> that outperform the existing ones or take advantage of particular properties of the prime <span class="search-hit mathjax">factors</span> can have a practical impact on present implementations of cryptographic <span class="search-hit mathjax">algorithms</span> that rely on the complexity of <span class="search-hit mathjax">factorization</span>. Currently used keys are chosen on the basis of the present <span class="search-hit mathjax">algorithmic</span> knowledge and, thus, can potentially be subject to future breaches. For this reason, it is worth to investigate new approaches which have the potentiality of giving a computational advantage. The problem has also relevance in <span class="search-hit mathjax">quantum</span> computation, as an efficient <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">algorithm</span> for prime <span class="search-hit mathjax">factorization</span> already exists. Thus, better classical asymptotic complexity can provide a better understanding of the advantages offered by <span class="search-hit mathjax">quantum</span> computers. In this paper, we reduce the <span class="search-hit mathjax">factorization</span> problem to the search of points of parametrizable varieties, in particular curves, over <span class="search-hit mathjax">finite</span> <span class="search-hit mathjax">fields</span>. The varieties are required to have an arbitrarily large number of intersection points with some hypersurface over the base <span class="search-hit mathjax">field</span>. For a subexponential or poly- nomial <span class="search-hit mathjax">factoring</span> complexity, the number of parameters have to scale sublinearly in the space dimension n and the complexity of computing a point given the parameters has to be subexponential or <span class="search-hit mathjax">polynomial</span>, respectively. We outline a procedure for building these varieties, which is illustrated with two constructions. In one case, we show that there are varieties whose points can be evaluated efficiently given a number of parameters not greater than n/2. In the other case, the bound is dropped to n/3. Incidentally, the first construction resembles a kind of retro-causal model. Retro-causality is considered one possible explanation of <span class="search-hit mathjax">quantum</span> weirdness.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2209.11650v1-abstract-full').style.display = 'none'; document.getElementById('2209.11650v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 23 September, 2022; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> September 2022.
+      
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1807.09675">arXiv:1807.09675</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1807.09675">pdf</a>, <a href="https://arxiv.org/ps/1807.09675">ps</a>, <a href="https://arxiv.org/format/1807.09675">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Symbolic Computation">cs.SC</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Computational Complexity">cs.CC</span>
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Number Theory">math.NT</span>
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Toward an Optimal <span class="search-hit mathjax">Quantum</span> <span class="search-hit mathjax">Algorithm</span> for <span class="search-hit mathjax">Polynomial</span> <span class="search-hit mathjax">Factorization</span> over <span class="search-hit mathjax">Finite</span> <span class="search-hit mathjax">Fields</span>
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Doliskani%2C+J">Javad Doliskani</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1807.09675v1-abstract-short" style="display: inline;">
+        We present a randomized <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">algorithm</span> for <span class="search-hit mathjax">polynomial</span> <span class="search-hit mathjax">factorization</span> over <span class="search-hit mathjax">finite</span> <span class="search-hit mathjax">fields</span>. For <span class="search-hit mathjax">polynomials</span> of degree&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1807.09675v1-abstract-full').style.display = 'inline'; document.getElementById('1807.09675v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1807.09675v1-abstract-full" style="display: none;">
+        We present a randomized <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">algorithm</span> for <span class="search-hit mathjax">polynomial</span> <span class="search-hit mathjax">factorization</span> over <span class="search-hit mathjax">finite</span> <span class="search-hit mathjax">fields</span>. For <span class="search-hit mathjax">polynomials</span> of degree $n$ over a <span class="search-hit mathjax">finite</span> <span class="search-hit mathjax">field</span> $\F_q$, the average-case complexity of our <span class="search-hit mathjax">algorithm</span> is an expected $O(n^{1 + o(1)} \log^{2 + o(1)}q)$ bit operations. Only for a negligible subset of <span class="search-hit mathjax">polynomials</span> of degree $n$ our <span class="search-hit mathjax">algorithm</span> has a higher complexity of $O(n^{4 / 3 + o(1)} \log^{2 + o(1)}q)$ bit operations. This breaks the classical $3/2$-exponent barrier for <span class="search-hit mathjax">polynomial</span> <span class="search-hit mathjax">factorization</span> over <span class="search-hit mathjax">finite</span> <span class="search-hit mathjax">fields</span> \cite{guo2016alg}.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1807.09675v1-abstract-full').style.display = 'none'; document.getElementById('1807.09675v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 25 July, 2018; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> July 2018.
+      
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1207.4783">arXiv:1207.4783</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1207.4783">pdf</a>, <a href="https://arxiv.org/ps/1207.4783">ps</a>, <a href="https://arxiv.org/format/1207.4783">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Data Structures and Algorithms">cs.DS</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Computational Complexity">cs.CC</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Testing Permanent Oracles -- Revisited
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Arora%2C+S">Sanjeev Arora</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Bhattacharyya%2C+A">Arnab Bhattacharyya</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Manokaran%2C+R">Rajsekar Manokaran</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Sachdeva%2C+S">Sushant Sachdeva</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1207.4783v1-abstract-short" style="display: inline;">
+        &hellip;X is chosen from the Gaussian ensemble (the matrix entries are i.i.d. univariate complex Gaussians). Can we test that the oracle satisfies this claim? This paper gives a <span class="search-hit mathjax">polynomial</span>-time&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1207.4783v1-abstract-full').style.display = 'inline'; document.getElementById('1207.4783v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1207.4783v1-abstract-full" style="display: none;">
+        Suppose we are given an oracle that claims to approximate the permanent for most matrices X, where X is chosen from the Gaussian ensemble (the matrix entries are i.i.d. univariate complex Gaussians). Can we test that the oracle satisfies this claim? This paper gives a <span class="search-hit mathjax">polynomial</span>-time <span class="search-hit mathjax">algorithm</span> for the task. The oracle-testing problem is of interest because a recent paper of Aaronson and Arkhipov showed that if there is a <span class="search-hit mathjax">polynomial</span>-time <span class="search-hit mathjax">algorithm</span> for simulating boson-boson interactions in <span class="search-hit mathjax">quantum</span> mechanics, then an approximation oracle for the permanent (of the type described above) exists in BPP^NP. Since computing the permanent of even 0/1 matrices is #P-complete, this seems to demonstrate more computational power in <span class="search-hit mathjax">quantum</span> mechanics than Shor&#39;s <span class="search-hit mathjax">factoring</span> <span class="search-hit mathjax">algorithm</span> does. However, unlike <span class="search-hit mathjax">factoring</span>, which is in NP, it was unclear previously how to test the correctness of an approximation oracle for the permanent, and this is the contribution of the paper. The technical difficulty overcome here is that univariate <span class="search-hit mathjax">polynomial</span> self-correction, which underlies similar oracle-testing <span class="search-hit mathjax">algorithms</span> for permanent over <span class="search-hit mathjax">finite</span> <span class="search-hit mathjax">fields</span> --- and whose discovery led to a revolution in complexity theory --- does not seem to generalize to complex (or even, real) numbers. We believe that this tester will motivate further progress on understanding the permanent of Gaussian matrices.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1207.4783v1-abstract-full').style.display = 'none'; document.getElementById('1207.4783v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 19 July, 2012; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> July 2012.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">Appears at RANDOM &#39;12</span>
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1111.1348">arXiv:1111.1348</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1111.1348">pdf</a>, <a href="https://arxiv.org/ps/1111.1348">ps</a>, <a href="https://arxiv.org/format/1111.1348">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        <span class="search-hit mathjax">Quantum</span> <span class="search-hit mathjax">Algorithm</span> for Computing the Period Lattice of an Infrastructure
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Fontein%2C+F">Felix Fontein</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Wocjan%2C+P">Pawel Wocjan</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1111.1348v2-abstract-short" style="display: inline;">
+        We present a <span class="search-hit mathjax">quantum</span>&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1111.1348v2-abstract-full').style.display = 'inline'; document.getElementById('1111.1348v2-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1111.1348v2-abstract-full" style="display: none;">
+        We present a <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">algorithm</span> for computing the period lattice of infrastructures of fixed dimension. The <span class="search-hit mathjax">algorithm</span> applies to infrastructures that satisfy certain conditions. The latter are always fulfilled for infrastructures obtained from global <span class="search-hit mathjax">fields</span>, i.e., algebraic number <span class="search-hit mathjax">fields</span> and function <span class="search-hit mathjax">fields</span> with <span class="search-hit mathjax">finite</span> constant <span class="search-hit mathjax">fields</span>.
+  The first of our main contributions is an exponentially better method for sampling approximations of vectors of the dual lattice of the period lattice than the methods outlined in the works of Hallgren and Schmidt and Vollmer. This new method improves the success probability by a <span class="search-hit mathjax">factor</span> of at least 2^{n^2-1} where n is the dimension. The second main contribution is a rigorous and complete proof that the running time of the <span class="search-hit mathjax">algorithm</span> is <span class="search-hit mathjax">polynomial</span> in the logarithm of the determinant of the period lattice and exponential in n. The third contribution is the determination of an explicit lower bound on the success probability of our <span class="search-hit mathjax">algorithm</span> which greatly improves on the bounds given in the above works.
+  The exponential scaling seems inevitable because the best currently known methods for carrying out fundamental arithmetic operations in infrastructures obtained from algebraic number <span class="search-hit mathjax">fields</span> take exponential time. In contrast, the problem of computing the period lattice of infrastructures arising from function <span class="search-hit mathjax">fields</span> can be solved without the exponential dependence on the dimension n since this problem reduces efficiently to the abelian hidden subgroup problem. This is also true for other important computational problems in algebraic geometry. The running time of the best classical <span class="search-hit mathjax">algorithms</span> for infrastructures arising from global <span class="search-hit mathjax">fields</span> increases subexponentially with the determinant of the period lattice.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1111.1348v2-abstract-full').style.display = 'none'; document.getElementById('1111.1348v2-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 11 June, 2012; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 5 November, 2011;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> November 2011.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">52 pages, 4 figures</span>
+    </p>
+    
+
+    
+
+    
+  </li>
+
+</ol>
+
+
+  
+
+
+      <div class="is-hidden-tablet">
+        <!-- feedback for mobile only -->
+        <span class="help" style="display: inline-block;"><a href="https://github.com/arXiv/arxiv-search/releases">Search v0.5.6 released 2020-02-24</a>&nbsp;&nbsp;</span>
+      </div>
+    </div>
+
+  </main>
+  <footer>
+    
+<footer class="ds-site-footer">
+  <div class="ds-site-footer-grid">
+    <div class="ds-site-footer-main">
+      <div class="ds-site-footer-ack">
+        We gratefully acknowledge support from
+        our <strong>major funders</strong>,
+        <a href="https://info.arxiv.org/about/ourmembers.html"><strong>member institutions</strong></a><span class="ack-member-inline" hidden>, <strong></strong></span>,
+        and all contributors.
+      </div>
+      <nav class="ds-site-footer-links" aria-label="Site navigation">
+        <a href="https://info.arxiv.org/about">About</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help">Help</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/contact.html">Contact</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/subscribe">Subscribe</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/license/index.html">Copyright</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/policies/privacy_policy.html">Privacy</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/web_accessibility.html">Accessibility</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://status.arxiv.org" target="_blank" rel="noopener noreferrer">Operational Status<span class="is-sr-only"> (opens in new tab)</span></a>
+      </nav>
+    </div>
+    <div class="ds-site-footer-funders" aria-label="Major funders">
+      <div class="ds-site-footer-funders-label">Major funding support from</div>
+      <div class="ds-site-footer-funders-logos">
+        <a class="ds-funder-link" href="https://www.simonsfoundation.org/" target="_blank" rel="noopener noreferrer">
+          <img class="ds-funder-logo" src="https://static.arxiv.org/static/base/1.0.1/images/funders/simons-foundation.png" alt="Simons Foundation"></a>
+        <a class="ds-funder-link" href="https://www.sfi.org.bm/" target="_blank" rel="noopener noreferrer">
+          <img class="ds-funder-logo" src="https://static.arxiv.org/static/base/1.0.1/images/funders/simons-foundation-international.png" alt="Simons Foundation International"></a>
+        <a class="ds-funder-link" href="https://www.schmidtsciences.org/" target="_blank" rel="noopener noreferrer">
+          <img class="ds-funder-logo" src="https://static.arxiv.org/static/base/1.0.1/images/funders/schmidt-sciences.png" alt="Schmidt Sciences"></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </footer>
+  <script src="https://static.arxiv.org/static/base/1.0.0a5/js/member_acknowledgement.js"></script>
+  </body>
+</html>

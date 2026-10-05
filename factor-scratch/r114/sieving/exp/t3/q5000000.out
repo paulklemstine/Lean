@@ -1,0 +1,65 @@
+# (2d98fe1) /home/raver1975/factor47/V11/cado/cado-nfs/build/Ecstasis/sieve/las -poly /home/raver1975/factor47/V11/cado/cado-nfs/tests/sieve/c90_21505.poly -lim 811066 -lpb 23 -mfb 46 -I 11 -t 1 -q0 5000000 -fb1 fb_811066.txt -T -v
+# Compiled with gcc 13.3.0
+# Compilation flags (C) -Werror=all -Werror=extra -std=c99 -Wall -Wextra -O2  -msse3 -mssse3 -msse4.1 -mpopcnt -mavx -mpclmul -mavx2
+# Compilation flags (C++) -Werror=extra -Werror=all -export-dynamic -std=c++20 -Wno-c++11-compat -Wall -Wextra -O2  -Wno-stringop-overflow -Wno-literal-suffix -msse3 -mssse3 -msse4.1 -mpopcnt -mavx -mpclmul -mavx2
+# las flags: BUCKET_SIEVE_POWERS LOGNORM_GUARD_BITS=1.00
+# Interpreting -I 11 as meaning -A 21
+# Warning: sqside not given, assuming side 1 for backward compatibility.
+# Making loose-binding a noop because of "nobind".
+# Skipping mem binding because of "nobind".
+# Getting rid of sieve_shared_data structure [rss=9820.00 k]
+# Making loose-binding a noop because of "nobind".
+# No binding applied because of the setting machine,1,1,nobind on a machine with topology Package:1 [NUMANode] L3Cache:1 L2Cache:8 L1dCache:1 Core:1 PU:2 (32 GB RAM)
+# 1 job(s) in parallel
+# 1 thread(s) per job
+# Expected memory usage per binding zone for the factor base: 2.10 MB
+# Expected memory usage per subjob for logI=11: 7.10 MB
+# Expected memory use per subjob (max reached for logI=11): 7.10 MB
+# Expected memory use for 1 binding zone(s) and 1 1-threaded jobs per zone, counting 48 MB of base footprint: 58.12 MB
+# Making loose-binding a noop because of "nobind".
+# Skipping mem binding because of "nobind".
+# Using default value powlim0=ULONG_MAX
+# Creating side-0 rational factor base for polynomial f0(x) = -405913334250366170746+54212895541659703*x
+# including primes up to 811066 and prime powers up to 18446744073709551615 using threadpool of 1 threads.
+# Creating side-0 rational factor base took 0.0 (0.1 real)
+# Using default value powlim1=ULONG_MAX
+# Reading side-1 factor base from disk for polynomial f1(x) = 117613498336889917907625-8070017054808095590*x-354641532392401*x^2+7791120786*x^3+109620*x^4
+# Reading side-1 factor base from fb_811066.txt
+# Factor base successfully read, 40510 primes, largest was 810989
+# Reading side-1 factor base took 0.0 (0.0 real)
+# Making loose-binding a noop because of "nobind".
+# Skipping cpu binding because of "nobind".
+# Skipping mem binding because of "nobind".
+# subjob 0 done (0 special-q's), now waiting for other jobs
+# Making loose-binding a noop because of "nobind".
+# Average J=0 for 0 special-q's, max bucket fill -bkmult 1
+# Discarded 0 special-q's out of 0 pushed
+#
+# Hierarchical timings:
+#
+# Categorized timings (total counted time 0.00):
+# -1 uncategorized (top-level bookkeeping): 0.00
+# total counted time: 0.00
+#
+# survivors before_sieve: 0
+# survivors after_sieve: 0 (ratio 0.00e+00)
+# survivors not_both_even: 0
+# survivors not_both_multiples_of_p: 0
+# survivors trial_divided_on_side[0]: 0
+# survivors check_leftover_norm_on_side[0]: 0 (0.0%)
+# survivors trial_divided_on_side[1]: 0
+# survivors check_leftover_norm_on_side[1]: 0 (0.0%)
+# survivors enter_cofactoring: 0
+# survivors cofactored: 0 (0.0%)
+# survivors smooth: 0
+# Wasted cpu time due to 0 bkmult adjustments: 0.00
+# Cumulated wait time over all threads 0.00
+# Total cpu time 0.00s, useful 0.00s [norm 0.00+0.0, sieving 0.0 (0.0+0.0 + 0.0), factor 0.0 (0.0+0.0 + 0.0), rest 0.0], wasted+waited 0.00s, rest 0.00s
+# Total elapsed time 0.01s, per special-q 0, per relation 0
+# Expected memory usage per binding zone for the factor base: 2.10 MB
+# Expected memory usage per subjob for logI=11: 7.10 MB
+# Expected memory use per subjob (max reached for logI=11): 7.10 MB
+# Expected memory use for 1 binding zone(s) and 1 1-threaded jobs per zone, counting 48 MB of base footprint: 58.12 MB
+# PeakMemusage (MB) = 263
+# Total 0 reports [0s/r, 0.0r/sq] in 0.00531 elapsed s [7.2% CPU]
+# Getting rid of sieve_shared_data structure [rss=13.10 MB]

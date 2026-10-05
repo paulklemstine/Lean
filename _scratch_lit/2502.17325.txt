@@ -1,0 +1,2197 @@
+                                                    Optimized circuits for windowed modular arithmetic with
+                                                         applications to quantum attacks against RSA
+                                                         Alessandro Luongo1,2 , Varun Narasimhachar3 , and Adithya Sireesh4,*
+                                                             1
+                                                               Centre for Quantum Technologies, National University of Singapore, Singapore
+                                                                                         2
+                                                                                           Inveriant Pte. Ltd., Singapore
+                                                  3
+                                                    Institute of High Performance Computing, Agency for Science, Technology and Research, Singapore.
+                                                                 4
+                                                                   School of Informatics, University of Edinburgh, Scotland, United Kingdom
+                                                                                  *
+                                                                                    Corresponding author: asireesh@ed.ac.uk
+arXiv:2502.17325v1 [quant-ph] 24 Feb 2025
+
+
+
+
+                                                                                          February 25, 2025
+
+
+                                                                                                 Abstract
+                                                     Windowed arithmetic [Gidney, 2019] is a technique for reducing the cost of quantum arithmetic
+                                                 circuits with space–time tradeoffs using memory queries    to precomputed   tables. It can reduce the
+                                                 asymptotic cost of modular exponentiation from O n3 to O n3 / log2 n operations, resulting in the
+                                                 current state-of-the-art compilations of quantum attacks against modern cryptography. In this work
+                                                 we introduce four optimizations to windowed modular exponentiation. We (1) show how the cost of
+                                                 unlookups can be reduced by 66% asymptotically in the number of bits, (2) illustrate how certain
+                                                 addresses can be bypassed, reducing both circuit depth and the overall lookup cost, (3) demonstrate that
+                                                 multiple lookup–addition operations can be merged into a single, larger lookup at the start of the modular
+                                                 exponentiation circuit, and (4) reduce the depth of the unary conversion for unlookups. On a logical level,
+                                                 this leads to a 3% improvement in Toffoli count and Toffoli depth for modular exponentiation circuits
+                                                 relevant to cryptographic applications. This translates to some improvements on [Gidney and Ekerå,
+                                                 2021]’s factoring algorithm: for a given number of physical qubits, our improvements show a reduction in
+                                                 the expected runtime from 2% to 6% for factoring RSA-2048 integers.
+
+
+                                            1    Introduction
+                                            Efficient quantum arithmetic circuits are fundamental to a wide range of quantum algorithms, from crypto-
+                                            graphic applications to simulations in physics and chemistry, machine learning, and finance. For example,
+                                            these circuits feature prominently in Shor’s quantum factoring algorithm [Sho94], whose implementation
+                                            would render many cryptographic schemes, including RSA (Rivest–Shamir–Adleman) and ECC (elliptic curve
+                                            cryptography), insecure. Despite the theoretical promise of speedups offered by quantum algorithms, practical
+                                            implementations demand highly optimized arithmetic circuits to minimize qubit and gate resource overheads.
+                                            At the core of quantum factoring algorithms is a circuit for the modular exponentiation operation, which
+                                            dominates the costs—including physical qubit count, gate count, and runtime—required for their execution.
+                                            Hence, optimizing modular arithmetic subroutines within these algorithms is crucial for making quantum
+                                            attacks on cryptography practically viable. In quantum computing, more significantly than in the classical
+                                            case, circuit optimizations—such as reducing the space or the number of gates—can mean the difference
+                                            between being able to run an algorithm or not.
+                                                 In this regard, significant progress has already been made in improving quantum arithmetic algo-
+                                            rithms [Dra00; Cuc+04; KY24; Lit24; Gid18] and their applications, especially in cryptanalysis, e.g.,
+                                            with newer variants of factoring algorithms and more efficient modular arithmetic subroutines to reduce
+                                            resource overheads [GE21; Lit23; Gou+23; CFS24; Wan+24]. There have also been attempts to adapt
+                                            more efficient classical methods of multiplication (such as the algorithms by Karatsuba, Toom–Cook, and
+                                            Schönhage–Strassen [Knu14]) to the quantum setting. Naively doing so leads to a significant waste of space
+                                            and time as the quantum counterparts of these subroutines need to be executed reversibly. The asymptotically
+                                            efficient quantum Karatsuba algorithm [Gid19b] and fast integer multiplication with zero ancillas [KY24] are
+
+
+
+                                                                                                     1
+more recent approaches to adapt efficient classical multiplication algorithms to quantum algorithms without
+the massive space overhead.
+    One notable advancement in the area of efficient quantum arithmetic is Gidney’s introduction of windowed
+quantum arithmetic [Gid19c], which reduces the costs of modular multiplication through precomputed lookup
+tables and the segmentation of operations into “windows”. This method improves the scaling of modular
+exponentiation of n-bit numbers from O(n3 ) to O(n3 / log2 n) by offloading some computational overhead to
+classical resources. This technique, which is a central focus of optimization in our work, underpins one of the
+best circuits for factoring RSA-2048 integers, demonstrating its utility in practical quantum cryptographic
+attacks [GE21].
+
+1.1     Our contribution
+In this paper, we present four improvements for windowed arithmetic circuits for modular multiplication and
+examine their impact on quantum algorithms for breaking RSA-2048.
+    In Section 1.2, we first look at the history of quantum factoring algorithms, highlighting the key optimiza-
+tions developed over the past three decades, and their interplay with quantum arithmetic. We discuss the
+growing need for more efficient and cost-effective subroutines, particularly arithmetic ones, to reduce the
+overhead of running these algorithms in a fault-tolerant manner. We introduce the background on memory
+lookups and modular arithmetics in Section 2.
+    In Section 3, we present four key algorithmic optimizations to the windowed arithmetic method, focusing
+on reducing the size and depth (measured in Toffoli gates and Toffoli depth) of memory lookups and their
+uncomputation, as well as minimizing the number of required lookups in the modular exponentiation algorithm.
+First, we show how the cost of unlookups can be reduced by 66% asymptotically in the number of bits. Then,
+we illustrate how certain addresses can be bypassed, reducing both circuit depth and the overall lookup
+cost. Furthermore, we demonstrate that by merging multiple lookup-addition operations into a single, larger
+lookup at the start of the modular exponentiation circuit, additional savings in both Toffoli gate count and
+circuit depth can be achieved. Finally, by using existing techniques, we also show how the depth of unary
+conversion (a subroutine used in computing memory lookups) can be reduced. While the improvements
+depend on parameters like the number of bits of the modulus, number of bits of the exponent register, and
+error budget, in ranges relevant for cryptographic applications, we achieve a 3% improvement in Toffoli count
+and Toffoli depth, compared to the original windowing arithmetic circuit.
+
+                     Adt factor        Reps                         #Tof                                           Depth
+                                                       Lookup       Add.         Unlookup           Lookup       Add.           Unlookup
+                                                                                 √                                              √
+ Original [Gid19c]       0            2 wnn e
+                                         m we
+                                                      2   we +wm
+                                                                    2n          3 2we +wm          2 we +wm
+                                                                                                                 2n            3 2we +wm
+ OPT. 1 [Sec. 3.1]       0            2 wnn e
+                                         m we
+                                                      2we +wm       2n       2 wnm · 2we + 2wm     2we +wm       2n         2 wnm · 2we + 2wm
+                                                                                  √                                              √
+ OPT. 2 [Sec. 3.2]       0         2 wnn e
+                                      m we
+                                                    2we +wm − 2we   2n           3 2we +wm       2we +wm − 2we   2n             3 2we +wm
+                                   n(ne −n′e )
+                                                                                  √                                              √
+                         n′e                              we +wm
+ OPT. 3 [Sec. 3.3]      2         2 wm we             2             2n           3 2we +wm         2we +wm       2n             3 2we +wm
+                                                                                  √                                     √
+ OPT. 4 [Sec. 3.4]       0            2 wnn e
+                                         m we
+                                                      2   we +wm
+                                                                    2n           3 2we +wm         2 we +wm
+                                                                                                                 2n         2we +wm + 2(we − 1)
+                         n′e          n(ne −n′e )
+  OPT. 1+2+3+4          2         2     wm we       2we +wm − 2we   2n       2 wnm · 2we + 2wm   2we +wm − 2we   2n     2 wnm (we − 1) + 2wm
+
+Table 1: Comparison of the computational costs of the original windowed modular exponentiation and each of our proposed
+optimizations. Here, n denotes the number of bits in the modulus, ne represents the number of exponent bits, and we and
+wm correspond to the sizes of the exponent and multiplication windows, respectively. For OPT 3, n′e indicates the number
+of exponent bits directly exponentiated at the start of the modular exponentiation procedure due to a larger initial lookup.
+For a specific n, optimal values for we , wm , and n′e can be determined via a grid search. The total Tof count and depth can
+be calculated from the table as Adt factor + Reps(Lookup + Add. + Unlookup). An improvement in number of logical qubits is
+reported in Appendix B
+
+
+    In Section 4, we study how our improvements translate to saving in physical resources. In particular, we
+study the improved physical qubit count, runtime, and error-correction overhead, providing updated resource
+estimates for attacking RSA-2048. Concretely, we test our improvements within the Gidney–Ekerå (GE)
+framework [GE21] and demonstrate a reduction in the computational volume for factoring RSA-2048 integers.
+Combined, these optimizations yield reductions in the Toffoli count for attacks against RSA by 1.5% to 3.4%,
+depending on the key size. For a fixed physical qubit count, our improvements show anywhere from a 2% to
+6% reduction in the expected runtime for factoring RSA-2048 integers (Table 5). These improvements help find
+parameters for the original GE algorithm that lead to a slight reduction in the overall computational volume
+
+
+                                                                         2
+for factoring RSA-2048. Finally, we explore potential tradeoffs between runtime and space when integrating
+our improvements into the GE algorithm. Depending on the chosen cost metric, the qubit count can be
+reduced by nearly 25% at the expense of a 1.5 times increase in the runtime. These tradeoffs were already
+part of the optimization landscape considered in [GE21]; but even accounting for them, our contributions
+lead to slight reductions in the associated costs. The tradeoffs are explored in Section 4 (Figure 17) and
+Appendix C.
+    In Section 5, we discuss further ideas, exploring other potential space-time tradeoffs in circuit design.
+Specifically, we discuss modifications to the memory lookup architecture used in [GE21] for a memory with
+reduced depth at the expense of increased space requirements. In Appendix B, we discuss an optimization
+that leads to a reduction in the number of logical qubits used in the windowing operation. However, we were
+unable to translate these reductions into a corresponding decrease in physical qubits or total runtime. Last
+but not least, the reader interested in a more precise understanding of the subroutines used in GE factoring
+algorithm is referred to Appendix D, where they can find the pseudocode of most of the subroutines discussed
+in this work.
+
+1.2    Factoring and quantum arithmetic
+Shor’s algorithm provides an efficient quantum approach to factoring an integer N . This problem can be
+reduced to finding the order r of an integer b in the multiplicative group of integers modulo N , where b < N
+and gcd(b, N ) = 1. The order r satisfies the condition
+
+                                                   br ≡ 1 mod N.
+
+If r is even, this condition can be rewritten as
+
+                                        (br/2 − 1)(br/2 + 1) ≡ 0 mod N.
+
+Provided br/2 is not a trivial root of unity (i.e., br/2 ̸≡ ±1 mod N ), the factors of N can be extracted using
+
+                                    gcd(N, br/2 − 1)      or   gcd(N, br/2 + 1).
+
+Shor’s quantum factoring algorithm finds r by leveraging phase estimation: a ubiquitous quantum computing
+subroutine that, when given a prepared eigenstate of a unitary operator, determines the corresponding
+eigenvalue to a required precision. In this case, the operator is the modular multiplication unitary Ub , which
+acts as follows on the computational basis:
+
+                                             Ub |y⟩ = |b · y mod N ⟩ .
+
+Here, the integers y are represented as binary strings encoded in quantum registers. The computational basis
+|y⟩n represents integers x ∈ {0, 1, . . . , 2n − 1}, where n is the bit size of the number we wish to factorize. The
+quantum state prepared by the algorithm is of the form:
+
+                                            22n
+                                             X  −1
+                                                     |x⟩2n |bx mod N ⟩n .
+                                             x=0
+
+This state is generated through a sequence of modular multiplication operations, where a chosen integer b (with
+gcd(b, N ) = 1) is used. A QFT (quantum Fourier transform) is then applied to the first register to perform
+phase estimation, resulting in an approximation of s/r, where 0 ≤ s < r. The continued fractions algorithm
+is subsequently used to extract r from this approximation. For successful extraction, the approximation of
+s/r must have sufficient precision: approximately 2n bits or an error smaller than 1/N 2 . This requirement
+determines the size of the x register to be 2n qubits, ensuring s/r is a convergent of the approximation [NC11].
+
+Variants of Shor’s quantum factoring algorithm. Beyond efforts to optimize modular multiplication
+subroutines, several alternative approaches to factoring numbers have been proposed, diverging from Shor’s
+original framework. Numerous studies [GE21; Lit23; Gou+23; MS19; EH17; RC18] explore these variations.
+Ekerå and Håstad for instance, found that it is easier to factor RSA integers (integers of the form N = pq
+for large primes p, q) by reducing the problem of factoring to a short discrete logarithm problem [EH17].
+May and Schlieper [MS19] proved that Shor’s algorithm is compression-robust and that the target state
+
+
+                                                           3
+|bx ⟩ can be hashed to a single bit (at the cost of more repetitions of the algorithm). This result was then
+extended by Chevignard, Fouque, and Schrottenloher [CFS24] by using a residue number system modular
+multiplier [RC18] to reduce the space requirements of factoring an n-bit integer to just n/2 + o(n). In 2024,
+Regev [Reg23] combined different lattice-based techniques to come up with a multi-dimensional analogue
+of Shor’s algorithm, requiring Õ(n3/2 ) gate cost and Õ(n3/2 ) space at the cost of Õ(n1/2 ) repetitions. The
+space requirements were further relaxed by Ragavan and Vaikuntanathan [RV23] to O(n) using a Fibonacci
+exponentiation technique (an optimization based purely on making multiplication easier in Regev’s algorithm),
+at the cost of increasing the gate cost to O(n5/2 ). Ekerå and Gartner [EG24] then extended Regev’s work to
+computing discrete logarithms. They also showed a way to use Regev’s algorithm to solve the order-finding
+problem. A very early work that inspired the idea of trading more repetitions for reduced space (as seen in
+many algorithms described above) is that of Seifert [Sei01], which managed to lower the size of the exponent
+from 2n to n(1 + ϵ) for 0 < ϵ ≤ 1 and computing approximations to the order of b. These approximations are
+then combined using simultaneous diophantine approximations to reconstruct the order. While the factoring
+algorithms by Regev and Chevignard, Fouque, and Schrottenloher [CFS24] offer interesting avenues to explore
+the practical costs of breaking RSA, there is still work to be done in further reducing space requirements in
+Regev’s algorithm and gate/time costs in Chevignard, Fouque, and Schrottenloher [CFS24]’s approach. In
+this paper, we focus on the implementation of factoring RSA integers using the GE algorithm and explore the
+impact of various improvements to the current state of the art.
+
+Gidney–Ekerå (GE) 2021. This relatively recent work is among the more thorough analyses of concrete
+resources (qubits, gates, time, etc.) required for running a quantum algorithm on specific, practically relevant
+instances of a problem (as opposed to asymptotic analyses). The work lays out a circuit compilation of
+Shor’s factoring algorithm for attacking state-of-the-art RSA cryptographic schemes. The compilation is
+tailored for superconducting qubit architectures with a layout suitable for error correction using surface
+codes. For relevant RSA key sizes, the work optimizes various design parameters of the circuit (which we will
+explain in more detail below) and estimates the corresponding resource costs based on realistic assumptions
+on near-term hardware. In addition to its detailed resource estimation, it also presents some improvements
+in some subroutines that occur in the algorithm. A key focus of their approach—like many algorithms
+optimizing fault-tolerant quantum computation—is the reduction of Tof/T gate count and depth, as these
+gates dominate the cost of implementing large-scale quantum algorithms [FG18; GF19; Bab+18; Hän+20].
+In this section, we detail the main algorithmic techniques used by Gidney and Ekerå [GE21] to achieve a
+physical qubit count of 20 million qubits and expected runtime of 8 hours for breaking RSA-2048 keys:
+   • Factoring using discrete logarithm problem: Ekerå and Håstad showed that RSA integers could be
+     factored more efficiently than Shor’s algorithm by translating the factoring problem to a short discrete
+     logarithm problem [EH17]. The reduction of the n-bit factoring problem to a discrete logarithm problem
+     helps reduce the number of exponentiation qubits to 1.5n (we normally require at least 2n [Sho94]).
+   • Windowed arithmetic via lookups: Previously, it was thought that each controlled modular multiplication
+     in Shor’s algorithm would have to be performed individually. However, in the paper [Gid19c], it
+     was shown that we can precompute a table of values classically and appropriately load them into our
+     circuit. This method leads to a log2 n factor reduction in the number of Toffolis required for modular
+     exponentiation from O(n3 ) to O(n3 / log2 n).
+   • Semi-classical Fourier transform: The QFT that needs to be performed at the end of the phase
+     estimation in Shor’s algorithm involves O(n2 ) controlled rotation gates. There is, however, a way to
+     perform the same procedure semi-classically [GN96]: the exponent qubits can be measured one at a
+     time, and each measurement outcome can be used to classically control a rotation on the subsequent
+     exponent qubits. This technique also allows for reuseing the exponent qubits instead of maintaining a
+     superposition of O(n) qubits at one time.
+   • Coset representation: A basic modular adder requires the use of 4 non-modular adders. Adding two
+     n-qubit registers has a Toffoli cost of 2n. When we need to perform modular addition, the cost goes up
+     to 8n. The coset representation, first introduced by Zalka [Zal06], helps perform modular addition with
+     a single non-modular addition circuit. For a register |x⟩ that we wish to add into, we first map it into
+                PO(log N )
+     the state c           |x + c ∗ N ⟩ (the coset state). This state is close to the eigenvector of the unitary
+     “add N to x”. Now, if we wish to add a value y into |x′ ⟩, we just perform non-modular addition into
+     P2k                           P2k
+        c=1 |x + c · N + y⟩n+k ≈     c=1 |(x + y mod N ) + c · N ⟩. The number of extra qubits required, k, is
+     logarithmic in the total number of modular additions to the performed in the whole algorithm.
+
+
+                                                       4
+    • Oblivious carry runways: The depth of the ripple carry adder is limited by the size of the registers
+      that are to be summed because the more significant qubits need to wait for the carry values to be
+      propagated from the less significant qubits. Carry runways [Gid19a] give us a way to parallelize addition
+      by splitting the addition registers into multiple pieces. The pieces of the first register are summed up
+      with the corresponding pieces of the second register. Thus, the time taken by addition now effectively
+      depends only on the size of the pieces (instead of the size of the whole register).
+
+
+2     Preliminaries and background
+We denote quantum registers as collections of qubits used for storing quantum information. For example
+|x⟩n refers to an n-qubit register in the computational basis with value x ∈ {0, 1, . . . , 2n − 1}. We use xi to
+denote the ith qubit of the register x. In windowed arithmetic, we split a register |x⟩n into a consecutive set
+of qubits or “windows” of size w qubits, with each window denoted as x(i,w) for i = 0, 1, . . . , n/w − 1. Note:
+if w does not divide n the last window size has n mod w bits. However, for ease of explanation, we assume
+that w divides n. Each x(i,w) is treated as an independent w-bit value. For instance, the overall value of x
+can be expressed in terms of w-bit windows as follows:
+                                                  n/w−1
+                                                   X
+                                             x=           x(i,w) · 2i·w .
+                                                   i=0
+
+Using this notation to represent windows, we see that x(i,1) ≡ xi i.e. the ith qubit of register x is equivalent
+to saying that we are looking at the ith window of register x with window size 1.
+
+Unary encoding. We define a unary encoding (also
+referred to as one-hot encoding in other fields, such as
+                                                           n                                           •
+machine learning) as a function unary : {0, 1}n → {0, 1}2 ,
+                                                                              Input x                      • •
+where an n-bit input x is mapped into a 2n -bit output.
+The mapping is defined as unary(x) = bin(2x+1 ), where                                                             • • • •
+
+bin is the function returning the binary encoding of a                                         |0⟩    ××           ×
+decimal number with the proper padding. In this encoding,                                      |0⟩    ×        ×       ×
+the position of the bits set to 1 corresponds directly to                                  =   |0⟩         ×               ×
+the value of the binary input x. The possible circuit is                                       |0⟩             ×               ×
+illustrated in Figure 1, involving controlled operations that               Init Unary x
+                                                                                               |0⟩                 ×
+shift the position of the 1 in the unary register. The unary
+                                                                                               |0⟩                     ×
+register is initialized with the first qubit in the 1 state
+                                                                                               |0⟩                         ×
+and all other qubits in the 0 state. This configuration
+                                                                                               |0⟩                             ×
+effectively represents the value ’0’ in the unary register.
+The least significant bit of the input register x controls       Figure 1: Unary conversion from [Gid19c]. This circuit
+the first shift, moving the 1 by one position if the bit is      essentially performs a binary to unary encoding by control-
+                                                                 ling on the least significant qubit and shifting the position
+set. Subsequent gates control on the higher-order bits of        by 1 in the unary register. The next pair of gates control
+x, where each ith bit shifts the position of the 1 by 2i−1       on the 2nd least significant qubit, shifting the position by
+positions when set. This approach encodes an n-bit binary        2 places. The last set of 4 controlled swaps control on the
+                                                                 most significant qubit and shift by 4 positions.
+input into a unary register of size 2n , positioning the 1
+according to the binary value of x. The depth and Tof
+count of this approach is 2n − 1.
+
+Computational model and circuit complexities. We cost our circuits by measuring the size as the
+number of Toffoli (Tof) gates, and the circuit depth as the Toffoli #depth (the number of sequential layers
+of Tof gates required in the circuit). This is justified as the Toffoli gates are generally considered the main
+bottlenecks for fault-tolerant quantum computation. Hence, we will use these as a proxy to describe the
+overall circuit size and depth. In our case, the size and depth of the circuits we consider are similar up to a
+small multiplicative factor of the Toffoli size and depth. In the windowed arithmetic circuits, we also use
+Fan-Out gates, which are described as single control multi-target NOT gates. In the standard circuit model,
+we can decompose a Fan-Out gate of arity k + 1 using k CNOT gates and depth O(log2 (k)). Another way
+of implementing Fan-Out gates can be found in [PHA13], with a protocol that requires O(k) qubits and a
+constant number of operations. In a more realistic, error-corrected setting, Fan-Out gates can be implemented
+
+
+                                                          5
+using lattice surgery [Hor+12; FG18] as a single logical operation. In particular, in [GF19], they explore
+layouts for surface codes to reduce time overheads for performing large Fan-Out gates (as in the case of
+QROM lookup table operations). We apply a more realistic method of costing the computation in Section 4
+as described in [GE21; GF19].
+
+2.1     Quantum table lookup and unlookup
+While the focus of this paper is on optimizing windowed arithmetic, we begin by introducing quantum table
+lookups—a key operation within windowed arithmetic. These lookups enable the efficient loading of classical
+or quantum data into memory [Bab+18]. In this section, we provide a detailed exploration of table lookups
+as a foundation for the subsequent discussion on windowed arithmetic. For an address register |a⟩l , we have
+an associated lookup table of size L = 2l . Let us assume that each memory element in the lookup table is of
+m bits; therefore, we need m qubits to store the value being looked up. A lookup operation can be described
+as follows:
+
+                                                           Lookup
+                                                |a⟩l |y⟩m 7−−−−→ |a⟩l |y ⊕ Ta ⟩m ,
+
+where Ta is the memory element in the lookup table for index a. A specific architecture for a quantum lookup
+table, termed a QROM lookup, was introduced in [Bab+18]; an unoptimized version of the QROM lookup
+can be seen in Figure 2, left.
+   Decomposing each multi-controlled Toffoli gate, and using a temporary logical-AND construction (see
+Figure 3), we get the circuit in Figure 2, right. This circuit can be further simplified as showing in [Bab+18],
+resulting in Tof gate count and depth of 2l − 1.
+ a2                                                        a2       a2                            ···
+
+ a1                                                        a1       a1                            ···
+
+                                                                                                  ···
+
+ a0                                                        a0       a0                            ···
+
+                                                                                                  ···
+
+
+                                                                =
+       ⊕?    ⊕?    ⊕?    ⊕?       ⊕?   ⊕?   ⊕?      ⊕?                   ⊕?              ⊕?       ···   ⊕?         ⊕?
+       ⊕?    ⊕?    ⊕?    ⊕?       ⊕?   ⊕?   ⊕?      ⊕?                   ⊕?              ⊕?       ···   ⊕?         ⊕?
+       ⊕?    ⊕?    ⊕?    ⊕?       ⊕?   ⊕?   ⊕?      ⊕?                   ⊕?              ⊕?       ···   ⊕?         ⊕?
+d
+       ⊕?    ⊕?    ⊕?    ⊕?       ⊕?   ⊕?   ⊕?      ⊕?                   ⊕?              ⊕?       ···   ⊕?         ⊕?
+       ⊕?    ⊕?    ⊕?    ⊕?       ⊕?   ⊕?   ⊕?      ⊕?                   ⊕?              ⊕?       ···   ⊕?         ⊕?
+       ⊕?    ⊕?    ⊕?    ⊕?       ⊕?   ⊕?   ⊕?      ⊕?                   ⊕?              ⊕?       ···   ⊕?         ⊕?
+       T0    T1    T2    T3       T4   T5   T6      T7                   T0              T1       ···   T6         T7
+
+
+Figure 2: Equivalence of a standard, and unoptimized QROM lookup, and the same table decomposed into a set of logical-AND’s.
+The two-control gates that look like Tof gates can be decomposed in the form as shown in Figs. 3, 4
+
+
+
+                              x             x         x                  T†                       x
+
+                              y             y    = y                     T†                       y
+
+                                            xy      |T ⟩                 T           H        S   xy
+
+
+Figure 3: The temp logical-AND construction of Gidney [Gid18]. Here, the decomposition is using 4 T gates instead of the more
+expensive 7 T gates traditionally used to execute a Tof gate
+
+
+
+Uncomputation: motivation and improvements. In quantum algorithms and subroutines, uncompu-
+tation is sometimes necessary, especially when ancillary qubits need to be reset to free up space for reuse.
+Bennett’s method [Ben73] offers a foundational approach to uncomputation, though it may double the
+
+
+                                                                    6
+                                            x                x           x                                       x
+
+                                           y                 y = y                                       Z       y
+
+                                        xy                          xy                 H
+
+
+Figure 4: Uncomputation of the temp logical-AND by Gidney [Gid18]. Here the circuit uses no T gates. It instead includes an H
+gate, a computation basis measurement and a classically controlled C-Z gate
+
+
+
+resource cost relative to the original computation. Over time, various approaches, both general [Jon13;
+KSS21] and specific [Bab+18; Gid19a; Gid19c; Gid18; Luo+24], have aimed to reduce this overhead.
+    In the case of quantum table lookups, once a lookup register has been consumed by a subroutine in our
+algorithm, uncomputation or an unlookup becomes essential, as resetting the corresponding registers saves
+valuable space. As with other uncomputations, under certain conditions, it admits a simpler implementation
+than the lookup itself. We now discuss a particular simplification due to Gidney [Gid19c], built on the more
+common MBU technique. The lookup register is first measured in the X basis, and the resultant measurement
+value s is recorded
+                                X                 Measure
+                                                          X
+                                    |a⟩ℓ |Ta ⟩m 7−−−−−→     (−1)s·Ta |a⟩ℓ |0⟩m .
+                                       a                                           a
+
+   This measurement may result in a phase on each address a, which depends on the value of the measurement
+s and the value of the memory element Ta associated with a. These values are all known classically, as we
+have access to the entire lookup table. We now split the address register in two pieces alow , ahigh of u and
+ℓ − u qubits respectively (for 0 < u < ℓ), and use alow as the input for the unary conversion.
+         X                     Unary X
+          (−1)s·Ta |a⟩ℓ |0⟩m 7−−−→    (−1)s·Ta |a = ahigh alow ⟩ℓ |unary(alow )⟩2u |0⟩m−2u
+           a                                    a
+                                                                   "                                               #
+                                            X                          X    s·Tahigh alow
+                                        =            |ahigh ⟩ℓ−u        (−1)              |alow ⟩u |unary(alow )⟩2u |0⟩m−2u .
+                                            ahigh                       alow
+
+The unary conversion is used to construct a new phase correction lookup table Fahigh , with the address register
+ahigh , and lookup register storing the unary conversion. For an index ahigh , the value has a 1 at index x, for
+all a = ahigh x that satisfy s · Ta = 1. With this new lookup table F , we can perform a simultaneous phase
+correction for any addresses a = ahigh ... with the same ahigh . The cost of performing the lookup F is 2ℓ−u .
+We finally perform an inverse unary operation, to reset the unary register, and retrieve the required state.
+                                                    "                            #
+                              Lookup X                X
+                            7−−−−→      |ahigh ⟩ℓ−u     |alow ⟩u |unary(alow )⟩2u |0⟩m−2u
+                                       ahigh                     alow
+
+                              Unary†   X
+                              7−−−−→            |a⟩ℓ |0⟩m .
+                                        a
+
+    The total cost of this unlookup is equal to the sum of the cost of the unary conversion, the cost of
+the phase correction lookup, and the cost of the unlookup. The unlookup can be done with a temporary
+logical-AND construction, thus leading to a total cost of 2u + 2ℓ−u Tof√gates. This value is minimized when
+u = ℓ/2 i.e. when size(ahigh ) = size(alow ), leading to a cost, 2 · 2ℓ/2 = 2 L i.e the unlookup has a square root
+speed up over the cost of the lookup.
+           •                                                                                                                  •
+ /                            /                                                                                            Input a0
+     l   Input a                  l
+ /                        =   /                                                                       Input a1                                Input a1
+ ≥ 2l                         ≥ 2l                                                             2l
+ /    Unlookup Da   ⟨0|       /    H                                                   |0⟩ /        Init Unary a1    H   ⊕Lookup Fa0   H   Clear Unary a1   ⟨0|
+
+                                                    Compute fixup table F /
+                                               Figure 5: Unlookup circuit from [Gid19c].
+
+
+    In summary, the reduction is based on the above observation that the Toffoli cost of a table lookup
+is linear in the number of entries but indifferent to the size of each. In the unlookup stage, half of the
+
+
+                                                                               7
+               we
+expnonent               Input expn = |[phase
+                                     x(i,we ) = ]|                        Input expn = |[phase
+                                                                                       x(i,we ) = ]|       ...       Input expn = |[phase
+                                                                                                                                  x(i,we ) = ]|                         Input expn = |[phase
+                                                                                                                                                                                     x(i,we ) = ]|
+
+    t(0,wt )            Input mult = t(0,wt )                             Input mult = t(0,wt )            ...
+
+    t(1,wt )                                                                                               ...
+               ..                                                                                          ...
+                .
+
+    t(p,wt )                                                                                               ...       Input mult = t(p,wt )                              Input mult = t(p,wt )
+
+               n
+        |0⟩         Lookup v = Ti,0 (expn, mult)           Input v            Unlookup v                   ...   Lookup v = Ti,p (expn, mult)       Input v                 Unlookup v
+
+       out                                                |[phase
+                                                         +v  (mod =N]|)                                    ...                                     |[phase
+                                                                                                                                                  +v  (mod =N]|)
+                                                                                                                                                                                         iwe
+Figure 6: Windowed modular exponentiation by [Gid19c]. Here, we are executing the modular multiplication of b2           x(i,we )
+
+(the exponentiated value of the of the ith window x(i,we ) of the exponent), with the register t = bx(0,iwe ) which is currently
+holding the exponentiation of the first i − 1 windows of the exponent register.
+
+
+
+address register is copied in unary format onto part of the lookup (which is now free, thanks to the preceding
+measurement). Meanwhile, a “fixup table” is computed, indexed by the remaining half of the address
+(therefore, of size quadratically smaller than the original table’s) and containing the appropriate phase
+correction to be applied on each value of the half in unary encoding. This correction is then applied bitwise
+on the unarized half-address, through a lookup operation over the smaller table. This quadratically reduces
+the overall Toffoli count of the unlookup.
+
+2.2            Modular exponentiation using windowed arithmetic
+As mentioned previously, windowed arithmetic reduces the complexity of modular exponentiation from
+O(n3 ) to O(n3 / log2 n). Here we discuss the work of [Gid19c] in detail, which is needed to understand our
+improvements. We will see why this is the case in the current section. Windowed arithmetic
+                                                                                       P uses lookup tables
+to perform quantum modular exponentiation of an integer b i.e. to prepare the state x |x⟩ |bx mod N ⟩. It
+is insightful to rewrite the modular exponentiation of b to the power of x by looking at the binary expansion
+of x:
+                                                                              Pk−1                                 k−1
+                                                                                                                   Y
+                                                                                       i                                      i
+                                                         bx mod N = b             i=0 2 xi          mod N =               b2 xi mod N.
+                                                                                                                   i=0
+
+   From the above equation, we see that modular exponentiation can be implemented as repeated controlled
+                                                              i
+modular multiplication: namely, multiplying sequentially by b2 using xi as the control. We can redefine the
+computation of the modular exponentiation recursively as follows:
+                                                                                                       i
+                                                                             t[i] = t[i−1] b2 xi mod N,
+                        0
+with t[0] = b2 x0 and t[k−1] = bx mod N ; Hence, to perform the modular multiplication described previously,
+we can implement a unitary that takes an integer register t holding the value t[i−1] , and computes the value
+         i
+t[i] = b2 xi t[i−1] into an empty target register (out-of-place multiplication), for some classically provided b
+and i. More formally, we would like to perform the modular multiplication operation:
+
+                                                                                           (
+                                                E                    i
+                                                                                                  |xi ⟩1 t[i−1] n c + t[i] mod N n                                 if xi = 1
+                                    [i−1]                     +b2 xi t[i−1] mod N
+                      |xi ⟩1 t                          |c⟩n 7−−−−−−−−−−−−→
+                                                    n                                             |xi ⟩1 t[i−1] n c + t[i−1] mod N n                               if xi = 0,
+
+
+for any c ∈ {0, 1}n . The text above the arrow depicts the change effected on the last register. For our
+purposes it suffices to consider c = 0, thus giving us the operation:
+                                                           (
+                                E        2i xi [i−1]         |xi ⟩1 t[i−1] n t[i] n   if xi = 1
+                                       +b     t      mod N
+                   |xi ⟩1 t[i−1] |0⟩n 7−−−−−−−−−−−−→
+                                  n                          |xi ⟩1 t[i−1] n t[i−1] n if xi = 0.
+
+
+   Controlled modular multiplication itself can be decomposed into repeated controlled modular addition,
+with the controls being (xi , tj ) for j ∈ {0, 1, · · · , n − 1}. In words, we iterate over the bits tj of t, for each j
+
+
+
+                                                                                                       8
+                                                                                                                               i
+adding into the current value of the third register the product of 2j tj and b2 xi :
+
+                                     E                                                        E                                      E
+                                                    i 
+                                                  + b2 xi ·t0 mod N                                     i
+                             [i−1]
+                  |xi ⟩1 t                   |0⟩n 7−−−−−−−−−−−−→ |xi ⟩1 t[i−1]                     b2 xi t0 mod N
+                                         n                                                     n                                         n
+                                                                                              E                                                       E
+                                                   i 
+                                                 + b2 xi ·2t1 mod N                                     i
+                                                7−−−−−−−−−−−−−→ |xi ⟩1 t[i−1]                      b2 xi (t0 + 2t1 ) mod N
+                                                                                               n                                                          n
+                                                                       ..
+                                                                        .
+                                                                                                                                     !                    +
+                                                                                              E                         j
+                                                  i 
+                                                + b2 xi ·2j tj mod N                                                    X
+                                                                                      [i−1]            2i xi                   k
+                                               7−−−−−−−−−−−−−−→ |xi ⟩1 t                           b                          2 tk       mod N
+                                                                                               n
+                                                                                                                        k=0                                   n
+                                                                       ..
+                                                                        .
+                                                                                                                                     !                        +
+                                                                                              E
+                                           i 
+                                         + b2 xi ·2n−1 tn−1 mod N                                                       n−1
+                                                                                                                        X
+                                                                                      [i−1]            2i xi                   k
+                                     7−−−−−−−−−−−−−−−−−→ |xi ⟩1 t                                  b                          2 tk           mod N
+                                                                                               n
+                                                                                                                        k=0                                   n
+                                                                                              E                                              E
+                                                                                      [i−1]            2i xi [i−1]
+                                                                   = |xi ⟩1 t                      b            t             mod N               .
+                                                                                              En            E                                 n
+
+                                                                   = |xi ⟩1 t[i−1]                 t[i]             .
+                                                                                               n            n
+
+
+
+    The acute reader will have observed that every step of the controlled addition can actually be performed
+by first doing a lookup, then an (uncontrolled) modular addition, which is followed by an unlookup. The
+lookup table is indexed by two-bit addresses (xi , tj ) and is shown in Table 2. Each operation in the series of
+lookups followed by additions are aptly termed lookup-additions or LookupAdd.
+    Now using lookup tables, we can perform a series of 2-
+bit lookup-additions to execute the modular multiplication                                i
+                                                                          tj    xi    (b2 xi ) · 2j tj mod N
+operation. Since each addition modulo N costs O(n), and
+we have to iterate over n bits of t, therefore modular                    0     0                  0
+multiplication costs O(n2 ). This only exponentiates 1 bit
+of the exponent and has to be repeated k times for the k                  0     1                  0
+different bits of the exponent x. However, since all we are               1     0                  2j
+doing is performing table lookups followed by additions,                                         i
+
+we do not need to stop at just looking up 2 bits at a                     1     1           2j b2 mod N
+time. Let us assume we take a window we of bits for the Table 2: A 2-bitthlookup table for modular multiplication.
+                                                               Here, tj is the j bit of the multiplicand and xi is the ith
+exponent, and a window wt of bits for our multiplication bit of the       exponent.
+register t. We can rewrite our recursive definition as:
+                                                                            iwe
+                                                        t[i] = t[i−1] b2        x   (i,we )
+                                                                                              mod N
+              0
+with t[0] = b2 x(0,we ) and t[k−1] = bx mod N ; where k = n/we . We now show how to exponentiate we bits
+at a time. In the next equation x(i,we ) represents the i-th window of size we in the exponent and t(k,wt )
+represents the k-th window of size wt in the multiplication register.
+
+
+
+
+                                                                              9
+                                                             !
+                                          2i·we x(i,w )
+                                   + b(           )  e           ·t(0,w ) mod N
+                     E                                                t                              E           i·we
+                                                                                                                                                           E
+x(i,we )    t[i−1]           |0⟩n 7−−−−−−−−−−−−−−−−−−−−−−−→ x(i,we )                        t[i−1]        b (2          )x(i,we ) t
+                                                                                                                                      (0,wt )   mod N
+                         n                                                                            n                                                        n
+                                                      !
+                                     2i·we x(i,w )
+                                 + b(         ) e          ·2wt t(1,w ) mod N
+                                                                      t                              E           i·we
+                                                                                                                                                                                          E
+                              7−−−−−−−−−−−−−−−−−−−−−−−−−→ x(i,we )                          t[i−1]        b (2          )x(i,we ) (t
+                                                                                                                                       (0,wt ) + 2
+                                                                                                                                                     wt
+                                                                                                                                                          t(1,wt ) ) mod N
+                                                                                                      n                                                                                       n
+                                                                                  ..
+                                                                                   .
+                                                      !
+                                    2i·we x(i,w )
+                             + b(         )    e          ·2j·wt t(j,w ) mod N                                                         j
+                                                                                                                                                                  !                       +
+                                                                      t                              E         i·we
+                                                                                                          b (2      )x(i,we )
+                                                                                             [i−1]
+                                                                                                                                       X
+                             7−−−−−−−−−−−−−−−−−−−−−−−−−−→ x(i,we )                          t                                            2k·wt t(k,wt )                mod N
+                                                                                                      n
+                                                                                                                                       k=0                                                    n
+                                                                                  ..
+                                                                                   .
+                                    !  n    
+                  2i·we x(i,w )
+           + b(          )                 −1 ·wt
+                                     ·2 wt
+                             e                    t                   mod N                                                      n −1                     +
+                                                            n −1,w                                                                  wt
+                                                                  t
+                                                                                                               2i·we
+                                                                                                     E
+                                                                                                          b(            )x(i,we ) 
+                                                            wt                                                                      X
+       7−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−→ x(i,we )                                       t[i−1]                                       2k·wt
+                                                                                                                                               t(k,wt ) mod N
+                                                                                                                                                       
+                                                                                                      n
+                                                                                                                                         k=0
+                                                                                                                                                                                                  n
+                                                                                                               2i·we
+                                                                                                     E                                                    E
+                                                                              = x(i,we )    t[i−1]
+                                                                                                          b(            )x(i,we ) t[i−1] mod N
+                                                                                                     En          E                                            n
+
+                                                                              = x(i,we )    t[i−1]        t[i]        .
+                                                                                                      n           n
+
+    There is one last important ingredient to discuss to finish our presentation of windowed arithmetic. We
+have discussed how windowing works to perform exponentiation of multiple bits at a time, but we also need
+to uncompute the register holding t[i−1] (as the multiplication is being performed out-of-place), and swap it
+with the result register, in order to prepare for the next window of exponents to be multiplied. This reset
+operation is essentially a modular division operation, but can be executed as another modular multiplication
+operation with the target register being the new multiplication register, and the multiplication register taking
+the place of the new target register. This works because
+                           h    i·we
+                                               i          h    i·we          i·we
+                                                                                               i
+                   t[i−1] − b−(2 )x(i,we ) t[i] = t[i−1] − b−(2 )x(i,we ) b(2 )x(i,we ) t[i−1]
+                                                                           = t[i−1] − t[i−1] = 0.
+
+   The above sequence of computations is as follows:
+
+                             E             LookupMul
+                                                                                   E
+                                                                                 i·we
+                                                                                                     E                                                             E              E
+x(i,we ) w t[i−1]                 |0⟩2n 7−−−−−−→ x(i,we )                    b(2 )x(i,we ) t[i−1] |0⟩n = x(i,we )
+                                                                          t[i−1]                                                                      t[i−1]               t[i]           |0⟩n
+             e                n                                          n
+                                          LookupInvMul
+                                                                                                     En     E                                                          n              n
+                                                                 [i−1]       [i]   −(2i·we )x(i,we )
+                                        7−−−−−−−−→ x(i,we ) t           −t ·b                           t[i] |0⟩n
+                                                                                                      n       n
+                                                                           E
+                                                                       [i]
+                                                    = x(i,we ) |0⟩n t          |0⟩n .
+                                                                                       n
+
+
+
+We now swap the register holding the result, with the register that was initially holding t (t is now uncomputed
+because of the LookupInvMul). The result register will become the multiplication register for the next iteration
+                                           Swap
+                                                            E
+                                         7−−−→ x(i,we ) t[i] |0⟩2n .
+                                                                                                n
+
+   Now that the current window (ith window) has been exponentiated, we can do another round of lookup
+additions to exponentiate next window i.e. the (i + 1)th window of the exponent, until the last remaining
+exponent window (i.e. the k th exponent window).
+
+
+
+
+                                                                                       10
+                        E             LookupMul
+                                                                   E          E       LookupInvMul,Swap
+                                                                                                                        E
+    x(i+1,we ) w t[i]           |0⟩2n 7−−−−−−→ x(i+1,we )   t[i]        t[i+1] |0⟩n 7−−−−−−−−−−−→ x(i+1,we )   t[i+1]       |0⟩2n
+               e            n                                      n                                                    n
+                                            ..
+                                             . exponentiation over all k exponent qubit windows
+                                             ..
+                                              .
+                LookupMul,LookupInvMul,Swap
+                                                               E
+              7−−−−−−−−−−−−−−−−−−→ x(k−1,we ) t[k−1] |0⟩2n
+                                             = |x⟩ |bx mod N ⟩n |0⟩2n .
+
+    Thus resulting in the modular exponentiation of b. Each step in the repeated controlled modular addition
+(with controls x(i,we ) , t(k,wt ) ∀k ∈ {0, 1, · · · , n/k − 1}) can be performed using a lookup table (as previously
+shown with the modular addition of 2 bits) with indices t(k,wt ) ||x(i,we ) , where || represents the concatenation
+of the 2 individual addresses. The size of this lookup table is L = 2wt +we , and holds memory elements
+                                         i·we
+of the form Ti,j (expn, mult) = a(2 )expn · 2j·wt mult mod N , where expn ∈ {0, 1}we and mult ∈ {0, 1}wt .
+                                    ′   p
+The cost of the unlookup is L = (2wt +we ) (See Figure 5). The whole windowed lookup algorithm can be
+seen as a single nested loop, with the outer loop iterating over we exponent qubits at a time, and the inner
+loop iterating over wt multiplication qubits   2 at     a time. Therefore, the total number of lookup additions to
+                                                   n
+perform modular exponentiation is O wt we , with each of these lookup additions costing O (2we +wt + n)
+Tof gates, with the depth depending on the depth of the adder used (the O(n) comes from the linear cost
+of modular addition). Therefore, the final complexity of windowing-based modular exponentiation totals
+       n2
+O     wt we (2
+              we +wt
+                        Tof gates. This complexity is minimized when wt = we = 12 log n, leading to an
+                     + n)
+                                
+overall scaling of O n3 / log2 n . For this work, it is useful to look more carefully at the constant factors in
+the aforementioned complexity. Assuming a problem setting that involves the modular exponentiation of an
+n-bit modulus, with ne bits in the exponent, the Tof gate complexity of modular exponentiation is [GE21]:
+
+                                            #Tof = #LookupAdds × cost(LookupAdd).
+We know that the number of lookup additions can be calculated as the number of exponent windows times
+the number of multiplication windows. We also have a factor of 2 due to the fact that after a new exponent
+window is processed (using LookupMul), the result of the previous exponent window must be reversibly
+uncomputed (using LookupInvMul), thus giving us:
+                                                                              nne
+                                                    #LookupAdds = 2                .
+                                                                             wm we
+The cost of a single lookup-addition is made up of many components. First, we have CLookup the cost of
+lookuping a table of size (2(we +wm ) ), followed by the addition of this lookup value into a target register. For
+the addition, we will assume the target register is prepared in a coset state [Gid19a], hence allowing the use of
+Cuccaro’s adder (instead of a circuit for modular addition) which results in a costs of CModAdd = 2n + O(log n).
+The coset state register is padded by a number of qubits that scales logarithmically in the number total
+number of addition operations and desired fidelity [Zal98; Gid19a] (See Sec. 2 for more details). In the context
+of windowed arithmetic, the number of qubits is log(#LookupAdds) ≈ 2 log n + log ϵ where ϵ represents the
+desired error rate or fidelity relative to ideal additions. As a result, addition incurs an extra O(log n) cost.
+Finally, we perform the unlookup (costing CUnlookup ). Regardless of the initial set-up cost for the coset state,
+this approach becomes more convenient for this application, as circuits for modular addition — despite
+our recent improvements [Luo+24] — have worse constant factors. One could potentially use the adder
+from[Gid18], which uses n Tof gates, but this construction requires n extra ancilla qubits, hence we do not
+consider this possibility here.
+    The unlookup first involves a unary conversion on w = 12 (we + wm ) bits, followed by a lookup over a table
+of w address bits, ending finally with an uncomputation of the unary register. This gives us an overall cost of:
+
+                                        cost(LookupAdd) = CLookup + CModAdd + CUnlookup
+                                                                           √
+                                                        = (2we +wm + 2n + 3 2we +wm ).
+
+
+
+                                                                       11
+Combining the previous two expressions to compute the total Tof count gives us1
+                                         nne                   √
+                             #Tof = 2        (2we +wm + 2n + 3 2we +wm )
+                                       wm we
+Similarly, we get a depth of
+                                                                                         nne                   √
+                                                                    depth = 2                 (2we +wm + 2n + 3 2we +wm ).
+                                                                                        wm we
+In summary, using the QROM lookup table construction of [Bab+18], the coset-state based adder of [Zal06;
+Gid19a], and the unary-based uncomputation of [Gid19c], this results in the above mentioned depth and Tof
+counts for quantum modular exponentiation.
+
+
+3            Improvements
+In this section, we present several optimizations for windowed arithmetic circuits, particularly in scenarios
+involving multiple consecutive lookups. For cryptographically relevant ranges (i.e. when the number of
+exponent’s bits are 1.5n and the modulo has n bits) our combined improvements lead to a circuit size and
+depth reduction by 3%. When the number of exponent qubits is n, the improvement goes up to 3.24%. We
+show how the cost of unlookups can be reduced by up to 66% by deferring all unlookups to the end of each
+exponent window. We also illustrate how certain addresses can be bypassed, reducing both circuit depth and
+the overall lookup cost. Furthermore, we demonstrate that by merging multiple lookup-addition operations
+into a single, larger lookup at the start of the modular exponentiation circuit, additional savings in both
+Toffoli gate count and circuit depth can be achieved. Finally, using existing techniques, we also show how the
+depth of unary conversion can be reduced.
+
+3.1              Deferred uncomputation
+                 we
+expnonent                    Input expn = |[phase
+                                          x(i,we ) = ]|                                                                     ...                  Input expn = |[phase
+                                                                                                                                                              x(i,we ) = ]|
+
+     t(0,wm )                Input mult = t(0,wm )                                                                          ...
+
+     t(1,wm )                                                                                                               ...
+                                           
+                  ..       p=        n
+                                       −1       windows                                                                     ..
+                   .                wm                                                                                               .
+
+  t(p−1,wm )                                                                                                                ...                Input mult = t(p−1,wm )
+                                                                                               S0                                                                                                             Sp−1
+                 n
+          |0⟩            Lookup v = Ti,0 (expn, mult)                  |[phase
+                                                                     Input  v = ]|      H                                   ...            Lookup v = Ti,p−1 (expn, mult)                  |[phase
+                                                                                                                                                                                         Input  v = ]|   H
+
+         out                                                      +v (mod N )                                               ...                                                     +v (mod N )
+
+                                                                                                         Compute                                                                                                         Compute
+                                                                                                           fixup                                                                                                           fixup
+                                                                                                         table FS0                                                                                                      table FSp−1
+
+
+
+                 we
+ expnonent                 Input expn = |[phase
+                                        x(i,we ) = ]|                                                                                                                                                    Input expn = |[phase
+                                                                                                                                                                                                                      x(i,we ) = ]|
+
+      t(0,wm )                                                                       Input mult = t|[phase
+                                                                                                    (0,wm ) = ]|            ...
+
+      t(1,wm )                                                                                                              ...
+                 ..      p = (n/wm − 1) windows                                                                             ..
+                  .                                                                                                              .
+
+    t(p−1,wm )                                                                                                              ...                                  Input mult = t(p−1,w
+                                                                                                                                                                                 |[phase
+                                                                                                                                                                                     m)  = ]|
+
+                                     Init                                                                                                                                                                      Clear
+                 2we
+         |0⟩                        Unary                 H                          ⊕ Lookup FS0 (mult)                    ...                                  ⊕ Lookup FSp−1 (mult)          H              Unary
+ Lookup                              expn                                                                                                                                                                       expn
+ Register        n−2we
+                                                                                            ......                          ...                                          ......
+          out                                                                               ......                          ...                                          ......
+
+                                                              Fixup Table F0                                                             Fixup Table Fk−1
+
+Figure 7: Our proposed circuit for deferred uncomputation. The lookup additions have 2 stages. In stage one, the windowed
+multiplication with lookup qubit reset and no phase correction (top) is performed, followed by the second stage, where the
+circuit for deferred phased correction (bottom) is executed. Notice that the unary conversion is performed only once, and on the
+exponent window as it is common for all lookups and can be reused. This is different from Figure 6 where the unlookups or
+phase corrections are performed after every single lookup addition.
+
+  While unlookups are much cheaper than their corresponding lookups (as shown in [Gid19c]), they can be
+made even cheaper in the multi-lookup setting, when part or the whole address register remains unchanged
+   1 As previously noted [Gid19c], if the unary conversion is performed using a temporary logical-AND, we require no Tof gates
+                                                                                  √
+for the unary uncomputation. Thus giving us #Tof = 2 wnnw    e
+                                                                (2we +wm + 2n + 2 2we +wm )
+                                                                                                           m       e
+
+
+
+
+                                                                                                                       12
+over many consecutive table lookups. This is the exact scenario in the case of the GE factoring algorithm,
+                                                                      iwe
+where for all the lookup-additions involved in multiplying bx(i,we ) 2    (with index i, and window size we ),
+    exponent window oremains unchanged. For a fixed i, these lookups have address a = x(i,we ) ||t(j,wm ) with
+the n
+j ∈ 0, 1, · · · , wnm − 1 , where t(j,wm ) is a window over the multiplication qubits.
+   As mentioned before, the whole windowed lookup algorithm is a nested loop, with the outer loop iterating
+over we exponent qubits at a time and an inner loop iterating over wt multiplication qubits at a time. Each
+unlookup is of the form:
+                                                         H, Measure                                  E
+                                                           7−−−−−−→ (−1)Sj ·ℓi,j x(i,we ) t[i−1] |Sj ⟩n |r⟩n
+                                                                                                                                          
+                                                                                                        n                                
+                                                         Reset Sj                                   E                                    
+                                                         7−−−−−→ (−1)Sj ·ℓi,j x             t [i−1]
+                                                                                                         |0⟩   |r⟩                        
+                                                                                 (i,we )                    n     n                      
+                                                                                                      n                                  
+                                                         Unary                                  E
+                                                         7−−−→ (−1)Sj ·ℓi,j x
+ h                     E                             i                                     [i−1]
+                                                                                                                                          
+                                          Unlookup
+     x(i,we )   t[i−1]
+                          |ℓi,j ⟩n |r⟩n 7−−−−−→ · · · ≡                       (i,we )   t             unary(x(i,we ) ) 2we |r⟩n |0⟩n−2we 
+                                                                                                   n
+                                                                                                                                          
+                        n                                                                                                                
+                                                         Lookup FS                     E                                                 
+                                                                     j            [i−1]
+                                                         7−−−−−−−→ x(i,we ) t                unary(x(i,we ) ) 2we |r⟩n |0⟩n−2we
+                                                                                                                                         
+                                                                                                                                          
+                                                                                         n                                               
+                                                                   †
+                                                                                  E                                                      
+                                                             Unary           [i−1]
+                                                          7−−−−→ x(i,we ) t            |0⟩n |r⟩n
+                                                                                               n
+
+    Each lookup is addressed by a = expn||mult that combines an (outer loop) exponentiation window index
+expn and an (inner loop) multiplication window index mult. Gidney’s [Gid19c] unary unlookup reduction is
+then applied to this construction.
+    We improve this further, exploiting the nested loop structure. Notice that the outer index expn stays fixed
+while the circuit iterates over the inner index mult. In our proposed circuit (Figure 7), we use mult as the
+address of the fixup table FSj and the “unarized” expn as the target. The binary-to-unary initialization of expn
+needs to be done only once before entering the inner loop, and the erasure of the unary register only once right
+at the end of the inner loop—whereas, in the unmodified version, there is a reset and initialization after every
+iteration within the inner loop. Thus, the cost of our circuit is dominated by the phase lookups (FSj ) within
+each iteration, with the one-time unary initialization and reset contributing negligibly in comparison. Overall,
+this leads to a halving of the Toffoli cost of unlookups in the original windowed modular exponentiation
+algorithm. After every lookup in the inner loop, let’s instead perform the operation
+                                                                                               E             
+                                                          H, Measure
+    h                E                              i    7−−−−−−→(−1)sj ·ℓi,j x(i,we ) t[i−1] |Sj ⟩n |r⟩n
+                                      Def. Unlookup                                              n           
+      x(i,we ) t[i−1] |ℓi,j ⟩n |r⟩n 7−−−−−−−−→ · · · ≡                                          E            .
+                       n                                     Reset Sj   Sj ·ℓi,j           [i−1]
+                                                           7−−−−−→(−1)           x(i,we ) t         |0⟩n |r⟩n
+                                                                                                                      n
+
+The value Sj is recorded classically, and aphase fixup
+                                                       table FSj is constructed (indexed/addressed by mult).
+                                                          n
+At the end of the inner loop, we have p =                 wt − 1      classical bit strings Sj , and p different phase fixup tables
+FSj ; ∀j ∈ {0, 1, · · · , p − 1}. The state at this stage is:
+                                                   Pp−1                                E
+                                            (−1)    k=0 Sk ·ℓi,j   x(i,we )   t[i−1]           |0⟩n |r⟩n .
+                                                                                           n
+
+We can now construct a unary register with input x(i,we ) , and window over the register t to perform our
+phase corrections with FSj , i.e.
+      Pp−1                            E                              E
+  (−1) k=0 Sk ·ℓi,j x(i,we ) t[i−1]       unary(x(i,we ) ) 2we t[i] |0⟩n−2we
+                                       n                               n
+                                Lookup FS0      Pp−1                               E                              E
+                                                       S    ·ℓ
+                             7−−−−−−−→ (−1) k=1           k   i,j
+                                                                  x(i,we ) t[i−1]      unary(x(i,we ) ) 2we t[i] |0⟩n−2we
+                                                                                     n                              n
+                                Lookup FS1      Pp−1                               E                              E
+                                                       S    ·ℓ               [i−1]                            [i]
+                              7−−−−−−−→ (−1) k=2          k   i,j
+                                                                  x(i,we ) t           unary(x(i,we ) ) 2we t         |0⟩n−2we
+                                                                                                   n                       n
+                                     ..
+                                      .
+                                        Lookup FSp−2                              E                              E
+                                    7−−−−−−−−−→ (−1)Sp−1 ·ℓi,p−1 x(i,we ) t[i−1]        unary(x(i,we ) ) 2we t[i] |0⟩n−2we
+                                                                                     n                            n
+                                        Lookup FSp−1               E                              E
+                                                             [i−1]                            [i]
+                                     7−−−−−−−−−→ x(i,we ) t            unary(x(i,we ) ) 2we t         |0⟩n−2we
+                                                                     n                              n
+                                        Unary† , Swap
+                                                                E            E
+                                      7−−−−−−−−→ x(i,we ) t[i−1] |0⟩n t[i] .
+                                                                         n                 n
+
+
+
+                                                                       13
+Here, unary† represents the uncomputation of the unary register. If we were to perform a more general
+complexity analysis on the impact of deferred uncomputation on windowed modular exponentiation, we see
+that
+                                           nne                    wm we
+                                #Tof = 2        (2we +wm + 2n + 2    · 2 + 2 wm )
+                                          wm we                    n
+                                           nne                    wm we
+                                depth = 2       (2we +wm + 2n + 2    · 2 + 2wm ).
+                                          wm we                    n
+
+3.2     Selective lookups
+Although lookup tables differ for various moduli N and exponent bases b, they share some structural
+similarities for specific addresses. During a lookup addition of the ith exponent window (of size we ) and the
+j th multiplication window (of size wm ), we construct a classical table Ti,j corresponding to addresses stored in
+the register m(j,wm ) ||x(i,we ) . For a classical bit string address a = mult||expn, with mult ∈ {0, 1, · · · , 2wm − 1}
+and expn ∈ {0, 1, · · · , 2we − 1}, the lookup table Ti,j holds the following values:
+                                                                    iwe
+                                  Ti,j (mult, expn) := (bexpn2            2jwm mult) mod N .
+
+Ti,j contains 2we +wm distinct values (for all combinations of length we and wm bit strings). Upon examining
+the values associated with addresses where mult = 0, we observe that Ti,j (mult, ∗) = 0 regardless of i, j, and
+expn. Consequently, we can initiate lookups directly from mult = 1 since there are no relevant values for
+mult = 0. This adjustment would save us 2wm lookups per query.
+    On the other hand, for all addresses with expn = 0, we have Ti,j (mult, expn) = mult2jwm . Thus, mult is
+directly copied to the target register. We propose to perform this copying at the start of every lookup. Note
+that the lookup table must be updated with new values:
+                                                        iwe
+                             ′
+                            Ti,j (mult, expn) = (bexpn2       2jwm mult mod N ) ⊕ 2jwm mult.
+
+This adjustment is necessary because the initial copying operation applies uniformly across all addresses.
+                                         we
+                            exponent                                  Input expn = x|[phase
+                                                                                    (i,we ) = ]|
+
+                            t(0,wm )                                  Input mult = t(0,wm )
+                                         ..
+                                          .
+                         t(p−1,wm )
+
+                                         ..
+                                                                                  ′
+                             lookup       ..                    Lookup v = Ti,0 (expn, mult)
+                                           ..
+
+Figure 8: Proposed optimization for pruned table. The sequence of CNOTs before the lookup operation, performs a copy
+operation into the lookup register. The lookup table is then modified to take into account the uncontrolled copy operation we
+initially performed. Here, p represents the number of windows of size wm the register t can be split into.
+
+
+We need to correct the lookup values for cases where expn ̸= 0. The initial copying operation is equivalent to
+performing a lookup operation v ← 2jwm mult. Subsequently, we perform a lookup of Ti,j  ′
+                                                                                          (mult, expn), which
+updates the lookup register as follows:
+
+                             v ← 2jwm mult ⊕ Ti,j
+                                              ′
+                                                  (mult, expn)
+                                                       iwe
+                               = 2jwm mult ⊕ (bexpn2         2jwm mult mod N ) ⊕ 2jwm mult
+                                          iwe
+                               = (bexpn2        2jwm mult) mod N
+                               = Ti,j (mult, expn)
+
+    This progression shows that the final value in the lookup register correctly corresponds to Ti,j (mult, expn).
+This modification yields a saving of 2wm − 1 lookups (adjusting for the fact that otherwise, we would
+double-count the savings from the previous optimization for the case mult = 0). Refer to Fig 8 for a detailed
+circuit diagram of this copy-and-update-table lookup operation.
+
+
+
+                                                               14
+     Analytically, we see that the size and depth complexity of the circuit becomes
+                                          nne                   √
+                              #Tof = 2         (2we +wm + 2n + 3 2we +wm − 2we )
+                                         wm we
+                                          nne                   √
+                              depth = 2        (2we +wm + 2n + 3 2we +wm − 2we ).
+                                         wm we
+
+3.3          Larger initial lookup
+While windowed modular exponentiation typically processes the exponent in small windows of size 12 log n to
+balance precomputation and the number of iterations of the lookup-additions, we investigate an optimization
+for the algorithm’s beginning phase. By combining multiple initial exponent windows into a single, larger
+lookup operation, we show below how to slightly reduce the number of modular multiplications and thus
+decrease the overall Toffoli gate count. Recall that with x(i,we ) we represent the i-th window of size we in
+the exponent and with t(j,wt ) we represent the j-th window of size wt in the multiplication register. We also
+recall from Section 2.2 how modular exponentiation is performed using windowing:
+
+                                                               x                        E
+                                                            ×b (0,we ) mod N
+                                   x(0,we ) w |1⟩n |0⟩2n 7−−−−−−−−−−−→ x(0,we ) w t[0] |0⟩2n
+                                               e                                 e       n
+                                               E           2we x(1,w )                  E
+                                           [0]           ×b         e mod N
+                                                                                    [1]
+                             x(1,we ) w t        |0⟩2n 7−−−−−−−−−−−−−→ x(1,we ) w t        |0⟩2n
+                                            e          n                                                                 e        n
+                                                                                ..
+                                                                                 . Iterate over i exponent windows
+                                              E                                                  E
+                                                      ×b(       )x(i,we ) mod N
+                                                          2i·we
+
+                   x(i,we ) w           t[i−1] |0⟩2n 7−−−−−−−−−−−−−−−→ x(i,we ) w t[i] |0⟩2n
+                                    e           n                                                                        e       n
+                                                                           ..
+                                                                            . Iterate over the rest of the exponent windows
+                                   E                                                             E
+                                            ×b(          ) (k−1,we ) mod N
+                                                2(k−1)·we x
+
+     x(k−1,we ) w            t[k−2] |0⟩2n 7−−−−−−−−−−−−−−−−−−−−→ x(k−1,we ) w t[k−1] |0⟩2n
+                     e                  n                                                                                    e                 n
+
+
+  x(0,we )            Input x(0,w
+                             |[phase
+                                  e) = ]|
+
+
+  x(1,we )                                          Input x(1,w
+                                                           |[phase
+                                                                e) = ]|
+
+
+  x(2,we )                                                                      Input x(2,w
+                                                                                       |[phase
+                                                                                           e)  = ]|
+
+
+             ···              ···                             ···                                            ···   ···                         ···
+
+x(k−2,we )                                                                                                                              Input x(k−2,w
+                                                                                                                                                  |[phase
+                                                                                                                                                      e)  = ]|
+
+
+x(k−1,we )                                                                                                                                                                   Input x(k−1,w
+                                                                                                                                                                                       |[phase
+                                                                                                                                                                                           e)  = ]|
+
+
+             n           0                            we                            2we                                                (k−2)we                              (k−1)we
+      out           ×b2 x(0,we ) modN           ×b2      x   (1,we )   modN   ×b2       x   (2,we )   modN                       ×b2           x   (k−2,we )   modN   ×b2           x(k−1,we )
+                                                                                                                                                                                                 modN
+
+
+
+
+Figure 9: Standard windowed modular exponentiation. The first three exponent windows (x(0,we ) , x(1,we ) , and x(2,we ) ) are
+highlighted, demonstrating the typical approach of processing the exponent in small windows. Each window leads to a separate
+modular multiplication operation
+
+    The initial sequence of modular multiplications in the modular exponentiation algorithm can be reduced to
+a single lookup operation over the first (i + 1)we bits of the exponent2 . However, as i increases, this approach
+becomes more expensive than regular windowed modular multiplication, potentially negating the benefits
+of windowed arithmetic due to exponential growth in lookup table size. We explore the tradeoff between a
+exponentiation based on direct lookups (for the first e bits of the exponent) versus the cost of exponentiation
+based on lookup-additions. To determine the optimal size of this initial “large” lookup, we compare its cost
+to that of performing 2i separate windowed multiplications (one for the out-of-place multiplication register
+and one for uncomputation of the previous multiplicand; see Section 2.2). From Figure 14, for the problem of
+   2 Note, in these set of equations, we only show the current exponent window of qubits that are involved in the windowing
+
+operation. Based on the implementation of modular exponentiation, the previous exponent windows either remain in memory
+until all windows are exponentiated, or are repeatedly measured and reused using a Semiclassical QFT [GN96]
+
+
+
+                                                                                                      15
+                  x(0,we )              Input x(0,w
+                                               |[phase
+                                                   e)  = ]|
+
+
+                  x(1,we )              Input x(1,w
+                                               |[phase
+                                                   e)  = ]|
+
+
+                  x(2,we )              Input x(2,w
+                                               |[phase
+                                                   e)  = ]|
+
+
+                             ···                                               ···                                ···                    ···
+
+                x(k−2,we )                                               Input x(k−2,w
+                                                                                   |[phase
+                                                                                       e)  = ]|
+
+
+                x(k−1,we )                                                                                 Input x(k−2,w
+                                                                                                                     |[phase
+                                                                                                                         e)  = ]|
+
+
+                             n              0                        (k−2)we                              (k−1)we
+                      out          Lookup b2 x(0,3we ) modN        ×b2       x   (k−2,we )   modN   ×b2           x   (k−1,we )   modN
+
+
+
+
+Figure 10: Optimized initial stage of quantum modular exponentiation. In contrast to the standard approach shown in Figure 9,
+the first three exponent windows have been combined into a single, larger lookup operation. This optimization reduces the
+number of modular multiplications required in the early stages of the algorithm, leading to savings in Tof count and depth.
+
+
+
+2048-bit modular exponentiation, we see that it only costs about 1 million Tof gates, versus 10 million Tof
+gates for the same operation to be performed with a window size of 5 (i.e. using 5 bit exponent windows).
+More specifics on these costs calculations can be seen in Appendix. A
+   If we were to perform a more general complexity analysis (e.g. looking up n′e exponent bits directly) on
+the impact of a larger initial lookup on windowed modular exponentiation, we see that
+
+                                                   n(ne − n′e ) we +wm
+                                                     ′                         √
+                                   #Tof = 2ne + 2              (2      + 2n + 3 2we +wm ),
+                                                     wm we
+                                             ′     n(ne − n′e ) we +wm         √
+                                   depth = 2ne + 2             (2      + 2n + 3 2we +wm ).
+                                                     wm we
+
+3.4     Lower-depth unary conversion
+In the context of uncomputing quantum table lookups, the unary conversion step plays a pivotal role.
+Typically, this involves taking half of the address qubits and applying a unary conversion circuit, as illustrated
+in Figure 1. However, the depth of this standard unary conversion circuit grows exponentially with the input
+size. Specifically, for an address register of size k qubits, using half of these qubits for unary conversion
+results in a Tof depth of 2k/2 − 1. To achieve lower depth in unary conversion, we draw on concepts from
+quantum random access memory (QRAM) architectures. QRAM provides a means to reduce the depth of
+lookup operations, albeit at the cost of an exponential increase in qubit usage relative to the address size. A
+QRAM lookup can be decomposed into two main stages: the address routing stage and the lookup stage. Our
+focus is on the address routing stage (as illustrated in Figure 11), which involves a combination of address
+register fanout and unary encoding. This stage typically requires approximately 2w qubits, where w is the
+size of the address register. The circuit can be seen as traversing down a binary tree, and setting the leaf at
+index i to 1, if and only if a = i. All the other qubits are set to 0. This is exactly what a unary encoding
+does. This method of unary encoding has a Tof depth of w for a w bit address, with a space cost coming
+from the largest address fanout and space required to store the unary register. This gives us a total space
+cost of 2w + 2w−1 − 1. Finally, the Tof count is 2w − 1. We have an improvement in the depth compared to
+the original unary circuit, ours being w vs. the original 2w − 1. The price we pay is the space complexity,
+ours being 2w + 2w−1 − 1 while the original is 2w .
+
+
+
+
+                                                              16
+                               |0⟩
+                               |0⟩
+                               |0⟩
+
+
+                               |i2 ⟩
+                               |i1 ⟩
+                               |i0 ⟩
+
+
+
+
+                                                            |0⟩
+
+
+
+
+                                             |0⟩
+
+
+                                                            |0⟩
+
+
+                               |0⟩
+                               |1⟩
+                                                            |0⟩
+
+
+                                             |0⟩
+
+
+
+
+                                                            |0⟩
+
+
+
+
+Figure 11: Illustration of the address routing stage of a bucket brigade QRAM with n = 3 address qubits. This figure here is a
+part of the architecture proposed by [Aru+15] and edited in [Dor+24]
+
+
+
+    In the specific context of factoring problems or modular exponentiation, the number of qubits available for
+lookup operations is typically exponential in the number of address qubits. The size and depth complexities
+of the circuit become
+                                         nne                   √
+                             #Tof = 2         (2we +wm + 2n + 3 2we +wm ),
+                                        wm we
+                                         nne                   √
+                             depth = 2        (2we +wm + 2n + 2 2we +wm + we − 1).
+                                        wm we
+
+4     Measuring the impact on attacks against RSA
+Many quantum algorithms have been proposed that offer an asymptotic speedup over classical counterparts.
+However, practical implementation requires careful consideration of constant factors, which includes the
+challenge of estimating the non-asymptotic cost in terms of time and space. A significant overhead in running
+these algorithms is the number of physical qubits needed to protect logical information from noise during
+computation.
+    With a clearer understanding of the parameters for large-scale quantum computers—such as qubit modality,
+expected gate error rates, gate speeds, and potential quantum error-correcting codes (QECC)—estimating the
+fault-tolerant costs associated with specific quantum algorithms has become more feasible. A given algorithm
+does not have a unique compilation; therefore, optimizing these compilations for resource efficiency is among
+the most critical and complex problems in fault-tolerant quantum computing. Resource estimation plays a
+vital role in addressing this challenge.
+    In this section, we build upon the resource estimation framework introduced by Gidney and Ekerå [GE21]
+by incorporating our proposed enhancements to windowed arithmetic. Our analysis targets a superconducting
+qubit architecture, with computations encoded in rotated surface codes and logical operations performed
+using lattice surgery [Hor+12; FG18]. We assume a physical error rate of 10−3 (and also test with a more
+optimistic 10−4 error rate), reflecting the fidelity of operations such as single- and two-qubit gates, state
+initialization, and measurements. Additionally, we consider a cycle time of 1µs, representing the duration
+required to measure all stabilizers of a surface code patch. These parameters are chosen to align with the
+anticipated capabilities of future fault-tolerant quantum hardware and provide a consistent baseline for
+comparison. For a distance-d rotated surface code, we require 2(d + 1)2 physical qubits to encode a single
+logical qubit of information. To compare with [GE21], our goal is to minimize the skewed volume, a metric
+
+
+
+                                                              17
+that balances the tradeoffs between qubit count and runtime, defined as:
+
+                                                 skewed volume = (Mqb)q × E[hrs]
+
+where Mqb is the total number of physical qubits in megaqubits (millions of qubits), and E[hrs] is the expected
+runtime in hours, accounting for the likelihood of retries due to logical errors. The exponent q reflects the
+tradeoff between qubit resources and runtime, and in [GE21], q is taken to be 1.2, indicating a preference for
+reducing the physical qubit count (Mqb) over the expected runtime (E[hrs]). The value of q can be adjusted
+depending on the use case.
+
+  n       ne      gate err    L1     L2   doff     gmul   gexp   gsep      %    v.p.r    E[vol]    Mqb       hrs    E[hrs]    B Tofs
+ 1024    1493       10−3      15     27    5        5      5     1024     6%    0.507    0.539     9.624    1.264    1.344    0.407
+ 2048    3029       10−3      15     27    4        5      5     1024    31%    4.047    5.865    19.249    5.046    7.313    2.698
+ 3072    4565       10−3      17     29    6        4      5     1024     9%   18.328    20.141   37.897   11.607   12.755    9.885
+ 4096    6101       10−3      17     31    9        4      5     1024     5%   47.963    50.488   54.616   21.077   22.186    23.038
+ 1024    1493       10−4       7     13    4        5      5      512     5%     0.07    0.073     2.637    0.633    0.667    0.415
+ 2048    3029       10−4       7     13    4        5      5      512    21%    0.558    0.706     5.273    2.538    3.212    2.774
+ 3072    4565       10−4       9     15    5        5      5      768     2%     2.92     2.98     9.12     7.686    7.843    8.595
+ 4096    6101       10−4       9     15    5        4      5      512     3%    6.791    7.001    15.241   10.693   11.024    23.773
+  n       ne      gate err    L1     L2   doff     gmul   gexp   gsep      %    v.p.r    E[vol]    Mqb       hrs    E[hrs]    B Tofs
+ 1024    1493       10−3      15     27    4        5      5     1024     6%    0.488    0.519     9.624    1.217    1.295    0.393
+ 2048    3029       10−3      17     27    6        5      5     1024    20%    4.419    5.524    21.616    4.906    6.133    2.656
+ 3072    4565       10−3      17     29    4        4      5     1024     9%   17.727    19.48    37.897   11.226   12.336    9.742
+ 4096    6101       10−3      17     31    8        4      5     1024     5%   46.424    48.867   54.616     20.4   21.474     22.8
+ 1024    1493       10−4       7     13    4        5      5      512     5%    0.067    0.071     2.637    0.612    0.644    0.402
+ 2048    3029       10−4       7     13    3        5      5      512    21%    0.541    0.684     5.273    2.461    3.115     2.72
+ 3072    4565       10−4       9     15    5        5      5      768     2%    2.851    2.909     9.12     7.503    7.656    8.486
+ 4096    6101       10−4       9     15    5        4      5      512     3%    6.588    6.792    15.241   10.374   10.695    23.559
+Table 3: The columns represent: the number of bits of the numbers to factor (n), the bits of the exponentiation register (ne ),
+the gate error (gate err), the level 1 and level 2 distances for the CCZ factories (L1 and L2 ), the deviation of the padding (doff )
+related to the error introduced by coset representation, the window size for the multiplication register of windowed arithmetic
+(gmul ), the window size for the exponent register of windowed arithmetic (gexp ), the size of the adder pieces for the oblivious carry
+runways (gsep ), the probability of having an error in the computation (retry risk - %), volume of the computation for a single
+run expressed in megaqubit-days (v.p.r.), expected volume of the computation taking into account the retry risk (E[volume]),
+number of megaqubits (Mqb, 106 ), runtime in hours for a single run (hours), expected runtime taking into account the error
+(E[hrs]), and number of Tof gates in billions (B Tofs). Values in red indicate degradation (increases) and values in blue indicate
+improvements (decreases) compared to the corresponding values in the first table.
+
+
+
+             n      ne       gate err     Mqb             E[hrs]         % improvement       B Tofs        % improvement
+                                                       GE      Ours          E[hrs]        GE    Ours         in B Tofs
+           2048    3029       10−3        14.747     12.361 11.912           3.63%        2.656 2.607           1.85%
+           2048    3029       10−3        15.592     10.584 10.332           2.39%        2.665 2.609           2.11%
+           2048    3029       10−3        17.492      9.834    9.548         2.91%        2.656 2.621           1.31%
+           2048    3029       10−3        18.513      8.428    8.242         2.22%        2.665 2.616           1.85%
+           2048    3029       10−3        19.249      7.313     7.08         3.17%        2.698 2.643           2.06%
+           2048    3029       10−3        21.616      6.388    6.133         4.01%        2.698 2.656           1.57%
+           2048    3029       10−3        24.001      6.334    6.084         3.98%        2.695 2.656           1.45%
+           2048    3029       10−3        25.265      5.367    5.192         3.25%        3.041 2.988           1.76%
+           2048    3029       10−3        27.308      5.364    5.181         3.39%        3.045 2.992           1.75%
+           2048    3029       10−3        29.184      4.772    4.497         5.76%        3.125 3.079           1.48%
+           2048    3029       10−3        32.602      4.012     3.79         5.55%        3.132 3.085           1.51%
+           2048    3029       10−3        40.075      3.478    3.329         4.29%        3.718 3.085          17.02%
+Table 4: A summary of improvements from Table 5 (reported in the Appendix). In Table 5 we study the lowest expected
+runtimes of the two algorithms for attacking RSA-2048 keys with increasing qubit counts for a given number of physical qubits
+with (gate err 10−3 ). Every row in this table compares the improvements for the expected runtime and Tof count (in billions)
+for a fixed number of physical qubits (Mqb).
+
+
+    The improvements3 described in Sections 3.1, 3.2, 3.3 and 3.4 focus on reducing the Tof count and
+computational volume for modular arithmetic operations. When combined, these optimizations yield
+reductions in the Tof count and depth for cryptographically relevant attacks on RSA factoring by 1.5% to
+3.4%, as summarized in Table 3. More specifically, in the second line of the bottom part of the Table, we
+see nearly a 16% reduction in the expected runtime of the algorithm for factoring RSA-2048 bit integers at
+    3 To generate the graphs and the table, we used https://github.com/Inveriant/TAMARIND which is based on the code
+
+of [GE21]
+
+
+                                                                    18
+the cost of a 12% increase in the physical qubit count (owing to the reduced retry risk of the algorithm)
+when comparing the lowest skewed volume estimates of GE and ours. However, this increase in qubit count
+does not paint the full picture because the computed estimates are an artifact of the metric we are trying to
+optimize (the skewed volume in our case). The GE algorithm can also achieve lower expected runtimes at
+the cost of more physical qubits. For a more fair comparison, in Table 4 we explore the lowest achievable
+runtimes of both algorithms for a given number of physical qubits. We notice a 2–6% reduction in expected
+runtime when incorporating our proposed improvements. More tradeoffs are explored in Appendix C. In
+Figure 12 and Figure 13 we provide a broader comparison across various RSA key sizes.
+     Expected time (hours) and physical qubit count (megaqubits)
+
+
+
+
+                                                                                 Ekerå-Håstad - 0.1% gate error rate, hours
+                                                                                 Ekerå-Håstad - 0.1% gate error rate, megaqubits
+                                                                                 Ekerå-Håstad - 0.01% gate error rate, hours
+                                                                   100           Ekerå-Håstad - 0.01% gate error rate, megaqubits
+                                                                                 Our work - 0.1% gate error rate, hours
+                                                                    50           Our work - 0.1% gate error rate, megaqubits
+                                                                                 Our work - 0.01% gate error rate, hours
+                                                                                 Our work - 0.01% gate error rate, megaqubits
+                                                                    10
+                                                                     5
+
+
+
+                                                                     1
+                                                                    256
+
+
+
+
+                                                                                                                        512
+
+
+
+
+                                                                                                                                                              768
+
+
+
+
+                                                                                                                                                                                            1024
+
+
+
+
+                                                                                                                                                                                                              1280
+
+
+
+                                                                                                                                                                                                                                     1536
+
+
+
+                                                                                                                                                                                                                                                    1792
+
+
+                                                                                                                                                                                                                                                                    2048
+                                                                                                                                       Modulus length n (bits)
+Figure 12: Scaling comparison between the windowing [GE21] and optimized windowing (this work) of space and time costs
+with 10−3 and 10−4 gate error rates for small RSA key sizes.
+
+
+
+                                                                   100000
+     Expected time (hours) and physical qubit count (megaqubits)
+
+
+
+
+                                                                    50000
+                                                                                    Ekerå-Håstad - 0.1% gate error rate, hours
+                                                                                    Ekerå-Håstad - 0.1% gate error rate, megaqubits
+                                                                                    Ekerå-Håstad - 0.01% gate error rate, hours
+                                                                                    Ekerå-Håstad - 0.01% gate error rate, megaqubits
+                                                                    10000           Our work - 0.1% gate error rate, hours
+                                                                     5000           Our work - 0.1% gate error rate, megaqubits
+                                                                                    Our work - 0.01% gate error rate, hours
+                                                                                    Our work - 0.01% gate error rate, megaqubits
+                                                                     1000
+                                                                         500
+
+
+                                                                         100
+                                                                          50
+
+
+                                                                          10
+                                                                           5
+
+
+                                                                           1
+                                                                          1024
+
+
+
+
+                                                                                                  2048
+
+
+
+
+                                                                                                                3072
+
+
+                                                                                                                          4096
+
+                                                                                                                                    5120
+
+                                                                                                                                             6144
+                                                                                                                                                    7168
+                                                                                                                                                           8192
+
+                                                                                                                                                                    10240
+
+                                                                                                                                                                            12288
+                                                                                                                                                                                    14336
+                                                                                                                                                                                             16384
+
+                                                                                                                                                                                                     20480
+
+                                                                                                                                                                                                             24576
+                                                                                                                                                                                                                     28672
+                                                                                                                                                                                                                             32768
+
+                                                                                                                                                                                                                                            40960
+
+                                                                                                                                                                                                                                                    49152
+                                                                                                                                                                                                                                                            57344
+                                                                                                                                                                                                                                                                    65536
+
+
+
+
+                                                                                                                                           Modulus length n (bits)
+Figure 13: Scaling comparison between the windowing [GE21] and optimized windowing (this work) of space and time costs
+with 10−3 and 10−4 gate error rates for large RSA key sizes.
+
+
+
+
+                                                                                                                                                    19
+5    Discussion and conclusions
+In this paper, we examine Gidney’s windowed arithmetic construction [Gid19c] for efficient modular mul-
+tiplication and explore how it can be further optimized to reduce resource estimates for fault-tolerant
+implementations. Through the improvements described in this work, the quantum factoring circuit using
+windowed arithmetic can be made (slightly) cheaper on the algorithmic level. In Section 3, we present four
+algorithmic optimizations to the windowed arithmetic method, focusing on reducing the Tof cost and depth of
+lookups and unlookups, as well as minimizing the number of required lookups in the modular exponentiation
+algorithm used by Gidney. Finally, in Section 4 we test these proposed improvements within Gidney–Ekerå’s
+resource estimation framework [GE21] and demonstrate a reduction in the overall computational volume for
+factoring RSA-2048 integers.
+
+Recent improvements on factoring. While more recent factoring algorithms [Reg23; CFS24] (which we
+discussed in Section 1.2) present exciting theoretical advancements, they are still in their nascent stages, with
+considerable optimization required for practical execution. Some more recent results have made improvements
+to Regev’s factoring algorithm [Rag24; RV23; EG24]. To our knowledge, the best implementation of Regev’s
+algorithm [Rag24] uses only 10.4n qubits — vs. 3n qubits for the GE algorithm — and translates to a
+number of physical resources higher than the ones required by GE’s algorithm. The work of [CFS24] — under
+some heuristic assumptions — requires only n2 + o(1) qubits (specifically 1730 for RSA-2048), but requires
+6.9 × 1010 Tof gates, which is nearly 25 times the number of Tof gates required by GE’s algorithm (or our
+improvements). Furthermore, they require an average of 40 repetitions to succeed. We anticipate that new
+algorithmic subroutines will emerge in the near future, further reducing the physical resource requirements.
+In contrast, windowing arithmetic offers a more practical avenue for immediate improvements. Therefore, in
+this paper, we focus on optimizing the windowed arithmetic circuits in the GE algorithm and quantifying
+the impact of these improvements on the costs of breaking RSA and similar cryptographic protocols using
+quantum computers.
+
+Further techniques for reducing the depth. Several quantum lookup table architectures exist, including
+parallel methods that trade size for reduced depth. These architectures have been explored in various
+works [GLM08; JR23; All+23; LKS24; YZ23; ZSL24]. The bucket brigade QRAM is notable for achieving
+favorable query fidelities but requires a large qubit count that scales with both the number of memory elements
+and the word length (n) of each element [Han21] For memory lookups and addition,  √      using such architectures
+could reduce the depth of a LookupAdd operation from (2we +wm + 2n + 3 2we +wm ) to O( nk (we′ + wm          ′
+                                                                                                               )),
+                                       we′ +wm
+                                             ′
+with a space overhead of O(n + k2              ) for 1 ≤ k ≤ n. However, as mentioned previously, this comes
+at a cost: when k = 1, the QRAM is sequential and depth becomes linear in the word length (which for
+us is n), losing the tradeoff. Conversely, with k = n, the QRAM is fully parallel, but the qubit count
+increases significantly, necessitating smaller window sizes (we′ , wm ′
+                                                                        ). Even with an impractical distance of 3
+for algorithmic qubits, some crude estimates show that estimated physical qubit costs would be over 200
+million (nearly ten times more than GE’s factoring cost). Newer methods of magic state purification might
+offer cheaper implementations in the future [GSJ24]. We leave this analysis for future work.
+
+Further techniques for reducing resources We introduce a technique we call sliced windowing (described
+in Appendix B), which offers two different flavors for performing tradeoff at a logical level by only partially
+loading a lookup table into memory. The first can reduce the number of logical qubits in the lookup register
+by 50% (which is a 16% reduction in the number of logical qubits). The second one can reduce the number of
+Tof gates for addition by 50%. While we show that these techniques reduce the number of logical qubits
+or the Tof count, they come at the expense of an increased circuit depth. This added depth necessitates
+higher-distance QEC codes to ensure fault tolerance, which can lead to a net increase in the overall physical
+resource cost, and hence is not included in our comparison. Unfortunately, our analysis indicates that sliced
+windowing is unlikely to reduce the number of physical qubits, but we hope that our work can inspire more
+impactful techniques in the future.
+
+
+6    Acknowledgements
+This work started when AS was working at Inveriant Pte. Ltd. AS is supported by Innovate UK under grant
+10004359. This work is supported by the National Research Foundation, Singapore, and A*STAR under its
+
+
+                                                       20
+Centre for Quantum Technologies Funding Initiative (S24Q2d0009). We also acknowledge funding from the
+Quantum Engineering Programme (QEP 2.0) under grants NRF2021-QEP2-02-P05 and NRF2021-QEP2-
+02-P01. We thank Filippo Miatto, Ilan Tzitrin, and Rafael Alexander for useful discussions on resource
+estimations, Miklos Santha and Michele Orrù for useful discussions quantum and classical arithmetic.
+
+
+References
+[All+23]    Jonathan Allcock, Jinge Bao, João F Doriguello, Alessandro Luongo, and Miklos Santha.
+           “Constant-depth circuits for Uniformly Controlled Gates and Boolean functions with application
+            to quantum memory circuits”. In: arXiv preprint arXiv:2308.08539 (2023).
+[Aru+15]   Srinivasan Arunachalam, Vlad Gheorghiu, Tomas Jochym-O’Connor, Michele Mosca, and Priyaa
+           Varshinee Srinivasan. “On the robustness of bucket brigade quantum RAM”. In: New Journal of
+           Physics 17.12 (2015), p. 123010.
+[Bab+18]   Ryan Babbush, Craig Gidney, Dominic W Berry, Nathan Wiebe, Jarrod McClean, Alexandru
+           Paler, Austin Fowler, and Hartmut Neven. “Encoding electronic spectra in quantum circuits with
+           linear T complexity”. In: Physical Review X 8.4 (2018), p. 041015.
+[Ben73]    C. H. Bennett. “Logical Reversibility of Computation”. In: IBM Journal of R&D 17.6 (1973),
+           pp. 525–532.
+[CFS24]    Clémence Chevignard, Pierre-Alain Fouque, and André Schrottenloher. “Reducing the Number
+           of Qubits in Quantum Factoring”. In: Cryptology ePrint Archive (2024).
+[Cuc+04]   Steven A Cuccaro, Thomas G Draper, Samuel A Kutin, and David Petrie Moulton. “A new
+           quantum ripple-carry addition circuit”. In: arXiv preprint quant-ph/0410184 (2004).
+[Dor+24]   Joao F Doriguello, George Giapitzakis, Alessandro Luongo, and Aditya Morolia. “On the prac-
+           ticality of quantum sieving algorithms for the shortest vector problem”. In: arXiv preprint
+           arXiv:2410.13759 (2024).
+[Dra00]    Thomas G Draper. “Addition on a quantum computer”. In: arXiv preprint quant-ph/0008033
+           (2000).
+[EG24]     Martin Ekerå and Joel Gärtner. “Extending Regev’s factoring algorithm to compute discrete
+           logarithms”. In: International Conference on Post-Quantum Cryptography. Springer. 2024, pp. 211–
+           242.
+[EH17]     Martin Ekerå and Johan Håstad. “Quantum algorithms for computing short discrete logarithms
+           and factoring RSA integers”. In: Post-Quantum Cryptography: 8th International Workshop,
+           PQCrypto 2017, Utrecht, The Netherlands, June 26-28, 2017, Proceedings 8. Springer. 2017,
+           pp. 347–363.
+[FG18]     Austin G Fowler and Craig Gidney. “Low overhead quantum computation using lattice surgery”.
+           In: arXiv preprint arXiv:1808.06709 (2018).
+[GE21]     Craig Gidney and Martin Ekerå. “How to factor 2048 bit RSA integers in 8 hours using 20 million
+           noisy qubits”. In: Quantum 5 (2021), p. 433.
+[GF19]     Craig Gidney and Austin G Fowler. “Flexible layout of surface code computations using AutoCCZ
+           states”. In: arXiv preprint arXiv:1905.08916 (2019).
+[Gid18]    Craig Gidney. “Halving the cost of quantum addition”. In: Quantum 2 (2018), p. 74.
+[Gid19a]   Craig Gidney. “Approximate encoded permutations and piecewise quantum adders”. In: arXiv
+           preprint arXiv:1905.08488 (2019).
+[Gid19b]   Craig Gidney. “Asymptotically efficient quantum Karatsuba multiplication”. In: arXiv preprint
+           arXiv:1904.07356 (2019).
+[Gid19c]   Craig Gidney. “Windowed quantum arithmetic”. In: arXiv preprint arXiv:1905.07682 (2019).
+[GLM08]    Vittorio Giovannetti, Seth Lloyd, and Lorenzo Maccone. “Architectures for a quantum random
+           access memory”. In: Physical Review A—Atomic, Molecular, and Optical Physics 78.5 (2008),
+           p. 052310.
+[GN96]     Robert B Griffiths and Chi-Sheng Niu. “Semiclassical Fourier transform for quantum computa-
+           tion”. In: Physical Review Letters 76.17 (1996), p. 3228.
+
+
+                                                   21
+[Gou+23]    Élie Gouzien, Diego Ruiz, Francois-Marie Le Régent, Jérémie Guillaud, and Nicolas Sangouard.
+            “Performance analysis of a repetition cat code architecture: Computing 256-bit elliptic curve
+            logarithm in 9 hours with 126 133 cat qubits”. In: Physical Review Letters 131.4 (2023), p. 040602.
+[GSJ24]     Craig Gidney, Noah Shutty, and Cody Jones. “Magic state cultivation: growing T states as cheap
+            as CNOT gates”. In: arXiv preprint arXiv:2409.17595 (2024).
+[Hän+20]   Thomas Häner, Samuel Jaques, Michael Naehrig, Martin Roetteler, and Mathias Soeken. “Im-
+            proved quantum circuits for elliptic curve discrete logarithms”. In: (2020).
+[Han21]     Connor T Hann. “Practicality of quantum random access memory”. PhD thesis. Yale University,
+            2021.
+[Hor+12]    Dominic Horsman, Austin G Fowler, Simon Devitt, and Rodney Van Meter. “Surface code
+            quantum computing by lattice surgery”. In: New Journal of Physics 14.12 (2012), p. 123011.
+[Jon13]     Cody Jones. “Low-overhead constructions for the fault-tolerant Toffoli gate”. In: Physical Review
+            A—Atomic, Molecular, and Optical Physics 87.2 (2013), p. 022328.
+[JR23]      Samuel Jaques and Arthur G Rattew. “Qram: A survey and critique”. In: arXiv preprint
+            arXiv:2305.10310 (2023).
+[Knu14]     Donald E Knuth. The Art of Computer Programming: Seminumerical Algorithms, Volume 2.
+            Addison-Wesley Professional, 2014.
+[KSS21]     Niels Kornerup, Jonathan Sadun, and David Soloveichik. “Tight Bounds on the Spooky Pebble
+            Game: Recycling Qubits with Measurements”. In: arXiv preprint arXiv:2110.08973 (2021).
+[KY24]      Gregory D Kahanamoku-Meyer and Norman Y Yao. “Fast quantum integer multiplication with
+            zero ancillas”. In: arXiv preprint arXiv:2403.18006 (2024).
+[Lit23]     Daniel Litinski. “How to compute a 256-bit elliptic curve private key with only 50 million Toffoli
+            gates”. In: arXiv preprint arXiv:2306.08585 (2023).
+[Lit24]     Daniel Litinski. “Quantum schoolbook multiplication with fewer Toffoli gates”. In: arXiv preprint
+            arXiv:2410.00899 (2024).
+[LKS24]     Guang Hao Low, Vadym Kliuchnikov, and Luke Schaeffer. “Trading T gates for dirty qubits in
+            state preparation and unitary synthesis”. In: Quantum 8 (2024), p. 1375.
+[Luo+24]    Alessandro Luongo, Antonio Michele Miti, Varun Narasimhachar, and Adithya Sireesh. “Measurement-
+            based uncomputation of quantum circuits for modular arithmetic”. In: arXiv preprint arXiv:2407.20167
+            (2024).
+[MS19]      Alexander May and Lars Schlieper. “Quantum period finding is compression robust”. In: arXiv
+            preprint arXiv:1905.10074 (2019).
+[NC11]      Michael A. Nielsen and Isaac L. Chuang. Quantum Computation and Quantum Information:
+            10th Anniversary Edition. Cambridge University Press, 2011. isbn: 9781107002173.
+[PHA13]     PAUL PHAM. “A 2D NEAREST-NEIGHBOR QUANTUM ARCHITECTURE FOR FACTOR-
+            ING IN POLYLOGARITHMIC DEPTH”. In: Quantum Information and Computation 13.11&12
+            (2013), pp. 0937–0962.
+[Rag24]     Seyoon Ragavan. “Regev Factoring Beyond Fibonacci: Optimizing Prefactors”. In: Cryptology
+            ePrint Archive (2024).
+[RC18]      Rich Rines and Isaac Chuang. “High performance quantum modular multipliers”. In: arXiv
+            preprint arXiv:1801.01081 (2018).
+[Reg23]     Oded Regev. “An efficient quantum factoring algorithm”. In: arXiv preprint arXiv:2308.06572
+            (2023).
+[RV23]      Seyoon Ragavan and Vinod Vaikuntanathan. “Optimizing Space in Regev’s Factoring Algorithm”.
+            In: arXiv preprint arXiv:2310.00899 (2023).
+[Sei01]     Jean-Pierre Seifert. “Using fewer qubits in Shor’s factorization algorithm via simultaneous
+            diophantine approximation”. In: Cryptographers’ Track at the RSA Conference. Springer. 2001,
+            pp. 319–327.
+[Sho94]     Peter W. Shor. “Algorithms for quantum computation: discrete logarithms and factoring”. In:
+            Proceedings 35th Annual Symposium on Foundations of Computer Science (1994), pp. 124–134.
+
+
+                                                      22
+[Wan+24] Siyi Wang, Xiufan Li, Wei Jie Bryan Lee, Suman Deb, Eugene Lim, and Anupam Chattopadhyay.
+         “A Comprehensive Study of Quantum Arithmetic Circuits”. In: arXiv preprint arXiv:2406.03867
+         (2024).
+[YZ23]         Pei Yuan and Shengyu Zhang. “Optimal (controlled) quantum state preparation and improved
+               unitary synthesis by quantum circuits with any number of ancillary qubits”. In: Quantum 7
+               (2023), p. 956.
+[Zal06]        Christof Zalka. “Shor’s algorithm with fewer (pure) qubits”. In: arXiv preprint quant-ph/0601097
+               (2006).
+[Zal98]        Christof Zalka. Fast versions of Shor’s quantum factoring algorithm. arXiv:quant-ph/9806084.
+               June 1998.
+[ZSL24]        Shuchen Zhu, Aarthi Sundaram, and Guang Hao Low. “Unified architecture for a quantum
+               lookup table”. In: arXiv preprint arXiv:2406.18030 (2024).
+
+
+A       Larger initial lookup for RSA-2048
+For RSA-2048 with parameters we = 5, wm = 5, and n = 2048, the cost of windowed modular exponentiation
+for a single exponent window is approximately:
+                                                                        n
+                                                         ntof = 2 ·       (CLookup + CModAdd + CUnlookup ) ≈ 4.25 million Tof
+                                                                       wm
+    where: n: number of bits in the modulus (2048 for RSA-2048), wm : window size for multiplication
+(5), CLookup = 1024: cost of a lookup operation, CModAdd = 4096: cost of a Cuccaro addition over n bits,
+CUnlookup = 64: cost for creating the unary register representation (32) and applying the phase fixup (32).
+The multiplicative factor of 2 in the equation account for the number of circuit calls required for computation
+and uncomputation of windowed multiplication, while wnm is the number of windows needed to cover the
+multiplication register. Note that clearing the unary register incurs no additional Tof cost when using the
+Logical-AND method for creating the unary representation. For the first n′e exponent bits, the total cost of
+exponentiation is given by:
+
+                                                                                                n′e
+                                                                                ntof ≈ 4.25 ·       million Tof
+                                                                                                we
+          n′
+where wee is the number of windows over the first n′e exponent bits. In contrast, performing a direct lookup
+                                                 ′
+over the first n′e exponent bits would require 2ne Tof.
+
+                                         50
+                                                         Direct exponentiation
+                                                         Lookup-addition (n=1024)
+                                                         Lookup-addition (n=2048)
+                                         40              Lookup-addition (n=3072)
+               Toffoli Count (in millions)
+
+
+
+
+                                         30
+
+
+
+                                         20
+
+
+
+                                         10
+
+
+
+                                             0
+                                                 4   5     6   7   8    9    10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27
+                                                                                    Number of bits exponentiated
+Figure 14: Comparison of the cost of direct exponentiation vs. lookup-addition based exponentiation for the first n′e bits of
+                                                                  ′
+the exponent register. The direct exponentiation cost, given by 2ne , is represented by a dashed line, while the lookup-addition
+                                                                        n′
+based exponentiation cost, given by 2 · we · wn · (2we +wm + 2n + 2(we +wm )/2 ), is shown in solid lines for different values of n.
+                                         e    m
+Analytical formulas are used to compute the costs.
+
+
+
+
+                                                                                                23
+B     Sliced windowing
+During the windowing stage of GE’s factoring algorithm, precomputed lookup table values are loaded into
+an n-qubit lookup register. We propose a method to reduce the number of logical qubits required for these
+lookups by effectively utilizing carry runways. The GE algorithm employs carry runways to parallelize
+quantum addition. Assuming the carry runways divide the n-qubit quantum register into m pieces, each
+                  n                                         n                   n
+piece is of size m  . Our approach involves loading only m    or a multiple of m  bits of the lookup table at a
+                                                 n
+time. We then add this loaded register of size m to the relevant quantum register, uncompute the values, and
+                n                                                                                            n
+load the next m    bits. This strategy reduces the abstract qubit count of the GE algorithm from 3n to 2n + m  .
+Although this increases the Tof count of the lookups by a factor of m, it can be managed by rearranging the
+order of the lookups and additions. We propose two variants of the sliced windowing scheme that reduce the
+logical qubit count without impacting the Tof count.
+
+B.1     Variant A: logical qubit reduction with sliced windowing
+In the original windowing circuit for a number N (with n = log N ), let the exponent register e have a window
+size we = ⌊ 21 log n⌋, a the multiplication register m (of size n) have a window size wm = ⌊ 21 log n⌋. Assume we
+use a lookup register ℓ of size n/2 (instead of the general size n), and a target register t of size n for adding the
+lookup values. In this variant, we perform lookup additions on one half of the target register t[0 : n/2], using
+the second half, t[n/2 : n], as ancillas required for Gidney’s logical-AND-based addition [Gid18]. Lookups
+can be conducted by windowing over the multiplication register m, with a memory size of n/2, compared to
+                                                                              1
+the original n size proposed in [Gid19c]. The lookup costs 2we +wm = 22⌊ 2 log n⌋ in Tof gates and depth. The
+looked-up values can then be added to the target register using carry runways that attach register pieces
+of size n/4. The other half of the target register, of size n/2, serves as the ancillas needed for Gidney’s
+logical-AND-based addition. A sweep over the entire multiplication register is performed while only looking
+up half the memory bits of the lookup table. The Tof count for the Gidney additions of registers of size x is
+x. In our case, this addition costs n/2, with a measurement depth of n. In the second phase of the lookup
+                                                                                    1
+additions, we perform another set of lookups, which again cost 2we +wm = 22⌊ 2 log n⌋ in Tof gates and depth,
+with a size of n/2 (shown in green in Figure 16). Here, we use a normal Cuccaro addition (with no ancillas).
+The Tof count for the Cuccaro RCA additions of registers of size x is 2x, with a measurement depth of 2x.
+Thus, the additions cost 2 · n/2 = n Tof gates with a measurement depth of 2 · n/2 = n. Overall, this protocol
+achieves no reduction in the Tof count but results in a decrease of n/2 logical qubits and an increase in depth
+by n.
+
+B.2     Variant B: reintroducing temporarily protected ancillas for a lower toffoli
+        count
+In this variant, we aim to lower the Tof count by strategically reusing ancillas that are idle for part of the
+computation. Specifically, we repurpose ancillas saved in Variant A by only loading half of the lookup table
+at a time, and then reintroduce them during the addition to the second half of the target register. In Variant
+A, when adding the first half of the lookup values to the target register, the second half of the target register
+served as ancillas for logical-AND adder [Gid18]. When processing the second half, we had to switch to
+Cuccaro’s ripple-carry adder because no ancillas were left available. In this variant, we avoid switching to
+Cuccaro’s adder by reintroducing the ancillas that were saved during the first stage of the computation.
+These ancillas, which would otherwise remain idle for the first half of the algorithm’s runtime, are now
+only needed and protected during the second half, when they are essential for performing the logical-AND
+addition into the second half of the target register. This results in a reduction in the Tof count by n/2 (per
+lookup-addition), while maintaining the same logical qubit count. The logical qubits need to effectively be
+protected for only half of the runtime and are “borrowed” for the second half of the process, where they are
+used to perform the addition on the second half of the target register. The tradeoff is that the circuit depth
+increases (so it is possible that we end up having to protect the logical information for longer, thus defeating
+the purpose of the idle ancillas), depending on the window size, but we gain an overall reduction in Tof cost
+compared to the baseline Cuccaro adder approach.
+
+
+
+
+                                                         24
+                                                                                                                                          mj ◦ ei
+                                                                                                0     1      ...          ...             2we +wm − 2           2we +wm − 1
+                                                                                     0          0     0       1            0                    0                    1
+                                                                                     1          0     0       0            1                    0                    0
+                                                                                     2          0     0       0            0                    1                    1
+                                                                                     ..         ..    ..      ..           ..                   ..                    ..
+                                                        mj aei 2j∗wn (mod N)
+                                                                                      .          .     .       .            .                    .                     .
+                                                                                   n
+                                                                                   2 −3         0     0       0            1                    1                    0
+                                                                                   n
+                                                                                   2 −2         0     0       1            1                    0                    1
+                                                                                   n
+                                                                                   2 −1         0     0       0            0                    0                    0
+                                                                                     n
+                                                                                     2          0     0       0            0                    0                    0
+                                                                                   n
+                                                                                   2 + 1        0     0       1            1                    1                    1
+                                                                                   n
+                                                                                   2 +2         0     0       0            0                    0                    0
+                                                                                    ..           ..    ..      ..           ..                   ..                    ..
+                                                                                     .            .     .       .            .                    .                     .
+                                                                                   n−3          0     0       0            0                    0                    0
+                                                                                   n−2          0     0       1            1                    1                    1
+                                                                                   n−1          0     0       0            0                    0                    0
+Figure 15: Table of lookup values for sliced windowing in the quantum modular exponentiation circuit with modulus N (of size
+n = 2048 bits) by GE. Here, we and wm represent the window sizes of the exponent and multiplication registers. The value
+                                              i·we
+stored in each column is of the form mj aei 2      2j·wm (mod N )
+
+
+
+
+               we
+  exponent                             |[phase
+                                        Input e=
+                                               x ]|                                                         |[phase
+                                                                                                             Input e=
+                                                                                                                    x ]|         ...                         |[phase
+                                                                                                                                                              Input e=
+                                                                                                                                                                     x ]|                                              |[phase
+                                                                                                                                                                                                                        Input e=
+                                                                                                                                                                                                                               x ]|
+
+
+       m[0]                            Input m0                                                             Input m0             ...
+
+m[wm :2wm ]                                                                                                                      ...
+
+                   ..                                                                                                            ..
+                    .                                                                                                                 .
+
+ m[k.wm :n]                                                                                                                      ...                        Input mk.wm                                               Input mk.wm
+                   n
+                   2
+        |0⟩              Lookup v = m0 aex 20   (mod N ) >> n
+                                                            2                         Input v               Unlookup v           ...        Lookup v = mk.wm   aex 2k.wm      (mod N ) >> n
+                                                                                                                                                                                          2
+                                                                                                                                                                                                    Input v           Unlookup v
+                   n
+                   2
+                                                                               x         |[phase
+                                                                                        x+v (mod=N]|)                                                                                         x        |[phase
+                                                                                                                                                                                                      x+v (mod=N]|)
+      out                                                         n                 +v (mod N )                                                                                       n           +v (mod N )
+                                                                  2                                                                                                                   2
+                                        |0⟩                                    0                      0             |0⟩          ...                          |0⟩                             0                  0           |0⟩
+
+
+
+              we
+  exponent                              |[phase
+                                         Input e=
+                                                x ]|                                                         |[phase
+                                                                                                              Input e=
+                                                                                                                     x ]|        ...                           |[phase
+                                                                                                                                                                Input e=
+                                                                                                                                                                       x ]|                                             |[phase
+                                                                                                                                                                                                                         Input e=
+                                                                                                                                                                                                                                x ]|
+
+
+      m[0]                              Input m0                                                             Input m0            ...
+
+m[wm :2wm ]                                                                                                                      ...
+
+              ..                                                                                                                 ..
+               .                                                                                                                      .
+
+ m[k.wm :n]                                                                                                                      ...                         Input mk.wm                                              Input mk.wm
+              n
+              2
+        |0⟩             Lookup v = m0 aex 20 (mod N ) (mod 2n/2 )                      Input v              Unlookup v           ...        Lookup v = mk.wm aex 2k.wm (mod N ) (mod 2n/2 )           Input v          Unlookup v
+              n
+              2
+                                                                                                                                 ...
+      out     n
+              2
+                                                                                          |[phase
+                                                                                     +v (mod N ) = ]|                            ...                                                                    |[phase
+                                                                                                                                                                                                   +v (mod N ) = ]|
+
+
+
+Figure 16: Variant A - The two steps of the sliced windowing improvement. In the first part (upper figure, in dark blue), we use
+an adder (e.g., Gidney’s adder) that reduces the Tof cost at the expense of using more space. In the lower figure (in light blue),
+we perform additions in the second part of the target register using an adder circuit that utilizes no ancilla qubits.
+
+
+
+
+                                                                                                                            25
+C       Analysing tradeoffs on physical resources
+
+  n      ne    gate err    L1   L2    doff   gmul   gexp   gsep     %   v.p.r   E[vol]     Mqb      hrs    E[hrs]   B Tofs
+ 2048   3029     10−3      15   27     2      5      5     2048   36%   4.861   7.596     14.747   7.911   12.361   2.656
+ 2048   3029     10−3      17   27     6      5      5     2048   25%   5.157   6.876     15.592   7.938   10.584   2.665
+ 2048   3029     10−3      15   29     2      5      5     2048   18%   5.878   7.168     17.492   8.064    9.834   2.656
+ 2048   3029     10−3      17   29     6      5      5     2048    4%   6.241   6.501     18.513   8.091    8.428   2.665
+ 2048   3029     10−3      15   27     4      5      5     1024   31%   4.047   5.865     19.249   5.046    7.313   2.698
+ 2048   3029     10−3      17   27     4      5      5     1024   21%   4.545   5.753     21.616   5.046    6.388   2.698
+ 2048   3029     10−3      15   29     3      5      5     1024   18%   5.194   6.334     24.001   5.194    6.334   2.695
+ 2048   3029     10−3      17   29     5      4      5     1024    4%   5.424    5.65     25.265   5.153    5.367   3.041
+ 2048   3029     10−3      17   31     6      4      5     1024    2%   5.981   6.103     27.308   5.256    5.364   3.045
+ 2048   3029     10−3      15   27     3      4      5      512   32%   3.946   5.802     29.184   3.245    4.772   3.125
+ 2048   3029     10−3      17   27     4      4      5      512   19%   4.415    5.45     32.602    3.25    4.012   3.132
+ 2048   3029     10−3      17   29     6      4      4      512    4%   5.576   5.808     40.075   3.339    3.478   3.718
+  n      ne    gate err    L1   L2    doff   gmul   gexp   gsep     %   v.p.r   E[vol]     Mqb      hrs    E[hrs]   B Tofs
+ 2048   3029     10−3      15   27     2      5      5     2048   35%   4.757   7.319     14.747   7.743   11.912   2.607
+ 2048   3029     10−3      17   27     3      5      5     2048   25%   5.034   6.712     15.592   7.749   10.332   2.609
+ 2048   3029     10−3      15   29     8      5      5     2048   17%   5.776   6.959     17.492   7.925    9.548   2.621
+ 2048   3029     10−3      17   29     6      5      5     2048    4%   6.103   6.357     18.513   7.912    8.242   2.616
+ 2048   3029     10−3      15   27     2      5      5     1024   31%   3.918   5.679     19.249   4.886     7.08   2.643
+ 2048   3029     10−3      17   27     6      5      5     1024   20%   4.419   5.524     21.616   4.906    6.133   2.656
+ 2048   3029     10−3      15   29     6      5      5     1024   17%    5.05   6.084     24.001   5.049    6.084   2.656
+ 2048   3029     10−3      17   29     5      4      5     1024    4%   5.247   5.466     25.265   4.984    5.192   2.988
+ 2048   3029     10−3      17   31     6      4      5     1024    2%   5.778   5.895     27.308   5.078    5.181   2.992
+ 2048   3029     10−3      15   27     4      4      5      512   31%   3.773   5.468     29.184   3.103    4.497   3.079
+ 2048   3029     10−3      17   27     5      4      5      512   18%   4.221   5.148     32.602   3.108     3.79   3.085
+ 2048   3029     10−3      17   29     5      4      5      512    4%   5.336   5.558     40.075   3.196    3.329   3.085
+Table 5: Table with increasing qubit counts for GE (top) vs. GE incorporating our improvements (bottom). Here, we explore
+the lowest expected runtimes that can be achieved for a given number of physical qubits (gate err 10−3 ).
+
+
+
+  n      ne     gate err   L1    L2   doff   gmul   gexp   gsep     %   v.p.r    E[vol]    Mqb      hrs    E[hrs]   B Tofs
+ 2048   3029      10−4     7     13    3      5      6     2048   27%   0.866    1.187     3.195   6.507   8.914    2.658
+ 2048   3029      10−4     9     13    3      5      6     2048   20%    0.99    1.238     3.651   6.507   8.134    2.658
+ 2048   3029      10−4     7     13    3      5      5     1024   23%   0.658    0.855     3.977   3.972   5.159    2.695
+ 2048   3029      10−4     9     13    3      5      5     1024   15%   0.779    0.916     4.706   3.972   4.673    2.695
+ 2048   3029      10−4     7     13    4      5      5      512   21%   0.558    0.706     5.273   2.538   3.212    2.774
+ 2048   3029      10−4     7     15    5      5      5      512   12%   0.731    0.831     6.513   2.694   3.062     2.78
+ 2048   3029      10−4     9     13    5      5      5      512   13%   0.756    0.869     7.141   2.542   2.922     2.78
+ 2048   3029      10−4     9     15    5      4      5      512    2%   0.847    0.865     7.621   2.668   2.723    3.139
+  n      ne     gate err   L1    L2   doff   gmul   gexp   gsep     %   v.p.r    E[vol]    Mqb      hrs    E[hrs]   B Tofs
+ 2048   3029      10−4     7     13    2      5      6     2048   27%   0.849    1.163     3.195   6.378   8.737    2.594
+ 2048   3029      10−4     9     13    2      5      6     2048   20%    0.97    1.213     3.651   6.378   7.972    2.594
+ 2048   3029      10−4     7     13    9      5      5     1024   22%   0.649    0.832     3.977   3.918   5.023    2.666
+ 2048   3029      10−4     9     13    6      5      5     1024   15%   0.766     0.89     4.706   3.904   4.539    2.656
+ 2048   3029      10−4     7     13    3      5      5      512   21%   0.541    0.684     5.273   2.461   3.115     2.72
+ 2048   3029      10−4     7     15    4      5      5      512   12%   0.708    0.804     6.513   2.608   2.963    2.725
+ 2048   3029      10−4     9     13    4      5      5      512   13%   0.733    0.843     7.141   2.465   2.833    2.725
+ 2048   3029      10−4     9     15    5      4      5      512    2%    0.82    0.836     7.621   2.581   2.634    3.085
+Table 6: Table with increasing qubit counts for our algorithm for GE (top) vs. GE incorporating our improvements (bottom).
+Here, we explore the lowest expected runtimes that can be achieved for a given number of physical qubits (gate err 10−4 ).
+
+
+
+
+                                                            26
+            n      ne     gate err     Mqb         E[hrs]       % improvement         B Tofs        % improvement
+                                                GE     Ours         E[hrs]          GE    Ours         in B Tofs
+           2048   3029      10−4      3.195    8.914 8.737          1.99%          2.658 2.594           2.41%
+           2048   3029      10−4      3.651    8.134 7.972          1.99%          2.658 2.594           2.41%
+           2048   3029      10−4      3.977    5.159 5.023          2.64%          2.695 2.666           1.08%
+           2048   3029      10−4      4.706    4.673 4.539          2.87%          2.695 2.656           1.45%
+           2048   3029      10−4      5.273    3.212 3.115          3.02%          2.774 2.720           1.95%
+           2048   3029      10−4      6.513    3.062 2.963          3.23%          2.780 2.725           1.98%
+           2048   3029      10−4      7.141    2.922 2.833          3.05%          2.780 2.725           1.98%
+           2048   3029      10−4      7.621    2.723 2.634          3.27%          3.139 3.085           1.72%
+Table 7: Comparison in % of the improvements of Table 6 (gate err 10−4 ). Every row in this table compares the improvements
+for the expected runtime and Tof count (in billions) for a fixed number of physical qubits (Mqb).
+
+
+
+
+Figure 17: A view of all possible tradeoffs for expected runtime and physical qubit count to break RSA of various key sizes when
+using our optimizations in GE factoring algorithm. Here, the physical error rate is set to 10−3 .
+
+
+
+D      Pseudocode of useful subroutines
+
+ Algorithm 1: Standard Multicontrolled Lookup
+  Input: Address register a, classical lookup table table, lookup register l
+  Output: Updated lookup register l with values from table corresponding to a
+  Function STANDARD LOOKUP(a, table, l):
+     for i ← 0 to 2|a| − 1 do
+        if a is in state |i⟩ then
+            l ← table[i]
+
+                                              Table 8: Lookup table pseudocode
+
+
+
+
+                                                              27
+Algorithm 2: Unlookup Unitary
+ Input: Address register a, classical lookup table table, lookup register l
+ Output: Cleared lookup register l with applied phase corrections
+ Function INIT UNARY(b, c):
+    // Initialize an out-of-place unary mapping from b to c
+               |b|
+    if c ̸= 0⊗2 then
+        assertion failed
+    c0 ← 1;
+    for i ← 0 to |b| − 1 do
+        for j ← 0 to 2i − 1 do
+            if bi then
+                swap(cj , cj+2i );
+
+ Function UNLOOKUP(a, table, l):
+   // Clear the lookup register l and apply phase corrections
+   H(l);
+   l ← l;
+           |l|
+   l ← 0⊗2 ;
+   INIT UNARY(a[|a|/2 :], l[0 : 2|a|/2 ]);
+   phases ← tableT ·l;
+   F ← array.zeros(2|a|/2 , 2|a|/2 );
+   for addrt ← 0 to len(table) − 1 do
+       if phases[t] = −1 then
+           F [addrt [|a|/2 :], addrt [0 : |a|/2]] ← 1;
+
+     H(l[0 : 2|a|/2 ]);
+     LOOKUP(a[0 : |a|/2], F, l[0 : 2|a|/2 ]);
+     H(l[0 : 2|a|/2 ]);
+     reverse INIT UNARY(a[|a|/2 :], l[0 : 2|a|/2 ]);
+                                          Table 9: Unlookup pseudocode
+
+
+
+
+                                                       28
+Algorithm 3: Windowed Quantum Modular Exponentiation
+ Input: Modulus N , base g, target register t, exponent register e, multiplication register m, lookup
+         register l, exponent window size we , multiplication window size wm
+ Output: Final exponentiated state |e⟩ → |e⟩ |g e (mod N )⟩
+ Function WINDOWED MODULAR EXPONENTIATION(N , g, t, e, m, l, we , wm ):
+    // Compute modular inverse of g modulo N
+    gi ← MODULAR MULT INVERSE(g, N );
+    assert gi ̸= None;
+    for x ← 0 to ⌈ len(e)
+                      we ⌉ − 1 do
+       // Create reference to the exponent window
+       ewindow ← e.POP(we );
+       for y ← 0 to ⌈ len(m)
+                          wm ⌉ − 1 do
+           // Create reference to the multiplication window
+           mwindow ← m.POP(wm );
+           table ← LOOKUP TABLE(g, x, we , y, wm );
+           // Perform lookup addition
+           QROM LOOKUP(mwindow ∥ ewindow , table, l);
+           INPLACE ADD MOD(t, l);
+           UNLOOKUP(mwindow ∥ ewindow , table, l);
+        // Swap target and multiplication registers
+        t, m ← m, t;
+        // Uncompute register m
+        for y ← 0 to ⌈ len(m)
+                         wm ⌉ − 1 do
+            mwindow ← m.POP(wm );
+            table ← LOOKUP TABLE(gi , x, we , y, wm );
+            // Perform lookup subtraction
+            QRAM LOOKUP(mwindow ∥ ewindow , table, l);
+            reverse INPLACE ADD MOD(t, l);
+            UNLOOKUP(mwindow ∥ ewindow , table, l);
+
+                           Table 10: Windowed modular exponentiation pseudocode
+
+
+
+
+                                                   29
+Algorithm 5: Phase Unlookup Table
+ Input: window size of exponent we , window size of multiplication register wm , the table we used for
+         the lookup operation table, the quantum register holding the lookup value l
+ Output: a classical table containing information phase corrections F
+ Function COMPUTE PHASE UNLOOKUP TABLE(a, table, l):
+    // Measure lookup register in X basis H(l) ;
+    l←l;
+            len(l)
+    l ← 0⊗2        ;
+    // Compute phases from measurement phases ← tableT .l ;
+    F ← array.zeros(2we , 2wm ) ;
+    // Init phase correction table
+    for addrt ← 0 to len(table) − 1 do
+       if phases[addrt ] == −1 then
+           eval ← addrt [0 : we ] ;
+           mval ← addrt [we : we + wm ] ;
+           F [eval , mval ] ← 1 ;
+     return F ;
+
+Algorithm 6: Windowed Quantum Modular Exponentiation with Deferred Uncomputation
+ Input: Modulus N , base g, target register t, exponent register e, multiplication register m, lookup
+         register l, exponent window size we , multiplication window size wm
+ Output: F
+ Function DU WINDOWED MODULAR EXPONENTIATION(N , g, t, e, m, l, we , wm ):
+    gi ← MODULAR MULT INVERSE(g, N ) ;
+    assert gi ̸= None
+    F ← {} ;
+    // Store phase tables
+    for x ← 0 to ⌈ len(e)
+                      we ⌉ − 1 do
+       ewindow ← e.POP (size=we ) ;
+       for y ← 0 to ⌈ len(m)
+                          wm ⌉ − 1 do
+           mwindow ← m.POP (size=wm ) ;
+           table ← LOOKUP TABLE (g, x, we , y, wm ) ;
+           QRAM LOOKUP(mwindow ||ewindow , table, l) ;
+           INPLACE ADD MOD(t, l) ;
+           F [y] ← COMPUTE PHASE UNLOOKUP TABLE(we , wm , table, l) ;
+        INIT UNARY(ewindow , l[0 : 2we ]) ;
+        for y ← 0 to ⌈ len(m)  wm ⌉ − 1 do
+                mwindow ← m.POP (size=wm ) ;
+                H(l[0 : 2we ]) ;
+                LOOKUP(mwindow , F [y], l[0 : 2we ]) ;
+                H(l[0 : 2we ]) ;
+        reverse INIT UNARY(ewindow , l[0 : 2we ])
+        // Swap target and multiplication registers
+        t, m ← m, t;
+            ..
+             .
+             ..
+              . uncompute register m
+           ..
+            .
+
+                                     Table 11: Deferred uncomputation
+
+
+
+
+                                                   30
+

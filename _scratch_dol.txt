@@ -1,0 +1,659 @@
+Toward an Optimal Quantum Algorithm for Polynomial
+Factorization over Finite Fields
+Javad Doliskani1
+
+arXiv:1807.09675v1 [cs.SC] 25 Jul 2018
+
+1
+
+Institute for Quantum Computing, University of Waterloo
+
+Abstract
+We present a randomized quantum algorithm for polynomial factorization over finite fields.
+For polynomials of degree n over a finite field Fq , the average-case complexity of our algorithm is
+an expected O(n1+o(1) log2+o(1) q) bit operations. Only for a negligible subset of polynomials of
+degree n our algorithm has a higher complexity of O(n4/3+o(1) log2+o(1) q) bit operations. This
+breaks the classical 3/2-exponent barrier for polynomial factorization over finite fields [9].
+
+1
+
+Introduction
+
+Factoring polynomials over finite fields has been known to be randomized polynomial time in the
+seminal work of Berlekamp [1]. Various improvements on polynomial factorization, over many
+decades, have been made since Berlekamp’s work. Two major steps were taken by [2] and [19]; in
+the latter, von zur Gathen and Shoup proposed an efficient way of computing traces and powers
+of the Frobenius map in the polynomial ring modulo the input polynomial. Their algorithm is
+quasi-quadratic in the degree of the polynomial to be factored. Kaltofen and Shoup proposed
+a baby-step giant-step technique combined with an efficient method of computing simultaneous
+modular compositions that led to the first subquadratic algorithm for polynomial factorization
+[12]. The complexity of their algorithm is O(n1.815 log q) finite field operations.
+The best known algorithm, as of now, is an implementation of the Kaltofen-Shoup algorithm due to Kedlaya and Umans [14]. They proposed a fast algorithm for modular composition that when plugged into the Kaltofen-Shoup algorithm leads to an algorithm with complexity
+O(n3/2+o(1) log1+o(1) q + n1+o(1) log2+o(1) q) bit operations. A recent result of Doliskani et al. [6]
+achieves the same complexity by exploiting some geometric properties of Rank 2 Drinfeld modules.
+Despite much effort, improving the exponent 3/2 has remained an open problem. Guo et al. [9]
+proposed a set of algebraic problems that are equivalent to improving the exponent 3/2 in polynomial factorization. In this paper, we propose a quantum algorithm that improves this bound. Our
+main result is as follows:
+Theorem 1. Let Fq be a finite field, where q is a power of a prime p, and let n be a positive integer.
+Let Cn be the set of all polynomials of degree n over Fq . There is a randomized quantum algorithm
+for polynomial factorization over Fq , that for all but a negligible subset Bn of polynomials in Cn
+runs in an expected O(n1+o(1) log2+o(1) q) bit operations. For the subset Bn the algorithm runs in
+an expected O(n4/3+o(1) log2+o(1) q) bit operations.
+1
+
+It follows from Theorem 1 that the average-case runtime of the proposed algorithm for polynomials of degree n is O(n1+o(1) log2+o(1) q) bit operations. This is essentially optimal with respect to
+the degree of the input. For a complete polynomial factorization algorithm we follow the CantorZassenhaus scheme which consists of three stages:
+SFF Squarefree factorization: Given a polynomial f ∈ Fq [x], outputs a set of squarefree polynomials f1 , . . . , fr such that f = f1 f22 · · · frr .
+DDF Distinct-degree factorization: Given a squarefree polynomial f ∈ Fq [x], outputs f [1] , . . . , f [n]
+such that f [i] is the product of all monic irreducible factors of f of degree i for all i = 1, . . . , n.
+The inputs of this stage are the outputs of the SFF stage.
+EDF Equal-degree factorization: Given a squarefree polynomial f ∈ Fq [x] such that all irreducible
+factors of f have the same degree, outputs the irreducible factors of f . The inputs of this
+stage are the outputs of the DDF stage.
+The SFF stage cane be done using an algorithm of Yun [20] which takes O(n1+o(1) log1+o(1) q +
+n log2+o(1) q) bit operations. For the EDF stage the probabilistic algorithm of von zur Gathen and
+Shoup [19] takes an expected O(n1+o(1) log2+o(1) q) bit operations. The bottleneck of polynomial
+factorization is the DDF stage for which the best known algorithm takes O(n3/2+o(1) log1+o(1) q +
+n1+o(1) log2+o(1) q) bit operations [14]. Therefore, to asymptotically improve the complete factorization algorithm we shall focus only on the DDF stage.
+Complexity model. We will always count the number of bit operations in our complexity estimates. Two n-bit integers can be multiplied in O(n log n log log n) = O(n1+o(1) ) bit operations
+[18]. Given two polynomials f, g of degree n over a ring R, the product f g can be computed in
+M(n) = O(n log n log log n) = O(n1+o(1) ) operations in R [18]. Sometimes it is more convenient to
+count operations in the base field Fq . To convert to bit operations we always assume that Fq is
+represented by a quotient Fp [y]/h(y) for some polynomial h ∈ Fp [y] of degree m. The product of
+two elements of Fq can then be computed in O(m1+o(1) log1+o(1) p) = O(log1+o(1) q) bit operations.
+For polynomials f, g, h ∈ Fq [x] of degree n, the modular polynomial composition f (g) mod h can
+be done in C(n) = O(n1+o(1) log1+o(1) q) bit operations [14]. Other operations such as gcd and
+reduction of polynomials of degree n over Fq can be done in O(n1+o(1) log1+o(1) q) bit operations
+[18].
+Given a polynomial f ∈ Fq [x] of degree n, define K = Fq [x]/f . The Frobenius endomorphism
+π : K → K is an Fq -homomorphism defined by x 7→ xq . Given π(x) and any integer j > 0, the
+power π j (x), which is j successive compositions, can be computed using a simple binary-powering
+algorithm at the cost of O(C(n) log j) = O(n1+o(1) (log j) log1+o(1) q) bit operations. The polynomial
+π(x) = xq mod f can itself be computed in O(n1+o(1) log2+o(1) q) bit operations.
+Our technique. The exponent 3/2, achieved by the best previous algorithms for polynomial
+factorization, seems to be a natural outcome of the so called baby-step giant-step methodology. We
+take a completely different approach here. Let f ∈ Fq [x] be a squarefree monic polynomial of degree
+n, and let d be the degree of the splitting of f over Fq . Then the degrees of the irreducible factors of
+f divide d. We show that given d, one can efficiently compute a distinct-degree factorization of f .
+This reduces polynomial factorization to computation of splitting degrees. Computing the splitting
+degree of f is equivalent to computing the order of the Frobenius automorphism π, defined above,
+2
+
+in the automorphism group Aut(K/Fq ). To compute the order of π, we use a quantum period
+finding algorithm.
+
+2
+
+Estimating the order of an automorphism
+
+Given a squarefree polynomial f ∈ Fq [x] of degree n > 1, let K = Fq [x]/f . The Fq -endomorphism
+π : K → K defined by x 7→ xq is called the Frobenius endomorphism. Since f is squarefree, π is
+an automorphism. The cyclic group of automorphisms hπi is finite. We give a quantum algorithm
+that efficiently estimates the order of any automorphism σ ∈ hπi. The quantum algorithm is not
+new; it is a standard order finding algorithm adapted to our situation.
+To find the order of an automorphism σ we use the techniques in [13, 16]. The group hσi is
+isomorphic to the additive group Z/rZ for some ineteger r > 0. Since the action of σ on K is
+determined by the action of σ on x, the powers σ j are represented by the polynomials σ j (x) ∈ K
+for all j ≥ 0. A polynomial h ∈ K is represented using an array of size n containing the coefficients
+of h. The number of qubits for representing the elements of K is then n⌈log q⌉. For an integer j
+and a polynomial h ∈ K, define the action of σ on the state |ji|hi as
+σ|ji|hi = |ji|σ j (x) ⊕ hi
+
+(1)
+
+where ⊕ is simply the xor of two qubit arrays.
+The main ingredient of order finding algorithms is the quantum Fourier transform (QFT). For
+any finite group G and any function t : G → C the QFT over G is a specific unitary operator on the
+vector space C[G] that takes the complex numbers {t(g)}g∈G to another set of |G| complex numbers
+[10]. We shall only need QFT over the additive group Z/N Z, denoted by FN , where N = 2m for
+some integer m. In this case, we have
+X kj
+1
+FN : |ki 7−→ √
+ζN |ji
+N j∈Z/N Z
+where k ∈ Z/N Z and ζN = e2πi/N ∈ C is a primitive N -th root of unity. Given an integer ℓ > 0, an
+ℓ-bit estimate of the order r of σ is computed as follows. Prepare two registers with initial value
+|0i|0i, the first register of length m = 2ℓ + 1 qubits and the second of length n⌈log q⌉ qubits. Create
+a superposition in the first register to get the state
+X
+1
+|ji|0i.
+|ψi = √
+N j∈Z/N Z
+Applying σ to |ψi and rewriting the resulting sum based on the period r gives
+!
+m
+r−1
+b −1
+X
+X
+X
+1
+1
+√
+σ|ψi = √
+|ji|σ j (x)i =
+|zr + bi |σ j (x)i
+N j∈Z/N Z
+N
+z=0
+b=0
+where mb is the largest integer such that mb ≤ (N − b − 1)/r + 1 [13]. Discarding the second register
+leaves the first register in the superposition state
+m −1
+
+b
+1 X
+|zr + bi
+√
+mb
+
+z=0
+
+3
+
+Input:
+- A squarefree monic polynomial f ∈ Fq [x] of degree n
+- An automorphism σ ∈ hπi of the Fq -algebra K = Fq [x]/f
+- An integer ℓ < n as a bound for the number of bits by which the
+order of the automorphism σ is estimated
+Output: The order r of σ or ‘Fail’
+1: m := 2ℓ + 1, N := 2m
+2: Prepare registers |0i|0i of length m qubits and n⌈log q⌉ qubits respectively.
+3: Create a superposition in the first register and apply σ to get
+X
+1
+√
+|ji|σ j (x)i
+N j∈Z/N Z
+−1
+
+to the first register to
+obtain an integer k such that j1 /r1 = k/N is an estimate of j/r for
+some nearly uniformly random j ∈ Z/rZ
+5: Compute r1 using rational number reconstruction
+6: Repeat Steps 2-5 to obtain another r2 , and compute r := lcm(r1 , r2 )
+7: If σ r = id then return r, else return ‘Fail’
+4: Discard the second register and apply FN
+
+Algorithm 1: Estimate the order of an automorphism
+where b ∈ Z/rZ is selected nearly uniformly at random. Applying FN−1 and measuring, we obtain
+an integer k such that k/N is an estimate of j/r for some nearly uniformly random j ∈ Z/rZ. More
+1
+precisely, one can show that |k/N − j/r| ≤ 2N
+for some nearly uniformly random j ∈ Z/rZ. Using
+rational number reconstruction, we can obtain integers j1 , r1 such that j1 /r1 = j/r. Repeating
+this process, we obtain another pair j2 , r2 . It can be shown that r = lcm(r1 , r2 ) with probability
+≈ 6/π 2 . Therefore, we only need to run the above procedure a constant number of times to obtain
+r with high probability. This is summarized in Algorithm 1.
+Proposition 2. Given a squarefree monic polynomial f ∈ Fq [x] of degree n, an element σ ∈ hπi
+and an integer ℓ > 0, Algorithm 1 computes the order of σ, or fails, with probability O(1) and in
+O(ℓn1+o(1) log1+o(1) q) bit operations.
+Proof. The quantum Fourier transform FN and its inverse FN−1 in Steps 3 and 4 are done in
+O(log N log log N ) = O(ℓ log ℓ) bit operations [4, 3]. For an ineteger j, the power σ j in Step 3 is
+computed in O(C(n) log j) operations in Fq . Since j < 2ℓ and C(n) ∈ O(n1+o(1) log1+o(1) q), Step 3
+is performed in O(ℓn1+o(1) log1+o(1) q) bit operations.
+The rational number reconstruction of Step 5 is done at the cost of O(log1+o(1) N ) = O(n1+o(1) )
+bit operations [17]. Since r < 2ℓ , Step 7 is done using O(ℓn1+o(1) log1+o(1) q) bit operations. Adding
+these together establishes the claimed complexity.
+
+4
+
+3
+
+Computing the order of the Frobenius
+
+Let f ∈ Fq [x] be a squarefree polynomial of degree n and let K = Fq [x]/f . Let f = f1 f2 · · · fk be
+the factorization of f into distinct irreducible factors. By the Chinese Remainder Theorem, there
+is an isomorphism of rings
+k
+M
+Fq [x]/fi (x).
+(2)
+K∼
+=
+i=1
+
+Let di = deg(fi ) for i = 1, . . . , k. Then the splitting field of f has degree d = lcm(d1 , . . . , dk ) over
+Fq . Also note that the Frobenius automorphism π : x 7→ xq of K is the coproduct of the Frobenius
+automorphisms πi : x 7→ xq of the fields Fq [x]/fi . It follows that the order of the group hπi is d as
+well.
+Given σ ∈ hπi of order d′ , one could compute the exact value of d′ using Algorithm 1 as follows.
+Start with a small estimation bound ℓ and call the algorithm with input (f, σ, ℓ). If the algorithm
+does not output ‘Fail’ then stop, otherwise set ℓ := ℓ + 1 and repeat. This results in too many calls
+to Algorithm 1 if d′ is too large. It is therefore crucial to know a reasonable bound on the size d of
+the group hπi. To obtain such a bound, one naturally looks at the distinct values of the di ’s above.
+It turns out that for almost all polynomials f ∈ Fq [x] of degree n the degree of the splitting field of
+f over Fq is O(2polylog(n) ), that is log d ∈ O(polylog(n)). In fact, Knopfmacher proves the following
+rather precise estimate for the number of distinct values of the di ’s.
+Theorem 3 ([15]). The number of irreducible factors of a polynomial f ∈ Fq [x] of degree n has
+mean value log n + O(1) and variance log n + O(1) as n → ∞. In particular, almost all polynomials
+of degree n have approximately log n irreducible factors.
+From Theorem 3 we see that for almost all polynomials f of degree n, if d1 , . . . , dk are the
+irreducible degrees of f then
+!k
+r
+ n k  n log n
+2
+1X
+≈
+= O(2log n )
+(3)
+di
+d = lcm(d1 , . . . , dk ) ≤
+≤
+k
+k
+log n
+i=1
+
+where the first inequality is the arithmetic-geometric mean. Dixon and Panario [5] give a stronger
+statement for bounds on d based on the analogy between degrees of splitting fields of polynomials
+of degree n and orders of elements in the symmetric group Sn [7, 8]. We state their result here for
+completeness. Following the notation of [5], let λ be a partition of n of shape [1k1 2k2 . . . nkn ], i.e.,
+there are ki parts of size i. Define m(λ) to be the lcm of the i’s where ki 6= 0. For any t > 0 define
+√
+Φn (t) = {λ ⊢ n : log m(λ) − log2 n/2 > t log3/2 n/ 3}
+where λ ⊢ n denotes a partition λ of n. A monic polynomial f ∈ Fq [X] of degree n is said to be of
+shape λ if the degrees of the irreducible factors of f are the parts of λ. We have
+Theorem 4 ([5, Theorem 1]). For each λ ⊢ n, let w(λ, q) denote the portion of monic polynomials
+of degree n over Fq that are of shape λ. Then there exists a constant c > 0 such that for each t ≥ 1
+there exists an integer n0 (t) such that
+X
+w(λ, q) ≤ ce−t/4 for all q and all n ≥ n0 (t).
+λ∈Φn (t)
+
+5
+
+In particular, almost all monic polynomials of degree n have splitting fields of degree at most
+exp(( 12 + o(1)) log 2 n) over Fq as n → ∞.
+
+It follows from the above that for almost all squarefree f , the order d of the Frobenius σ of
+K can be computed in O(n1+o(1) log1+o(1) q) bit operations: we simply call Algorithm√1 with the
+bound ℓ = log2 n. There are, however, some f for which d can be as large
+√ as exp(c n ln n) for
+some constant c > 0 [7]. In this case, the input bound has to be ℓ = c n ln n, so Algorithm 1
+computes d in O(n3/2+o(1) log1+o(1) q) bit operations. This already dashes the hopes of improving
+upon the classical bound if we ever wanted to use Algorithm 1 as a subroutine in a polynomial
+factorization algorithm! Fortunately, this problem can be circumvented by preprocessing f before
+calling Algorithm 1. We need the following lemma.
+Lemma 5. Let f ∈ Fq [x] be a squarefree polynomial of degree n. Let f˜ be the product of the factors
+of f with degree higher than n2/3 . Then the order of the Frobenius automorphism σ of Fq [x]/f˜ is
+√
+less than exp( 32 3 n ln n).
+Proof. Let f˜ = f˜1 f˜2 · · · f˜r be the irreducible factorization of f˜. Then di = deg(f˜i ) > n2/3 and hence
+r < n1/3 . The degree of the Frobenius automorphism σ of Fq [x]/f˜ is d = lcm(d1 , d2 , . . . , dr ), which
+is also the degree of the splitting field of f˜ over Fq . We have, as in (3),
+!r
+r
+r
+ n r
+Y
+1X
+di
+.
+≤
+di ≤
+d≤
+r
+r
+i=1
+
+i=1
+
+The function y(t) = (n/t)t on R>0 has a global maximum at t = n/e. Therefor, for r < n1/3 we
+have
+
+
+ n r 
+n1/3
+2√
+2/3
+3
+n ln n .
+= exp
+< n
+r
+3
+√
+Given an f for which d ∈ O(exp(c n ln n)), we can first extract all irreducible factors of
+f of degree at most n2/3 . This can be done using the algorithm of [14, §8] at the cost of
+O(n4/3+o(1) log2+o(1) q) bit operations. For the remaining polynomial f˜, the order d˜ of the Frobe√
+nius σ̃ of Fq [x]/f˜ is at most exp( 32 3 n ln n) by Lemma 5. Now, if we call Algorithm 1 with input
+√
+(f˜, σ̃, 3 n ln n), we obtain d˜ at the cost of O(n4/3+o(1) log1+o(1) q) bit operations.
+Since
+√ d is not known a priori, to compute the exact value of d using Algorithm 1, we could set
+ℓ = c n log n, the maximum possible bound. But, as mentioned above, this results in the exponent
+3/2 which is not better than the classical exponent for polynomial factorization. Instead, we do
+the following. We first call Algorithm 1 with the bound ℓ = log2 n (or ℓ = logc n for any reasonable
+constant c ≥ 2). If the output is not ‘Fail’ then we are done. Otherwise, we remove all factors
+√
+of degree ≤ n2/3 from f and call Algorithm 1 with the bound ℓ = 3 n log n. These remarks are
+summarized in Algorithm 2. Note that Algorithm 2 also accepts a bound ℓ as an extra parameter.
+This increases the flexibility of the algorithm that proves useful in later stages of our factorization
+algorithm, see Algorithm 3.
+Proposition 6. Let f ∈ Fq [x] be a squarefree polynomial of degree n and let d be the degree of the
+splitting field of f over Fq . Given a bound ℓ, Algorithm 2 runs in
+• O(ℓn1+o(1) log1+o(1) q) bit operations if d ∈ O(2ℓ ), or
+• O(n4/3+o(1) log2+o(1) q) bit operations otherwise.
+
+Proof. Follows from the previous remarks.
+
+6
+
+Input:
+- A monic squarefree polynomial f ∈ Fq [x] of degree n
+- An element σ ∈ hπi of the Frobenius group of Fq [x]/f
+- A bound ℓ
+Output: A monic polynomial g | f and the order of the Frobenius of
+Fq [x]/g
+1: Compute an estimate d of σ using Algorithm 1 with input (f, σ, ℓ)
+2: if the output is not ‘Fail’ then
+3:
+return f, d
+4: end if
+5: Remove and output all irreducible factors of degree ≤ n2/3 from f ,
+and let f˜ be the resulting polynomial
+√
+6: Set ℓ̃ := ⌈c1 3 n log n⌉ for a suitable constant c1
+7: Compute an estimate d˜ of the Frobenius σ̃ of Fq [x]/f˜ using Algorithm
+1.
+8: return f˜, d˜
+Algorithm 2: Compute the order of a power of the Frobenius
+
+4
+
+An algorithm for distinct-degree factorization
+
+In this section, we give a dynamic programing algorithm for the distinct-degree factorization of a
+squarefree polynomial f (x) of degree n over Fq . Our algorithm invokes the quantum algorithm of
+the previous section in order to determine the order of a power of the Frobenius modulo f . We
+aim to solve the following subproblem.
+Problem. Given a tuple (f (x), s) where f (x) is a squarefree polynomial and s > 0 is an integer
+that divides the degrees of all irreducible factors of f , produce a set T = {(f1 , s1 ), . . . , (fk , sk )} of
+tuples such that
+1. The polynomials {fi }1≤i≤k are nontrivial splitting of f unless f has only irreducible factors
+of degree s (i.e., it is already a distinct-degree part),
+2. s | si for all 1 ≤ i ≤ k.
+To obtain a DDF of f , we start with the tuple (f, 1) and recursively solve the above problem
+for every output tuple until each tuple is a distinct-degree part of f . Before discussing the solution
+to the above problem, we recall the following key fact.
+d
+
+Fact. For any integer d > 0, the polynomial xq − x ∈ Fq [x] is the product of all monic irreducible
+polynomials whose degree divide d.
+d
+
+This means that gcd(xq − x, f ) is the product of the distinct-degree parts of f whose degree
+divide d.
+Now, let (f (x), s) be given as above and let d1 , . . . , dk be the degrees of irreducible factors of
+f . Let σ be the Frobenius of Fq [x]/f , and set T = {}. Compute the Frobenius power σ̃ = σ s . If
+σ̃ = id then di | s for all 1 ≤ i ≤ k. But since s | di for all 1 ≤ i ≤ k by assumption, we have
+7
+
+d1 = · · · = dk = s so f is a distinct-degree part and we are done. So assume σ̃ 6= id. Compute the
+order d of σ̃ using Algorithm 2. Note that the output of Algorithm 2 might be some distinct-degree
+parts of f and a polynomial f˜ | f such that d is the order of σ̃ as an automorphism of Fq [x]/f˜.
+We assume, without loss of generality, that the distinct-degree outputs are appended to T , f := f˜
+and d1 , . . . , dk are again the degrees of irreducible factors of f . Write d = pe11 pe22 · · · peℓ ℓ , where pi ’s
+are pairwise distinct primes and ei ’s are positive integers. Since sd = lcm(d1 , . . . , dk ), each prime
+power pei i must divide at least one of the dj ’s. Let
+g(x) := gcd(σ̃ d/
+
+Qℓ
+
+i=1 pi
+
+(x) − x, f ).
+
+Q
+Then g(x) is the product of all factors of f with degrees dividing s ℓi=1 piei −1 , and g0 (x) := f /g
+is the product of factors with degrees a multiple of at least one of the spei i . If g 6= 1 then add the
+tuple (g, s) to T . To separate all factors with degrees a multiple of spe11 , we first compute
+g1 (x) = gcd(σ̃ d/p1 (x) − x, g0 )
+and then h1 = g0 /g1 . If g1 is a nontrivial factor of g0 then add the tuple (h1 , spe11 ) to T . Otherwise
+we have g1 = 1, so spe11 divides the degrees of all irreducible factors of g0 . In this case we replace
+g1 and s with g0 and spe11 respectively. Next, we separate all factors of g1 with degree a multiple
+of spe22 by computing
+g2 (x) = gcd(σ̃ d/p2 (x) − x, g1 )
+and repeating the same process. Doing this for all i = 2, . . . , ℓ, we obtain a list of tuples
+T = {(hi1 , si1 ), . . . , (hir , sir )}
+
+(4)
+
+such that hij is a nontrivial factor of f , s | sij and sij divide all irreducible degrees of hij . We
+have, by construction, f = hi1 hi2 · · · hir , so the list of tuple T in (4) satisfy conditions 1 and 2
+in the above problem. Algorithm 3 uses this procedure to recursively compute a DDF of a given
+polynomial f . We need to prove that the recursion is not too deep. This is established by Lemma
+7.
+Lemma 7. Given a squarefree polynomial f ∈ Fq [x] of degree n, the recursion depth of Algorithm
+3 for the input (f, 1, n) is O(log n).
+Proof. Let
+d′
+be
+an
+irreducible
+degree
+of
+f (x)
+and
+let
+(f (x), 1)
+=
+′
+′
+(a1 (x), s1 ), (a2 (x), s2 ), . . . , (ak (x), sk ) = (ak (x), d ) be the path to the degree d part of f
+generated by Algorithm 3. Let di be the degree of the Frobenius σ si mod ai (x) computed in Step
+5 for i = 1, . . . , k, and let d1 := pe11 pe22 · · · peℓ ℓ be the prime factorization of d1 at Step 6. Write
+d′ = pα1 1 · · · pαℓ ℓ where 0 ≤ αi ≤ ei for all i = 1, . . . , ℓ. Now, given 1 ≤ j ≤ k, write dj = pβ1 1 · · · pβℓ ℓ .
+Then only two things can happen from (aj (x), sj ) to (aj+1 (x), sj+1 ):
+1. αr < βr for all r = 1, . . . , ℓ. In other words, non of the prime powers pβi i divides d′ .
+This happens when (aj+1 (x), sj+1 ) is the tuple in Step 9. In this case, sj+1 = sj and
+Q
+dj | dj+1 / ℓi=1 pi = p1β1 −1 · · · pℓβℓ −1 .
+
+2. αr = βr for at least one 1 ≤ r ≤ ℓ. In other words, d′ is a multiple of at least one of the prime
+powers pβi i . This happens when (aj+1 (x), sj+1 ) is one of the tuples in Step 10. In this case,
+tsj | sj+1 for some integer t > 1.
+8
+
+Input:
+- A monic squarefree polynomial f ∈ Fq [x] of degree m
+- An integer s > 0 that divides the degrees of all irreducible factors of
+f
+- An integer n > 0
+Output: Distinct-degree factors of f
+1: Compute σ̃ := σ s mod f
+2: if σ̃ = id then
+3:
+Output f and return
+4: end if
+5: Compute the order d of σ̃ mod f using Algorithm 2 with inputs
+(f, σ̃, log2 n), and let f˜ be the output polynomial
+e
+e e
+6: Factor d and let d := p11 p22 · · · pℓ ℓ
+Qℓ
+7: Compute g(x) := gcd(σ̃ d/ i=1 pi (x) − x, f ) and g0 (x) := f /g
+8: T := {}
+9: If g 6= 1 then add (g, s, n) to T
+10: for i = 1 to ℓ do
+11:
+Compute gi (x) := gcd(σ̃ d/pi (x) − x, gi−1 )
+12:
+if gi 6= 1 then
+13:
+Compute hi := gi−1 /gi and add the tuple (hi , spei i , n) to T
+14:
+else
+15:
+gi := gi−1 , s := spei i
+16:
+end if
+17: end for
+18: Add (gℓ , s, n) to T
+19: Recursively process all tuples in T
+Algorithm 3: DDF
+Let e = max1≤i≤ℓ {ei }. Since di ≤ d1 for all i = 1, . . . , k, case 1 can happen at most e ≤ log n
+number of times. Since si ≤ d′ ≤ n for all i = 1, . . . , k, case 2 can also happen at most log n number
+of times. Therefore, we always have k ∈ O(log n).
+Given a squarefree polynomial f ∈ Fq [x] of degree n, calling Algorithm 3 with the input tuple
+(f, s = 1, n) will produce the DDF of f . The auxiliary input integer n is never changed. It is used
+in Step 5 to input the bound ℓ = log2 n to Algorithm 2. This will simplifies the complexity analysis
+2
+of the algorithm. Note that when the algorithm is called for the first time, if d ∈ O(2log n ) then
+we could always assume that this bound holds for the subsequent d’s in the the next stages of the
+recursion: for any input polynomial g of degree m in an intermediate stage we have m < n and
+g | f so that the order of the Frobenius of Fq [x]/g is always bounded by that of Fq [x]/f . Let us
+now analyze the complexity of Algorithm 3. We shall need the following two propositions.
+t
+
+Proposition 8. Given a polynomial f ∈ Fq [x] of degree n, a power σ̃(x) = xq of the Frobenius of
+
+9
+
+Fq [x]/f , and an integer d = pe11 pe22 · · · peℓ ℓ in the factored form, the sequence
+σ̃ d/p1 (x) mod f, . . . , σ̃ d/pℓ (x) mod f
+
+(5)
+
+can be computed in O(C(n)(log ℓ)(log d) + ℓM(n)) operations in Fq .
+Proof. Denote by {d, [1, ℓ], σ̃} the problem of computing σ̃ d/pi (x) mod f for all i in the range [1, ℓ].
+er+1
+We recursively solve this problem as follows. Let r = ⌊ℓ/2⌋, d1 = pr+1
+· · · peℓ ℓ and d2 = pe11 · · · perr .
+d
+Then the problem is reduced to the two subproblems {d2 , [1, r], σ̃ 1 } and {d1 , [r + 1, ℓ], σ̃ d2 }. The
+ei
+ei
+problem {pei i , [i, i], σ̃ d/pi } is solved by simply raising σ̃ d/pi to the power piei −1 .
+Computing the powers of the Frobenius is done using modular composition. At any level of the
+recursions, the total number of modular compositions is O(log d). Therefore, at level j we spend
+O(C(n) log d) operations in Fq on modular compositions, and O(2j M(n)) operations in Fq on 2j
+polynomial reductions. Since the depth of the recursion is log ℓ, the claimed runtime follows.
+Proposition 9. The integer factorization in Step 6 of Algorithm 3 can be done in O(n1+o(1) ) bit
+operations.
+2
+
+Proof. We know that d is n-smooth, i.e., pi ≤ n for all i = 1, . . . , ℓ. If d ∈ O(2log n ) then d can be
+completely factored in O(n√1+o(1) ) bit operations using a naive trial division algorithm. So we are
+3
+left with the case d ∈ O(2c n log n ). For this we use a subproduct tree.
+Let P = {q1 , q2 , . . . , qs } be the set of all primes ≤ n. The subproduct tree for the set P is a
+binary tree described as follows. The root of the tree is the product q1 q2 . . . qs . Now divide the
+set P into two halves for the left and right subtrees with roots the products q1 q2 . . . q⌈s/2⌉ and
+q⌈s/2⌉+1 . . . qs , respectively. Repeating this this process results in a tree with leaves the primes in P .
+The tree can be built recursively: starting from the leaves, the value of a parent node is the product
+of the roots of the left and right subtrees. Since two m-bit integers are multiplied in O(m1+o(1) )
+bit operation, it is easily seen that each level of the tree is built at the cost of O(n1+o(1) ) bit
+operations. Since the height of the tree is O(log n), the total cost of building the tree is O(n1+o(1) )
+bit operations.
+Now, given a subproduct tree T for P , we can compute D = {d mod p : p ∈ P } as follows. We
+reduce d modulo the root of T , and then reduce the resulting value modulo the roots of the left
+and right subtrees, and so on. The set D is obtained when we reach the leaves. Again, the cost of
+the reductions at each level of T , and hence the total cost of computing D, is O(n1+o(1) ). From D
+we get the complete factorization of d at a negligible cost.
+Remark. Another way of factoring d in Proposition 9 is to use a quantum factoring algorithm,
+see [13]. A nontrivial factor of d can be found in time O(log2+o(1) d) bit operations, so a full
+factorization requires O(log3+o(1) d) = O(n1+o(1) ) bit operations.
+Theorem 10. Let f ∈ Fq [x] be a square free polynomial of degree n and let d be the order of the
+Frobenius of Fq [x]/f . Then the runtime of Algorithm 3 is
+2
+
+• O(n1+o(1) log2+o(1) q) bit operations if d ∈ O(2log n ), or
+• O(n4/3+o(1) log2+o(1) q) bit operations otherwise.
+
+10
+
+Proof. Step 1 of the algorithm takes O(C(m) log s + M(m) log q) = O(C(m) log m + M(m) log q)
+operations in Fq or O(m1+o(1) log2+o(1) q) bit operations. The cost of Step 5 is given by Proposition
+2
+6: if d ∈ O(2log n ) then it takes O(m1+o(1) (log2 n) log1+o(1) q) bit operations. Otherwise it takes
+O(m4/3+o(1) log2+o(1) q) bit operations. Step 6 can be done in O(n1+o(1) ) bit operations according
+to Proposition 9.
+Step 7 is done in O(C(m) log d + M(m) log m) operations in Fq or O(m1+o(1) (log d) log1+o(1) q)
+bit operations. For the loop at Step 10, we first compute the values σ̃ d/p1 , . . . , σ̃ d/pℓ mod f using
+Proposition 8 and then compute the gcd’s. This takes O(C(m)(log ℓ) log d+ℓM(m) log m) operations
+in Fq . Since the number of prime factors of any integer t is O(log t/ log log t) [11], we have ℓ ∈
+O(log d/ log log d) so the cost of this step is O(m1+o(1) (log d)(log log d) log1+o(1) q) bit operations.
+2
+If d ∈ O(2log n ) then, by the above, for an input polynomial of degree m the algorithm takes
+U (m) ∈ O(m1+o(1) log2+o(1) q + m1+o(1) (log2 n)(log log n) log1+o(1) q + n1+o(1) )
+bit operations before the recursive calls. Let d = pe11 pe22 · · · peℓ ℓ be the prime factorization of d, and
+let T (n) be the total cost of the algorithm for an input polynomial f of degree n. Then
+X
+T (n) ≤
+max
+{
+T (mi )} + U (n)
+(6)
+m1 +···+mℓ =n
+
+where {mi }1≤i≤ℓ is a partition of irreducible degrees of f . Since U is a super-additive function,
+i.e., U (m1 + m2 ) ≤ U (m1 ) + U (m2 ) for all m1 , m2 , and by Lemma 7, the depth of the recursion is
+O(log n), we have
+T (n) ∈ O(n1+o(1) log2+o(1) q).
+c
+
+If d ∈
+/ O(2log n ) then for an input polynomial of degree m it is always guaranteed that log d ∈
+O(m1/3+o(1) ). In this case, the algorithm takes U (m) = O(m4/3+o(1) log2+o(1) q + n1+o(1) ) bit
+operations before the recursive calls. Again since U is a super-additive function and (6) holds, for
+an input polynomial of degree n, the total cost of the algorithm is
+T (n) ∈ O(n4/3+o(1) log2+o(1) q)
+bit operations.
+Proof of Theorem 1. For a polynomial f ∈ Fq [x] of degree n, the squarefree factorization and
+equal-degree factorization stages take O(n1+o(1) log2+o(1) q) bit operations. For the distinct-degree
+factorization, combining Theorems 4 and 10 gives the desired complexity.
+
+References
+[1] E. R. Berlekamp. Factoring polynomials over large finite fields. Mathematics of Computation,
+24(111):713–735, 1970.
+[2] David G Cantor and Hans Zassenhaus. A new algorithm for factoring polynomials over finite
+fields. Mathematics of Computation, pages 587–592, 1981.
+[3] Andrew M Childs and Wim Van Dam. Quantum algorithms for algebraic problems. Reviews
+of Modern Physics, 82(1):1, 2010.
+11
+
+[4] Richard Cleve, Artur Ekert, Chiara Macchiavello, and Michele Mosca. Quantum algorithms
+revisited. In Proceedings of the Royal Society of London A: Mathematical, Physical and Engineering Sciences, volume 454, pages 339–354. The Royal Society, 1998.
+[5] John D Dixon and Daniel Panario. The degree of the splitting field of a random polynomial
+over a finite field. the electronic journal of combinatorics, 11(1):70, 2004.
+[6] Javad Doliskani, Anand Kumar Narayanan, and Éric Schost. Drinfeld modules with complex
+multiplication, hasse invariants and factoring polynomials over finite fields. arXiv preprint
+arXiv:1712.00669, 2017.
+[7] P Erdos and P Turán. On some problems of a statistical group theory i. Z. Wahrscheinlichkeitstheorie verw. Geb, 4:175–186, 1965.
+[8] Paul Erdos and P Turán. On some problems of a statistical group-theory. ii. Acta Math. Acad.
+Sci. Hungar, 18(1-2):151–163, 1967.
+[9] Zeyu Guo, Anand Kumar Narayanan, and Chris Umans. Algebraic Problems Equivalent to
+Beating Exponent 3/2 for Polynomial Factorization over Finite Fields. In 41st International
+Symposium on Mathematical Foundations of Computer Science (MFCS 2016), volume 58,
+pages 47:1–47:14, 2016.
+[10] Sean Hallgren, Alexander Russell, and Amnon Ta-Shma. The hidden subgroup problem and
+quantum computation using group representations. SIAM Journal on Computing, 32(4):916–
+934, 2003.
+[11] Godfrey Harold Hardy and Edward Maitland Wright. An introduction to the theory of numbers.
+Oxford university press, 1979.
+[12] E. Kaltofen and V. Shoup. Subquadratic-time factoring of polynomials over finite fields. Mathematics of Computation, 67(223):1179–1197, 1998.
+[13] Phillip Kaye, Raymond Laflamme, and Michele Mosca. An introduction to quantum computing.
+Oxford University Press, 2007.
+[14] Kiran S Kedlaya and Christopher Umans. Fast polynomial factorization and modular composition. SIAM Journal on Computing, 40(6):1767–1802, 2011.
+[15] Arnold Knopfmacher. On the degrees of irreducible factors of polynomials over a finite field.
+Discrete mathematics, 196(1-3):197–206, 1999.
+[16] Michael A Nielsen and Isaac L Chuang. Quantum computation and quantum information.
+Cambridge university press, 2010.
+[17] Victor Y Pan and Xinmao Wang. Acceleration of euclidean algorithm and extensions. In
+Proceedings of the 2002 international symposium on Symbolic and algebraic computation, pages
+207–213. ACM, 2002.
+[18] Joachim von zur Gathen and Jurgen Gerhard. Modern Computer Algebra. Cambridge University Press, New York, NY, USA, 1999.
+12
+
+[19] Joachim von zur Gathen and Victor Shoup. Computing Frobenius maps and factoring polynomials. Computational complexity, 2(3):187–224, 1992.
+[20] David YY Yun. On square-free decomposition algorithms. In Proceedings of the third ACM
+symposium on Symbolic and algebraic computation, pages 26–35. ACM, 1976.
+
+13
+
+

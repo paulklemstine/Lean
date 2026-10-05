@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/rSK3nTSsZeUQYX447bw9UAVYccc</id>
+  <title>arXiv Query: search_query=ti:"Quantum computation of multivariate polynomials"&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-09-29T02:14:19Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22Quantum+computation+of+multivariate+polynomials%22&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>0</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+</feed>

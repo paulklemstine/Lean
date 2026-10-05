@@ -344,6 +344,43 @@ def t9_samplers() -> None:
     check("|a^2-b^3| is not degenerate (median is large)", med > 1000, f"median={med}")
 
 
+def t11_zero_hang_regression() -> None:
+    """REGRESSION: V = a^2-b^3 is EXACTLY ZERO for a=c^3, b=c^2, and the
+    divide-out loop `while v % p == 0: v //= p` NEVER TERMINATES on 0, because
+    0 % p == 0 for every p.
+
+    This actually happened: R2 ran >100 s producing no output, and because
+    stdout was block-buffered through a pipe the hang was indistinguishable
+    from "slow".  A hang that looks like slowness is the worst kind of bug --
+    it costs the whole time budget and reports nothing.
+    """
+    print("== T11. ZERO-VALUE HANG regression ==")
+    import time
+    # 4^3 = 64, 8^2 = 64 -> a^2 - b^3 = 4096 - 262144.  Need a=c^3,b=c^2 with
+    # a^2 = b^3:  take c=4 -> a = c^3 = 64, b = c^2 = 16 -> 64^2 = 4096,
+    # 16^3 = 4096.  V = 0 exactly.
+    zero_vals = np.array([0, 1, 2, 3, 4096 - 4096], dtype=np.int64)
+    t0 = time.time()
+    m = smooth_mask_batch(zero_vals, 1000)
+    dt = time.time() - t0
+    check("smooth_mask_batch terminates on an array containing 0", dt < 5.0,
+          f"{dt:.3f}s")
+    check("0 is reported NOT smooth (its factorisation is undefined)",
+          not bool(m[0]), "convention: |v|=0 is not a usable candidate")
+    check("neighbours unaffected: 1 smooth, 2 smooth, 3 smooth at B=1000",
+          bool(m[1]) and bool(m[2]) and bool(m[3]))
+    check("active fast path agrees on the zero case",
+          bool(np.array_equal(m, smooth_mask_batch_active(zero_vals, 1000))))
+    # the actual construction that produces it
+    for c in (2, 3, 4, 5):
+        aa, bb = c**3, c**2
+        assert aa * aa - bb * bb * bb == 0, "a=c^3, b=c^2 must give V=0"
+    check("a=c^3, b=c^2 gives V=0 exactly (the real trigger)", True)
+    # and confirm it would have hung the OLD code: 0 % p == 0 for all p
+    check("0 % p == 0 for every prime (the mechanism of the hang)",
+          all(0 % p == 0 for p in (2, 3, 5, 7)))
+
+
 # ---------------------------------------------------------------------------
 # T10. the cap in (*) vs the parity BYPASS -- the one place conditioning can pay.
 # ---------------------------------------------------------------------------
@@ -371,6 +408,7 @@ def main() -> int:
     t7_rational_and_vacuity()
     t8_z_detector_validity()
     t9_samplers()
+    t11_zero_hang_regression()
     t10_parity_bypass()
     print(f"\n{'ALL SELFTESTS PASS' if not FAILS else 'SELFTEST FAILURES: ' + ', '.join(FAILS)}"
           f"   ({NCHECK - len(FAILS)}/{NCHECK})")

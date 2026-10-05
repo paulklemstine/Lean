@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/z4jnZ7mqPljFeE94dL4Z2mWyJ9M</id>
+  <title>arXiv Query: search_query=&amp;id_list=2511.10851&amp;start=0&amp;max_results=10</title>
+  <updated>2026-10-05T15:39:07Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=10&amp;id_list=2511.10851" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2511.10851v1</id>
+    <title>A number-theoretic conjecture implying faster algorithms for polynomial factorization and integer factorization</title>
+    <updated>2025-11-13T23:23:54Z</updated>
+    <link href="https://arxiv.org/abs/2511.10851v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.10851v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The fastest known algorithm for factoring a degree $n$ univariate polynomial over a finite field $\mathbb{F}_q$ runs in time $O(n^{3/2 + o(1)}\text{polylog } q)$, and there is a reason to believe that the $3/2$ exponent represents a ''barrier'' inherent in algorithms that employ a so-called baby-steps-giant-steps strategy. In this paper, we propose a new strategy with the potential to overcome the $3/2$ barrier. In doing so we are led to a number-theoretic conjecture, one form of which is that there are sets $S, T$ of cardinality $n^β$, consisting of positive integers of magnitude at most $\exp(n^α)$, such that every integer $i \in [n]$ divides $s-t$ for some $s \in S, t \in T$. Achieving $α+ β\le 1 + o(1)$ is trivial; we show that achieving $α, β&lt; 1/2$ (together with an assumption that $S, T$ are structured) implies an improvement to the exponent 3/2 for univariate polynomial factorization. Achieving $α= β= 1/3$ is best-possible and would imply an exponent 4/3 algorithm for univariate polynomial factorization. Interestingly, a second consequence would be a reduction of the current-best exponent for deterministic (exponential) algorithms for factoring integers, from $1/5$ to $1/6$.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-13T23:23:54Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Chris Umans</name>
+    </author>
+    <author>
+      <name>Siki Wang</name>
+    </author>
+  </entry>
+</feed>

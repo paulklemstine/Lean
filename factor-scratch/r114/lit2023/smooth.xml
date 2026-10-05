@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/DKIajbFOc1xPPwLTrHl6G52mt3U</id>
+  <title>arXiv Query: search_query=abs:"smooth numbers" AND cat:cs.CR&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-05T15:30:24Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22smooth+numbers%22+AND+cat:cs.CR&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>6</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2402.11269v1</id>
+    <title>A New Approach to Generic Lower Bounds: Classical/Quantum MDL, Quantum Factoring, and More</title>
+    <updated>2024-02-17T13:00:47Z</updated>
+    <link href="https://arxiv.org/abs/2402.11269v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.11269v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper studies the limitations of the generic approaches to solving cryptographic problems in classical and quantum settings in various models.
+  - In the classical generic group model (GGM), we find simple alternative proofs for the lower bounds of variants of the discrete logarithm (DL) problem: the multiple-instance DL and one-more DL problems (and their mixture). We also re-prove the unknown-order GGM lower bounds, such as the order finding, root extraction, and repeated squaring.
+  - In the quantum generic group model (QGGM), we study the complexity of variants of the discrete logarithm. We prove the logarithm DL lower bound in the QGGM even for the composite order setting. We also prove an asymptotically tight lower bound for the multiple-instance DL problem. Both results resolve the open problems suggested in a recent work by Hhan, Yamakawa, and Yun.
+  - In the quantum generic ring model we newly suggested, we give the logarithmic lower bound for the order-finding algorithms, an important step for Shor's algorithm. We also give a logarithmic lower bound for a certain generic factoring algorithm outputting relatively small integers, which includes a modified version of Regev's algorithm.
+  - Finally, we prove a lower bound for the basic index calculus method for solving the DL problem in a new idealized group model regarding smooth numbers.
+  The quantum lower bounds in both models allow certain (different) types of classical preprocessing. All of the proofs are significantly simpler than the previous proofs and are through a single tool, the so-called compression lemma, along with linear algebra tools. Our use of this lemma may be of independent interest.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-17T13:00:47Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Minki Hhan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.13954v1</id>
+    <title>Smooth Number Message Authentication Code in the IoT Landscape</title>
+    <updated>2023-10-21T09:18:17Z</updated>
+    <link href="https://arxiv.org/abs/2310.13954v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.13954v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper presents the Smooth Number Message Authentication Code (SNMAC) for the context of lightweight IoT devices. The proposal is based on the use of smooth numbers in the field of cryptography, and investigates how one can use them to improve the security and performance of various algorithms or security constructs. The literature findings suggest that current IoT solutions are viable and promising, yet they should explore the potential usage of smooth numbers. The methodology involves several processes, including the design, implementation, and results evaluation. After introducing the algorithm, provides a detailed account of the experimental performance analysis of the SNMAC solution, showcasing its efficiency in real-world scenarios. Furthermore, the paper also explores the security aspects of the proposed SNMAC algorithm, offering valuable insights into its robustness and applicability for ensuring secure communication within IoT environments.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-21T09:18:17Z</published>
+    <arxiv:comment>19 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Eduard-Matei Constantinescu</name>
+    </author>
+    <author>
+      <name>Mohammed Elhajj</name>
+    </author>
+    <author>
+      <name>Luca Mariot</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.07804v1</id>
+    <title>Quantum and Classical Combinatorial Optimizations Applied to Lattice-Based Factorization</title>
+    <updated>2023-08-15T14:31:25Z</updated>
+    <link href="https://arxiv.org/abs/2308.07804v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.07804v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The availability of working quantum computers has led to several proposals and claims of quantum advantage. In 2023, this has included claims that quantum computers can successfully factor large integers, by optimizing the search for nearby integers whose prime factors are all small.
+  This paper demonstrates that the hope of factoring numbers of commercial significance using these methods is unfounded. Mathematically, this is because the density of smooth numbers (numbers all of whose prime factors are small) decays exponentially as n grows. Our experimental reproductions and analysis show that lattice-based factoring does not scale successfully to larger numbers, that the proposed quantum enhancements do not alter this conclusion, and that other simpler classical optimization heuristics perform much better for lattice-based factoring.
+  However, many topics in this area have interesting applications and mathematical challenges, independently of factoring itself. We consider particular cases of the CVP, and opportunities for applying quantum techniques to other parts of the factorization pipeline, including the solution of linear equations modulo 2. Though the goal of factoring 1000-bit numbers is still out-of-reach, the combinatoric landscape is promising, and warrants further research with more circumspect objectives.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-15T14:31:25Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Willie Aboumrad</name>
+    </author>
+    <author>
+      <name>Dominic Widdows</name>
+    </author>
+    <author>
+      <name>Ananth Kaushik</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.11724v2</id>
+    <title>ECM And The Elliott-Halberstam Conjecture For Quadratic Fields</title>
+    <updated>2023-01-17T14:07:16Z</updated>
+    <link href="https://arxiv.org/abs/2212.11724v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.11724v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The complexity of the elliptic curve method of factorization (ECM) is proven under the celebrated conjecture of existence of smooth numbers in short intervals. In this work we tackle a different version of ECM which is actually much more studied and implemented, especially because it allows us to use ECM-friendly curves. In the case of curves with complex multiplication (CM) we replace the heuristics by rigorous results conditional to the Elliott-Halberstam (EH) conjecture. The proven results mirror recent theorems concerning the number of primes p such thar p -- 1 is smooth. To each CM elliptic curve we associate a value which measures how ECM-friendly it is. In the general case we explore consequences of a statement which translated EH in the case of elliptic curves.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-22T14:15:26Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Razvan Barbulescu</name>
+      <arxiv:affiliation>LFANT</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Florent Jouve</name>
+      <arxiv:affiliation>IMB</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.09592v1</id>
+    <title>On speeding up factoring with quantum SAT solvers</title>
+    <updated>2019-10-21T18:33:34Z</updated>
+    <link href="https://arxiv.org/abs/1910.09592v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.09592v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>There have been several efforts to apply quantum SAT solving methods to factor large integers. While these methods may provide insight into quantum SAT solving, to date they have not led to a convincing path to integer factorization that is competitive with the best known classical method, the Number Field Sieve. Many of the techniques tried involved directly encoding multiplication to SAT or an equivalent NP-hard problem and looking for satisfying assignments of the variables representing the prime factors. The main challenge in these cases is that, to compete with the Number Field Sieve, the quantum SAT solver would need to be superpolynomially faster than classical SAT solvers. In this paper the use of SAT solvers is restricted to a smaller task related to factoring: finding smooth numbers, which is an essential step of the Number Field Sieve. We present a SAT circuit that can be given to quantum SAT solvers such as annealers in order to perform this step of factoring. If quantum SAT solvers achieve any speedup over classical brute-force search, then our factoring algorithm is faster than the classical NFS.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-21T18:33:34Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Michele Mosca</name>
+    </author>
+    <author>
+      <name>João Marcos Vensi Basso</name>
+    </author>
+    <author>
+      <name>Sebastian R. Verschoor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0810.2067v3</id>
+    <title>Divisibility, Smoothness and Cryptographic Applications</title>
+    <updated>2009-01-02T03:54:55Z</updated>
+    <link href="https://arxiv.org/abs/0810.2067v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0810.2067v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  This paper deals with products of moderate-size primes, familiarly known as smooth numbers. Smooth numbers play a crucial role in information theory, signal processing and cryptography.
+  We present various properties of smooth numbers relating to their enumeration, distribution and occurrence in various integer sequences. We then turn our attention to cryptographic applications in which smooth numbers play a pivotal role.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2008-10-12T02:28:07Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>David Naccache</name>
+    </author>
+    <author>
+      <name>Igor E. Shparlinski</name>
+    </author>
+  </entry>
+</feed>

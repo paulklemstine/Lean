@@ -1,0 +1,808 @@
+                                          ON DETERMINISTICALLY FINDING AN ELEMENT OF HIGH
+                                                    ORDER MODULO A COMPOSITE
+
+
+                                                                     ZIV OZNOVICH AND BEN LEE VOLK
+arXiv:2506.07668v3 [cs.DS] 11 Oct 2025
+
+
+
+
+                                                   Abstract. We give a deterministic algorithm that, given a composite number
+                                                   N and a target order D ≥ N 1/6 , runs in time D1/2+o(1) and finds either an
+                                                   element a ∈ Z∗N of multiplicative order at least D, or a nontrivial factor of N .
+                                                   Our algorithm improves upon an algorithm of Hittmeir [Hit18], who designed
+                                                   a similar algorithm under the stronger assumption D ≥ N 2/5 . Hittmeir’s
+                                                   algorithm played a crucial role in the recent breakthrough deterministic integer
+                                                   factorization algorithms of Hittmeir and Harvey [Hit21, Har21, HH22b]. When
+                                                   N is assumed to have an r-power divisor with r ≥ 2, our algorithm provides
+                                                   the same guarantees assuming D ≥ N 1/6r .
+
+
+
+
+                                                                                1. Introduction
+                                             While it is generally believed that every randomized algorithm can be simulated
+                                         by a deterministic algorithm with at most a polynomial slowdown (and indeed,
+                                         such a statement is implied by widely believed complexity theoretic conjectures
+                                         [NW94, IW97, DMOZ22]), obtaining unconditional derandomization results is still
+                                         of great interest in complexity theory and algorithm design. Computational number
+                                         theory offers a host of problems in which the best known randomized algorithms
+                                         significantly outperform the best known deterministic algorithms, with one prime
+                                         example being the problem of integer factorization: the best known randomized
+                                         algorithms
+                                                 √ for factoring an integer N with rigorously proved guarantees run in time
+                                         exp(Õ( log N ))1 while the best known deterministic algorithms are still strongly
+                                         exponential. For decades, essentially the best known algorithm was the Strassen-
+                                         Pollard algorithm [Pol74, Str77] that runs in time N 1/4+o(1) , and a large body of
+                                         work was devoted to improving the o(1) term. Recently, a series of breakthroughs
+                                         by Hittmeir and Harvey [Hit21, Har21, HH22b] resulted in a deterministic algorithm
+                                         that runs in time N 1/5+o(1) .
+                                             The algorithms of Hittmeir and Harvey [Hit21, Har21, HH22b] all crucially rely
+                                         on deterministically finding an element a ∈ Z∗N with large multiplicative order:
+                                         recall that the order of an element a ∈ Z∗N , which we denote by ordN (a), is the
+                                         smallest positive integer k such that ak ≡ 1 (mod N ). Specifically, [Har21, HH22b]
+                                         require finding an element whose order is at least roughly N 1/5 .
+                                             The problem of finding an element of large order is a natural derandomization
+                                         problem in and of itself: consider, for example, the case where N = pq for primes
+                                         p, q such that neither p nor q is very small (using standard arguments, Hittmeir
+
+                                            Efi Arazi School of Computer Science, Reichman University, Israel.                      Emails:
+                                         {oznovich.ziv@gmail.com, benleevolk@gmail.com}. The research leading to these results has
+                                         received funding from the Israel Science Foundation (grant number 843/23).
+                                            1Heuristically, the general number field sieve algorithm even runs in time exp(Õ((log N )1/3 )),
+                                         but in this work we focus on algorithms with provable worst case complexity guarantees.
+                                                                                          1
+2                         ZIV OZNOVICH AND BEN LEE VOLK
+
+
+and Harvey [Hit21, Har21, HH22b] reduce the general case to this case). A random
+element in Z∗N is likely to have a large multiplicative order, but it is not immediately
+clear how to deterministically and efficiently find such an element.
+    This problem was addressed by Hittmeir [Hit18], who gave an algorithm that,
+given a composite integer N and a parameter D ≥ N 2/5 , runs in time D1/2+o(1) ,
+and either finds an element a ∈ Z∗N of multiplicative order at least D, or finds a
+nontrivial factor of N . It might seem slightly unsatisfactory that the algorithm
+is not guaranteed to find an element of large order. But in the context of being
+used as a subroutine in a factorization algorithm, this algorithm leads to a natural
+win-win type argument: either such an element is found, or a nontrivial factor of N
+is found. Furthermore, there exist infinitely many integers N such that the order
+of any element modulo N is at most (log N )O(log log log N ) [EPS91], so in the general
+case, an element of such a large order does not always exist.
+    In the factorization algorithms in [Har21, HH22b], Hittmeir’s algorithm [Hit18]
+is applied with D = N 2/5 , so it runs in time N 1/5+o(1) , barely fast enough so as not
+to hurt the total running time of the algorithm (as the other steps in the algorithm
+also take time N 1/5+o(1) ). If it does not factor N , it produces an element whose
+order is at least D = N 2/5 , whereas the next steps of the factorization algorithm
+only require an element of order at least roughly N 1/5 .
+    As a final remark, we note that when Hittmeir’s algorithm [Hit18] is given as an
+input a prime number N , it will not necessarily output an element of larger order
+modulo N , and it may just detect the fact that N is prime (which is, of course,
+famously decidable in deterministic polynomial time [AKS04]).
+    When N = p is prime, Z∗p is cyclic, and deterministically finding a generator for
+this group is another very interesting open problem. To the best of our knowledge,
+the best known deterministic algorithm for this problem follows from using the
+          Qm algorithms of [Har21, HH22b] to obtain a factorization of p − 1 as
+factorization
+p − 1 = i=1 qiei , and then, using brute-force search, finding qi -th non-residue ai
+                                          Qm (p−1)/qiei
+modulo p for every qi , and outputting i=1 ai              . Classical upper bounds on
+the magnitude of the least q-th non-residues [Bur57, Wan64, Nor71, Tre15] imply
+that the time complexity of the algorithm is dominated by the factorization step,
+so the total running time is p1/5+o(1) . In [Gro15], Grossman presents a pseudo-
+deterministic algorithm for finding a generator modulo p in time exp(Õ(log p)) (a
+pseudo-deterministic algorithm is a randomized algorithm that on every input, is
+guaranteed to output some canonical output with high probability).
+1.1. Our results. We give a deterministic algorithm for finding an element a ∈ Z∗N
+of large order that works for a wider range of parameters than Hittmeir’s algorithm
+[Hit18].
+Theorem 1.1. There exists a deterministic algorithm that, when given as input
+a composite integer N ∈ N and a target order D ≥ N 1/6 , runs in time D1/2+o(1)
+and outputs either a nontrivial factor of N or an element a ∈ Z∗N of multiplicative
+order at least D.
+   Our algorithm can be used as-is as a subroutine in the factorization algorithms
+of Hittmeir and Harvey [Hit21, Har21, HH22b] to produce an element of order
+at least, say N 1/5 (which is a large enough order for the rest of the algorithm’s
+analysis to go through) in time N 1/10+o(1) . As mentioned earlier, in the algorithms
+of [Hit21, Har21, HH22b] the running time of this step is N 1/5+o(1) .
+                        FINDING AN ELEMENT OF HIGH ORDER                                3
+
+
+   Like Hittmeir’s algorithm [Hit18], our algorithm might not produce any useful
+output if given as input a prime number N (i.e., it might just output the fact that
+N is prime).
+   For integers that have a prime factor with multiplicity r, we can even obtain an
+algorithm with the same running time of D1/2+o(1) under the weaker assumption
+D ≥ N 1/6r .
+   In a recent independent and concurrent work, Gao, Feng, Hu and Pan [GFHP25]
+presented a similar deterministic algorithm for finding an element of large order
+modulo composite that runs in time D1/2+o(1) under the stronger assumption
+D ≥ N 1/4r . We remark further on their techniques in the next subsection and
+in Section 3. The paper [GFHP25] further includes improved algorithms (by
+logarithmic factors) for deterministic factorization in certain important special
+cases.
+
+1.2. Proof Technique. We begin with a broad overview of Hittmeir’s algorithm
+[Hit18, Algorithm 6.2].
+   In a high level overview, one can think of Hittmeir’s algorithm as performing a
+brute force search for an element of high order, starting from a = 2,  √ 3, . . . Given a
+specific element a ∈ Z∗N , one can deterministically check in time O( D) · logO(1) N
+whether the order of a is at least D, using a simple variant on Shanks’s [Sha71]
+famous Baby-Step Giant-Step method for solving discrete logarithm: √        indeed, one
+can compute (and store) the list of elements aj√for 0 ≤ j ≤ ⌈ D⌉ − 1 (these are
+                                                                       √
+the “baby steps”) and the list of elements a−i⌈ D⌉ for 0 ≤ i ≤ ⌈ D⌉ − 1 (these
+are the “giant steps”), sort the lists and check for a collision in linear time (in the
+lengths√of the lists). If indeed√ak ≡ 1 mod N for some k ≤ D, then by writing
+k = i⌈ D⌉ + j for 0 ≤ i, j ≤ ⌈ D⌉ − 1, we are guaranteed to find a collision, and
+in fact in this case we also know the exact order of a. If a collision is not found,
+then the order of√a is greater than D (see Theorem 2.1 for a small improvement
+that shaves off a log log D factor).
+   Going back to the problem of finding an element of large order, Hittmeir’s
+algorithm maintains a variable M that equals the least common multiple of the
+orders of the elements checked so far. It then does a brute force search for the next
+element a whose order is not divisible by M . If the order of a is at least D, we are
+done. Otherwise, we can try to use the fact that the order of a modulo N is small
+to try to obtain information about the factors of N , and update the variable M as
+the least common multiple of its previous value and the order of a.
+   The value of M grows by a factor of at least 2 in each iteration. After O(log D)
+iterations, we are at the situation where unless that algorithm already terminated
+with a correct
+             √ output, we know that every prime factor p of N equals 1 modulo M ,
+where M ≥ D. At this point, Hittmeir invokes a variant of Strassen’s algorithm
+                                            1/4
+[Str77] which factors N in time roughly N√M (see Section 2.2 for details).
+   We improve on this method in several ways. Our first improvement comes from
+a better upper bound on the number of consecutive elements a, a+1, a+2, . . . ∈ Z∗N
+whose multiplicative order is divisible by M . Hittmeir
+                                                     √      [Hit18] upper bounds this
+number by M , but we prove an upper √   bound  of O(   M ), which allows us to increase
+M up to roughly D (rather than D) without hurting the running time.
+   Our second contribution comes from replacing the final factorization step of the
+algorithm. The question of finding factors of a number given information about
+4                        ZIV OZNOVICH AND BEN LEE VOLK
+
+
+their residue classes has received some attention. Coppersmith, Howgrave-Graham
+and Nagaraj [CHN08] designed a remarkable, efficient and deterministic algorithm
+specifically for that problem: given an integer N and a parameter 0 ≤ t < s < N
+such that s ≥ N α for α > 1/4 and gcd(t, s) = gcd(s, N ) = 1, their algorithm finds
+all divisors of N that equal t modulo s in deterministic polynomial time. Their
+algorithm even provides an upper bound for the number of such factors that depend
+only on α, although this is less relevant for our application (such an upper bound
+was also proved earlier by Lenstra [Len84]). The algorithm of [CHN08] is based
+on Coppersmith’s method for finding small roots of low degree univariate modular
+polynomials [Cop97], using the basis reduction algorithm of Lenstra, Lenstra and
+Lovász [LLL82].
+   At the last step of our algorithm we know that every prime factor p of N equals
+1 modulo M and M ≥ D. Assuming D ≥ N 1/4+ε we can use the factorization of
+[CHN08] to recover the prime factors of N .
+   However, we can even improve the parameters a bit further. Since the other
+steps of our algorithm already run in time D1/2+o(1) , we can allow the factorization
+step to run for longer than polynomial time. To that end, we adapt the technique
+of Coppersmith et al. [CHN08] to a recent deterministic algorithm of Harvey and
+Hittmeir [HH22a] for finding all r-th power divisors of an integer N . Their algorithm
+also builds on Coppersmith’s method [Cop97], which they adapt to exploit the fact
+that N has an r-th power divisor, enabling them to find all such divisors in time
+N 1/4r .
+   We extend their approach under the assumption that the residue class of the
+prime divisors of N modulo some integer s is known. Intuitively, the assumption
+that N has a prime divisor in a specific residue class modulo s should reduce the
+search space by a factor of s. Indeed, we show that this intuition can be realized
+and present a variant of their algorithm (and in a sense also of [CHN08]) that,
+given N and s ≥ N α coprime to N , finds all r-th power divisors of N that equal
+1 modulo s in time N 1/4r−α+o(1) . Quite surprisingly, it seems that the approach
+of Harvey and Hittmeir [HH22a] gives better dependence on α, even when r = 1,
+rather than trying to directly extend [CHN08].
+   We now give an overview of the algorithm of Harvey and Hittmeir [HH22a], and
+explain our extensions.
+   The main idea in the algorithm (and, for that matter, in the algorithm of
+Coppersmith et al. [CHN08] as well) is to search for divisors of N in various
+intervals, by constructing a low-degree univariate integer polynomial h(x) such
+that the integer roots of h correspond to potential divisors of N .
+   To search a given interval of the form [P − H, P + H], Harvey and Hittmeir
+construct the system of polynomials
+                               (
+                                N m−⌊i/r⌋ (P + x)i , 0 ≤ i < rm,
+                      fi (x) =
+                                (P + x)i ,           rm ≤ i < d.
+
+(where m and d are parameters that are later set to optimize the running time of
+the algorithm). These polynomials are designed so that they vanish modulo prm at
+x0 = p − P , assuming pr | N .
+   The LLL algorithm [LLL82] is applied to find a short vector in the lattice spanned
+by those polynomials: that vector corresponds to a polynomial h(x) with small
+coefficients that vanishes at x0 = p−P modulo prm . Since |x0 | ≤ H, then assuming
+                       FINDING AN ELEMENT OF HIGH ORDER                               5
+
+
+H is small enough, |h(x0 )| < prm , which implies that x0 is a root of h over the
+integers.
+   Harvey and Hittmeir then cover the entire search range [1, N 1/r ] by such shorter
+intervals, and since the above procedure runs in polynomial time, the dominant
+contribution to the algorithm’s running time arises from the number of subintervals
+[P − H, P + H] that must be processed.
+   In our case, it is known that the residue class of the prime factors of N modulo
+some integer s is 1. Namely, we know that p ≡ 1 (mod s) for all prime factors p
+of N . This reduces the search space by a factor of s, making it a natural goal to
+modify the algorithm accordingly and aim for an improvement by a factor of s in
+running time.
+   In Harvey and Hittmeir’s algorithm, [HH22a], the basic polynomial of interest is
+f (x) = x + P , where P is the center of the current search interval [P − H, P + H].
+The two important properties of this polynomial are:
+     • It is monic. This property is used to bound the lattice determinant, which
+       is crucial for the efficiency of the algorithm, as the maximal possible size of
+       H depends on this determinant, and we would like to maximize H in order
+       to reduce the number of search intervals.
+     • If p is an r -th power divisor of N “close” to P , then x0 = p−P , is a “small”
+       root of f (x) modulo p. This fact remains true for powers and multiples of
+       f (x), and integer linear combinations thereof, hence enabling them (using
+       the LLL basic reduction algorithm) to find p.
+   The key idea of our variant is to replace the polynomial P + x with a new
+polynomial that, in some sense, retains all the useful properties of the original
+construction. The fact that the residue class of p modulo s is known allows us to
+reduce the size of the root we need to recover, from H to roughly H/s. This enables
+us to increase the size of the interval in which we perform a single search by a factor
+of s, which, in turn, reduces the number of subintervals required by a factor of s,
+and improves the overall running time.
+   We remark that our algorithm, with straightforward modifications, works equally
+well for finding divisors in other residue classes modulo s (i.e., divisors that equal
+t modulo s for some 0 ≤ t ≤ s − 1). Since this is less useful in our context, we omit
+the details.
+   A similar algorithm with the same running time that uses very similar techniques
+was recently independently obtained by [GFHP25], in a similar context.
+
+1.3. Organization. In Section 2, we cite relevant prior results and prove some
+preliminary facts that are useful for our main algorithm. In Section 3, we give the
+algorithm for finding factors of N given their residue class modulo some integer s.
+The main algorithm is given in Section 4. We conclude with some open problems
+in Section 5.
+
+
+                                 2. Preliminaries
+  In this section, we cite and prove some preliminary results. Sections 2.1, 2.2, 2.3
+and 2.4 summarize important subroutines we use in our algorithms. In Section 2.5
+we prove some new results that we rely on for our improvement.
+6                          ZIV OZNOVICH AND BEN LEE VOLK
+
+
+2.1. Order Calculation Algorithm. As discussed in Section 1, a well known
+theorem of Shanks allows one to test, for each integer a, whether the order of a
+modulo N exceeds D, and if it does not, to compute it exactly. A small improvement
+over Shanks’ method was given by [Sut07, Algorithm 4.1] (see also [Hit18, Theorem
+6.1]).
+Theorem 2.1 ([Sut07]). There exists an algorithm that on input D, N ∈ N such
+                                                  1/2
+that D ≤ N and a ∈ Z∗N , runs in time O       √ D
+                                               log log D
+                                                         · log2 N   , and outputs:
+      • ordN (a) if ordN (a) ≤ D
+      • “ordN (a) > D” otherwise.
+2.2. Strassen’s Method. As part of the main algorithm we wish to check if N
+has relatively “small” prime divisors, and if so, find them. Also, when a “small”
+order element ai is found, we wish to factor ordN (ai ). For these purposes we use
+the method of Pollard and Strassen [Pol74, Str77] for finding small factors of N .
+(See also [Har21, Proposition 2.5] for the exact statement on the running time).
+Theorem 2.2 ([Pol74, Str77]). There exists an algorithm that on input L, N ∈ N
+such that L ≤ N , tests if N has a prime divisor p ≤ L, and if so, finds the smallest
+such divisor, and runs in time O(L1/2 log3 N ).
+                              √
+   Note that by setting L := N , this method can √ be used to completely factor N ,
+since any composite N must have a divisor p ≤ N .
+2.3. Order of All Prime Divisors. We state an important lemma of Hittmeir
+([Hit18, Lemma 2.3]) that allows us to deduce, in certain cases, the order of a
+modulo prime factors of N .
+Lemma 2.3 ([Hit18]). Let N ∈ N and a ∈ Z∗N . Let m := ordN (a). Then
+                     ordp (a) = m    for every prime p dividing N
+if and only if
+                 gcd(N, am/r − 1) = 1    for every prime r dividing m.
+2.4. Lattice Basis Reduction. An important tool that we use in Section 3 is the
+famous LLL [LLL82] lattice basis reduction algorithm.
+Lemma 2.4 ([LLL82]). Let d ≥ 1 and B ≥ 2. Given a set of linearly independent
+vectors v0 , . . . , vd−1 ∈ Zd such that ∥vi ∥ ≤ B for all i, there exists a deterministic
+algorithm that runs in time polynomial in d and log B and returns a nonzero vector
+w in the lattice L := spanZ (v0 , . . . , vd−1 ) such that
+                                                        1/d
+                               ∥w∥ ≤ 2(d−1)/4 (det L)
+2.5. Number of Consecutive Roots. In this section we prove a bound on the
+number of consecutive integers a that satisfy the equality aℓ ≡ 1 (mod N ). [Hit18]
+obtained a bound of ℓ using the observation that if aℓ = 1 mod N , then the same
+holds for every p that divides N , and a degree ℓ polynomial  √ over the field Fp has
+at most ℓ roots. We prove an improved upper bound of O( ℓ). In fact, our proof
+also uses the fact that aℓ cannot be equal to 1 modulo a prime p for too many
+consecutive integers. Moreover, if this equality fails modulo a prime divisor p of N ,
+it certainly cannot be true modulo N . Our proof uses the following lemma, due to
+Forbes, Kayal, Mittal and Saha, on the number of solutions for a set of polynomial
+equations of a certain form modulo p.
+                        FINDING AN ELEMENT OF HIGH ORDER                                7
+
+
+Lemma√ 2.5 ([FKMS11], Lemma 2.1). Let k, ℓ be positive integers           such that k ≤
+√2 ·  ℓ + 1 and p be  a prime such that p >   2ℓ. Let S = {(x +   ai ) ℓ
+                                                                         − θi }1≤i≤k be a
+  5
+system of univariate polynomials, where θi , ai ∈ Fp and the ai ’s are distinct. Then,
+the number of common roots of the polynomials in S is at most 2ℓ/(k − 1) + 3.
+  We now present and prove the main result of Section 2.5.
+Claim 2.6. Let N, ℓ be large enough√positive integers. Suppose N has a prime
+factor p such that p > 2ℓ. Let m = 10 ℓ and A = {a, a + 1, . . . , a + m} be a set of
+m consecutive integers. Then A contains an element b such that bℓ ̸≡ 1 mod N .
+Proof. By assumption, N has a prime
+                                 √ factor p > 2ℓ.
+  Assuming ℓ > 25, we know 10 ℓ < 2ℓ < p, so all elements of A are distinct
+modulo p.                                 √
+  Consider Lemma 2.5 over Fp with k = ℓ/2, θi = 1 and ai = i for 1 ≤ i ≤
+k. Note that indeed k < √25 ℓ + 1, so by Lemma 2.5, we can conclude that the
+polynomial system S = {(x + i)ℓ − 1}1≤i≤k has at most
+                             √                √
+        2ℓ/(k − 1) + 3 = 2ℓ/    ℓ/2 − 1 + 3 < 5 ℓ (for large enough ℓ)
+common roots over Fp .              √
+   Let A′ = {a, a + 1, . . . , a + 5 ℓ} ⊆ A. Then A contains an element b = a + j
+which is not a common root of S. That is, for some 1 ≤ i ≤ k, (b + i)ℓ ̸≡ 1 √modulo
+p, and
+    √  therefore (b + i)   ≡
+                           ̸    1 mod N . Since b + i = a + j + i with j ≤ 5  ℓ and
+i ≤ ℓ/2, we have that b + i ∈ A.                                                  □
+   We note that Claim 2.6 assumes that N has a prime factor which is greater
+than 2ℓ. The reason we will be able to get away with this assumption in our main
+algorithm is that if N has small prime factors, we can use Theorem 2.2 to find them
+quickly.
+
+          3. Factoring N Given the Residue of a Prime Divisor
+  In this section, we give an algorithm that finds all prime factors of N that equal
+1 modulo s, for s ≥ N α coprime to N . Our algorithm is a modification of Harvey
+and Hittmeir’s algorithm for finding r-power divisors of N [HH22a].
+Definition 3.1. Let N, r ∈ N. An integer p > 1 is called an r-th power divisor of
+N if pr | N .
+  The main theorem we prove in this section is the following.
+Theorem 3.2. Let N, s, r ∈ N be integers such that
+(3.1)              s ≥ N α for some 0 < α ≤ 4r
+                                            1
+                                               ,       gcd(N, s) = 1.
+Then there exists a deterministic algorithm that finds all r-th power divisors of N
+that equal 1 modulo s, and runs in time
+                                     N 1/4r−α+o(1) .
+  As stated in Section 1, a similar result was independently obtained by Gao, Feng,
+Hu, and Pan [GFHP25].
+  The most general setting is the one in which we do not assume N has any r-
+power divisors for r ≥ 2. In this case, we may set r = 1 and the running time of the
+8                            ZIV OZNOVICH AND BEN LEE VOLK
+
+
+algorithm is N 1/4−α+o(1) . However, since the parameters we obtain are better when
+N is assumed to have r power divisors for r ≥ 2, and since the proof is identical
+for all values of r (and also perhaps under the influence of the original purpose of
+the algorithm in [HH22a]), we treat r as a parameter and present the proof for all
+values of r.
+   We start with the following claim.
+Claim 3.3. Let N, s ∈ N with gcd(N, s) = 1. Let s′ denote the unique integer in
+[1, N − 1] which is equivalent to the inverse of s modulo N .2
+    Given H < P ∈ N, suppose p0 = sx0 + 1 is a divisor of N that lies in the interval
+[P − H, P + H]. Let P̃ be the unique integer in [0, s − 1] which is equivalent to P
+modulo s, and define g(x) ∈ Z[x] as
+                                g(x) := x + s′ + s′ (P − P̃ ).
+where every coefficient is taken modulo N (so that every coefficient of g is an integer
+in [0, N − 1]). Further, let x′ := x0 − P −P̃
+                                          s . Then:
+    (1) g(x′ ) ≡ 0 (mod p0 )
+    (2) |x′ | ≤ H/s + 1.
+Proof. Since P ≡ P̃ (mod s), we have that s | (P − P̃ ), meaning that (P − P̃ )/s is
+an integer, and thus x′ is also an integer. We observe that (P − P̃ )/s ≡ s′ (P − P̃ )
+(mod N ), and that s′ p0 = s′ (sx0 + 1) ≡ x0 + s′ (mod N ). Therefore,
+                        g(x′ ) = x0 − (P − P̃ )/s + s′ + s′ (P − P̃ )
+                                ≡ x0 + s′ ≡ s′ p0     (mod N ).
+Since g(x ) is divisible by p0 modulo N , and p0 divides N , g(x′ ) is divisible by p0
+           ′
+
+over the integers. This establishes (1).
+   As for (2), by assumption p0 = sx0 + 1 ∈ [P − H, P + H], which implies that
+                                  −H ≤ sx0 + 1 − P ≤ H
+Adding P̃ − 1 to both sides of the equation and dividing by s, we get that
+                        −H + P̃ − 1        P − P̃   H + P̃ − 1
+                                    ≤ x0 −        ≤
+                            s                s          s
+Since 0 ≤ P̃ < s and x′ = x0 − P −P̃
+                                 s , (2) follows.                                              □
+   Claim 3.3 is used in order to search for prime divisors of N (that equal 1 modulo
+s) in small intervals of the form [P − H, P + H].
+   We remark that Claim 3.3 is the main difference between our algorithm and
+Harvey and Hittmeir’s algorithm [HH22a]. Harvey and Hittmeir observe that a
+divisor p0 ∈ [P − H, P + H] corresponds to a root of x + P modulo p0 of absolute
+value at most H (the root is p0 − P ). In our setup, the added assumption that
+p0 equals 1 modulo s means that the search space is reduced by a factor of s.
+Intuitively, this means that the bound on the root size is reduced by a factor of s
+and this is indeed what is shown in Claim 3.3. However, as it will soon be clear,
+we also want the polynomial g(x) to be monic in x, which leads to the definition in
+Claim 3.3.
+   2We choose to use the notation s′ rather than s−1 in order to clearly distinguish between
+multiplication by s′ and division by s: these operations are equivalent modulo N but distinct over
+the integers.
+                         FINDING AN ELEMENT OF HIGH ORDER                                  9
+
+
+   We now construct the set of polynomials that are the basis of the lattice whose
+short vector will be the polynomial whose roots we will eventually find.
+Claim 3.4. Let N, s be as in Claim 3.3. Let r, m, d ∈ N be arbitrary parameters.
+Define the polynomials f0 , . . . , fd−1 ∈ Z[x] as
+                                  (
+                                     N m−⌊i/r⌋ g(x)i , 0 ≤ i < rm,
+                    fi (x) :=
+                                     g(x)i ,           rm ≤ i < d.
+where g is as in Claim 3.3. Let p0 ∈ [P − H, P + H] be an r-power divisor of N
+that equals 1 modulo s, and let x′ be as in Claim 3.3. Then prm
+                                                             0  | fi (x′ ) for all
+0 ≤ i < d.
+Proof. If 0 ≤ i < rm, we have fi (x) = N m−⌊i/r⌋ g(x)i . By Claim 3.3, pi0 | g(x′ )i
+                             r(m−⌊i/r⌋)
+and pr0 | N , which means p0            | N m−⌊i/r⌋ . Since r · ⌊i/r⌋ ≤ i, the claim
+                                                      ′ i
+follows. If rm ≤ i < d, then by Claim 3.3, prm
+                                             0 | g(x ) .                           □
+
+   The following theorem states that assuming H is small enough, we may efficiently
+search intervals of the form [P −H, P +H] for prime divisors that equal 1 modulo s.
+In order to make the technical parameters easier to digest, the reader may assume
+that the parameters d and m are roughly logarithmic in N (this will be true in
+the final setting of the parameters). The theorem is analogous to Theorem 2.1 in
+[HH22a], and the proof is very similar.
+Theorem 3.5. Let N, s ∈ N be integers such that s ≥ N α for some 0 < α < 1/2,
+and gcd(N, s) = 1. Let r ≤ log N be a positive integer, d ∈ N and m ≤ d/r.
+  Further, suppose P, H are integers such that H < P ≤ N 1/r .
+  Then, assuming
+                               1       (P − H)rm
+(3.2)      G(d−1)/2 <                ·                 for G := ⌈H/s⌉ + 1,
+                       d1/2 2(d−1)/4 N rm(m+1)/2d
+there exists a deterministic algorithm that finds all integers p such that pr | N and
+p ≡ 1 (mod s) in the interval [P − H, P + H], that runs in time
+                                       O(dc logk N )
+for some constants c and k.
+Proof. We follow the proof of Theorem 2.1 in [HH22a]. Define the polynomials
+f0 , . . . , fd−1 ∈ Z[x] as in Claim 3.4. We associate with each polynomial
+fi (x) the coefficient vector v̄i of the polynomial fi (Gx).                   That is, v̄i =
+(ai,0 , ai,1 G, . . . , ai,d−1 Gd−1 ) where ai,j is the coefficient of xj in fi (x).
+    Define the matrix M as the matrix whose rows are the vectors v̄i for 0 ≤ i < d.
+    We can now run the LLL [LLL82] basis reduction algorithm from Lemma 2.4 on
+the lattice spanned by the vectors v̄i for 0 ≤ i < d. This algorithm returns a vector
+w̄ which is an integral linear combination of the v̄i ’s, such that
+                               ∥w̄∥ ≤ 2(d−1)/4 det(M )1/d .
+As M is a lower-triangular matrix, its determinant is the product of the leading
+coefficients of fi (Gx), and we get, using the same calculation as in [HH22a,
+Proposition 2.3], that
+                            det(M ) = Gd(d−1)/2 N rm(m+1)/2 .
+10                         ZIV OZNOVICH AND BEN LEE VOLK
+
+
+   The running time of the LLL basis reduction algorithm is polynomial in the
+dimension of the lattice d and the logarithm of the norm of the basis vectors (see
+Section 2.4). Since the entries of v̄i are bounded by N O(d) , we can find a non-zero
+vector w̄ in the lattice such that
+                         ∥w̄∥ ≤ 2(d−1)/4 G(d−1)/2 N rm(m+1)/2d
+in time O(dc logk N ) for some constants c and k.
+   Let w̄ = (w0 , . . . , wd−1 ). By Cauchy-Schwarz,
+        |w0 | + · · · + |wd−1 | ≤ d1/2 ∥w̄∥ < d1/2 2(d−1)/4 G(d−1)/2 N rm(m+1)/2d .
+From w̄ create the polynomial
+                    h(x) := w0 + w1 (x/G) + . . . + wd−1 (x/G)d−1
+which is a linear combination of the polynomials fi (x) for 0 ≤ i < d. Denoting
+     Pd−1
+h = i=0 hi xi , we have that hj = wj /Gj (note that hj is an integer since wj is a
+linear combination of the integers ai,j ’s multiplied by Gj ). It follows that
+(3.3)     |h0 | + |h1 |G + · · · + |hd−1 |Gd−1 ≤ d1/2 2(d−1)/4 G(d−1)/2 N rm(m+1)/2d .
+   Suppose now p0 ∈ [P −H, P +H] is an r-power divisor of N that equals 1 modulo
+s, and x′ be as in Claim 3.3.
+                              ′
+   By Claim 3.4, prm 0 | fi (x ) for all 0 ≤ i < d, and since h(x) is a linear combination
+                                            ′
+of the fi ’s, we also have that prm0 | h(x ).
+                      ′
+   By Claim 3.3, |x | ≤ G, so together with (3.3) and (3.2) we have that
+           |h(x′ )| ≤ |h0 | + |h1 |G + · · · + |hd−1 |Gd−1 < (P − H)rm ≤ prm
+                                                                          0
+
+It follows that that x′ is a root of h(x) also over the integers.
+   Therefore, after computing h(x), the algorithm computes the roots of h(x) over
+the integers in time polynomial in d and log N (see, e.g., [HH22a, Theorem 1.2])
+and for each root, checks whether it is indeed an r-power divisor of N that equals
+1 modulo s.                                                                     □
+
+   Next, as in [HH22a, Section 3], we consider finding r-power divisors T ≤ pr ≤
+T in larger intervals [T, T ′ ]. The method would be to apply Theorem 3.5 to
+ ′
+
+subintervals of the form [P − H, P + H] and cover the entire interval [T, T ′ ]. As
+mentioned in [HH22a], it turns out that the running time is mainly determined by
+the number of subintervals, so we aim to maximize the size of H while ensuring that
+the condition in Theorem 3.5 holds, mainly condition (3.2). For that, we require
+G ≤ G̃ for
+                                  1        T 2rm/(d−1)
+(3.4)                 G̃ :=            ·                 > 0.
+                         d1/(d−1) 21/2 N rm(m+1)/d(d−1)
+   Note that compared to [HH22a], we can take H to be roughly larger by a factor
+of s, which would mean that the number of intervals is smaller by a factor of s.
+   The following lower bound on G̃ is calculated in [HH22a]:
+Lemma 3.6 ([HH22a], Lemma 3.1). Let N, r, d, and T be positive integers, where
+d ≥ 2 and T ≤ N 1/r . Define
+                                                 
+                                    (d − 1) log T
+(3.5)                        m :=                   ,
+                                       log N
+                        FINDING AN ELEMENT OF HIGH ORDER                               11
+
+
+and let G̃ be as defined in (3.4). Then the following inequality holds:
+                                     1 2
+                                 G̃ > N θ /r−1/(d−1) ,
+                                     3
+where
+                        r log T
+(3.6)              θ :=         , so that T = N θ/r and θ ∈ [0, 1].
+                         log N
+   The next proposition addresses the detection of r-th power divisors within the
+interval [T, T ′ ], and is analogous to [HH22a, Proposition 3.2].
+Proposition 3.7. There is a deterministic algorithm with the following properties:
+Given positive integers N, r, s, T, and T ′ satisfying (3.1) and
+                             √
+(3.7)                      4 log N )/r ≤ T ≤ T ′ ≤ N 1/r ,
+the algorithm outputs a list of all integers p within the interval [T, T ′ ] that satisfy
+both pr | N and p ≡ 1 (mod s).
+   The total running time of the algorithm is bounded by
+                        ′                      
+                        T −T         θ(1−θ)/r−α
+                                 ·N               · polylog(N )
+                            T
+where θ is defined in (3.6).
+Proof. The argument closely follows the proof of [HH22a, Proposition 3.2]. As in
+[HH22a, Proposition 3.2], Lemma 3.6 shows that G̃ (defined in Eq. (3.4)) satisfies
+           2
+G̃ ≥ 16 N θ /r and G = ⌊G̃⌋ satisfies
+                                           1 θ2 /r
+                                G ≥ G̃/2 >   N      .
+                                          12
+   Let H = (G − 1)s so that G = ⌈H/s⌉ + 1. Then H ≥ G   2 s, so that
+                                        s θ2 /r
+                                  H≥      N     .
+                                       24
+   We now apply Theorem 3.5 with N, r, d, m, G and H as above and as set in
+Lemma 3.6, with P = T + H, P = T + 3H and so on, to cover the entire interval
+[T, T ′ ].
+   The total number of intervals that must be examined is
+               ′
+                            T′ − T
+                                             ′                  
+               T −T                           T − T θ(1−θ)/r−α
+                        ≤ s θ2 /r + 1 = O             N
+                2H         12 N
+                                                  T
+where we have used the fact that s ≥ N α and T = N θ/r .
+  For each of these subintervals, applying Theorem 3.5 requires time
+                                      O(logk N ),
+for some constant k ∈ N.                                                               □
+  We can now prove Theorem 3.2.
+Proof of Theorem 3.2. The proof closely follows the argument of Theorem 1.1 in [HH22a].
+   We start by searching for r-power   √ divisors that equal 1 modulo s using a brute
+                                         log N/r
+force search, for all
+                    √  integers up to 4          . This takes time N o(1) .
+   Letting 2k = 4 log N/r , we now apply Proposition 3.7 successively on    p the intervals
+  k k+1
+[2 , 2   ], [2k+1 , 2k+2 ] and so on, until reaching N 1/r . Since k ≥ 2 log N/r, the
+12                         ZIV OZNOVICH AND BEN LEE VOLK
+
+                                                                            ′
+assumption of Proposition 3.7 is satisfied, and for each such interval, T T−T ≤ 2 and
+since θ ∈ [0, 1], θ(1 − θ) ≤ 14 .
+   The number of intervals [2k , 2k+1 ] is O(log N ), and therefore the total running
+time is as stated in the theorem.                                                   □
+
+   We remark again that the algorithm in Theorem 3.2 can be slightly tweaked for
+finding r-th power divisors in any residue class t modulo s (with the same running
+time). The only required change is to define, in Claim 3.3, g(x) = x+s′ t+s′ (P − P̃ )
+so that s′ p0 = s′ (sx0 + t) ≡ x0 + s′ t (mod N ).
+
+                              4. The Main Algorithm
+   We now give an algorithm satisfying the claim of Theorem 1.1. As we mentioned,
+the algorithm is based on Algorithm 6.2 in [Hit18], while incorporating several
+simplifications and improvements.
+
+Algorithm 4.1 Finding an Element with Large Order or a Nontrivial Factor of N
+Input: An integer N ∈ N, and N 1/6 ≤ D ≤ N
+Output: An element a ∈ Z∗N with ordN (a) > D, or a nontrivial factor of N , or
+“N is prime”.
+
+ 1: Apply Theorem 2.2 with L := 2D
+ 2: if a nontrivial factor K of N is found then
+ 3:     Return K
+ 4: Set M1 = 1 and a = 2
+ 5: for i = 1, 2, . . . do
+ 6:    while a ∤ N and aMi ≡ 1       mod N do
+ 7:        a←a+1
+ 8:    if a | N then
+ 9:        Return a as a nontrivial factor of N or, if a = N , “N is prime”.
+10:    Run the algorithm of Theorem 2.1 on D, N and a
+11:    if ordN (a) is not found then
+12:        Return a as element with ordN (a) > D
+                                                                        √
+13:    Set mi = ordN (a) and factor mi using Theorem 2.2 (with L := mi )
+14:    for each prime q dividing mi do
+15:        if gcd(N, ami /q − 1) ̸= 1 then
+16:            Return gcd(N, ami /q − 1) as a nontrivial factor of N
+17:    Set Mi+1 ← lcm(Mi , mi )
+18:    if Mi+1 ≥ D then
+19:        if gcd(N, Mi+1 ) ̸= 1 then
+20:            Return gcd(N, Mi+1 ) as a nontrivial factor of N
+21:        Apply Theorem 3.2 with r := 1, s := Mi+1
+22:        Return some nontrivial factor of N or “N is prime”.
+23:    a←a+1
+
+
+4.1. High-Level Overview of Algorithm 4.1. The algorithm performs a brute
+force search for a = 2, 3, . . . until either a large order element is found, or we obtain
+                       FINDING AN ELEMENT OF HIGH ORDER                              13
+
+
+enough information that enables us to find a factor of N . Each a is found to be
+either
+     • a divisor of N (leading to the termination of the algorithm with a nontrivial
+       factor of N ), or
+     • an element with a large order (leading to the termination of the algorithm
+       with an element of large order), or
+     • an element with a low order. In this case, the order of a is used to gather
+       information about the prime factors of N . After enough iterations, this
+       enables us to deduce the residue of the prime factors of N modulo a large
+       enough integer to utilize Theorem 3.2 and find a prime factor of N .
+
+4.2. Main Changes from [Hit18,     √ Algorithm 6.2]. By applying Claim 2.6, the
+first while loop in step 6 takes O( Mi ) iterations (rather than the O(Mi ) given by
+       √ This allows us to modify the condition in step 18 to Mi ≥ D instead of
+[Hit18]).
+Mi ≥ D without impacting the overall running time.
+                                                                 1/4
+                                √ have allowed us to take D ≥ N
+    By itself, this argument would                                   and the running
+time would have remained Õ( D).
+    We get further improvement by using Theorem 3.2 to factor N in step 21 ([Hit18]
+uses a variant of Theorem 2.2 to find a factor of N is this final step).
+
+4.3. Proof of Theorem 1.1. We are now ready to prove that Algorithm 4.1
+satisfies the statements made in Theorem 1.1.
+
+Proof of Theorem 1.1.
+Correctness. The algorithm terminates at steps 9, 12, 16 and 22. We will
+show that if the algorithm terminates at any of these steps, the output is correct.
+Furthermore, we will demonstrate that the algorithm must terminate.
+   Step 9 is straightforward, and step 12 follows directly from Theorem 2.1.
+   For step 16 we need to show that if gcd(N, ami /q − 1) ̸= 1, then it is a nontrivial
+factor of N , i.e., not N itself. Since mi is the order of a and mi /q < mi , we have
+that ami /q − 1 ̸≡ 0 mod N .
+   If we reach step 21, then in every loop iteration i, steps 14–16 did not terminate.
+Using Lemma 2.3, we deduce that ordp (a) = mi for all primes p dividing N , for
+all i. Because the order of every element modulo p divides φ(p) = p − 1, we have
+that mi | p − 1, i.e., p − 1 = ki mi for some ki ∈ N. Since Mi+1 is the least
+common multiple of all mi , there exists some k ∈ N such that kMi+1 = p − 1, and
+thus p ≡ 1 mod Mi+1 for all primes p dividing N . Furthermore, we know that
+gcd(N, Mi+1 ) = 1 due to step 19. Since Mi+1 ≥ D ≥ N 1/6 , by Theorem 3.2, we
+can factor N in step 21.
+   For termination it is enough to show that for all i, Mi+1 > Mi . Assume by
+contradiction that there exists some i such that Mi+1 ≤ Mi . Since Mi+1 =
+lcm(Mi , mi ), we have that mi | Mi . Since mi is the order of a, we have that
+aMi ≡ 1 mod N , contradicting the condition in step 6.
+   Running time. Step 1 runs in time D1/2+o(1) , by Theorem 2.2.
+   The number of iterations of the loop in step 5 is O(log D). This is because for
+all i, Mi+1 > Mi , and Mi+1 = lcm(Mi , mi ), so Mi+1 ≥ 2Mi .
+   We will now show that each iteration of the loop in step 5 runs in time D1/2+o(1) ,
+thus completing the proof.
+14                       ZIV OZNOVICH AND BEN LEE VOLK
+
+
+   By applying Claim √ 2.6 with ℓ := D, we observe that the while loop in step 6
+executes at most O( D) iterations. Note that the condition that N has a prime
+factor p such that p > 2D is satisfied, otherwise a factor of N would be found in
+step 1.
+   Computing the Mi -th power of a in step 6 can be done in time polynomial in
+log D and log N by repeated squaring, as Mi is bounded by D.              √
+   Computing if the order of a is greater than D in step 10 is done in Õ( D) time,
+by Theorem 2.1.
+   Computing the prime factorization of mi in step 13 is done in Õ(D1/4 ) time, as
+mi < D. The number of distinct prime factors of mi in step 14 is at most log mi , so
+this step runs in time polynomial in log D and log N . Computing gcd(N, ami /q − 1)
+in step 15 is done in time polynomial in log N , using the Euclidean algorithm.
+   Computing the least common multiple of Mi and mi in step 17 can also be done
+in time polynomial in log N , using the Euclidean algorithm.
+   Computing gcd(N, Mi+1 ) in step 19 is done in time polynomial in log N , using
+the Euclidean algorithm.
+   Finally, applying Theorem 3.2 in step 21 with r := 1, s := Mi+1 , α := 1/6 is done
+in time N 1/4−1/6+o(1) time, which is D1/2+o(1) since D ≥ N 1/6 .
+   Therefore, the overall time complexity of the algorithm is D1/2+o(1) .          □
+4.4. The r-power divisor case. Assuming N has an r-power divisor p, we can
+slightly improve on the parameters of Theorem 1.1. Note that in this case, the
+factorization algorithm of Theorem 3.2 runs in time N 1/4r−α+o(1) . Therefore, we
+may set α = 1/6r, and the running time of Algorithm 4.1 is D1/2+o(1) even for
+D ≥ N 1/6r .
+Theorem 4.2. There exists a deterministic algorithm that, given as input integers
+N, r ∈ N such that N has an r-th power divisor, and a target order D ≥ N 1/6r ,
+runs in time D1/2+o(1) and outputs either a nontrivial factor of N or an element
+a ∈ Z∗N of multiplicative order at least D.
+
+                               5. Open Problems
+   Our work raises several natural questions that may lead to further progress in
+deterministic algorithms within computational number theory.
+   The first promising direction is to use Algorithm 4.1 as a subroutine in the
+factorization algorithm of [Har21]. One can search for an element a ∈ Z∗N of
+order greater than N 1/5 in time N 1/10+o(1) . This naturally leads to the question
+of improving the remaining steps of the factorization algorithm to break the 1/5
+barrier.
+   A related question concerns the analog of high order elements in prime fields
+and more specifically, finding a generator in the cyclic group Z∗p . As mentioned in
+Section 1, to the best of our knowledge, the best known deterministic algorithm
+for this problem runs in time p1/5+o(1) , and it is an interesting open problem to
+improve this.
+   Finally, another longstanding open problem is obtaining improved deterministic
+algorithms for the discrete logarithm problem in Z∗p . The classical algorithm of
+                                          √
+Shanks [Sha71] solves the problem in O( p) time using the baby-step giant-step
+method, and no significantly faster deterministic algorithm is currently known.
+Even a modest improvement over this bound would be a significant progress.
+                          FINDING AN ELEMENT OF HIGH ORDER                                   15
+
+
+                                        References
+[AKS04]  Manindra Agrawal, Neeraj Kayal, and Nitin Saxena. PRIMES is in P. Ann. of Math.
+         (2), 160(2):781–793, 2004.
+[Bur57]  D. A. Burgess. The distribution of quadratic residues and non-residues. Mathematika,
+         4:106–112, 1957.
+[CHN08] Don Coppersmith, Nick Howgrave-Graham, and S. V. Nagaraj. Divisors in residue
+         classes, constructively. Math. Comput., 77(261):531–545, 2008.
+[Cop97]  Don Coppersmith. Small solutions to polynomial equations, and low exponent RSA
+         vulnerabilities. J. Cryptol., 10(4):233–260, 1997.
+[DMOZ22] Dean Doron, Dana Moshkovitz, Justin Oh, and David Zuckerman. Nearly optimal
+         pseudorandomness from hardness. J. ACM, 69(6):43:1–43:55, 2022.
+[EPS91]  Paul Erdős, Carl Pomerance, and Eric Schmutz. Carmichael’s lambda function. Acta
+         Arith., 58(4):363–385, 1991.
+[FKMS11] Michael Forbes, Neeraj Kayal, Rajat Mittal, and Chandan Saha. Square root bound
+         on the least power non-residue using a sylvester-vandermonde determinant. CoRR,
+         abs/1104.4557, 2011.
+[GFHP25] Yiming Gao, Yansong Feng, Honggang Hu, and Yanbin Pan. On factoring and power
+         divisor problems via rank-3 lattices and the second vector. Cryptology ePrint Archive,
+         Paper 2025/1004, 2025.
+[Gro15]  Ofer Grossman. Finding primitive roots pseudo-deterministically. Electron.
+         Colloquium Comput. Complex., TR15-207, 2015.
+[Har21]  David Harvey. An exponent one-fifth algorithm for deterministic integer factorisation.
+         Math. Comput., 90(332):2937–2950, 2021.
+[HH22a]  David Harvey and Markus Hittmeir. A deterministic algorithm for finding r-power
+         divisors. Research in Number Theory, 8(4):94, 2022.
+[HH22b]  David Harvey and Markus Hittmeir. A log-log speedup for exponent one-fifth
+         deterministic integer factorisation. Math. Comput., 91(335):1367–1379, 2022.
+[Hit18]  Markus Hittmeir. A babystep-giantstep method for faster deterministic integer
+         factorization. Mathematics of Computation, 87(314):2915–2935, March 2018.
+[Hit21]  Markus Hittmeir. A time-space tradeoff for lehman’s deterministic integer factorization
+         method. Math. Comput., 90(330):1999–2010, 2021.
+[IW97]   Russell Impagliazzo and Avi Wigderson. P = BPP if E requires exponential circuits:
+         Derandomizing the XOR lemma. In Frank Thomson Leighton and Peter W. Shor,
+         editors, Proceedings of the Twenty-Ninth Annual ACM Symposium on the Theory of
+         Computing, El Paso, Texas, USA, May 4-6, 1997, pages 220–229. ACM, 1997.
+[Len84]  Hendrik Willem Lenstra. Divisors in residue classes. Mathematics of computation,
+         42(165):331–340, 1984.
+[LLL82]  Arjen K. Lenstra, Hendrik W. Lenstra, Jr., and László Lovász. Factoring polynomials
+         with rational coefficients. Math. Ann., 261(4):515–534, 1982.
+[Nor71]  Karl K. Norton. Numbers with small prime factors, and the least kth power
+         non-residue. Memoirs of the American Mathematical Society, No. 106. American
+         Mathematical Society, Providence, RI, 1971.
+[NW94]   Noam Nisan and Avi Wigderson. Hardness vs randomness. J. Comput. Syst. Sci.,
+         49(2):149–167, 1994.
+[Pol74]  J. M. Pollard. Theorems on factorization and primality testing. Mathematical
+         Proceedings of the Cambridge Philosophical Society, 76(3):521–528, 1974.
+[Sha71]  Daniel Shanks. Class number, a theory of factorization, and genera. In 1969 Number
+         Theory Institute (Proc. Sympos. Pure Math., Vol. XX, State Univ. New York, Stony
+         Brook, N.Y., 1969), Proc. Sympos. Pure Math., Vol. XX, pages 415–440. Amer. Math.
+         Soc., Providence, RI, 1971.
+[Str77]  Volker Strassen. Einige Resultate über Berechnungskomplexität. Jber. Deutsch. Math.-
+         Verein., 78(1):1–8, 1977.
+[Sut07]  Andrew V Sutherland. Order computations in generic groups. PhD thesis,
+         Massachusetts Institute of Technology, 2007.
+[Tre15]  Enrique Treviño. The least k-th power non-residue. Journal of Number Theory,
+         149:201–224, 2015.
+16                        ZIV OZNOVICH AND BEN LEE VOLK
+
+
+[Wan64]   Yuan Wang. Estimation and application of character sums. Shuxue Jinzhan, 7:78–83,
+          1964.
+

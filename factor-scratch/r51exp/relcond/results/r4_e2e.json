@@ -1,0 +1,110 @@
+[
+  {
+    "seed": 3101,
+    "stratum": "s_p=1,s_q=2",
+    "mode": "uniform",
+    "rels": 60,
+    "sec": 1.9790089130401611,
+    "ms_per_rel": 32.983481884002686,
+    "trials": 668
+  },
+  {
+    "seed": 3101,
+    "stratum": "s_p=1,s_q=2",
+    "mode": "odd_x",
+    "rels": 60,
+    "sec": 2.075228452682495,
+    "ms_per_rel": 34.58714087804159,
+    "trials": 700
+  },
+  {
+    "seed": 3101,
+    "stratum": "s_p=1,s_q=2",
+    "mode": "even_x",
+    "rels": 60,
+    "sec": 1.941049337387085,
+    "ms_per_rel": 32.35082228978475,
+    "trials": 654
+  },
+  {
+    "seed": 3101,
+    "stratum": "s_p=1,s_q=2",
+    "mode": "x_mod4_0",
+    "rels": 60,
+    "sec": 1.9512746334075928,
+    "ms_per_rel": 32.52124389012655,
+    "trials": 654
+  },
+  {
+    "seed": 3102,
+    "stratum": "s_p=2,s_q=5",
+    "mode": "uniform",
+    "rels": 60,
+    "sec": 2.426607847213745,
+    "ms_per_rel": 40.44346412022909,
+    "trials": 803
+  },
+  {
+    "seed": 3102,
+    "stratum": "s_p=2,s_q=5",
+    "mode": "odd_x",
+    "rels": 60,
+    "sec": 2.534865379333496,
+    "ms_per_rel": 42.24775632222494,
+    "trials": 829
+  },
+  {
+    "seed": 3102,
+    "stratum": "s_p=2,s_q=5",
+    "mode": "even_x",
+    "rels": 60,
+    "sec": 2.008145809173584,
+    "ms_per_rel": 33.46909681955973,
+    "trials": 668
+  },
+  {
+    "seed": 3102,
+    "stratum": "s_p=2,s_q=5",
+    "mode": "x_mod4_0",
+    "rels": 60,
+    "sec": 2.2764570713043213,
+    "ms_per_rel": 37.94095118840536,
+    "trials": 765
+  },
+  {
+    "seed": 3103,
+    "stratum": "s_p=4,s_q=2",
+    "mode": "uniform",
+    "rels": 60,
+    "sec": 2.723533868789673,
+    "ms_per_rel": 45.392231146494545,
+    "trials": 903
+  },
+  {
+    "seed": 3103,
+    "stratum": "s_p=4,s_q=2",
+    "mode": "odd_x",
+    "rels": 60,
+    "sec": 1.962026596069336,
+    "ms_per_rel": 32.700443267822266,
+    "trials": 666
+  },
+  {
+    "seed": 3103,
+    "stratum": "s_p=4,s_q=2",
+    "mode": "even_x",
+    "rels": 60,
+    "sec": 2.6819357872009277,
+    "ms_per_rel": 44.69892978668213,
+    "trials": 907
+  },
+  {
+    "seed": 3103,
+    "stratum": "s_p=4,s_q=2",
+    "mode": "x_mod4_0",
+    "rels": 60,
+    "sec": 1.9476299285888672,
+    "ms_per_rel": 32.46049880981445,
+    "trials": 653
+  }
+]

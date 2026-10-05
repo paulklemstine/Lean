@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- new favicon config and versions by realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/favicon-16x16.png">
+<link rel="manifest" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/site.webmanifest">
+<link rel="mask-icon" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/safari-pinned-tab.svg" color="#b31b1b">
+<link rel="shortcut icon" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/favicon.ico">
+<meta name="msapplication-TileColor" content="#b31b1b">
+<meta name="msapplication-config" content="images/icons/browserconfig.xml">
+<meta name="theme-color" content="#b31b1b">
+<!-- end favicon config -->
+<title>Search | arXiv e-print repository</title>
+<script defer src="https://static.arxiv.org/static/base/1.0.0a5/fontawesome-free-5.11.2-web/js/all.js"></script>
+<link rel="stylesheet" href="https://static.arxiv.org/static/base/1.0.0a5/css/arxivstyle.css" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    messageStyle: "none",
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true,
+      ignoreClass: '.*',
+      processClass: 'mathjax.*'
+    },
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js", "noErrors.js"],
+        noErrors: {
+          inlineDelimiters: ["$","$"],
+          multiLine: false,
+          style: {
+            "font-size": "normal",
+            "border": ""
+          }
+        }
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src='//static.arxiv.org/MathJax-2.7.3/MathJax.js'></script>
+<script src="https://static.arxiv.org/static/base/1.0.0a5/js/notification.js"></script>
+
+    
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/base/1.0.1/css/arxiv-header-footer.css?v=20260626" />
+  <script defer src="https://static.arxiv.org/static/base/1.0.1/js/arxiv-header.js?v=20260626"></script>
+  <link rel="stylesheet" href="https://static.arxiv.org/static/search/0.5.6/css/bulma-tooltip.min.css" />
+  <link rel="stylesheet" href="https://static.arxiv.org/static/search/0.5.6/css/search.css" />
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+    crossorigin="anonymous"></script>
+
+  <script src="https://static.arxiv.org/static/search/0.5.6/js/fieldset.js"></script>
+  <style>
+  radio#cf-customfield_11400 {
+    display: none;
+  }
+  /* Render the spinout .ds-site-footer standalone / full-bleed. search extends the
+     legacy base, whose bare wrapping <footer> (in base/base.html, outside any
+     overridable block — so it can't be removed from here) is styled by
+     arxivstyle.css with a grey background (hsl(0,0%,95%)) + 1em 2em padding,
+     boxing our warm-wash footer inside a second grey band. display:contents drops
+     the wrapper's box entirely (cleaner than zeroing individual properties) so
+     .ds-site-footer renders in its place; it inherits flex-shrink:0 from the same
+     legacy `footer` rule, so the sticky footer still works. Search-specific
+     legacy-base integration; the shared chrome CSS stays byte-identical to the SSOT. */
+  body > footer {
+    display: contents;
+  }
+  </style>
+
+  </head>
+  <body>
+  
+  
+  <header><a href="#main-container" class="is-sr-only">Skip to main content</a>
+    <div class="ds-announcement" id="announcement-banner" role="region" aria-label="Announcement" data-banner-name="spinout-nonprofit">
+  <img class="ds-announcement-glyph" src="https://static.arxiv.org/static/base/1.0.1/images/icons/smileybones-small.svg" alt="" aria-hidden="true">
+  <span class="ds-announcement-text">arXiv is now an independent nonprofit!</span>
+  <a class="ds-announcement-link" href="https://info.arxiv.org/about">Learn more</a>
+  <button type="button" class="ds-announcement-close" aria-label="Dismiss announcement">&times;</button>
+</div>
+<header class="ds-site-header">
+  <a href="https://arxiv.org/" class="ds-site-header-logo" aria-label="archive home">
+    <img src="https://static.arxiv.org/static/base/1.0.1/images/arxiv-logo-primary-light.svg" alt="archive">
+  </a>
+  <button type="button" id="ds-nav-toggle" class="ds-site-header-nav-toggle"
+    aria-label="Open menu" aria-controls="ds-site-header-nav" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <nav class="ds-site-header-nav" id="ds-site-header-nav" aria-label="Main navigation">
+    <a id="arxiv-search-toggle" href="/search" aria-controls="arxiv-search-overlay" aria-expanded="false">
+      <svg class="ds-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      Search
+    </a>
+    <a href="https://arxiv.org/user/create">Submit</a>
+    <a href="https://info.arxiv.org/about/donate.html">Donate</a>
+    <span class="ds-site-header-divider" aria-hidden="true"></span>
+    <a href="https://arxiv.org/login" class="ds-site-header-login">Log in</a>
+  </nav>
+</header>
+
+<div class="arxiv-search-overlay" id="arxiv-search-overlay" hidden>
+  <div class="arxiv-search-panel" role="search">
+    <form method="GET" action="/search">
+      <label for="arxiv-search-input" class="is-sr-only">Search arXiv</label>
+      <input type="text" name="query" id="arxiv-search-input" autocomplete="off"
+        placeholder="Search papers by title, author, abstract, or ID...">
+      <input type="hidden" name="searchtype" value="all">
+      <input type="hidden" name="source" value="header">
+    </form>
+    <div class="arxiv-search-hint">
+      Press Enter to search &middot; <a href="/search/advanced">Advanced search</a>
+    </div>
+  </div>
+</div>
+
+  </header>
+  <main class="container" id="main-container">
+    
+
+
+    
+  <div class="level is-marginless">
+    <div class="level-left">
+      <h1 class="title is-clearfix">
+    
+        Showing 1&ndash;15 of 15 results for all: <span class="mathjax">every integer divides a difference</span>
+    
+</h1>
+    </div>
+    <div class="level-right is-hidden-mobile">
+      <!-- feedback for mobile is moved to footer -->
+      <span class="help" style="display: inline-block;"><a href="https://github.com/arXiv/arxiv-search/releases">Search v0.5.6 released 2020-02-24</a>&nbsp;&nbsp;</span>
+    </div>
+  </div>
+    <div class="content">
+      
+  <form method="GET" action="/search/"  aria-role="search">
+    
+
+    
+    <div class="field has-addons-tablet">
+      <div class="control is-expanded">
+        <label for="query" class="hidden-label">Search term or terms</label>
+        
+          <input class="input is-medium" id="query" name="query" placeholder="Search term..." type="text" value="every integer divides a difference">
+        
+        
+      </div>
+      <div class="select control is-medium">
+        <label class="is-hidden" for="searchtype">Field</label>
+        <select class="is-medium" id="searchtype" name="searchtype"><option selected value="all">All fields</option><option value="title">Title</option><option value="author">Author(s)</option><option value="abstract">Abstract</option><option value="comments">Comments</option><option value="journal_ref">Journal reference</option><option value="acm_class">ACM classification</option><option value="msc_class">MSC classification</option><option value="report_num">Report number</option><option value="paper_id">arXiv identifier</option><option value="doi">DOI</option><option value="orcid">ORCID</option><option value="license">License (URI)</option><option value="author_id">arXiv author ID</option><option value="help">Help pages</option><option value="full_text">Full text</option></select>
+      </div>
+      <div class="control">
+          <button class="button is-link is-medium">Search</button>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control is-size-7">
+        
+        <label class="radio">
+          <input checked id="abstracts-0" name="abstracts" type="radio" value="show"> Show abstracts
+        </label>
+        
+        <label class="radio">
+          <input id="abstracts-1" name="abstracts" type="radio" value="hide"> Hide abstracts
+        </label>
+        
+      </div>
+    </div>
+    <div class="is-clearfix" style="height: 2.5em"> 
+      <div class="is-pulled-right">
+        
+        <a href="/search/advanced?terms-0-term=every+integer+divides+a+difference&amp;terms-0-field=all&amp;size=50&amp;order=-announced_date_first">Advanced Search</a>
+        
+      </div>
+    </div>
+    <input type="hidden" name="order" value="-announced_date_first">
+    <input type="hidden" name="size" value="50">
+  </form>
+
+  
+
+  
+      
+<div class="level breathe-horizontal">
+  <div class="level-left">
+    <form method="GET" action="/search/">
+      <div style="display: none;">
+        
+          
+            <select id="searchtype" name="searchtype"><option selected value="all">All fields</option><option value="title">Title</option><option value="author">Author(s)</option><option value="abstract">Abstract</option><option value="comments">Comments</option><option value="journal_ref">Journal reference</option><option value="acm_class">ACM classification</option><option value="msc_class">MSC classification</option><option value="report_num">Report number</option><option value="paper_id">arXiv identifier</option><option value="doi">DOI</option><option value="orcid">ORCID</option><option value="license">License (URI)</option><option value="author_id">arXiv author ID</option><option value="help">Help pages</option><option value="full_text">Full text</option></select>
+          
+        
+          
+            <input id="query" name="query" type="text" value="every integer divides a difference">
+          
+        
+          
+        
+          
+        
+          
+            <ul id="abstracts"><li><input checked id="abstracts-0" name="abstracts" type="radio" value="show"> <label for="abstracts-0">Show abstracts</label></li><li><input id="abstracts-1" name="abstracts" type="radio" value="hide"> <label for="abstracts-1">Hide abstracts</label></li></ul>
+          
+        
+      </div>
+      <div class="box field is-grouped is-grouped-multiline level-item">
+        <div class="control">
+          <span class="select is-small">
+            <select id="size" name="size"><option value="25">25</option><option selected value="50">50</option><option value="100">100</option><option value="200">200</option></select>
+          </span>
+          <label for="size">results per page</label>.
+        </div>
+        <div class="control">
+          <label for="order">Sort results by</label>
+          <span class="select is-small">
+            <select id="order" name="order"><option selected value="-announced_date_first">Announcement date (newest first)</option><option value="announced_date_first">Announcement date (oldest first)</option><option value="-submitted_date">Submission date (newest first)</option><option value="submitted_date">Submission date (oldest first)</option><option value="">Relevance</option></select>
+          </span>
+        </div>
+        <div class="control">
+          <button class="button is-small is-link">Go</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+      
+
+
+
+
+<ol class="breathe-horizontal" start="1"> 
+
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2608.23529">arXiv:2608.23529</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2608.23529">pdf</a>, <a href="https://arxiv.org/ps/2608.23529">ps</a>, <a href="https://arxiv.org/format/2608.23529">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Combinatorics">math.CO</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Metric Geometry">math.MG</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Infinite rational distance sets in affine general position: constructions in <span class="search-hit mathjax">every</span> dimension
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Qiu%2C+J">Junkai Qiu</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2608.23529v1-abstract-short" style="display: inline;">
+        For <span class="search-hit mathjax">every</span> <span class="search-hit mathjax">integer</span> $d\geq 1$, we construct a countably infinite set $X_d\subset\mathbb{R}^d$ in affine general position, with all pairwise distances rational. When $d$ is odd, $X_d$ may also be chosen so that no $d+2$ points lie on a common sphere. The construction is uniform in $d$: positive Chebyshev square decomposit&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2608.23529v1-abstract-full').style.display = 'inline'; document.getElementById('2608.23529v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2608.23529v1-abstract-full" style="display: none;">
+        For <span class="search-hit mathjax">every</span> <span class="search-hit mathjax">integer</span> $d\geq 1$, we construct a countably infinite set $X_d\subset\mathbb{R}^d$ in affine general position, with all pairwise distances rational. When $d$ is odd, $X_d$ may also be chosen so that no $d+2$ points lie on a common sphere. The construction is uniform in $d$: positive Chebyshev square decompositions produce harmonic curves on spheres whose points corresponding to rational parameter values have pairwise rational distances. A <span class="search-hit mathjax">divided</span>-<span class="search-hit mathjax">difference</span> factorization of the affine determinant shows that sufficiently short arcs are locally convex, and stereographic projection produces the odd-dimensional examples. We also construct infinite rational distance sets in $\mathbb{Q}^d$ in affine general position for <span class="search-hit mathjax">every</span> even $d$, and in general position for <span class="search-hit mathjax">every</span> $d\equiv 1\pmod 4$. For <span class="search-hit mathjax">every</span> $d\geq 1$ and $n\geq d+1$, taking and rescaling suitable finite subsets gives $n$-point integral point sets in affine general position. A suitable ordered choice yields integral-distance realizations of all cyclic polytopes. In dimension three, we give an explicit rational parametrization and obtain infinitely many pairwise non-similar primitive $n_3$-clusters for <span class="search-hit mathjax">every</span> $n\geq 4$.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2608.23529v1-abstract-full').style.display = 'none'; document.getElementById('2608.23529v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 24 August, 2026; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> August 2026.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">27 pages; a 7-page computational supplement and exact verification code are included as ancillary files</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          52C10 (Primary); 51K05; 11E12; 52B11 (Secondary)
+        
+
+        
+      </p>
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2607.27503">arXiv:2607.27503</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2607.27503">pdf</a>, <a href="https://arxiv.org/ps/2607.27503">ps</a>, <a href="https://arxiv.org/format/2607.27503">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="General Mathematics">math.GM</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Character Fourier Spectra of Circular Units and Twisted Bernoulli Class Components
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Chocian%2C+P">Peter Chocian</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2607.27503v1-abstract-short" style="display: inline;">
+        &hellip;: for <span class="search-hit mathjax">every</span> odd $m$, $\sum_t \barχ(t)P_m(h_t) = τ(\barχ)B_{m,χ}/(m\,m!)$. After reduction at any prime above $p \nmid f$, the case $m = p-j$ identifies this spectrum, including its exact nonzero scalar, with the <span class="search-hit mathjax">divided</span> generalized Bernoulli value attached to $χω^{-j}$; the spectral-zero and Bernoulli-zero criteria the&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2607.27503v1-abstract-full').style.display = 'inline'; document.getElementById('2607.27503v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2607.27503v1-abstract-full" style="display: none;">
+        Let $χ$ be a primitive odd Dirichlet character of conductor $f$. For the universal projector polynomials $P_m$ introduced in arXiv:2607.23177, defined by $\sum_m P_m(X)Y^m = -\log(1-X(1-e^{-Y}))$, we evaluate the character Fourier spectrum at $h_t = ζ_f^t/(ζ_f^t-1)$: for <span class="search-hit mathjax">every</span> odd $m$, $\sum_t \barχ(t)P_m(h_t) = τ(\barχ)B_{m,χ}/(m\,m!)$. After reduction at any prime above $p \nmid f$, the case $m = p-j$ identifies this spectrum, including its exact nonzero scalar, with the <span class="search-hit mathjax">divided</span> generalized Bernoulli value attached to $χω^{-j}$; the spectral-zero and Bernoulli-zero criteria therefore agree over <span class="search-hit mathjax">every</span> residue field, with no splitting hypothesis on the coefficient field. We connect the identity with the local Kummer spectrum of the circular unit $1-ζ_fζ_p$ and carry the programme through in the first non-real case: for the two primitive quartic characters modulo 5 and primes $p &lt; 500$, $p \equiv 1 \pmod{20}$, exactly eleven zero lines occur. On each line an integral character projection of $1-ζ_5ζ_p$ is everywhere locally unramified, a finite split-prime Artin computation proves it is not a global $p$-th power, and the character-wise Main Conjecture shows the radical generates the complete order-$p$ Hilbert class component. Six of the eleven components occur at classically regular primes. At $p = 61$ the two conjugate characters contribute on <span class="search-hit mathjax">different</span> indices. A deterministic <span class="search-hit mathjax">integer</span>-arithmetic program (ancillary file) verifies the enumeration, the <span class="search-hit mathjax">divided</span> digits, and <span class="search-hit mathjax">every</span> certificate.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2607.27503v1-abstract-full').style.display = 'none'; document.getElementById('2607.27503v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 29 July, 2026; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> July 2026.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">13 pages. Deterministic <span class="search-hit mathjax">integer</span>-arithmetic verification program included as ancillary file. Companion to arXiv:2607.23177</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          11R18; 11R23; 11R29; 11Y40
+        
+
+        
+      </p>
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2607.13165">arXiv:2607.13165</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2607.13165">pdf</a>, <a href="https://arxiv.org/ps/2607.13165">ps</a>, <a href="https://arxiv.org/format/2607.13165">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Combinatorics">math.CO</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Discrete Mathematics">cs.DM</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Interchange graphs of (0,1)-matrices are maximally Hamiltonian
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Baggett%2C+J+S">Jeffrey S. Baggett</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Yan%2C+H">Huiya Yan</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2607.13165v4-abstract-short" style="display: inline;">
+        For <span class="search-hit mathjax">integer</span> vectors R,S let A(R,S) denote the class of (0,1)-matrices with row sum vector R and column sum vector S. Its interchange graph G(R,S) has A(R,S) as its vertex set, two matrices being adjacent when they&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2607.13165v4-abstract-full').style.display = 'inline'; document.getElementById('2607.13165v4-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2607.13165v4-abstract-full" style="display: none;">
+        For <span class="search-hit mathjax">integer</span> vectors R,S let A(R,S) denote the class of (0,1)-matrices with row sum vector R and column sum vector S. Its interchange graph G(R,S) has A(R,S) as its vertex set, two matrices being adjacent when they <span class="search-hit mathjax">differ</span> by a single 2 x 2 interchange. Brualdi asked whether G(R,S) is Hamiltonian for <span class="search-hit mathjax">every</span> R,S. We prove the stronger statement that G(R,S) is maximally Hamiltonian: Hamilton-laceable when bipartite, and Hamilton-connected when not. The proof is a structural induction on the number of matrices in the class, organized by the structure theory of interchange graphs. Deleting inactive lines and splitting invariant positions expresses any class as a Cartesian product, reducing the argument to the prime factors. The bipartite classes are products of complete transposition graphs; we settle them together, without induction, by proving they are paired 2-disjoint-path-coverable and hence Hamilton-laceable, using a recent theorem of Coleman, Fischberg, Gong, Harrington and Wong on paired disjoint path covers. The non-bipartite classes <span class="search-hit mathjax">divide</span> into three cases: products assembled from smaller factors, a base of Johnson graphs and small classes, and the large prime classes, treated by a pivot-and-fiber construction whose line quotients are matroid base-exchange graphs. The complete argument has been machine-checked in the Lean 4 proof assistant from first principles together with seven cited results of the literature; the disjoint-path-cover results it imports are themselves proved within the formalization.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2607.13165v4-abstract-full').style.display = 'none'; document.getElementById('2607.13165v4-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 17 August, 2026; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 14 July, 2026;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> July 2026.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">45 pages, 4 figures. Ancillary public trust surface and reproducibility guide. Companion Lean 4 formalization, with continuous integration re-running the kernel check, at https://github.com/jbaggett/brualdi-interchange-lean (tag arxiv-v3)</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          05C45 (Primary); 05B20; 05C38; 05B35; 52B05 (Secondary)
+        
+
+        
+      </p>
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2606.15407">arXiv:2606.15407</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2606.15407">pdf</a>, <a href="https://arxiv.org/ps/2606.15407">ps</a>, <a href="https://arxiv.org/format/2606.15407">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Combinatorics">math.CO</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Affine weighted Motzkin paths and the differential kernel method
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Omelchenko%2C+A">Alexander Omelchenko</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2606.15407v2-abstract-short" style="display: inline;">
+        &hellip;root, which is unavailable because the equation is differential rather than algebraic in the catalytic variable. When the boundary index nu = (beta_0 - C)/C is a positive <span class="search-hit mathjax">integer</span> m, the construction becomes finite and combinatorial: shifting&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2606.15407v2-abstract-full').style.display = 'inline'; document.getElementById('2606.15407v2-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2606.15407v2-abstract-full" style="display: none;">
+        We study Motzkin paths whose up-, level-, and down-step weights are affine functions of the height: alpha_k = A k + alpha_0, gamma_k = B k + gamma_0, beta_k = C k + beta_0. Let w_{n,k} be the total weight of paths of length n ending at height k, and let W_n = w_{n,0} be the return column. For affine weights the row recurrence becomes a first-order differential equation in the variable marking terminal height, and, unless beta_0 = C, that equation involves the unknown return series as boundary data. We show that the return series is nevertheless determined by the step rule alone: a characteristic ending on the floor forces a cancellation and yields an Abel-Volterra equation for the returns, while the same identity read at an interior point reconstructs the entire triangle (w_{n,k}). We call this boundary cancellation the differential kernel method; it takes the place of substituting an admissible kernel root, which is unavailable because the equation is differential rather than algebraic in the catalytic variable. When the boundary index nu = (beta_0 - C)/C is a positive <span class="search-hit mathjax">integer</span> m, the construction becomes finite and combinatorial: shifting <span class="search-hit mathjax">every</span> height by m turns the <span class="search-hit mathjax">divided</span>-<span class="search-hit mathjax">difference</span> evolution into an ordinary weighted path model on a half-line carrying m virtual levels below the visible floor, and a first-entry decomposition expresses (w_{n,k}) through two such local models. Exactly one bridge, of weight alpha_0 - A, leads from the virtual strip back to the visible region; it is closed, and the terminal-height columns factorise, precisely when alpha_0 = A. For the Dyck weights alpha_k = k+1, beta_k = k+nu+1, gamma_k = 0 this gives sum_{n&gt;=0} w_{n,k} t^n / n! = sec^{nu+1}(t) tan^k(t).
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2606.15407v2-abstract-full').style.display = 'none'; document.getElementById('2606.15407v2-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 28 July, 2026; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 13 June, 2026;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> June 2026.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">42 pages, 8 figures</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          05A15; 33C05; 42C05; 45D05; 60J27
+        
+
+        
+      </p>
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2606.01765">arXiv:2606.01765</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2606.01765">pdf</a>, <a href="https://arxiv.org/ps/2606.01765">ps</a>, <a href="https://arxiv.org/format/2606.01765">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Formal Languages and Automata Theory">cs.FL</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Computation and Language">cs.CL</span>
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Machine Learning">cs.LG</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        An Algebraic View of the Expressivity of Recurrent Language Models
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Nowak%2C+F">Franz Nowak</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Cotterell%2C+R">Ryan Cotterell</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Boumasmoud%2C+R">Reda Boumasmoud</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2606.01765v3-abstract-short" style="display: inline;">
+        &hellip;conflict: some authors report Turing-completeness, while others show equivalence to regular languages. The reason for this discrepancy is that the underlying arithmetic model <span class="search-hit mathjax">differs</span>. The paper develops a unified algebraic account of the expressivity of recurrent neural networks, starting with a formal account of various arithmetic models. This account reduc&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2606.01765v3-abstract-full').style.display = 'inline'; document.getElementById('2606.01765v3-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2606.01765v3-abstract-full" style="display: none;">
+        What formal languages can a recurrent neural language model recognize? Formal results in the literature conflict: some authors report Turing-completeness, while others show equivalence to regular languages. The reason for this discrepancy is that the underlying arithmetic model <span class="search-hit mathjax">differs</span>. The paper develops a unified algebraic account of the expressivity of recurrent neural networks, starting with a formal account of various arithmetic models. This account reduces expressivity to an algebraic question, e.g., whether a network&#39;s syntactic monoid <span class="search-hit mathjax">divides</span> a certain wreath product. As a case study, the paper revisits diagonal state-space models: the same architecture cannot implement an even-modulus counter once floating-point recurrences are enforced, yet realizes <span class="search-hit mathjax">every</span> even-modulus counter under unsigned-<span class="search-hit mathjax">integer</span> quantization.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2606.01765v3-abstract-full').style.display = 'none'; document.getElementById('2606.01765v3-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 25 August, 2026; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 1 June, 2026;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> June 2026.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">Accepted at the 43rd International Conference on Machine Learning (ICML 2026). 28 pages, 2 figures</span>
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2603.00886">arXiv:2603.00886</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2603.00886">pdf</a>, <a href="https://arxiv.org/ps/2603.00886">ps</a>, <a href="https://arxiv.org/format/2603.00886">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Algebraic Geometry">math.AG</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Commutative Algebra">math.AC</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Explicit deformation of a spider algebra to a curvilinear scheme via Möbius generators
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Turturean%2C+D">David Turturean</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2603.00886v1-abstract-short" style="display: inline;">
+        &hellip;inside the curvilinear ring together with a <span class="search-hit mathjax">divided</span>-&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2603.00886v1-abstract-full').style.display = 'inline'; document.getElementById('2603.00886v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2603.00886v1-abstract-full" style="display: none;">
+        We construct an explicit flat one-parameter family of 22-dimensional Artinian $k$-algebras whose special fibre is the spider algebra $k[x,y,z]/(x^8, y^8, z^8, xy, xz, yz)$ and whose generic fibre is the curvilinear algebra $k[t]/(t^{22})$. The construction uses Möbius generators $u_a = t/(1-at)$ inside the curvilinear ring together with a <span class="search-hit mathjax">divided</span>-<span class="search-hit mathjax">difference</span> change of coordinates, and produces the family via a weighted Rees degeneration with <span class="search-hit mathjax">integer</span> coefficients. This gives an explicit one-parameter family witnessing, for this spider ideal, the general phenomenon proved by Bérczi-Svendsen that <span class="search-hit mathjax">every</span> monomial subscheme of $\mathbb{C}^d$ lies in the curvilinear component of the Hilbert scheme of points.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2603.00886v1-abstract-full').style.display = 'none'; document.getElementById('2603.00886v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 28 February, 2026; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> March 2026.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">18 pages, Macaulay2 verification script included as ancillary file</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          14C05 (Primary); 13D10; 14B07; 13H10; 13E10 (Secondary)
+        
+
+        
+      </p>
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2212.06753">arXiv:2212.06753</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2212.06753">pdf</a>, <a href="https://arxiv.org/ps/2212.06753">ps</a>, <a href="https://arxiv.org/format/2212.06753">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Algebra">math.QA</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Indecomposable solutions of the Yang-Baxter equation of square-free cardinality
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Ced%C3%B3%2C+F">Ferran Cedó</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Okni%C5%84ski%2C+J">Jan Okniński</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2212.06753v1-abstract-short" style="display: inline;">
+        &hellip;, for <span class="search-hit mathjax">different</span> prime numbers $p_1,\ldots, p_n$, are studied. It is proved that they are multipermutation solutions of level $\leq n$. In particular, there is no simple solution of a non-prime square-free cardinality. This solves a problem stated in [F. Cedó, J. Okniński, Constructing finite simple solutions of the Yang-Baxter equation, Adv. Math. 391 (2021)&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2212.06753v1-abstract-full').style.display = 'inline'; document.getElementById('2212.06753v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2212.06753v1-abstract-full" style="display: none;">
+        Indecomposable involutive non-degenerate set-theoretic solutions $(X,r)$ of the Yang-Baxter equation of cardinality $p_1\cdots p_n$, for <span class="search-hit mathjax">different</span> prime numbers $p_1,\ldots, p_n$, are studied. It is proved that they are multipermutation solutions of level $\leq n$. In particular, there is no simple solution of a non-prime square-free cardinality. This solves a problem stated in [F. Cedó, J. Okniński, Constructing finite simple solutions of the Yang-Baxter equation, Adv. Math. 391 (2021), 107968] and provides a far reaching extension of several earlier results on indecomposability of solutions. The proofs are based on a detailed study of the brace structure on the permutation group $\mathcal G(X,r)$ associated to such a solution. It is proved that $p_1,\ldots, p_n$ are the only primes <span class="search-hit mathjax">dividing</span> the order of $\mathcal{G}(X,r)$. Moreover, the Sylow $p_i$-subgroups of $\mathcal{G}(X,r)$ are elementary abelian $p_i$-groups and if $P_i$ denotes the Sylow $p_i$-subgroup of the additive group of the left brace $\mathcal{G}(X,r)$, then there exists a permutation $σ\in S_n$ such that $P_{σ(1)}, \, P_{σ(1)}P_{σ(2)}, \dots , P_{σ(1)}P_{σ(2)}\cdots P_{σ(n)}$ are ideals of the left brace $\mathcal{G}(X,r)$ and $\mathcal{G}(X,r)=P_1P_2\cdots P_n$. In addition, indecomposable solutions of cardinality $p_1\cdots p_n$ that are multipermutation of level $n$ are constructed, for <span class="search-hit mathjax">every</span> nonnegative <span class="search-hit mathjax">integer</span> $n$.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2212.06753v1-abstract-full').style.display = 'none'; document.getElementById('2212.06753v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 13 December, 2022; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> December 2022.
+      
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          16T25 (Primary) 20B15; 20F16 (Secondary)
+        
+
+        
+      </p>
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1812.00817">arXiv:1812.00817</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1812.00817">pdf</a>, <a href="https://arxiv.org/ps/1812.00817">ps</a>, <a href="https://arxiv.org/format/1812.00817">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Functional Analysis">math.FA</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Extension criteria for homogeneous Sobolev space of functions of one variable
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Shvartsman%2C+P">Pavel Shvartsman</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1812.00817v2-abstract-short" style="display: inline;">
+        &hellip;and each positive <span class="search-hit mathjax">integer</span> $m$ we give intrinsic characterizations of the restriction of the homogeneous Sobolev space $L^m_p(R)$ to an arbitrary closed subset $E$ of the real line.
+  We show that the classical one dimensional Whitney extension operator is &#34;universal&#34; for the scale of $L^m_p(R)$ spaces in the following sense: for&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1812.00817v2-abstract-full').style.display = 'inline'; document.getElementById('1812.00817v2-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1812.00817v2-abstract-full" style="display: none;">
+        For each $p&gt;1$ and each positive <span class="search-hit mathjax">integer</span> $m$ we give intrinsic characterizations of the restriction of the homogeneous Sobolev space $L^m_p(R)$ to an arbitrary closed subset $E$ of the real line.
+  We show that the classical one dimensional Whitney extension operator is &#34;universal&#34; for the scale of $L^m_p(R)$ spaces in the following sense: for <span class="search-hit mathjax">every</span> $p\in(1,\infty]$ it provides almost optimal $L^m_p$-extensions of functions defined on $E$. The operator norm of this extension operator is bounded by a constant depending only on $m$. This enables us to prove several constructive $L^m_p$-extension criteria expressed in terms of $m^{th}$ order <span class="search-hit mathjax">divided</span> <span class="search-hit mathjax">differences</span> of functions.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1812.00817v2-abstract-full').style.display = 'none'; document.getElementById('1812.00817v2-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 18 December, 2018; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 30 November, 2018;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> December 2018.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">48 pages. arXiv admin note: substantial text overlap with arXiv:1808.01467, arXiv:1710.07826</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          46E35
+        
+
+        
+      </p>
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1808.01467">arXiv:1808.01467</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1808.01467">pdf</a>, <a href="https://arxiv.org/format/1808.01467">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Functional Analysis">math.FA</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Sobolev functions on closed subsets of the real line: long version
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Shvartsman%2C+P">Pavel Shvartsman</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1808.01467v2-abstract-short" style="display: inline;">
+        &hellip;and each positive <span class="search-hit mathjax">integer</span> $m$ we give intrinsic characterizations of the restriction of the Sobolev space $W^m_p(R)$ and homogeneous Sobolev space $L^m_p(R)$ to an arbitrary closed subset $E$ of the real line. In particular, we show that the classical one dimensional Whitney extension operator is &#34;universal&#34; for the scale of $L^m_p(R)$ spaces in the&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1808.01467v2-abstract-full').style.display = 'inline'; document.getElementById('1808.01467v2-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1808.01467v2-abstract-full" style="display: none;">
+        For each $p&gt;1$ and each positive <span class="search-hit mathjax">integer</span> $m$ we give intrinsic characterizations of the restriction of the Sobolev space $W^m_p(R)$ and homogeneous Sobolev space $L^m_p(R)$ to an arbitrary closed subset $E$ of the real line. In particular, we show that the classical one dimensional Whitney extension operator is &#34;universal&#34; for the scale of $L^m_p(R)$ spaces in the following sense: for <span class="search-hit mathjax">every</span> $p\in(1,\infty]$ it provides almost optimal $L^m_p$-extensions of functions defined on $E$. The operator norm of this extension operator is bounded by a constant depending only on $m$. This enables us to prove several constructive $W^m_p$- and $L^m_p$-extension criteria expressed in terms of $m^{th}$ order <span class="search-hit mathjax">divided</span> <span class="search-hit mathjax">differences</span> of functions.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1808.01467v2-abstract-full').style.display = 'none'; document.getElementById('1808.01467v2-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 18 December, 2018; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 4 August, 2018;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> August 2018.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">107 pages. long version of arXiv:1710.07826 and arXiv:1812.00817</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          46E35
+        
+
+        
+      </p>
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1701.05915">arXiv:1701.05915</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1701.05915">pdf</a>, <a href="https://arxiv.org/ps/1701.05915">ps</a>, <a href="https://arxiv.org/format/1701.05915">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Number Theory">math.NT</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Constructing hyperelliptic curves with surjective Galois representations
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Anni%2C+S">Samuele Anni</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Dokchitser%2C+V">Vladimir Dokchitser</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1701.05915v2-abstract-short" style="display: inline;">
+        &hellip;a framework for systematically dealing with primitivity of symplectic mod l Galois representations.
+  The main result of the paper is the following. Suppose n=2g+2 is an even <span class="search-hit mathjax">integer</span> that can be written as a sum of two primes in two&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1701.05915v2-abstract-full').style.display = 'inline'; document.getElementById('1701.05915v2-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1701.05915v2-abstract-full" style="display: none;">
+        In this paper we show how to explicitly write down equations of hyperelliptic curves over Q such that for all odd primes l the image of the mod l Galois representation is the general symplectic group. The proof relies on understanding the action of inertia groups on the l-torsion of the Jacobian, including at primes where the Jacobian has non-semistable reduction. We also give a framework for systematically dealing with primitivity of symplectic mod l Galois representations.
+  The main result of the paper is the following. Suppose n=2g+2 is an even <span class="search-hit mathjax">integer</span> that can be written as a sum of two primes in two <span class="search-hit mathjax">different</span> ways, with none of the primes being the largest primes less than n (this hypothesis appears to hold for all g <span class="search-hit mathjax">different</span> from 0,1,2,3,4,5,7 and 13). Then there is an explicit <span class="search-hit mathjax">integer</span> N and an explicit monic polynomial $f_0(x)\in \mathbb{Z}[x]$ of degree n, such that the Jacobian $J$ of <span class="search-hit mathjax">every</span> curve of the form $y^2=f(x)$ has $Gal(\mathbb{Q}(J[l])/\mathbb{Q})\cong GSp_{2g}(\mathbb{F}_l)$ for all odd primes l and $Gal(\mathbb{Q}(J[2])/\mathbb{Q})\cong S_{2g+2}$, whenever $f(x)\in\mathbb{Z}[x]$ is monic with $f(x)\equiv f_0(x) \bmod{N}$ and with no roots of multiplicity greater than $2$ in $\overline{\mathbb{F}}_p$ for any p not <span class="search-hit mathjax">dividing</span> N.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1701.05915v2-abstract-full').style.display = 'none'; document.getElementById('1701.05915v2-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 4 June, 2019; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 20 January, 2017;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> January 2017.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">24 pages, minor corrections</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          11F80 (Primary); 12F12; 11G10; 11G30 (Secondary)
+        
+
+        
+      </p>
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1701.01425">arXiv:1701.01425</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1701.01425">pdf</a>, <a href="https://arxiv.org/format/1701.01425">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Algebraic Geometry">math.AG</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Commutative Algebra">math.AC</span>
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Complex Variables">math.CV</span>
+          
+        </div>
+      
+        
+          <div class="is-inline-block" style="margin-left: 0.5rem">
+            <div class="tags has-addons">
+              <span class="tag is-dark is-size-7">doi</span>
+              <span class="tag is-light is-size-7"><a class="" href="https://doi.org/10.1016/j.aim.2018.09.020">10.1016/j.aim.2018.09.020 <i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+            </div>
+          </div>
+        
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        The Jacobian Conjecture fails for pseudo-planes
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Dubouloz%2C+A">Adrien Dubouloz</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Palka%2C+K">Karol Palka</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1701.01425v2-abstract-short" style="display: inline;">
+        &hellip;-equivariant étale endomorphisms.
+  We prove also that for <span class="search-hit mathjax">every</span> <span class="search-hit mathjax">integers</span> $r\geq 1, k\geq 2$ the $\mathbb{Q}$-acyclic rational hyperplane $u(1+u^{r}v)=w^k$, which has fundamental group $\mathbb{Z}_k$ and negative Kodaira dimension, admits families of non-proper étale endomorphisms of arbitrarily high dimension and degr&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1701.01425v2-abstract-full').style.display = 'inline'; document.getElementById('1701.01425v2-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1701.01425v2-abstract-full" style="display: none;">
+        A smooth complex variety satisfies the Generalized Jacobian Conjecture if all its étale endomorphisms are proper. We study the conjecture for $\mathbb{Q}$-acyclic surfaces of negative Kodaira dimension. We show that $G$-equivariant counterexamples for infinite group $G$ exist if and only if $G=\mathbb{C}^*$ and we classify them relating them to Belyi-Shabat polynomials. Taking universal covers we get rational simply connected $\mathbb{C}^*$-surfaces of negative Kodaira dimension which admit non-proper $\mathbb{C}^*$-equivariant étale endomorphisms.
+  We prove also that for <span class="search-hit mathjax">every</span> <span class="search-hit mathjax">integers</span> $r\geq 1, k\geq 2$ the $\mathbb{Q}$-acyclic rational hyperplane $u(1+u^{r}v)=w^k$, which has fundamental group $\mathbb{Z}_k$ and negative Kodaira dimension, admits families of non-proper étale endomorphisms of arbitrarily high dimension and degree, whose members remain <span class="search-hit mathjax">different</span> after <span class="search-hit mathjax">dividing</span> by the action of the automorphism group by left and right composition.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1701.01425v2-abstract-full').style.display = 'none'; document.getElementById('1701.01425v2-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 5 September, 2018; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 5 January, 2017;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> January 2017.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">26 pages, 1 figure</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          14R15; 14R25
+        
+
+        
+      </p>
+    
+
+    
+      <p class="comments is-size-7">
+        <span class="has-text-black-bis has-text-weight-semibold">Journal ref:</span>
+        Adv. Math. 339 (2018), 248-284
+      </p>
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1606.01754">arXiv:1606.01754</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1606.01754">pdf</a>, <a href="https://arxiv.org/format/1606.01754">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Data Structures and Algorithms">cs.DS</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Discrete Mathematics">cs.DM</span>
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Social and Information Networks">cs.SI</span>
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Optimization and Control">math.OC</span>
+          
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        A Graph Partitioning Algorithm for Leak Detection in Water Distribution Networks
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Rajeswaran%2C+A">Aravind Rajeswaran</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Narasimhan%2C+S">Sridharakumar Narasimhan</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Narasimhan%2C+S">Shankar Narasimhan</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1606.01754v1-abstract-short" style="display: inline;">
+        &hellip;use of water balance. Graph partitioning is used to determine the location of flow measurements, with the objective to minimize the measurement cost. We follow a multi-stage <span class="search-hit mathjax">divide</span> and conquer approach. In&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1606.01754v1-abstract-full').style.display = 'inline'; document.getElementById('1606.01754v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1606.01754v1-abstract-full" style="display: none;">
+        Leak detection in urban water distribution networks (WDNs) is challenging given their scale, complexity, and limited instrumentation. We present an algorithm for leak detection in WDNs, which involves making additional flow measurements on-demand, and repeated use of water balance. Graph partitioning is used to determine the location of flow measurements, with the objective to minimize the measurement cost. We follow a multi-stage <span class="search-hit mathjax">divide</span> and conquer approach. In <span class="search-hit mathjax">every</span> stage, a section of the WDN identified to contain the leak is partitioned into two or more sub-networks, and water balance is used to trace the leak to one of these sub-networks. This process is recursively continued until the desired resolution is achieved. We investigate <span class="search-hit mathjax">different</span> methods for solving the arising graph partitioning problem like <span class="search-hit mathjax">integer</span> linear programming (ILP) and spectral bisection. The proposed methods are tested on large scale benchmark networks, and our results indicate that on average, less than 3% of the pipes need to be measured for finding the leak in large networks.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1606.01754v1-abstract-full').style.display = 'none'; document.getElementById('1606.01754v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 3 June, 2016; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> June 2016.
+      
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1301.6332">arXiv:1301.6332</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1301.6332">pdf</a>, <a href="https://arxiv.org/ps/1301.6332">ps</a>, <a href="https://arxiv.org/format/1301.6332">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Rings and Algebras">math.RA</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Commutative Algebra">math.AC</span>
+          
+        </div>
+      
+        
+          <div class="is-inline-block" style="margin-left: 0.5rem">
+            <div class="tags has-addons">
+              <span class="tag is-dark is-size-7">doi</span>
+              <span class="tag is-light is-size-7"><a class="" href="https://doi.org/10.1007/s00605-013-0519-9">10.1007/s00605-013-0519-9 <i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+            </div>
+          </div>
+        
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        <span class="search-hit mathjax">Integer</span>-valued polynomials over matrices and <span class="search-hit mathjax">divided</span> <span class="search-hit mathjax">differences</span>
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Peruginelli%2C+G">Giulio Peruginelli</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1301.6332v3-abstract-short" style="display: inline;">
+        &hellip;a positive <span class="search-hit mathjax">integer</span>. We give a characterization of the polynomials in $K[X]$ which are <span class="search-hit mathjax">integer</span>-valued over the set of matrices $M_n(D)$ in terms of their <span class="search-hit mathjax">divided</span> <span class="search-hit mathjax">differences</span>. A necessary and sufficient condition on $f\in K[X]$ to be&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1301.6332v3-abstract-full').style.display = 'inline'; document.getElementById('1301.6332v3-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1301.6332v3-abstract-full" style="display: none;">
+        Let $D$ be an integrally closed domain with quotient field $K$ and $n$ a positive <span class="search-hit mathjax">integer</span>. We give a characterization of the polynomials in $K[X]$ which are <span class="search-hit mathjax">integer</span>-valued over the set of matrices $M_n(D)$ in terms of their <span class="search-hit mathjax">divided</span> <span class="search-hit mathjax">differences</span>. A necessary and sufficient condition on $f\in K[X]$ to be <span class="search-hit mathjax">integer</span>-valued over $M_n(D)$ is that, for each $k$ less than $n$, the $k$-th <span class="search-hit mathjax">divided</span> <span class="search-hit mathjax">difference</span> of $f$ is integral-valued on <span class="search-hit mathjax">every</span> subset of the roots of any monic polynomial over $D$ of degree $n$. If in addition the intersection of the maximal ideals of finite index is $(0)$ then it is sufficient to check the above conditions on subsets of the roots of monic irreducible polynomials of degree $n$, that is, conjugate integral elements of degree $n$ over $D$.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1301.6332v3-abstract-full').style.display = 'none'; document.getElementById('1301.6332v3-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 9 June, 2013; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 27 January, 2013;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> January 2013.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">minor changes, notation made uniform throughout the paper. Fixed a wrong assumption we used in (4), (5) and Thm 4.1: "$D$ has zero Jacobson radical" has to be replaced with "the intersection of the maximal ideals of finite index is $(0)$". Keywords: <span class="search-hit mathjax">Integer</span>-valued polynomial, Divided differences, Matrix, Integral element, Polynomial closure, Pullback. In Monatshefte für Mathematik, 2013</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          13B25; 13F20; 11C20
+        
+
+        
+      </p>
+    
+
+    
+      <p class="comments is-size-7">
+        <span class="has-text-black-bis has-text-weight-semibold">Journal ref:</span>
+        Monatsh. Math. 173 (2014), no. 4, 559-571
+      </p>
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1108.3680">arXiv:1108.3680</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1108.3680">pdf</a>, <a href="https://arxiv.org/ps/1108.3680">ps</a>, <a href="https://arxiv.org/format/1108.3680">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Number Theory">math.NT</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        The $k$-Tuple Jumping Champions among Consecutive Primes
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Xiaosheng%2C+W">Wu Xiaosheng</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Shaoji%2C+F">Feng Shaoji</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1108.3680v1-abstract-short" style="display: inline;">
+        &hellip;and any <span class="search-hit mathjax">integer</span> $k\ge1$, we say that a set $\mathcal{D}_{k}$ of $k$ distinct <span class="search-hit mathjax">integers</span> is a $k$-tuple jumping champion if it is the most common <span class="search-hit mathjax">differences</span> that occurs among $k+1$ consecutive primes less than or equal to $x$. For $k=1$, it&#39;s known as the jumping champion intr&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1108.3680v1-abstract-full').style.display = 'inline'; document.getElementById('1108.3680v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1108.3680v1-abstract-full" style="display: none;">
+        For any real $x$ and any <span class="search-hit mathjax">integer</span> $k\ge1$, we say that a set $\mathcal{D}_{k}$ of $k$ distinct <span class="search-hit mathjax">integers</span> is a $k$-tuple jumping champion if it is the most common <span class="search-hit mathjax">differences</span> that occurs among $k+1$ consecutive primes less than or equal to $x$. For $k=1$, it&#39;s known as the jumping champion introduced by J. H. Conway. In 1999 A. Odlyzko, M. Rubinstein, and M. Wolf announced the Jumping Champion Conjecture that the jumping champions greater than 1 are 4 and the primorials 2, 6, 30, 210, 2310,.... They also made a weaker and possibly more accessible conjecture that any fixed prime $p$ <span class="search-hit mathjax">divides</span> all sufficiently large jumping champions. These two conjectures were proved by Goldston and Ledoan under the assumption of appropriate forms of the Hardy-Littlewood conjecture recently. In the present paper we consider the situation for any $k\ge2$ and prove that any fixed prime $p$ <span class="search-hit mathjax">divides</span> <span class="search-hit mathjax">every</span> element of all sufficiently large $k$-tuple jumping champions under the assumption that the Hardy-Littlewood prime $k+1$-tuple conjecture holds uniformly for $\mathcal{D}_k\subset[2,\log^{k+1}x]$. With a stronger form of the Hardy-Littlewood conjecture, we also proved that, for any sufficiently large $k$-tuple jumping champion, the $gcd$ of elements in it is square-free.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1108.3680v1-abstract-full').style.display = 'none'; document.getElementById('1108.3680v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 18 August, 2011; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> August 2011.
+      
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/1008.2943">arXiv:1008.2943</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/1008.2943">pdf</a>, <a href="https://arxiv.org/ps/1008.2943">ps</a>, <a href="https://arxiv.org/format/1008.2943">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Functional Analysis">math.FA</span>
+        </div>
+      
+        
+          <div class="is-inline-block" style="margin-left: 0.5rem">
+            <div class="tags has-addons">
+              <span class="tag is-dark is-size-7">doi</span>
+              <span class="tag is-light is-size-7"><a class="" href="https://doi.org/10.1090/S0002-9939-2011-10935-3">10.1090/S0002-9939-2011-10935-3 <i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+            </div>
+          </div>
+        
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        A Characterisation of Anti-Lowner Functions
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Audenaert%2C+K+M+R">Koenraad M. R. Audenaert</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="1008.2943v2-abstract-short" style="display: inline;">
+        &hellip;is operator monotone if and only if its Löwner matrix, which is the matrix of <span class="search-hit mathjax">divided</span> <span class="search-hit mathjax">differences</span> $L_f=(\frac{f(x_i)-f(x_j)}{x_i-x_j})_{i,j=1}^N$, is positive semidefinite for <span class="search-hit mathjax">every</span> <span class="search-hit mathjax">integer</span> $N&gt;0$ and any choice of $x_1,x_2,...,x_N$. In&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1008.2943v2-abstract-full').style.display = 'inline'; document.getElementById('1008.2943v2-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="1008.2943v2-abstract-full" style="display: none;">
+        According to a celebrated result by Löwner, a real-valued function $f$ is operator monotone if and only if its Löwner matrix, which is the matrix of <span class="search-hit mathjax">divided</span> <span class="search-hit mathjax">differences</span> $L_f=(\frac{f(x_i)-f(x_j)}{x_i-x_j})_{i,j=1}^N$, is positive semidefinite for <span class="search-hit mathjax">every</span> <span class="search-hit mathjax">integer</span> $N&gt;0$ and any choice of $x_1,x_2,...,x_N$. In this paper we answer a question of R. Bhatia, who asked for a characterisation of real-valued functions $g$ defined on $(0,+\infty)$ for which the matrix of <span class="search-hit mathjax">divided</span> sums $K_g=(\frac{g(x_i)+g(x_j)}{x_i+x_j})_{i,j=1}^N$, which we call its anti-Löwner matrix, is positive semidefinite for <span class="search-hit mathjax">every</span> <span class="search-hit mathjax">integer</span> $N&gt;0$ and any choice of $x_1,x_2,...,x_N\in(0,+\infty)$. Such functions, which we call anti-Löwner functions, have applications in the theory of Lyapunov-type equations.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('1008.2943v2-abstract-full').style.display = 'none'; document.getElementById('1008.2943v2-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 27 April, 2011; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 17 August, 2010;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> August 2010.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">7 pages; V2: Title changed; mistake corrected in proofs and results about anti-Lowner functions of finite order weakened. The main result about anti-Lowner functions of all orders is unchanged</span>
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+          <span class="has-text-black-bis has-text-weight-semibold">Report number:</span>
+          Mittag-Leffler-2010fall
+        
+
+        
+          <span class="has-text-black-bis has-text-weight-semibold">MSC Class:</span>
+          15A60
+        
+
+        
+      </p>
+    
+
+    
+      <p class="comments is-size-7">
+        <span class="has-text-black-bis has-text-weight-semibold">Journal ref:</span>
+        Proc. AMS 139, 4217-4223 (2011)
+      </p>
+    
+  </li>
+
+</ol>
+
+
+  
+
+
+      <div class="is-hidden-tablet">
+        <!-- feedback for mobile only -->
+        <span class="help" style="display: inline-block;"><a href="https://github.com/arXiv/arxiv-search/releases">Search v0.5.6 released 2020-02-24</a>&nbsp;&nbsp;</span>
+      </div>
+    </div>
+
+  </main>
+  <footer>
+    
+<footer class="ds-site-footer">
+  <div class="ds-site-footer-grid">
+    <div class="ds-site-footer-main">
+      <div class="ds-site-footer-ack">
+        We gratefully acknowledge support from
+        our <strong>major funders</strong>,
+        <a href="https://info.arxiv.org/about/ourmembers.html"><strong>member institutions</strong></a><span class="ack-member-inline" hidden>, <strong></strong></span>,
+        and all contributors.
+      </div>
+      <nav class="ds-site-footer-links" aria-label="Site navigation">
+        <a href="https://info.arxiv.org/about">About</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help">Help</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/contact.html">Contact</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/subscribe">Subscribe</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/license/index.html">Copyright</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/policies/privacy_policy.html">Privacy</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/web_accessibility.html">Accessibility</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://status.arxiv.org" target="_blank" rel="noopener noreferrer">Operational Status<span class="is-sr-only"> (opens in new tab)</span></a>
+      </nav>
+    </div>
+    <div class="ds-site-footer-funders" aria-label="Major funders">
+      <div class="ds-site-footer-funders-label">Major funding support from</div>
+      <div class="ds-site-footer-funders-logos">
+        <a class="ds-funder-link" href="https://www.simonsfoundation.org/" target="_blank" rel="noopener noreferrer">
+          <img class="ds-funder-logo" src="https://static.arxiv.org/static/base/1.0.1/images/funders/simons-foundation.png" alt="Simons Foundation"></a>
+        <a class="ds-funder-link" href="https://www.sfi.org.bm/" target="_blank" rel="noopener noreferrer">
+          <img class="ds-funder-logo" src="https://static.arxiv.org/static/base/1.0.1/images/funders/simons-foundation-international.png" alt="Simons Foundation International"></a>
+        <a class="ds-funder-link" href="https://www.schmidtsciences.org/" target="_blank" rel="noopener noreferrer">
+          <img class="ds-funder-logo" src="https://static.arxiv.org/static/base/1.0.1/images/funders/schmidt-sciences.png" alt="Schmidt Sciences"></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </footer>
+  <script src="https://static.arxiv.org/static/base/1.0.0a5/js/member_acknowledgement.js"></script>
+  </body>
+</html>

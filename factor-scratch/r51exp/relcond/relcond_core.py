@@ -85,8 +85,28 @@ def smooth_mask_batch(vals, b: int) -> np.ndarray:
     n = v.shape[0]
     if n == 0:
         return np.zeros(0, dtype=bool)
-    # v <= 1 is trivially smooth (1 has no prime factors). Keep the convention
-    # explicit rather than letting it fall out of the loop.
+    # ⚠️ V = a^2 - b^3 is EXACTLY 0 whenever a = c^3, b = c^2, and 0 % p == 0 for
+    # every p -- so the divide-out loop below never terminates on a zero input.
+    # This actually happened: R2 hung for >100 s with no output, and because
+    # stdout was block-buffered through a pipe the hang was indistinguishable
+    # from "slow".  The fix is to handle v <= 0 up front rather than letting it
+    # fall out of the loop.
+    zero = v <= 0
+    if zero.any():
+        # Convention: |v| = 0 is NOT a usable candidate (its factorisation is
+        # undefined), and negative values are tested on their absolute value.
+        v[zero] = 0
+        # mark them False explicitly below; keep them out of the divide-out loop
+        safe = v[~zero].copy()
+        res = np.zeros(v.shape[0], dtype=bool)
+        if safe.size:
+            res[~zero] = _divide_out_smooth(safe, b)
+        return res
+    return _divide_out_smooth(v, b)
+
+
+def _divide_out_smooth(v: np.ndarray, b: int) -> np.ndarray:
+    """Divide out all primes <= b; return (cofactor == 1).  Requires v > 0."""
     for p in primes_upto(b):
         m = (v % p) == 0
         while m.any():
@@ -104,7 +124,8 @@ def smooth_mask_batch_active(vals, b: int) -> np.ndarray:
     """
     v = np.asarray(vals, dtype=np.int64).copy()
     n = v.shape[0]
-    alive = np.ones(n, dtype=bool)
+    zero = v <= 0
+    alive = ~zero
     for p in primes_upto(b):
         if not alive.any():
             break
@@ -119,7 +140,9 @@ def smooth_mask_batch_active(vals, b: int) -> np.ndarray:
             alive[idx[done]] = False
             v[idx[done]] = 1
         v[idx] = w
-    return v == 1
+    res = v == 1
+    res[zero] = False      # |v| = 0 has no factorisation; not a usable candidate
+    return res
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/8iX8w1sZZYBVFqZilz8yCpJKVyM</id>
+  <title>arXiv Query: search_query=abs:"general number field sieve" OR ti:"general number field sieve"&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-05T15:30:36Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22general+number+field+sieve%22+OR+ti:%22general+number+field+sieve%22&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>6</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2507.07055v1</id>
+    <title>Integer Factorization: Another perspective</title>
+    <updated>2025-07-09T17:20:49Z</updated>
+    <link href="https://arxiv.org/abs/2507.07055v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.07055v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integer factorization is a fundamental problem in algorithmic number theory and computer science. It is considered as a one way or trapdoor function in the (RSA) cryptosystem. To date, from elementary trial division to sophisticated methods like the General Number Field Sieve, no known algorithm can break the problem in polynomial time, while its proved that Shor's algorithm could on a quantum computer. In this paper, we recall some factorization algorithms and then approach the problem under different angles. Firstly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right)$ to the Lebesgue space $\mathcal{L}^{1}\left(X\right)$ where $X$ can be $\mathbb{Q}$ or any given interval setting. From this first perspective, integer factorization becomes equivalent to finding the perimeter of a rectangle whose area is known. In this case, it is equivalent to either finding bounds of integrals or finding primitives for some given bounds. Secondly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right) $ to the ring of matrices $\left( M_{2}\text{(}\mathbb{Z}\text{)}, \ \text{+} \ \cdot\right)$ and show that this problem is equivalent to matrix decomposition, and therefore present some possible computing algorithms, particularly using Gröbner basis and through matrix diagonalization. Finally, we address the problem depending on algebraic forms of factors and show that this problem is equivalent to finding small roots of a bivariate polynomial through coppersmith's method.
+  The aim of this study is to propose innovative methodological approaches to reformulate this problem, thereby offering new perspectives.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-09T17:20:49Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Gilda Rech Bansimba</name>
+    </author>
+    <author>
+      <name>Regis Freguin Babindamana</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.08198v1</id>
+    <title>Scaling up prime factorization with self-organizing gates: A memcomputing approach</title>
+    <updated>2023-09-15T07:02:54Z</updated>
+    <link href="https://arxiv.org/abs/2309.08198v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.08198v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We report preliminary results on using the MEMCPU\texttrademark{} Platform to compute the prime factorization of large biprimes. The first approach, the direct model, directly returns the factors of a given biprime. The second approach, the congruence model, returns smooth congruences to address the bottleneck of standard sieve methods. The models have size-dependent structure, and the MEMCPU Platform requires structure-dependent tuning for optimal performance. Therefore, for both models, we tuned the platform on sample problems up to a given size according to available resources. Then we generated RSA-like benchmark biprimes to perform rigorous scaling analysis. The MEMCPU timings over the tuned range followed low degree polynomials in the number of bits, markedly different than other tested methods including general number field sieve. MEMCPU's congruence model was the most promising, which was scaled up to 300-bit factorization problems while following a $2^{nd}$ degree polynomial fit. We also discuss the approach to tuning the MEMCPU Platform for problems beyond the reach of today's most advanced methods. Finally, basic analysis of the acceleration expected from an ASIC implementation is provided and suggests the possibility of real time factorization of large biprimes.</summary>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.AO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-15T07:02:54Z</published>
+    <arxiv:primary_category term="cs.ET"/>
+    <author>
+      <name>Tristan Sharp</name>
+    </author>
+    <author>
+      <name>Rishabh Khare</name>
+    </author>
+    <author>
+      <name>Erick Pederson</name>
+    </author>
+    <author>
+      <name>Fabio Lorenzo Traversa</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.12498v1</id>
+    <title>Machine Learning Algorithms for Active Monitoring of High Performance Computing as a Service (HPCaaS) Cloud Environments</title>
+    <updated>2020-09-26T01:29:19Z</updated>
+    <link href="https://arxiv.org/abs/2009.12498v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.12498v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cloud computing provides ubiquitous and on-demand access to vast reconfigurable resources that can meet any computational need. Many service models are available, but the Infrastructure as a Service (IaaS) model is particularly suited to operate as a high performance computing (HPC) platform, by networking large numbers of cloud computing nodes. We used the Pacific Northwest National Laboratory (PNNL) cloud computing environment to perform our experiments. A number of cloud computing providers such as Amazon Web Services, Microsoft Azure, or IBM Cloud, offer flexible and scalable computing resources. This paper explores the viability identifying types of engineering applications running on a cloud infrastructure configured as an HPC platform using privacy preserving features as input to statistical models. The engineering applications considered in this work include MCNP6, a radiation transport code developed by Los Alamos National Laboratory, OpenFOAM, an open source computational fluid dynamics code, and CADO-NFS, a numerical implementation of the general number field sieve algorithm used for prime number factorization. Our experiments use the OpenStack cloud management tool to create a cloud HPC environment and the privacy preserving Ceilometer billing meters as classification features to demonstrate identification of these applications.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-26T01:29:19Z</published>
+    <arxiv:comment>9 pages, 13 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Gianluca Longoni</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Ryan LaMothe</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jeremy Teuton</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mark Greaves</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Nicole Nichols</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>William Smith</name>
+      <arxiv:affiliation>Pacific Northwest National Laboratory</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.02689v2</id>
+    <title>Number Field Sieve with Provable Complexity</title>
+    <updated>2020-07-11T07:49:12Z</updated>
+    <link href="https://arxiv.org/abs/2007.02689v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.02689v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this thesis we give an in-depth introduction to the General Number Field Sieve, as it was used by Buhler, Lenstra, and Pomerance, before looking at one of the modern developments of this algorithm: A randomized version with provable complexity. This version was posited in 2017 by Lee and Venkatesan and will be preceded by ample material from both algebraic and analytic number theory, Galois theory, and probability theory.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-02T08:39:08Z</published>
+    <arxiv:comment>MSc Thesis, 113 pages, 1 table</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Barry van Leeuwen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1212.1958v1</id>
+    <title>Root optimization of polynomials in the number field sieve</title>
+    <updated>2012-12-10T03:05:08Z</updated>
+    <link href="https://arxiv.org/abs/1212.1958v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1212.1958v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The general number field sieve (GNFS) is the most efficient algorithm known for factoring large integers. It consists of several stages, the first one being polynomial selection. The quality of the chosen polynomials in polynomial selection can be modelled in terms of size and root properties. In this paper, we describe some algorithms for selecting polynomials with very good root properties.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-12-10T03:05:08Z</published>
+    <arxiv:comment>16 pages, 18 references</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Mathematics of Computation 84 (2015), 2447-2457</arxiv:journal_ref>
+    <author>
+      <name>Shi Bai</name>
+    </author>
+    <author>
+      <name>Richard P. Brent</name>
+    </author>
+    <author>
+      <name>Emmanuel Thomé</name>
+    </author>
+    <arxiv:doi>10.1090/S0025-5718-2015-02926-3</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/S0025-5718-2015-02926-3" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1003.2165v2</id>
+    <title>Coarse-grained integers - Smooth? Rough? Both!</title>
+    <updated>2012-02-17T13:52:07Z</updated>
+    <link href="https://arxiv.org/abs/1003.2165v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1003.2165v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We count ]B, C]-grained, k-factor integers which are simultaneously B-rough and C-smooth and have a fixed number k of prime factors. Our aim is to exploit explicit versions of the prime number theorem as much as possible to get good explicit bounds for the count of such integers. This analysis was inspired by certain inner procedures in the general number field sieve. The result should at least provide some insight in what happens there.
+  We estimate the given count in terms of some recursively defined functions. Since they are still difficult to handle, only another approximation step reveals their orders.
+  Finally, we use the obtained bounds to perform numerical experiments that show how good the desired count can be approximated for the parameters of the general number field sieve in the mentioned inspiring application.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2010-03-10T17:56:27Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Daniel Loebenberger</name>
+    </author>
+    <author>
+      <name>Michael Nüsken</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/uu9JraAAEWP0laPu9TEvU6HUYWM</id>
+  <title>arXiv Query: search_query=abs:"elliptic curve method"&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-05T15:30:35Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22elliptic+curve+method%22&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>12</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2508.15781v1</id>
+    <title>The problem of finding three numbers such that the sum or difference of any two of them is a square number</title>
+    <updated>2025-08-05T21:51:15Z</updated>
+    <link href="https://arxiv.org/abs/2508.15781v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.15781v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Euler explored the problem of finding three numbers such that the sum or difference of any two of them is a perfect square. He discovered a parametric solution represented by polynomials of degree 18 and identified the smallest of these solutions. Additionally, we derive two parametric solutions using the elliptic curve method and find all solutions within the range of $10^8$.</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-05T21:51:15Z</published>
+    <arxiv:primary_category term="math.GM"/>
+    <author>
+      <name>Seiji Tomita</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.23772v2</id>
+    <title>Anamorphic Cryptography using Baby-Step Giant-Step Recovery</title>
+    <updated>2025-07-03T14:52:27Z</updated>
+    <link href="https://arxiv.org/abs/2505.23772v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.23772v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In 2022, Persianom, Phan and Yung outlined the creation of Anamorphic Cryptography. With this, we can create a public key to encrypt data, and then have two secret keys. These secret keys are used to decrypt the cipher into different messages. So, one secret key is given to the Dictator (who must be able to decrypt all the messages), and the other is given to Alice. Alice can then decrypt the ciphertext to a secret message that the Dictator cannot see. This paper outlines the implementation of Anamorphic Cryptography using ECC (Elliptic Curve Cryptography), such as with the secp256k1 curve. This gives considerable performance improvements over discrete logarithm-based methods with regard to security for a particular bit length. Overall, it outlines how the secret message sent to Alice is hidden within the random nonce value, which is used within the encryption process, and which is cancelled out when the Dictator decrypts the ciphertext. It also shows that the BSGS (Baby-step Giant-step) variant significantly outperforms unoptimised elliptic curve methods.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-21T12:53:32Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>William J Buchanan</name>
+    </author>
+    <author>
+      <name>Jamie Gilchrist</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.04559v1</id>
+    <title>Efficient Algorithms for Isogeny Computation on Hyperelliptic Curves: Their Applications in Post-Quantum Cryptography</title>
+    <updated>2025-04-06T17:15:10Z</updated>
+    <link href="https://arxiv.org/abs/2504.04559v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.04559v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present e cient algorithms for computing isogenies between hyperelliptic curves, leveraging higher genus curves to enhance cryptographic protocols in the post-quantum context. Our algorithms reduce the computational complexity of isogeny computations from O(g4) to O(g3) operations for genus 2 curves, achieving significant ciency gains over traditional elliptic curve methods. Detailed pseudocode and comprehensive complexity analyses demonstrate these improvements both theoretically and empirically. Additionally, we provide a thorough security analysis, including proofs of resistance to quantum attacks such as Shor's and Grover's algorithms. Our findings establish hyperelliptic isogeny-based cryptography as a promising candidate for secure and e cient post-quantum cryptographic systems.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-06T17:15:10Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Mohammed El Baraka</name>
+    </author>
+    <author>
+      <name>Siham Ezzouak</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.11724v2</id>
+    <title>ECM And The Elliott-Halberstam Conjecture For Quadratic Fields</title>
+    <updated>2023-01-17T14:07:16Z</updated>
+    <link href="https://arxiv.org/abs/2212.11724v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.11724v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The complexity of the elliptic curve method of factorization (ECM) is proven under the celebrated conjecture of existence of smooth numbers in short intervals. In this work we tackle a different version of ECM which is actually much more studied and implemented, especially because it allows us to use ECM-friendly curves. In the case of curves with complex multiplication (CM) we replace the heuristics by rigorous results conditional to the Elliott-Halberstam (EH) conjecture. The proven results mirror recent theorems concerning the number of primes p such thar p -- 1 is smooth. To each CM elliptic curve we associate a value which measures how ECM-friendly it is. In the general case we explore consequences of a statement which translated EH in the case of elliptic curves.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-22T14:15:26Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Razvan Barbulescu</name>
+      <arxiv:affiliation>LFANT</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Florent Jouve</name>
+      <arxiv:affiliation>IMB</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.08847v1</id>
+    <title>Parametric Solution to six n degree powers for degree two, three, four, five, six , seven, eight, and nine</title>
+    <updated>2022-01-22T05:38:57Z</updated>
+    <link href="https://arxiv.org/abs/2201.08847v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.08847v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Historically in math literature there are instances where solutions have been arrived at by different authors for equation 1 for six powers on both side of equation, for different degree 2,3,4,5,6,7,8,9. See reference number 1, by A. Bremner &amp; J. Delorme and reference number 10, by Tito Piezas. The difference is that this paper has done systematic analysis of equation 1. While numerical solutions for equation 1, is available on Wolfram math website, search for parametric solutions to equation 1, in various publications for all degree 2,3,4,5,6,7,8,9 did not yield results. The authors of this paper have selected six terms on each side of equation 1, since the difficulty of the problem increases every time a term is deleted on each side of equation 1. The authors have provided parametric solutions for equation 1, for degree 2, 3, 4, 5 &amp; 6 and for degree 7, 8 &amp; 9 solutions using elliptical curve method has been provided. Also we would like to mention that solutions for degree 7, 8 &amp; 9 using elliptic curve method has infinite numerical solutions. Keywords, Pure math, Diophantine equations, Equal sums, parameteric equations.</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-22T05:38:57Z</published>
+    <arxiv:comment>twenty pages</arxiv:comment>
+    <arxiv:primary_category term="math.GM"/>
+    <author>
+      <name>Oliver Couto</name>
+    </author>
+    <author>
+      <name>Seiji Tomita</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2101.09151v1</id>
+    <title>Probability Analysis and Comparison of Well-Known Integer Factorization Algorithms</title>
+    <updated>2021-01-21T06:50:05Z</updated>
+    <link href="https://arxiv.org/abs/2101.09151v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2101.09151v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Two prominent methods for integer factorization are those based on general integer sieve and elliptic curve. The general integer sieve method can be specialized to quadratic integer sieve method. In this paper, a probability analysis for the success of these methods is described, under some reasonable conditions. The estimates presented are specialized for the elliptic curve factorization. These methods are compared through heuristic estimates. It is shown that the elliptic curve method is a probabilistic polynomial time algorithm under the assumption of uniform probability distribution for the arising group orders and clearly more likely to succeed, faster asymptotically.</summary>
+    <category term="math.GM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-01-21T06:50:05Z</published>
+    <arxiv:primary_category term="math.GM"/>
+    <arxiv:journal_ref>Global Journal of Pure and Applied Mathematics, Volume 17, Number 1 (2021), pp. 1-8 (ISSN 0973-1768)</arxiv:journal_ref>
+    <author>
+      <name>Duggirala Meher Krishna</name>
+    </author>
+    <author>
+      <name>Duggirala Ravi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.03811v1</id>
+    <title>Efficient ECM factorization in parallel with the Lyness map</title>
+    <updated>2020-02-05T14:14:59Z</updated>
+    <link href="https://arxiv.org/abs/2002.03811v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.03811v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Lyness map is a birational map in the plane which provides one of the simplest discrete analogues of a Hamiltonian system with one degree of freedom, having a conserved quantity and an invariant symplectic form. As an example of a symmetric Quispel-Roberts-Thompson (QRT) map, each generic orbit of the Lyness map lies on a curve of genus one, and corresponds to a sequence of points on an elliptic curve which is one of the fibres in a pencil of biquadratic curves in the plane. Here we present a version of the elliptic curve method (ECM) for integer factorization, which is based on iteration of the Lyness map with a particular choice of initial data. More precisely, we give an algorithm for scalar multiplication of a point on an elliptic curve, which is represented by one of the curves in the Lyness pencil. In order to avoid field inversion, and require only field multiplication (${\bf M}$), squaring (${\bf S}$) and addition, projective coordinates in $\mathbb{P}^1 \times \mathbb{P}^1$ are used. Neglecting multiplication by curve constants (assumed small), each addition of the chosen point uses $2{\bf M}$, while each doubling step requires $15{\bf M}$. We further show that the doubling step can be implemented efficiently in parallel with four processors, dropping the effective cost to $4{\bf M}$. Our scalar multiplication algorithm should require, on average, roughly twice as many multiplications per bit as the fastest state of the art methods using twisted Edwards curves with small constants, but it can be applied to any elliptic curve over $\mathbb{Q}$, whereas twisted Edwards curves (equivalent to Montgomery curves) correspond to only a subset of all elliptic curves. Hence, if implemented in parallel, our method may have potential advantages for integer factorization or elliptic curve cryptography.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-05T14:14:59Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Andrew N. W. Hone</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2001.09076v3</id>
+    <title>ECM factorization with QRT maps</title>
+    <updated>2020-07-15T06:51:13Z</updated>
+    <link href="https://arxiv.org/abs/2001.09076v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2001.09076v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Quispel-Roberts-Thompson (QRT) maps are a family of birational maps of the plane which provide the simplest discrete analogue of an integrable Hamiltonian system, and are associated with elliptic fibrations in terms of biquadratic curves. Each generic orbit of a QRT map corresponds to a sequence of points on an elliptic curve. In this preliminary study, we explore versions of the elliptic curve method (ECM) for integer factorization based on iterating three different QRT maps with particular initial data. Pseudorandom number generation and other possible applications are briefly discussed.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-01-24T16:30:32Z</published>
+    <arxiv:comment>14 pages, full version for FCS'20 proceedings</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Andrew N. W. Hone</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1202.4285v2</id>
+    <title>Finding ECM-friendly curves through a study of Galois properties</title>
+    <updated>2012-09-04T09:09:11Z</updated>
+    <link href="https://arxiv.org/abs/1202.4285v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1202.4285v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we prove some divisibility properties of the cardinality of elliptic curves modulo primes. These proofs explain the good behavior of certain parameters when using Montgomery or Edwards curves in the setting of the elliptic curve method (ECM) for integer factorization. The ideas of the proofs help us to find new families of elliptic curves with good division properties which increase the success probability of ECM.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-02-20T10:33:55Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>Algorithmic Number Theory Symposium (2012)</arxiv:journal_ref>
+    <author>
+      <name>Razvan Barbulescu</name>
+      <arxiv:affiliation>INRIA Nancy - Grand Est / LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Joppe W. Bos</name>
+      <arxiv:affiliation>LACAL</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Cyril Bouvier</name>
+      <arxiv:affiliation>INRIA Nancy - Grand Est / LORIA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Thorsten Kleinjung</name>
+      <arxiv:affiliation>LACAL</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Peter L. Montgomery</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1103.4093v2</id>
+    <title>Aspects of Nonabelian Group Based Cryptography: A Survey and Open Problems</title>
+    <updated>2011-03-22T05:45:05Z</updated>
+    <link href="https://arxiv.org/abs/1103.4093v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1103.4093v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Most common public key cryptosystems and public key exchange protocols presently in use, such as the RSA algorithm, Diffie-Hellman, and elliptic curve methods are number theory based and hence depend on the structure of abelian groups. The strength of computing machinery has made these techniques theoretically susceptible to attack and hence recently there has been an active line of research to develop cryptosystems and key exchange protocols using noncommutative cryptographic platforms. This line of investigation has been given the broad title of noncommutative algebraic cryptography. This was initiated by two public key protocols that used the braid groups, one by Ko, Lee et.al.and one by Anshel, Anshel and Goldfeld. The study of these protocols and the group theory surrounding them has had a large effect on research in infinite group theory. In this paper we survey these noncommutative group based methods and discuss several ideas in abstract infinite group theory that have arisen from them. We then present a set of open problems.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-03-21T17:43:43Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Benjamin Fine</name>
+    </author>
+    <author>
+      <name>Maggie Habeeb</name>
+    </author>
+    <author>
+      <name>Delaram Kahrobaei</name>
+    </author>
+    <author>
+      <name>Gerhard Rosenberger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/0905.2325v1</id>
+    <title>Factorization with genus 2 curves</title>
+    <updated>2009-05-14T13:19:57Z</updated>
+    <link href="https://arxiv.org/abs/0905.2325v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/0905.2325v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The elliptic curve method (ECM) is one of the best factorization methods available. It is possible to use hyperelliptic curves instead of elliptic curves but it is in theory slower. We use special hyperelliptic curves and Kummer surfaces to reduce the complexity of the algorithm. Our implementation GMP-HECM is faster than GMP-ECM for factoring big numbers.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2009-05-14T13:19:57Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Romain Cosset</name>
+    </author>
+    <arxiv:doi>10.1090/S0025-5718-09-02295-9</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1090/S0025-5718-09-02295-9" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/math/0208038v2</id>
+    <title>Fast Elliptic Curve Arithmetic and Improved Weil Pairing Evaluation</title>
+    <updated>2003-01-22T21:39:11Z</updated>
+    <link href="https://arxiv.org/abs/math/0208038v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/math/0208038v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  We present an algorithm which speeds scalar multiplication on a general elliptic curve by an estimated 3.8 % to 8.5 % over the best known general methods when using affine coordinates. This is achieved by eliminating a field multiplication when we compute 2P+Q from given points P, Q on the curve. We give applications to simultaneous multiple scalar multiplication and to the Elliptic Curve Method of factorization. We show how this improvement together with another idea can speed the computation of the Weil and Tate pairings by up to 7.8 %.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2002-08-05T23:41:54Z</published>
+    <arxiv:comment>12 pages, added some consequences for computing the Weil Pairing, to appear in Proceedings of RSA-CT 2003</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Kirsten Eisentraeger</name>
+    </author>
+    <author>
+      <name>Kristin Lauter</name>
+    </author>
+    <author>
+      <name>Peter L. Montgomery</name>
+    </author>
+  </entry>
+</feed>

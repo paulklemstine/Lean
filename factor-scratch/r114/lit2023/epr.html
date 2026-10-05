@@ -1,0 +1,2478 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="/css/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Search results</title>
+    <link rel="stylesheet" href="/css/eprint.css?v=10">
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon-180x180.png" />
+    <meta name="tdm-reservation" content="1">
+    
+<style>
+ input {
+   background-color: #e8e8e8 !important;
+ }
+ mark {
+   font-weight: 600;
+   padding: .2em 0px .2em 0px;
+   color: black;
+ }
+ span.term {
+   font-weight: 700 !important;
+   font-family: var(--bs-font-monospace), monospace !important;
+ }
+ form {
+   background-color:#fff;
+ }
+ @media (min-width: 768px) {
+   form {
+     position:sticky;top:6rem;
+   }
+ }
+
+</style>
+<meta name="description" content="Search the Cryptology ePrint Archive">
+
+  </head>
+
+  <body>
+    <noscript>
+      <h1 class="text-center">What a lovely hat</h1>
+      <h4 class="text-center">Is it made out of <a href="https://iacr.org/tinfoil.html">tin foil</a>?</h4>
+    </noscript>
+    <div class="fixed-top" id="topNavbar">
+      <nav class="navbar navbar-custom navbar-expand-lg">
+        <div class="container px-0 justify-content-between justify-content-lg-evenly">
+          <div class="order-0 align-items-center d-flex">
+            <button class="navbar-toggler btnNoOutline" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false">
+              <span class="icon-bar top-bar"></span>
+              <span class="icon-bar middle-bar"></span>
+              <span class="icon-bar bottom-bar"></span>
+            </button>
+            <a class="d-none me-5 d-lg-inline" href="https://iacr.org/"><img class="iacrlogo" src="/img/iacrlogo_small.png" alt="IACR Logo" style="max-width:6rem;"></a>
+          </div>
+          <a class="ePrintname order-1" href="/">
+            <span class="longNavName">Cryptology ePrint Archive</span>
+          </a>
+          <div class="collapse navbar-collapse order-3" id="navbarContent">
+            <ul class="navbar-nav me-auto ms-2 mb-2 mb-lg-0 justify-content-end w-100">
+              <li class="ps-md-3 nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Papers
+                </a>
+                <ul class="dropdown-menu me-3" aria-labelledby="navbarDropdown">
+                  <span class="text-dark mx-3" style="white-space:nowrap;">Updates from the last:</span>
+                  <li><a class="dropdown-item ps-custom" href="/days/7">7 days</a></li>
+                  <li><a class="dropdown-item ps-custom" href="/days/31">31 days</a></li>
+                  <li><a class="dropdown-item ps-custom" href="/days/183">6 months</a></li>
+                  <li><a class="dropdown-item ps-custom" href="/days/365">365 days</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/byyear">Listing by year</a></li>
+                  <li><a class="dropdown-item" href="/complete">All papers</a></li>
+                  <li><a class="dropdown-item" href="/complete/compact">Compact view</a></li>
+                  <li><a class="dropdown-item" href="https://www.iacr.org/news/subscribe">Subscribe</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/citation.html">How to cite</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="/rss">Harvesting metadata</a></li>
+                </ul>
+              </li>
+              <li class="ps-md-3 nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="submissionsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Submissions
+                </a>
+                <ul class="dropdown-menu me-3" aria-labelledby="submissionsDropdown">
+                  <li><a class="dropdown-item" href="/submit">Submit a paper</a></li>
+                  <li><a class="dropdown-item" href="/revise">Revise or withdraw a paper</a></li>
+                  <li><a class="dropdown-item" href="/operations.html">Acceptance and publishing conditions</a></li>
+                </ul>
+              </li>
+              <li class="ps-md-3 nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  About
+                </a>
+                <ul class="dropdown-menu me-3" aria-labelledby="aboutDropdown">
+                  <li><a class="dropdown-item" href="/about.html">Goals and history</a></li>
+                  <li><a class="dropdown-item" href="/news.html">News</a></li>
+                  <li><a class="dropdown-item" href="/stats">Statistics</a></li>
+                  <li><a class="dropdown-item" href="/contact.html">Contact</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="dropdown ps-md-2 text-right order-2 order-lg-last">
+            <button class="btn btnNoOutline" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="/img/search.svg" class="searchIcon" alt="Search Button"/>
+            </button>
+            <div id="searchDd" class="dropdown-menu dropdown-menu-end p-0" aria-labelledby="dropdownMenuButton1">
+              <form action="/search" method="GET">
+                <div class="input-group">
+                  <input id="searchbox" name="q" type="search" class="form-control" autocomplete="off">
+                  <button class="btn btn-secondary border input-group-append ml-2">
+                    Search
+                  </button>
+                </div>
+              </form>
+              <div class="ms-2 p-1 d-none"><a href="/search">Advanced search</a></div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <main id="eprintContent" class="container px-3 py-4 p-md-4">
+<div class="row">
+    <div class="alert alert-info" role="alert">
+      We have switched the default sort to relevance (instead of chronological order) based on a straw poll at Eurocrypt.
+      Let us know how this affects your search experience!
+    </div>
+    <div class="col-12 col-lg-4">
+      <form class="p-2 pt-md-4 align-items-end  needs-validation" novalidate onsubmit="return validateForm()" method="GET" action="/search">
+        <label for="anything" class="mt-2 form-label">Match anything</label>
+        <input type="text" name="q" class="form-control form-control-sm" id="anything" aria-label="Match anything" value="number field sieve sieving">
+        <label for="title" class="mt-4 form-label">Match title</label>
+        <input type="text" name="title" class="form-control form-control-sm" id="title" aria-label="Match title" value="">
+        <label for="authors" class="mt-4 form-label">Match authors</label>
+        <input type="text" name="authors" class="form-control form-control-sm" id="authors" aria-label="Match authors" value="">
+        <label for="category" class="mt-4 form-label">Category</label><br>
+        <select class="form-select form-select-sm" id="category" name="category" aria-label="Category">
+          <option value="">All categories</option>
+          
+          <option value="APPLICATIONS" >Applications</option>
+          
+          <option value="PROTOCOLS" >Cryptographic protocols</option>
+          
+          <option value="FOUNDATIONS" >Foundations</option>
+          
+          <option value="IMPLEMENTATION" >Implementation</option>
+          
+          <option value="SECRETKEY" >Secret-key cryptography</option>
+          
+          <option value="PUBLICKEY" >Public-key cryptography</option>
+          
+          <option value="ATTACKS" >Attacks and cryptanalysis</option>
+          
+        </select>
+        <div class="row d-none d-lg-flex">
+          <div class="col-6">
+            <label for="submittedafter" class="mt-4 form-label">Submitted after</label><br>
+            <input class="form-control form-control-sm" type="number" min="1996" id="submittedafter" name="submittedafter" aria-label="Submitted after" value="None" placeholder="Enter a year">
+          </div>
+          <div class="col-6">
+            <label for="submittedbefore" class="mt-4 form-label">Submitted before</label><br>
+            <input class="form-control form-control-sm" type="number" min="1996" id="submittedbefore" name="submittedbefore" aria-label="Submitted before" value="None" placeholder="Enter a year">
+            <div class="invalid-feedback">
+              Dates are inconsistent
+            </div>
+          </div>
+        </div>
+        <div class="row d-none d-lg-flex">
+          <div class="col-6">
+            <label for="revisedafter" class="mt-4 form-label">Revised after</label><br>
+            <input class="form-control form-control-sm" type="number" min="1996" id="revisedafter" name="revisedafter" aria-label="Revised after" placeholder="Enter a year" value="None">
+            <div class="invalid-feedback">
+              Dates are inconsistent
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="revisedbefore" class="mt-4 form-label">Revised before</label><br>
+            <input class="form-control form-control-sm" type="number" min="1996" id="revisedbefore" name="revisedbefore" aria-label="Revised before" value="None" placeholder="Enter a year">
+          </div>
+        </div>
+        <div class="d-none d-lg-flex mt-3">
+          <div class="form-check">
+            <input type="checkbox" id="relevance" name="relevance" >
+            <label for="relevance" class="form-check-label ms-2">Sort by relevance</label>
+          </div>
+        </div>
+        <div class="mt-3 d-flex">
+          <button class="btn btn-primary btn-sm" type="submit">Search</button>
+          <button id="clearButton" class="btn btn-secondary btn-sm ms-2" type="button">Clear</button>
+          <button id="helpButton" class="btn btn-info btn-sm ms-auto" type="button" data-bs-toggle="modal" data-bs-target="#helpModal">Help</button>
+        </div>
+      </form>
+      <div class="modal" tabindex="-1" id="helpModal">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Search Help</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>
+                You can search for a phrase by enclosing it in double quotes, e.g.,
+                <span class="term text-nowrap"><a href="/search?q=%22differential%20privacy%22">"differential privacy"</a></span>.
+              </p>
+              <p>
+                You can require or exclude specific terms using + and -. For example, to search for papers that contain the term elliptic
+                but not the term factoring, use
+                <span class="term text-nowrap"><a href="/search?q=%2Belliptic%20-factoring">+elliptic -factoring</a></span>
+              </p>
+              <p>
+                To search in a title or for author name, use
+                <span class="term text-nowrap"><a href="/search?q=title%3Aisogeny%20author%3Aboneh">title:isogeny author:boneh</a></span>.
+                If you want to require both, you can use
+                <span class="term text-nowrap"><a href="/search?q=title%3Aisogeny%20AND%20author%3Aboneh">title:isogeny AND author:boneh</a></span>
+                because it recognizes logical operators <span class="term">AND</span> and <span class="term">OR</span>.
+                This is equivalent to <a href="/search?title=isogeny&authors=boneh">using the individual fields</a> for author and title.
+                You can also use NOT to negate a condition, as with
+                <span class="term text-nowrap"><a href="/search?q=title%3Aisogeny%20AND%20NOT%20author%3Aboneh">title:isogeny AND NOT author:boneh</a></span> to search for papers with an author other than Boneh.
+              </p>
+              <p>
+                To find documents containing a term starting with the string
+                <span class="term">differe</span>, use
+                <span class="term"><a href="/search?q=differe%2A">differe*</a></span>.
+                This will match the terms difference, different, and differential
+              </p>
+              <p>
+                Note that search applies stemming, so that if you search for <span class="term">yield</span> it will also match terms
+                <span class="term">yields</span> and <span class="term">yielding</span>. If you want to disable
+                stemming, capitalize the term. A search for <span class="term">Adam</span> will not match the term 'Adams'.
+              </p>
+              <p>
+                The system attempts to recognize possible misspellings. This is perhaps a source of amusement more than anything else.
+              </p>
+              <p>
+                This currently searches the text in titles, authors, abstracts, and keywords, but does not search in the PDF or PS itself.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Parsed query: Query(((Znumber@1 AND Zfield@2 AND Zsiev@3 AND Zsiev@4) AND_MAYBE PostingSource(Xapian::ValueWeightPostingSource(slot=2)))) -->
+    </div>
+  <div class="col-12 col-lg-8" style="min-height:80vh">
+    
+    
+    
+    
+    <h4 class="mt-3 ms-4">88 results sorted by ID</h5>
+      <div class="alert alert-info ms-lg-4">Possible spell-corrected query: <a href="/search?q=number field sieve giving">number field sieve giving</a></div>
+    <div class="ms-lg-4 mt-3 results">
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2026/2256" class="paperlink" href="/2026/2256">2026/2256</a>
+          <span class="ms-2"><a href="/2026/2256.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2026-10-01</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Affine-Padding Rabin-Oracle Factoring in $L_n\!\left(\frac{1}{3},\sqrt[3]{\frac{32}{9}}\right)$</strong>
+              <div class="mt-1"><span class="fst-italic">Alexandra-Ioana Buzățoiu, Diana Maimuț, David Naccache</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-ATTACKS">Attacks and cryptanalysis</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The 2007 algorithm of Joux, Naccache, and Thomé (\textsc{jnt}) shows that, with subexponential access to
+an $e$-th root oracle, one can forge \textsc{rsa} signatures for \emph{odd} $e$ in time close to the
+special number field sieve, without factoring the modulus; a recent \textsc{jnt}
+implementation by Shea et al.~\cite{Forge26} carried that attack to $1024$-bit
+\textsc{rsa}. We revisit the \textsc{jnt} construction at $e=2$, the Rabin case, where an $e$-th root oracle is a
+square-root...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2026/2131" class="paperlink" href="/2026/2131">2026/2131</a>
+          <span class="ms-2"><a href="/2026/2131.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2026-09-20</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Forging 1024-bit RSA signatures in nearly SNFS time</strong>
+              <div class="mt-1"><span class="fst-italic">Laura Shea, Miro Haller, Adam Suhl, Nadia Heninger, Emmanuel Thomé</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-ATTACKS">Attacks and cryptanalysis</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The security of RSA is generally understood to be based on the complexity of factoring, and key size parameters are extrapolated from the general number field sieve (GNFS). However, this may not accurately represent RSA security in practical scenarios.
+
+An under-appreciated 2007 algorithm of Joux, Naccache, and Thomé allows an attacker to forge RSA signatures after temporary access to a raw RSA signing/decryption oracle in time close to the *special* number field sieve (SNFS) without...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2026/1522" class="paperlink" href="/2026/1522">2026/1522</a>
+          <span class="ms-2"><a href="/2026/1522.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2026-07-24</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Efficient Ternary Computation of Optimal Ate Pairing on BLS27 Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Walid Haddaji</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The computation of optimal Ate pairings on elliptic curves with embedding degree $k=27$ (BLS27) is highly relevant for achieving the 256-bit security level, especially in the context of recent advances in the Number Field Sieve (NFS) and its variants (exTNFS, SexTNFS). Traditional binary approaches fail to fully exploit the degree-3 extension tower of $\Fpk{27}$. In this work, we propose an efficient ternary version of the Miller loop, restricting the seed representation to sparse ternary...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2026/560" class="paperlink" href="/2026/560">2026/560</a>
+          <span class="ms-2"><a href="/2026/560.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2026-06-19</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>High-Order Galois Automorphisms for TNFS Linear Algebra</strong>
+              <div class="mt-1"><span class="fst-italic">Haetham Al Aswad, Cécile Pierrot, Emmanuel Thomé</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The Number Field Sieve and its variants are the best-known algorithms to solve the discrete logarithm problem in finite fields. When the extension degree is composite, the Tower variant, TNFS, is the most efficient.  Looking at finite fields with composite extension degrees such as $6$ and $12$ is motivated by pairing-based cryptography, which does not yet have a good quantum-resistant equivalent.
+
+The two most costly steps in TNFS are the relation collection and linear algebra steps. ...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2024/1426" class="paperlink" href="/2024/1426">2024/1426</a>
+          <span class="ms-2"><a href="/2024/1426.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2024-09-11</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Agile Asymmetric Cryptography and the Case for Finite Fields</strong>
+              <div class="mt-1"><span class="fst-italic">Anna M. Johnston</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Cryptographic agility, the ability to easily and quickly modify cryptography in a sys- tem, is one of the most important features of any cryptographic system. Any algorithm may be attacked and, at some point in time, be broken. The most obvious solution is to change the cryptographic algorithm, however this has high risk and cost. Another solution is to use agile algorithms. Agile algorithms have security parameters easily changed to increase protection against attacks.
+In this paper we...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2023/834" class="paperlink" href="/2023/834">2023/834</a>
+          <span class="ms-2"><a href="/2023/834.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2024-10-10</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Discrete Logarithm Factory</strong>
+              <div class="mt-1"><span class="fst-italic">Haetham AL ASWAD, Cécile PIERROT, Emmanuel THOMÉ</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The Number Field Sieve and its variants are the best algorithms to solve the discrete logarithm problem in finite fields (except for the weak small characteristic case). The Factory variant accelerates the computation when several prime fields are targeted.  This article adapts the Factory variant to non-prime finite fields of medium and large characteristic. A precomputation, solely dependent on an approximate finite field size and an  extension degree, allows to efficiently compute...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2023/801" class="paperlink" href="/2023/801">2023/801</a>
+          <span class="ms-2"><a href="/2023/801.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2023-05-31</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>We Are on the Same Side. Alternative Sieving Strategies for the Number Field Sieve</strong>
+              <div class="mt-1"><span class="fst-italic">Charles Bouillaguet, Ambroise Fleury, Pierre-Alain Fouque, Paul Kirchner</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-ATTACKS">Attacks and cryptanalysis</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The Number Field Sieve (NFS) is the state-of-the art algorithm for integer
+  factoring, and sieving is a crucial step in the NFS. It is a very
+  time-consuming operation, whose goal is to collect many relations. The
+  ultimate goal is to generate random smooth integers mod $N$ with their prime
+  decomposition, where smooth is defined on the rational and algebraic sides
+  according to two prime factor bases.
+
+  In modern factorization tool, such as \textsf{Cado-NFS}, sieving is split...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2022/1588" class="paperlink" href="/2022/1588">2022/1588</a>
+          <span class="ms-2"><a href="/2022/1588.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2022-11-15</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Factoring using multiplicative relations modulo n: a subexponential algorithm inspired by the index calculus</strong>
+              <div class="mt-1"><span class="fst-italic">Katherine E. Stange</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We demonstrate that a modification of the classical index calculus algorithm can be used to factor integers.  More generally, we reduce the factoring problem to finding an overdetermined system of multiplicative relations in any factor base modulo $n$, where $n$ is the integer whose factorization is sought.  The algorithm has subexponential runtime $\exp(O(\sqrt{\log n \log \log n}))$ (or $\exp(O( (\log n)^{1/3} (\log \log n)^{2/3} ))$ with the addition of a number field sieve), but requires...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2022/912" class="paperlink" href="/2022/912">2022/912</a>
+          <span class="ms-2"><a href="/2022/912.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2023-09-04</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Individual Discrete Logarithm with Sublattice Reduction</strong>
+              <div class="mt-1"><span class="fst-italic">Haetham AL ASWAD, Cécile PIERROT</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The Number Field Sieve and its numerous variants is the best algorithm to compute discrete logarithms in medium and large characteristic finite fields. When the extension degree $n$ is composite and the characteristic~$p$ is of medium size, the Tower variant (TNFS) is asymptotically the most efficient one. Our work deals with the last main step, namely the individual logarithm step, that computes a smooth decomposition of a given target~$T$ in the finite field thanks to two distinct phases:...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2021/933" class="paperlink" href="/2021/933">2021/933</a>
+          <span class="ms-2"><a href="/2021/933.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2021-07-09</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Fast Factoring Integers by SVP Algorithms, corrected</strong>
+              <div class="mt-1"><span class="fst-italic">Claus Peter Schnorr</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">To factor an integer $N$ we construct $n$ triples of $p_n$-smooth integers $u,v,|u-vN|$ for the $n$-th prime $p_n$. Denote such triple a fac-relation. We get fac-relations from a nearly shortest vector of the lattice $\mathcal L(\mathbf R_{n, f})$ with basis matrix $\mathbf R_{n, f} \in \mathbb R^{(n+1)\times(n+1)}$ where $f\colon [1, n]\to[1, n]$ is a permutation of $[1, 2, \ldots, n]$ and $(f(1),\ldots,f(n),N&#39;\ln N)$ is the diagonal and $(N&#39; \ln p_1,\ldots, N&#39; \ln p_n,N&#39; \ln N)$ for $N&#39; =...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2021/707" class="paperlink" href="/2021/707">2021/707</a>
+          <span class="ms-2"><a href="/2021/707.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2022-09-22</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Lattice Enumeration for Tower NFS: a 521-bit Discrete Logarithm Computation</strong>
+              <div class="mt-1"><span class="fst-italic">Gabrielle De Micheli, Pierrick Gaudry, Cécile Pierrot</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The Tower variant of the Number Field Sieve (TNFS) is known to be asymptotically the most efficient algorithm to solve the discrete logarithm problem in finite fields of medium characteristics, when the extension degree is composite. A major obstacle to an efficient implementation of TNFS is the collection of algebraic relations, as it happens in dimension greater than 2. This requires the construction of new sieving algorithms which remain efficient as the dimension grows. In this article,...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2021/647" class="paperlink" href="/2021/647">2021/647</a>
+          <span class="ms-2"><a href="/2021/647.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2022-03-06</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>privateDH: An Enhanced Diffie-Hellman Key-Exchange Protocol using RSA and AES Algorithm</strong>
+              <div class="mt-1"><span class="fst-italic">Ripon Patgiri</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-SECRETKEY">Secret-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">RSA cryptography is an asymmetric communication protocol, and it is facing diverse issues. Recent research works suggest that RSA security has already broken. On the contrary, AES is the most used symmetric-key cryptography protocol, and it is also facing issues. Literature search suggests that there is an issue of cryptanalysis attacks. A shared secret key requires for AES cryptography. The most famous key exchange protocol is Diffie-Hellman; however, it has an issue of the number field...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2021/232" class="paperlink" href="/2021/232">2021/232</a>
+          
+          
+          <small class="ms-auto">Last updated: 2021-06-05</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Fast Factoring Integers by SVP Algorithms</strong>
+              <div class="mt-1"><span class="fst-italic">Claus Peter Schnorr</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">To factor an integer $N$ we construct  $n$ triples of $p_n$-smooth integers $u,v,|u-vN|$ for the $n$-th prime $p_n$. Denote such triple a fac-relation. We get fac-relations from a nearly shortest vector of the lattice
+$\mathcal{L}(\mathbf{R}_{n,f})$ with basis matrix  $\mathbf{R}_{n,f} \in \mathbb{R}^{(n+1)\times (n+1)}$ where
+$f : [1,n] \rightarrow [1,n]$  is a  permutation of $[1,2,...,n]$ and $(f(1),...,f(n), N&#39;\ln N)$ is the diagonal and (N&#39;\ln p_1, \ldots, N&#39;\ln p_n, N&#39;\ln N) for...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2020/1619" class="paperlink" href="/2020/1619">2020/1619</a>
+          <span class="ms-2"><a href="/2020/1619.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2021-01-04</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Getting Rid of Linear Algebra in Number Theory Problems</strong>
+              <div class="mt-1"><span class="fst-italic">Paul Kirchner, Pierre-Alain Fouque</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We revisit some well-known cryptographic problems in a black box modular ring model of computation. This model allows us to compute with black box access to the ring $\mathbb{Z}/m\mathbb{Z}$. We develop new generic ring algorithms to recover $m$ even if it is unknown. At the end, Maurer&#39;s generic algorithm allows to recover an element from its black box representation. However, we avoid Maurer&#39;s idealized model with CDH oracle for the multiplication in the hidden ring by introducing a new...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2020/1369" class="paperlink" href="/2020/1369">2020/1369</a>
+          <span class="ms-2"><a href="/2020/1369.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2020-11-02</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Multiplication over Extension Fields for Pairing-based Cryptography: an Hardware Point of View</strong>
+              <div class="mt-1"><span class="fst-italic">Arthur Lavice, Nadia El Mrabet, Alexandre Berzati, Jean-Baptiste Rigaud</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">New Number Field Sieves (NFS) attacks on the discrete logarithm problem have
+led to increase the key size of pairing-based cryptography
+and more precisely pairings on most popular curves like BN.
+To ensure 128-bit security level, recent costs estimations recommand
+to switch for BLS24 curves.
+However, using BLS24 curves for pairing
+requires to have an efficient arithmetic in Fp4.
+
+In this paper, we transposed previous work on multiplication over extesnsion fields using Newton&#39;s...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2020/829" class="paperlink" href="/2020/829">2020/829</a>
+          <span class="ms-2"><a href="/2020/829.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2021-06-22</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Refined Analysis of the Asymptotic Complexity of the Number Field Sieve</strong>
+              <div class="mt-1"><span class="fst-italic">Aude Le Gluher, Pierre-Jean Spaenlehauer, Emmanuel Thomé</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The classical heuristic complexity of the Number Field Sieve (NFS) is the solution of an optimization problem that involves an  unknown function, usually noted $o(1)$ and called $\xi(N)$ throughout this paper, which tends to zero as the entry $N$ grows. The aim of this paper is to find optimal asymptotic choices of the parameters of NFS as $N$ grows, in order to minimize its heuristic asymptotic computational cost. This amounts to minimizing a function of the parameters of NFS bound together...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2020/697" class="paperlink" href="/2020/697">2020/697</a>
+          <span class="ms-2"><a href="/2020/697.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2020-08-17</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Comparing the difficulty of factorization and discrete logarithm: a 240-digit experiment</strong>
+              <div class="mt-1"><span class="fst-italic">F.  Boudot, P.  Gaudry, A.  Guillevic, N.  Heninger, E.  Thomé, P.  Zimmermann</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We report on two new records: the factorization of RSA-240, a 795-bit number, and a discrete logarithm computation over a 795-bit prime field.  Previous records were the factorization of RSA-768 in 2009 and a 768-bit discrete logarithm computation in 2016.  Our two computations at the 795-bit level were done using the same hardware and software, and show that computing a discrete logarithm is not much harder than a factorization of the same size. Moreover, thanks to algorithmic variants and...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2020/329" class="paperlink" href="/2020/329">2020/329</a>
+          <span class="ms-2"><a href="/2020/329.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2020-11-05</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Asymptotic complexities of discrete logarithm algorithms in pairing-relevant finite fields</strong>
+              <div class="mt-1"><span class="fst-italic">Gabrielle De Micheli, Pierrick Gaudry, Cécile Pierrot</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We study the discrete logarithm problem at the boundary case between small and medium characteristic finite fields, which is precisely the area where finite fields used in pairing-based cryptosystems live.  In order to evaluate the security of pairing-based protocols, we thoroughly analyze the complexity of all the algorithms that coexist at this boundary case: the Quasi-Polynomial algorithms, the Number Field Sieve and its many variants, and the Function Field Sieve.  We adapt the latter to...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2019/1371" class="paperlink" href="/2019/1371">2019/1371</a>
+          <span class="ms-2"><a href="/2019/1371.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2020-02-05</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A short-list of pairing-friendly curves resistant to Special TNFS at the 128-bit security level</strong>
+              <div class="mt-1"><span class="fst-italic">Aurore Guillevic</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">There have been notable improvements in discrete logarithm computations in finite fields since 2015 and the introduction of the Tower Number Field Sieve algorithm (TNFS) for extension fields. The Special TNFS is very efficient in finite fields that are target groups of pairings on elliptic curves, where the characteristic is special (e.g.~sparse). The key sizes for pairings should be increased, and alternative pairing-friendly curves can be considered.
+We revisit the Special variant of TNFS...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2019/885" class="paperlink" href="/2019/885">2019/885</a>
+          <span class="ms-2"><a href="/2019/885.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2021-02-22</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>On the alpha value of polynomials in the tower number field sieve algorithm</strong>
+              <div class="mt-1"><span class="fst-italic">Aurore Guillevic, Shashank Singh</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this paper, we provide a notable step towards filling the gap between theory (estimates of running-time) and practice (a discrete logarithm record computation) for the Tower Number Field Sieve (TNFS) algorithm. We propose a generalisation of ranking formula for selecting the polynomials used in the very first step of TNFS algorithm. For this we provide a definition and an exact implementation (Magma and SageMath) of the alpha function. This function measures the bias in the smoothness...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2019/555" class="paperlink" href="/2019/555">2019/555</a>
+          <span class="ms-2"><a href="/2019/555.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2019-08-22</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Optimal TNFS-secure pairings on elliptic curves with composite embedding degree</strong>
+              <div class="mt-1"><span class="fst-italic">Georgios Fotiadis, Chloe Martindale</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this paper we present a comprehensive comparison between pairing-friendly elliptic curves, considering different curve forms and twists where possible. We define a measure of the efficiency of a parametrized pairing-friendly family that takes into account the number field sieve (NFS) attacks (unlike the $\rho$-value). This measure includes an approximation of the security of the discrete logarithm problem in $\mathbb F_{p^k}^*$, computed via the method of Barbulescu and Duquesne [4]. We...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2019/485" class="paperlink" href="/2019/485">2019/485</a>
+          <span class="ms-2"><a href="/2019/485.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2020-09-29</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A taxonomy of pairings, their security, their complexity</strong>
+              <div class="mt-1"><span class="fst-italic">Razvan Barbulescu, Nadia El Mrabet, Loubna Ghammam</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The Kim-Barbulescu attack against pairings made it necessary to increase the key sizes of the most popular families of pairings : BN, BLS-12, KSS-16, KSS-18 and BLS-24. The computation of new key sizes was a slow process because it was done in two waves : first a series of theoretical estimations, then a wave of precise estimations based on practical models. In this paper, we propose an up-to-date security evaluation for more then hundred pairing friendly elliptic curves. We evaluate the...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2019/431" class="paperlink" href="/2019/431">2019/431</a>
+          <span class="ms-2"><a href="/2019/431.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2019-10-01</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Cocks-Pinch curves of embedding degrees five to eight and optimal ate pairing computation</strong>
+              <div class="mt-1"><span class="fst-italic">Aurore Guillevic, Simon Masson, Emmanuel Thomé</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Recent algorithmic improvements of discrete logarithm computation in special extension fields threaten the security of pairing-friendly curves used in practice. A possible answer to this delicate situation is to propose alternative curves that are immune to these attacks, without compromising the efficiency of the pairing computation too much. We follow this direction, and focus on embedding degrees 5 to 8; we extend the Cocks-Pinch algorithm to obtain pairing-friendly curves with an...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2018/1017" class="paperlink" href="/2018/1017">2018/1017</a>
+          <span class="ms-2"><a href="/2018/1017.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2018-10-24</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>TNFS Resistant Families of Pairing-Friendly Elliptic Curves</strong>
+              <div class="mt-1"><span class="fst-italic">Georgios Fotiadis, Elisavet Konstantinou</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Recently there has been a significant progress on the tower number field sieve (TNFS) method, reducing the complexity of the discrete logarithm problem (DLP) in finite field extensions of composite degree. These new variants of the TNFS attacks have a major impact on pairing-based cryptography and particularly on the selection of the underlying elliptic curve groups and extension fields. In this paper we revise the criteria for selecting pairing-friendly elliptic curves considering these new...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2018/967" class="paperlink" href="/2018/967">2018/967</a>
+          <span class="ms-2"><a href="/2018/967.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2018-10-14</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Higher dimensional sieving for the number field sieve algorithms</strong>
+              <div class="mt-1"><span class="fst-italic">Laurent Grémy</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Since 2016 and the introduction of the exTNFS (extended Tower Number Field Sieve) algorithm, the security of cryptosystems based on non-
+prime finite fields, mainly the paring and torus-based one, is being reassessed. The feasibility of the relation collection, a crucial step of the NFS variants, is especially investigated. It usually involves polynomials of degree one, i.e., a search space of dimension two. However, exTNFS uses bivariate polynomials of at least four coefficients. If sieving...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2018/893" class="paperlink" href="/2018/893">2018/893</a>
+          <span class="ms-2"><a href="/2018/893.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2018-09-23</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Blockchain as cryptanalytic tool</strong>
+              <div class="mt-1"><span class="fst-italic">Manfred Lochter</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PROTOCOLS">Cryptographic protocols</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">One approach for blockchain based applications to  provide  a proof-of-work is the computation of hash-values.  In our opinion these computations are a waste of energy. It would be highly desirable to find an alternative method that
+generates useful output. We show how to substitute hashing by performing
+multiplications on Elliptic Curves in order to find distinguished points that can then be used to solve the discrete
+logarithm problem on a chosen curve. Today&#39;s digital infrastructures rely...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2018/669" class="paperlink" href="/2018/669">2018/669</a>
+          <span class="ms-2"><a href="/2018/669.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2018-10-01</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Faster cofactorization with ECM using mixed representations</strong>
+              <div class="mt-1"><span class="fst-italic">Cyril Bouvier, Laurent Imbert</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">This paper introduces a novel implementation of the elliptic curve factoring method specifically designed for medium-size integers such as those arising by billions in the cofactorization step of the number field sieve.  In this context, our algorithm requires fewer modular multiplications than any other publicly available implementation.  The main ingredients are: the use of batches of primes, fast point tripling, optimal double-base decompositions and Lucas chains, and a good mix of...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2017/1174" class="paperlink" href="/2017/1174">2017/1174</a>
+          <span class="ms-2"><a href="/2017/1174.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2017-12-06</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Efficient Optimal Ate Pairing at 128-bit Security Level</strong>
+              <div class="mt-1"><span class="fst-italic">Md.  Al-Amin Khandaker, Yuki Nanjo, Loubna Ghammam, Sylvain Duquesne, Yasuyuki Nogami, Yuta Kodera</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Following the emergence of Kim and Barbulescu&#39;s new number field sieve (exTNFS) algorithm at CRYPTO&#39;16 [21] for solving discrete logarithm problem (DLP) over the finite field; pairing-based cryptography researchers are intrigued to find new parameters that confirm standard security levels against exTNFS. Recently, Barbulescu and Duquesne have suggested new parameters [3] for well-studied pairing-friendly curves i.e., Barreto-Naehrig (BN) [5], Barreto-Lynn-Scott (BLS-12) [4] and...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2017/1050" class="paperlink" href="/2017/1050">2017/1050</a>
+          <span class="ms-2"><a href="/2017/1050.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2019-09-03</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Scalable Multi-party Computation for zk-SNARK Parameters in the Random Beacon Model</strong>
+              <div class="mt-1"><span class="fst-italic">Sean Bowe, Ariel Gabizon, Ian Miers</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PROTOCOLS">Cryptographic protocols</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Zero-knowledge succinct non-interactive arguments of knowledge (zk-SNARKs) have emerged as a valuable tool for verifiable computation and privacy preserving protocols. Currently practical schemes require a common reference string (CRS) to be constructed in a one-time setup for each statement. Ben-Sasson, Chiesa, Green, Tromer and Virza devised a multi-party protocol to securely compute such a CRS, and an adaptation of this protocol was used to construct the CRS for the Zcash cryptocurrency....</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2017/758" class="paperlink" href="/2017/758">2017/758</a>
+          <span class="ms-2"><a href="/2017/758.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2017-08-07</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>On Improving Integer Factorization and Discrete Logarithm Computation using Partial Triangulation</strong>
+              <div class="mt-1"><span class="fst-italic">Fabrice Boudot</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The number field sieve is the best-known algorithm for factoring integers and solving the discrete logarithm problem in prime fields. In this paper, we present some new improvements to various steps of the number field sieve. We apply these improvements on the current 768-bit discrete logarithm record and show that we are able to perform the overall computing time in about 1260 core$\cdot$years using these improvements instead of 2350 core$\cdot$years using the best known parameters for this...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2017/067" class="paperlink" href="/2017/067">2017/067</a>
+          <span class="ms-2"><a href="/2017/067.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2017-03-29</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Computation of a 768-bit prime field discrete logarithm</strong>
+              <div class="mt-1"><span class="fst-italic">Thorsten Kleinjung, Claus Diem, Arjen K.  Lenstra, Christine Priplata, Colin Stahlke</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">This paper reports on the number field sieve computation of a 768-bit prime field discrete logarithm, describes the different parameter optimizations and resulting algorithmic changes compared to the factorization of a 768-bit RSA modulus, and briefly discusses the cryptologic relevance of the result.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/1102" class="paperlink" href="/2016/1102">2016/1102</a>
+          <span class="ms-2"><a href="/2016/1102.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-12-27</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Challenges with Assessing the Impact of NFS Advances on the Security of Pairing-based Cryptography</strong>
+              <div class="mt-1"><span class="fst-italic">Alfred Menezes, Palash Sarkar, Shashank Singh</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In the past two years there have been several advances in Number Field Sieve (NFS) algorithms for computing discrete logarithms in finite fields $\mathbb{F}_{p^n}$ where $p$ is prime and $n &gt; 1$ is a small integer. This article presents a concise overview of these algorithms and discusses some of the challenges with assessing their impact on keylengths for pairing-based cryptosystems.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/961" class="paperlink" href="/2016/961">2016/961</a>
+          <span class="ms-2"><a href="/2016/961.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2017-07-18</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A kilobit hidden SNFS discrete logarithm computation</strong>
+              <div class="mt-1"><span class="fst-italic">Joshua Fried, Pierrick Gaudry, Nadia Heninger, Emmanuel Thomé</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We perform a special number field sieve discrete logarithm
+computation in a 1024-bit prime field.  To our knowledge, this is
+the first kilobit-sized discrete logarithm computation ever reported
+for prime fields.  This computation took a little over two months of
+calendar time on an academic cluster using the open-source CADO-NFS
+software.
+
+Our chosen prime $p$ looks random, and $p-1$ has a 160-bit prime
+factor, in line with recommended parameters for the Digital
+Signature Algorithm. ...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/727" class="paperlink" href="/2016/727">2016/727</a>
+          <span class="ms-2"><a href="/2016/727.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-09-02</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Improvements on the Individual Logarithm Step in Extended Tower Number Field Sieve</strong>
+              <div class="mt-1"><span class="fst-italic">Yuqing Zhu, Jincheng Zhuang, Chang Lv, Dongdai Lin</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The hardness of discrete logarithm problem over finite fields is the foundation of many cryptographic protocols. When the characteristic of the finite field is medium or large, the state-of-art algorithms for solving the corresponding problem are the number field sieve and its variants. There are mainly three steps in such algorithms: polynomial selection, factor base logarithms computation, and individual logarithm computation. Note that the former two steps can be precomputed for fixed...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/684" class="paperlink" href="/2016/684">2016/684</a>
+          <span class="ms-2"><a href="/2016/684.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2018-09-17</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Faster individual discrete logarithms in finite fields of composite extension degree</strong>
+              <div class="mt-1"><span class="fst-italic">Aurore Guillevic</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Computing discrete logarithms in finite fields is a main concern in cryptography. The best algorithms in large and medium characteristic fields (e.g., {GF}$(p^2)$, {GF}$(p^{12})$) are the Number Field Sieve and its variants (special, high-degree, tower). The best algorithms in small characteristic finite fields (e.g., {GF}$(3^{6 \cdot 509})$) are the Function Field Sieve, Joux&#39;s algorithm, and the quasipolynomial-time algorithm. The last step of this family of algorithms is the individual...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/605" class="paperlink" href="/2016/605">2016/605</a>
+          <span class="ms-2"><a href="/2016/605.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-06-10</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Improving NFS for the discrete logarithm problem in non-prime finite fields</strong>
+              <div class="mt-1"><span class="fst-italic">Razvan Barbulescu, Pierrick Gaudry, Aurore Guillevic, François Morain</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The aim of this work is to investigate the hardness of the discrete logarithm problem in fields GF($p^n$) where $n$ is a small integer greater than $1$. Though less studied than the small characteristic case or the prime field case, the difficulty of this problem is at the heart of security evaluations for torus-based and pairing-based cryptography. The best known method for solving this problem is the Number Field Sieve (NFS). A key ingredient in this algorithm is the ability to find good...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/537" class="paperlink" href="/2016/537">2016/537</a>
+          <span class="ms-2"><a href="/2016/537.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-05-31</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A Generalisation of the Conjugation Method for Polynomial Selection for the Extended Tower Number Field Sieve Algorithm</strong>
+              <div class="mt-1"><span class="fst-italic">Palash Sarkar, Shashank Singh</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In a recent work, Kim and Barbulescu showed how to combine previous polynomial selection methods with the extended tower
+number field sieve algorithm to obtain improved complexity for the discrete logarithm problem on finite fields $\mathbb{F}_{p^n}$
+for the medium prime case and where $n$ is composite and not a prime-power. A follow up work by Sarkar and Singh presented a
+general polynomial selection method and showed how to lower the complexity in the medium prime case even when $n$ is...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/526" class="paperlink" href="/2016/526">2016/526</a>
+          <span class="ms-2"><a href="/2016/526.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-10-06</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Extended Tower Number Field Sieve with Application to Finite Fields of Arbitrary Composite Extension Degree</strong>
+              <div class="mt-1"><span class="fst-italic">Taechan Kim, Jinhyuck Jeong</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We propose a generalization of exTNFS algorithm recently introduced by Kim and Barbulescu (CRYPTO 2016). The algorithm, exTNFS, is a state-of-the-art algorithm for discrete logarithm in $\mathbb{F}_{p^n}$ in the medium prime case, but it only applies when $n=\eta\kappa$ is a composite with nontrivial factors $\eta$ and $\kappa$ such that $\gcd(\eta,\kappa)=1$. Our generalization, however, shows that exTNFS algorithm can be also adapted to the setting with an arbitrary composite $n$...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/507" class="paperlink" href="/2016/507">2016/507</a>
+          <span class="ms-2"><a href="/2016/507.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-05-25</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Solving discrete logarithms on a 170-bit MNT curve by pairing reduction</strong>
+              <div class="mt-1"><span class="fst-italic">Aurore Guillevic, François Morain, Emmanuel Thomé</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Pairing based cryptography is in a dangerous position following the breakthroughs on discrete logarithms computations in finite fields of small characteristic. Remaining instances are built over finite fields of large characteristic and their security relies on the fact the embedding field of the underlying curve is relatively large. How large is debatable. The aim of our work is to sustain the claim that the combination of degree 3 embedding and too small finite fields obviously does not...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/485" class="paperlink" href="/2016/485">2016/485</a>
+          <span class="ms-2"><a href="/2016/485.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-05-20</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A General Polynomial Selection Method and New Asymptotic Complexities for the Tower Number Field Sieve Algorithm</strong>
+              <div class="mt-1"><span class="fst-italic">Palash Sarkar, Shashank Singh</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In a recent work, Kim and Barbulescu had extended the tower number field sieve algorithm to obtain improved asymptotic complexities in
+the medium prime case for the discrete logarithm problem on $\mathbb{F}_{p^n}$ where $n$ is not a prime power. Their method does not work
+when $n$ is a composite prime power. For this case, we obtain new asymptotic complexities, e.g., $L_{p^n}(1/3,(64/9)^{1/3})$ (resp.
+$L_{p^n}(1/3,1.88)$ for the multiple number field variation) when $n$ is composite and a...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/412" class="paperlink" href="/2016/412">2016/412</a>
+          <span class="ms-2"><a href="/2016/412.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-04-28</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Solving Quadratic Equations with XL on Parallel Architectures - extended version</strong>
+              <div class="mt-1"><span class="fst-italic">Chen-Mou Cheng, Tung Chou, Ruben Niederhagen, Bo-Yin Yang</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Solving a system of multivariate quadratic equations (MQ) is an NP-complete problem whose complexity estimates are relevant to many cryptographic scenarios. In some cases it is required in the best known attack; sometimes it is a generic attack (such as for the multivariate PKCs), and sometimes it determines a provable level of security (such as for the QUAD stream ciphers).
+
+Under reasonable assumptions, the best way to solve generic MQ systems is the XL algorithm implemented with a sparse...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/401" class="paperlink" href="/2016/401">2016/401</a>
+          <span class="ms-2"><a href="/2016/401.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-04-26</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Tower Number Field Sieve Variant of a Recent Polynomial Selection Method</strong>
+              <div class="mt-1"><span class="fst-italic">Palash Sarkar, Shashank Singh</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">At Asiacrypt 2015, Barbulescu et al. performed a thorough analysis of the tower number field sieve (TNFS) variant of the number
+field sieve algorithm. More recently, Kim and Barbulescu combined the TNFS variant with several polynomial selection methods
+including the Generalised Joux-Lercier method and the Conjugation method proposed by Barbulescu et al. at Eurocrypt 2015.
+Sarkar and Singh (Eurocrypt 2016) proposed
+a polynomial selection method which subsumes both the GJL and the Conjugation...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/329" class="paperlink" href="/2016/329">2016/329</a>
+          <span class="ms-2"><a href="/2016/329.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-03-25</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A modified block Lanczos algorithm with fewer vectors</strong>
+              <div class="mt-1"><span class="fst-italic">Emmanuel Thomé</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The block Lanczos algorithm proposed by Peter Montgomery is an efficient means to tackle the sparse linear algebra problem which arises in the context of the number field sieve factoring algorithm and its predecessors. We present here a modified version of the algorithm, which incorporates several improvements: we discuss how to efficiently handle homogeneous systems and how to reduce the number of vectors stored in the course of the computation. We also provide heuristic justification for...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/220" class="paperlink" href="/2016/220">2016/220</a>
+          <span class="ms-2"><a href="/2016/220.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-04-06</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Algorithms on Ideal over Complex Multiplication order</strong>
+              <div class="mt-1"><span class="fst-italic">Paul Kirchner</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We show in this paper that the Gentry-Szydlo algorithm for cyclotomic orders, previously
+revisited by Lenstra-Silverberg, can be extended to complex-multiplication (CM) orders, and
+even to a more general structure. This algorithm allows to test equality over the polarized ideal
+class group, and finds a generator of the polarized ideal in polynomial time. Also, the algorithm
+allows to solve the norm equation over CM orders and the recent reduction of principal ideals to
+the real suborder can...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2016/124" class="paperlink" href="/2016/124">2016/124</a>
+          <span class="ms-2"><a href="/2016/124.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-05-30</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Collecting relations for the Number Field Sieve in $GF(p^6)$</strong>
+              <div class="mt-1"><span class="fst-italic">Pierrick Gaudry, Laurent Grémy, Marion Videau</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In order to assess the security of cryptosystems based on the discrete logarithm problem in non-prime finite fields, as are the torus-based or pairing-based ones, we investigate thoroughly the case in $GF(p^6)$ with the Number Field Sieve. We provide new insights, improvements, and comparisons between different methods to select polynomials intended for a sieve in dimension 3 using a special-q strategy. We also take into account the Galois action to increase the relation productivity of the...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2015/1179" class="paperlink" href="/2015/1179">2015/1179</a>
+          <span class="ms-2"><a href="/2015/1179.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2015-12-10</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A construction of 3-dimensional lattice sieve for number field sieve over F_{p^n}</strong>
+              <div class="mt-1"><span class="fst-italic">Kenichiro Hayasaka, Kazumaro Aoki, Tetsutaro Kobayashi, Tsuyoshi Takagi</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The security of pairing-based cryptography is based on the hardness of solving the discrete logarithm problem (DLP) over extension field F_{p^n} of characteristic p and degree n. Joux et al. proposed an asymptotically fastest algorithm for solving DLP over F_{p^n} (JLSV06-NFS) as the extension of the number field sieve over prime field F
+_p (JL03-NFS). The lattice sieve is often used for a large-scaled experiment of solving DLP over F_p by the number field sieve. Franke and Kleinjung...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2015/1076" class="paperlink" href="/2015/1076">2015/1076</a>
+          <span class="ms-2"><a href="/2015/1076.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-02-17</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>An appendix for a recent paper of Kim</strong>
+              <div class="mt-1"><span class="fst-italic">Razvan Barbulescu</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">This appendix proposes an improvement of Kim&#39;s exTNFS. It has been merged the original paper of Taechan Kim 2015/1027 (version 1).</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2015/1027" class="paperlink" href="/2015/1027">2015/1027</a>
+          <span class="ms-2"><a href="/2015/1027.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-06-03</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Extended Tower Number Field Sieve: A New Complexity for the Medium Prime Case</strong>
+              <div class="mt-1"><span class="fst-italic">Taechan Kim, Razvan Barbulescu</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We introduce a new variant of the number field sieve algorithm for discrete logarithms in $\mathbb{F}_{p^n}$ called exTNFS. The most important modification is done in the polynomial selection step, which determines the cost of the whole algorithm: if one knows how to select good polynomials to tackle discrete logarithms in $\mathbb{F}_{p^\kappa}$, exTNFS allows to use this method when tackling $\mathbb{F}_{p^{\eta\kappa}}$ whenever $\gcd(\eta,\kappa)=1$. This simple fact has consequences on...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2015/1000" class="paperlink" href="/2015/1000">2015/1000</a>
+          <span class="ms-2"><a href="/2015/1000.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-01-16</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Factoring as a Service</strong>
+              <div class="mt-1"><span class="fst-italic">Luke Valenta, Shaanan Cohney, Alex Liao, Joshua Fried, Satya Bodduluri, Nadia Heninger</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The difficulty of integer factorization is fundamental to modern cryptographic security using RSA encryption and signatures.  Although a 512-bit RSA modulus was first factored in 1999, 512-bit RSA remains surprisingly common in practice across many cryptographic protocols.  Popular understanding of the difficulty of 512-bit factorization does not seem to have kept pace with developments in computing power.  In this paper, we optimize the CADO-NFS and Msieve implementations of the number...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2015/944" class="paperlink" href="/2015/944">2015/944</a>
+          <span class="ms-2"><a href="/2015/944.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-04-21</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>New Complexity Trade-Offs for the (Multiple) Number Field Sieve Algorithm in Non-Prime Fields</strong>
+              <div class="mt-1"><span class="fst-italic">Palash Sarkar, Shashank Singh</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The selection of polynomials to represent number fields crucially determines the efficiency of the Number Field Sieve
+(NFS) algorithm for solving the discrete logarithm in a finite field. An important recent work due to Barbulescu et al. builds upon
+existing works to propose two new methods for polynomial selection when the target field is a non-prime field. These methods are
+called the generalised Joux-Lercier (GJL) and the Conjugation methods. In this work, we propose a new method (which...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2015/513" class="paperlink" href="/2015/513">2015/513</a>
+          <span class="ms-2"><a href="/2015/513.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-05-26</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Computing Individual Discrete Logarithms Faster in $GF(p^n)$</strong>
+              <div class="mt-1"><span class="fst-italic">Aurore Guillevic</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The Number Field Sieve (NFS) algorithm is the best known method to
+compute discrete logarithms (DL) in finite fields
+$\mathbb{F}_{p^n}$, with $p$ medium to large and $n \geq 1$ small. This algorithm
+comprises four steps: polynomial selection, relation collection,
+linear algebra and finally, individual logarithm computation. The
+first step outputs two polynomials defining two number fields, and a
+map from the polynomial ring over the integers modulo each of these
+polynomials to...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2015/505" class="paperlink" href="/2015/505">2015/505</a>
+          <span class="ms-2"><a href="/2015/505.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2015-05-27</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>The Tower Number Field Sieve</strong>
+              <div class="mt-1"><span class="fst-italic">Razvan Barbulescu, Pierrick Gaudry, Thorsten Kleinjung</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The security of pairing-based crypto-systems relies on the difficulty to compute discrete logarithms in finite fields GF(p^n) where n is a small integer larger than 1. The state-of-art algorithm is the number field sieve (NFS) together with its many variants. When p has a special form (SNFS), as in many pairings constructions, NFS has a faster variant due to Joux and Pierrot. We present a new NFS variant for SNFS computations, which is better for some cryptographically relevant cases,...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2015/044" class="paperlink" href="/2015/044">2015/044</a>
+          <span class="ms-2"><a href="/2015/044.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2016-09-07</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Use of SIMD-Based Data Parallelism to Speed up Sieving in Integer-Factoring Algorithms</strong>
+              <div class="mt-1"><span class="fst-italic">Binanda Sengupta, Abhijit Das</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Many cryptographic protocols derive their security from the apparent computational intractability of the integer factorization problem. Currently, the best known integer-factoring algorithms run in subexponential time. Efficient parallel implementations of these algorithms constitute an important area of practical research. Most reported implementations use multi-core and/or distributed parallelization. In this paper, we use SIMD-based parallelization to speed up the sieving stage of...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2014/996" class="paperlink" href="/2014/996">2014/996</a>
+          <span class="ms-2"><a href="/2014/996.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2014-12-18</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Some experiments investigating a possible L(1/4) algorithm for the discrete logarithm problem in algebraic curves</strong>
+              <div class="mt-1"><span class="fst-italic">Maike Massierer</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The function field sieve, a subexponential algorithm of complexity L(1/3) that computes discrete logarithms in finite fields, has recently been improved to an algorithm of complexity L(1/4) and subsequently to a quasi-polynomial time algorithm. We investigate whether the new ideas also apply to index calculus algorithms for computing discrete logarithms in Jacobians of algebraic curves. While we do not give a final answer to the question, we discuss a number of ideas, experiments, and...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2014/921" class="paperlink" href="/2014/921">2014/921</a>
+          <span class="ms-2"><a href="/2014/921.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2014-11-10</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Batch NFS</strong>
+              <div class="mt-1"><span class="fst-italic">Daniel J.  Bernstein, Tanja Lange</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">This paper shows, assuming standard heuristics regarding the number-field sieve, that a &#34;batch NFS&#34; circuit of area L^{1.181...+o(1)} factors L^{0.5+o(1)} separate B-bit RSA keys in time L^{1.022...+o(1)}. Here L=exp((log 2^B)^{1/3}(log log 2^B)^{2/3}). The circuit&#39;s area-time product (price-performance ratio) is just L^{1.704...+o(1)} per key. For comparison, the best area-time product known for a single key is L^{1.976...+o(1)}.
+
+This paper also introduces new &#34;early-abort&#34; heuristics...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2014/653" class="paperlink" href="/2014/653">2014/653</a>
+          <span class="ms-2"><a href="/2014/653.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2015-01-12</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Mersenne factorization factory</strong>
+              <div class="mt-1"><span class="fst-italic">Thorsten Kleinjung, Joppe W.  Bos, Arjen K.  Lenstra</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We present work in progress to fully factor seventeen Mersenne numbers using a variant of the special number field sieve where sieving on the algebraic side is shared among the numbers. It is expected that it reduces the overall factoring effort by more than 50\%. As far as we know this is the first practical application of Coppersmith&#39;s ``factorization factory&#39;&#39; idea. Most factorizations used a new double-product approach that led to additional savings in the matrix step.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2014/641" class="paperlink" href="/2014/641">2014/641</a>
+          <span class="ms-2"><a href="/2014/641.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2015-09-11</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>The Multiple Number Field Sieve with Conjugation Method</strong>
+              <div class="mt-1"><span class="fst-italic">Cécile Pierrot</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this short paper, we propose a variant of the Number Field Sieve to compute discrete logarithms in medium characteristic finite fields.
+We propose an algorithm that combines two recent ideas, namely the Multiple variant of the Number Field Sieve taking advantage of a large number of number fields in the sieving phase and the Conjugation Method giving a new polynomial selection for the classical Number Field Sieve. The asymptotic complexity of our improved algorithm is L_Q (1/3, (8 (9+4...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2014/419" class="paperlink" href="/2014/419">2014/419</a>
+          <span class="ms-2"><a href="/2014/419.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2014-06-05</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>FFS Factory: Adapting Coppersmith&#39;s &#34;Factorization Factory&#34; to the Function Field Sieve</strong>
+              <div class="mt-1"><span class="fst-italic">Jérémie Detrey</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In 1993, Coppersmith introduced the &#34;factorization factory&#34; approach as a means to speed up the Number Field Sieve algorithm (NFS) when factoring batches of integers of similar size: at the expense of a large precomputation whose cost is amortized when considering sufficiently many integers to factor, the complexity of each individual factorization can then be lowered.
+
+We suggest here to extend this idea to the computation of discrete logarithms in finite fields of small characteristic...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2014/397" class="paperlink" href="/2014/397">2014/397</a>
+          <span class="ms-2"><a href="/2014/397.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2015-01-28</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Cofactorization on Graphics Processing Units</strong>
+              <div class="mt-1"><span class="fst-italic">Andrea Miele, Joppe W.  Bos, Thorsten Kleinjung, Arjen K.  Lenstra</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We show how the cofactorization step, a compute-intensive part of the relation collection
+phase of the number field sieve (NFS), can be farmed out to a graphics processing unit.
+Our implementation on a GTX 580 GPU, which is integrated with a state-of-the-art NFS
+implementation, can serve as a cryptanalytic co-processor for
+several Intel i7-3770K quad-core CPUs simultaneously.
+This allows those processors to focus on the memory-intensive sieving
+and results in more useful NFS-relations found...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2014/147" class="paperlink" href="/2014/147">2014/147</a>
+          <span class="ms-2"><a href="/2014/147.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2015-10-19</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>The Multiple Number Field Sieve for Medium and High Characteristic &gt; Finite Fields</strong>
+              <div class="mt-1"><span class="fst-italic">Razvan Barbulescu, Cécile Pierrot</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this paper, we study the discrete logarithm problem in medium and high characteristic finite fields. We propose a variant of the Number Field Sieve (NFS) based on numerous number fields. Our improved algorithm computes discrete logarithms in $\mathbb{F}_{p^n}$ for the whole range of applicability of NFS and lowers the asymptotic complexity from $L_{p^n}(1/3, (128/9)^{1/3})$ to $L_{p^n}(1/3, (2^{13} /3^6)^{1/3})$ in the medium characteristic case, and from $L_{p^n} (1/3, (64/9)^{1/3})$ to...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2013/583" class="paperlink" href="/2013/583">2013/583</a>
+          <span class="ms-2"><a href="/2013/583.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2019-08-17</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Polynomial Selection for the Number Field Sieve in an Elementary Geometric View</strong>
+              <div class="mt-1"><span class="fst-italic">Min Yang, Qingshu Meng, Zhangyi Wang, Lina Wang, Huanguo Zhang</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Polynomial selection is one important step in the number field sieve. A good polynomial can reduce the factorization time. In this paper, we propose a new model for the polynomial selection in an elementary geometric view. With this model, many existing requirements on polynomial selection can be taken into consideration simultaneously. With this model, the criterion for a polynomial to be ideal is that its leading coefficient should be as small as possible, all coefficients be skewed...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2013/582" class="paperlink" href="/2013/582">2013/582</a>
+          <span class="ms-2"><a href="/2013/582.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2013-09-14</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>The Special Number Field Sieve in $\F _{p^{n}}$, Application to Pairing-Friendly Constructions</strong>
+              <div class="mt-1"><span class="fst-italic">Antoine Joux, Cécile Pierrot</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this paper, we study the
+discrete logarithm problem in finite fields related to pairing-based
+curves.  We start with a precise analysis of the
+state-of-the-art algorithms for computing discrete logarithms that
+are suitable for finite fields related to pairing-friendly
+constructions. To improve upon these algorithms, we extend the
+Special Number Field Sieve to compute discrete logarithms in
+$\F_{p^{n}}$, where $p$ has an adequate sparse representation. Our
+improved algorithm works for the...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2013/197" class="paperlink" href="/2013/197">2013/197</a>
+          <span class="ms-2"><a href="/2013/197.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2013-11-05</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Discrete logarithm in GF(2^809) with FFS</strong>
+              <div class="mt-1"><span class="fst-italic">Razvan Barbulescu, Cyril Bouvier, Jérémie Detrey, Pierrick Gaudry, Hamza Jeljeli, Emmanuel Thomé, Marion Videau, Paul Zimmermann</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The year 2013 has seen several major complexity advances for the discrete logarithm problem in multiplicative groups of small characteristic finite fields. These outmatch, asymptotically, the Function Field Sieve (FFS) approach, which was so far the most efficient algorithm known for this task. Yet, on the practical side, it is not clear whether the new algorithms are uniformly better than FFS.  This article presents the state of the art with regard to the FFS algorithm, and reports data...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2013/147" class="paperlink" href="/2013/147">2013/147</a>
+          <span class="ms-2"><a href="/2013/147.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2013-04-03</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A note on the practical complexity of the NFS in the medium prime case: Smoothness of Norms</strong>
+              <div class="mt-1"><span class="fst-italic">Naomi Benger, Manuel Charlemagne, Kefei Chen</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">During an ongoing examination of the behaviour, in practice, of the Number Field Sieve (NFS) in the medium prime case we have noticed numerous interesting patterns. In this paper we present findings on run-time observations of an aspect of the sieving stage. The contributions of these observations to the computational mathematics community are twofold: firstly, they bring us a step closer to understanding the true practical effectiveness of the algorithm and secondly, they enabled the...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2012/720" class="paperlink" href="/2012/720">2012/720</a>
+          <span class="ms-2"><a href="/2012/720.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2013-01-07</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Faster index calculus for the medium prime case. Application to 1175-bit and 1425-bit finite fields</strong>
+              <div class="mt-1"><span class="fst-italic">Antoine Joux</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Many index calculus algorithms generate multiplicative relations
+between smoothness basis elements by using a process called {\it
+Sieving}. This process allows to filter potential candidate
+relations very quickly, without spending too much time to consider bad
+candidates. However, from an asymptotic point of view, there is not
+much difference between sieving and straightforward testing of
+candidates. The reason is that even when sieving, some small amount
+time is spend for each bad...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2012/691" class="paperlink" href="/2012/691">2012/691</a>
+          <span class="ms-2"><a href="/2012/691.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2012-12-10</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Root Optimization of Polynomials in the Number Field Sieve</strong>
+              <div class="mt-1"><span class="fst-italic">Shi Bai, Richard P.  Brent, Emmanuel Thomé</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The general number field sieve (GNFS) is the most efficient
+algorithm known for factoring large integers. It consists of several
+stages, the first one being polynomial selection. The quality of the
+chosen polynomials in polynomial selection can be modelled in terms of
+size and root properties. In this paper, we describe some algorithms for
+selecting polynomials with very good root properties.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2012/639" class="paperlink" href="/2012/639">2012/639</a>
+          <span class="ms-2"><a href="/2012/639.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2012-11-11</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Coarse-grained integer - Smooth? Rough? Both!</strong>
+              <div class="mt-1"><span class="fst-italic">Daniel Loebenberger, Michael Nüsken</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We count ]B, C]-grained, k-factor integers which are simultaneously B-rough and C-smooth and have a fixed number k of prime factors.  Our aim is to exploit explicit versions of the prime number theorem as much as possible to get good explicit bounds for the count of such integers.  This analysis was inspired by certain inner procedures in the general number field sieve.  The result should at least provide some insight in what happens there.
+
+We estimate the given count in terms of some...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2012/599" class="paperlink" href="/2012/599">2012/599</a>
+          <span class="ms-2"><a href="/2012/599.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2013-01-24</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>On the coefficients of the polynomial in the number field sieve</strong>
+              <div class="mt-1"><span class="fst-italic">Min Yang, Qingshu Meng, Zhangyi Wang, Li Li, Huanguo Zhang</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Polynomial selection is very important in number field sieve. If the yield of a pair of polynomials is closely correlated with the coefficients of the polynomials, we can select polynomials by checking the coefficients first. This can speed up the selection of good polynomials. In this paper, we aim to study the correlation between the polynomial coefficients and the yield of the polynomials. By theoretical analysis and experiments, we find that a polynomial with the ending coefficient...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2012/444" class="paperlink" href="/2012/444">2012/444</a>
+          <span class="ms-2"><a href="/2012/444.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2012-08-06</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Factorization of a 1061-bit number by the Special Number Field Sieve</strong>
+              <div class="mt-1"><span class="fst-italic">Greg Childers</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">I provide the details of the factorization of the Mersenne number $2^{1061}-1$ by the Special Number Field Sieve.  Although this factorization is easier than the completed factorization of RSA-768, it represents a new milestone for factorization using publicly available software.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2012/369" class="paperlink" href="/2012/369">2012/369</a>
+          <span class="ms-2"><a href="/2012/369.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2012-07-05</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Factorisation of RSA-704 with CADO-NFS</strong>
+              <div class="mt-1"><span class="fst-italic">Shi Bai, Emmanuel Thomé, Paul Zimmermann</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We give details of the factorization of RSA-704 with CADO-NFS. This is a record computation with publicly available software tools. The aim of this experiment was to stress CADO-NFS - which was originally designed for 512-bit factorizations - for larger inputs, and to identify possible rooms of improvement.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2012/345" class="paperlink" href="/2012/345">2012/345</a>
+          <span class="ms-2"><a href="/2012/345.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2012-06-22</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Breaking pairing-based cryptosystems using $\eta_T$ pairing over $GF(3^{97})$</strong>
+              <div class="mt-1"><span class="fst-italic">Takuya Hayashi, Takeshi Shimoyama, Naoyuki Shinohara, Tsuyoshi Takagi</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">There are many useful cryptographic schemes, such as ID-based encryption,
+short signature, keyword searchable encryption, attribute-based encryption,
+functional encryption, that use a bilinear pairing.
+It is important to estimate the security of such pairing-based cryptosystems in cryptography.
+The most essential number-theoretic problem in pairing-based cryptosystems is
+the discrete logarithm problem (DLP)
+because pairing-based cryptosystems are no longer secure once the underlining DLP is...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2012/089" class="paperlink" href="/2012/089">2012/089</a>
+          <span class="ms-2"><a href="/2012/089.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2012-09-07</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>ECM at Work</strong>
+              <div class="mt-1"><span class="fst-italic">Joppe W.  Bos, Thorsten Kleinjung</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The performance of the elliptic curve method (ECM) for integer factorization plays an important role in the security assessment of RSA-based protocols as a cofactorization tool inside the number field sieve. The efficient arithmetic for Edwards curves found an application by speeding up ECM. We propose techniques based on generating and combining addition-subtracting chains to optimize Edwards ECM in terms of both performance and memory requirements. This makes our approach very suitable for...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2012/042" class="paperlink" href="/2012/042">2012/042</a>
+          <span class="ms-2"><a href="/2012/042.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2012-06-19</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Key Length Estimation of Pairing-based Cryptosystems using $\eta_T$ Pairing</strong>
+              <div class="mt-1"><span class="fst-italic">Naoyuki Shinohara, Takeshi Shimoyama, Takuya Hayashi, Tsuyoshi Takagi</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The security of pairing-based cryptosystems depends on the difficulty of the discrete logarithm problem (DLP) over certain types of finite fields. One of the most efficient algorithms for computing a pairing is the $\eta_T$ pairing over supersingular curves on finite fields whose characteristic is $3$. Indeed many high-speed implementations of this pairing have been reported, and it is an attractive candidate for practical deployment of pairing-based cryptosystems. The embedding degree of...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2011/416" class="paperlink" href="/2011/416">2011/416</a>
+          <span class="ms-2"><a href="/2011/416.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2011-08-05</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Efficient Parallelization of Lanczos Type Algorithms</strong>
+              <div class="mt-1"><span class="fst-italic">Ilya Popovyan</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We propose a new parallelization technique for Lanczos type algorithms for solving large sparse linear systems over finite fields on mesh cluster architecture. The algorithm computation time scales as $P^{-1}$ on $P processors, and the communcation times scales as $P^{-1/2}$ for reasonable choice of $P$.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2011/292" class="paperlink" href="/2011/292">2011/292</a>
+          <span class="ms-2"><a href="/2011/292.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2011-06-03</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>On Nonlinear Polynomial Selection and Geometric Progression (mod N) for Number Field Sieve</strong>
+              <div class="mt-1"><span class="fst-italic">Namhun Koo, Gooc Hwa Jo, Soonhak Kwon</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">The general number field sieve (GNFS) is asymptotically the
+fastest known factoring algorithm. One of the most important steps
+of GNFS is to select a good polynomial pair. A standard way of
+polynomial selection (being used in factoring RSA challenge
+numbers) is to select a nonlinear polynomial for algebraic sieving
+and a linear polynomial for rational sieving. There is another
+method called a nonlinear method which selects two polynomials of
+the same  degree greater than one. In this paper,...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2011/098" class="paperlink" href="/2011/098">2011/098</a>
+          <span class="ms-2"><a href="/2011/098.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2011-02-28</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Computing Discrete Logarithms in the Jacobian of High-Genus Hyperelliptic Curves over Even Characteristic Finite Fields</strong>
+              <div class="mt-1"><span class="fst-italic">M.  D.  Velichka, M.  J.  Jacobson Jr., A.  Stein</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-FOUNDATIONS">Foundations</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We describe improved versions of index-calculus algorithms for solving discrete logarithm problems in Jacobians of high-genus hyperelliptic curves defined over even characteristic fields. Our first improvement is to incorporate several ideas for the low-genus case by Gaudry and Theriault, including the large prime variant and using a smaller factor base, into the large-genus algorithm of Enge and Gaudry. We extend the analysis in [24] to our new algorithm, allowing us to predict accurately...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2010/006" class="paperlink" href="/2010/006">2010/006</a>
+          <span class="ms-2"><a href="/2010/006.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2010-02-18</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Factorization of a 768-bit RSA modulus</strong>
+              <div class="mt-1"><span class="fst-italic">Thorsten Kleinjung, Kazumaro Aoki, Jens Franke, Arjen Lenstra, Emmanuel Thomé, Joppe Bos, Pierrick Gaudry, Alexander Kruppa, Peter Montgomery, Dag Arne Osvik, Herman te Riele, Andrey Timofeev, Paul Zimmermann</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">This paper reports on the factorization of the 768-bit number RSA-768 by the number field sieve factoring method and discusses some
+implications for RSA.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2008/064" class="paperlink" href="/2008/064">2008/064</a>
+          <span class="ms-2"><a href="/2008/064.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2008-02-11</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Remarks on the NFS complexity</strong>
+              <div class="mt-1"><span class="fst-italic">Pavol Zajac</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In this contribution we investigate practical issues with
+implementing the NFS algorithm to solve the DLP arising in
+XTR-based cryptosystems. We can transform original XTR-DLP to a
+DLP instance in $\mathbb{F}_{p^6},$ where $p$ is a medium sized
+prime. Unfortunately, for practical ranges of $p,$ the optimal degree of NFS polynomial is less than the required degree 6. This leads
+to a problem to find enough smooth equations during the sieve
+stage of the NFS algorithm. We discuss several...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2007/424" class="paperlink" href="/2007/424">2007/424</a>
+          <span class="ms-2"><a href="/2007/424.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2007/424.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2007-11-18</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>When e-th Roots Become Easier Than Factoring</strong>
+              <div class="mt-1"><span class="fst-italic">Antoine Joux, David Naccache, Emmanuel Thomé</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We show that computing $e$-th roots modulo $n$ is easier than
+factoring $n$ with currently known methods, given subexponential
+access to an oracle outputting the roots of numbers of the form
+$x_i + c$.
+
+Here $c$ is fixed and $x_i$ denotes small integers of the
+attacker&#39;s choosing.
+
+Several variants of the attack are presented, with varying
+assumptions on the oracle, and goals ranging from selective to
+universal forgeries. The computational complexity of the attack
+is $L_n(\frac{1}{3},...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2007/205" class="paperlink" href="/2007/205">2007/205</a>
+          <span class="ms-2"><a href="/2007/205.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2007/205.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2007-05-31</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A kilobit special number field sieve factorization</strong>
+              <div class="mt-1"><span class="fst-italic">Kazumaro Aoki, Jens Franke, Thorsten Kleinjung, Arjen Lenstra, Dag Arne Osvik</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We describe how we reached a new factoring milestone by completing the
+first special number field sieve factorization of a number having more
+than 1024 bits, namely the Mersenne number $2^{1039}-1$.
+Although this factorization is orders of magnitude `easier&#39; than a
+factorization of a 1024-bit RSA modulus is believed to be, the
+methods we used to obtain our result shed new light on the feasibility
+of the latter computation.</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2006/403" class="paperlink" href="/2006/403">2006/403</a>
+          <span class="ms-2"><a href="/2006/403.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2006/403.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2006-11-12</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Non-Wafer-Scale Sieving Hardware for the NFS: Another Attempt to Cope with 1024-bit</strong>
+              <div class="mt-1"><span class="fst-italic">Willi Geiselmann, Rainer Steinwandt</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">Significant progress in the design of special purpose hardware for supporting the Number Field Sieve (NFS) has been made. From a practical cryptanalytic point of view, however, none of the published proposals for coping with the sieving step is satisfying. Even for the best known designs, the technological obstacles faced for the parameters expected for a 1024-bit RSA modulus are significant.
+Below we present a new hardware design for implementing the sieving step. The suggested chips are of...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2006/109" class="paperlink" href="/2006/109">2006/109</a>
+          <span class="ms-2"><a href="/2006/109.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2006/109.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2006-08-26</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>A Simpler Sieving Device: Combining ECM and TWIRL</strong>
+              <div class="mt-1"><span class="fst-italic">Willi Geiselmann, Fabian Januszewski, Hubert Koepfer, Jan Pelzl, Rainer Steinwandt</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">A main obstacle in manufacturing the TWIRL device for realizing the sieving step of the Number Field Sieve is the sophisticated chip layout. Especially the logic for logging and recovering large prime
+factors found during sieving adds significantly to the layout complexity. We describe a device building on the Elliptic Curve Method (ECM) that for parameters of interest enables the replacement of the complete logging part in TWIRL by an off-wafer postprocessing. The postprocessing is done in...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2006/107" class="paperlink" href="/2006/107">2006/107</a>
+          <span class="ms-2"><a href="/2006/107.pdf">(PDF)</a></span>
+          
+          <small class="ms-auto">Last updated: 2006-03-19</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>The number field sieve for integers of low weight</strong>
+              <div class="mt-1"><span class="fst-italic">Oliver Schirokauer</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We define the weight of an integer $N$ to be the smallest $w$ such that $N$ can be represented as $\sum_{i=1}^w \epsilon_i 2^{c_i}$, with $\epsilon_1,\ldots,\epsilon_w\in\{1,-1\}$.  Since arithmetic modulo a prime of low weight is particularly efficient, it is tempting to use such primes in cryptographic protocols.  In this paper we consider the difficulty of the discrete logarithm problem modulo a prime $N$ of low weight, as well as the difficulty of factoring an integer $N$ of low weight. ...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2005/193" class="paperlink" href="/2005/193">2005/193</a>
+          <span class="ms-2"><a href="/2005/193.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2005/193.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2006-03-09</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>VSH, an Efficient and Provable Collision Resistant Hash Function</strong>
+              <div class="mt-1"><span class="fst-italic">Scott Contini, Arjen K.  Lenstra, Ron Steinfeld</span></div>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We introduce VSH, {\em very smooth hash}, a new $S$-bit hash function that
+is provably collision-resistant assuming the hardness of
+finding nontrivial modular
+square roots of very smooth numbers modulo an $S$-bit composite.
+By very smooth, we mean that the smoothness bound is
+some fixed polynomial function of~$S$.
+We argue that finding collisions for VSH has the same asymptotic
+complexity as factoring using the Number Field Sieve factoring algorithm,
+i.e., subexponential in~$S$.
+%We show how...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2004/095" class="paperlink" href="/2004/095">2004/095</a>
+          <span class="ms-2"><a href="/2004/095.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2004/095.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2004-04-17</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>GNFS Factoring Statistics of RSA-100, 110, ..., 150</strong>
+              <div class="mt-1"><span class="fst-italic">Kazumaro Aoki, Yuji Kida, Takeshi Shimoyama, Hiroki Ueda</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-IMPLEMENTATION">Implementation</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">GNFS (general number field sieve) algorithm is currently the fastest known algorithm for factoring large integers.  Up to the present, several running time estimates for GNFS are announced.  These estimates are usually based on the previous factoring results.  However, since the previous factoring results were done by various programs and/or computers, it is difficult to compare those running time.  We implemented GNFS and factored 100- to 150-digits number on the same environment.  This...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2003/202" class="paperlink" href="/2003/202">2003/202</a>
+          <span class="ms-2"><a href="/2003/202.pdf">(PDF)</a></span>
+          <span class="ms-2"><a href="/2003/202.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2003-09-26</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Yet Another Sieving Device</strong>
+              <div class="mt-1"><span class="fst-italic">Willi Geiselmann, Rainer Steinwandt</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">A compact mesh architecture for supporting the relation collection step of the number field sieve is described. Differing from TWIRL, only isolated chips without inter-chip communication are used. According to a preliminary analysis for 768-bit numbers, with a 130 nm process one mesh-based device fits on a single chip of ca. (4.9 cm)^2 - the largest  proposed chips in the TWIRL cluster for 768-bit occupy ca. (6.7 cm)^2.
+
+A 300 mm silicon wafer filled with the mesh-based devices is about 6.3...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2001/096" class="paperlink" href="/2001/096">2001/096</a>
+          
+          <span class="ms-2"><a href="/2001/096.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2001-11-13</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Constructing elliptic curves with a given number of points over a finite field</strong>
+              <div class="mt-1"><span class="fst-italic">Amod Agashe, Kristin Lauter, Ramarathnam Venkatesan</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">In using elliptic curves for  cryptography, one often needs to construct elliptic curves with a given or known number of points over a given finite field.  In the context of primality proving, Atkin and Morain suggested the use of the theory of complex multiplication to construct such curves. One of the steps in this method is the calculation of the Hilbert class polynomial
+$H_D(X)$ modulo some integer $p$ for a certain fundamental discriminant $D$. The usual way of doing this is to...</p>
+        </div>
+
+      </div>
+      
+      <div class="mb-4">
+        <div class="d-flex"><a title="2001/007" class="paperlink" href="/2001/007">2001/007</a>
+          
+          <span class="ms-2"><a href="/2001/007.ps">(PS)</a></span>
+          <small class="ms-auto">Last updated: 2001-01-30</small>
+        </div>
+        <div class="ms-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <strong>Are &#39;Strong&#39; Primes Needed for RSA</strong>
+              <div class="mt-1"><span class="fst-italic">Ron Rivest, Robert Silverman</span></div>
+            </div>
+            
+            <div class="float-end mt-1 ms-md-3">
+              <small class="badge category category-PUBLICKEY">Public-key cryptography</small>
+            </div>
+            
+          </div>
+          <p class="mb-0 mt-1 search-abstract">We review the arguments in favor of using so-called ``strong primes&#39;&#39;
+in the RSA public-key cryptosystem.  There are two types of such
+arguments: those that say that strong primes are needed to protect
+against factoring attacks, and those that say that strong primes are
+needed to protect against ``cycling&#39;&#39; attacks (based on repeated
+encryption).
+
+We argue that, contrary to common belief, it is unnecessary to use
+strong primes in the RSA cryptosystem.  That is, by using strong
+primes one...</p>
+        </div>
+
+      </div>
+      
+      
+      
+    </div>
+    
+  </div>
+</div>
+      <script>
+       document.getElementById('clearButton').addEventListener('click', function(ev) {
+         document.querySelectorAll('input').forEach(el => {
+           el.value = '';
+         });
+         document.getElementById('category').selectedIndex = "0";
+       });
+
+       function validateForm() {
+         // check that dates are compatible.
+         let submittedAfter = document.getElementById('submittedafter');
+         let submittedBefore = document.getElementById('submittedbefore');
+         let revisedAfter = document.getElementById('revisedafter');
+         let revisedBefore = document.getElementById('revisedbefore');
+         if (submittedAfter.value &&
+             submittedBefore.value &&
+             submittedAfter.value > submittedBefore.value) {
+           submittedAfter.classList.add('is-invalid');
+           submittedBefore.classList.add('is-invalid');
+           return false;
+         }
+         if (revisedAfter.value &&
+             revisedBefore.value &&
+             revisedAfter.value > revisedBefore.value) {
+           revisedAfter.classList.add('is-invalid');
+           revisedBefore.classList.add('is-invalid');
+           return false;
+         }
+         if (revisedBefore.value &&
+             submittedAfter.value &&
+             revisedBefore.value < submittedAfter.value) {
+           revisedBefore.classList.add('is-invalid');
+           submittedAfter.classList.add('is-invalid');
+           return false;
+         }
+         return true;
+       }
+
+      </script>
+      <script src="/js/mark.min.js"></script>
+      <script>
+       var instance = new Mark("div.results");
+       let urlParams = new URLSearchParams(window.location.search);
+       if (urlParams.get('q')) {
+         instance.mark(urlParams.get('q'));
+       }
+       if (urlParams.get('title')) {
+         instance.mark(urlParams.get('title'));
+       }
+       if (urlParams.get('authors')) {
+         instance.mark(urlParams.get('authors'));
+       }
+      </script>
+<!--  -->
+</main>
+<div class="container-fluid mt-auto" id="eprintFooter">
+  <a href="https://iacr.org/">
+    <img id="iacrlogo" src="/img/iacrlogo_small.png" class="img-fluid d-block mx-auto" alt="IACR Logo">
+  </a>
+  <div class="colorDiv"></div>
+  <div class="alert alert-success w-75 mx-auto">
+    Note: In order to protect the privacy of readers, eprint.iacr.org
+    does not use cookies or embedded third party content.
+  </div>
+</div>
+<script src="/css/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+   var topNavbar = document.getElementById('topNavbar');
+   if (topNavbar) {
+     document.addEventListener('scroll', function(e) {
+       if (window.scrollY > 100) {
+         topNavbar.classList.add('scrolled');
+       } else {
+         topNavbar.classList.remove('scrolled');
+       }
+     })
+   }
+  </script>
+
+
+</body>
+</html>

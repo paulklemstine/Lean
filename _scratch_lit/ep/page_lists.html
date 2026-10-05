@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+
+<title>Erdős Problems</title>
+<meta property="og:title" content="Erdős Problems">
+<link rel="icon" href="/static/favicon.ico">
+<link rel="stylesheet" href="/static/style.css?v=a13e2aa7">
+
+<script>
+document.addEventListener('click', (e) => {
+  // Toggle reply form
+  const toggle = e.target.closest('.reply-toggle');
+  if (toggle) {
+    const id = toggle.getAttribute('data-target');
+    const form = document.getElementById(id);
+    if (form) form.classList.toggle('hidden');
+  }
+  // Reply with quote
+  const quoteBtn = e.target.closest('.reply-quote');
+  if (quoteBtn) {
+    const id = quoteBtn.getAttribute('data-target');
+    const form = document.getElementById(id);
+    if (!form) return;
+    const ta = form.querySelector('textarea');
+    const raw = quoteBtn.getAttribute('data-raw') || '';
+    const quoted = raw.split('\n').map(l => '> ' + l).join('\n') + '\n\n';
+    ta.value = quoted;
+    form.classList.remove('hidden');
+    ta.focus();
+    const len = ta.value.length;
+    ta.setSelectionRange(len, len);
+  }
+});
+</script>
+
+<!-- This creates the reference in the bibliography box. -->
+
+<script>
+function addNewBox(key, problem_id, shouldScroll = false) {
+  const local_id = 'bib-container' + String(problem_id);
+  const container = document.getElementById(local_id);
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  fetch(`/bibs/${encodeURIComponent(key)}`)
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.text();
+    })
+    .then(html => {
+      container.innerHTML = html;
+
+      if (shouldScroll) {
+        requestAnimationFrame(() => {
+          container.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        });
+      }
+    })
+    .catch(err => {
+      console.error("Failed to load bib:", err);
+      container.textContent = "Unable to load reference.";
+
+      if (shouldScroll) {
+        container.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
+    });
+}
+</script>
+
+<script>
+const filledSVG = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" class="fav-icon">
+  <path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" />
+</svg>
+                `;
+const outlineSVG = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="black" fill="white" class="fav-icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.610l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.840-.610l1.285-5.386a.563.563 0 0 0-.182-.557L3.041 10.385a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z" />
+</svg>
+                `;
+
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest(".fav-btn");
+  if (!btn) return;
+
+  e.preventDefault();
+  const problemId = btn.dataset.problemId;
+
+  try {
+    const res = await fetch(`/forum/toggle_favourite/${problemId}`, { method: "POST" });
+    const data = await res.json();
+
+    btn.dataset.favourited = data.favourited ? "true" : "false";
+    btn.innerHTML = data.favourited ? filledSVG : outlineSVG;
+  } catch (err) {
+    console.error("Toggle failed:", err);
+  }
+});
+</script>
+
+    
+<script>
+function addImageBox(X, problem_id, shouldScroll = true) {
+  const local_id = 'image-container' + String(problem_id);
+  const container = document.getElementById(local_id);
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const newBox = document.createElement("div");
+
+  const img = document.createElement("img");
+  img.src = `/static/${encodeURIComponent(X)}.png`;
+  img.className = "responsive-image";
+  img.alt = String(X);
+
+  newBox.appendChild(img);
+  container.appendChild(newBox);
+
+  if (shouldScroll) {
+    requestAnimationFrame(() => {
+      container.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+  }
+}
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('searchForm');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    const input = form.querySelector('.searchTerm');
+    if (!input) return;
+    const value = input.value.trim();
+    if (!value) return;
+    const path = '/search/' + encodeURIComponent(value);
+    const inDual = window.location.pathname.startsWith("/dual");
+    if (inDual) {
+      e.preventDefault(); 
+      const selected = document.querySelector('input[name="targetPanel"]:checked');
+      const panel = selected ? selected.value : "left";
+      const iframe = document.getElementById(`iframe-${panel}`);
+      if (iframe) {
+        const url = path.includes("?") ? path + "&embed=1" : path + "?embed=1";
+        iframe.src = url;
+        const box = document.querySelector(`#panel-${panel} input`);
+        if (box) box.value = path;
+      } else {
+        window.location.href = path;
+      }
+    } else {
+      form.action = path;
+      form.method = "GET";
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.location.pathname.startsWith("/dual")) return;
+
+  var form = document.getElementById('idsearchForm');
+  if (!form) return;
+
+  form.onsubmit = function() {
+    var input = document.querySelector('.idsearchTerm').value.trim();
+    var searchUrl;
+
+    if (/^\d+$/.test(input)) {
+        searchUrl = '/' + encodeURIComponent(input);
+    } else if (/^((\d+|end)(-(\d+|end))?\s*)+(open|solved|yes|no)?$/.test(input.toLowerCase())) {
+        let parts = input.split(/\s+/).filter(Boolean);
+        searchUrl = '/range/' + parts.map(encodeURIComponent).join('/');
+    } else {
+        alert("Enter either a single integer or a space-separated list of numbers/ranges...");
+        return false;
+    }
+    window.location.href = searchUrl;
+    return false;
+  };
+});
+</script>
+
+<script>
+  window.CURRENT_USERNAME = "";
+</script>
+
+
+<script>
+document.addEventListener("click", async (ev) => {
+  const btn = ev.target.closest(".reaction-btn");
+  if (!btn) return;
+  const you = window.CURRENT_USERNAME || "";
+  const bar = btn.closest(".reaction-bar");
+  const postId = bar?.dataset.postId;
+  const rtype = btn.dataset.type;
+  const reactUrl = bar?.dataset.reactUrl; 
+  if (!postId || !rtype || !reactUrl) return;
+
+  try {
+    const res = await fetch(reactUrl, {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({type: rtype})
+    });
+    const data = await res.json();
+    if (!data.ok) {
+      alert(data.error || "Could not update reaction.");
+      return;
+    }
+    const summary = data.summary;
+    
+    bar.querySelectorAll(".reaction-btn").forEach(b => {
+      const t = b.dataset.type;
+      const countSpan = bar.querySelector(`.reaction-count[data-type="${t}"]`);
+      if (countSpan && summary[t]) {
+        countSpan.textContent = summary[t].count;
+    const desc = b.dataset.desc || "";
+    const usersTitle = summary[t].users_title || "No one yet.";
+    b.title = `${desc}\n\n${usersTitle}`;
+      }
+        const iReacted = you && (summary[t].users_title || "").includes(you);
+  b.classList.toggle("active", !!iReacted);
+  b.setAttribute("aria-pressed", iReacted ? "true" : "false");
+    });
+  } catch (e) {
+    console.error(e);
+    alert("Only registered users with 5+ posts can react.");
+  }
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.body.addEventListener("click", function (e) {
+    const link = e.target.closest(".problem-reaction-link");
+    if (!link) return;
+
+    e.preventDefault();
+
+    const row = link.closest(".problem-reaction-row");
+    if (!row) return;
+
+    const form = row.querySelector(".problem-reaction-form");
+    if (!form) return;
+
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: {
+        "X-Requested-With": "XMLHttpRequest"
+      }
+    })
+      .then(resp => resp.json())
+      .then(data => {
+        if (!data.ok) {
+          console.error(data.error || "Problem reaction update failed");
+          return;
+        }
+
+        const summary = data.summary;
+
+        // Update users text for each reaction type
+        for (const [type, info] of Object.entries(summary)) {
+          const r = document.querySelector(
+            `.problem-reaction-row[data-reaction-type="${type}"]`
+          );
+          if (!r) continue;
+
+          const usersCell = r.querySelector(".problem-reaction-users");
+          if (usersCell) {
+            usersCell.textContent = info.users_title || "None yet";
+          }
+        }
+        link.classList.toggle("active");
+        if (link.classList.contains("active")) {
+          link.textContent = "(no)";
+        } else {
+          link.textContent = "(yes)";
+        }
+      })
+      .catch(err => {
+        console.error("Problem reaction AJAX error", err);
+      });
+  });
+});
+</script>
+
+
+
+
+
+
+</head>
+
+<body>
+
+<div class="topnav">
+
+  <div class="left">
+    <div class="logo">
+      <a class="dual-aware" href="/"><img src="/static/EPLogo.png" alt="Logo" height="50"></a>
+    </div>
+    <div class="links dual-aware desktop-nav">
+      <a href="/forum">Forum</a>
+      <a href="/dm">Inbox</a> 
+      <a href="/favourites">Favourites</a>
+      <a href="/tags">Tags</a> 
+      <div class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">More</a>
+        <div class="dropdown-content">
+          <a href="/faq">FAQ</a>
+          <a href="/prizes">Prizes</a>
+          <a href="/lists">Problem Lists</a>
+          <a href="/definitions">Definitions</a>
+          <a href="/links">Links</a>
+        </div>
+      </div> 
+    </div>
+    <div class="mobile-nav">
+    
+        <a class="forumlink" href="/forum">Forum</a>
+    <div class="dropdown">
+      <button class="dropbtn" id="mobileMenuButton">Menu</button>
+      <div class="dropdown-content">
+        <a href="/dm">Inbox</a> 
+        <a href="/favourites">Favourites</a>
+        <a href="/tags">Tags</a>  
+        <a href="/faq">FAQ</a>
+        <a href="/prizes">Prizes</a>
+        <a href="/lists">Problem Lists</a>
+        <a href="/definitions">Definitions</a>
+        <a href="/links">Links</a>
+      </div>
+     </div>
+    </div>
+  </div>
+
+  <div class = "middle">
+    <div class="button-container" style="max-width: 50%;">
+      <form id="idsearchForm">
+        <input required type="text" name="query" class="idsearchTerm" placeholder="# (or range #-#)" title="Enter either a single integer or a space-separated list of numbers/ranges, optionally ending with 'open' or 'solved'.">
+        <button type="submit" class="searchButton">Go</button>
+      </form>
+    </div>
+    <div class="button-container" style="max-width: 50%;">
+      <form id="searchForm">
+        <input required type="text" name="query" class="searchTerm" placeholder="Search" title="Search all problems.">
+        <button type="submit" class="searchButton">Go</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="right">
+    <a href="#" id="dualViewLink" class="split_all">Dual View</a>
+    <a href="/random_solved" class="split_solved dual-aware">Random Solved</a>
+    <a href="/random_open" class="split_open dual-aware">Random Open</a>
+  </div>
+
+</div>
+
+<div id="notifications-slot"></div>
+
+
+
+
+
+<div class="container">
+<div class="problem-box">
+<div class="problem-text">
+This is a list of the problem lists that Erd&#337;s wrote, in chronological order. The problem count reflects how many problems in this database appear in that paper. The order in which these problems appear in the database may not correlate at all with the order they are presented in the paper.
+<p>
+Papers with a green background have been completely checked, and so the database should contain all problems in that paper. There remain many problem lists of Erd&#337;s that have only been partially, if at all, checked against this database. One day, hopefully, all of the problems in the lists below will have been entered into this database. One purpose of this list to show where the work remains to be done.
+<p>
+I believe this list is complete; if you know of a problem list (i.e. a paper (co)written by Erd&#337;s whose main purpose is to discuss open problems) not on the list please let me know.
+<p>
+There are 147 lists, of which 65 are completely checked.
+</div>
+</div>
+<div class="list-table">
+<table> 
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er55c?sources_only=1"> 12 problems </a> <br> (6 solved)</th>
+<th><i>Some problems on the distribution of prime numbers</i><br/> C.I.M.E., Teoria dei numeri  (1955)</th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er56?sources_only=1"> 11 problems </a> <br> (5 solved)</th>
+<th><i>Problems and results in additive number theory</i><br/> Colloque sur la Théorie des Nombres, Bruxelles, 1955 127-137 (1956) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=0079027" rel="nofollow noopener noreferrer ugc" target="_blank">MR 0079027</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er57?sources_only=1"> 29 problems </a> <br> (20 solved)</th>
+<th><i>Some unsolved problems</i><br/> Michigan Math. J. 291-300 (1957) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=98702" rel="nofollow noopener noreferrer ugc" target="_blank">MR 98702</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er59?sources_only=1"> 5 problems </a> <br> (2 solved)</th>
+<th><i>Über einige Probleme der additiven Zahlentheorie</i><br/> Sammelband zu Ehren des 250. Geburtstages Leonhard<br>Eulers 116-119 (1959) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=176972" rel="nofollow noopener noreferrer ugc" target="_blank">MR 176972</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er61?sources_only=1"> 110 problems </a> <br> (60 solved)</th>
+<th><i>Some unsolved problems</i><br/> Magyar Tud. Akad. Mat. Kutató Int. Közl. 221-254 (1961) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=177846" rel="nofollow noopener noreferrer ugc" target="_blank">MR 177846</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er62?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Remarks on number theory. IV. Extremal problems in number theory. I</i><br/> Mat. Lapok 228-255 (1962) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=195822" rel="nofollow noopener noreferrer ugc" target="_blank">MR 195822</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er63?sources_only=1"> 1 problem </a> <br> (0 solved)</th>
+<th><i>Quelques problémes de théorie des nombres</i><br/> Monographies de L'Enseignement Mathématique, No.<br>6 81-135 (1963) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=158847" rel="nofollow noopener noreferrer ugc" target="_blank">MR 158847</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er64b?sources_only=1"> 20 problems </a> <br> (16 solved)</th>
+<th><i>Problems and results on diophantine approximations</i><br/> Compositio Math. 52-65 (1964) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=179131" rel="nofollow noopener noreferrer ugc" target="_blank">MR 179131</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er64c?sources_only=1"> 7 problems </a> <br> (3 solved)</th>
+<th><i>Extremal problems in graph theory</i><br/> Theory of Graphs and its Applications (Proc. Sympos. Smolenice, 1963) 29-36 (1964) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=180500" rel="nofollow noopener noreferrer ugc" target="_blank">MR 180500</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er65?sources_only=1"> 17 problems </a> <br> (7 solved)</th>
+<th><i>Extremal problems in number theory</i><br/> Proc. Sympos. Pure Math., Vol. VIII 181-189 (1965) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=174539" rel="nofollow noopener noreferrer ugc" target="_blank">MR 174539</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er65b?sources_only=1"> 52 problems </a> <br> (28 solved)</th>
+<th><i>Some recent advances and current problems in number theory</i><br/> Lectures on Modern Mathematics, Vol. III 196-244 (1965) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=177933" rel="nofollow noopener noreferrer ugc" target="_blank">MR 177933</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er67?sources_only=1"> 4 problems </a> <br> (2 solved)</th>
+<th><i>Problems and results on the convergence and divergence properties of the Lagrange interpolation polynomials and some extremal problems</i><br/> Mathematica (Cluj) 65-73 (1967) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=233114" rel="nofollow noopener noreferrer ugc" target="_blank">MR 233114</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er67b?sources_only=1"> 5 problems </a> <br> (4 solved)</th>
+<th><i>Extremal problems in graph theory</i><br/> A Seminar on Graph Theory 54-59 (1967) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=223263" rel="nofollow noopener noreferrer ugc" target="_blank">MR 223263</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er69?sources_only=1"> 16 problems </a> <br> (6 solved)</th>
+<th><i>Some applications of graph theory to number theory</i><br/> The Many Facets of Graph Theory (Proc. Conf.,<br>Western Mich. Univ., Kalamazoo, Mich., 1968) 77-82 (1969) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=250917" rel="nofollow noopener noreferrer ugc" target="_blank">MR 250917</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er69b?sources_only=1"> 20 problems </a> <br> (12 solved)</th>
+<th><i>Problems and results in chromatic graph theory</i><br/> Proof Techniques in Graph Theory (Proc. Second Ann<br>Arbor Graph Theory Conf., Ann Arbor, Mich.,<br>1968) 27-35 (1969) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=252273" rel="nofollow noopener noreferrer ugc" target="_blank">MR 252273</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er70?sources_only=1"> 7 problems </a> <br> (2 solved)</th>
+<th><i>Some extremal problems in combinatorial number theory</i><br/> Mathematical Essays Dedicated to A. J. Macintyre 123-133 (1970) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=276194" rel="nofollow noopener noreferrer ugc" target="_blank">MR 276194</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/ErSi70?sources_only=1"> 4 problems </a> <br> (2 solved)</th>
+<th><i>Some extremal problems in graph theory</i><br/> Combinatorial theory and its applications, I-III (Proc. Colloq., Balatonfüred, 1969) 377-390 (1970) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=300924" rel="nofollow noopener noreferrer ugc" target="_blank">MR 300924</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er70b?sources_only=1"> 8 problems </a> <br> (4 solved)</th>
+<th><i>Some applications of graph theory to number theory</i><br/> Proc. Second Chapel Hill Conf. on Combinatorial Mathematics and its Applications (Univ. North Carolina, Chapel Hill, N.C., 1970) 136-145 (1970) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=266845" rel="nofollow noopener noreferrer ugc" target="_blank">MR 266845</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er70c?sources_only=1"> 6 problems </a> <br> (3 solved)</th>
+<th><i>Some problems in additive number theory</i><br/> Amer. Math. Monthly 619-621 (1970) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=268141" rel="nofollow noopener noreferrer ugc" target="_blank">MR 268141</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er70d?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems in combinatorial set theory</i><br/> Combinatorial Structures and their Applications (Proc. Calgary Internat. Conf., Calgary, Alta., 1969) 97-100 (1970) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=263640" rel="nofollow noopener noreferrer ugc" target="_blank">MR 263640</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/ErHa70?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results in finite and infinite combinatorial analysis</i><br/> Ann. New York Acad. Sci. 115-124 (1970) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=263675" rel="nofollow noopener noreferrer ugc" target="_blank">MR 263675</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er71?sources_only=1"> 43 problems </a> <br> (23 solved)</th>
+<th><i>Some unsolved problems in graph theory and combinatorial analysis</i><br/> Combinatorial Mathematics and its Applications (Proc.<br>Conf., Oxford, 1969) 97-109 (1971) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=0277392" rel="nofollow noopener noreferrer ugc" target="_blank">MR 0277392</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er71b?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results in combinatorial analysis</i><br/> Combinatorics (Proc. Sympos. Pure Math., Vol. XIX, Univ. California, Los Angeles, Calif., 1968) 77-89 (1971) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=432462" rel="nofollow noopener noreferrer ugc" target="_blank">MR 432462</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/ErHa71?sources_only=1"> 6 problems </a> <br> (2 solved)</th>
+<th><i>Unsolved problems in set theory</i><br/> Axiomatic Set Theory (Proc. Sympos. Pure Math., Vol. XIII, Part I, Univ. California, Los Angeles, Calif., 1967) 17-48 (1971) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=280381" rel="nofollow noopener noreferrer ugc" target="_blank">MR 280381</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er72?sources_only=1"> 9 problems </a> <br> (7 solved)</th>
+<th><i>Extremal problems in number theory</i><br/> Proceedings of the 1972 Number Theory Conference<br>(Univ. Colorado, Boulder, Colo.) 80-86 (1972) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=392900" rel="nofollow noopener noreferrer ugc" target="_blank">MR 392900</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er73?sources_only=1"> 62 problems </a> <br> (31 solved)</th>
+<th><i>Problems and results on combinatorial number theory</i><br/> A survey of combinatorial theory (Proc. Internat. Sympos., Colorado State Univ., Fort Collins, Colo., 1971) 117-138 (1973) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=0360509" rel="nofollow noopener noreferrer ugc" target="_blank">MR 0360509</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er73c?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Résultats et problémes en théorie des nombres</i><br/> Séminaire Delange-Pisot-Poitou (14e année: 1972/73), Théorie des nombres, Fasc. 2 Exp. No. 24, 7 (1973) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=396376" rel="nofollow noopener noreferrer ugc" target="_blank">MR 396376</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er74b?sources_only=1"> 22 problems </a> <br> (7 solved)</th>
+<th><i>Remarks on some problems in number theory</i><br/> Math. Balkanica 197-202 (1974) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=429704" rel="nofollow noopener noreferrer ugc" target="_blank">MR 429704</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er74c?sources_only=1"> 14 problems </a> <br> (7 solved)</th>
+<th><i>Extremal problems on graphs and hypergraphs</i><br/>  75-84 (1974) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=360350" rel="nofollow noopener noreferrer ugc" target="_blank">MR 360350</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er74d?sources_only=1"> 8 problems </a> <br> (4 solved)</th>
+<th><i>Unsolved Problems</i><br/>  278-297 (1974) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=360350" rel="nofollow noopener noreferrer ugc" target="_blank">MR 360350</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/ErHa74?sources_only=1"> 1 problem </a> <br> (0 solved)</th>
+<th><i>Unsolved and solved problems in set theory</i><br/> Proceedings of the Tarski Symposium (Proc. Sympos. Pure Math., Vol. XXV, Univ. California, Berkeley, Calif., 1971) 269-287 (1974) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=357122" rel="nofollow noopener noreferrer ugc" target="_blank">MR 357122</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er75?sources_only=1"> 16 problems </a> <br> (11 solved)</th>
+<th><i>Some recent progress on extremal problems in graph theory</i><br/> Congr. Numer. 3-14 (1975)</th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er75b?sources_only=1"> 24 problems </a> <br> (15 solved)</th>
+<th><i>Problems and results in combinatorial number theory</i><br/> Journées Arithmétiques de Bordeaux (Conf., Univ. Bordeaux, Bordeaux, 1974) 295-310 (1975) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=0374075" rel="nofollow noopener noreferrer ugc" target="_blank">MR 0374075</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er75d?sources_only=1"> 2 problems </a> <br> (2 solved)</th>
+<th><i>Problems and results on finite and infinite graphs</i><br/> Recent advances in graph theory (Proc. Second<br>Czechoslovak Sympos., Prague, 1974) 183-192. (loose errata) (1975) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=389669" rel="nofollow noopener noreferrer ugc" target="_blank">MR 389669</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er75e?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results on finite and infinite combinatorial analysis</i><br/> Infinite and finite sets (Colloq., Keszthely, 1973;<br>dedicated to P. Erdős on his 60th birthday), Vols.<br>I, II, III 403-424 (1975) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=389607" rel="nofollow noopener noreferrer ugc" target="_blank">MR 389607</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er75f?sources_only=1"> 33 problems </a> <br> (12 solved)</th>
+<th><i>On some problems of elementary and combinatorial geometry</i><br/> Ann. Mat. Pura Appl. (4) 99-108 (1975) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=411984" rel="nofollow noopener noreferrer ugc" target="_blank">MR 411984</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er75g?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results on Diophantine approximations. II</i><br/> Répartition modulo 1 (Actes Colloq., Marseille-Luminy, 1974) 89-99 (1975) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=412138" rel="nofollow noopener noreferrer ugc" target="_blank">MR 412138</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er75h?sources_only=1"> 3 problems </a> <br> (0 solved)</th>
+<th><i>Some problems on elementary geometry</i><br/> Austral. Math. Soc. Gaz. 2-3 (1975)</th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er76?sources_only=1"> 3 problems </a> <br> (2 solved)</th>
+<th><i>Problems and results in combinatorial analysis</i><br/> Colloquio Internazionale sulle Teorie Combinatorie (Roma, 1973), Tomo II 3-17 (1976) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=0465878" rel="nofollow noopener noreferrer ugc" target="_blank">MR 0465878</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er76b?sources_only=1"> 7 problems </a> <br> (6 solved)</th>
+<th><i>Problems and results in graph theory and combinatorial analysis</i><br/> Proceedings of the Fifth British Combinatorial Conference (Univ. Aberdeen, Aberdeen, 1975) 169-192 (1976) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=409246" rel="nofollow noopener noreferrer ugc" target="_blank">MR 409246</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er76c?sources_only=1"> 4 problems </a> <br> (4 solved)</th>
+<th><i>Some recent problems and results in graph theory, combinatorics and number theory</i><br/> Proceedings of the Seventh Southeastern Conference on<br>Combinatorics, Graph Theory, and Computing (Louisiana State Univ., Baton Rouge, La., 1976) 3-14 (1976) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=422031" rel="nofollow noopener noreferrer ugc" target="_blank">MR 422031</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er76d?sources_only=1"> 22 problems </a> <br> (2 solved)</th>
+<th><i>Problems and results on number theoretic properties of consecutive integers and related questions</i><br/> Proceedings of the Fifth Manitoba Conference on Numerical Mathematics (Univ. Manitoba, Winnipeg, Man., 1975) 25-44 (1976) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=422146" rel="nofollow noopener noreferrer ugc" target="_blank">MR 422146</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er76e?sources_only=1"> 6 problems </a> <br> (1 solved)</th>
+<th><i>Problems and results on consecutive integers</i><br/> Publ. Math. Debrecen 271-282 (1976) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=453671" rel="nofollow noopener noreferrer ugc" target="_blank">MR 453671</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er76f?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Extremal problems on polynomials</i><br/> Approximation theory, II (Proc. Internat. Sympos., Univ. Texas, Austin, Tex., 1976) 347-355 (1976) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=477003" rel="nofollow noopener noreferrer ugc" target="_blank">MR 477003</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er76g?sources_only=1"> 2 problems </a> <br> (2 solved)</th>
+<th><i>Problems and results on combinatorial number theory. II</i><br/> J. Indian Math. Soc. (N.S.) 285-298 (1976) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=444552" rel="nofollow noopener noreferrer ugc" target="_blank">MR 444552</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er77?sources_only=1"> 2 problems </a> <br> (0 solved)</th>
+<th><i>Problems in number theory and combinatorics</i><br/> Proceedings of the Sixth Manitoba Conference on<br>Numerical Mathematics (Univ. Manitoba, Winnipeg,<br>Man., 1976) 35-58 (1977) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=532690" rel="nofollow noopener noreferrer ugc" target="_blank">MR 532690</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er77b?sources_only=1"> 1 problem </a> <br> (0 solved)</th>
+<th><i>Problems and results in combinatorial analysis</i><br/> Proceedings of the Eighth Southeastern Conference on<br>Combinatorics, Graph Theory and Computing (Louisiana<br>State Univ., Baton Rouge, La., 1977) 3-12 (1977) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=542437" rel="nofollow noopener noreferrer ugc" target="_blank">MR 542437</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er77c?sources_only=1"> 56 problems </a> <br> (21 solved)</th>
+<th><i>Problems and results on combinatorial number theory. III</i><br/> Number theory day (Proc. Conf., Rockefeller Univ.,<br>New York, 1976) 43-72 (1977) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=472752" rel="nofollow noopener noreferrer ugc" target="_blank">MR 472752</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er77d?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problémes extrémaux et combinatoires en théorie des nombres</i><br/> Séminaire Delange-Pisot-Poitou, 17e année:<br>1975/76, Théorie des nombres: Fasc. 2 Exp. No. G7, 5 (1977) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=554189" rel="nofollow noopener noreferrer ugc" target="_blank">MR 554189</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er78?sources_only=1"> 11 problems </a> <br> (5 solved)</th>
+<th><i>Problems and results in combinatorial analysis and combinatorial number theory</i><br/> Proceedings of the Ninth Southeastern Conference on Combinatorics, Graph Theory, and Computing (Florida Atlantic Univ., Boca Raton, Fla., 1978) 29-40 (1978) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=527930" rel="nofollow noopener noreferrer ugc" target="_blank">MR 527930</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er78b?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results in graph theory and combinatorial analysis</i><br/> Problémes combinatoires et théorie des graphes (Colloq. Internat. CNRS, Univ. Orsay, Orsay, 1976) 127-129 (1978) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=539958" rel="nofollow noopener noreferrer ugc" target="_blank">MR 539958</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er78c?sources_only=1"> 3 problems </a> <br> (1 solved)</th>
+<th><i>Some more problems on elementary geometry</i><br/> Austral. Math. Soc. Gaz. 52-54 (1978) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=509363" rel="nofollow noopener noreferrer ugc" target="_blank">MR 509363</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er78d?sources_only=1"> 1 problem </a> <br> (0 solved)</th>
+<th><i>Set-theoretic, measure-theoretic, combinatorial, and<br>number-theoretic problems concerning point sets in Euclidean<br>space</i><br/> Real Anal. Exchange 113-138 (1978/79) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=533932" rel="nofollow noopener noreferrer ugc" target="_blank">MR 533932</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er78e?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Some extremal problems on families of graphs and related problems</i><br/> Combinatorial mathematics (Proc. Internat. Conf. Combinatorial Theory, Australian Nat. Univ., Canberra, 1977) 13-21 (1978) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=526725" rel="nofollow noopener noreferrer ugc" target="_blank">MR 526725</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er78f?sources_only=1"> 2 problems </a> <br> (0 solved)</th>
+<th><i>On some unusual nonconventional problems in additive number<br>theory</i><br/> Mat. Lapok 9-14 (1978/82) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=734602" rel="nofollow noopener noreferrer ugc" target="_blank">MR 734602</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/ErSa78?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Some solved and unsolved problems in combinatorial number theory</i><br/> Math. Slovaca 407-421 (1978) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=534819" rel="nofollow noopener noreferrer ugc" target="_blank">MR 534819</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/ErSz78?sources_only=1"> 3 problems </a> <br> (1 solved)</th>
+<th><i>Some number theoretic problems on binomial coefficients</i><br/> Austral. Math. Soc. Gaz. 97-99 (1978) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=519358" rel="nofollow noopener noreferrer ugc" target="_blank">MR 519358</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er79?sources_only=1"> 18 problems </a> <br> (7 solved)</th>
+<th><i>Some unconventional problems in number theory</i><br/> Math. Mag. 67-70 (1979) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=527408" rel="nofollow noopener noreferrer ugc" target="_blank">MR 527408</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er79b?sources_only=1"> 1 problem </a> <br> (0 solved)</th>
+<th><i>Problems and results in graph theory and combinatorial analysis</i><br/> Graph theory and related topics (Proc. Conf., Univ. Waterloo, Waterloo, Ont., 1977) 153-163 (1979) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=538043" rel="nofollow noopener noreferrer ugc" target="_blank">MR 538043</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er79c?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Old and new problems in combinatorial analysis and graph theory</i><br/> Second International Conference on Combinatorial<br>Mathematics (New York, 1978) 177-187 (1979) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=556022" rel="nofollow noopener noreferrer ugc" target="_blank">MR 556022</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er79d?sources_only=1"> 21 problems </a> <br> (3 solved)</th>
+<th><i>Some unconventional problems in number theory</i><br/> Acta Math. Acad. Sci. Hungar. 71-80 (1979) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=515121" rel="nofollow noopener noreferrer ugc" target="_blank">MR 515121</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er79e?sources_only=1"> 16 problems </a> <br> (9 solved)</th>
+<th><i>Some unconventional problems in number theory</i><br/> Astérisque 73-82 (1979) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=556666" rel="nofollow noopener noreferrer ugc" target="_blank">MR 556666</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er79f?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Combinatorial problems in geometry and number theory</i><br/> Relations between combinatorics and other parts of mathematics<br>(Proc. Sympos. Pure Math., Ohio State Univ.,<br>Columbus, Ohio, 1978) 149-162 (1979) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=525325" rel="nofollow noopener noreferrer ugc" target="_blank">MR 525325</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er79g?sources_only=1"> 3 problems </a> <br> (3 solved)</th>
+<th><i>Some old and new problems in various branches of combinatorics</i><br/> Proceedings of the Tenth Southeastern Conference on<br>Combinatorics, Graph Theory and Computing (Florida<br>Atlantic Univ., Boca Raton, Fla., 1979) 19-37 (1979) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=561032" rel="nofollow noopener noreferrer ugc" target="_blank">MR 561032</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/ErGr79?sources_only=1"> 29 problems </a> <br> (13 solved)</th>
+<th><i>Old and new problems and results in combinatorial number theory: van der Waerden's theorem and related topics</i><br/> Enseign. Math. 325-344 (1979) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=0570317" rel="nofollow noopener noreferrer ugc" target="_blank">MR 0570317</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er80?sources_only=1"> 99 problems </a> <br> (46 solved)</th>
+<th><i>A survey of problems in combinatorial number theory</i><br/> Ann. Discrete Math. 89-115 (1980) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=593525" rel="nofollow noopener noreferrer ugc" target="_blank">MR 593525</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er80b?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results in number theory and graph theory</i><br/> Proceedings of the Ninth Manitoba Conference on<br>Numerical Mathematics and Computing (Univ. Manitoba,<br>Winnipeg, Man., 1979) 3-21 (1980) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=593699" rel="nofollow noopener noreferrer ugc" target="_blank">MR 593699</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er80c?sources_only=1"> 4 problems </a> <br> (3 solved)</th>
+<th><i>Nine little known problems in combinatorial number theory</i><br/> Normat 155-164, 180 (1980) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=597617" rel="nofollow noopener noreferrer ugc" target="_blank">MR 597617</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er80d?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Some combinational problems in geometry</i><br/> Geometry and differential geometry (Proc. Conf., Univ.<br>Haifa, Haifa, 1979) 46-53 (1980) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=585852" rel="nofollow noopener noreferrer ugc" target="_blank">MR 585852</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er80h?sources_only=1"> 1 problem </a> <br> (1 solved)</th>
+<th><i>Problems and results on polynomials and interpolation</i><br/>  383--391 (1980) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=623480" rel="nofollow noopener noreferrer ugc" target="_blank">MR 623480</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/ErGr80?sources_only=1"> 303 problems </a> <br> (146 solved)</th>
+<th><i>Old and new problems and results in combinatorial number theory</i><br/> Monographies de L'Enseignement Mathematique  (1980) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=0592420" rel="nofollow noopener noreferrer ugc" target="_blank">MR 0592420</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er81?sources_only=1"> 77 problems </a> <br> (39 solved)</th>
+<th><i>On the combinatorial problems which I would most like to see solved</i><br/> Combinatorica 25-42 (1981) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=602413" rel="nofollow noopener noreferrer ugc" target="_blank">MR 602413</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er81b?sources_only=1"> 10 problems </a> <br> (8 solved)</th>
+<th><i>My Scottish Book 'Problems'</i><br/> The Scottish Book 27-35 (page numbers are given for the 2nd edition of The Scottish Book) (1981)</th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er81c?sources_only=1"> 5 problems </a> <br> (1 solved)</th>
+<th><i>Some new problems and results in graph theory and other branches of combinatorial mathematics</i><br/> Combinatorics and graph theory 9-17 (1981) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=593525" rel="nofollow noopener noreferrer ugc" target="_blank">MR 593525</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er81d?sources_only=1"> 1 problem </a> <br> (0 solved)</th>
+<th><i>Some applications of graph theory and combinatorial methods to number theory and geometry</i><br/> Algebraic methods in graph theory, Vol. I, II (Szeged, 1978) 137-148 (1981) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=642037" rel="nofollow noopener noreferrer ugc" target="_blank">MR 642037</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er81e?sources_only=1"> 1 problem </a> <br> (1 solved)</th>
+<th><i>Problems and results in graph theory</i><br/> The theory and applications of graphs (Kalamazoo, Mich.,<br>1980) 331-341 (1981) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=634537" rel="nofollow noopener noreferrer ugc" target="_blank">MR 634537</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er81f?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results on finite and infinite combinatorial<br>analysis. II</i><br/> Enseign. Math. (2) 163-176 (1981) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=630965" rel="nofollow noopener noreferrer ugc" target="_blank">MR 630965</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er81g?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Many old and on some new problems of mine in number theory</i><br/> Congr. Numer. 3-27 (1981) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=635934" rel="nofollow noopener noreferrer ugc" target="_blank">MR 635934</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er81h?sources_only=1"> 16 problems </a> <br> (5 solved)</th>
+<th><i>Some problems and results on additive and multiplicative<br>number theory</i><br/> Analytic number theory (Philadelphia, Pa., 1980) 171-182 (1981) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=654526" rel="nofollow noopener noreferrer ugc" target="_blank">MR 654526</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er81j?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Solved and unsolved problems in combinatorics and combinatorial number theory</i><br/> Congr. Numer. 49-62 (1981) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=681869" rel="nofollow noopener noreferrer ugc" target="_blank">MR 681869</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er81k?sources_only=1"> 2 problems </a> <br> (2 solved)</th>
+<th><i>Problems and results in number theory</i><br/> Recent progress in analytic number theory, Vol. 1 (Durham,<br>1979) 1-13 (1981) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=637339" rel="nofollow noopener noreferrer ugc" target="_blank">MR 637339</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er82?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results on finite and infinite combinatorial analysis. II</i><br/> Logic and algorithmic (Zurich, 1980) 131-144 (1982) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=648300" rel="nofollow noopener noreferrer ugc" target="_blank">MR 648300</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er82b?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results on block designs and set systems</i><br/> Congr. Numer. 3-16 (1982) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=725865" rel="nofollow noopener noreferrer ugc" target="_blank">MR 725865</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er82c?sources_only=1"> 4 problems </a> <br> (1 solved)</th>
+<th><i>Miscellaneous problems in number theory</i><br/> Congr. Numer. 25-45 (1982) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=681700" rel="nofollow noopener noreferrer ugc" target="_blank">MR 681700</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er82d?sources_only=1"> 2 problems </a> <br> (1 solved)</th>
+<th><i>Some new problems and results in number theory</i><br/> Number theory (Mysore, 1981) 50-74 (1982) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=665438" rel="nofollow noopener noreferrer ugc" target="_blank">MR 665438</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er82e?sources_only=1"> 58 problems </a> <br> (42 solved)</th>
+<th><i>Some of my favourite problems which recently have been solved</i><br/>  59--79 (1982) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=690096" rel="nofollow noopener noreferrer ugc" target="_blank">MR 690096</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er83?sources_only=1"> 6 problems </a> <br> (1 solved)</th>
+<th><i>Some remarks and problems in number theory related to the work<br>of Euler</i><br/> Math. Mag. 292-298 (1983) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=720650" rel="nofollow noopener noreferrer ugc" target="_blank">MR 720650</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er83b?sources_only=1"> 2 problems </a> <br> (0 solved)</th>
+<th><i>On some of my conjectures in number theory and combinatorics</i><br/> Proceedings of the fourteenth Southeastern conference on combinatorics, graph theory and computing (Boca Raton, Fla., 1983) 3-19 (1983) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=734525" rel="nofollow noopener noreferrer ugc" target="_blank">MR 734525</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er83c?sources_only=1"> 17 problems </a> <br> (7 solved)</th>
+<th><i>Combinatorial problems in geometry</i><br/> Math. Chronicle 35-54 (1983) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=706025" rel="nofollow noopener noreferrer ugc" target="_blank">MR 706025</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er83d?sources_only=1"> 3 problems </a> <br> (1 solved)</th>
+<th><i>Some combinatorial, geometric and set theoretic problems in measure theory</i><br/> Measure Theory, Oberwolfach 1983: Proceedings of the Conference held at Oberwolfach, June 26-July 2, 1983 321-327 (1984)</th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er84?sources_only=1"> 7 problems </a> <br> (4 solved)</th>
+<th><i>Research problems</i><br/> Period. Math. Hungar. 101-103 (1984) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1553627" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1553627</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er84b?sources_only=1"> 4 problems </a> <br> (2 solved)</th>
+<th><i>On some problems in graph theory, combinatorial analysis and<br>combinatorial number theory</i><br/> Graph theory and combinatorics (Cambridge, 1983) 1-17 (1984) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=777160" rel="nofollow noopener noreferrer ugc" target="_blank">MR 777160</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er84c?sources_only=1"> 2 problems </a> <br> (1 solved)</th>
+<th><i>Some old and new problems in combinatorial geometry</i><br/> Convexity and graph theory (Jerusalem, 1981) 129-136 (1984) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=791022" rel="nofollow noopener noreferrer ugc" target="_blank">MR 791022</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er84d?sources_only=1"> 4 problems </a> <br> (2 solved)</th>
+<th><i>Extremal problems in number theory, combinatorics and<br>geometry</i><br/> Proceedings of the International Congress of<br>Mathematicians, Vol. 1, 2 (Warsaw, 1983) 51-70 (1984) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=804676" rel="nofollow noopener noreferrer ugc" target="_blank">MR 804676</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er84f?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Some new and old problems on chromatic graphs</i><br/> Combinatorics and applications (Calcutta, 1982) 118-126 (1984) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=852032" rel="nofollow noopener noreferrer ugc" target="_blank">MR 852032</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er85?sources_only=1"> 8 problems </a> <br> (6 solved)</th>
+<th><i>Problems and results in combinatorial geometry</i><br/> Discrete geometry and convexity (New York, 1982) 1-11 (1985) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=809186" rel="nofollow noopener noreferrer ugc" target="_blank">MR 809186</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er85b?sources_only=1"> 1 problem </a> <br> (0 solved)</th>
+<th><i>Problems and results on chromatic numbers in finite and infinite graphs</i><br/> Graph theory with applications to algorithms and computer<br>science (Kalamazoo, Mich., 1984) 201-213 (1985) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=812666" rel="nofollow noopener noreferrer ugc" target="_blank">MR 812666</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er85c?sources_only=1"> 24 problems </a> <br> (8 solved)</th>
+<th><i>On some of my problems in number theory I would most like to see solved</i><br/> Number theory (Ootacamund, 1984) 74-84 (1985) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=797781" rel="nofollow noopener noreferrer ugc" target="_blank">MR 797781</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er85d?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Some of my old and new problems in elementary number theory<br>and geometry</i><br/> Proceedings of the Sundance conference on combinatorics and<br>related topics (Sundance, Utah, 1985) 97-106 (1985) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=833541" rel="nofollow noopener noreferrer ugc" target="_blank">MR 833541</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er85e?sources_only=1"> 5 problems </a> <br> (2 solved)</th>
+<th><i>Some problems and results in number theory</i><br/> Number theory and combinatorics. Japan 1984 (Tokyo,<br>Okayama and Kyoto, 1984) 65-87 (1985) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=827779" rel="nofollow noopener noreferrer ugc" target="_blank">MR 827779</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er85f?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Some solved and unsolved problems of mine in number theory</i><br/> Topics in analytic number theory (Austin, Tex., 1982) 59-75 (1985) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=804242" rel="nofollow noopener noreferrer ugc" target="_blank">MR 804242</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er86b?sources_only=1"> 1 problem </a> <br> (1 solved)</th>
+<th><i>Some problems on number theory</i><br/> Proceedings of the seventeenth Southeastern international<br>conference on combinatorics, graph theory, and computing<br>(Boca Raton, Fla., 1986) 225-244 (1986) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=885283" rel="nofollow noopener noreferrer ugc" target="_blank">MR 885283</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er86c?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Some problems on number theory</i><br/>  53--67 (1986) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=844584" rel="nofollow noopener noreferrer ugc" target="_blank">MR 844584</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er86d?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>On some metric and combinatorial geometric problems</i><br/> Discrete Math. 147--153 (1986) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=852104" rel="nofollow noopener noreferrer ugc" target="_blank">MR 852104</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er87?sources_only=1"> 18 problems </a> <br> (6 solved)</th>
+<th><i>Some problems on finite and infinite graphs</i><br/> Logic and combinatorics (Arcata, Calif., 1985) 223-228 (1987) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=891250" rel="nofollow noopener noreferrer ugc" target="_blank">MR 891250</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er87b?sources_only=1"> 17 problems </a> <br> (3 solved)</th>
+<th><i>Some combinatorial and metric problems in geometry</i><br/> Intuitive geometry (Siófok, 1985) 167-177 (1987) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=910710" rel="nofollow noopener noreferrer ugc" target="_blank">MR 910710</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/ErNa87?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results on minimal bases in additive number<br>theory</i><br/> Number theory (New York, 1984-1985) 87-96 (1987) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=894505" rel="nofollow noopener noreferrer ugc" target="_blank">MR 894505</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er88?sources_only=1"> 7 problems </a> <br> (1 solved)</th>
+<th><i>Problems and results in combinatorial analysis and graph theory</i><br/> Discrete Math. 81-92 (1988)</th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er88b?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Some old and new problems in combinatorial geometry</i><br/> Applications of discrete mathematics (Clemson, SC, 1986) 32-37 (1988) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=974622" rel="nofollow noopener noreferrer ugc" target="_blank">MR 974622</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er88c?sources_only=1"> 23 problems </a> <br> (9 solved)</th>
+<th><i>On the irrationality of certain series: problems and results</i><br/> New advances in transcendence theory (Durham, 1986) 102-109 (1988) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=971997" rel="nofollow noopener noreferrer ugc" target="_blank">MR 971997</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er89?sources_only=1"> 3 problems </a> <br> (2 solved)</th>
+<th><i>Some Problems and Results on Combinatorial Number Theory</i><br/> Annals of the New York Academy of Sciences 132-145 (1989) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1110810" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1110810</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er89b?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>On some problems and results in elementary number theory</i><br/> Sichuan Daxue Xuebao 1-6 (1989) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1059667" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1059667</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er89c?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results on extremal problems in number theory,<br>geometry, and combinatorics</i><br/> Proceedings of the 7th Fischland Colloquium, I<br>(Wustrow, 1988) 6-14 (1989) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1050324" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1050324</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er89d?sources_only=1"> 3 problems </a> <br> (1 solved)</th>
+<th><i>Some old and new problems on additive and combinatorial number<br>theory</i><br/> Combinatorial Mathematics: Proceedings of the Third<br>International Conference (New York, 1985) 181-186 (1989) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1018622" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1018622</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er90?sources_only=1"> 50 problems </a> <br> (23 solved)</th>
+<th><i>Some of my favourite unsolved problems</i><br/> A tribute to Paul Erdős 467-478 (1990) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1117038" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1117038</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er90b?sources_only=1"> 7 problems </a> <br> (2 solved)</th>
+<th><i>Problems and results on graphs and hypergraphs: similarities and differences</i><br/> Mathematics of Ramsey theory 12-28 (1990) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1083590" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1083590</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er90c?sources_only=1"> 2 problems </a> <br> (2 solved)</th>
+<th><i>Some recent combinatorial problems</i><br/> Technical Report, University of Bielefeld  (1990)</th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er90d?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>On some of my favourite problems in graph theory and block designs</i><br/> Matematiche (Catania) 61-73 (1990) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1180999" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1180999</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er90e?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Some of my old and new combinatorial problems</i><br/> Paths, flows, and VLSI-layout (Bonn, 1988) 35-45 (1990) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1083376" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1083376</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er91?sources_only=1"> 33 problems </a> <br> (17 solved)</th>
+<th><i>Problems and results in combinatorial analysis and combinatorial number theory</i><br/> Graph theory, combinatorics, and applications, Vol. 1 (Kalamazoo, MI, 1988) 397-406 (1991) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1170793" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1170793</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er91b?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Problems and results on polynomials and interpolation</i><br/> Approximation theory (Kecskemét, 1990) 253-261 (1991) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1211436" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1211436</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er92?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>On some unsolved problems in elementary geometry</i><br/> Mat. Lapok (N.S.) 1-10 (1992) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1273073" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1273073</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er92b?sources_only=1"> 20 problems </a> <br> (17 solved)</th>
+<th><i>Some of my favourite problems in various branches of combinatorics</i><br/> Matematiche (Catania) 231-240 (1992) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1275857" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1275857</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er92c?sources_only=1"> 34 problems </a> <br> (12 solved)</th>
+<th><i>Some of my forgotten problems in number theory</i><br/> Hardy-Ramanujan J. 34-50 (1992) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1215590" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1215590</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er92d?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>On some of my favourite problems in various branches of<br>combinatorics</i><br/> Fourth Czechoslovakian Symposium on Combinatorics,<br>Graphs and Complexity (Prachatice, 1990) 69-79 (1992) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1206246" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1206246</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er92e?sources_only=1"> 20 problems </a> <br> (5 solved)</th>
+<th><i>Some Unsolved problems in Geometry, Number Theory and Combinatorics</i><br/> Eureka 44-48 (1992)</th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er93?sources_only=1"> 48 problems </a> <br> (21 solved)</th>
+<th><i>Some of my favorite solved and unsolved problems in graph theory</i><br/> Quaestiones Math. 333-350 (1993) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1254162" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1254162</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/ErGi93?sources_only=1"> 6 problems </a> <br> (5 solved)</th>
+<th><i>Some problems and results in cochromatic theory</i><br/> Quo vadis, graph theory? 261-264 (1993) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1217997" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1217997</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er94?sources_only=1"> 2 problems </a> <br> (1 solved)</th>
+<th><i>Problems and results on set systems and hypergraphs</i><br/> Extremal problems for finite sets (Visegrád, 1991) 217-227 (1994) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1319165" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1319165</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er94b?sources_only=1"> 29 problems </a> <br> (17 solved)</th>
+<th><i>Some problems in number theory, combinatorics and combinatorial geometry</i><br/> Math. Pannon. 261-269 (1994) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1304854" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1304854</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er94c?sources_only=1"> 1 problem </a> <br> (1 solved)</th>
+<th><i>Problems and results in discrete mathematics</i><br/> Discrete Math. 53-73 (1994) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1313281" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1313281</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er95?sources_only=1"> 74 problems </a> <br> (35 solved)</th>
+<th><i>Some of my favourite problems in number theory, combinatorics, and geometry</i><br/> Resenhas 165-186 (1995) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1370501" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1370501</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er95b?sources_only=1"> 0 problems </a> <br> (0 solved)</th>
+<th><i>Some of my recent problems in combinatorial number theory, geometry and combinatorics</i><br/> Graph theory, combinatorics, and algorithms, Vol. 1, 2 (Kalamazoo, MI, 1992) 335-349 (1995) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1405821" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1405821</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er95c?sources_only=1"> 10 problems </a> <br> (7 solved)</th>
+<th><i>Some problems in number theory</i><br/> Octogon Math. Mag. 3-5 (1995) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1374981" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1374981</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er95d?sources_only=1"> 13 problems </a> <br> (7 solved)</th>
+<th><i>On some problems in combinatorial set theory</i><br/> Publ. Inst. Math. (Beograd) (N.S.) 61-65 (1995) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1387354" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1387354</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/Er95e?sources_only=1"> 1 problem </a> <br> (0 solved)</th>
+<th><i>Some old and new problems in approximation theory: research problems 95-1</i><br/> Constr. Approx. 419-421 (1995) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1350678" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1350678</a></th>
+</tr>
+
+<tr >
+<th>
+<a href="/search_bib/ErPu95b?sources_only=1"> 1 problem </a> <br> (1 solved)</th>
+<th><i>Extremal problems in combinatorial geometry</i><br/> Handbook of combinatorics, Vol. 1, 2 809-874 (1995) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1373673" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1373673</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er96?sources_only=1"> 9 problems </a> <br> (4 solved)</th>
+<th><i>Some of my favourite problems on cycles and colourings</i><br/> Tatra Mt. Math. Publ. 7-9 (1996) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1402943" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1402943</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er96b?sources_only=1"> 13 problems </a> <br> (8 solved)</th>
+<th><i>Some problems I presented or planned to present in my short<br>talk</i><br/> Analytic number theory, Vol. 1 (Allerton Park, IL, 1995) 333-335 (1996) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1399346" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1399346</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er97?sources_only=1"> 20 problems </a> <br> (10 solved)</th>
+<th><i>Problems in number theory</i><br/> New Zealand J. Math. 155-160 (1997) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1601631" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1601631</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er97b?sources_only=1"> 24 problems </a> <br> (13 solved)</th>
+<th><i>Some old and new problems in various branches of combinatorics</i><br/> Discrete Math. 227-231 (1997) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1439273" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1439273</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er97c?sources_only=1"> 54 problems </a> <br> (24 solved)</th>
+<th><i>Some of my favorite problems and results</i><br/> The mathematics of Paul Erdős, I 47-67 (1997) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1425174" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1425174</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er97d?sources_only=1"> 20 problems </a> <br> (10 solved)</th>
+<th><i>Some recent problems and results in graph theory</i><br/> Discrete Math. 81-85 (1997) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1432220" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1432220</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er97e?sources_only=1"> 49 problems </a> <br> (17 solved)</th>
+<th><i>Some of my favourite unsolved problems</i><br/> Math. Japon. 527-537 (1997) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1487304" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1487304</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er97f?sources_only=1"> 37 problems </a> <br> (15 solved)</th>
+<th><i>Some unsolved problems</i><br/> Combinatorics, geometry and probability (Cambridge, 1993) 1-10 (1997) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1476428" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1476428</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er98?sources_only=1"> 29 problems </a> <br> (13 solved)</th>
+<th><i>Some of my new and almost new problems and results in combinatorial number theory</i><br/> Number theory (Eger, 1996) 169-180 (1998) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1628841" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1628841</a></th>
+</tr>
+
+<tr  class="completed" >
+<th>
+<a href="/search_bib/Er99?sources_only=1"> 12 problems </a> <br> (6 solved)</th>
+<th><i>A selection of problems and results in combinatorics</i><br/> Combin. Probab. Comput. 1-6 (1999) <a href="https://mathscinet.ams.org/mathscinet/relay-station?mr=1684620" rel="nofollow noopener noreferrer ugc" target="_blank">MR 1684620</a></th>
+</tr>
+
+</table>
+</div>
+</div>
+    
+
+
+
+
+
+<script>
+window.MathJax = {
+  output: {
+    font: 'mathjax-tex'
+  },
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+};
+</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@4.1.2/tex-chtml-nofont.js"></script>
+
+
+<!-- Previewing forum posts -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, m => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[m]);
+  }
+
+  function normalizeHref(href) {
+    href = href.trim();
+    if (!/^https?:\/\//i.test(href) && !href.startsWith("/")) {
+      href = "https://" + href;
+    }
+
+    return href;
+  }
+
+  let mathJaxQueue = Promise.resolve();
+
+  function clearMathJax(element) {
+    if (window.MathJax && MathJax.typesetClear) {
+      MathJax.typesetClear([element]);
+    }
+  }
+
+  function typesetMath(element) {
+    if (!window.MathJax) return;
+
+    if (MathJax.typesetPromise) {
+      mathJaxQueue = mathJaxQueue
+        .then(() => {
+          if (MathJax.startup && MathJax.startup.promise) {
+            return MathJax.startup.promise;
+          }
+        })
+        .then(() => MathJax.typesetPromise([element]))
+        .catch(err => {
+          console.error("MathJax typeset failed:", err);
+        });
+
+      return;
+    }
+
+    if (MathJax.Hub) {
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub, element]);
+    }
+  }
+
+  function renderPreview(textarea, preview, label) {
+    let raw = textarea.value;
+    const anchors = [];
+    let idx = 0;
+
+    raw = raw.replace(
+      /<a\s+href=("(?:[^"]*)"|'(?:[^']*)')\s*>([\s\S]*?)<\/a>/gi,
+      (match, qHref, labelText) => {
+        const href = qHref.slice(1, -1);
+        const token = `__A_TAG_${idx++}__`;
+
+        anchors.push({
+          token,
+          href: normalizeHref(href),
+          label: labelText
+        });
+
+        return token;
+      }
+    );
+
+    let safe = escapeHtml(raw);
+
+    anchors.forEach(a => {
+      const html = `<a href="${escapeHtml(a.href)}">${escapeHtml(a.label)}</a>`;
+      safe = safe.replace(a.token, html);
+    });
+
+    safe = safe.replace(/\{PROBLEM=(.+?)\}/g, (_, p1) =>
+      `<a href="/${escapeHtml(p1)}">[${escapeHtml(p1)}]</a>`
+    );
+
+    safe = safe.replace(/\n/g, "<br>");
+    clearMathJax(preview);
+
+    if (!safe.trim()) {
+      preview.innerHTML = "";
+      preview.classList.add("hidden");
+      label.classList.add("hidden");
+      return;
+    }
+
+    preview.innerHTML = safe;
+    preview.classList.remove("hidden");
+    label.classList.remove("hidden");
+
+    typesetMath(preview);
+  }
+
+function initialisePreview(textarea) {
+  const form = textarea.closest("form");
+  const preview = form && form.querySelector(".post-preview");
+  const label = form && form.querySelector(".preview-label");
+
+  if (!preview || !label) {
+    return;
+  }
+
+  renderPreview(textarea, preview, label);
+}
+
+document.addEventListener("input", function (event) {
+  if (!event.target.matches("form textarea")) {
+    return;
+  }
+
+  initialisePreview(event.target);
+});
+
+document.querySelectorAll("form textarea").forEach(function (textarea) {
+  initialisePreview(textarea);
+});
+});
+</script>
+
+<!-- To handle the search bar -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    function setFilterLink(linkId, newFilter) {
+        const link = document.getElementById(linkId);
+        if (!link) return;
+        const pathParts = window.location.pathname.split("/");
+        // Expect: /<section>/<entry> or /<section>/<entry>/<filter>
+        if (pathParts.length >= 3) {
+            const section = pathParts[1];
+            const entry = pathParts[2];
+            // Construct base: /tags/additive, /sources_bib/BL09, etc.
+            const baseUrl = "/" + section + "/" + entry;
+            link.href = baseUrl + "/" + newFilter;
+        }
+    }
+    setFilterLink("solvedLink", "solved");
+    setFilterLink("openLink", "open");
+    setFilterLink("yesLink", "yes");
+    setFilterLink("noLink", "no");
+});
+</script>
+
+<!-- Handle the dual view link -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const dualLink = document.getElementById("dualViewLink");
+  if (!dualLink) return;
+
+  const isInDualView = window.location.pathname.startsWith("/dual");
+  dualLink.textContent = isInDualView ? "Exit Dual View" : "Dual View";
+  dualLink.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    if (isInDualView) {
+      try {
+        const leftIframe = document.getElementById("iframe-left");
+        const src = leftIframe?.src || "/";
+        let clean = src.replace(window.location.origin, "");
+        clean = clean.replace(/[?&]embed=1/, "");
+
+        window.location.href = clean;
+      } catch (err) {
+        window.location.href = "/";
+      }
+    } else {
+      const currentPath = window.location.pathname + window.location.search;
+      const rightPanelDefault = "/";
+      const hash = `#left:${encodeURIComponent(currentPath)}&right:${encodeURIComponent(rightPanelDefault)}`;
+      window.location.href = `/dual${hash}`;
+    }
+  });
+});
+</script>
+
+<!-- Redirect links and searches when in dual view mode -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  if (!window.location.pathname.startsWith("/dual")) return;
+
+  function getTargetPanel() {
+    const selected = document.querySelector('input[name="targetPanel"]:checked');
+    return selected ? selected.value : "left";
+  }
+
+  function loadInPanel(panel, path) {
+    if (!path) return;
+    const iframe = document.getElementById(`iframe-${panel}`);
+    if (!iframe) return;
+    const url = path.includes("?") ? path + "&embed=1" : path + "?embed=1";
+    iframe.src = url;
+    const inputBox = document.querySelector(`#panel-${panel} input`);
+    if (inputBox) inputBox.value = path;
+    console.log(`Loaded "${url}" into panel "${panel}"`);
+  }
+  
+  document.querySelectorAll(".dual-aware a[href^='/'], a.dual-aware[href^='/']").forEach(link => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      const path = this.getAttribute("href");
+      loadInPanel(getTargetPanel(), path);
+    });
+  });
+
+  const idForm = document.getElementById("idsearchForm");
+  if (idForm) {
+    idForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const input = idForm.querySelector(".idsearchTerm").value.trim();
+      if (!input) return;
+
+      let path = null;
+
+      if (/^\d+$/.test(input)) {
+        path = "/go_to/" + encodeURIComponent(input);
+      } else if (/^((\d+|end)(-(\d+|end))?\s*)+(open|solved|yes|no)?$/i.test(input)) {
+        const parts = input.split(/\s+/).filter(Boolean);
+        path = "/range/" + parts.map(encodeURIComponent).join("/");
+      } else {
+        alert("Invalid input format.");
+        return;
+      }
+
+      loadInPanel(getTargetPanel(), path);
+    });
+  }
+
+  const searchForm = document.getElementById("searchForm");
+  if (searchForm) {
+    searchForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const input = searchForm.querySelector(".searchTerm").value.trim();
+      if (!input) return;
+
+      const path = "/search/" + encodeURIComponent(input);
+      loadInPanel(getTargetPanel(), path);
+    });
+  }
+});
+</script>
+
+<!-- Different menu on mobile -->
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const button = document.getElementById("mobileMenuButton");
+  const dropdown = document.getElementById("mobileDropdown");
+
+  if (button && dropdown) {
+    button.addEventListener("click", function () {
+      dropdown.classList.toggle("show");
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!button.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove("show");
+      }
+    });
+  }
+});
+</script>
+
+<!-- For expanding threads -->
+
+<script>
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('#toggle-posts');
+  if (!link) return;
+  e.preventDefault(); 
+
+  const box = document.getElementById('more-posts');
+  const isHidden = box.classList.toggle('hidden');
+  const expanded = !isHidden;
+
+  link.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  box.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+
+  link.textContent = expanded
+    ? 'Show only the top five comments'
+    : `Show ${link.dataset.remaining} more comments`;
+});
+</script>
+
+
+<script>
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('.toggle-replies');
+  if (!link) return;
+  e.preventDefault();
+
+  const pid = link.dataset.postId;
+  const box = document.getElementById(`more-replies-${pid}`);
+  if (!box) return;
+
+  const isHidden = box.classList.toggle('hidden');
+  const expanded = !isHidden;
+
+  link.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  box.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+
+  link.textContent = expanded
+    ? 'Hide replies'
+    : `Show ${link.dataset.remaining} more replies`;
+});
+</script>
+
+
+<script>
+document.addEventListener("click", async function (event) {
+    const button = event.target.closest(".problem-status-option");
+    if (!button) return;
+
+    const widget = button.closest(".problem-status-widget");
+    if (!widget) return;
+
+    if (widget.dataset.canEdit !== "1") return;
+
+    const status = button.dataset.status;
+    const url = widget.dataset.setUrl;
+
+    widget.classList.add("is-saving");
+
+    const buttons = widget.querySelectorAll(".problem-status-option");
+    buttons.forEach(btn => btn.disabled = true);
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Requested-With": "fetch"
+            },
+            body: JSON.stringify({ status: status })
+        });
+
+        const data = await response.json().catch(() => ({}));
+
+        if (!response.ok || !data.ok) {
+            throw new Error(data.error || "Could not update problem status.");
+        }
+
+        widget.dataset.currentStatus = data.status;
+
+        buttons.forEach(btn => {
+            const active = btn.dataset.status === data.status;
+            btn.classList.toggle("is-active", active);
+            btn.setAttribute("aria-checked", active ? "true" : "false");
+        });
+
+        const label = widget.querySelector(".js-problem-status-label");
+        const description = widget.querySelector(".js-problem-status-description");
+
+        if (label) label.textContent = data.label || button.dataset.label;
+        if (description) description.textContent = data.description || button.dataset.description;
+          widget.style.setProperty("--status-progress", button.dataset.progress);
+
+    } catch (err) {
+        alert(err.message || "Could not update problem status.");
+    } finally {
+        widget.classList.remove("is-saving");
+
+        if (widget.dataset.canEdit === "1") {
+            buttons.forEach(btn => btn.disabled = false);
+        }
+    }
+});
+</script>
+  
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a426e9d9eca9aa25',t:'MTc5MDY0MjE4NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"b8844510a8d24cfb9a8920cc04221446","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

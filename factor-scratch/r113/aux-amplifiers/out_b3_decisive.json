@@ -1,0 +1,110 @@
+[
+ {
+  "kp": 48,
+  "kq": 24,
+  "joint_log2": 23.87,
+  "single_log2": 48
+ },
+ {
+  "kp": 48,
+  "kq": 40,
+  "joint_log2": 39.87,
+  "single_log2": 48
+ },
+ {
+  "kp": 48,
+  "kq": 48,
+  "joint_log2": 47.286,
+  "single_log2": 48
+ },
+ {
+  "kp": 48,
+  "kq": 56,
+  "joint_log2": 48.0,
+  "single_log2": 48
+ },
+ {
+  "kp": 48,
+  "kq": 60,
+  "joint_log2": 48.0,
+  "single_log2": 48
+ },
+ {
+  "kp": 48,
+  "kq": 64,
+  "joint_log2": 48.0,
+  "single_log2": 48
+ },
+ {
+  "kp": 56,
+  "kq": 24,
+  "joint_log2": 23.87,
+  "single_log2": 56
+ },
+ {
+  "kp": 56,
+  "kq": 40,
+  "joint_log2": 39.87,
+  "single_log2": 56
+ },
+ {
+  "kp": 56,
+  "kq": 48,
+  "joint_log2": 47.87,
+  "single_log2": 56
+ },
+ {
+  "kp": 56,
+  "kq": 56,
+  "joint_log2": 55.041,
+  "single_log2": 56
+ },
+ {
+  "kp": 56,
+  "kq": 60,
+  "joint_log2": 56.0,
+  "single_log2": 56
+ },
+ {
+  "kp": 56,
+  "kq": 64,
+  "joint_log2": 56.0,
+  "single_log2": 56
+ },
+ {
+  "kp": 60,
+  "kq": 24,
+  "joint_log2": 23.87,
+  "single_log2": 60
+ },
+ {
+  "kp": 60,
+  "kq": 40,
+  "joint_log2": 39.87,
+  "single_log2": 60
+ },
+ {
+  "kp": 60,
+  "kq": 48,
+  "joint_log2": 47.87,
+  "single_log2": 60
+ },
+ {
+  "kp": 60,
+  "kq": 56,
+  "joint_log2": 55.87,
+  "single_log2": 60
+ },
+ {
+  "kp": 60,
+  "kq": 60,
+  "joint_log2": 59.112,
+  "single_log2": 60
+ },
+ {
+  "kp": 60,
+  "kq": 64,
+  "joint_log2": 59.95,
+  "single_log2": 60
+ }
+]

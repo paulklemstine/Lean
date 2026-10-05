@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/c3UvjAmcMbTHVu3/s/AOyU1DXJE</id>
+  <title>arXiv Query: search_query=abs:"polynomial" AND abs:"factorization" AND abs:"modulo" AND cat:cs.CR&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-05T15:30:22Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22polynomial%22+AND+(abs:%22factorization%22+AND+(abs:%22modulo%22+AND+cat:cs.CR))&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>5</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2607.03376v2</id>
+    <title>Exact Stratification and Affine Mass Formulas for Split Richelot Data over Finite Fields</title>
+    <updated>2026-08-05T07:50:50Z</updated>
+    <link href="https://arxiv.org/abs/2607.03376v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.03376v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Richelot $(2,2)$-step is the standard step of explicit genus-2 isogeny computation. We determine the exact stratification of its input space over a finite field $\mathbb{F}_q$ of odd characteristic: ordered factorizations $f=uvw$ of a square-free sextic into monic quadratics fall into three strata by the geometric type of the quotient, governed by the incidence geometry of the discriminant locus. This yields closed formulas for each stratum and, modulo affine coordinate changes, mass formulas of degree four in $q$ with a complete classification of stabilisers. The classification is decided by data the step already computes, at $5\mathrm{M}+6\mathrm{S}$ beyond the brackets, and an output post-check is provably redundant. On the decomposable stratum the square class of one resultant determines the field of definition of the elliptic factors and the shape of the Weil polynomial of the Jacobian; the two cases are counted exactly, and in the nonsplit case the curve $y^2=f$ has $q+1$ rational points. Exhaustive enumeration over small finite fields verifies every proved count.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-03T14:29:46Z</published>
+    <arxiv:comment>Substantially revised and extended; supersedes v1, then titled "Derivative-free Richelot isogenies via subresultants with algebraic certification". Corrects v1 and adds exact stratification counts, affine mass formulas with a full stabiliser classification, and the base-field arithmetic of the decomposable stratum. 46 pages; verification scripts included as ancillary files</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Hung T. Dang</name>
+    </author>
+    <author>
+      <name>Diep V. Nguyen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.04061v4</id>
+    <title>Computing $\varphi(N)$ for an RSA module with a single quantum query</title>
+    <updated>2025-10-09T09:28:48Z</updated>
+    <link href="https://arxiv.org/abs/2406.04061v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.04061v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we give a polynomial time algorithm to compute $\varphi(N)$ for an RSA module $N$ using as input the order modulo $N$ of a randomly chosen integer. This provides a new insight in the very important problem of factoring an RSA module with extra information. In fact, the algorithm is extremely simple and consists only on a computation of a greatest common divisor, two multiplications and a division. The algorithm works with a probability of at least $1-\frac{1}{N^{1/2-ε}}$, where $ε$ is any small positive constant.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-06T13:30:18Z</published>
+    <arxiv:comment>Some corrections pointed out by referees have been incorporated</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Luis Víctor Dieulefait</name>
+    </author>
+    <author>
+      <name>Jorge Urróz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.19897v1</id>
+    <title>Hidden Stabilizers, the Isogeny To Endomorphism Ring Problem and the Cryptanalysis of pSIDH</title>
+    <updated>2023-05-31T14:30:32Z</updated>
+    <link href="https://arxiv.org/abs/2305.19897v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.19897v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Isogeny to Endomorphism Ring Problem (IsERP) asks to compute the endomorphism ring of the codomain of an isogeny between supersingular curves in characteristic $p$ given only a representation for this isogeny, i.e. some data and an algorithm to evaluate this isogeny on any torsion point. This problem plays a central role in isogeny-based cryptography; it underlies the security of pSIDH protocol (ASIACRYPT 2022) and it is at the heart of the recent attacks that broke the SIDH key exchange. Prior to this work, no efficient algorithm was known to solve IsERP for a generic isogeny degree, the hardest case seemingly when the degree is prime.
+  In this paper, we introduce a new quantum polynomial-time algorithm to solve IsERP for isogenies whose degrees are odd and have $O(\log\log p)$ many prime factors. As main technical tools, our algorithm uses a quantum algorithm for computing hidden Borel subgroups, a group action on supersingular isogenies from EUROCRYPT 2021, various algorithms for the Deuring correspondence and a new algorithm to lift arbitrary quaternion order elements modulo an odd integer $N$ with $O(\log\log p)$ many prime factors to powersmooth elements.
+  As a main consequence for cryptography, we obtain a quantum polynomial-time key recovery attack on pSIDH. The technical tools we use may also be of independent interest.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-31T14:30:32Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Mingjie Chen</name>
+    </author>
+    <author>
+      <name>Muhammad Imran</name>
+    </author>
+    <author>
+      <name>Gábor Ivanyos</name>
+    </author>
+    <author>
+      <name>Péter Kutas</name>
+    </author>
+    <author>
+      <name>Antonin Leroux</name>
+    </author>
+    <author>
+      <name>Christophe Petit</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1612.02788v2</id>
+    <title>Faster Space-Efficient Algorithms for Subset Sum, k-Sum and Related Problems</title>
+    <updated>2017-06-24T18:35:30Z</updated>
+    <link href="https://arxiv.org/abs/1612.02788v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1612.02788v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present space efficient Monte Carlo algorithms that solve Subset Sum and Knapsack instances with $n$ items using $O^*(2^{0.86n})$ time and polynomial space, where the $O^*(\cdot)$ notation suppresses factors polynomial in the input size. Both algorithms assume random read-only access to random bits. Modulo this mild assumption, this resolves a long-standing open problem in exact algorithms for NP-hard problems. These results can be extended to solve Binary Linear Programming on $n$ variables with few constraints in a similar running time. We also show that for any constant $k\geq 2$, random instances of $k$-Sum can be solved using $O(n^{k-0.5}polylog(n))$ time and $O(\log n)$ space, without the assumption of random access to random bits.
+  Underlying these results is an algorithm that determines whether two given lists of length $n$ with integers bounded by a polynomial in $n$ share a common value. Assuming random read-only access to random bits, we show that this problem can be solved using $O(\log n)$ space significantly faster than the trivial $O(n^2)$ time algorithm if no value occurs too often in the same list.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-12-08T20:09:55Z</published>
+    <arxiv:comment>23 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Nikhil Bansal</name>
+    </author>
+    <author>
+      <name>Shashwat Garg</name>
+    </author>
+    <author>
+      <name>Jesper Nederlof</name>
+    </author>
+    <author>
+      <name>Nikhil Vyas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1605.08065v1</id>
+    <title>Cryptographic applications of capacity theory: On the optimality of Coppersmith's method for univariate polynomials</title>
+    <updated>2016-05-25T20:38:56Z</updated>
+    <link href="https://arxiv.org/abs/1605.08065v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1605.08065v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We draw a new connection between Coppersmith's method for finding small solutions to polynomial congruences modulo integers and the capacity theory of adelic subsets of algebraic curves. Coppersmith's method uses lattice basis reduction to construct an auxiliary polynomial that vanishes at the desired solutions. Capacity theory provides a toolkit for proving when polynomials with certain boundedness properties do or do not exist. Using capacity theory, we prove that Coppersmith's bound for univariate polynomials is optimal in the sense that there are \emph{no} auxiliary polynomials of the type he used that would allow finding roots of size $N^{1/d+ε}$ for monic degree-$d$ polynomials modulo $N$. Our results rule out the existence of polynomials of any degree and do not rely on lattice algorithms, thus eliminating the possibility of even superpolynomial-time improvements to Coppersmith's bound. We extend this result to constructions of auxiliary polynomials using binomial polynomials, and rule out the existence of any auxiliary polynomial of this form that would find solutions of size $N^{1/d+ε}$ unless $N$ has a very small prime factor.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-05-25T20:38:56Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ted Chinburg</name>
+    </author>
+    <author>
+      <name>Brett Hemenway</name>
+    </author>
+    <author>
+      <name>Nadia Heninger</name>
+    </author>
+    <author>
+      <name>Zachary Scherr</name>
+    </author>
+  </entry>
+</feed>

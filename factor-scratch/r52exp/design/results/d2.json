@@ -1,0 +1,456 @@
+{
+ "theory": [
+  {
+   "arm": "Jacobi on g^x (r51 R1a)",
+   "rejects": true,
+   "q": 0.5,
+   "gain_cap_best_case": 1.0,
+   "verdict": "KILLED: GAIN <= 0.50"
+  },
+  {
+   "arm": "2-adic corner p|a,p|b (R2)",
+   "rejects": true,
+   "q": 0.1111111111111111,
+   "gain_cap_best_case": 0.2222222222222222,
+   "verdict": "KILLED: GAIN <= 0.22"
+  },
+  {
+   "arm": "parity of x (r51 R1d)",
+   "rejects": false,
+   "q": 1.0,
+   "gain_cap_best_case": 2.0,
+   "verdict": "legal, measured NULL (1.007)"
+  },
+  {
+   "arm": "D2a sieve-only search",
+   "rejects": false,
+   "q": 1.0,
+   "gain_cap_best_case": 2.0,
+   "verdict": "LEGAL: q=1 by construction"
+  },
+  {
+   "arm": "D2b sieve over x mod ord_n(g)",
+   "rejects": false,
+   "q": 1.0,
+   "gain_cap_best_case": 2.0,
+   "verdict": "LEGAL, period ~ n (D2b)"
+  },
+  {
+   "arm": "D2d p-1 family",
+   "rejects": false,
+   "q": 1.0,
+   "gain_cap_best_case": 2.0,
+   "verdict": "LEGAL, rate 0/72 (D1)"
+  }
+ ],
+ "d2a": [
+  {
+   "bits": 28,
+   "b": 6,
+   "n_sieve": 135,
+   "n_brute": 135,
+   "identical": true,
+   "trials_bruteforce": 696,
+   "sieve_marks": 1997,
+   "sieve_divide_steps": 444,
+   "bruteforce_divide_steps": 444,
+   "q_implied": 1.0
+  },
+  {
+   "bits": 28,
+   "b": 12,
+   "n_sieve": 379,
+   "n_brute": 379,
+   "identical": true,
+   "trials_bruteforce": 1392,
+   "sieve_marks": 1997,
+   "sieve_divide_steps": 1532,
+   "bruteforce_divide_steps": 1454,
+   "q_implied": 1.0
+  },
+  {
+   "bits": 30,
+   "b": 6,
+   "n_sieve": 135,
+   "n_brute": 135,
+   "identical": true,
+   "trials_bruteforce": 696,
+   "sieve_marks": 1997,
+   "sieve_divide_steps": 444,
+   "bruteforce_divide_steps": 444,
+   "q_implied": 1.0
+  },
+  {
+   "bits": 30,
+   "b": 12,
+   "n_sieve": 379,
+   "n_brute": 379,
+   "identical": true,
+   "trials_bruteforce": 1392,
+   "sieve_marks": 1997,
+   "sieve_divide_steps": 1532,
+   "bruteforce_divide_steps": 1454,
+   "q_implied": 1.0
+  },
+  {
+   "bits": 32,
+   "b": 6,
+   "n_sieve": 135,
+   "n_brute": 135,
+   "identical": true,
+   "trials_bruteforce": 696,
+   "sieve_marks": 1997,
+   "sieve_divide_steps": 444,
+   "bruteforce_divide_steps": 444,
+   "q_implied": 1.0
+  },
+  {
+   "bits": 32,
+   "b": 12,
+   "n_sieve": 379,
+   "n_brute": 379,
+   "identical": true,
+   "trials_bruteforce": 1392,
+   "sieve_marks": 1997,
+   "sieve_divide_steps": 1532,
+   "bruteforce_divide_steps": 1454,
+   "q_implied": 1.0
+  }
+ ],
+ "d2b_poly": [
+  {
+   "trials": 122880,
+   "P_p": 0.018741861979166666,
+   "P_q": 0.021793619791666666,
+   "P_n": 0.00043131510416666665,
+   "P_p_times_P_q": 0.0004084530141618517,
+   "expected_joint_count": 50.19070638020833,
+   "ratio_joint_over_independent": 1.0559723865711412,
+   "z_vs_independence": 0.3966196175765396,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 0
+  },
+  {
+   "trials": 122880,
+   "P_p": 0.023095703125,
+   "P_q": 0.01923828125,
+   "P_n": 0.0003987630208333333,
+   "P_p_times_P_q": 0.0004443216323852539,
+   "expected_joint_count": 54.5982421875,
+   "ratio_joint_over_independent": 0.8974647907477562,
+   "z_vs_independence": -0.7578074264976732,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 1
+  },
+  {
+   "trials": 122880,
+   "P_p": 0.014542643229166667,
+   "P_q": 0.016951497395833334,
+   "P_n": 0.00016276041666666666,
+   "P_p_times_P_q": 0.000246519578827752,
+   "expected_joint_count": 30.292325846354167,
+   "ratio_joint_over_independent": 0.6602332254526141,
+   "z_vs_independence": -1.870254700453173,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 2
+  },
+  {
+   "trials": 122880,
+   "P_p": 0.019148763020833334,
+   "P_q": 0.015096028645833334,
+   "P_n": 0.00030110677083333335,
+   "P_p_times_P_q": 0.00028907027509477405,
+   "expected_joint_count": 35.520955403645836,
+   "ratio_joint_over_independent": 1.0416386490607277,
+   "z_vs_independence": 0.24819997291378446,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 3
+  },
+  {
+   "trials": 245760,
+   "P_p": 0.024430338541666666,
+   "P_q": 0.027071126302083335,
+   "P_n": 0.0006306966145833334,
+   "P_p_times_P_q": 0.0006613567802641127,
+   "expected_joint_count": 162.53504231770836,
+   "ratio_joint_over_independent": 0.9536405060086701,
+   "z_vs_independence": -0.5912291667277447,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 0
+  },
+  {
+   "trials": 245760,
+   "P_p": 0.020589192708333332,
+   "P_q": 0.02694091796875,
+   "P_n": 0.0005777994791666667,
+   "P_p_times_P_q": 0.0005546917517979939,
+   "expected_joint_count": 136.321044921875,
+   "ratio_joint_over_independent": 1.0416586821306981,
+   "z_vs_independence": 0.48652757888032844,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 1
+  },
+  {
+   "trials": 245760,
+   "P_p": 0.024723307291666666,
+   "P_q": 0.016682942708333332,
+   "P_n": 0.00037027994791666665,
+   "P_p_times_P_q": 0.00041245751910739474,
+   "expected_joint_count": 101.36555989583333,
+   "ratio_joint_over_independent": 0.8977408115094976,
+   "z_vs_independence": -1.029762651166019,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 2
+  },
+  {
+   "trials": 245760,
+   "P_p": 0.0211181640625,
+   "P_q": 0.016682942708333332,
+   "P_n": 0.00032958984375,
+   "P_p_times_P_q": 0.0003523131211598714,
+   "expected_joint_count": 86.58447265625,
+   "ratio_joint_over_independent": 0.9355026082052729,
+   "z_vs_independence": -0.6002589967021498,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 3
+  },
+  {
+   "trials": 491520,
+   "P_p": 0.01375732421875,
+   "P_q": 0.009440104166666666,
+   "P_n": 0.00011800130208333333,
+   "P_p_times_P_q": 0.00012987057367960613,
+   "expected_joint_count": 63.833984375,
+   "ratio_joint_over_independent": 0.9086069210292812,
+   "z_vs_independence": -0.730243143642872,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 0
+  },
+  {
+   "trials": 491520,
+   "P_p": 0.012650553385416667,
+   "P_q": 0.010203043619791666,
+   "P_n": 0.00012613932291666668,
+   "P_p_times_P_q": 0.00012907414800590939,
+   "expected_joint_count": 63.44252522786458,
+   "ratio_joint_over_independent": 0.9772624872247203,
+   "z_vs_independence": -0.18111783430401981,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 1
+  },
+  {
+   "trials": 491520,
+   "P_p": 0.008990478515625,
+   "P_q": 0.010630289713541666,
+   "P_n": 0.00010579427083333334,
+   "P_p_times_P_q": 9.557139128446579e-05,
+   "expected_joint_count": 46.975250244140625,
+   "ratio_joint_over_independent": 1.1069658965038964,
+   "z_vs_independence": 0.7331631705592375,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 2
+  },
+  {
+   "trials": 491520,
+   "P_p": 0.009724934895833334,
+   "P_q": 0.014200846354166666,
+   "P_n": 0.00010579427083333334,
+   "P_p_times_P_q": 0.00013810230626000298,
+   "expected_joint_count": 67.88004557291667,
+   "ratio_joint_over_independent": 0.7660572346572995,
+   "z_vs_independence": -1.9275722811440257,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 3
+  },
+  {
+   "trials": 983040,
+   "P_p": 0.011241658528645834,
+   "P_q": 0.009210205078125,
+   "P_n": 0.0001068115234375,
+   "P_p_times_P_q": 0.00010353798046708108,
+   "expected_joint_count": 101.78197631835938,
+   "ratio_joint_over_independent": 1.0316168323512906,
+   "z_vs_independence": 0.31898942094454114,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 0
+  },
+  {
+   "trials": 983040,
+   "P_p": 0.007933553059895833,
+   "P_q": 0.011244710286458333,
+   "P_n": 8.748372395833333e-05,
+   "P_p_times_P_q": 8.921050570077365e-05,
+   "expected_joint_count": 87.69749552408852,
+   "ratio_joint_over_independent": 0.9806437400071218,
+   "z_vs_independence": -0.1812735396212056,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 1
+  },
+  {
+   "trials": 983040,
+   "P_p": 0.014174397786458333,
+   "P_q": 0.008916219075520834,
+   "P_n": 0.00013224283854166666,
+   "P_p_times_P_q": 0.00012638203592764006,
+   "expected_joint_count": 124.23859659830728,
+   "ratio_joint_over_independent": 1.0463736999567106,
+   "z_vs_independence": 0.5169249107905318,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 2
+  },
+  {
+   "trials": 983040,
+   "P_p": 0.007623291015625,
+   "P_q": 0.014262898763020834,
+   "P_n": 9.765625e-05,
+   "P_p_times_P_q": 0.00010873022799690565,
+   "expected_joint_count": 106.88616333007813,
+   "ratio_joint_over_independent": 0.8981518000935231,
+   "z_vs_independence": -1.0530226518450296,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 3
+  },
+  {
+   "trials": 1966080,
+   "P_p": 0.005629984537760416,
+   "P_q": 0.006403096516927083,
+   "P_n": 4.018147786458333e-05,
+   "P_p_times_P_q": 3.6049334384087056e-05,
+   "expected_joint_count": 70.87587534586588,
+   "ratio_joint_over_independent": 1.1146246817339378,
+   "z_vs_independence": 0.9650174993780716,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 0
+  },
+  {
+   "trials": 1966080,
+   "P_p": 0.0056427001953125,
+   "P_q": 0.00435028076171875,
+   "P_n": 1.8819173177083334e-05,
+   "P_p_times_P_q": 2.4547330103814604e-05,
+   "expected_joint_count": 48.26201477050782,
+   "ratio_joint_over_independent": 0.7666484744977978,
+   "z_vs_independence": -1.6211331959767685,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 1
+  },
+  {
+   "trials": 1966080,
+   "P_p": 0.0046956380208333336,
+   "P_q": 0.004155476888020833,
+   "P_n": 2.288818359375e-05,
+   "P_p_times_P_q": 1.9512615270084805e-05,
+   "expected_joint_count": 38.363362630208336,
+   "ratio_joint_over_independent": 1.1729941515753837,
+   "z_vs_independence": 1.0715044815401442,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 2
+  },
+  {
+   "trials": 1966080,
+   "P_p": 0.005282084147135417,
+   "P_q": 0.006362406412760416,
+   "P_n": 4.3233235677083336e-05,
+   "P_p_times_P_q": 3.360676605047451e-05,
+   "expected_joint_count": 66.07359059651692,
+   "ratio_joint_over_independent": 1.2864443907560366,
+   "z_vs_independence": 2.328421356071205,
+   "has_power": true,
+   "sampling": "uniform over [0,n) in both a and b -- CRT-exact",
+   "modulus_index": 3
+  }
+ ],
+ "d2b_stange": [],
+ "d2c": [
+  {
+   "bits": 26,
+   "b": 6,
+   "n_rels": 0,
+   "factored": false,
+   "note": "no usable relation in this box (REGIME LIMIT, see docstring)"
+  },
+  {
+   "bits": 26,
+   "b": 10,
+   "n_rels": 0,
+   "factored": false,
+   "note": "no usable relation in this box (REGIME LIMIT, see docstring)"
+  },
+  {
+   "bits": 26,
+   "b": 14,
+   "n_rels": 0,
+   "factored": false,
+   "note": "no usable relation in this box (REGIME LIMIT, see docstring)"
+  },
+  {
+   "bits": 28,
+   "b": 6,
+   "n_rels": 0,
+   "factored": false,
+   "note": "no usable relation in this box (REGIME LIMIT, see docstring)"
+  },
+  {
+   "bits": 28,
+   "b": 10,
+   "n_rels": 0,
+   "factored": false,
+   "note": "no usable relation in this box (REGIME LIMIT, see docstring)"
+  },
+  {
+   "bits": 28,
+   "b": 14,
+   "n_rels": 0,
+   "factored": false,
+   "note": "no usable relation in this box (REGIME LIMIT, see docstring)"
+  },
+  {
+   "bits": 30,
+   "b": 6,
+   "n_rels": 0,
+   "factored": false,
+   "note": "no usable relation in this box (REGIME LIMIT, see docstring)"
+  },
+  {
+   "bits": 30,
+   "b": 10,
+   "n_rels": 0,
+   "factored": false,
+   "note": "no usable relation in this box (REGIME LIMIT, see docstring)"
+  },
+  {
+   "bits": 30,
+   "b": 14,
+   "n_rels": 0,
+   "factored": false,
+   "note": "no usable relation in this box (REGIME LIMIT, see docstring)"
+  }
+ ],
+ "calibration": {
+  "identical": true,
+  "swing": 0.0,
+  "n_cells": 12
+ },
+ "config": {
+  "FBB": 300
+ }
+}

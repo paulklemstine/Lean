@@ -1,0 +1,1212 @@
+                                            Magic state cultivation: growing T states as cheap
+                                            as CNOT gates
+                                            Craig Gidney, Noah Shutty, and Cody Jones
+
+                                            Google Quantum AI, California, USA
+                                            September 27, 2024
+
+
+
+                                                       We refine ideas from [KLZ96; JBH16; CN20; Bom+24; GJ23; Gid+23; HIF24] to
+                                                  efficiently prepare good |T ⟩ states. We call our construction “magic state cultivation”
+                                                  because it gradually grows the size and reliability of one state. Cultivation fits inside
+arXiv:2409.17595v1 [quant-ph] 26 Sep 2024
+
+
+
+
+                                                  a surface code patch and uses roughly the same number of physical gates as a lattice
+                                                  surgery CNOT gate of equivalent reliability. We estimate the infidelity of cultivation
+                                                  (from injection to idling at distance 15) using a mix of state vector simulation, stabilizer
+                                                  simulation, error enumeration, and Monte Carlo sampling. Compared to prior work,
+                                                  cultivation uses an order of magnitude fewer qubit·rounds to reach logical error rates
+                                                  as low as 2 · 10−9 when subjected to 10−3 uniform depolarizing circuit noise. Halving
+                                                  the circuit noise to 5 · 10−4 improves the achievable logical error rate to 4 · 10−11 .
+                                                  Cultivation’s efficiency and strong response to improvements in physical noise suggest
+                                                  that further magic state distillation may never be needed in practice.
+                                                       Data availability: Code, circuits, and stats are available on Zenodo [Gid24a].
+
+
+
+                                            Contents
+                                            1   Introduction                                                                                        3
+
+                                            2   Construction                                                                                        4
+                                                2.1 Stages . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    4
+                                                2.2 Injection Stage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     5
+                                                2.3 Cultivation Stage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     6
+                                                2.4 Escape Stage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      7
+                                                2.5 Decoding . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     10
+                                                2.6 Errata . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   11
+
+                                            3   Results                                                                                            12
+                                                3.1 Conventions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    12
+                                                3.2 Assumptions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      13
+                                                3.3 Simulations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    14
+
+                                            4   Conclusion                                                                                         17
+
+                                            5   Contributions                                                                                      17
+
+                                            6   Acknowledgements                                                                                   18
+
+                                            A Noise Model                                                                                          22
+
+                                            B Chunked Circuit Construction                                                                         23
+
+                                            C Bonus Figures                                                                                        25
+                                            Craig Gidney: craig.gidney@gmail.com
+
+
+
+                                                                                                1
+Figure 1: Scatter plot of historical estimates of T |+⟩ cost trade-offs from [Fow+12; Li15; FG18; GF19b;
+Lit19; Sin+22; Gid23; HIF24; Ito+24; Lee+24; Gid24b], under circuit noise with a noise strength of 10−3 .
+Points marked with “ungrown” omit the escape stage; they don’t account for the cost of growing the state to
+a large code distance. They represent the part of the process that’s experimentally accessible today.
+
+                          Paper     Noise      Fault     Error Rate   Discard Rate    Error Rate    Discard Rate
+                                   Strength   Distance   (Ungrown)     (Ungrown)     (End to End)   (End to End)
+                  Li 2015 [Li15]     10−3         7         N/A           N/A          5 · 10−3         50%
+ Chamberland et al 2020 [CN20]     5 · 10−4       7       3 · 10−7        95%            N/A            N/A
+ Chamberland et al 2020 [CN20]       10−4         7       5 · 10−10       50%            N/A            N/A
+          Gidney 2023 [Gid23]        10−3         7         N/A           N/A          6 · 10−4         75%
+    Itogawa et al 2024 [Ito+24]      10−3         3       1 · 10−4        30%            N/A            N/A
+                   (This Paper)      10−3         3       6 · 10−7        35%          3 · 10−6         80%
+                   (This Paper)      10−3         5       6 · 10−10       85%          2 · 10−9         99%
+                   (This Paper)    5 · 10−4       5       2 · 10−11       65%          4 · 10−11        90%
+                   (This Paper)      10−4         5       6 · 10−15       20%            N/A            N/A
+
+        Figure 2: Selected historical estimates of T |+⟩ cost trade-offs, without logical distillation.
+
+
+                                                         2
+Figure 3: To-scale spacetime defect diagrams of historical constructions for producing |T ⟩ states, showing
+improvement over time. (Limited to papers that included 3d models.) Assumes 10−3 uniform depolarizing
+circuit noise. ϵ annotations indicate logical error rates. Red boxes indicate output locations. Left: the braided
+factory from [FD12]. Middle left: the lattice surgery factory from [FG18]. Middle right: the double-output
+catalyzed factory from [GF19a]. Right: our construction retrying-until-success to cultivate a magic state, with
+a target fault distance of 5 and a target fault distance of 3.
+
+
+1 Introduction
+The surface code is a quantum error correcting code with a high threshold and simple planar con-
+nectivity requirements [Fow+12]. These properties have made it a leading contender in the design
+of fault tolerant quantum computers (though recently the competition has been growing [HH21;
+Bra+24; GJ23]). One downside of the surface code is the high cost of performing non-Clifford
+gates, like Ts and Toffolis. For two decades, the cheapest known way to perform these gates has
+been by magic state distillation and gate teleportation [BK05; GF19a; Lit19; HIF24].
+    The main inefficiency of magic state distillation is the fact that it’s performed with logical
+operations [Fow+12; GF19a; Lit19]. The large size of these operations, relative to physical oper-
+ations, has resulted in magic state distillation being a leading contributor to the expected cost of
+fault tolerant quantum computations. Many papers have attempted to optimize the cost of magic
+state distillation or to replace it with other techniques [Fow+12; FD12; Li15; FG18; GF19b; Lit19;
+Sin+22; Gid23; HIF24; Ito+24; Lee+24; Bro20; BKS21; VB19; Bom18; CN20; HH24]. Despite
+these efforts, the cost has remained substantial.
+    The enduring cost of preparing magic states has shaped proposals for quantum computer archi-
+tectures. For example, [Lit18] is a commonly cited architecture that pays large routing overheads
+to ensure magic state factories can run continuously. As another example, high-depth ripple carry
+adders were expected to run faster than low-depth carry-lookahead adders because ripple carry
+adders use fewer T gates [Gid17; Gid20]. More generally, the cost of quantum algorithms has often
+been approximated and optimized by focusing mainly on gates that require magic states [Lee+21;
+Cam17; Mas16; HC18; KW20].
+    In [CN20], Chamberland and Noh proposed a way to improve magic states using physical op-
+erations within a code, instead of logical operations
+                                                    √ between codes. The color code has transversal
+                                                                                           √
+Clifford gates, including the HXY = (X + Y )/ 2 gate which has |T ⟩ = T |+⟩ = |0⟩ + i|1⟩ as
+its +1 eigenstate and Z|T ⟩ as its -1 eigenstate. [CN20] noted that it was possible to measure in
+the eigenbasis of HXY by transversally controlling HXY gates with a GHZ state |00..0⟩ + |11..1⟩.
+Phase kickback from these controlled operations would transform the GHZ state into the state
+|00..0⟩ + s|11..1⟩, where s = ±1 is the projective measurement outcome in the eigenbasis of HXY
+and can be extracted using local measurements and classical communication. Therefore, after
+encoding a |T ⟩ state into a color code in some noisy fashion, the state can be cross-checked by
+performing this GHZ-controlled transversal HXY gate. These cross-checks increase the fault dis-
+tance of the state. The difficulty of preparing large GHZ states prevents this from being viable at
+arbitrarily large code distances, but it works well at small code distances.
+    [CN20] assumed a complex planar connectivity, and required an ambitious physical noise
+strength of between 10−4 and 5 · 10−4 . Itogawa et al [Ito+24] improved on this by showing that the
+idea still works with a simple square grid connectivity and 10−3 uniform depolarizing circuit noise.
+
+
+                                                       3
+These improvements are what brought the construction to our attention. In this paper we further
+refine the construction, enormously improving its performance. We make five main improvements.
+    First, we don’t attempt to correct any errors when at small code distances. Instead, we posts-
+elect using error detection. Carefully managing the amount of error detection, and the transition
+into error correction, is key to achieving good efficiency. Detecting too much ruins the retry rate.
+Detecting too little ruins the error rate. We think prior work has been detecting too little.
+    Second, we don’t keep the size of the code fixed. We iteratively improve the fault distance of
+the state while gradually increasing the size of the code hosting it. This incremental growth in
+the reliability of the state and the size of the code is why we call our construction “cultivation”.
+Incremental growth reduces the amount of postselection required to reach a target fault distance,
+making it tractable to target a fault distance of 5 despite assuming uniform depolarizing circuit
+noise with a noise strength of 10−3 .
+    Third, we reduce the cost of checking the logical state. Conceptually we’re still performing
+a transversal HXY controlled by a GHZ state, but the form of the circuit is streamlined. In
+particular, we perform checks in pairs with one check being the time reverse of the other. This
+allows qubits to be more freely rearranged during a check, because its time-reversed partner will
+undo these rearrangements. Also, the time-reversed check restores helper qubits to their original
+states, creating many accompanying flag checks.
+    Fourth, we measure color code stabilizers using the superdense cycle from [GJ23]. This measures
+the stabilizers using fewer circuit layers than other known circuits, under square grid connectivity,
+while preserving code distance by having the different stabilizer measurements flag each other. The
+superdense cycle is difficult to decode, but this downside isn’t an issue in this paper because we
+can simply postselect away any complicated cases.
+    Fifth, we introduce a technique (“grafting”) for rapidly growing the size of the code hosting
+the prepared state. We include this step in our simulations and in our estimates. Prior work has
+tended to ignore the need to grow the prepared state to large distances. However, we find that this
+step is surprisingly difficult and costly. Accounting for it is crucial to getting accurate numbers.
+    Magic state cultivation is a construction whose goals are practical, not theoretical. Due to
+exponential growth in postselection costs versus target fault distance, cultivation isn’t relevant
+to performance in the asymptotic limit. Regardless, cultivation is an efficient way to produce T
+states with error rates relevant to practical quantum computations. In particular, our simulations
+will show that cultivation makes it substantially cheaper to reach intermediate logical error rates
+like 10−6 or 10−9 (see Figure 1 and Figure 2). These error rates are nearly sufficient to run well
+known quantum algorithms like [Gid17; Hän+20; Bab+18]. Our simulations will further show
+that cultivation’s costs and error rates improve dramatically as physical noise strength is reduced.
+Even modest ongoing improvements to physical qubits could easily result in cultivation meeting the
+practical requirements of quantum computers. So we suspect cultivation will eventually obsolete
+magic state distillation, in practice if not in theory.
+    The paper is organized as follows. In Section 2 we describe our construction along with some
+alternatives that we considered. In Section 3 we describe our simulations of the construction,
+quantifying its performance. We conclude in Section 4. Appendix A describes our noise model.
+Appendix B summarizes the process by which we created the circuits we simulated. Appendix C
+includes bonus figures that didn’t fit well in the main text.
+
+
+2 Construction
+The code we wrote to produce our construction is available on Zenodo [Gid24a].
+
+2.1 Stages
+We split our construction into three stages: the injection stage, the cultivation stage, and the
+escape stage.
+
+   • Injection. The injection stage creates the initial encoded |T ⟩ state. The state should end up
+     stored in a distance 3 code (or better), even though the state itself will have a fault distance
+     of 1. This stage is the easiest stage; there are many ways to do it that perform similarly.
+
+
+                                                 4
+Figure 4: Overview of a magic state cultivation. Time moves upward. Darker colors are color code boundaries.
+Lighter colors are X/Z boundaries, and X/Z stabilizers. In practice cultivation must be attempted several times
+before it succeeds, and multiple attempts at stage 1 and stage 2 would be run in parallel.
+
+
+   • Cultivation. This stage gradually increases the fault distance of the stored |T ⟩ state by
+     performing cross-checks on it. The main challenge of this stage is that retry costs grow
+     exponentially with the number of gates, harshly punishing any inefficiencies.
+   • Escape! Cultivation ends with a |T ⟩ state too good for the code it’s trapped inside. Staying
+     for even one unpostselected round would substantially damage the state, because the logical
+     error rate without postselection is much higher. The goal of the escape stage is to fix this,
+     by rapidly boosting the size of the code hosting the state. The challenge of the escape stage
+     is that its circuit is far too large to postselect every possible detection event. Fine grained
+     measures of whether or not to discard a shot are needed.
+
+   These stages are visually summarized in Figure 4.
+
+2.2 Injection Stage
+In [Ito+24], the injection stage is performed by a unitary encoding circuit (the left half of figure
+2 in their paper). In [CN20], the injection stage is performed by lattice surgery between a data
+qubit storing |T ⟩ and a degenerate color code (figure 7a of their paper). In this work we considered
+three different designs for the injection stage: “teleport injection” (see Figure 21), “Bell injection”
+(see Figure 20), and “unitary injection” (see Figure 6). We used brute force enumeration of error
+mechanisms to compare these methods (see Figure 5). Of the three approaches, we found that
+unitary injection had the best performance, though all three were surprisingly close despite their
+conceptual and physical differences.
+    Our unitary injection circuit performs a series of Clifford gates that deterministically prepare
+the stabilizers and observables of a distance 3 color code storing a |T ⟩ state. Note that the circuit
+isn’t an encoding circuit; it doesn’t first prepare a physical |T ⟩ state and then expand it into a
+color code. Instead, similar to [Gid23], we arrange the circuit so that the T gate appears in the
+
+
+                                                      5
+Figure 5: Cost of cultivation without an escape stage. Shows the similar performance of different injection
+stages. Estimated by enumerating all possible logical errors up to distance 5.
+
+
+middle. This allows the T gate to occur on a qubit protected by a Z stabilizer, catching X or Y
+errors on the T gate.
+
+2.3 Cultivation Stage
+In [CN20], cultivation is done by alternating between a flagged GHZ-controlled transversal H check
+and a flagged stabilizer check. At code distance 3, ignoring single qubit Clifford gate layers, their
+T state check spans 10 layers and 16 qubits while their stabilizer check spans 9 layers and 49 qubits
+(see figures 1, 2, and 3 of [CN20]). To reach fault distance d, they initialize a distance 2d + 1 color
+code and run d alternations.
+    In [Ito+24], cultivation is restricted to growing the fault distance from 1 to 2, which is done by
+the flagged creation of a GHZ state followed by using the GHZ state to control a transversal HXY
+gate. This process spans 15 layers and 25 qubits.
+    Our cultivation stage works on a check-grow-stabilize cycle. The “check” step increases the
+fault distance of the T state by checking on the logical value of the code. The “grow” step enables
+further increases in the fault distance by increasing the size of the color code. The “stabilize” step
+measures the stabilizers of the code a few times, to ensure new stabilizers can detect errors and to
+prevent correlated errors between T state checks.
+    Our check step is actually a “double-check”; it performs two checks with the second check being
+the time reverse of the first. Example double-check circuits are shown in Figure 7 and Figure 8.
+These circuits start by applying T † gates to the data qubits, so that the goal becomes checking
+the X parity of all data qubits (instead of the HXY parity). Each data qubit is paired with an
+adjacent ancilla, which we call the data qubit’s partner. The partners are initialized into the |+⟩
+state and then each data qubit is targeted by a CNOT gate controlled by its partner qubit. After
+these CNOTs are applied, each data/partner pair is in the +1 eigenspace of the swap operation,
+meaning we can “swap” a data qubit and its partner by doing nothing. We “swap” certain pairs,
+so that the partner qubits now form a contiguous region within the qubit grid. We measure the
+X parity of this contiguous region by choosing a spanning tree, and folding the X parity towards
+
+
+                                                    6
+the root of the tree using CNOT gates along the tree. The root is then measured in the X basis,
+revealing the parity of the first check. At this point the data qubits are still entangled with many
+of the partner qubits and need to be restored to their original configuration. We restore them by
+performing the same check again, but time-reversed. We prepare the root of the spanning tree
+into a |+⟩ state (this is the time-reverse of the X basis measurement of the root), we perform the
+CNOT gates that folded the parity into the root in the reverse order to unfold the parity back to
+where it started, we perform the data/partner CNOTs to unentangle the partners from the data
+qubits, we measure the partners in the X basis (this is the time-reverse of the |+⟩ preparation of
+the partners), and finally we restore the orientations of the data qubits by applying T gates. Note
+that, because the time-reversed check unscrambles everything done by the time-forward check,
+and because the partner qubits started in the |+⟩ state, every partner qubit should end in the |+⟩
+state. This means the X basis measurement of every partner should be +1. The partners aren’t
+just workspace; they double as flag checks. The time-reversed check of the observable is embedded
+amongst these flag checks. This approach to checking the T state spans 15 qubits and 6 layers per
+check at d = 3, making it faster and more compact than both [CN20] and [HIF24].
+    To grow a color code, we prepare the data qubits covered by the new larger color code, but not
+the old smaller color code, into Bell pairs (see Figure 9). The Bell pairs are chosen so that they
+determine the stabilizers whose colors match the boundary that is being moved [JBH16]. Note
+that, because the preparation of the Bell pairs happens only on new data qubits, the growth step
+can be overlapped with the preceding check step.
+    To stabilize the grown color code, we use the superdense color code cycle [GJ23]. A key detail
+is how many times to repeat the cycle before moving on to the next T state checks. We initially
+used automated fault distance searches to guide this choice. In a phenomenological noise model, it
+would be sufficient to measure the stabilizers twice. But under circuit noise the superdense cycle
+doesn’t reach the desired fault distance when repeated only twice; it contains spacetimelike hook
+errors that increase the required number of repetitions to four. However, when estimating logical
+error rates, we found that the fault distance wasn’t predictive of the final performance. Adding
+a third superdense cycle noticeably improves the logical error rate, but adding a fourth cycle has
+negligible effects. The benefit of the fourth cycle isn’t worth the cost of postselecting another cycle,
+and so we decided that a stabilize step would use three superdense cycles despite this technically
+not hitting the fault distance target.
+
+2.4 Escape Stage
+When we initially began working on this paper, we assumed that the escape stage would be trivial
+compared to the cultivation stage. This expectation seems to be echoed in previous work. In
+[CN20] there’s recognition of the fact that the patch grows, but the cost of doing so isn’t included
+in estimates. In [Ito+24], the need to grow the patch beyond distance 3 isn’t considered. In this
+paper, we simulated the escape stage as part of producing our estimates and found that it was by
+far the hardest to get working well.
+    Initially, we tried simply growing the color code into a larger color code as in Figure 9. Unfortu-
+nately, our current color code decoder (Chromobius [GJ23]) isn’t good enough for this strategy to
+work. Chromobius’ predictions aren’t accurate enough, and it doesn’t provide a way to report how
+confident it is in its predictions (which is crucial for postselecting efficiently during the escape).
+We tried a few hacks for fixing this, but none of them worked well enough to report. We believe
+that a pure color code growth strategy should be viable, but it requires better color code decoders
+than we have access to today.
+    With the simple route blocked, we were forced down a more complicated path: escaping into a
+surface code. In prior work, turning color codes into surface codes has been done by local unitary
+transformations [KYP15; Ito+24] and by lattice surgery [PFB17; SC22; Ito+24]. Unfortunately,
+both of these solutions weren’t efficient enough for our purposes. The unitary transformations were
+unworkable because they failed to preserve the fault distance of the system. The lattice surgery
+constructions preserved the fault distance, but prevented the code distance of the system from
+increasing until after the lattice surgery finished (instead of immediately). These aren’t small
+problems; the error rates of these methods are orders of magnitude higher than the error rate of
+the states we’re trying to preserve. To achieve sufficient fidelity we had to invent a new solution,
+
+
+                                                   7
+Figure 6: Detector slice diagram of unitary injection. Replace the S gate with a T gate to prepare T |+⟩
+instead of S|+⟩. Ends with the color code patch slightly deformed, requiring the following superdense cycle to
+be adjusted. Click here to open this circuit (plus the modified superdense cycle) in Crumble.
+
+
+
+
+Figure 7: Detector slice diagram of double-checking a d = 3 color code’s logical value. Replace S gates
+with T gates (and S † with T † ) to double-check T |+⟩ instead of S|+⟩. Large green shapes are slices of the
+logical value being measured and re-prepared. The stabilizers of the color code (not shown) are preserved by
+this circuit, up to deferrable Pauli Z feedback. Click here to open this circuit in crumble.
+
+
+
+
+Figure 8: Detector slice diagram of double-checking a d = 5 color code’s logical value. Distance 5 variant
+of Figure 7. Click here to open this circuit in crumble.
+
+
+                                                      8
+Figure 9: How to grow a color code by initializing added data qubits into Bell pairs (shown as wedges).
+Because the blue-green boundary is the one being extended, the Bell pairs must be positioned to imply the
+values of the blue and green stabilizers. The missing red stabilizers are initialized by the next measurement
+cycle.
+
+
+
+
+Figure 10: Topological summary of transforming a small color code into a large matchable code. Left: the
+initial color code is topologically equivalent to a folded surface code. The folded surface code has four twists
+spread over its three corners. The two twists sharing a corner are on ”opposite sides of the fold”. Left middle:
+three of the twists are moved outward, creating a partially folded surface code. Middle: the remaining twist
+stays still for O(d) rounds where d is the distance of the initial color code. This avoids twists passing near the
+worldlines of other twists. Right middle: eventually, the remaining twist is moved to the corner. Right: the
+system has fully unfolded into a matchable code.
+
+
+which we call “grafting”.
+    Our grafting construction grows a large surface code out of a small color code. It creates a
+grafted code that is a combination of a surface code and a color code. Topologically, the grafted
+code is a “partially folded surface code”, with the color code region corresponding to the folded
+region. This grafted code has a code distance set by the large surface code, not by the small color
+code. We stabilize the grafted code by measuring its stabilizers several times, until it becomes
+possible to discard the color code region and transition into a fully matchable code. Once we’ve
+escaped to a large matchable code the state is safe, because we have excellent decoders for this
+situation [Hig21; PF23; Gid+23].
+    Grafting is topologically distinct from lattice surgery between a color code and a surface
+code [PFB17; SC22]. They look similar, but can be easily distinguished if you know what to
+look for. First, lattice surgery attaches one boundary of the color code to the surface code (vi-
+sually: the color code points away from the surface code, as in figure 6 of [SC22]). Grafting the
+codes results in two boundaries of the color code being attached to the surface code (visually: the
+color code points into the surface code). Second, in lattice surgery the surface code boundaries
+that are attached to the corners of the color code have the same type. For example, when doing
+a logical MXX measurement, both attached boundaries would be Z type boundaries. Grafting re-
+sults in these boundaries having opposite type. Third, and most importantly, the code distance of
+intermediate configurations created by lattice surgery cannot be larger than the distance of either
+code. Grafting a surface code with a color code produces a stabilizer code whose distance is larger
+than the distance of the color code.
+    After the grafted code has stabilized, we need to replace the color code region of the grafted
+code with some sort of matchable code. We settled on a strategy that drops some of the color code
+
+
+                                                        9
+Figure 11: Stabilizer configurations while escaping to a matchable code. Dark tiles are X basis stabilizers.
+Light tiles are Z basis stabilizers. Red, green, and blue tiles are part of the unmatchable color code region, where
+there are data errors producing three detection events instead of two. When two checked stabilizers overlap, one
+of them is inset to avoid visual ambiguity. Left: the initial color code. Middle-left: detector slice immediately
+after initializing new data qubits for the grown patch, implying the initialization bases of the new data qubits.
+Middle-right: stabilizers to measure d − 1 times before ablating the color code region. Right: the final fully
+matchable configuration that we ultimately transition into. Click here to open an example of the middle-right
+patch’s cycle circuit in Crumble. Click here to open an example of the right patch’s cycle circuit in Crumble.
+
+
+stabilizers, keeps some of the color code stabilizers, and decomposes some of the color code stabi-
+lizers into two body stabilizers. This produces a code with the correct code distance, which can
+be transitioned into with a fault distance nearly matching that code distance, while not oversub-
+scribing the available measurement qubits. We show a topological summary of our escape stage in
+Figure 10, and the exact stabilizer code configurations in Figure 11. We considered a few different
+ways of dropping the color code region, summarized in Figure 32.
+
+2.5 Decoding
+During the injection stage and the cultivation stage, we use full postselection. If any detector from
+these stages fires, we discard the system and start over. We did some exploratory experiments
+where we allowed correcting simple detection event patterns, to attempt to reduce retry rates, but
+ultimately decided to stick with full postselection of the early stages.
+    A secondary benefit of the choice to postselect the early stages is it simplifies feedback. Using
+error correction during the cultivation stage would require complex just-in-time decoding [CN20],
+to prevent X errors from turning T into T † . Fixing such an X error too late ruins the shot.
+When postselecting, a shot with a detected X error was going to be discarded anyways. The
+postselected outcome is the same, regardless of the latency. That said, there are still two kinds of
+fast feedback needed by cultivation. First, when growing the color code patch, stabilizers prepared
+non-deterministically need to be forced into a specific eigenstate before the next layer of T gates.
+This is a hard time limit that must be met. Second, when a detection event is caught, the state
+needs to be discarded and another cultivation attempt started. This is a soft time limit, but
+restarting quickly improves expected cost by increasing attempt rates. Because these fast feedback
+operations have simple conditions and simple effects, we assume they can be done with a latency
+of less than one microsecond.
+    To decode the escape stage, we transform the decoding problem from a color code problem
+(which we don’t have good decoders for) into a matching problem. We do this by postselecting any
+shots that contain detection events on red X basis stabilizers or green Z basis stabilizers in the color
+code region. Postselecting these stabilizers ensures the number of unpostselected detection events
+caused by X basis or Z basis data errors is at most 2, enabling matching to be used. The stabilizers
+to postselect were chosen based on the layout of the grafted code. They are the stabilizers that, if
+removed, don’t reduce its code distance to O(1). These stabilizers are also the stabilizers that are
+discarded (or decomposed) when transitioning to a fully matchable code, meaning postselection of
+these stabilizers has a natural stopping point.
+    To present the color code region to the matcher in a form it can understand, we add “doublet”
+
+
+
+                                                        10
+Figure 12: How the color code region is exposed to matching-based decoders. Left: X basis subgraph.
+Right: Z basis subgraph. Small circles are “doublet” nodes, added for each adjacent pair of colored nodes.
+Errors that flip three colored nodes are exposed to the matcher as three separate errors, each flipping a colored
+node and a doublet node corresponding to the other two.
+
+
+nodes, which represent a pair of excitations on adjacent detectors. Example doublet nodes are
+included in Figure 12. Unmatchable errors in the color code region are decomposed into matchable
+errors involving these doublet nodes. For example, a red + green + blue error mechanism would
+be exposed to the matcher as three independent error mechanisms: a red + (green-blue-doublet)
+error, a green + (red-blue-doublet) error, and a blue + (red-green-doublet) error. This makes it
+possible for the matcher to understand the cost of travelling across the color code region, allowing
+a confidence to be estimated via the complementary gap [Gid+23].
+    Beware that exposing the decoding problem to the matcher using doublet nodes won’t work
+well without postselecting one of the colors. The issue is that matching can’t get rid of an odd
+number of excitations, except by matching at least one of them to a boundary. So there’s no way
+to locally resolve the excitations of a red + green + blue error. Postselecting one of the colors
+prevents this case from occurring. There are still suboptimal cases, such as two red+green+blue
+errors overlapping on the postselected color, but the achieved performance was sufficient for our
+purposes in this paper.
+    The final step of decoding is to decide whether or not to keep the state, based on the comple-
+mentary gap of the escape stage. This requires waiting for the decoder to finish, which we assume
+takes 10 microseconds. By varying the cutoff for an acceptable gap, we can achieve a variety of
+trade-offs between expected cost and fidelity.
+
+2.6 Errata
+Shortly before releasing this paper, we noticed a minor mistake in our circuits. The issue is that
+we’re preparing the stabilizers of the color code so that its X and Z stabilizers are in their +1
+eigenstate. For stabilizers with 6 qubits, this results in the Y stabilizer being in the -1 eigenstate
+(because X ⊗2 · Z ⊗2 = −Y ⊗2 ). This means the HXY gate isn’t trivially transversal. Applying
+HXY to each physical qubit doesn’t perform a logical HXY , it performs one up to Pauli gates.
+It also flips the sign of the 6-body X-basis stabilizers. As a result, a GHZ state controlling HXY
+gates targeting the physical qubits of a color code will become entangled with the 6-body X-
+basis stabilizers instead of only experiencing phase kickback. We missed this mistake because we
+only performed state vector simulation of the d = 3 color code, which has no 6-body operators,
+and because in our stabilizer simulations of the d = 5 case (with T gates replaced by S gates)
+Stim was silently correcting for the problem when computing the expected values of detectors and
+
+
+                                                       11
+observables.
+    Note that this sign-entangling problem isn’t an issue in [CN20]. They use the H gate, instead
+of the HXY gate. H exchanges the X and Z stabilizers, and the state is in their +1 eigenstates,
+so no sign flip occurs. For this paper we don’t want to use H, because consuming the resulting
+magic state to perform a non-Clifford gate requires a Y basis interaction (which is more costly for
+planar surface codes [Gid24b]).
+    The sign-entangling problem can be fixed in two ways. The first option is that we could
+prepare the color code so that the sign of overlapping stabilizers is always identical across the X,
+Y, and Z bases. This requires the state to be in the +1 eigenstate of 4-body stabilizers, because
++X ⊗4 · +Z ⊗4 = +Y ⊗4 and −X ⊗4 · −Z ⊗4 ̸= −Y ⊗4 . Conversely, it requires the state to be in the
+-1 eigenstate of 6-body stabilizers, because +X ⊗6 · +Z ⊗6 ̸= +Y ⊗6 and −X ⊗6 · −Z ⊗6 = −Y ⊗6 .
+Implementing this option would mean folding Pauli gates into the injection stage (Figure 6) as
+well as into the Bell pair preparation that occurs when growing the color code (Figure 9). The
+second option is to cancel out the problematic sign flips while performing the transversal HXY .
+This can be done by folding Pauli gates into the single qubit rotations that appear in Figure 8.
+There could also be changes to Figure 7, though technically none are needed because the d = 3
+color code has no 6-body operators. See [Bom13] for more discussion of adjusting signs to ensure
+gates are transversal.
+    Neither of these options would impact our stabilizer simulations, because Pauli gates commute
+with digitized errors. It’s conceivable that the state vector simulations with T gates, from Figure 13,
+could be affected. Choosing the second option (fix signs during logical state checks), while leaving
+Figure 7 alone, would avoid this possibility.
+    We spent weeks performing Monte Carlo sampling of the current circuits, so updating and
+resampling them will take some time. We intend to fix the issue in a future version of the paper.
+We don’t expect the changes to affect the final results.
+
+
+3 Results
+The generated circuits we benchmarked, and the statistics we collected, are available on Zen-
+odo [Gid24a].
+
+3.1 Conventions
+In plots, and throughout the paper, we use the following conventions and terminology:
+
+   • The “code distance” of a code is the minimum number of single qubit Pauli errors needed to
+     flip a logical observable without flipping a stabilizer.
+   • The “fault distance” of a circuit or a state is the minimum number of errors from the noise
+     model needed to cause a logical error without tripping any detectors.
+   • d1 is the target fault distance of the magic state. It’s the code distance at the end of the
+     cultivation stage (equivalently: at the beginning of the escape stage).
+   • d2 is the code distance at the end of the escape stage.
+
+   • A “round” (also called a “cycle”) is a series of circuit layers measuring/preparing the sta-
+     bilizers of a code. A round contains multiple two qubit gate layers and starts/ends with
+     reset/measure layers. We count rounds, instead of circuit layers, due to reset/measure layers
+     lasting substantially longer than unitary layers when executed on a superconducting quantum
+     computer.
+
+   • r1 is the number of rounds spent idling in the grafted code during the escape stage, before
+     transitioning into the final matchable code.
+   • r2 is the number of rounds spent idling in the final matchable code, until the simulation is
+     ended.
+
+
+
+                                                  12
+   • c is the name of the circuit task being simulated.
+   • q is the automatically computed number of qubits present in the simulated circuit.
+   • p is the noise strength.
+   • r is the automatically computed number of rounds present in the simulated circuit.
+   • b is the basis being cultivated, with b = Y corresponding to cultivation of the Y eigenbasis
+     S|+⟩.
+   • g is the name of the gateset. g = css means the gate set is single qubit gates, plus CNOT as
+     the two qubit gate, plus single qubit Pauli basis measurement and reset.
+   • “noise” is the noise model being used, with noise = uniform referring to uniform depolarizing
+     circuit noise.
+   • “decoder” is the decoder being used. “perfectionist” means full postselection. “desaturation”
+     means the decoding described in Section 2.5. “pymatching-gap” means pymatching was used
+     to compute a complementary gap [HG23; Gid+23].
+
+3.2 Assumptions
+Simulating our construction was (and is) a major challenge. Our circuit for preparing a fault
+distance 5 T state performs more than 50 T gates and escapes into a code with hundreds of qubits.
+It’s possible to simulate circuits with this many T gates and qubits, for example see [KWV22],
+but the per-shot simulation time tends to be measured in minutes. We want to use Monte Carlo
+sampling to validate our constructions, meaning we need billions or even trillions of shots. For this
+to be tractable we need hundreds of shots per second, not hundreds of seconds per shot.
+    In [CN20], large cultivation circuits were simulated by tracking the propagation of Pauli errors
+through the circuit. When a Pauli error propagated across a T gate, becoming a non-Pauli error,
+it was twirled back into a Pauli error. For example, when an X error crosses a T gate, the X
+will transform into X + Y and then twirling will replace it with an X gate 50% of the time and
+a Y gate the other 50% of the time. We attempted to use this technique, but couldn’t get it to
+work. The basic problem we encountered is that it’s common in fault tolerant circuits for there
+to be benign errors (such as an X error on a |+⟩ state) that unfold into stabilizers of the code
+under the action of the circuit. An error equal to a stabilizer is still a benign error, so this kind of
+unfolding is fine and in fact quite normal. Unfortunately, the twirling process would transform this
+benign stabilizer error into a malignant error by acting differently on its individual Pauli terms.
+The result was that when we used this simulation technique, it would report logical error rates of
+Θ(p) when using a noise strength of p, even though we knew the circuits are more reliable than
+that. We made a few attempts at fixing this issue, but couldn’t find a solution.
+    In [Gid23] and [Zho+24], a different hack is used for avoiding simulating T gates: Z gates and
+S gates are used as proxies for the T gate. Our circuits (similar to [Gid23; Zho+24]) have the
+property that replacing every T gate with an S gate (or Z gate) will prepare an S|+⟩ state (or
+Z|+⟩ state) instead of a T |+⟩ state. The idea is that, because the overall structure of the circuit
+doesn’t depend on which of the gates is being used, the error rate of a T |+⟩ preparation should
+be similar to the error rate of a Z|+⟩ preparation or S|+⟩ preparation. Unfortunately, when we
+attempted to verify this idea, we found that the situation is complicated.
+    We performed full state vector simulations of the injection and cultivation stage, targeting a
+fault distance of 3, for T |+⟩, S|+⟩, and Z|+⟩ cultivation. These simulations clearly show that the
+logical error rate for cultivating T |+⟩ is higher than the logical error rates for cultivating S|+⟩
+or Z|+⟩ (see Figure 13). For the cases we simulated, cultivating T |+⟩ had a logical error rate
+around twice as high as cultivating S|+⟩. We conjecture that this is a reasonable approximation
+for all cases we consider in this paper. This is the assumption we use for converting the numbers
+produced by our simulations into the estimates we show in Figure 1 and Figure 2.
+Assumption 3.1. For the cases considered by this paper, the logical error rate of T |+⟩ cultivation
+can be estimated by doubling the logical error rate of S|+⟩ cultivation (using the same circuit but
+with T replaced by S).
+
+
+                                                  13
+    Beware that it’s clear from Figure 13 that the gap between S|+⟩ and T |+⟩ cultivation is growing
+slowly as the physical noise strength is decreased. Assumption 3.1 will clearly break if the noise
+strength is made substantially lower. Assumption 3.1 could also potentially break as the fault
+distance of cultivation is increased. We were able to check that the assumption holds for fault
+distance 3 cultivation, but we don’t have an easy way of checking that it continues to hold for fault
+distance 5 cultivation. Regardless, due to a lack of better alternatives, we are forced to rely on
+Assumption 3.1.
+
+3.3 Simulations
+In Figure 14 we show the results of end-to-end stabilizer simulations of S|+⟩ cultivation under
+uniform depolarizing noise (see Appendix A). These simulations start with injection and end in a
+distance 15 matchable code. They don’t include consuming the state to perform gate teleportation.
+    From the results of the end-to-end simulations, it’s clear that magic state cultivation is ex-
+tremely sensitive to the physical noise strength p and that this impacts the optimal choice of d1 .
+For example, at p = 2 · 10−3 it would take 1000 attempts per kept shot for d1 = 5 cultivation
+to break even with d1 = 3 cultivation using 20 attempts per kept shot. At p = 10−3 the d1 = 5
+cultivation beats d1 = 3 cultivation by three orders of magnitude using 100 attempts per kept shot
+(versus 4 attempts per kept shot for d1 = 3). At p = 10−3 /2, the d1 = 5 cultivation is four or five
+orders of magnitude better than the d1 = 3 cultivation, while needing only 10 attempts per kept
+shot (versus 2). It’s plausible at p = 10−3 /2 that even d1 = 7 cultivation is becoming viable, but
+we didn’t simulate this case.
+    To quantify the spacetime volume of the construction, we performed simulations that eagerly
+discarded shots as soon as a postselected detector triggered. We also tracked how many qubits
+had been activated as the simulation progressed. The result is Figure 15, which shows the gradual
+loss of shots alongside the gradual (then sudden) gain of qubits. The integral of the product of the
+surviving shots and activated qubits over time gives a simple spacetime cost for the construction.
+We make slightly more pessimistic assumptions for the volumes shown in Figure 1, to account for
+packing constraints.
+    Finally, in Figure 16, we quantify the reliability of the grafted matchable code that our end-to-
+end simulations end in. They show that the d2 = 15 grafted matchable code is comparable to a
+d = 11 surface code. They further show that at d2 = 15, performing light postselection incurring
+around a 10−4 chance of retry per round is sufficient to maintain an error rate of 10−9 per round.
+This would be acceptable in contexts where the surrounding computation can be easily retried
+(such as inputs into a following magic state factory), but suggests we should grow to a larger code
+distance in contexts where the state will be used unconditionally. As a result, we expect future
+work to adjust the escape stage (e.g. having it grow to a larger code in two medium sized steps
+instead of to d2 = 15 in one big step). We expect the cost of cultivation to remain roughly similar,
+despite these adjustments, because targeting a larger final distance loosens the packing constraints
+on the earlier stages.
+
+
+
+
+                                                 14
+Figure 13: Small-scale comparison of cultivating T, S, and Z states without an escape stage. Uses the
+exact same circuit for each case, except each T gate is replaced by T , S, or Z. The T curve has an error rate
+roughly twice as high as the S and Z curves, with the ratio becoming gradually larger as the noise strength
+lowers. Discard rates appear identical. Shaded regions indicate error rate hypotheses with a likelihood within a
+factor of 1000 of the max likelihood hypothesis, given the sampled data.
+
+
+
+
+Figure 14: End to end simulation of magic state cultivation. Curves show the effect of varying the comple-
+mentary gap cutoff for rejecting shots, decreasing logical error rate at the cost of increasing expected attempts.
+Click here to open an example end-to-end circuit in Crumble. Shaded regions indicate error rate hypotheses
+with a likelihood within a factor of 1000 of the max likelihood hypothesis, given the sampled data.
+
+
+                                                       15
+Figure 15: Growth and survival during magic state cultivation. Each column is a labelled circuit cycle, which
+performs roughly ten layers of one/two qubit gates and ends with one or two layers of dissipative gates. The
+proportion of activated qubits starts small during the injection stage, gradually increases during the cultivation
+stage, and then jumps for the escape stage. Survival rates drop continuously due to postselected detectors
+failing, then hold steady for 10 cycles while waiting for the complementary gap to be computed. Expected
+qubit·rounds is computed by integrating the product of the survival rate times the qubit proportion, then
+multiplying by the total number of qubits and dividing by the final survival rate. This is slightly optimistic, due
+to ignoring factors like packing efficiency.
+
+
+
+
+Figure 16: Cost of idling after the escape stage ends. Shows that the d = 15 grafted matchable code we
+currently end in is roughly equivalent to a d = 11 surface code. Suggests our construction would be improved
+by ending in a normal surface code. Indicates that maintaining a 10−9 fault rate after escaping would require
+incurring around 10−4 additional retries per additional round of storing the output state (at a noise strength
+of 10−3 ). Shaded regions indicate error rate hypotheses with a likelihood within a factor of 1000 of the max
+likelihood hypothesis, given the sampled data.
+
+
+
+
+                                                        16
+4 Conclusion
+In this work, we presented a construction for preparing magic states that we call magic state
+cultivation. Cultivation achieves target error rates between 10−4 and 10−9 with spacetime costs
+an order of magnitude lower than in prior work. Cultivation is also extremely responsive to
+improvements in noise strength. For example, a 2x noise strength improvement (from 10−3 to
+5 · 10−4 ) becomes a 50x logical error rate improvement (from 2 · 10−9 to 4 · 10−11 ) and a 10x
+cost reduction. This suggests that even modest ongoing improvements to physical qubits could
+result in cultivation outpacing the needs of quantum computers in practice, obsoleting magic state
+distillation.
+    Our construction, though more refined than prior work, is still rough. The qubit utilization
+in Figure 8 is very low; maybe it can be increased. Our escape stage is horribly complicated
+and inelegant; maybe it can be streamlined. Maybe a sufficiently good color code decoder could
+be written, so that the escape stage could simply grow the color code. Maybe the color code
+stabilizer measurement cycle can be optimized further. Maybe non-local connectivity could be
+used to accelerate cultivation on non-planar architectures. Maybe a different code with transversal
+Clifford gates could be used. Maybe— suffice it to say there’s many opportunities for others to
+improve on our work.
+    In this work, we only simulated the production of T states. T states are produced in order
+to perform T gates. A major way to improve on our results would be to perform end-to-end
+simulations of a logical T gate, rather than just the T state. Ideally these simulations would
+include the parallel attempts at producing a T state, real time retries when postselection fails, the
+lattice surgery operations needed to attach the T state to a target logical qubit, and the real time
+Clifford correction needed to complete the gate teleportation. Figure 2 suggests that cultivating
+a T state is roughly as expensive as performing a CNOT gate of a similar reliability. We expect
+the full T gate construction to be around twice this cost but can’t say for sure without a full
+simulation.
+    Another major limitation of our simulations is our reliance on Assumption 3.1 to extrapolate
+the behavior of T gate circuits from the behavior of S gate circuits. It’s clear from the changing
+ratio in Figure 13 that this assumption has a limited regime of applicability. Ideally, we would
+directly simulate the T gate circuits. Hopefully, new simulation techniques can be found to make
+this tractable. Additionally, we should note that our simulations assume a digitized noise model.
+This may not be reasonable for low fault distance processes, like injection, that are present in
+our circuits. Ultimately, experiments on real quantum computers are needed to decide how well
+the construction works. The injection and cultivation stages are small enough to fit on existing
+quantum computers, so experiments are a surprisingly tractable avenue for benchmarking much of
+the magic state cultivation process.
+    Cultivation marks a major reduction in the expected cost of fault tolerant T gates, but it’s
+difficult to guess how this will impact the overall cost of quantum algorithms. For example,
+consider an algorithm implementation that used ripple carry adders to minimize T count (such
+as [GE21]). The first order effect of cheap T states is the adders get a bit cheaper. The second
+order effect is the adders can be replaced by faster T-hungrier carry-lookahead adders (the Jevons
+paradox), completely changing the available spacetime trade-offs. The first order effect is easy
+to estimate, but irrelevant compared to the second order effect. We look forward to seeing how
+large the second order effects are, as the details of quantum algorithms change in response to the
+existence of magic state cultivation.
+
+
+5 Contributions
+Craig Gidney built the construction, simulated its performance, and wrote the paper. Cody Jones
+made many suggestions for improving the construction, and supervised the project. Noah Shutty
+saved the project by showing that initial discouraging simulations of the escape stage (which
+suggested it would be a fatal bottleneck) were limitations of the decoder rather than inherent
+limitations of the stage.
+
+
+
+
+                                                 17
+6 Acknowledgements
+We thank the Google Quantum AI team, for providing an environment where this work was
+possible. We thank Matt McEwen, Alexis Morvan, and Oscar Higgott for comments that improved
+the paper. We thank Michael Newman for pushing us to include the CNOT gate comparison.
+
+
+References
+[Bab+18]   Ryan Babbush, Craig Gidney, Dominic W Berry, Nathan Wiebe, Jarrod McClean,
+           Alexandru Paler, Austin Fowler, and Hartmut Neven. “Encoding electronic spectra
+           in quantum circuits with linear T complexity”. In: Physical Review X 8.4 (2018),
+           p. 041015 (Cited on page 4).
+[Bai+19]   P Baireuther, M D Caio, B Criger, C W J Beenakker, and T E O’Brien. “Neural
+           network decoder for topological color codes with circuit level noise”. In: New Journal of
+           Physics 21.1 (Jan. 2019), p. 013003. issn: 1367-2630. doi: 10.1088/1367-2630/aaf29e.
+           url: http://dx.doi.org/10.1088/1367-2630/aaf29e (Cited on page 23).
+[BK05]     Sergey Bravyi and Alexei Kitaev. “Universal quantum computation with ideal Clifford
+           gates and noisy ancillas”. In: Physical Review A 71.2 (2005), p. 022316 (Cited on
+           page 3).
+[BKS21]    Michael E. Beverland, Aleksander Kubica, and Krysta M. Svore. “Cost of Universal-
+           ity: A Comparative Study of the Overhead of State Distillation and Code Switch-
+           ing with Color Codes”. In: PRX Quantum 2.2 (June 2021). issn: 2691-3399. doi:
+           10.1103/prxquantum.2.020341. url: http://dx.doi.org/10.1103/PRXQuantum.2.
+           020341 (Cited on page 3).
+[Bom+24]   Héctor Bombín, Mihir Pant, Sam Roberts, and Karthik I. Seetharam. “Fault-Tolerant
+           Postselection for Low-Overhead Magic State Preparation”. In: PRX Quantum 5.1 (Jan.
+           2024). issn: 2691-3399. doi: 10.1103/prxquantum.5.010302. url: http://dx.doi.
+           org/10.1103/PRXQuantum.5.010302 (Cited on page 1).
+[Bom13]    H. Bombin. “Gauge Color Codes: Optimal Transversal Gates and Gauge Fixing in
+           Topological Stabilizer Codes”. In: (2013). doi: 10.48550/ARXIV.1311.0879. url: htt
+           ps://arxiv.org/abs/1311.0879 (Cited on page 12).
+[Bom18]    Hector Bombin. Transversal gates and error propagation in 3D topological codes. 2018.
+           doi: 10.48550/ARXIV.1810.09575. url: https://arxiv.org/abs/1810.09575 (Cited
+           on page 3).
+[Bra+24]   Sergey Bravyi, Andrew W. Cross, Jay M. Gambetta, Dmitri Maslov, Patrick Rall, and
+           Theodore J. Yoder. “High-threshold and low-overhead fault-tolerant quantum mem-
+           ory”. In: Nature 627.8005 (Mar. 2024), pp. 778–782. issn: 1476-4687. doi: 10.1038/s41586-
+           024-07107-7. url: http://dx.doi.org/10.1038/s41586- 024- 07107- 7 (Cited on
+           page 3).
+[Bro20]    Benjamin J. Brown. “A fault-tolerant non-Clifford gate for the surface code in two
+           dimensions”. In: Science Advances 6.21 (May 2020). issn: 2375-2548. doi: 10.1126/s-
+           ciadv.aay4929. url: http : / / dx . doi . org / 10 . 1126 / sciadv . aay4929 (Cited on
+           page 3).
+[Cam17]    Earl Campbell. “Shorter gate sequences for quantum computing by mixing unitaries”.
+           In: Physical Review A 95.4 (Apr. 2017). issn: 2469-9934. doi: 10.1103/physreva.95.042306.
+           url: http://dx.doi.org/10.1103/PhysRevA.95.042306 (Cited on page 3).
+[CC22]     Christopher Chamberland and Earl T. Campbell. “Universal Quantum Computing
+           with Twist-Free and Temporally Encoded Lattice Surgery”. In: PRX Quantum 3.1
+           (Feb. 2022). issn: 2691-3399. doi: 10.1103/prxquantum.3.010331. url: http://dx.
+           doi.org/10.1103/PRXQuantum.3.010331 (Cited on page 28).
+
+
+
+
+                                               18
+[CN20]     Christopher Chamberland and Kyungjoo Noh. “Very low overhead fault-tolerant magic
+           state preparation using redundant ancilla encoding and flag qubits”. In: npj Quantum
+           Information 6.1 (Oct. 2020). issn: 2056-6387. doi: 10.1038/s41534-020-00319-5. url:
+           http://dx.doi.org/10.1038/s41534-020-00319-5 (Cited on pages 1–3, 5–7, 10,
+           12, 13).
+[FD12]     Austin G Fowler and Simon J Devitt. “A bridge to lower overhead quantum com-
+           putation”. In: arXiv preprint arXiv:1209.0510 (2012). doi: 10.48550/arXiv.1209.0510
+           (Cited on page 3).
+[FG18]     Austin G Fowler and Craig Gidney. “Low overhead quantum computation using lattice
+           surgery”. In: arXiv preprint arXiv:1808.06709 (2018). doi: 10.48550/arXiv.1808.06709
+           (Cited on pages 2, 3).
+[Fow+12]   A. G. Fowler, M. Mariantoni, J. M. Martinis, and A. N. Cleland. “Surface codes:
+           Towards practical large-scale quantum computation”. In: Phys. Rev. A 86 (2012).
+           arXiv:1208.0928, p. 032324. doi: 10.1103/PhysRevA.86.032324 (Cited on pages 2, 3).
+[GE21]     Craig Gidney and Martin Ekerå. “How to factor 2048 bit RSA integers in 8 hours using
+           20 million noisy qubits”. In: Quantum 5 (2021), p. 433. doi: 10.22331/q-2021-04-15-433
+           (Cited on page 17).
+[GF19a]    Craig Gidney and Austin G Fowler. “Efficient magic state factories with a catalyzed
+           CCZ to 2T transformation”. In: Quantum 3 (2019), p. 135. doi: 10.22331/q-2019-04-
+           30-135 (Cited on pages 3, 28).
+[GF19b]    Craig Gidney and Austin G. Fowler. Flexible layout of surface code computations using
+           AutoCCZ states. 2019. doi: 10.48550/ARXIV.1905.08916. url: https://arxiv.org/
+           abs/1905.08916 (Cited on pages 2, 3).
+[Gid+23]   Craig Gidney, Michael Newman, Peter Brooks, and Cody Jones. Yoked surface codes.
+           2023. doi: 10.48550/ARXIV.2312.04522. url: https://arxiv.org/abs/2312.04522
+           (Cited on pages 1, 9, 11, 13).
+[Gid17]    Craig Gidney. “Factoring with n+ 2 clean qubits and n-1 dirty qubits”. In: arXiv
+           preprint arXiv:1706.07884 (2017) (Cited on pages 3, 4).
+[Gid20]    Craig Gidney. Quantum block lookahead adders and the wait for magic states. 2020.
+           doi: 10.48550/ARXIV.2012.01624. url: https://arxiv.org/abs/2012.01624 (Cited
+           on page 3).
+[Gid21]    Craig Gidney. “Stim: a fast stabilizer circuit simulator”. In: Quantum 5 (July 2021),
+           p. 497. issn: 2521-327X. doi: 10.22331/q-2021-07-06-497 (Cited on page 23).
+[Gid22]    Craig Gidney. “Stability Experiments: The Overlooked Dual of Memory Experiments”.
+           In: Quantum 6 (Aug. 2022), p. 786. doi: 10.22331/q-2022-08-24-786. url: https :
+           //doi.org/10.22331/q-2022-08-24-786 (Cited on page 24).
+[Gid23]    Craig Gidney. Cleaner magic states with hook injection. 2023. doi: 10.48550/ARXIV.2302.12292.
+           url: https://arxiv.org/abs/2302.12292 (Cited on pages 2, 3, 5, 13).
+[Gid24a]   Craig Gidney. “Data for "Magic state cultivation: growing T states as cheap as CNOT
+           gates"”. In: Zenodo (Sept. 2024). doi: 10.5281/zenodo.13777072 (Cited on pages 1, 4,
+           12).
+[Gid24b]   Craig Gidney. “Inplace Access to the Surface Code Y Basis”. In: Quantum 8 (Apr.
+           2024), p. 1310. issn: 2521-327X. doi: 10.22331/q-2024-04-08-1310. url: http://dx.
+           doi.org/10.22331/q-2024-04-08-1310 (Cited on pages 2, 12, 23, 28).
+[GJ23]     Craig Gidney and Cody Jones. New circuits and an open source decoder for the color
+           code. 2023. doi: 10.48550/ARXIV.2312.08813. url: https://arxiv.org/abs/2312.
+           08813 (Cited on pages 1, 3, 4, 7, 23, 32).
+[GNM22]    Craig Gidney, Michael Newman, and Matt McEwen. “Benchmarking the Planar Hon-
+           eycomb Code”. In: Quantum 6 (Sept. 2022), p. 813. issn: 2521-327X. doi: 10.22331/q-
+           2022-09-21-813. url: http://dx.doi.org/10.22331/q-2022-09-21-813 (Cited on
+           page 33).
+
+
+                                              19
+[Hän+20]   Thomas Häner, Samuel Jaques, Michael Naehrig, Martin Roetteler, and Mathias Soeken.
+           “Improved quantum circuits for elliptic curve discrete logarithms”. In: Post-Quantum
+           Cryptography: 11th International Conference, PQCrypto 2020, Paris, France, April
+           15–17, 2020, Proceedings. Vol. 12100. Springer Nature. 2020, p. 425. doi: 10.1007/978-
+           3-030-44223-1_23 (Cited on page 4).
+[HC18]     Luke E Heyfron and Earl T Campbell. “An efficient quantum compiler that reducesT-
+           count”. In: Quantum Science and Technology 4.1 (Sept. 2018), p. 015004. issn: 2058-
+           9565. doi: 10.1088/2058-9565/aad604. url: http://dx.doi.org/10.1088/2058-
+           9565/aad604 (Cited on page 3).
+[HG23]     Oscar Higgott and Craig Gidney. Sparse Blossom: correcting a million errors per core
+           second with minimum-weight matching. 2023. doi: 10.48550/ARXIV.2303.15933. url:
+           https://arxiv.org/abs/2303.15933 (Cited on page 13).
+[HH21]     Matthew B Hastings and Jeongwan Haah. “Dynamically generated logical qubits”. In:
+           Quantum 5 (2021), p. 564. doi: 10.22331/q-2021-10-19-564 (Cited on pages 3, 33).
+[HH24]     Sascha Heußen and Janine Hilder. Efficient fault-tolerant code switching via one-way
+           transversal CNOT gates. 2024. doi: 10.48550/ARXIV.2409.13465. url: https : / /
+           arxiv.org/abs/2409.13465 (Cited on page 3).
+[HIF24]    Yutaka Hirano, Tomohiro Itogawa, and Keisuke Fujii. Leveraging Zero-Level Distilla-
+           tion to Generate High-Fidelity Magic States. 2024. doi: 10.48550/ARXIV.2404.09740.
+           url: https://arxiv.org/abs/2404.09740 (Cited on pages 1–3, 7).
+[Hig21]    Oscar Higgott. “PyMatching: A fast implementation of the minimum-weight perfect
+           matching decoder”. In: arXiv preprint arXiv:2105.13082 (2021). url: https://arxi
+           v.org/abs/2105.13082 (Cited on page 9).
+[Hor+12]   Clare Horsman, Austin G Fowler, Simon Devitt, and Rodney Van Meter. “Surface
+           code quantum computing by lattice surgery”. In: New Journal of Physics 14.12 (2012),
+           p. 123011. doi: 10.1088/1367-2630/14/12/123011 (Cited on pages 32, 33).
+[Ito+24]   Tomohiro Itogawa, Yugo Takada, Yutaka Hirano, and Keisuke Fujii. Even more effi-
+           cient magic state distillation by zero-level distillation. 2024. doi: 10.48550/ARXIV.2403.03991.
+           url: https://arxiv.org/abs/2403.03991 (Cited on pages 2, 3, 5–7).
+[JBH16]    Cody Jones, Peter Brooks, and Jim Harrington. “Gauge color codes in two dimen-
+           sions”. In: Physical Review A 93.5 (May 2016). issn: 2469-9934. doi: 10.1103/phys-
+           reva.93.052332. url: http://dx.doi.org/10.1103/PhysRevA.93.052332 (Cited on
+           pages 1, 7).
+[KLZ96]    E. Knill, R. Laflamme, and W. Zurek. Threshold Accuracy for Quantum Computation.
+           1996. doi: 10.48550/ARXIV.QUANT-PH/9610011. url: https://arxiv.org/abs/
+           quant-ph/9610011 (Cited on page 1).
+[KW20]     Aleks Kissinger and John van de Wetering. “Reducing the number of non-Clifford
+           gates in quantum circuits”. In: Physical Review A 102.2 (Aug. 2020). issn: 2469-9934.
+           doi: 10.1103/physreva.102.022406. url: http://dx.doi.org/10.1103/PhysRevA.
+           102.022406 (Cited on page 3).
+[KWV22]    Aleks Kissinger, John van de Wetering, and Renaud Vilmart. “Classical Simulation
+           of Quantum Circuits with Partial and Graphical Stabiliser Decompositions”. en. In:
+           Schloss Dagstuhl – Leibniz-Zentrum für Informatik, 2022. doi: 10.4230/LIPICS.TQC.2022.5.
+           url: https://drops.dagstuhl.de/entities/document/10.4230/LIPIcs.TQC.
+           2022.5 (Cited on page 13).
+[KYP15]    Aleksander Kubica, Beni Yoshida, and Fernando Pastawski. “Unfolding the color
+           code”. In: (2015). doi: 10.48550/ARXIV.1503.02065. url: https : / / arxiv . org /
+           abs/1503.02065 (Cited on page 7).
+[Lee+21]   Joonho Lee, Dominic W. Berry, Craig Gidney, William J. Huggins, Jarrod R. Mc-
+           Clean, Nathan Wiebe, and Ryan Babbush. “Even More Efficient Quantum Computa-
+           tions of Chemistry Through Tensor Hypercontraction”. In: PRX Quantum 2 (3 2021),
+           p. 030305. doi: 10.1103/PRXQuantum.2.030305 (Cited on page 3).
+
+
+                                               20
+[Lee+24]   Seok-Hyung Lee, Felix Thomsen, Nicholas Fazio, Benjamin J. Brown, and Stephen D.
+           Bartlett. Low-overhead magic state distillation with color codes. 2024. doi: 10.48550/ARXIV.2409.07707.
+           url: https://arxiv.org/abs/2409.07707 (Cited on pages 2, 3).
+[Li15]     Ying Li. “A magic state’s fidelity can be superior to the operations that created it”.
+           In: New Journal of Physics 17.2 (2015), p. 023037 (Cited on pages 2, 3).
+[Lit18]    Daniel Litinski. “A game of surface codes: Large-scale quantum computing with lattice
+           surgery”. In: arXiv preprint arXiv:1808.02892 (2018) (Cited on page 3).
+[Lit19]    Daniel Litinski. “Magic State Distillation: Not as Costly as You Think”. In: Quantum
+           3 (Dec. 2019), p. 205. issn: 2521-327X. doi: 10.22331/q-2019-12-02-205. url: http:
+           //dx.doi.org/10.22331/q-2019-12-02-205 (Cited on pages 2, 3, 28).
+[Mas16]    Dmitri Maslov. In: Quantum Information and Computation 16.13 & 14 (Oct. 2016).
+           issn: 1533-7146. doi: 10.26421/qic16.13-14. url: http://dx.doi.org/10.26421/
+           QIC16.13-14 (Cited on page 3).
+[MBG23]    Matt McEwen, Dave Bacon, and Craig Gidney. “Relaxing Hardware Requirements for
+           Surface Code Circuits using Time-dynamics”. In: (2023). doi: 10.48550/ARXIV.2302.02192.
+           url: https://arxiv.org/abs/2302.02192 (Cited on page 23).
+[PF23]     Alexandru Paler and Austin G. Fowler. “Pipelined correlated minimum weight perfect
+           matching of the surface code”. In: Quantum 7 (Dec. 2023), p. 1205. issn: 2521-327X.
+           doi: 10.22331/q-2023-12-12-1205. url: http://dx.doi.org/10.22331/q-2023-12-
+           12-1205 (Cited on page 9).
+[PFB17]    Hendrik Poulsen Nautrup, Nicolai Friis, and Hans J. Briegel. “Fault-tolerant interface
+           between quantum memories and quantum processors”. In: Nature Communications
+           8.1 (Nov. 2017). issn: 2041-1723. doi: 10.1038/s41467-017-01418-2. url: http://dx.
+           doi.org/10.1038/s41467-017-01418-2 (Cited on pages 7, 9).
+[SC22]     Noah Shutty and Christopher Chamberland. “Decoding Merged Color-Surface Codes
+           and Finding Fault-Tolerant Clifford Circuits Using Solvers for Satisfiability Mod-
+           ulo Theories”. In: Physical Review Applied 18.1 (July 2022). issn: 2331-7019. doi:
+           10.1103/physrevapplied.18.014072. url: http://dx.doi.org/10.1103/PhysRevAppl
+           ied.18.014072 (Cited on pages 7, 9).
+[Sin+22]   Shraddha Singh, Andrew S. Darmawan, Benjamin J. Brown, and Shruti Puri. “High-
+           fidelity magic-state preparation with a biased-noise architecture”. In: Physical Review
+           A 105.5 (May 2022). issn: 2469-9934. doi: 10.1103/physreva.105.052410. url: http:
+           //dx.doi.org/10.1103/PhysRevA.105.052410 (Cited on pages 2, 3).
+[VB19]     Michael Vasmer and Dan E. Browne. “Three-dimensional surface codes: Transversal
+           gates and fault-tolerant architectures”. In: Physical Review A 100.1 (July 2019). issn:
+           2469-9934. doi: 10.1103/physreva.100.012312. url: http://dx.doi.org/10.1103/
+           PhysRevA.100.012312 (Cited on page 3).
+[Zho+24]   Hengyun Zhou, Chen Zhao, Madelyn Cain, Dolev Bluvstein, Casey Duckering, Hong-
+           Ye Hu, Sheng-Tao Wang, Aleksander Kubica, and Mikhail D. Lukin. Algorithmic Fault
+           Tolerance for Fast Quantum Computing. 2024. doi: 10.48550/ARXIV.2406.17653. url:
+           https://arxiv.org/abs/2406.17653 (Cited on page 13).
+
+
+
+
+                                               21
+A Noise Model
+All circuits in this paper were simulated with a uniform depolarizing noise model, defined in
+Figure 18, so they could more easily be compared to prior work.
+
+      Noise channel     Probability distribution of effects
+                        1 − p → (report previous measurement correctly)
+          MERR(p)
+                          p → (report previous measurement incorrectly; flip its result)
+                        1−p→I
+          XERR(p)
+                          p→X
+                        1−p→I
+           ZERR(p)
+                          p→Z
+                        1−p→I
+                          p/3 → X
+           DEP1(p)
+                          p/3 → Y
+                         p/3 → Z
+                        1−p→I ⊗I            p/15 → I ⊗ X         p/15 → I ⊗ Y        p/15 → I ⊗ Z
+                        p/15 → X ⊗ I        p/15 → X ⊗ X         p/15 → X ⊗ Y        p/15 → X ⊗ Z
+           DEP2(p)
+                        p/15 → Y ⊗ I        p/15 → Y ⊗ X         p/15 → Y ⊗ Y        p/15 → Y ⊗ Z
+                        p/15 → Z ⊗ I        p/15 → Z ⊗ X         p/15 → Z ⊗ Y        p/15 → Z ⊗ Z
+
+                   Figure 17: Definitions of various noise channels. Used by Figure 18.
+
+
+
+                                               Ideal gate     Noisy gate
+                (single qubit unitary, including idle) U1     DEP1(p) · U1
+                                                     CX       DEP2(p) · CX
+                                              (reset) RX      ZERR(p) · RX
+                                                      RZ      XERR(p) · RZ
+                                                     MX       DEP1(p) · MERR(p) · MX
+                                                      MZ      DEP1(p) · MERR(p) · MZ
+
+Figure 18: The uniform depolarizing circuit noise model, used by simulations in this paper. Note B · A means
+B is applied after A. Noise channels are defined in Figure 17.
+
+
+
+
+                                                    22
+B Chunked Circuit Construction
+To transform our construction into a circuit, and to iteratively improve upon the pieces of that
+circuit, we used a process similar to what’s described in [Gid24b]. Every cycle of our construction
+was created, iterated, and optimized in “chunks”.
+    A chunk is a quantum stabilizer circuit annotated with a list of “stabilizer flows” [MBG23]. A
+                   M
+stabilizer flow A −→ B has an input stabilizer A, an output stabilizer B, and a set of measurements
+                                          M
+M . A circuit has the stabilizer flow A −→ B if it transforms A into B with a sign determined by
+the parity of M . The flows of a chunk are similar to the signature of a function; they’re a simplified
+and verifiable summary of what the chunk does and how it can be used. For example, if a chunk is
+                             m1 ,m2
+annotated with the flow A −−−−→ 1, that is an assertion that its circuit will measure the stabilizer
+A and that the measurement result is recovered by computing m1 ⊕ m2 . Stim [Gid21] has a class
+stim.Flow for representing flows, and a method stim.Circuit.has_flow for verifying that a given
+circuit implements a flow.
+    When two chunks are concatenated, we verify that the output stabilizers of flows declared by the
+first chunk match up exactly with the input stabilizers of flows declared by the second chunk. We
+then attach the matching flows to each other, forming longer flows over the concatenated circuit.
+Often this will produce flows entirely internal to the concatenated circuit, with an empty input and
+an empty output but a non-empty set of measurements. This guarantees the set of measurements
+must have deterministic parity under noiseless execution, meaning those measurements form a
+detector. In this way, flow annotations can be automatically converted into detector annotations
+while concatenating chunks.
+    Compared to other approaches for making circuits that we’ve tried, the chunk based approach
+has four main benefits: decoupling, contracts, artistic freedom, and micro-management.
+    By “decoupling” we mean that the details of a chunk can stay fixed when varying surrounding
+chunks. For example, during development we tried both superdense [GJ23] and Bell flagged [Bai+19]
+color code cycles. A superdense cycle measures all stabilizers of the color code, while a Bell flagged
+cycle only measures the stabilizers in one basis. When two superdense cycles are adjacent, all
+stabilizer measurements of the second cycle are compared to measurements in the first cycle in
+order to form detectors. But if the first cycle is changed to a Bell flagged X basis cycle, then
+the Z stabilizer measurements of the superdense cycle will need to compare to something earlier.
+When annotating the measurements to compare (as in a Stim circuit), this means the second cycle
+changes when the first cycle changes. In a chunk based approached, varying the first chunk doesn’t
+change the second chunk; the flows remain the same. The differing comparisons only appear at
+a later stage, when automatically matching up flows between concatenated chunks. Decoupling
+makes it easier to mix and match different approaches in each part of a construction.
+    By “contracts” we mean the ability to write a specification for what a chunk should do and then
+verify that the chunk does it. The flows are of course a specification of what the circuit should do,
+but we can also write specifications for which flows are expected to be present. For example, if a
+chunk is supposed to measure all the stabilizers of a code, we can write a unit test that iterates
+over the stabilizers of the code and searches for a corresponding empty-output flow in the chunk.
+Having the ability to specify and verify these kinds of contracts makes debugging faster, because
+when two chunks don’t match we can narrow down the problem by comparing them to the contract
+instead of to each other.
+    By “artistic freedom” we mean the ability to create chunks in a variety of ways. For example,
+some of the chunks in our construction are small and irregular. Writing code to generate these
+chunks is tedious and error-prone; it’s more convenient to create them in a visual editor like
+Crumble. By contrast, huge repetitive circuits are easier to generate with code. Another detail
+we vary is the amount of automation during chunk creation. For example, the measurement sets
+of flows can be solved for via Gaussian elimination. Solving the measurements in this way is
+convenient, and works well on chunks corresponding to a single cycle, but is quite slow and makes
+bad choices on multi-cycle circuits. A chunk doesn’t have to be made in one specific way; it has
+no memory of the strategy that was used to make it. All that’s required is that the flows agree
+with the circuit. So we’re free to choose the best creation strategy for each chunk.
+    By “micro-management” we mean that we have guaranteed control over the detector basis. For
+
+
+
+                                                 23
+example, if we have three measurements A, B, C and we know A = B = C then there are several
+different ways to express this as detectors. We can define a detector A ⊕ B = 0 and a detector
+B ⊕ C = 0. Alternatively we can define a detector A ⊕ B = 0 and a detector A ⊕ C = 0. Or
+we could redundantly define three detectors: A ⊕ B = 0, A ⊕ C = 0, and B ⊕ C = 0. These
+choices are technically all equivalent, in that they all imply A = B = C, but often decoders require
+specific comparison structures to function correctly. For example, a matching based decoder won’t
+function if all measurements are compared to measurements from the third round, instead of to
+measurements from the previous round. By having flows be specified as an explicit list, instead of
+inferred automatically from the circuit, we can guarantee these kinds of decoding requirements are
+met.
+    Another benefit of micro-management is that it avoids ambiguity. For example, consider a toric
+code memory experiment circuit. The toric code has two logical qubits. Is the circuit intended to
+benchmark one of the logical qubits? The other? Both? This can’t be determined just by looking
+at the quantum operations performed by the circuit. Similarly, the toric code has global spacelike
+invariants: without noise the product of all X measurements in a round would equal +1 (similarly
+for Z). Is the circuit also benchmarking this invariant [Gid22]? Ignoring it? Using it as a coarse
+global flag check? It’s impossible to tell. As a result of this ambiguity, systems that attempt to
+fully automate the discovery of detectors/observables from a circuit, with no ability for a manual
+override, are inherently inflexible. For chunks, the explicit list of flows is the manual override.
+
+
+
+
+                                                24
+C Bonus Figures
+
+
+
+
+Figure 19: Decoder confidence given individual detection events. Each outlined box is a detector slice from a
+circuit cycle of end-to-end cultivation. Polygons correspond to the support of instantaneous stabilizers checked
+by a detector. Color indicates decoder confidence (red = very confident, black = not confident) if that detector
+is excited, without any other detector being excited. Gray means the detector is postselected, so decoding never
+reaches a point of computing the confidence. Note how the dark region (the region of maximum uncertainty)
+shifts towards the middle of the patch over time. This is an indication of the logical state transitioning from
+being stored in the color code to being stored in the full code.
+
+
+
+
+                                                      25
+Figure 20: Detector slice diagram of Bell injection, using XYZ=RGB color convention. Replace the S gate
+with a T gate to prepare |T ⟩ instead of |i⟩. Prepares a single data qubit in the state T k |+⟩. This data qubit is
+then treated as a distance 1 color code, and the code is grown to distance 3 by initializing six new data qubits
+into Bell pairs that imply the values of the target color code’s four stabilizers that don’t touching the initial
+data qubit. Afterward, all six stabilizers of the distance 3 color code are measured to stabilize the code. Fast
+feedback is needed, to ensure the Z stabilizers are in the +1 eigenbasis during cultivation. Click here to open
+this circuit in Crumble.
+
+
+
+
+Figure 21: Detector slice diagram of teleport injection, using XYZ=RGB color convention. Replace the S
+gate with a T gate to prepare |T ⟩ instead of |i⟩. Creates a four-tile [[8, 0, ∞]] color code by initializing its data
+qubits in the Z basis, and then measuring its X stabilizers. Then applies T k and MX to one of the qubits
+touched by only one tile, leaving behind a [[7, 1, 3]] color code storing a T k |+⟩ state (up to deferrable Pauli Z
+feedback). Click here to open this circuit in Crumble.
+
+
+
+                                                         26
+Figure 22: Danger of using S as a proxy for T. A simple example of why Assumption 3.1 doesn’t hold in
+general. Replacing Z or S gates with T gates can cause a circuit to behave very differently. Click here to open
+this circuit in Quirk.
+
+
+
+
+Figure 23: Detector error model of magic state cultivation. Black circles are detectors. Black lines are the X
+and Z parts of matchable errors (errors that cause at most two X basis detection events and at most two Z basis
+detection events). Red lines are matchable errors that flip the logical X or Z observable. Blue lines meeting at a
+common point are hyper errors (errors that aren’t decodable by matching). Magenta lines are hyper errors that
+flip the logical X or Z observable. The blue blob is a dense nest of hyper errors, corresponding to regions of the
+cultivation process where a color code is present and non-negligible postselection costs are being incurred.
+
+
+
+
+                                                       27
+Figure 24: Layout of an 8T-to-1CCZ distillation factory. A more optimized version of the factory from
+[GF19a]. Left: spacetime defect diagram of the factory. Pink boxes are noisy T state inputs, presumably
+created by magic state cultivation. Red surfaces are X type boundaries. Blue surfaces are Z type boundaries.
+Green-and-red boxes are transversal X basis measurement or inplace Y basis measurement [Gid24b], depending
+on feedback from earlier measurements. Right: ZX diagram of the factory, with annotated error sensitivities.
+White boxes are X spiders, black boxes are Z spiders, magenta boxes are π/4 X spiders, and green+black boxes
+are Z spiders with an angle of 0 or π/2 depending on feedback. Red (X), green (Y), and blue (Z) bursts on
+edges correspond to locations where a topological Pauli error of that type can cause the factory to silently fail.
+When a location only has a red burst, or only has a blue burst, it’s partially protected by the distillation process.
+The pipe at that location can be squished to save qubit·rounds, as in [Lit19]. Crossbars only have blue bursts
+due to the usage of Temporally Encoded Lattice Surgery [CC22].
+
+
+
+
+Figure 25: Distribution of complementary gaps observed when idling in the surface code and the grafted
+matchable code that our magic state cultivation construction current ends in. Note the similar shapes, with
+the main distinction being the offsets of the peaks. This suggests the grafted matchable code is well behaved,
+despite its unusual stabilizers. Shaded regions indicate frequency hypotheses with a likelihood within a factor
+of 1000 of the max likelihood hypothesis, given the sampled data.
+
+
+
+
+                                                         28
+Figure 26: Calibration of complementary gaps when idling. Sampled logical error rates, conditioned on
+sampled complementary gaps, when idling in the surface code and the grafted matchable code that our magic
+state cultivation construction current ends in. Shows that the complementary gap is strongly predictive of the
+logical error rate, both in the surface code and in the grafted matchable code. Shaded regions indicate error
+rate hypotheses with a likelihood within a factor of 1000 of the max likelihood hypothesis, given the sampled
+data.
+
+
+
+
+                                                     29
+Figure 27: Monte-Carlo sampling of cultivation without an escape stage. This data was collected to validate
+Figure 5. Shaded regions indicate error rate hypotheses with a likelihood within a factor of 1000 of the max
+likelihood hypothesis, given the sampled data.
+
+
+
+
+Figure 28: Comparing stabilizer simulations to state vector simulations. Shows that the state vector
+simulator is functioning correctly. Shaded regions indicate error rate hypotheses with a likelihood within a
+factor of 1000 of the max likelihood hypothesis, given the sampled data.
+
+
+                                                    30
+Figure 29: Cost trade-offs of cultivation under different noise strengths. Same as Figure 1, but with different
+noise strengths instead of different constructions. Derived from Figure 14. Shaded regions indicate error rate
+hypotheses with a likelihood within a factor of 1000 of the max likelihood hypothesis, given the sampled data.
+
+
+
+
+                                                      31
+Figure 30: Decoding color code growth using Chromobius [GJ23]. Curves show a variety of confidence
+cutoffs, based on complementary gaps. Gaps are computed similar to how they are done for matching: by
+adding a detector equivalent to an observable to the boundary of the patch then decoding once with it forced
+on and once with it forced off in order to take a weight difference. The added detector runs along a boundary,
+and is colored to complete the boundary (e.g. for the red-green boundary the detector would be colored blue).
+This figure shows that Chromobius isn’t good enough to be used for cultivation (e.g. limited to 5 · 10−3 instead
+of 2 · 10−6 when growing from distance 3). Shaded regions indicate error rate hypotheses with a likelihood
+within a factor of 1000 of the max likelihood hypothesis, given the sampled data.
+
+
+
+
+Figure 31: Visualizing the size of cultivation, based on quantities shown in Figure 15. Right: a spacetime
+defect diagram of the full cultivation process, with dark red/blue/green for color code boundaries and light
+red/blue for X/Z surface code boundaries. Top left: defect diagrams of each piece of the cultivation, multiplied
+by how many are expected per successful cultivation. Bottom left: defect diagram of a distance 15 surface
+code lattice surgery CNOT [Hor+12]. Bottom middle: same as top left but rearranged into stacks for easy
+comparison to the CNOT. The cultivation’s spacetime volume is nearly four times larger, when the CNOT
+uses the same code distance. (Figure 1 shows the distance of the CNOT needs to be larger to have the same
+reliability.)
+
+
+                                                      32
+Figure 32: Various matchable codes the escape stage could end in. Dark/light indicates the basis of
+the stabilizer (dark=X, light=Z). Red/green/blue shows the 3-coloring of the color code. Left: a grafted
+color/surface code. Left middle: a matchable code can created purely subtractively, by dropping stabilizers
+from the grafted code. Produces a region equal to a detector slice of the honeycomb code [HH21; GNM22].
+Has a code distance of dsurface − dcolor instead of dsurface . Right middle: a matchable code created by replacing
+the bulk of the color code region with the instantaneous stabilizers of a honeycomb code. Preserves the code
+distance, but has more stabilizers than available measurement qubits. Right: the code we actually transition
+into. Adds a subset of the instantaneous honeycomb code stabilizers, without oversubscribing the measurement
+qubits. Has full code distance, but the fault distance of transitioning into this code is slightly lower than dsurface .
+
+
+
+
+Figure 33: Performance of a surface code lattice surgery CNOT. Used to extrapolate the curve shown
+in Figure 1. The control and target patches are diagonally adjacent, so they touch different boundaries of a
+common ancilla patch, as in [Hor+12].
+
+
+
+
+                                                          33
+

@@ -1,0 +1,1087 @@
+arXiv:1606.04592v1 [cs.CC] 14 Jun 2016
+
+ALGEBRAIC PROBLEMS EQUIVALENT TO BEATING EXPONENT 3/2 FOR
+POLYNOMIAL FACTORIZATION OVER FINITE FIELDS
+ZEYU GUO, ANAND KUMAR NARAYANAN, AND CHRIS UMANS
+Abstract. The fastest known algorithm for factoring univariate polynomials over finite fields is the
+Kedlaya-Umans [12] (fast modular composition) implementation of the Kaltofen-Shoup algorithm
+e 3/2 log q + n log2 q) time to factor polynomials of degree n
+[11, § 2]. It is randomized and takes O(n
+over the finite field Fq with q elements. A significant open problem is if the 3/2 exponent can be
+improved. We study a collection of algebraic problems and establish a web of reductions between
+them. A consequence is that an algorithm for any one of these problems with exponent better than
+3/2 would yield an algorithm for polynomial factorization with exponent better than 3/2.
+
+1. Introduction
+A recent trend in discrete algorithms has been to establish very efficient reductions between problems with polynomial time algorithms, with the intention of identifying barriers (conceptual or concrete) to improving the polynomial running time of the best known algorithms. A standard example
+is the problem 3-SUM, which seems to require essentially quadratic time, and which has been reduced
+to many other problems. More recently, the study of “fine-grained” complexity has broadened, with
+several connections established between central problems in discrete algorithms, and new conjectures
+beyond the 3-SUM conjecture entering the picture (see, e.g. [1, 2, 3, 16, 17, 21, 23, 24]).
+In this paper we focus on a “barrier” in algebraic algorithms, that of improving the exponent 3/2
+for univariate polynomial factorization and several other problems. Generally, algebraic problems
+have two relevant “size” parameters – n, and the field size q. It is typical for the dependence on q to
+be polylogarithmic (it is for all of the problems we consider), and so we focus on the exponent on n in
+this work. We find that exponent 3/2 seems to be a barrier for a number of problems. This points to
+a need to move beyond the so-called “baby steps giant steps” methodology which tends to give rise
+to the exponent 3/2 behavior.
+The reductions in this paper can be seen as giving evidence that improving the 3/2 exponent may
+not be possible for these problems, but we believe that it “merely” gives evidence that this improvement requires a conceptual breakthrough (along the lines of going beyond the baby-steps giant-steps
+approach). Using the connections established in this paper, such a breakthrough for any one of the
+problems considered here would improve the exponent for all of them.
+
+The authors were supported by NSF grant CCF 1423544 and a Simons Foundation Investigator grant.
+1
+
+2
+
+ZEYU GUO, ANAND KUMAR NARAYANAN, AND CHRIS UMANS
+
+e to suppress no(1) terms and logo(1) q terms, in order to highIn the discussion below, we use O
+light the exponent on n that is our main object of study. We also use the phrase “nearly linear time
+e log q), and the phrase “3/2 exponent reducible”
+reduction” to mean a reduction that runs in time O(n
+to mean the weaker connection that shows that beating exponent 3/2 for one problem implies beating
+exponent 3/2 for the other.
+1.1. Algebraic problems with 3/2 exponent algorithms. We investigate the complexity of factoring a univariate polynomial over a finite field into its irreducible factors. The problem formally
+stated is,
+• Factor: Given a monic square free f (x) ∈ Fq [x] of degree n, write f (x) as a product of its
+monic irreducible factors.
+The square free assumption is without loss of generality [13, 25]. Factor can be solved in randomized
+polynomial time [4] and there is an extensive line of research [5, 11, 20] leading to a randomized
+algorithm [12] with exponent 3/2. Surprisingly, even determining the degree of a single irreducible
+factor rapidly would be sufficient to improve the exponent of this algorithm. We formulate this
+problem as
+• Factor Degree: Given a monic square free f (x) ∈ Fq [x], find the degree of an irreducible
+factor of f (x).
+and prove in § 2 that Factor is 3/2-exponent reducible to Factor Degree. That is, an algorithm
+for Factor Degree with exponent less than 3/2 yields one for Factor. Observe that Factor
+Degree merely seeks one, not necessarily all, irreducible factor degrees. We next investigate two
+linear algebraic problems, both we will demonstrate to be nearly linear time reducible to Factor.
+• Frobenius Min-Poly: Given a monic square free f (x) ∈ Fq [x], compute the minimal polynomial of the Frobenius endomorphism on Fq [x]/(f (x)) which takes a(x) mod f (x) to a(x)q
+mod f (x).
+• Carlitz Char-Poly: Given a monic square free f (x) ∈ Fq [x], compute the characteristic polynomial of the Carlitz endomorphism on Fq [x]/(f (x)) which takes a(x) mod f (x) to
+xa(x) + a(x)q mod f (x).
+In § 4, we prove that Factor Degree is nearly linear time reducible to Carlitz Char-Poly, under
+certain restrictions on the characteristic of Fq . These restrictions were removed in [14] by passing from
+Carlitz to Drinfeld modules. In § 3, through a novel recursive argument, we prove that Factor is
+3/2-exponent reducible to Frobenius Min-Poly.
+Frobenius Min-Poly was known [11, 10] to be nearly linear time reducible to
+• Automorphism Projection: Given a monic square free f (x) ∈ Fq [x], α ∈ Fq [x]/(f (x))
+i
+and an Fq -linear map u : Fq [x]/(f (x)) −→ Fq , compute u(αq ), ∀i ∈ {1, 2, . . . , deg(f )}.
+Thus, as a consequence of the reduction in § 3, we conclude that Factor is 3/2-exponent reducible to
+Automorphism Projection. This should be contrasted with the connection established in [11, 10].
+They show that Factor is nearly linear time reducible to Automorphism Projection assuming an
+Fq -linear straight line program algorithm for Automorphism Projection. This assumption allows
+them to use the “transpose” problem Automorphism Evaluation. Our reduction to Automorphism Projection is novel, direct, and holds without any assumptions.
+
+PROBLEMS EQUIVALENT TO BEATING EXPONENT 3/2 FOR POLYNOMIAL FACTORIZATION
+
+3
+
+The final two problems pertain to zero testing Moore and Vandermonde determinants.
+• Moore-Det: Given a monic square free f (x) ∈ Fq [x] and a positive integer m, decide if the
+i
+determinant of the m by m square matrix with entries mij := xjq mod f (x) is zero.
+• Vandermonde-Det:
+Given a monic square free f (x) ∈ Fq [x] and a positive integer b ≤
+p
+deg(f ), decide if the determinant of the Vandermonde matrix with first row
+(xq
+
+i
+
+mod f (x), i = 0, 1, 2, . . . , b − 1, b, 2b, 3b, . . . , (b − 1)b, b2 )
+
+is zero.
+In § 5, we prove that Factor Degree is nearly linear time reducible to each of these problems
+and that each of these problems is nearly linear time reducible to Factor. In summary, we have
+the following diagram where solid lines denote nearly linear time reductions and dotted lines denote
+3/2-exponent reductions.
+Moore-Det
+
+Carlitz
+Char-Poly
+
+Factor Degree
+
+Factor
+
+Vandermonde
+Det
+
+Frobenius
+Min-Poly
+
+Automorphism
+Projection
+
+An interesting open question is if the dotted lines can be made solid. Except for Automorphism
+Projection, every listed problem has a known randomized algorithm with exponent 3/2. If the
+matrix multiplication exponent is 2, then a randomized algorithm for Automorphism Projection
+with exponent 3/2 is known. Another open problem is if this dependence on the matrix multiplication
+exponent can be removed – perhaps by reducing automorphism projection to one of the other
+problems in the figure. Regardless, an algorithm for any of the problems in the figure with exponent
+less that 3/2 would yield an algorithm with exponent 3/2 for Factor, and this is one of the main
+points of this paper.
+
+2. Factorization and Finding a Factor Degree
+Clearly, if one can solve the problem factor in time T (n, q) then one can solve the problem factor
+degree in time T (n, q). In this section we show a reduction in the reverse direction, which leads to
+the surprising conclusion that one only needs to compute the degree of a single irreducible factor of the
+polynomial f (x) with exponent better than 3/2 to be able to factor f (x) completely with exponent
+better than 3/2.
+
+4
+
+ZEYU GUO, ANAND KUMAR NARAYANAN, AND CHRIS UMANS
+
+Theorem 2.1. If there is an algorithm that solves factor degree in the time T (n, q) where
+e
+T (n, q) = Ω(n log2 q) 1, then there is an algorithm that solves factor in time O(n·T
+(n, q)1/3 log4/3 q).
+
+Observe that when factor degree has an exponent 3/2 algorithm (as it does), this reduction
+recovers a 3/2 exponent algorithm for factor. A sub-3/2 exponent algorithm for factor degree
+implies a sub-3/2 exponent algorithm for factor, with a nearly-linear time algorithm yielding exponent 4/3 for factor.
+Proof. We are given a monic, square-free polynomial f (x) ∈ Fq [x] of degree n. Let g(x) be the product
+of irreducible factors of f (x) with degrees at most t (for a parameter t to be chosen later). If s(x) is
+defined as
+t
+Y
+i
+(xq − x)ai ,
+s(x) =
+i=1
+
+for some positive integers a1 , a2 , . . . , at , then we have that g(x) = gcd(s(x), f (x)). Using fast modular composition [12] and the method of Kaltofen-Shoup [11], we can compute s(x) mod f (x) in time
+√
+e
+O(n
+t log2 q) time. We then proceed to factor g(x) completely, using the Kedlaya-Umans implementation of the Kaltofen-Shoup algorithm. The bottleneck in this algorithm is computing the splitting
+polynomials, which are all polynomials of the form of s(x), with i ranging from 1 up to t′ ≤ t. This
+√
+e
+t log2 q) and factors g(x) completely.
+portion of the algorithm runs in time O(n
+Now we invoke the algorithm to solve factor degree, on input f (x)/g(x). Upon finding the
+d
+degree d of an irreducible factor, we compute gcd(xq − x mod f (x), f (x)) to split off the factors with
+that degree. We then repeat. The number of repetitions is bounded by n/t, since each irreducible
+e log2 q). Thus
+factor of f (x)/g(x) has degree at least t. Each repetition takes time T (n, q) + O(n
+2
+e
+e
+this portion of the algorithm runs in time O(n/t
+· (T (n, q) + n log q)) = O(n/t
+· T (n, q)). Finally we
+2
+e
+factor completely using equal-degree factorization which takes O(n log q) time. Optimizing, we set
+t = (T (n, q)/ log2 q)2/3 , and the overall running time becomes
+e · T (n, q)1/3 log4/3 q)
+O(n
+
+for each of the two stages, and hence in total as well.
+
+
+
+3. Factoring and Minimal Polynomial of Frobenius
+For a monic square free f (x), let g(λ) ∈ Fq [λ] denote the minimal polynomial of the q th power
+Frobenius endomorphism σ : Fq [x]/(f (x)) → Fq [x]/(f (x)). That is, g(λ) is the unique nonzero monic
+polynomial of least degree such that the endomorphism g(σ) on Fq [x]/(f (x)) is zero. The problem
+Frobenius Min-Poly is to determine g(λ) given f (x). Since g(λ) is the least common multiple of
+λd −1 as d runs through the degrees of the irreducible factors of f (x), Frobenius Min-Poly is nearly
+linear time reducible to Factor. In this section, we conversely prove that Factor is 3/2-exponent
+reducible to Frobenius Min-Poly.
+Let FrobMinPoly be an oracle that solves Frobenius Min-Poly. We present an algorithm Factor
+that invokes FrobMinPoly and solves Factor. For k ∈ N+ , denote by Φk the kth cyclotomic polynomial over Fq . Write φ(·) for the Euler totient function.
+1The assumption T (n, q) = Ω(n log2 q) is without loss of generality. For otherwise we slow down an algorithm with
+
+runtime T (n, q) until it is Ω(n log2 q).
+
+PROBLEMS EQUIVALENT TO BEATING EXPONENT 3/2 FOR POLYNOMIAL FACTORIZATION
+
+5
+
+Algorithm 1 Factor(f (x))
+Input: Monic square free polynomial f (x) ∈ Fq [x] of degree n.
+Output: Monic irreducible factors of f (x).
+Oracle: FrobMinPoly
+1: Using [12], output and remove all monic irreducible factors of f (x) of degree at most n2/3 . If at
+most one irreducible factor of degree greater than n2/3 remains, output and exit.
+2: g(λ) ← FrobMinPoly(f (x)).
+3: Perform square free factorization on g(λ), and then run Factor recursively on the outputs to
+obtain the list of monic irreducible factors g1 (λ), . . . , gm (λ) of g(λ).
+4: Run FindT(g1 (λ), . . . , gm (λ)) computing the set T := {k : p ∤ k and Φk (λ)|g(λ)} as well as mk ,
+the multiplicity of Φk (λ) in g(λ), for each k ∈ T .
+5: Compute S := {kpe : k ∈ T, 0 ≤ e ≤ logp mk }.
+s
+6: for each s ∈ S greater than n2/3 , set fs (x) ← gcd(f (x), xq − x mod f (x)), f (x) ← f (x)/fs (x)
+and perform equal-degree factorization on fs (x).
+The algorithm begins by extracting all monic irreducible factors of degree at most n2/3 . After
+Line 1, f (x) only has large (at least n2/3 ) degree factors. Suppose d1 , d2 , . . . , dm are the degrees of
+the (remaining) monic irreducible factors of f (x). Then the minimal polynomial g(λ) ∈ Fq [λ] of the
+Frobenius acting on Fq [x]/(f (x)) is
+
+g(λ) = lcm λd1 − 1, . . . , λdm − 1 .
+
+In particular, the cyclotomic polynomials Φd1 (λ), . . . , Φdm (λ) divide g(λ) and the factorization of g(λ)
+contains information about d1 , d2 , . . . , dm . We devise a novel procedure to infer d1 , d2 , . . . , dm efficiently.
+
+On Line 2, g(λ) is computed by invoking FrobMinPoly. To infer d1 , d2 , . . . , dm , we seek the factorization of g(λ). To this end, a key idea is to factor g(λ) recursively on Line 3 and obtain a list
+g1 (λ), g2 (λ), . . . , gm (λ) of its monic irreducible factors. Since f (x) is not irreducible at this point, g(λ)
+has degree strictly less than f (x) and the algorithm runs to completion.
+Then we use a procedure FindT(g1 (λ), . . . , gm (λ)) to compute the set T and integers mk as defined
+on Line 4. This step is the most technical part of the algorithm, and we defer its description and
+analysis to the next subsection, where we prove the following theorem:
+e log q) time.
+Theorem 3.1. FindT(g1 (λ), . . . , gm (λ)) can be implemented to run in O(n
+
+Once T is known, to compute S on Line 5 is straightforward. The following lemma shows that S
+indeed contains d1 , d2 , . . . , dm .
+
+Lemma 3.2. d1 , d2 , . . . , dm ∈ S.
+
+e
+Proof. Consider an arbitrary d ∈ {d1 , d2 , . . . , dm } and write
+Q it as d = kp with p ∤ k. By definition
+d
+d
+k
+pe
+k
+(λ − 1)|g(λ). Since λ − 1 = (λ − 1) and λ − 1 = k0 |k Φk0 (λ), Φk (λ) is a factor of g(λ) with
+multiplicity at least pe . So k ∈ T and mk ≥ pe , implying d = kpe ∈ S.
+
+
+To conclude, by Line 6, all the irreducible factors of f (x) are indeed output.
+
+6
+
+ZEYU GUO, ANAND KUMAR NARAYANAN, AND CHRIS UMANS
+
+Theorem 3.3. Suppose the oracle FrobMinPoly runs in time T (n, q) which is monotone in n and q.
+e (n, q) + n4/3 log2 q) time.
+Then Factor factors a degree-n polynomial in O(T
+
+Proof. We first analyze the running time of each step except the recursive call. Line 1 can be implee 4/3 log2 q) time using the baby-step-giant-step strategy [11, 12]. The oracle FrobMinPoly
+mented in O(n
+e
+on Line 2 runs
+P 4 could be found in time O(n log q) by Theorem
+Q in timemTk (n, q). The set T on Line
+divides g(λ), we have k∈T mk φ(k) ≤ deg(g(λ)) ≤ n. Hence |T | ≤ n and
+3.1. Since k∈T Φk (λ)
+e
+mk ≤ n for all k ∈ T , implying S on Line 5 could be computed in time O(n).
+Further,
+X
+X
+X
+X
+e
+kpe ≤ log n
+s≤
+kmk ≤ O(log log n) · log n
+mk φ(k) = O(n)
+s∈S
+
+k∈T,0≤e≤log p mk
+
+k∈T
+
+k∈T
+
+P
+
+where we use k/φ(k) = O(log log k) [18] and k∈T mk φ(k) ≤ n. Hence the number of s ∈ S greater
+P
+e 1/3 ). For each s ∈ S, Computing fs (x) takes O(n
+e log2 q)
+than n2/3 is at most ( s∈S s)/n2/3 = O(n
+e 4/3 log2 q) time in total. Equal degree factorization on Line 6
+time for each s ∈ S [12] and hence O(n
+2
+e log q) time in total.
+takes O(n
+
+Let dmax (f (x)) denote the maximal degree of the irreducible factors of f (x). We claim that dmax (f (x))
+shrinks by at least a factor of two every two recursive calls. It implies that the recursive tree has depth
+e 4/3 log2 q)) =
+no more than O(log n), so the total running time is bounded by O(log n) · (T (n, q) + O(n
+2
+e (n, q) + n4/3 log q), as desired.
+O(T
+
+Q
+Consider an irreducible factor g0 (λ) of g(λ). We know g0 (λ) divides λk − 1 = k0 |k Φk0 (λ) for a
+positive integer k corresponding to some degree k irreducible factor f0 (x) of f (x). If g0 (λ) divides
+Φk0 (λ) for some proper divisor k0 of k, we have deg(g0 (λ)) ≤ φ(k0 ) ≤ k0 ≤ k/2. Likewise, if g0 (λ)
+is a proper irreducible factorQof Φk (λ), we have deg(g0 (λ)) ≤ φ(k)/2 ≤ k/2 as well.
+Q So assume
+g0 (λ) = Φk (λ). Suppose k = ℓ ℓeℓ , ℓ running over prime divisors of k. Then φ(k) = ℓ (ℓ − 1)ℓeℓ −1 .
+If k is even, we have e2 ≥ 1 implying
+= φ(k) ≤ k/2 (since for ℓ = 2, (ℓ − 1)ℓeℓ −1 = ℓeℓ /2).
+Q deg(g0 (λ))
+eℓ −1
+is even. The argument above applied to g0 (λ) and
+If k is odd, deg(g0 (λ)) = φ(k) = ℓ (ℓ − 1)ℓ
+g(λ) in place of f0 (x) and f (x) shows that the degree shrinks by at least a factor of two in the next
+recursive call. The claim follows.
+
+Remark 3.4. One may easily check that the same algorithm and analysis also work if the polynomial
+g(λ) computed by the oracle is the characteristic polynomial of the Frobenius endomorphism instead
+of the minimal polynomial. The only difference is that g(λ) is the product of λd1 − 1, . . . , λdm − 1
+rather than their lcm.
+3.1. Computing the Set T . We next devise a nearly linear time procedure to implement FindT. It
+relies on solutions to the following two problems: (1) finding all irreducible factors of Φk (λ) over Fq
+from a single irreducible factor g0 (λ) and (2) finding the corresponding integer k. We deal with these
+two problems individually before describing FindT.
+3.1.1. Finding the irreducible factors of Φk (λ). Let k ∈ [1, n] be an integer coprime to p. Our goal
+is to find all the irreducible factors of Φk (λ) over Fq from a single irreducible factor g0 (λ)|Φk (λ). To
+achieve it, we need to know how Φk (λ) factorizes over Fq .
+
+PROBLEMS EQUIVALENT TO BEATING EXPONENT 3/2 FOR POLYNOMIAL FACTORIZATION
+
+7
+
+Factorization of Φk (λ) over Fq : As k is coprime to p, there are φ(k) distinct primitive kth roots of
+unity in Fq which are exactly the roots of Φk (λ). Denote this set of roots by µk . Let G be the abelian
+group (Z/kZ)× of order φ(k). For d ∈ Z, we write d¯ for the image of d in Z/kZ. The group G acts on
+µk such that d¯ ∈ G sends any θ ∈ µk to θd . This is a regular action, meaning that for fixed θ ∈ µk , the
+map d¯ 7→ θd is a bijection between G and µk . As p is coprime to k, we have q̄ ∈ G. Let G0 = hq̄i ⊆ G
+and s = [G : G0 ]. Restrict the G-action on µk to a G0 -action. Then µk is partitioned into s distinct
+G0 -orbits represented by θ1 , . . . , θs ∈ µk . It is well-known that the factorization of Φk (λ) over Fq is
+then determined in the following way:
+Lemma 3.5. Under the notations above, Φk (λ) has s irreducible factors g1 (λ), . . . , gs (λ) over Fq
+corresponding to the G0 -orbits G0 θ1 , . . . , G0 θs of µk in the sense that the set of roots of gi (λ) is
+exactly G0 θi .
+Proof. Let g(λ) be an irreducible factor of Φk (λ) over Fq and θ ∈ µk be a root of g(λ). Then Fq [θ] is
+Galois over Fq with the Galois group generated by the Frobenius map a 7→ aq . So a ∈ Fq [θ] is a root
+of g(λ) if and only if aq is a root of g(λ). Therefore G0 θ is the set of roots of g(λ) and the lemma
+follows.
+
+From now on we fix a root θ ∈ µk of the given irreducible factor g0 of Φk . For any subgroup H ⊆ G
+containing G0 , the G-action on µk restricts to an H-action. The H-orbit Hθ is partitioned into a
+disjoint union of G0 -orbits and hence corresponds to a subset L of irreducible factors of Φk (λ) by
+Lemma 3.5. Note that L also determines H: h ∈ G lies in H if and only if the minimal polynomial of
+hθ over Fq is in L. We say L is associated with the subgroup H.
+We use the following procedure FindOrder(ℓ, L) to find the order of H ℓ̄ in G/H:
+Algorithm 2 FindOrder(ℓ, L)
+Input: Integer ℓ ∈ [1, n] and L associated with some subgroup H containing G0
+Output: The order of H ℓ̄ in G/H, or zero if ℓ̄ 6∈ G = (Z/kZ)×
+1: Pick arbitrary f0 (λ) ∈ L
+2: e ← 0, r0 ← λ mod f0 (λ) ∈ Fq [λ]/(f0 (λ))
+3: repeat
+4:
+e←e+1
+ℓ
+5:
+re ← re−1
+and let fe (λ) be the minimal polynomial of re over Fq
+6: until fe (λ) ∈ L or fe (λ) = fe′ (λ) for some 0 ≤ e′ < e
+7: if fe (λ) ∈ L then return e else return 0
+Lemma 3.6. There exists a procedure FindOrder(ℓ, L) that takes an integer ℓ and the set L associated
+with H, and returns the following result: if ℓ̄ ∈ G = (Z/kZ)× , it returns the order of H ℓ̄ in G/H, i.e.
+the smallest e > 1 for which ℓ̄e ∈ H. Otherwise it returns zero. Moreover FindOrder(ℓ, L) could be
+e
+implemented in time O(φ(k)
+log q).
+
+Proof. The procedure FindOrder(ℓ, L) first picks a polynomial f0 (λ) ∈ L and one of its roots r0 ∈ Hθ.
+First assume ℓ̄ ∈ G. Then the procedure finds the smallest e for which fe (λ) ∈ L or fe (λ) = fe′ (λ) for
+
+8
+
+ZEYU GUO, ANAND KUMAR NARAYANAN, AND CHRIS UMANS
+e
+
+some 0 ≤ e′ < e, where fe (λ) is the minimal polynomial of ℓ̄e r0 = r0ℓ . The former condition fe (λ) ∈ L
+is equivalent to G0 ℓ̄e r0 ⊆ Hθ = Hr0 , or equivalently ℓ̄e ∈ H. The latter condition fe (λ) = fe′ (λ)
+′
+′
+for some 0 ≤ e′ < e is equivalent to G0 ℓ̄e r0 = G0 ℓ̄e r0 , or equivalently ℓ̄e−e ∈ G0 . Note that if the
+latter condition is met, by minimality of e we must have e′ = 0 and hence ℓ̄ ∈ G0 ⊆ H. So the former
+condition subsumes the latter and the desired e is picked.
+Now assume ℓ̄ 6∈ G, then ℓ0 := gcd(ℓ, k) > 0. Then all re generated in FindOrder(ℓ, L) are (k/ℓ0 )th
+roots of unity for e > 0, and hence fe (λ) 6∈ L for e > 0. Let k1 be the largest divisor of k coprime
+to ℓ and k2 = k/k1 . Then k1 consists of prime divisors of k not appeared in the factorization of ℓ0
+whereas k2 consists of those appeared. For any prime number t|k2 , we have vt (ℓ) ≥ vt (ℓ0 ) ≥ 1 and
+vt (k2 ) ≤ logt k2 ≤ log k2 , where vt (n) denotes the integer u ≥ 0 such that tu |n and tu+1 ∤ n. So for
+e ≥ log k2 , we have vt (ℓe ) ≥ vt (k2 ) for all prime number t, and hence k2 |ℓe . On the other hand, k1
+e
+is coprime to ℓ. So re = r0ℓ is a primitive k1 th root of unity for e ≥ log k2 . Let G0 be the subgroup
+of G := (Z/k1 Z)× generated by q mod k1 . We apply Lemma 3.5 on G and G0 instead of G and G0 .
+′
+Let e′ = [G : G0 ] ≤ [G : G0 ]. Then for any e ≥ log k we have G0 re+e′ = G0 ℓ̄e re = G0 re and hence
+fe+e′ (λ) = fe (λ). So the loop in FindOrder(ℓ, L) is executed at most log k + e′ ≤ log k + [G : G0 ]
+times. And as fe (λ) 6∈ L for e > 0, it returns zero.
+As all Fq (re ) are subfields of Fq (r0 ), the degrees of all fe (λ) are bounded by deg(f0 (λ)) = |G0 |. Line 5
+e 0 | log q) using the Kedlaya-Umans [12] implemenof FindOrder(ℓ, L) could be computed in time O(|G
+tation of Shoup’s algorithm [19]. The condition on Line 6 could be checked in time O(|G0 | log q(log N +
+log |L|)) if we store L and the list of fi (λ) using a data structure supporting fast search and insertion,
+where N is number of times that the loop is executed. Here |L| = [H : G0 ] ≤ k. If ℓ̄ ∈ G, the loop is
+executed e = [Hhℓ̄i : H] ≤ [G : G0 ] times, whereas if ℓ̄ 6∈ G, it is executed no more than log k +[G : G0 ]
+e 0 | log q)+ O(|G0 | log q log k)) =
+times. So the total running time is bounded by (log k + [G : G0 ])·(O(|G
+e
+O(φ(k)
+log q).
+
+We use a randomized procedure FindCyclotomic(g0 (λ), n) to find all irreducible factors of Φk (λ)
+over Fq . Here g0 (λ) is one irreducible factor of Φk (λ) and n is the degree of the polynomial f (x).2
+The procedure FindCyclotomic(g0 (λ), n) maintains a subset L of irreducible factors of Φk (λ)
+associated with some subgroup of G containing G0 . Initially L = {g0 (λ)}, associated with H0 := G0 .
+We claim:
+
+Lemma 3.7. Suppose L is associated with Hi−1 at the beginning ith execution of the outer loop
+of FindCyclotomic(g0 (λ), n). Then at the end of the ith execution, the set L is associated with a
+subgroup Hi ⊇ Hi−1 . Moreover, Hi = Hi−1 if ℓ̄ 6∈ G in the ith execution of the outer loop. Otherwise
+Hi = Hi−1 hℓ̄i.
+Proof. If ℓ 6∈ G in the ith execution of the outer loop, then e is set to zero by Lemma 3.6 and the claim
+is trivial. So assume ℓ ∈ G and let H = Hi−1 hℓ̄i. Then e is the order of Hi−1 ℓ̄ in H/Hi−1 by Lemma
+3.6, or [H : Hi−1 ]. Suppose the irreducible factors in L at the beginning of the ith execution correspond
+to distinct G0 -orbits G0 θ1 , . . . , G0 θm whose union is the Hi−1 -orbit Hi−1 θ, m = [Hi−1 : G0 ]. The
+2The argument n is only used on Line 2 and 3 to control the number of repetitions and the range of ℓ, which is
+
+related to the error probability.
+
+PROBLEMS EQUIVALENT TO BEATING EXPONENT 3/2 FOR POLYNOMIAL FACTORIZATION
+
+9
+
+Algorithm 3 FindCyclotomic(g0 (λ), n)
+Input: Irreducible factor g0 (λ) of Φk (λ) over Fq and degree n of f (x)
+Output: The list of irreducible factors of Φk (λ) over Fq
+1: L ← {g0 (λ)}
+2: for t from 1 to N = ⌊c log n log log n⌋ do
+⊲ c > 0 is a large enough constant
+3:
+Pick an integer ℓ ∈ [1, n] at random
+4:
+e ← FindOrder(ℓ, L)
+5:
+for each h(λ) ∈ L do
+ℓ
+6:
+r0 ← λ mod h(λ) ∈ Fq [λ]/(h(λ)), ri ← ri−1
+for i = 1, . . . , e − 1
+7:
+Let fi (λ) be the minimal polynomial of ri over Fq for i = 1, . . . , e − 1
+8:
+Add f1 (λ), . . . , fe−1 (λ) to L
+9:
+end for
+10: end for
+11: return L
+s
+
+inner loop enumerates G0 θj , and for each of them, adds the irreducible factor corresponding to G0 θjℓ
+s
+to L, s = 1, . . . , e − 1. Note that the union of these G0 -orbits G0 θjℓ = G0 ℓ̄s θj = ℓ̄s G0 θj where
+1 ≤ j ≤ m, 0 ≤ s ≤ e − 1 equals the union of Hi−1 -orbits ℓ̄s Hi−1 θj , which equals the H-orbit Hθ.
+And these G0 -orbits are all distinct since the number of them is me = [H : G0 ]. So L is associated
+with H at the end of the ith execution of the outer loop.
+
+Lemma 3.8. The procedure FindCyclotomic(g0 (λ), n) returns a set L associated with HN ⊆ G. And
+HN = G with probability 1 − poly(n) in which case L contains all irreducible factors of Φk (λ) over
+e
+Fq . Moreover FindCyclotomic(g0 (λ), n) could be implemented in time O(φ(k)
+log q).
+
+Proof. We want to show HN = G with probability 1 − poly(n). By Lemma 3.6 and Lemma 3.7, it is
+equivalent to showing the set of ℓ̄ ∈ G generates G. Identify G with a product of at most log |G| ≤ log n
+primary cyclic groups Ci whose orders are coprime to each other. We only need to show the the set
+of holomorphic images of ℓ̄ ∈ G generates Ci for each i with probability 1 − poly(n) and then apply
+the union bound.
+So fix one such Ci and let m = |Ci |. Then φ(m) out of the m elements in Ci are generators of Ci .
+Let α be the probability that the holomorphic image of ℓ̄ is among these φ(m) elements, where ℓ is
+randomly sampled from [1, n] as on Line 3. As m is a prime power, we have φ(m) ≥ m/2. Therefore
+α≥
+
+⌊n/k⌋ φ(m)
+·
+· |G| = Ω(φ(k)/k) = Ω(1/ log log k)
+n
+m
+
+where we use k/φ(k) = O(log log k) [18]. So for sufficiently large N = ⌊c log n log log n⌋, the claim
+holds with probability 1 − poly(n).
+e
+Then we analyze the running time: Line 4 runs in time O(φ(k)
+log q) by Lemma 3.6. Line 7 could
+e 0 | log q) [12, 19]. And Line 3–9 runs in time |L| · max{e, 1} · O(|G
+e 0 | log q).
+be implemented in time O(|G
+e
+This is bounded by O(φ(k) log q) since |L| = [Hi−1 : G0 ], max{e, 1} = [Hi : Hi−1 ], and |G| = φ(k).
+e
+As N = Θ(log n log log n), the total running time is bounded by O(φ(k)
+log q).
+
+
+10
+
+ZEYU GUO, ANAND KUMAR NARAYANAN, AND CHRIS UMANS
+
+3.1.2. Finding the integer k. Another problem we need to solve is finding the integer k given an
+irreducible factor g0 (λ) of Φk (λ) over Fq . Using the procedure FindCyclotomic(g0 (λ)), we could find
+all the irreducible factors of Φk (λ) and hence Φk (λ) itself. The degree d := deg(Φk (λ)) = φ(k) is
+hence also known. If |φ−1 (d)| is small, we could find k by enumerating k0 ∈ φ−1 (d) and checking if
+Φk0 (λ) = Φk (λ). However, Erdős [9] showed that for some constant c > 0, there are infinitely many
+integers d for which |φ−1 (d)| ≥ dc . So this approach is not affordable in general. Instead, we use the
+following procedure to find k efficiently:
+Algorithm 4 Findk(d, g0 (λ))
+Input: An integer d|φ(k) and an irreducible factor g0 (λ) of Φk (λ) over Fq
+Output: A positive integer k0 |k. And k0 = k if d = φ(k)
+1: k0 ← 1
+2: for each prime ℓ such that (ℓ − 1)|d do
+3:
+e ← 0, h(λ) ← g0 (λ), and r = λ mod g0 (λ) ∈ Fq [λ]/(g0 (λ))
+4:
+while FindOrder(ℓ, {h(λ)}) = 0 do
+5:
+e←e+1
+6:
+r ← rℓ
+7:
+Let h(λ) be the minimal polynomial of r over Fq
+8:
+end while
+9:
+k0 ← ℓe · k0
+10: end for
+Lemma 3.9. There exists a procedure Findk(d, g0 (λ)) that takes an integer d > 0 dividing φ(k) and an
+e
+irreducible factor g0 (λ) of Φk (λ), and returns a positive integer k0 |k in time O(φ(k)
+log q). Moreover
+k0 = k if d = φ(k).
+
+Proof. First assume d = φ(k). We compute k0 = k by determining its prime divisors ℓ and vℓ (k).
+Note that if a prime integer ℓ divides k, we have (ℓ − 1)|φ(k). So we enumerate all primes ℓ for which
+(ℓ − 1)|d as on Line 2. Then Line 3–8 determines e = vℓ (k). To do this, we start with e = 0 and
+keep increasing e until ℓ is not invertible in Z/(k/ℓe )Z, or equivalently e = vℓ (k), i.e., e is the integer
+satisfying ℓe |k and ℓe+1 ∤ k. To check if ℓ is not invertible in Z/(k/ℓe )Z, we maintain r as a primitive
+(k/ℓe )th root of unity and h(λ) its minimal polynomial over Fq . Applying Lemma 3.6 with k ′ = k/ℓe
+in place of k, we see ℓ is not invertible in Z/(k/ℓe )Z if and only if FindOrder(ℓ, {h(λ)}) returns 0,
+which is checked on Line 4. Finally, k0 is the product of all ℓe = ℓvℓ (k) at the end of the procedure
+and hence equals k.
+On the other hand, if d is only a proper divisor of φ(k), not necessarily all prime divisors ℓ of k
+are enumerated. But we still have k0 |k by the argument above.
+For the running time, note that the number of ℓ we enumerate is bounded by the number of divisors of d ≤ k, which is bounded by k O(1/ log log k) = φ(k)o(1) by a classical result of Wigert [22]. The
+inner loop is executed at most log k times for each ℓ. The condition on Line 4 can be checked in time
+e
+e
+O(φ(k)
+log q) by Lemma 3.6 and Line 7 can also be implemented in time O(φ(k)
+log q) [12, 19]. The
+claim follows.
+
+
+PROBLEMS EQUIVALENT TO BEATING EXPONENT 3/2 FOR POLYNOMIAL FACTORIZATION
+
+11
+
+3.1.3. Finding the set T . Now we are ready to describe the procedure FindT(g1 (λ), . . . , gm (λ)):
+
+Algorithm 5 FindT(g1 (λ), . . . , gm (λ))
+Input: The irreducible factors g1 (λ), . . . , gm (λ) of g(λ) over Fq
+Output: The set T and multiplicities mk for each k ∈ T
+1: L0 ← {g1 (λ), . . . , gm (λ)} as a multi-set and T ← ∅
+2: repeat
+3:
+Pick an arbitrary element g0 (λ) ∈ L0
+4:
+L ← FindCyclotomic(g
+0 (λ))
+Q
+5:
+h(λ) ← fi (λ)∈L fi (λ), d ← deg(h(λ))
+6:
+k0 ← Findk(d, g0 )
+7:
+if h(λ)|λk0 − 1 then
+8:
+if k0 6∈ T then mk0 ← 0
+9:
+T ← T ∪ {k0 }, mk0 ← mk0 + 1
+10:
+L0 ← L0 − L
+11:
+end if
+12: until L0 = ∅
+13: return T
+
+Theorem 3.10 (Theorem 3.1 restated). FindT(g1 (λ), . . . , gm (λ)) computes the set T and multiplice log q) with probability
+ities mk as defined in Algorithm 1, Line 4. Moreover it halts in time O(n
+1 − 1/poly(n).
+Proof. The algorithm picks g0 (λ) from L0 , calls FindCyclotomic to find a list L ⊆ L0 that almost
+surely contains all the irreducible factors of Φk (λ), and remove these factors from L0 . It repeats these
+steps until L0 is empty. Each time it also determines the integer k using Findk, adds it to T and
+updates mk .
+Note that with small probability, the list L returned by FindCyclotomic may not contain all the
+irreducible factors, in which case it is associated with a proper subgroup HN ⊆ G (c.f. Lemma 3.8).
+In any case we have deg(h(λ))|φ(k) and therefore by Lemma 3.9, the integer k0 returned by Findk
+divides k. We verify that k = k0 on Line 7: h(λ)|(λk0 − 1) if and only if k|k0 if and only if k = k0 since
+we know k0 |k. And if we find k 6= k0 we do nothing in that round. The correctness of the algorithm
+is then straightforward.
+e
+For the running time, note that each round runs in time O(φ(k)
+log q) by Lemma 3.8 and Lemma 3.9,
+and then factors of total degree φ(k) are removed from L0 with probability 1−1/poly(n). So with probPm e
+e
+ability 1 − 1/poly(n), the total running time is bounded by i=1 O(deg(g
+i (λ)) log q) = O(n log q). 
+
+12
+
+ZEYU GUO, ANAND KUMAR NARAYANAN, AND CHRIS UMANS
+
+4. Polynomial Factorization Using Carlitz Modules
+We next establish connections between polynomial factorization and the Carlitz action. We prove
+two nearly linear reductions, namely Factor Degree to Carlitz Char-Poly and Carlitz CharPoly to Factor. The former reduction requires that the characteristic p of Fq is larger than the
+number of irreducible factors.
+4.1. Carlitz Modules. Let A be an Fq [x]-algebra. For f (x) ∈ Fq [x] and α ∈ A, f (x)α is understood
+to be the result of the Fq [x] action of f (x) on α in A. Let σ : A −→ A and τ : A −→ A denote the
+q th power Frobenius endomorphism and the multiplication by x endomorphism respectively. That is,
+q
+∀α ∈ A, σ(α) = αP
+and τ (α) = xα. In [6, 7], Carlitz endowed a new Fq [x]-module structure on A by
+defining m(x) = i mi xi ∈ Fq [x] to act on α ∈ A as
+!
+X
+mi (σ + τ )i (α).
+ρm (α) := (m(σ + τ )) (α) =
+i
+
+In particular, ∀α ∈ A, ρx (α) = αq + xα and ∀u ∈ Fq , ρu (α) = uα. Let ρ(A) denote the Fq [x]-module
+structure thus endowed to A by the Carlitz action. To factor a monic square free polynomial f (x), we
+will concern ourselves with ρ(Fq [x]/(f (x))). Let χf (x) ∈ Fq [x] denote the characteristic polynomial
+of the Fq linear transformation on Fq [x]/(f (x)) that takes α ∈ Fq [x]/(f (x)) to ρx (α). Hence Carlitz
+Char-Poly may be restated as
+Problem 4.1. Given a monic square free f (x) ∈ Fq [x], compute χf (x).
+
+e log q) time.
+By Lemma 4.2, knowledge of factorization of f (x) immediately yields χf (x) in O(n
+Thus Problem Carlitz Char-Poly is linear time reducible to Factor. We next reduce Factor
+Degree to Carlitz Char-Poly.
+4.2. Factor Degree Estimation using Carlitz Modules.
+Q
+of a monic square free f (x) ∈ Fq [x] into
+Lemma 4.2. Let f (x) =
+i fi (x) be a factorization L
+∼
+monic
+irreducible
+polynomials
+.
+Then
+ρ(F
+[x]/(f
+(x)))
+= i Fq [x]/(fi (x) − 1). In particular, χf (x) =
+q
+Q
+(f
+(x)
+−
+1).
+i i
+∼ Q Fq [x]/(fi (x))
+Proof. By the Chinese remainder theorem, Fq [x]/(f (x)) =
+i
+!
+Y
+M
+(4.1)
+⇒ ρ(Fq [x]/(f (x))) ∼
+Fq [x]/(fi (x)) ∼
+ρ (Fq [x]/(fi (x))) .
+=ρ
+=
+i
+
+i
+
+The final congruence holds since for every direct product C ∼
+= A × B of Fq [x]-algebras, we have the
+corresponding direct sum ρ(C) ∼
+= ρ(A) ⊕ ρ(B) of Fq [x]-modules [8]. For a monic irreducible g(x) ([8]),
+(4.2)
+
+ρ(Fq [x]/(g(x))) ∼
+= Fq [x]/(g(x) − 1).
+
+Equation 4.1 and 4.2 together prove the lemma.
+
+
+
+Lemma 4.3. If p does not divide the number of smallest degree factors of a monic square free f (x) ∈
+Fq [x], then the smallest irreducible factor degree of f (x) is deg(f (x)) − deg(f (x) − χf (x)).
+
+PROBLEMS EQUIVALENT TO BEATING EXPONENT 3/2 FOR POLYNOMIAL FACTORIZATION
+
+13
+
+Q
+Proof. Let f (x) = i fi (x) be a factorization of a monic square free f (x) ∈ Fq [x] into monic irreducible
+polynomials. Let d be the smallest degree of factors of f (x). Then
+X f (x)
+Y
++ (terms of degree less than deg(f (x)) − d).
+f (x) − χf (x) = f (x) − (fi (x) − 1) =
+fi (x)
+i
+i
+
+The first equality is from Lemma 4.2. Since f (x)
+Pand fi (x) are all monic and p does not divide the
+number of fi (x) of degree d, the leading term of i (f (x)/fi (x)) is of degree deg(f (x)) − d. Therefore
+deg(f (x) − χf (x)) = deg(f (x)) − d and the lemma follows.
+
+
+Lemma 4.3 reduces in nearly linear time Factor Degree (when restricted to p greater than the
+number of factors of f (x)) to Carlitz Char-Poly. To see this, given f (x), we may call an algorithm
+that solves Problem 4.1 to obtain χf (x) and output deg(f (x)) − deg(f (x) − χf (x)).
+5. Moore and Vandermonde Determinants
+5.1. Moore Determinants and Carlitz Factorials. Let A be a finitely generated Fq algebra and
+n a positive integer. The Moore matrix Mw with first row w = (w1 , w2 , . . . , wn ) ∈ An is defined as
+
+
+w1
+w2
+w3
+...
+wn
+q
+q
+q
+ w
+w2
+w3
+...
+wnq 
+
+ 12
+ wq
+q2
+q2
+q2 
+.
+.
+.
+w
+w
+w
+
+n 
+3
+2
+Mw :=  1
+.. 
+..
+..
+..
+
+ ..
+.
+. 
+.
+.
+ .
+w1q
+
+n−1
+
+w2q
+
+n−1
+
+w3q
+
+n−1
+
+...
+
+n−1
+
+wnq
+
+and its determinant det(Mw ) is denoted by ∆(w1 , w2 , . . . , wn ). For a positive integer m, the mth
+Carlitz factorial
+q i
+Y  j−i
+xq − x
+,
+0≤i<j≤m
+
+is the product of all polynomials over Fq of degree at most m [6]. We next recall Carlitz’s identity
+and from it reduce Factor Degree to computing certain Moore determinants.
+Lemma 5.1. (Carlitz [6]) For every positive integer m,
+q i
+Y  j−i
+∆(1, x, x2 , . . . , xm ) =
+xq − x
+,
+0≤i<j≤m
+
+2
+
+Proof. The Moore matrix with first row (1, x, x , . . . , xm ), when viewed column-wise is Vandermonde.
+By the Vandermonde determinant formula,
+
+
+1
+x
+x2
+...
+xm
+q
+2q
+mq
+
+1
+x
+x
+...
+x
+
+
+
+q i
+Y  j−i
+Y  j
+2q2
+mq2 
+1 xq2
+q
+q
+qi
+x
+...
+x
+=
+=
+x
+−
+x
+x
+−
+x
+det 
+
+ ..
+..  0≤i<j≤m
+..
+..
+..
+0≤i<j≤m
+ .
+.
+. 
+.
+.
+1
+
+xq
+
+n−1
+
+x2q
+
+n−1
+
+...
+
+xmq
+
+n−1
+
+
+
+14
+
+ZEYU GUO, ANAND KUMAR NARAYANAN, AND CHRIS UMANS
+
+Moore-Det may be restated as
+Problem 5.2. Given a square free monic polynomial f (x) ∈ Fq [x] of degree n and a positive integer
+m ≤ n, decide if ∆(1, x, . . . , xm ) mod f (x) is 0.
+e 3/2 log q + n log2 q) time [12, Lemma 8.4].
+Problem 5.2 can be solved in O(n
+
+Theorem 5.3. If there is a T (n, m, log q) time algorithm for Problem 5.2, then Factor Degree can
+be solved in O(T (n, ⌈n/2⌉, log q) log n) time. That is, Factor Degree is nearly linear time reducible
+to Moore-Det.
+Proof. By Lemma 5.1, for a monic square free f (x) ∈ Fq [x] and m ≤ deg(f (x)), we have ∆(1, x, . . . , xm )
+mod f (x) = 0 if and only if
+q i
+Y  j−i
+(5.1)
+xq − x
+= 0 mod f (x).
+0≤i<j≤m
+
+Since f (x) is square free, Equation 5.1 holds if and only if every irreducible factor of f (x) has degree at most m. Given oracle access to an algorithm for Problem 5.2, a binary search leads to the
+determination of the largest irreducible factor degree of f (x).
+
+5.2. Vandermonde Determinants. The determinants involved in the previous subsection were
+both Moore and Vandermonde. Here we study determinants that are Vandermonde but not Moore.
+Further, the matrices involved are of dimension significantly smaller than the degree of the polynomial
+factored.
+For a positive integer m, let
+√
+√
+√
+√
+√
+√
+√
+Sm := {0, 1, 2, . . . , ⌊ m⌋ − 1, ⌊ m⌋, 2⌊ m⌋, 3⌊ m⌋, . . . , (⌊ m⌋ − 1)⌊ m⌋, ⌊ m⌋2 , m}.
+√
+This ensures that |Sm | ≤ 2⌊ m⌋ + 1 and {j − i|i, j ∈ Sm , i < j} = {1, 2, . . . , m − 1, m}.
+For a positive integer m, let Vm (x) ∈ Fq [x] denote the determinant of the Vandermonde matrix
+i
+with first row {xq , i ∈ Sm }.
+Lemma 5.4. For every monic square free f (x) ∈ Fq [x] and every positive integer m,
+
+
+
+Y  i
+gcd(Vm (x), f (x)) = gcd 
+xq − x , f (x) .
+0≤i≤m
+
+Proof. By the Vandermonde determinant formula,
+ j
+
+Y
+i
+(5.2)
+Vm (x) =
+xq − xq =
+i,j∈Sm |i<j
+
+Y
+
+i,j∈Sm |i<j
+
+ j−i
+q i
+.
+xq − x
+
+Since f (x) is square free and {j − i|i, j ∈ Sm , i < j} = {1, 2, . . . , m − 1, m},
+
+
+
+
+ j−i
+q i
+
+Y
+Y  i
+xq − x
+(5.3)
+gcd 
+, f (x) = gcd 
+xq − x , f (x) .
+i,j∈Sm |i<j
+
+By Equations 5.2 and 5.3, the lemma follows.
+
+0≤i≤m
+
+
+
+PROBLEMS EQUIVALENT TO BEATING EXPONENT 3/2 FOR POLYNOMIAL FACTORIZATION
+
+15
+
+Vandermonde Det may be restated as
+Problem 5.5. Given a square free monic polynomial f (x) ∈ Fq [x] of degree n and a positive integer
+m ≤ n, decide if Vm (x) mod f (x) is 0.
+√
+i
+We next sketch a fast algorithm for Problem 5.5. Since |Sm | ≤ n, the first row {xq mod f (x), i ∈
+e 3/2 log q + n log2 q) time using iterated Frobenius algorithm [20] impleSm } can be computed in O(n
+mented using fast modular composition [12]. Given the first row of a Vandermonde matrix over a
+commutative ring, the square of its determinant can be computed with nearly linearly many operations
+e 3/2 log q + n log2 q) time.
+over the ring [15]. Hence, Vm (x) mod f (x) can be zero tested in O(n
+
+Theorem 5.6. If there
+√ is a T (n, m, log q) time algorithm for Problem 5.5, then Factor Degree can
+be solved in O(T (n, ⌈ n⌉, log q) log n) time. That is, Factor Degree is nearly linear time reducible
+to Vandermonde Det.
+
+Proof. By Lemma 5.1 and Lemma 5.4, for every monic square free f (x) ∈ Fq [x] and positive integer
+m ≤ deg(f (x)),
+gcd(Vm (x), f (x)) = gcd(∆(1, x, . . . , xm ), f (x)).
+Hence Problems 5.2 and 5.5 are identical and our theorem follows from Theorem 5.3.
+
+
+
+Remark 5.7. We may pose functional variants of Problems 5.2 and 5.5, by asking for the respective
+determinants module f (x), instead of merely deciding if they are zero.
+Problem 5.8. Given a square free monic polynomial f (x) ∈ Fq [x] of degree n and a positive integer
+m ≤ n, compute ∆(1, x, . . . , xm ) mod f (x).
+Problem 5.9. Given a square free monic polynomial f (x) ∈ Fq [x] of degree n and a positive integer
+m ≤ n, compute (Vm (x))i mod f (x) for some positive integer i.
+As outlined, 3/2 exponent algorithms are known for problems 5.8 and 5.9. By [12, Thm 8.5],
+Factor is nearly linear time reducible to each of the problems 5.8 and 5.9.
+References
+[1] A. Abboud, F. Grandoni, and V. V. Williams. Subcubic equivalences between graph centrality problems, APSP and
+diameter. In Proceedings of the 26th Annual ACM-SIAM Symposium on Discrete Algorithms, pages 1681–1697,
+2015.
+[2] A. Abboud and V. V. Williams. Popular conjectures imply strong lower bounds for dynamic problems. In Proceedings of the 55th Annual Symposium on Foundations of Computer Science, pages 434–443, 2014.
+[3] A. Abboud, V. V. Williams, and O. Weimann. Consequences of faster alignment of sequences. In Automata,
+Languages, and Programming, pages 39–51, 2014.
+[4] E. R. Berlekamp. Factoring polynomials over finite fields. Bell System Technical Journal, 46(8):1853–1859, 1967.
+[5] D. G. Cantor and H. Zassenhaus. A new algorithm for factoring polynomials over finite fields. Mathematics of
+Computation, 36(154):587–592, 1981.
+[6] L. Carlitz. On certain functions connected with polynomials in a Galois field. Duke Math. J., 1(2):137–168, 06
+1935.
+[7] L. Carlitz. A class of polynomials. Transactions of the American Mathematical Society, 43(2):167–182, 1938.
+[8] K. Conrad. Carlitz extensions, available online at. http://www.math.uconn.edu/~ kconrad/blurbs/gradnumthy/carlitz.pdf.
+[9] P. Erdős. On the normal number of prime factors of p − 1 and some related problems concerning Eulers φ-function.
+Quart. J. Math, 6:205–213, 1935.
+
+16
+
+ZEYU GUO, ANAND KUMAR NARAYANAN, AND CHRIS UMANS
+
+[10] E. Kaltofen and A. Lobo. Factoring high-degree polynomials by the black box berlekamp algorithm. In Proceedings
+of the International Symposium on Symbolic and Algebraic Computation, pages 90–98, 1994.
+[11] E. Kaltofen and V. Shoup. Subquadratic-time factoring of polynomials over finite fields. Mathematics of computation, 67(223):1179–1197, 1998.
+[12] K. S. Kedlaya and C. Umans. Fast polynomial factorization and modular composition. SIAM J. Comput.,
+40(6):1767–1802, 2011.
+[13] D. E. Knuth. The Art of Computer Programming, Volume 2 (3rd Ed.): Seminumerical Algorithms. AddisonWesley, 1997.
+[14] A. K. Narayanan. Polynomial factorization over finite fields by computing Euler-Poincare characteristics of Drinfeld
+modules. arXiv preprint arXiv:1504.07697, 2015.
+[15] V. Pan. On computations with dense structured matrices. Mathematics of Computation, 55(191):179–190, 1990.
+[16] M. Pǎtraşcu. Towards polynomial lower bounds for dynamic problems. In Proceedings of the 42nd ACM Symposium
+on Theory of Computing, pages 603–610, 2010.
+[17] L. Roditty and U. Zwick. Replacement paths and k simple shortest paths in unweighted directed graphs. ACM
+Trans. Algorithms, 8(4):33:1–33:11, 2012.
+[18] J. B. Rosser and L. Schoenfeld. Approximate formulas for some functions of prime numbers. Illinois J. Math.,
+6(1):64–94, 1962.
+[19] V. Shoup. Efficient computation of minimal polynomials in algebraic extensions of finite fields. In Proceedings of
+the 1999 International Symposium on Symbolic and Algebraic Computation, pages 53–58, 1999.
+[20] J. Von Zur Gathen and V. Shoup. Computing frobenius maps and factoring polynomials. Computational complexity,
+2(3):187–224, 1992.
+[21] O. Weimann and R. Yuster. Replacement paths and distance sensitivity oracles via fast matrix multiplication.
+ACM Trans. Algorithms, 9(2):14:1–14:13, 2013.
+[22] S. Wigert. Sur l’ordre de grandeur du nombre des diviseurs d’un entier. Almqvist & Wiksells, 1907.
+[23] V. V. Williams. Faster replacement paths. In Proceedings of the 22nd Annual ACM-SIAM Symposium on Discrete
+Algorithms, pages 1337–1346, 2011.
+[24] V. V. Williams and R. Williams. Subcubic equivalences between path, matrix and triangle problems. In Proceedings
+of the 51st Annual Symposium on Foundations of Computer Science, pages 645–654, 2010.
+[25] D. Y.Y. Yun. On square-free decomposition algorithms. In Proceedings of the 3rd ACM Symposium on Symbolic
+and Algebraic Computation, pages 26–35, 1976.
+Department of Computing and Mathematical Sciences, California Institute of Technology.
+E-mail address: zguo,anandkn,umans@caltech.edu
+
+

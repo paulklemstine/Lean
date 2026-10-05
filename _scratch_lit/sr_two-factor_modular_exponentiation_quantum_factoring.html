@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- new favicon config and versions by realfavicongenerator.net -->
+<link rel="apple-touch-icon" sizes="180x180" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/favicon-16x16.png">
+<link rel="manifest" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/site.webmanifest">
+<link rel="mask-icon" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/safari-pinned-tab.svg" color="#b31b1b">
+<link rel="shortcut icon" href="https://static.arxiv.org/static/base/1.0.0a5/images/icons/favicon.ico">
+<meta name="msapplication-TileColor" content="#b31b1b">
+<meta name="msapplication-config" content="images/icons/browserconfig.xml">
+<meta name="theme-color" content="#b31b1b">
+<!-- end favicon config -->
+<title>Search | arXiv e-print repository</title>
+<script defer src="https://static.arxiv.org/static/base/1.0.0a5/fontawesome-free-5.11.2-web/js/all.js"></script>
+<link rel="stylesheet" href="https://static.arxiv.org/static/base/1.0.0a5/css/arxivstyle.css" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    messageStyle: "none",
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true,
+      ignoreClass: '.*',
+      processClass: 'mathjax.*'
+    },
+    TeX: {
+        extensions: ["AMSmath.js", "AMSsymbols.js", "noErrors.js"],
+        noErrors: {
+          inlineDelimiters: ["$","$"],
+          multiLine: false,
+          style: {
+            "font-size": "normal",
+            "border": ""
+          }
+        }
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+<script src='//static.arxiv.org/MathJax-2.7.3/MathJax.js'></script>
+<script src="https://static.arxiv.org/static/base/1.0.0a5/js/notification.js"></script>
+
+    
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" type="text/css" media="screen" href="https://static.arxiv.org/static/base/1.0.1/css/arxiv-header-footer.css?v=20260626" />
+  <script defer src="https://static.arxiv.org/static/base/1.0.1/js/arxiv-header.js?v=20260626"></script>
+  <link rel="stylesheet" href="https://static.arxiv.org/static/search/0.5.6/css/bulma-tooltip.min.css" />
+  <link rel="stylesheet" href="https://static.arxiv.org/static/search/0.5.6/css/search.css" />
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+    crossorigin="anonymous"></script>
+
+  <script src="https://static.arxiv.org/static/search/0.5.6/js/fieldset.js"></script>
+  <style>
+  radio#cf-customfield_11400 {
+    display: none;
+  }
+  /* Render the spinout .ds-site-footer standalone / full-bleed. search extends the
+     legacy base, whose bare wrapping <footer> (in base/base.html, outside any
+     overridable block — so it can't be removed from here) is styled by
+     arxivstyle.css with a grey background (hsl(0,0%,95%)) + 1em 2em padding,
+     boxing our warm-wash footer inside a second grey band. display:contents drops
+     the wrapper's box entirely (cleaner than zeroing individual properties) so
+     .ds-site-footer renders in its place; it inherits flex-shrink:0 from the same
+     legacy `footer` rule, so the sticky footer still works. Search-specific
+     legacy-base integration; the shared chrome CSS stays byte-identical to the SSOT. */
+  body > footer {
+    display: contents;
+  }
+  </style>
+
+  </head>
+  <body>
+  
+  
+  <header><a href="#main-container" class="is-sr-only">Skip to main content</a>
+    <div class="ds-announcement" id="announcement-banner" role="region" aria-label="Announcement" data-banner-name="spinout-nonprofit">
+  <img class="ds-announcement-glyph" src="https://static.arxiv.org/static/base/1.0.1/images/icons/smileybones-small.svg" alt="" aria-hidden="true">
+  <span class="ds-announcement-text">arXiv is now an independent nonprofit!</span>
+  <a class="ds-announcement-link" href="https://info.arxiv.org/about">Learn more</a>
+  <button type="button" class="ds-announcement-close" aria-label="Dismiss announcement">&times;</button>
+</div>
+<header class="ds-site-header">
+  <a href="https://arxiv.org/" class="ds-site-header-logo" aria-label="archive home">
+    <img src="https://static.arxiv.org/static/base/1.0.1/images/arxiv-logo-primary-light.svg" alt="archive">
+  </a>
+  <button type="button" id="ds-nav-toggle" class="ds-site-header-nav-toggle"
+    aria-label="Open menu" aria-controls="ds-site-header-nav" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+  <nav class="ds-site-header-nav" id="ds-site-header-nav" aria-label="Main navigation">
+    <a id="arxiv-search-toggle" href="/search" aria-controls="arxiv-search-overlay" aria-expanded="false">
+      <svg class="ds-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      Search
+    </a>
+    <a href="https://arxiv.org/user/create">Submit</a>
+    <a href="https://info.arxiv.org/about/donate.html">Donate</a>
+    <span class="ds-site-header-divider" aria-hidden="true"></span>
+    <a href="https://arxiv.org/login" class="ds-site-header-login">Log in</a>
+  </nav>
+</header>
+
+<div class="arxiv-search-overlay" id="arxiv-search-overlay" hidden>
+  <div class="arxiv-search-panel" role="search">
+    <form method="GET" action="/search">
+      <label for="arxiv-search-input" class="is-sr-only">Search arXiv</label>
+      <input type="text" name="query" id="arxiv-search-input" autocomplete="off"
+        placeholder="Search papers by title, author, abstract, or ID...">
+      <input type="hidden" name="searchtype" value="all">
+      <input type="hidden" name="source" value="header">
+    </form>
+    <div class="arxiv-search-hint">
+      Press Enter to search &middot; <a href="/search/advanced">Advanced search</a>
+    </div>
+  </div>
+</div>
+
+  </header>
+  <main class="container" id="main-container">
+    
+
+
+    
+  <div class="level is-marginless">
+    <div class="level-left">
+      <h1 class="title is-clearfix">
+    
+        Showing 1&ndash;8 of 8 results for all: <span class="mathjax">two-factor modular exponentiation quantum factoring</span>
+    
+</h1>
+    </div>
+    <div class="level-right is-hidden-mobile">
+      <!-- feedback for mobile is moved to footer -->
+      <span class="help" style="display: inline-block;"><a href="https://github.com/arXiv/arxiv-search/releases">Search v0.5.6 released 2020-02-24</a>&nbsp;&nbsp;</span>
+    </div>
+  </div>
+    <div class="content">
+      
+  <form method="GET" action="/search/"  aria-role="search">
+    
+
+    
+    <div class="field has-addons-tablet">
+      <div class="control is-expanded">
+        <label for="query" class="hidden-label">Search term or terms</label>
+        
+          <input class="input is-medium" id="query" name="query" placeholder="Search term..." type="text" value="two-factor modular exponentiation quantum factoring">
+        
+        
+      </div>
+      <div class="select control is-medium">
+        <label class="is-hidden" for="searchtype">Field</label>
+        <select class="is-medium" id="searchtype" name="searchtype"><option selected value="all">All fields</option><option value="title">Title</option><option value="author">Author(s)</option><option value="abstract">Abstract</option><option value="comments">Comments</option><option value="journal_ref">Journal reference</option><option value="acm_class">ACM classification</option><option value="msc_class">MSC classification</option><option value="report_num">Report number</option><option value="paper_id">arXiv identifier</option><option value="doi">DOI</option><option value="orcid">ORCID</option><option value="license">License (URI)</option><option value="author_id">arXiv author ID</option><option value="help">Help pages</option><option value="full_text">Full text</option></select>
+      </div>
+      <div class="control">
+          <button class="button is-link is-medium">Search</button>
+      </div>
+    </div>
+    <div class="field">
+      <div class="control is-size-7">
+        
+        <label class="radio">
+          <input checked id="abstracts-0" name="abstracts" type="radio" value="show"> Show abstracts
+        </label>
+        
+        <label class="radio">
+          <input id="abstracts-1" name="abstracts" type="radio" value="hide"> Hide abstracts
+        </label>
+        
+      </div>
+    </div>
+    <div class="is-clearfix" style="height: 2.5em"> 
+      <div class="is-pulled-right">
+        
+        <a href="/search/advanced?terms-0-term=two-factor+modular+exponentiation+quantum+factoring&amp;terms-0-field=all&amp;size=50&amp;order=-announced_date_first">Advanced Search</a>
+        
+      </div>
+    </div>
+    <input type="hidden" name="order" value="-announced_date_first">
+    <input type="hidden" name="size" value="50">
+  </form>
+
+  
+
+  
+      
+<div class="level breathe-horizontal">
+  <div class="level-left">
+    <form method="GET" action="/search/">
+      <div style="display: none;">
+        
+          
+            <select id="searchtype" name="searchtype"><option selected value="all">All fields</option><option value="title">Title</option><option value="author">Author(s)</option><option value="abstract">Abstract</option><option value="comments">Comments</option><option value="journal_ref">Journal reference</option><option value="acm_class">ACM classification</option><option value="msc_class">MSC classification</option><option value="report_num">Report number</option><option value="paper_id">arXiv identifier</option><option value="doi">DOI</option><option value="orcid">ORCID</option><option value="license">License (URI)</option><option value="author_id">arXiv author ID</option><option value="help">Help pages</option><option value="full_text">Full text</option></select>
+          
+        
+          
+            <input id="query" name="query" type="text" value="two-factor modular exponentiation quantum factoring">
+          
+        
+          
+        
+          
+        
+          
+            <ul id="abstracts"><li><input checked id="abstracts-0" name="abstracts" type="radio" value="show"> <label for="abstracts-0">Show abstracts</label></li><li><input id="abstracts-1" name="abstracts" type="radio" value="hide"> <label for="abstracts-1">Hide abstracts</label></li></ul>
+          
+        
+      </div>
+      <div class="box field is-grouped is-grouped-multiline level-item">
+        <div class="control">
+          <span class="select is-small">
+            <select id="size" name="size"><option value="25">25</option><option selected value="50">50</option><option value="100">100</option><option value="200">200</option></select>
+          </span>
+          <label for="size">results per page</label>.
+        </div>
+        <div class="control">
+          <label for="order">Sort results by</label>
+          <span class="select is-small">
+            <select id="order" name="order"><option selected value="-announced_date_first">Announcement date (newest first)</option><option value="announced_date_first">Announcement date (oldest first)</option><option value="-submitted_date">Submission date (newest first)</option><option value="submitted_date">Submission date (oldest first)</option><option value="">Relevance</option></select>
+          </span>
+        </div>
+        <div class="control">
+          <button class="button is-small is-link">Go</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+      
+
+
+
+
+<ol class="breathe-horizontal" start="1"> 
+
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2609.09273">arXiv:2609.09273</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2609.09273">pdf</a>, <a href="https://arxiv.org/ps/2609.09273">ps</a>, <a href="https://arxiv.org/format/2609.09273">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="High Energy Physics - Theory">hep-th</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Constant Maps and <span class="search-hit mathjax">Exponentially</span> Small Sectors in ABJM Bethe Observables
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Hosseini%2C+S+M">Seyed Morteza Hosseini</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2609.09273v1-abstract-short" style="display: inline;">
+        &hellip;the finite-rank index using high-precision Bethe-vacuum data, physics-informed symbolic regression, and integer relations. The Hessian, effective dilaton, and one-loop <span class="search-hit mathjax">factors</span> encode information beyond the on-shell twisted superpotential.
+  The <span class="search-hit mathjax">two</span> observables share the same shifted rank. Within a declared finite class&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2609.09273v1-abstract-full').style.display = 'inline'; document.getElementById('2609.09273v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2609.09273v1-abstract-full" style="display: none;">
+        The topologically twisted index of ABJM theory captures the microscopic entropy of magnetically charged supersymmetric $\mathrm{AdS}_4$ black holes. Building on the companion Letter arXiv:2608.04107, which reconstructed the finite-rank twisted superpotential at the universal twist, we determine the finite-rank index using high-precision Bethe-vacuum data, physics-informed symbolic regression, and integer relations. The Hessian, effective dilaton, and one-loop <span class="search-hit mathjax">factors</span> encode information beyond the on-shell twisted superpotential.
+  The <span class="search-hit mathjax">two</span> observables share the same shifted rank. Within a declared finite class, we reconstruct the index constant map from the ABJM $S^3$ constant maps at levels $k$ and $k/2$, the constant map of the twisted superpotential, and elementary terms. We prove that it equals a convergent one-kernel integral for real $k&gt;0$, resumming the large-$k$ expansion, fixing a previously numerical constant, and yielding type-IIA coefficients at arbitrary genus. We also prove that the Clausen expression in arXiv:2608.04107 equals an alternating Euler sum and an absolutely convergent integral, giving closed evaluations for <span class="search-hit mathjax">two</span> rational-argument Euler-sum families.
+  At $k=1,2,4$, the <span class="search-hit mathjax">exponentially</span> suppressed sectors exhibit arithmetic structure. The reconstructed coefficients of the twisted superpotential obey a divisor-sum formula with a conjectural all-order Eichler-integral series associated with a weight-four Eisenstein form. The index coefficients reduce to <span class="search-hit mathjax">two</span> rational generators; one admits <span class="search-hit mathjax">modular</span>-product formulas reproducing every available coefficient and suggesting an all-order completion. Conditional on this continuation, <span class="search-hit mathjax">modular</span> transformations determine the nearest logarithmic singularity, radius of convergence, and leading coefficient growth. These results provide a finite-$N$ benchmark for <span class="search-hit mathjax">quantum</span> gravitational blocks and bulk black hole <span class="search-hit mathjax">quantum</span> entropy.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2609.09273v1-abstract-full').style.display = 'none'; document.getElementById('2609.09273v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 8 September, 2026; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> September 2026.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">80 pages, 8 figures</span>
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2507.15302">arXiv:2507.15302</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2507.15302">pdf</a>, <a href="https://arxiv.org/ps/2507.15302">ps</a>, <a href="https://arxiv.org/format/2507.15302">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        </div>
+      
+        
+          <div class="is-inline-block" style="margin-left: 0.5rem">
+            <div class="tags has-addons">
+              <span class="tag is-dark is-size-7">doi</span>
+              <span class="tag is-light is-size-7"><a class="" href="https://doi.org/10.1103/czph-xpzs">10.1103/czph-xpzs <i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+            </div>
+          </div>
+        
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Resource-Efficient Cross-Platform Verification with <span class="search-hit mathjax">Modular</span> Superconducting Devices
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Dalton%2C+K">Kieran Dalton</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Kn%C3%B6rzer%2C+J">Johannes Knörzer</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Hoehne%2C+F">Finn Hoehne</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Song%2C+Y">Yongxin Song</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Flasby%2C+A">Alexander Flasby</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Zanuz%2C+D+C">Dante Colao Zanuz</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Panah%2C+M+B">Mohsen Bahrami Panah</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Besedin%2C+I">Ilya Besedin</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Besse%2C+J">Jean-Claude Besse</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Wallraff%2C+A">Andreas Wallraff</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2507.15302v1-abstract-short" style="display: inline;">
+        Large-scale <span class="search-hit mathjax">quantum</span> computers are expected to benefit from&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2507.15302v1-abstract-full').style.display = 'inline'; document.getElementById('2507.15302v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2507.15302v1-abstract-full" style="display: none;">
+        Large-scale <span class="search-hit mathjax">quantum</span> computers are expected to benefit from <span class="search-hit mathjax">modular</span> architectures. Validating the capabilities of <span class="search-hit mathjax">modular</span> devices requires benchmarking strategies that assess performance within and between modules. In this work, we evaluate cross-platform verification protocols, which are critical for quantifying how accurately different modules prepare the same <span class="search-hit mathjax">quantum</span> state -- a key requirement for <span class="search-hit mathjax">modular</span> scalability and system-wide consistency. We demonstrate these algorithms using a six-qubit flip-chip superconducting <span class="search-hit mathjax">quantum</span> device consisting of <span class="search-hit mathjax">two</span> three-qubit modules on a single carrier chip, with connectivity for intra- and inter-module entanglement. We examine how the resource requirements of protocols relying solely on classical communication between modules scale <span class="search-hit mathjax">exponentially</span> with qubit number, and demonstrate that introducing an inter-module <span class="search-hit mathjax">two</span>-qubit gate enables sub-<span class="search-hit mathjax">exponential</span> scaling in cross-platform verification. This approach reduces the number of repetitions required by a <span class="search-hit mathjax">factor</span> of four for three-qubit states, with greater reductions projected for larger and higher-fidelity devices.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2507.15302v1-abstract-full').style.display = 'none'; document.getElementById('2507.15302v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 21 July, 2025; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> July 2025.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">14 pages, 7 figures</span>
+    </p>
+    
+
+    
+
+    
+      <p class="comments is-size-7">
+        <span class="has-text-black-bis has-text-weight-semibold">Journal ref:</span>
+        PRX <span class="search-hit mathjax">Quantum</span> 6, 040365 (2025)
+      </p>
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2405.17021">arXiv:2405.17021</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2405.17021">pdf</a>, <a href="https://arxiv.org/format/2405.17021">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        </div>
+      
+        
+          <div class="is-inline-block" style="margin-left: 0.5rem">
+            <div class="tags has-addons">
+              <span class="tag is-dark is-size-7">doi</span>
+              <span class="tag is-light is-size-7"><a class="" href="https://doi.org/10.12743/quanta.v13i1.277">10.12743/quanta.v13i1.277 <i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+            </div>
+          </div>
+        
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Truncated <span class="search-hit mathjax">Modular</span> <span class="search-hit mathjax">Exponentiation</span> Operators: A Strategy for <span class="search-hit mathjax">Quantum</span> <span class="search-hit mathjax">Factoring</span>
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Singleton%2C+R+L">Robert L. Singleton Jr</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2405.17021v2-abstract-short" style="display: inline;">
+        <span class="search-hit mathjax">Modular</span> <span class="search-hit mathjax">exponentiation</span> (ME) operators are one of the fundamental components of Shor&#39;s algorithm, and the place where most of the <span class="search-hit mathjax">quantum</span> resources are deployed. I propose a method for constructing the ME operators that relies upon the simple observation that the work register&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2405.17021v2-abstract-full').style.display = 'inline'; document.getElementById('2405.17021v2-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2405.17021v2-abstract-full" style="display: none;">
+        <span class="search-hit mathjax">Modular</span> <span class="search-hit mathjax">exponentiation</span> (ME) operators are one of the fundamental components of Shor&#39;s algorithm, and the place where most of the <span class="search-hit mathjax">quantum</span> resources are deployed. I propose a method for constructing the ME operators that relies upon the simple observation that the work register starts in state $\vert 1 \rangle$. Therefore, we do not have to create an ME operator $U$ that accepts a general input, but rather, one that takes an input from the periodic sequence of states $\vert f(x) \rangle$ for $x \in \{0, 1, \cdots, r-1\}$, where $f(x)$ is the ME function with period $r$. The operator $U$ can be partitioned into $r$ levels, where the gates in level $x \in \{0, 1, \cdots, r-1\}$ increment the state $\vert f(x) \rangle$ to the state $\vert f(x+1) \rangle$. The gates below $x$ do not affect the state $\vert f(x+1) \rangle$. The obvious problem with this method is that it is self-defeating: If we knew the operator $U$, then we would know the period $r$ of the ME function, and there would be no need for Shor&#39;s algorithm. I show, however, that the ME operators are very forgiving, and truncated approximate forms in which levels have been omitted are able to extract <span class="search-hit mathjax">factors</span> just as well as the exact operators. I demonstrate this by <span class="search-hit mathjax">factoring</span> the numbers $N = 21, 33, 35, 143, 247$ by using less than half the requisite number of levels in the ME operators. This procedure works because the method of continued fractions only requires an approximate phase value. This is the basis for a <span class="search-hit mathjax">factorization</span> strategy in which we fill the circuits for the ME operators with more and more gates, and the correlations between the various composite operators $U^p$ (where $p$ is a power of <span class="search-hit mathjax">two</span>) compensate for the missing levels.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2405.17021v2-abstract-full').style.display = 'none'; document.getElementById('2405.17021v2-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 6 June, 2024; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 27 May, 2024;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> May 2024.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">45 pages, 33 figures. Added several figures that quantify the truncation studies</span>
+    </p>
+    
+
+    
+
+    
+      <p class="comments is-size-7">
+        <span class="has-text-black-bis has-text-weight-semibold">Journal ref:</span>
+        Quanta.13(2024)47-82
+      </p>
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2310.00899">arXiv:2310.00899</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2310.00899">pdf</a>, <a href="https://arxiv.org/ps/2310.00899">ps</a>, <a href="https://arxiv.org/format/2310.00899">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Space-Efficient and Noise-Robust <span class="search-hit mathjax">Quantum</span> <span class="search-hit mathjax">Factoring</span>
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Ragavan%2C+S">Seyoon Ragavan</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Vaikuntanathan%2C+V">Vinod Vaikuntanathan</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2310.00899v5-abstract-short" style="display: inline;">
+        We provide <span class="search-hit mathjax">two</span> improvements to Regev&#39;s recent&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2310.00899v5-abstract-full').style.display = 'inline'; document.getElementById('2310.00899v5-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2310.00899v5-abstract-full" style="display: none;">
+        We provide <span class="search-hit mathjax">two</span> improvements to Regev&#39;s recent <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">factoring</span> algorithm (Journal of the ACM 2025), addressing its space efficiency and its noise-tolerance.
+  Our first contribution is to improve the <span class="search-hit mathjax">quantum</span> space efficiency of Regev&#39;s algorithm while keeping the circuit size the same. Our main result constructs a <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">factoring</span> circuit using $O(n \log n)$ qubits and $O(n^{3/2} \log n)$ gates. We achieve the best of Shor and Regev (upto a logarithmic <span class="search-hit mathjax">factor</span> in the space complexity): on the one hand, Regev&#39;s circuit requires $O(n^{3/2})$ qubits and $O(n^{3/2} \log n)$ gates, while Shor&#39;s circuit requires $O(n^2 \log n)$ gates but only $O(n \log n)$ qubits. As with Regev, to <span class="search-hit mathjax">factor</span> an $n$-bit integer $N$, we run our circuit independently $O(\sqrt{n})$ times and apply Regev&#39;s classical postprocessing procedure.
+  Our optimization is achieved by implementing efficient and reversible <span class="search-hit mathjax">exponentiation</span> with Fibonacci numbers in the exponent, rather than the usual powers of 2, adapting work by Kaliski (arXiv:1711.02491) from the classical reversible setting to the <span class="search-hit mathjax">quantum</span> setting. This technique also allows us to perform <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">modular</span> <span class="search-hit mathjax">exponentiation</span> that is efficient in both space and size without requiring significant precomputation, a result that may be useful for other <span class="search-hit mathjax">quantum</span> algorithms. A key ingredient of our <span class="search-hit mathjax">exponentiation</span> implementation is an efficient circuit for a function resembling in-place <span class="search-hit mathjax">quantum</span>-<span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">modular</span> multiplication.
+  Our second contribution is to show that Regev&#39;s classical postprocessing procedure can be modified to tolerate a constant fraction of the <span class="search-hit mathjax">quantum</span> circuit runs being corrupted by errors. In contrast, Regev&#39;s analysis of his classical postprocessing procedure requires all $\approx \sqrt{n}$ runs to be successful. In a nutshell, we achieve this using lattice reduction techniques to detect and filter out corrupt samples.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2310.00899v5-abstract-full').style.display = 'none'; document.getElementById('2310.00899v5-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 30 April, 2025; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 2 October, 2023;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> October 2023.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">CRYPTO 2024; previously titled "Optimizing Space in Regev's <span class="search-hit mathjax">Factoring</span> Algorithm"</span>
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2205.11926">arXiv:2205.11926</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2205.11926">pdf</a>, <a href="https://arxiv.org/ps/2205.11926">ps</a>, <a href="https://arxiv.org/format/2205.11926">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Scalable semi-classical implementation of Shor <span class="search-hit mathjax">factoring</span> using time-multiplexed degenerate optical parametric oscillators
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Li%2C+M">Minghui Li</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Wang%2C+W">Wei Wang</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Tang%2C+Z">Zikang Tang</a>, 
+      
+      <a href="/search/?searchtype=author&amp;query=Ian%2C+H">Hou Ian</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2205.11926v1-abstract-short" style="display: inline;">
+        &hellip;parametric oscillations multiplexed in time is proposed. The classical entanglement between the polarization directions and the phases of the oscillating pulses, regarded as <span class="search-hit mathjax">two</span> computational registers, furnishes the integer correlations within each pair. We show the major algorithmic steps,&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2205.11926v1-abstract-full').style.display = 'inline'; document.getElementById('2205.11926v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2205.11926v1-abstract-full" style="display: none;">
+        A scheme to encode arbitrarily long integer pairs on degenerate optical parametric oscillations multiplexed in time is proposed. The classical entanglement between the polarization directions and the phases of the oscillating pulses, regarded as <span class="search-hit mathjax">two</span> computational registers, furnishes the integer correlations within each pair. We show the major algorithmic steps, <span class="search-hit mathjax">modular</span> <span class="search-hit mathjax">exponentiation</span> and discrete Fourier transform, of Shor&#39;s <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">factoring</span> algorithm can be executed in the registers as pulse interferences under the assistance of external logics. The <span class="search-hit mathjax">factoring</span> algorithm is thus rendered equivalent to a semi-classical optical-path implementation that is scalable and decoherence-free. The sought-after multiplicative order, from which the prime <span class="search-hit mathjax">factors</span> are deduced, is identified from a <span class="search-hit mathjax">two</span>-dimensional fringe image generated by four-hole interference measured at the end of the path.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2205.11926v1-abstract-full').style.display = 'none'; document.getElementById('2205.11926v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 24 May, 2022; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> May 2022.
+      
+    </p>
+    
+
+    
+
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/2011.05942">arXiv:2011.05942</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/2011.05942">pdf</a>, <a href="https://arxiv.org/format/2011.05942">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        </div>
+      
+        
+          <div class="is-inline-block" style="margin-left: 0.5rem">
+            <div class="tags has-addons">
+              <span class="tag is-dark is-size-7">doi</span>
+              <span class="tag is-light is-size-7"><a class="" href="https://doi.org/10.1103/PhysRevX.11.031057">10.1103/PhysRevX.11.031057 <i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+            </div>
+          </div>
+        
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        <span class="search-hit mathjax">Exponential</span> Error Suppression for Near-Term <span class="search-hit mathjax">Quantum</span> Devices
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Koczor%2C+B">Bálint Koczor</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="2011.05942v4-abstract-short" style="display: inline;">
+        As <span class="search-hit mathjax">quantum</span> computers mature, <span class="search-hit mathjax">quantum</span> error correcting codes (QECs) will be adopted in order to suppress errors to any desired level $E$ at a cost in qubit-count $n$ that is merely poly-logarithmic in $1/E$. However in the NISQ era, the complexity and scale required to adopt even the smallest QEC is prohibitive. Instead&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2011.05942v4-abstract-full').style.display = 'inline'; document.getElementById('2011.05942v4-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="2011.05942v4-abstract-full" style="display: none;">
+        As <span class="search-hit mathjax">quantum</span> computers mature, <span class="search-hit mathjax">quantum</span> error correcting codes (QECs) will be adopted in order to suppress errors to any desired level $E$ at a cost in qubit-count $n$ that is merely poly-logarithmic in $1/E$. However in the NISQ era, the complexity and scale required to adopt even the smallest QEC is prohibitive. Instead, error mitigation techniques have been employed; typically these do not require an increase in qubit-count but cannot provide <span class="search-hit mathjax">exponential</span> error suppression. Here we show that, for the crucial case of estimating expectation values of observables (key to almost all NISQ algorithms) one can indeed achieve an effective <span class="search-hit mathjax">exponential</span> suppression. We introduce the Error Suppression by Derangement (ESD) approach: by increasing the qubit count by a <span class="search-hit mathjax">factor</span> of $n\geq 2$, the error is suppressed <span class="search-hit mathjax">exponentially</span> as $Q^n$ where $Q&lt;1$ is a suppression <span class="search-hit mathjax">factor</span> that depends on the entropy of the errors. The ESD approach takes $n$ independently-prepared circuit outputs and applies a controlled derangement operator to create a state whose symmetries prevent erroneous states from contributing to expected values. The approach is therefore `NISQ-friendly&#39; as it is <span class="search-hit mathjax">modular</span> in the main computation and requires only a shallow circuit that bridges the $n$ copies immediately prior to measurement. Imperfections in our derangement circuit do degrade performance and therefore we propose an approach to mitigate this effect to arbitrary precision due to the remarkable properties of derangements. a) they decompose into a linear number of elementary gates -- limiting the impact of noise b) they are highly resilient to noise and the effect of imperfections on them is (almost) trivial. In numerical simulations validating our approach we confirm error suppression below $10^{-6}$ for circuits consisting of several hundred noisy gates (<span class="search-hit mathjax">two</span>-qubit gate error $0.5\%$) using no more than $n=4$ circuit copies.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('2011.05942v4-abstract-full').style.display = 'none'; document.getElementById('2011.05942v4-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 16 September, 2021; <span class="has-text-black-bis has-text-weight-semibold">v1</span> submitted 11 November, 2020;
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> November 2020.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">34 pages, 12 figures</span>
+    </p>
+    
+
+    
+
+    
+      <p class="comments is-size-7">
+        <span class="has-text-black-bis has-text-weight-semibold">Journal ref:</span>
+        Phys. Rev. X 11, 031057 (2021)
+      </p>
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/0707.2155">arXiv:0707.2155</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/0707.2155">pdf</a>, <a href="https://arxiv.org/ps/0707.2155">ps</a>, <a href="https://arxiv.org/format/0707.2155">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        
+          
+            <span class="tag is-small is-grey tooltip is-tooltip-top" data-tooltip="Chaotic Dynamics">nlin.CD</span>
+          
+        </div>
+      
+        
+          <div class="is-inline-block" style="margin-left: 0.5rem">
+            <div class="tags has-addons">
+              <span class="tag is-dark is-size-7">doi</span>
+              <span class="tag is-light is-size-7"><a class="" href="https://doi.org/10.1103/PhysRevA.76.042330">10.1103/PhysRevA.76.042330 <i class="fa fa-external-link" aria-hidden="true"></i></a></span>
+            </div>
+          </div>
+        
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        The <span class="search-hit mathjax">modular</span> multiplication operator and the quantized bakers maps
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Lakshminarayan%2C+A">Arul Lakshminarayan</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="0707.2155v1-abstract-short" style="display: inline;">
+        The <span class="search-hit mathjax">modular</span> multiplication operator, a central subroutine in Shor&#39;s&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('0707.2155v1-abstract-full').style.display = 'inline'; document.getElementById('0707.2155v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="0707.2155v1-abstract-full" style="display: none;">
+        The <span class="search-hit mathjax">modular</span> multiplication operator, a central subroutine in Shor&#39;s <span class="search-hit mathjax">factoring</span> algorithm, is shown to be a coherent superposition of <span class="search-hit mathjax">two</span> <span class="search-hit mathjax">quantum</span> bakers maps when the multiplier is 2. The classical limit of the maps being completely chaotic, it is shown that there exist perturbations that push the <span class="search-hit mathjax">modular</span> multiplication operator into regimes of generic <span class="search-hit mathjax">quantum</span> chaos with spectral fluctuations that are those of random matrices. For the initial state of relevance to Shor&#39;s algorithm we study fidelity decay due to phase and bit-flip errors in a single qubit and show <span class="search-hit mathjax">exponential</span> decay with shoulders at multiples or half-multiples of the order. A simple model is used to gain some understanding of this behavior.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('0707.2155v1-abstract-full').style.display = 'none'; document.getElementById('0707.2155v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 14 July, 2007; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> July 2007.
+      
+    </p>
+    
+
+    
+      <p class="comments is-size-7">
+        
+          <span class="has-text-black-bis has-text-weight-semibold">Report number:</span>
+          IITM/PH/TH/2007/7
+        
+
+        
+
+        
+      </p>
+    
+
+    
+      <p class="comments is-size-7">
+        <span class="has-text-black-bis has-text-weight-semibold">Journal ref:</span>
+        Phys. Rev. A 76, 042330 (2007)
+      </p>
+    
+  </li>
+
+  <li class="arxiv-result">
+    <div class="is-marginless">
+      <p class="list-title is-inline-block"><a href="https://arxiv.org/abs/quant-ph/0607065">arXiv:quant-ph/0607065</a>
+        <span>&nbsp;[<a href="https://arxiv.org/pdf/quant-ph/0607065">pdf</a>, <a href="https://arxiv.org/ps/quant-ph/0607065">ps</a>, <a href="https://arxiv.org/format/quant-ph/0607065">other</a>]&nbsp;</span>
+      </p>
+      <div class="tags is-inline-block">
+        <span class="tag is-small is-link tooltip is-tooltip-top" data-tooltip="Quantum Physics">quant-ph</span>
+        </div>
+      
+    </div>
+    
+    <p class="title is-5 mathjax">
+      
+        Architecture of a <span class="search-hit mathjax">Quantum</span> Multicomputer Optimized for Shor&#39;s <span class="search-hit mathjax">Factoring</span> Algorithm
+      
+    </p>
+    <p class="authors">
+      <span class="has-text-black-bis has-text-weight-semibold">Authors:</span>
+      
+      <a href="/search/?searchtype=author&amp;query=Meter%2C+R+D+V">Rodney Doyle Van Meter III</a>
+      
+    </p>
+    
+    <p class="abstract mathjax">
+      <span class="search-hit">Abstract</span>:
+      <span class="abstract-short has-text-grey-dark mathjax" id="quant-ph/0607065v1-abstract-short" style="display: inline;">
+        The <span class="search-hit mathjax">quantum</span> multicomputer consists of a large number of small nodes and a qubus interconnect for creating entangled state between the nodes. The primary metric chosen is the performance of such a system on Shor&#39;s algorithm for&hellip;
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('quant-ph/0607065v1-abstract-full').style.display = 'inline'; document.getElementById('quant-ph/0607065v1-abstract-short').style.display = 'none';">&#9661; More</a>
+      </span>
+      <span class="abstract-full has-text-grey-dark mathjax" id="quant-ph/0607065v1-abstract-full" style="display: none;">
+        The <span class="search-hit mathjax">quantum</span> multicomputer consists of a large number of small nodes and a qubus interconnect for creating entangled state between the nodes. The primary metric chosen is the performance of such a system on Shor&#39;s algorithm for <span class="search-hit mathjax">factoring</span> large numbers: specifically, the <span class="search-hit mathjax">quantum</span> <span class="search-hit mathjax">modular</span> <span class="search-hit mathjax">exponentiation</span> step that is the computational bottleneck. This dissertation introduces a number of optimizations for the <span class="search-hit mathjax">modular</span> <span class="search-hit mathjax">exponentiation</span>. My algorithms reduce the latency, or circuit depth, to complete the <span class="search-hit mathjax">modular</span> <span class="search-hit mathjax">exponentiation</span> of an n-bit number from O(n^3) to O(n log^2 n) or O(n^2 log n), depending on architecture. Calculations show that these algorithms are one million times and thirteen thousand times faster, when <span class="search-hit mathjax">factoring</span> a 6,000-bit number, depending on architecture. Extending to the <span class="search-hit mathjax">quantum</span> multicomputer, five different qubus interconnect topologies are considered, and <span class="search-hit mathjax">two</span> forms of carry-ripple adder are found to be the fastest for a wide range of performance parameters. The links in the <span class="search-hit mathjax">quantum</span> multicomputer are serial; parallel links would provide only very modest improvements in system reliability and performance. <span class="search-hit mathjax">Two</span> levels of the Steane [[23,1,7]] error correction code will adequately protect our data for <span class="search-hit mathjax">factoring</span> a 1,024-bit number even when the qubit teleportation failure rate is one percent.
+        <a class="is-size-7" style="white-space: nowrap;" onclick="document.getElementById('quant-ph/0607065v1-abstract-full').style.display = 'none'; document.getElementById('quant-ph/0607065v1-abstract-short').style.display = 'inline';">&#9651; Less</a>
+      </span>
+    </p>
+    
+
+    <p class="is-size-7"><span class="has-text-black-bis has-text-weight-semibold">Submitted</span> 11 July, 2006; 
+      <span class="has-text-black-bis has-text-weight-semibold">originally announced</span> July 2006.
+      
+    </p>
+    
+    <p class="comments is-size-7">
+      <span class="has-text-black-bis has-text-weight-semibold">Comments:</span>
+      <span class="has-text-grey-dark mathjax">Ph.D. thesis, Keio University: 256 pages, 57 figures and 60,000+ words in 103 files. Get the PDF file if you can, the PostScript is big</span>
+    </p>
+    
+
+    
+
+    
+  </li>
+
+</ol>
+
+
+  
+
+
+      <div class="is-hidden-tablet">
+        <!-- feedback for mobile only -->
+        <span class="help" style="display: inline-block;"><a href="https://github.com/arXiv/arxiv-search/releases">Search v0.5.6 released 2020-02-24</a>&nbsp;&nbsp;</span>
+      </div>
+    </div>
+
+  </main>
+  <footer>
+    
+<footer class="ds-site-footer">
+  <div class="ds-site-footer-grid">
+    <div class="ds-site-footer-main">
+      <div class="ds-site-footer-ack">
+        We gratefully acknowledge support from
+        our <strong>major funders</strong>,
+        <a href="https://info.arxiv.org/about/ourmembers.html"><strong>member institutions</strong></a><span class="ack-member-inline" hidden>, <strong></strong></span>,
+        and all contributors.
+      </div>
+      <nav class="ds-site-footer-links" aria-label="Site navigation">
+        <a href="https://info.arxiv.org/about">About</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help">Help</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/contact.html">Contact</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/subscribe">Subscribe</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/license/index.html">Copyright</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/policies/privacy_policy.html">Privacy</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://info.arxiv.org/help/web_accessibility.html">Accessibility</a>
+        <span class="ds-site-footer-sep" aria-hidden="true">&middot;</span>
+        <a href="https://status.arxiv.org" target="_blank" rel="noopener noreferrer">Operational Status<span class="is-sr-only"> (opens in new tab)</span></a>
+      </nav>
+    </div>
+    <div class="ds-site-footer-funders" aria-label="Major funders">
+      <div class="ds-site-footer-funders-label">Major funding support from</div>
+      <div class="ds-site-footer-funders-logos">
+        <a class="ds-funder-link" href="https://www.simonsfoundation.org/" target="_blank" rel="noopener noreferrer">
+          <img class="ds-funder-logo" src="https://static.arxiv.org/static/base/1.0.1/images/funders/simons-foundation.png" alt="Simons Foundation"></a>
+        <a class="ds-funder-link" href="https://www.sfi.org.bm/" target="_blank" rel="noopener noreferrer">
+          <img class="ds-funder-logo" src="https://static.arxiv.org/static/base/1.0.1/images/funders/simons-foundation-international.png" alt="Simons Foundation International"></a>
+        <a class="ds-funder-link" href="https://www.schmidtsciences.org/" target="_blank" rel="noopener noreferrer">
+          <img class="ds-funder-logo" src="https://static.arxiv.org/static/base/1.0.1/images/funders/schmidt-sciences.png" alt="Schmidt Sciences"></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </footer>
+  <script src="https://static.arxiv.org/static/base/1.0.0a5/js/member_acknowledgement.js"></script>
+  </body>
+</html>

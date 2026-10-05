@@ -1,0 +1,843 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/ImxLt0moL9cCzIzlJMp12Ynl+Oo</id>
+  <title>arXiv Query: search_query=ti:"factoring" AND abs:"lattice"&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-05T15:30:37Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22factoring%22+AND+abs:%22lattice%22&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>1156</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2610.03553v1</id>
+    <title>Complex-momentum form factors from lattice QCD</title>
+    <updated>2026-10-02T16:34:05Z</updated>
+    <link href="https://arxiv.org/abs/2610.03553v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.03553v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We demonstrate that form factors evaluated at complex-valued momenta can be directly accessed from position-space Euclidean correlators without analytically continuing the latter and without solving an inverse problem. The approach directly applies a bilateral Laplace transform to the lattice data, which provides the analytically continued form factor wherever it converges. Focusing on the pion form factor in Quantum Chromodynamics (QCD), this gives access to the observable as a function of invariant \(Q^2\) throughout an extended analytic domain consisting of all complex \(Q^2\) with real part larger than \(-4m_π^2\). This could, for example, be used to improve charge-radius determinations or provide more complete data for fits based on conformal mapping of the data. After developing the approach for infinite-volume correlators, we discuss various options for finite-volume estimators suitable for realistic calculations, including position-space fits or application of a spatial chemical potential represented by boundary conditions with an imaginary twist angle. Finally, we test the method in the two-dimensional \(O(3)\) nonlinear sigma model using Monte Carlo data.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-02T16:34:05Z</published>
+    <arxiv:comment>40 pages, 11 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-lat"/>
+    <author>
+      <name>Maxwell T. Hansen</name>
+    </author>
+    <author>
+      <name>Gurtej Kanwar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.01988v1</id>
+    <title>Effective field theory of scalar glueballs: Form factors and interaction radii</title>
+    <updated>2026-10-01T16:27:03Z</updated>
+    <link href="https://arxiv.org/abs/2610.01988v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.01988v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We develop a gauge-invariant effective field theory for scalar glueball interactions based on the Yang-Mills gluon condensate. Starting from a coherent-state formulation of the Yang-Mills vacuum, we derive an effective Lagrangian for the scalar glueball and its interactions with gluons. The resulting crossing-symmetric amputated four-gluon Green's function is projected onto the color-singlet $J^{PC}=0^{++}$ channel, yielding a normalized scalar glueball form factor that factorizes into universal kinematic structures and an intrinsic glueball function. The formalism predicts a parameter-free effective interaction radius for the ground-state scalar glueball with resonance $f_0(1710)$, $r_{\rm int}=\sqrt{6}/m_φ=0.28$ fm, which is in excellent agreement with recent lattice Yang-Mills determinations of the mass-radius ($r=0.263(31)$ fm). The predicted momentum dependence of the normalized form factor is consistent with lattice Yang-Mills gravitational form factor data, with the $f_0(1710)$ candidate providing the best overall fit and $r_{\rm int}$. Inclusion of the first excited $0^{++}$ glueball produces modest corrections to the interaction radius ($r_{\rm int}^*=0.240$ fm) while yielding stable and kinematically robust modifications of the form factor. This framework provides a systematic bridge between effective field theory and first-principles lattice Yang-Mills calculations of scalar glueball dynamics.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-01T16:27:03Z</published>
+    <arxiv:comment>16 pages, 5 figures, and 6 tables</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Adamu Issifu</name>
+    </author>
+    <author>
+      <name>Orlando Oliveira</name>
+    </author>
+    <author>
+      <name>Tobias Frederico</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2610.01396v1</id>
+    <title>Gravitational D-form factors of the nucleon and pion with mixing between two-quark and four-quark states</title>
+    <updated>2026-10-01T10:01:54Z</updated>
+    <link href="https://arxiv.org/abs/2610.01396v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2610.01396v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the gravitational $D$-form factors of the nucleon and pion within an extended linear sigma model (eLSM) that incorporates both two-quark and four-quark states, as well as nucleon fields. Within the scalar-meson-dominance picture, we find that meson mixing between two-quark and four-quark states suppresses the nucleon $D$-form factor and leads to agreement with the lattice-QCD results. Interestingly, a quantitatively similar suppression was previously found in the parity doublet model (PDM) as a consequence of a nonzero chiral invariant component of the nucleon mass. This suggests that the effects of meson mixing and the chiral invariant mass are difficult to distinguish from the nucleon $D$-form factor alone. We therefore examine the pion $D$-form factor in the chiral limit. While its value in the forward limit remains fixed at $-1$ in both the eLSM and the PDM, meson mixing modifies its momentum-transfer dependence. In contrast, the chiral invariant mass does not directly affect the pion $D$-form factor. These results suggest that a combined analysis of the nucleon and pion $D$-form factors can provide further insight into the mass decomposition of the nucleon and the quark composition of mesons.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-10-01T10:01:54Z</published>
+    <arxiv:comment>9 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Mamiya Kawaguchi</name>
+    </author>
+    <author>
+      <name>Yao Ma</name>
+    </author>
+    <author>
+      <name>Yong-Liang Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.31952v2</id>
+    <title>Discrete quality-factor control in a side-coupled photonic crystal microcavity: evanescent Bloch tunnelling and the finite-cell correction</title>
+    <updated>2026-09-29T18:22:07Z</updated>
+    <link href="https://arxiv.org/abs/2609.31952v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.31952v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A point-defect microcavity side-coupled to a W1 waveguide in a two-dimensional photonic crystal of silicon rods immersed in an aqueous analyte is studied by plane-wave expansion and finite-difference time-domain computation. The resonance moves continuously through the transverse-magnetic band gap with the square of the radius of the defect rod, as first-order perturbation theory predicts for the dielectric area restored to the lattice site. The quality factor is set instead by the separation between cavity and waveguide, counted in lattice rows: each added row multiplies it by 7.10 at the reference defect radius, whereas moving the defect rod by up to a tenth of a lattice period changes it by less than 7 per cent. The per-row factor follows, at two defect radii and with no adjustable parameter, from the decay of the slowest evanescent Bloch channel of the crystal at the wavevector of the guided mode. Two checks are needed before such values can be trusted in a finite cell: convergence in cladding thickness and removal of the reflections from the waveguide ends. Without them the per-row factor comes out too low and the quality factor wrong by up to a factor of two. Scaled to 1550 nm the design gives a sensitivity of 634 nm per refractive index unit, which perturbation theory reproduces, and a Fano fit to an independently normalised transmission spectrum confirms the linewidth. The absorption of water at this wavelength lowers the quality factor of the reference geometry by a third and caps it near 9200, which limits the benefit of adding further rows.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-25T19:59:04Z</published>
+    <arxiv:comment>26 pages, 7 figures, 5 tables. Data, code and supplementary material: doi:10.5281/zenodo.22912910. v2: data availability statement and the Zenodo record added</arxiv:comment>
+    <arxiv:primary_category term="physics.optics"/>
+    <author>
+      <name>Hasan Oguz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.27993v1</id>
+    <title>Spectral Gap of the Hexagonal AKLT Model via Boundary-State Factorization</title>
+    <updated>2026-09-23T12:24:49Z</updated>
+    <link href="https://arxiv.org/abs/2609.27993v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.27993v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We establish a sufficient condition under which overlapping PEPS boundary states satisfy the approximate factorization criterion for a spectral gap. The condition is formulated in terms of the boundary response induced by cutting bonds through the center of a rectangular region. We decompose this response into a contribution common to all four associated regions and a remainder measured in the instantaneous boundary metric. A single linear transport absorbs the common contribution and yields compatible factorization operators, with an error controlled solely by the remainder.
+  We apply this framework to Ising PEPS and to the spin-3/2 AKLT model on the hexagonal lattice. For Ising PEPS, the required boundary-response estimate reduces to a Dobrushin-Shlosman-type condition. For the hexagonal AKLT model, a rooted expansion in paths and loops isolates the common response, while a local comparison of boundary states together with a scalar Kotecký-Preiss estimate controls the remaining terms. In both cases, the factorization error decays exponentially with the overlap width, up to a prefactor proportional to the cut length. For AKLT, we establish the corresponding physical projector estimate and obtain a uniform spectral gap. For Ising PEPS, the gap implication additionally requires compatible injective regional contractions, as specified in the paper. More generally, the method provides a systematic route from locality of PEPS boundary response to spectral gaps of two-dimensional parent Hamiltonians.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-23T12:24:49Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Michael J. Kastoryano</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.27479v1</id>
+    <title>Partial factorization and reflexivity of operator algebras</title>
+    <updated>2026-09-23T07:42:39Z</updated>
+    <link href="https://arxiv.org/abs/2609.27479v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.27479v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\mathcal{H}$ be a separable infinite dimensional Hilbert space and $\mathcal{B}(\mathcal{H})$ the algebra of all bounded linear operators on $\mathcal{H}$. A subalgebra $\mathfrak{A}$ in $\mathcal{B}(\mathcal{H})$ has the left (resp.\ right) partial factorization property if for any invertible operator $S\in\mathcal{B}(\mathcal{H})$, there exists an isometry (resp.\ a co-isometry) $U\in\mathcal{B}(\mathcal{H})$ such that $U^*S, S^{-1}U\in\mathfrak{A}$. We show that if $\mathfrak{A}$ is weak operator topology closed with the left (resp.\ right) partial factorization property, then $\mathfrak{A}$ is the nest algebra associated with its invariant subspace lattice. In particular, if $\mathfrak{A}$ is transitive, then $\mathfrak{A}=\mathcal{B}(\mathcal{H})$. This gives a positive answer to Question 6.3 raised by B.V.R. Bhat and M. Kumar in \emph{Publ. Res. Inst. Math. Sci.} \textbf{60}(2024), 507--537.</summary>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-23T07:42:39Z</published>
+    <arxiv:comment>9 pages</arxiv:comment>
+    <arxiv:primary_category term="math.OA"/>
+    <author>
+      <name>Fengyang Jia</name>
+    </author>
+    <author>
+      <name>Guoxing Ji</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.27268v2</id>
+    <title>Toeplitz multiplication and graded factorization of determinant recurrences</title>
+    <updated>2026-09-27T15:13:43Z</updated>
+    <link href="https://arxiv.org/abs/2609.27268v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.27268v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study how determinant recurrences of banded Toeplitz matrices behave when their Laurent symbols are multiplied. Two classical structures underlie the problem. Clean banded Toeplitz determinants have a root-product description of their recurrences, while a product of two finite Toeplitz sections differs from the finite section of the product by finite-rank corner corrections. We connect these structures by identifying multiplication-induced boundary defects with exterior-degree sectors of the determinant recurrence.
+  To each polynomial core we associate recurrence polynomials for all exterior degrees. Multiplication of cores becomes a graded convolution via composed products, while complementary degrees are related by a scaled reciprocal duality. On the matrix side, one-sided factors produce a defect filtration whose successive pieces are exactly these sectors. For general two-sided factors, independently weighting the two corner corrections gives an interval filtration: increasing either defect order adds one adjacent sector, and the cumulative recurrences are generically minimal. The multiplication-induced same-corner minors used in these filtrations lie in the standard row-column state module, whereas cross-corner imbalance corresponds instead to Laurent recentering.
+  Opposite Laurent recenterings realize the individual sectors directly, and for several factors the admissible recenterings form an explicit lattice polytope. The pentadiagonal case gives the basic $1+4+1$ decomposition. The resulting framework gives a factor-level description of how finite-section boundary effects generate the recurrence spectrum of structured banded Toeplitz products.</summary>
+    <category term="math.RA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-23T02:52:38Z</published>
+    <arxiv:primary_category term="math.RA"/>
+    <author>
+      <name>Max A. Alekseyev</name>
+    </author>
+    <author>
+      <name>Dmitry I. Khomovsky</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.26944v1</id>
+    <title>Improved $B\to K^*_0\left(1430\right)$ transition form factors at next-to-leading order in light cone sum rules</title>
+    <updated>2026-09-22T18:32:24Z</updated>
+    <link href="https://arxiv.org/abs/2609.26944v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.26944v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present an improved determination of the $B\to K_0^*(1430)$ transition form factors using light-cone sum rules (LCSR) with an expansion near the light cone. We include the one-loop radiative corrections to the twist-2 and asymptotic twist-3 distribution amplitudes of the scalar meson and perform the calculation consistently in the $\overline{\mathrm{MS}}$ scheme. It allowed us to quantify the impact of radiative corrections on the form factors for each twist. A daughter sum rule is used from the $B\to K_0^*(1430)$ LCSR to ascertain Borel mass and threshold parameter simultaneously. We find that the dominant theoretical uncertainties arise from the $K_0^*(1430)$ distribution amplitudes and its decay constant. Our results are presented in a form that facilitates the incorporation of future improvements in these nonperturbative inputs, including those from lattice QCD and experimental measurements, and can be readily extended to other scalar mesons.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-22T18:32:24Z</published>
+    <arxiv:comment>16 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Arslan Sikandar</name>
+    </author>
+    <author>
+      <name>M. Jamil Aslam</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.20736v1</id>
+    <title>Electromagnetic form factors of vector mesons in Einstein-dilaton holographic QCD</title>
+    <updated>2026-09-17T17:25:56Z</updated>
+    <link href="https://arxiv.org/abs/2609.20736v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.20736v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the electromagnetic form factors of the $ρ$ meson family within a holographic QCD framework based on Einstein-dilaton gravity with confining backgrounds. We obtain the elastic and transition form factors using a spectral decomposition of the three-point isospin current correlator and an independent approach based on the Kaluza-Klein expansion. Furthermore, we establish a holographic dictionary of the current matrix element. The elastic form factors are in agreement with available lattice QCD results, whereas the transition form factors, not yet determined within lattice QCD, are predictions of the model. For the elastic case, the electric form factor for the $ρ$ meson family exhibits a zero at $q^{2} = 6\, m_{ρ^{n}}^{2}$ and in particular for the ground state $q^{2} = 3.61\,\text{GeV}^{2}$, consistent with light-front and Dyson-Schwinger calculations. We also compute strong couplings between vector meson states and find some approximate selection rules. In the elastic case and low-$q^{2}$ regime, we calculate dimensionless electric radius, magnetic and quadrupole moments and compare with other approaches. In the high-$q^{2}$ regime, the form factors follow the expected scaling behavior, and the model predicts their asymptotic normalization. The results in the high-$q^{2}$ regime lead to superconvergence relations and establish a new sum rule involving masses, decay constants and couplings.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-17T17:25:56Z</published>
+    <arxiv:comment>41 pages, 14 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Alfonso Ballon-Bayona</name>
+    </author>
+    <author>
+      <name>Tobias Frederico</name>
+    </author>
+    <author>
+      <name>Luis A. H. Mamani</name>
+    </author>
+    <author>
+      <name>Adão S. da Silva Junior</name>
+    </author>
+    <author>
+      <name>Wayne de Paula</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.20019v1</id>
+    <title>Anharmonic Phonon Renormalization and Defect Tolerance of the Thermoelectric Power Factor in Monolayer SnSe</title>
+    <updated>2026-09-17T10:25:56Z</updated>
+    <link href="https://arxiv.org/abs/2609.20019v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.20019v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Monolayer tin selenide (SnSe) exhibits phase-dependent anharmonic lattice dynamics, yet their consequences for the thermoelectric power factor (PF) and point-defect tolerance remain unresolved. We combine density functional theory, the stochastic self-consistent harmonic approximation (SSCHA), and Boltzmann transport calculations including electron-phonon and electron-defect scattering to investigate monolayer $α$-SnSe (Pnma) and $β$-SnSe (Cmcm). In dynamically stable $α$-SnSe, SSCHA renormalizes the finite-temperature phonons without changing the qualitative n-type transport picture. In $β$-SnSe, SSCHA removes the harmonic soft-mode instability of the Cmcm phase at 800-1000 K, and thereby enables high-temperature transport calculations; LO/TO-2 is the principal electron-scattering channel. In the lower-density window near $10^{12}$ cm$^{-2}$, the n-type PF reaches 15-19 $μ\mathrm{W}/(\mathrm{K}^{2}\cdot\mathrm{cm})$ at 800-900 K and exceeds the p-type PF primarily because of the higher electrical conductivity. Se vacancies ($V_{\mathrm{Se}}$) produce weaker electron-defect scattering than Sn vacancies ($V_{\mathrm{Sn}}$), and p-type transport is less defect tolerant than n-type transport in both phases. We define an operational critical defect concentration, $C_{\mathrm{crit}}$, at which the PF decreases by 15% relative to the corresponding defect-free value. The lowest $C_{\mathrm{crit}}$ is $8.841\times10^{-5}$ (approximately 88 ppm) for p-type $α$-SnSe with $V_{\mathrm{Sn}}$; for n-type $β$-SnSe with $V_{\mathrm{Se}}$, the 15% threshold is not reached up to $5\times10^{-3}$ (5000 ppm). These results distinguish finite-temperature phonon renormalization in stable $α$-SnSe from anharmonic stabilization in $β$-SnSe and provide defect-concentration limits for preserving the PF.</summary>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.app-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.comp-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-17T10:25:56Z</published>
+    <arxiv:comment>13 pages, 4 figures, 1 table</arxiv:comment>
+    <arxiv:primary_category term="cond-mat.mtrl-sci"/>
+    <author>
+      <name>Nguyen Tran Gia Bao</name>
+    </author>
+    <author>
+      <name>Thang Bach Phan</name>
+    </author>
+    <author>
+      <name>Vu Thi Hanh Thu</name>
+    </author>
+    <author>
+      <name>Nguyen Tuan Hung</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.16765v1</id>
+    <title>Ehrhart reciprocity and forced factors in three plane-partition enumerators</title>
+    <updated>2026-09-15T07:38:44Z</updated>
+    <link href="https://arxiv.org/abs/2609.16765v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.16765v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study three plane-partition enumerators arising from Schreier-Aigner's quasi-symmetry classes. Their realizations as lattice-point enumerators, together with staircase translations of interior lattice points, yield factorizations by Ehrhart-Macdonald reciprocity. We determine the consecutive linear factors, the parity and degree of the residual polynomials, and explicit divisibility bounds for their coefficient denominators. The denominator argument includes the half-integral translation required by the second-kind classes. We also derive a corrected size-five formula for the symmetric second-kind class. Exact computations verify irreducibility of the quasi-symmetric residual polynomials for every size from $3$ to $24$.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-15T07:38:44Z</published>
+    <arxiv:comment>18 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Yinuo Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.10609v1</id>
+    <title>Real stability of layer-refined antichain polynomials for three-chain products with a two-element factor</title>
+    <updated>2026-09-08T10:46:01Z</updated>
+    <link href="https://arxiv.org/abs/2609.10609v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.10609v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For all positive integers $n,k$, we prove that the layer-refined antichain polynomial of the product poset $[2]\times[n]\times[k]$ is real stable. Jacobi-polynomial interlacing further shows that its diagonal specialization, the ordinary antichain polynomial of the same poset, has only simple, strictly negative zeros. For the special family $[2]\times[m]\times[m+1]$, explicit reciprocal identities give palindromicity; reciprocal pairing of the simple negative zeros then shows that every coefficient in the gamma expansion is strictly positive. Thus we prove Conjecture 4.3 of Ding and Dong and resolve all parts of their Conjecture 4.5, while strengthening its stated gamma-positivity consequence. The enumerative input is an explicit first-crossing reflection for two lattice paths, specialized from work of Krattenthaler and Sulanke.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-08T10:46:01Z</published>
+    <arxiv:comment>12 pages, with a 4-page ancillary computational supplement. Reproducibility package: https://doi.org/10.5281/zenodo.22082487</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Weiqi Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.07612v1</id>
+    <title>Exact spin form factors and correlations at a massive Kramers-Wannier interface</title>
+    <updated>2026-09-07T15:19:33Z</updated>
+    <link href="https://arxiv.org/abs/2609.07612v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.07612v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We determine exact finite-volume spin form factors and two-point correlations for a massive Kramer--Wannier interface in the scaling Ising model, separating ordered and disordered phases. The interface admits two complementary lattice realizations: a self-dual inhomogeneous Ising chain whose continuum limit has a sign-changing Majorana mass profile, and, after exchanging Euclidean space and time, a mixed thermal average amenable to Toeplitz/Fredholm methods. Combining these descriptions, we obtain the exact Neveu-Schwarz-Ramond spin matrix elements and a factorized Fredholm determinant for the interface correlator. Defect TCSA and independent fermionic spin-chain calculations confirm the predicted spectrum and matrix elements.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.stat-mech" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-07T15:19:33Z</published>
+    <arxiv:comment>16 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <author>
+      <name>Zoltan Bajnok</name>
+    </author>
+    <author>
+      <name>Yizhuang Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.05109v1</id>
+    <title>The axial-vector nucleon form factor in the meson dominance picture: the role triangle singularities from a dispersive view</title>
+    <updated>2026-09-04T13:03:14Z</updated>
+    <link href="https://arxiv.org/abs/2609.05109v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.05109v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The nucleon axial form factor is analyzed in terms of a dispersion relation comprising chiral perturbation theory (ChPT) and perturbative QCD (pQCD) in the low- and high-momentum regimes respectively, which implies a set of superconvergence sum rules for the $A \to N \bar N$ spectral function. In the timelike region below the $N \bar N$ production threshold we include the $a_1$ and $a_1'$ resonances, with finite-width effects modeled through $ρπ$ and $σπ$ intermediate states. Above the $N \bar N$ threshold, we model an infinite tower of radially excited $1^{++}$ resonances with a non-integer power fall-off, eventually matching pQCD. In this setup, we find that both the ChPT and pQCD contributions are tiny. In turn, the dominant $ρπ$ triangle provides the leading deviations from axial meson dominance. Our calculation is not a fit; it contains parameters with a priori uncertainties estimates. The axial radius is predicted to be $r_A^2 =(0.28-0.33)~\textrm{fm}^2 = ( 0.47-0.57~\textrm{fm})^2$ in agreement with recent lattice QCD results but inconsistent with the MINER$ν$A determination. A simple semiempirical formula is provided accounting for the main physical effects.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-04T13:03:14Z</published>
+    <arxiv:comment>10 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Enrique Ruiz Arriola</name>
+    </author>
+    <author>
+      <name>Pablo Sanchez-Puertas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.04142v1</id>
+    <title>First Two-Hadron Form Factor from QCD</title>
+    <updated>2026-09-03T17:33:20Z</updated>
+    <link href="https://arxiv.org/abs/2609.04142v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.04142v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present the first QCD determination of an energy-dependent form factor for a two-hadron scattering state. In particular, we calculate the QCD contribution to the forward electromagnetic $π^+π^+ + γ\toπ^+π^+$ amplitude at $m_π\approx 400$~MeV using lattice QCD. Because lattice calculations are performed in a finite Euclidean spacetime, where asymptotic scattering states are absent, this amplitude cannot be accessed directly from correlation functions. Instead, we can constrain this and related amplitudes nonperturbatively using a finite-volume formalism that requires two ingredients: the discrete finite-volume spectrum and finite-volume matrix elements of the electromagnetic current. We calculate three-point correlation functions coupling $π^+π^+$ finite-volume states and extract the corresponding electromagnetic matrix elements. Combining these results with the previously determined spectrum, we constrain the infinite-volume $π^+π^+ + γ\toπ^+π^+$ amplitude in the forward limit. Using constraints from Lorentz symmetry, unitarity, and analyticity, we describe this amplitude in terms of a single real-valued energy-dependent two-hadron form factor. The resulting amplitude and form factor agree with the Ward-Takahashi identity across all energies and moving frames considered, providing the first QCD validation of this finite-volume approach and a pathway toward first-principles studies of the electromagnetic structure and electroweak responses of resonances and multi-hadron bound states.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-03T17:33:20Z</published>
+    <arxiv:comment>16 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-lat"/>
+    <author>
+      <name>Felipe G. Ortega-Gama</name>
+    </author>
+    <author>
+      <name>Raúl A. Briceño</name>
+    </author>
+    <author>
+      <name>Ivan M. Burbano</name>
+    </author>
+    <author>
+      <name>Robert G. Edwards</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.03784v1</id>
+    <title>A note on the noncommutative Hodge conjecture for graded matrix factorizations</title>
+    <updated>2026-09-03T12:58:41Z</updated>
+    <link href="https://arxiv.org/abs/2609.03784v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.03784v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $m\geq 2$ and $d\geq 7$. We consider homogeneous polynomials in $2m+2$ variables of the form $f=F_0(u_0,v_0)+\cdots+F_m(u_m,v_m)$, where the $F_i$ are independently very general squarefree binary forms of degree $d$. We prove the rational noncommutative Hodge conjecture for the dg category $\mathrm{MF}^{\mathrm{gr}}(f)$ of graded matrix factorizations. Its Hochschild homology is the direct sum of the scalar-invariant Jacobian sector and $d-1$ one-dimensional point sectors. Boundary--bulk images of explicit rank-one factorizations generate a lattice of rank $(d-1)^{m+1}$ in the identity sector, while grading shifts of the stabilized residue field generate all point sectors. A reduced-Burau calculation shows that the identity-sector lattice exhausts the rational Hodge classes at a very general parameter. Consequently, $\dim_{\mathbb{Q}}\operatorname{Hdg}\bigl(\mathrm{MF}^{\mathrm{gr}}(f),\mathbb{Q}\bigr)=(d-1)^{m+1}+d-1$, and the rational topological $K$-rank is $\bigl((d-1)^{2m+2}+d-1\bigr)/d+d-1$. Finally, applying the additivity of the noncommutative Hodge conjecture for semiorthogonal decompositions together with Orlov's decompositions for Fano, Calabi--Yau, and general-type hypersurfaces proves the rational Hodge conjecture for the associated smooth projective hypersurface.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-03T12:58:41Z</published>
+    <arxiv:comment>35 pages, comments are welcome</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Xun Lin</name>
+    </author>
+    <author>
+      <name>Shizhuo Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.29042v1</id>
+    <title>Towards power corrections in the factorization of baryon quasi-distribution amplitudes in LaMET</title>
+    <updated>2026-08-29T04:27:22Z</updated>
+    <link href="https://arxiv.org/abs/2608.29042v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.29042v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Light-cone distribution amplitudes (LCDAs) are essential to precision phenomenological studies. They can be accessed from lattice QCD through the large-momentum effective theory (LaMET) via quasi-distribution amplitudes (quasi-DAs). Factorization of quasi-DAs receive power corrections in inverse powers of the hadron momentum, including target-mass and higher-twist corrections. In this work, we present the first systematic analysis of such power corrections for the leading-twist baryon quasi-DA. Establishing the moment relation between the quasi-DA and the LCDA, we derive an exact closed-form relation that resums target-mass correction to all orders at leading twist. This result also applies to heavy baryons and to quasi-transverse-momentum-dependent distributions. We numerically assess these corrections for the $Λ$ baryon quasi-DA using existing lattice data, finding that the target-mass correction decreases rapidly with increasing baryon momentum and is almost negligible in the endpoint regions. In addition, we explicitly construct the next-to-leading-twist operators entering the quasi-DA factorization. Our results are a first step toward quantifying the power corrections in future lattice determinations of light or heavy baryon LCDAs.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-29T04:27:22Z</published>
+    <arxiv:comment>27 pages, 1 figure</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Yu-Ji Shi</name>
+    </author>
+    <author>
+      <name>Jun Zeng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.29585v1</id>
+    <title>Step Recursion: Mixed Stride Spectra, Path Factorization, and Synchronization Geometry</title>
+    <updated>2026-08-27T13:22:19Z</updated>
+    <link href="https://arxiv.org/abs/2609.29585v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.29585v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Step recursion allows recursive computation to move through a canonical hierarchy in jumps, or strides. Suppose a function algebra is allowed to use several primitive stride lengths $L$. Composition immediately produces sums of these lengths, but it is not clear whether arbitrary nesting of mixed recursions can create any genuinely new canonical stride. We prove that it cannot: at every fixed canonical row $n\ge2$ and lower basis $m&lt;n$, the canonical strides definable from $L$ are exactly the additive monoid $\langle L\rangle$ generated by $L$.
+  The proof gives more information than membership alone. Every sufficiently high dependency path computing a canonical descent of stride $p$ carries total label weight exactly $p$, and the possible path signatures are precisely the additive factorizations of $p$ by the primitive stride labels. Thus the computation remembers both which strides are definable and how each one can be assembled. After saturation, inclusion between mixed-stride classes is exactly inclusion between their additive stride monoids, giving a concrete lattice description and finite certificates for inclusion.
+  We then study several synchronized recursion clocks. Joint descent maps can encode arbitrary additive submonoids of $\mathbb N^r$, already giving continuum order complexity for $r=2$. Ordinary scalar observation, however, forgets correlations between the clocks and retains only the independent coordinate strides. This identifies precisely where synchronization information is preserved and where it collapses.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-27T13:22:19Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Kirill Osipov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.23788v1</id>
+    <title>Photon and gluon gravitational form factors of proton in QCD</title>
+    <updated>2026-08-24T19:36:23Z</updated>
+    <link href="https://arxiv.org/abs/2608.23788v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.23788v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The energy-momentum tensor provides a unique insight into the internal gravitational structure of the proton by revealing how energy, momentum, and mechanical properties are distributed among its different QCD components. The gravitational form factors associated with different components of the QCD energy-momentum tensor allow us to investigate the individual contributions of these sectors to the gravitational properties of the proton. In this work, we calculate the photon and gluon gravitational form factors of the proton within the framework of QCD sum rules. Using the photon and gluon components of the QCD energy-momentum tensor, we derive the corresponding sum rules for four independent gravitational form factors. Their momentum transfer dependence is analyzed within the validity region of the method and extrapolated to zero momentum transfer using a multipole parametrization. The resulting parametrizations of the form factors are used to extract the mass and scalar radii associated with the photon and gluon sectors. Our results indicate that the gluon mass radius is smaller than the photon mass radius, suggesting a more localized gluonic energy distribution inside the proton. These findings provide new nonperturbative information on the gravitational structure of the proton and offer complementary theoretical results for future lattice QCD calculations and phenomenological studies.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-24T19:36:23Z</published>
+    <arxiv:comment>21 Pages, 4 Figures and 3 Tables</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Z. Asmaee</name>
+    </author>
+    <author>
+      <name>K. Azizi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.14529v3</id>
+    <title>Polynomial-Factor Deterministic NP-Hardness for SVP in Every lp Norm with p &gt; 2</title>
+    <updated>2026-08-19T00:12:16Z</updated>
+    <link href="https://arxiv.org/abs/2608.14529v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.14529v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For every constant $2&lt;p&lt;\infty$ and every constant \[
+  0&lt;\varepsilon&lt;
+  \min\left\{\frac{p-2}{4p},\frac18\right\}, \] we show that the $\ell_p$-shortest vector problem for lattices of rank $M$ is NP hard to approximate within a factor of $M^\varepsilon$, via a deterministic reduction. For $p=\infty$, the same holds for every constant $0&lt;\varepsilon&lt;1/8$. The reduction builds on the polynomial-gap CVP construction of OpenAI [OpenAI 2026] and the direct reduction to SVP for $p&gt;2$ of Hair and Sahai [STOC'26].</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-14T17:47:49Z</published>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Isaac M Hair</name>
+    </author>
+    <author>
+      <name>Amit Sahai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.14348v1</id>
+    <title>Full-field and Bloch-periodic-factor discretizations: Accuracy and phantom modes</title>
+    <updated>2026-08-14T14:42:09Z</updated>
+    <link href="https://arxiv.org/abs/2608.14348v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.14348v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>One can distinguish four major formulations of the Bloch-mode problem in linear periodic media. First, there are two common complementary ways of slicing the Bloch variety (Bloch wave vectors paired with the corresponding frequencies): frequency vs. wave vector or, conversely, wave vector vs. frequency. This paper deals exclusively with the latter option, directly applicable to lossy media, evanescent waves, and complex band structures.
+  A separate crossroads is the full field (FF) vs. the lattice-periodic Bloch factor (PF) formulations. These are fully equivalent on the continuous level, but common discretization techniques may break this equivalence not just approximately but qualitatively. In the FF problem, the primary unknown eigenvalue is the Bloch phase factor (not the wavenumber), which enters only through opposite-boundary coupling. The PF formulation, on the other hand, injects the Bloch wavenumber into the differential operator and leads to a volume quadratic pencil. Consequently, standard PF discretizations of the type considered here, in contrast with the corresponding FF discretizations, violate the reciprocal-lattice (Brillouin-zone-shift) covariance -- which, as the theory and numerical examples in the paper show, may lead to inaccurate or even nonphysical modes.
+  From the mathematical perspective, the paper highlights the role of structure-preserving algorithms. The practical importance of the results and recommendations stems from the wide adoption of PF formulations in optics, photonics, and beyond -- such as the computation of propagating and evanescent Bloch modes in photonic and acoustic structures, topological photonics, effective-mass and topological insulator band theories.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-14T14:42:09Z</published>
+    <arxiv:comment>9 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.optics"/>
+    <author>
+      <name>Igor Tsukerman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.08591v2</id>
+    <title>Ramsey--Turán Factors of Non-directed Oriented Cycles in Oriented Graphs</title>
+    <updated>2026-09-02T13:36:13Z</updated>
+    <link href="https://arxiv.org/abs/2608.08591v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.08591v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $\overrightarrow{C}$ be any orientation of the cycle $C_{\ell}$ which is not directed. We prove that, for every integer $\ell\ge3$ and every $μ&gt;0$, there is a real $γ$ such that every sufficiently large oriented graph $D$ with $\ell\mid |D|$, minimum semidegree at least $(1/4+μ)|D|$ and independence number at most $γ|D|$ has a $\overrightarrow{C}$-factor. The constant $1/4$ is asymptotically tight. This proof establishes Ramsey-Turán type lattice absorption lemmas and an almost covering theorem via the oriented tree embedding lemma under chromatic number constraints.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-09T09:10:28Z</published>
+    <arxiv:comment>14pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Jia Zhou</name>
+    </author>
+    <author>
+      <name>Yunshu Gao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.07421v2</id>
+    <title>The noncommutative topological factor theorem for rank-one product lattices</title>
+    <updated>2026-09-22T17:09:29Z</updated>
+    <link href="https://arxiv.org/abs/2608.07421v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.07421v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove a noncommutative topological factor theorem for irreducible lattices in products of real rank-one simple Lie groups. The intermediate C*-subalgebras between the reduced group C*-algebra and the boundary crossed product are exactly the crossed products arising from coordinate subproducts of the Furstenberg boundary. This follows from a more general theorem for product boundary actions, which also yields tree and mixed local-field versions. We finally show that, for lattices in connected semisimple real Lie groups with finite center and no compact factors, the scalar-expectation case of the corresponding classification is equivalent to ordinary ITAP.</summary>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-07T17:09:52Z</published>
+    <arxiv:comment>24 pages. v2: Improved exposition</arxiv:comment>
+    <arxiv:primary_category term="math.OA"/>
+    <author>
+      <name>Cyril Houdayer</name>
+    </author>
+    <author>
+      <name>Corentin Le Bars</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.01489v1</id>
+    <title>What are the consequences of independent factorization and renormalization scales?</title>
+    <updated>2026-08-02T20:47:31Z</updated>
+    <link href="https://arxiv.org/abs/2608.01489v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.01489v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is common for separate factorization and renormalization scales to be discussed in connection with phenomenological applications of QCD factorization theorems. We observe that simultaneously preserving renormalization group invariance, Ward identities, and the basic sum rules in the definitions of parton densities forces these scales to be equal. The statement applies to generalized pole subtraction schemes that use dimensional regularization and to collinear factorization theorems for basic processes like deep inelastic scattering. We discuss implications for estimating the effects of scale sensitivity in phenomenological calculations, consistent extractions of Standard Model parameters alongside parton densities in global QCD analyses, and generally connecting phenomenologically extracted parton densities to first principles non-perturbative techniques like lattice QCD.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-02T20:47:31Z</published>
+    <arxiv:comment>20 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>T. C. Rogers</name>
+    </author>
+    <author>
+      <name>R. M. Whitehill</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.27870v1</id>
+    <title>On the number of factorable induced subgraphs</title>
+    <updated>2026-07-30T08:44:50Z</updated>
+    <link href="https://arxiv.org/abs/2607.27870v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.27870v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Let $F$ be an $r$-vertex graph. In this paper, we study the $F$-factor problem in random induced subgraphs of dense graphs. We show that for any $r$-vertex graph $F$ and $γ&gt;0$, if $H$ is an $n$-vertex graph with minimum degree at least $(1-1/χ_{cr}(F)+γ)n$, then for every fixed $p \in (0,1)$, the random induced subgraph $H[p]$ contains an $F$-factor with probability at least $1/(rq)-o_n(1)$, where $q\in \mathbb{N}$ is the order of certain coset group defined from $H$. The probability is asymptotically best possible for infinitely many $F$ and $H$ and yields that a $1/(rq)-o_n(1)$ proportion of the subsets of $H$ induce $F$-factors, interestingly, regardless of whether $H$ itself admits an $F$-factor. Similar results are obtained for perfect matchings in hypergraphs under minimum degree conditions. Our proof combines concentration inequalities, lattice point counting in $\mathbb{Z}^d$ and structural theorems for $F$-factors in dense (hyper)graphs.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-30T08:44:50Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Jie Han</name>
+    </author>
+    <author>
+      <name>Bin Wang</name>
+    </author>
+    <author>
+      <name>Jingwen Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.27868v1</id>
+    <title>Pion Transition Form Factor in Lattice QCD</title>
+    <updated>2026-07-30T08:43:02Z</updated>
+    <link href="https://arxiv.org/abs/2607.27868v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.27868v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the neutral pion transition form factor $F_{π^0γ^\astγ^\ast}(q_1^2,q_2^2)$ in lattice QCD and confirm that the connected and disconnected contributions have the same sign. We employ the recently proposed blending method, which supplies an unbiased and cheap estimators for the required all-to-all propagators. The external pion states are treated within the distillation framework, while the electromagnetic currents are evaluated in the full blending space. Numerical tests are performed on an $N_f=2+1$ lattice ensemble. Our result shows that the contribution of the disconnected part is approximately $1\%$ of that of the connected part and enables constructive interference of probability amplitudes.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-30T08:43:02Z</published>
+    <arxiv:primary_category term="hep-lat"/>
+    <author>
+      <name>Shihao Su</name>
+    </author>
+    <author>
+      <name>Liuming Liu</name>
+    </author>
+    <author>
+      <name>Peng Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.25099v1</id>
+    <title>Spin resummation of heavy quarkonium photoproduction: from the gluonic gravitational form factors to the holographic pomeron</title>
+    <updated>2026-07-27T21:54:56Z</updated>
+    <link href="https://arxiv.org/abs/2607.25099v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.25099v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Exclusive heavy quarkonium photoproduction probes the proton's gluonic structure from near-threshold (fixed-spin exchanges, gravitational form factors) to high energies (reggeized dynamics). We construct a holographic QCD amplitude that resums the even spin-$j$ gluonic exchanges, with the spin-2 input fixed by lattice QCD GFFs. The new framework describes the $J/ψ$ cross section from JLab to HERA energies in a unified manner. It explains why the spin-2 exchange model for GFF extraction near threshold is not a controlled approximation and suggests how to improve it.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-27T21:54:56Z</published>
+    <arxiv:comment>18 pages including Supplemental Material, 9 figures, 1 table</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Kiminad A. Mamo</name>
+    </author>
+    <author>
+      <name>Kemal Tezgin</name>
+    </author>
+    <author>
+      <name>Christian Weiss</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.23943v1</id>
+    <title>Electromagnetic form factors of singly charmed baryons $Σ_c$ and $Λ_c$ in a covariant quark-diquark model</title>
+    <updated>2026-07-27T02:39:46Z</updated>
+    <link href="https://arxiv.org/abs/2607.23943v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.23943v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a systematic study of the spacelike electromagnetic form factors of the ground-state singly charmed baryons, $Σ_c$ ($Σ_c^{++},Σ_c^+,Σ_c^0$) and $Λ_c^+$, within a covariant quark-diquark model. Based on this framework, we obtain their magnetic moments as well as electric charge and magnetic moment radii. Such observables are important to understand the internal structure and the inner dynamics of these heavy baryon states. Our theoretical calculations are in qualitative agreement with available lattice QCD results of $Σ_c^{++}$ and $Σ_c^0$ baryons. We also discuss the mechanism behind the dependence of the numerical results on the charm quark and light diquark. A key finding is that the electric form factors of the singly charmed baryons fall off much more slowly with momentum transfer $Q^2$ than that of the proton, indicating a more compact electric charge distribution, which is attributed to the heavy charm quark acting as a localized core. More importantly, we observe a striking difference in the magnetic structure: while the magnetic form factors of $Σ_c$ are dominated by the light axial-vector diquark, those of $Λ_c^+$ are unexpectedly governed by the charm quark due to the vanishing contribution of the scalar diquark. This highlights the decisive role of the light-diquark spin configuration in determining the magnetic properties. Finally, using an empirical asymptotic relation connecting the spacelike and timelike regions, we predict the total cross section for $e^+e^-\toΣ_c\barΣ_c$. Our findings can be tested at existing facilities including the BESIII, Belle II and LHCb, as well as the proposed Super Tau-Charm Facility.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-27T02:39:46Z</published>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Ye Cao</name>
+    </author>
+    <author>
+      <name>Cheng Chen</name>
+    </author>
+    <author>
+      <name>Dongyan Fu</name>
+    </author>
+    <author>
+      <name>Ju-Jun Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.07305v1</id>
+    <title>Gravitational form factors of the pion in light-front holographic QCD</title>
+    <updated>2026-07-08T11:49:16Z</updated>
+    <link href="https://arxiv.org/abs/2607.07305v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.07305v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Understanding the internal structure of the pion-particularly the energy-momentum distributions of quarks and gluons and the internal mechanical properties encoded in its gravitational form factors-is a fundamental challenge in quantum chromodynamics (QCD). In this work, we study the gravitational form factors using light-front QCD (LFQCD), combined with the holographic QCD. Our main innovation is the introduction of an effective light-front wave function, with its five-dimensional component obtained from holographic QCD, which is then employed, within the light-front QCD framework, to calculate the pion's gravitational form factors $A(Q^2)$ and $D(Q^2)$ as well as its radius. Our computed pion gravitational form factors show good agreement with lattice QCD results, providing nontrivial support for the viability of our phenomenological model.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-08T11:49:16Z</published>
+    <arxiv:comment>9 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Jiali Deng</name>
+    </author>
+    <author>
+      <name>Xiaolong Wang</name>
+    </author>
+    <author>
+      <name>Yang Zhou</name>
+    </author>
+    <author>
+      <name>Defu Hou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.04266v1</id>
+    <title>Phase-Factor-Controlled Interaction and Bonding between a Chiral Bobber and a Skyrmion String in the Conical Phase</title>
+    <updated>2026-07-05T12:26:05Z</updated>
+    <link href="https://arxiv.org/abs/2607.04266v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.04266v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Skyrmion interactions govern the formation of skyrmion lattices, clusters, and particle-like growth patterns. In contrast, the interaction between a chiral bobber and a skyrmion string remains largely unexplored, despite the role of bobbers as intermediate states in skyrmion-string formation and annihilation. Here we show that this interaction is intrinsically phase dependent in the conical phase. Using three-dimensional micromagnetic simulations, we compute the locally relaxed constrained energy landscape as a function of the bobber--skyrmion separation $R$ and the surface phase factor $φ_0$. We find that changing $φ_0$ qualitatively reshapes the interaction, producing repulsive, attractive, and bonding-like regimes that cannot be reduced to a conventional distance-dependent potential. Real-space analysis shows that this behavior originates from phase-dependent reconstruction of nonaxisymmetric outer distortion shells. The phase-controlled interaction persists over a finite field range and follows the expected top--bottom phase relation of surface-sensitive conical textures. These results identify the conical phase direction, often hidden in projected or thickness-averaged descriptions, as a previously underappreciated degree of freedom in the interaction between skyrmion strings and finite-length chiral textures, as demonstrated here for chiral bobbers.</summary>
+    <category term="cond-mat.mes-hall" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-05T12:26:05Z</published>
+    <arxiv:primary_category term="cond-mat.mes-hall"/>
+    <author>
+      <name>Haijun Zhao</name>
+    </author>
+    <author>
+      <name>Tingting Yan</name>
+    </author>
+    <author>
+      <name>Shuai Dong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.03458v1</id>
+    <title>The nucleon unpolarized generalized form factors and Mellin moments up to fourth order</title>
+    <updated>2026-07-03T16:15:42Z</updated>
+    <link href="https://arxiv.org/abs/2607.03458v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.03458v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nucleon Mellin moments of parton distribution are computed up to the fourth order in lattice QCD. The computation is performed using one ensemble of twisted mass fermions at the physical pion mass point. We employ boosted frames to access the higher-order Mellin moments of generalized parton distributions. We also extract the forward-limit Mellin moments $\langle x^{n-1}\rangle$ for $n=2,3,4$. These Mellin moments are used to construct unpolarized parton distribution functions and compare to phenomenological extractions.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-03T16:15:42Z</published>
+    <arxiv:primary_category term="hep-lat"/>
+    <author>
+      <name>Constantia Alexandrou</name>
+    </author>
+    <author>
+      <name>Simone Bacchio</name>
+    </author>
+    <author>
+      <name>Martha Constantinou</name>
+    </author>
+    <author>
+      <name>Christian Kummer</name>
+    </author>
+    <author>
+      <name>Yan Li</name>
+    </author>
+    <author>
+      <name>Gregoris Spanoudes</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.02302v1</id>
+    <title>A Maximum-Entropy Method for Zero-Skewness Valence GPDs Constrained by Nucleon Electromagnetic Form Factors</title>
+    <updated>2026-07-02T15:19:40Z</updated>
+    <link href="https://arxiv.org/abs/2607.02302v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.02302v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We formulate a reduced-profile maximum-entropy method (MEM) framework for constructing constrained zero-skewness valence-quark generalized parton distribution (GPD) transverse profiles from the four nucleon electromagnetic form factors $F_1^p(t)$, $F_1^n(t)$, $F_2^p(t)$, and $F_2^n(t)$. The form-factor sum rules fix only $x$-integrated moments of the GPDs; the forward limit of $H_v^q$ is fixed separately by the valence parton distribution functions, and the normalization of $E_v^q$ by the flavor anomalous magnetic moments. These complementary constraints are combined through the ansatz $H_v^q(x,t)=q_v(x)\exp[t f_H^q(x)]$ and $E_v^q(x,t)=e_v^q(x)\exp[t f_E^q(x)]$, where the positive profile functions encode the $x$-dependent transverse structure. Rather than attempting an unrestricted functional inversion, we use the entropy functional as a regularizing criterion on a low-dimensional positive profile manifold. In the numerical proof-of-concept calculation, a smooth elastic form-factor input and analytic forward distributions are adopted, together with the reduced form $f(x)=0.05+(1-x)^2\exp(c_0+c_1x+c_2x^2)$, which suppresses local modes that elastic moments alone cannot constrain. Within this reduced ansatz, the resulting profiles reproduce the imposed elastic moment constraints, satisfy the forward normalizations after discrete-grid normalization, and give impact-parameter distributions with the expected transverse shrinkage at large $x$. The construction provides a controlled zero-skewness baseline for connecting elastic form-factor constraints to $x$-dependent transverse profiles, and it offers a stable starting point for future analyses incorporating empirical form-factor fits, modern PDF inputs, lattice-QCD generalized form factors, and hard exclusive observables.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-02T15:19:40Z</published>
+    <arxiv:comment>15 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Seung-il Nam</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.00650v3</id>
+    <title>Charmonium-nucleon femtoscopy as a possible probe of the nucleon gravitational form factor</title>
+    <updated>2026-09-29T14:01:23Z</updated>
+    <link href="https://arxiv.org/abs/2607.00650v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.00650v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the charmonium-nucleon interaction, focusing on its connection with the internal structure of the nucleon encoded in the gravitational form factors. To describe this interaction, we employ an effective potential based on the QCD multipole expansion within the leading chromoelectric dipole approximation. In this framework, the potential is expressed in terms of the energy and pressure distributions inside the nucleon. We first construct these distributions from the gravitational form factors fitted to lattice-QCD data. The remaining model parameters are then fixed by requiring that the resulting $J/ψ$-$N$ potential reproduce the HAL QCD potential outside the short-distance region, as well as the scattering phase shift estimated from the HAL QCD data. Based on this potential, we evaluate the $J/ψ$-$N$ correlation function and further investigate the $ψ(2S)$-$N$ system. We then examine the sensitivity of these correlation functions to the nucleon $D$-form factor.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-01T09:02:53Z</published>
+    <arxiv:comment>9 pages, 8 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <arxiv:journal_ref>Phys. Rev. D 114, 054059 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Ren Ejima</name>
+    </author>
+    <author>
+      <name>Daisuke Fujii</name>
+    </author>
+    <author>
+      <name>Mamiya Kawaguchi</name>
+    </author>
+    <arxiv:doi>10.1103/tfbv-chjm</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1103/tfbv-chjm" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.30834v2</id>
+    <title>Extraction of the nucleon axial form factor from Lattice QCD using NNLO chiral perturbation theory</title>
+    <updated>2026-07-27T10:44:36Z</updated>
+    <link href="https://arxiv.org/abs/2606.30834v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.30834v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We calculate the nucleon axial form factor in relativistic chiral perturbation theory with $Δ(1232)$ up to next-to-next-to-leading order (NNLO). Relevant low-energy constants are determined by fitting to recent lattice-QCD results at several pion masses, while accounting for the uncertainty associated with the truncation of the chiral expansion. We obtain a good description of the lattice data for momentum transfers up to $\sqrt{Q^2}\simeq0.6$ GeV and pion masses up to $M_π\simeq400$ MeV. We find that the explicit inclusion of the $Δ$ resonance is required to reproduce the lattice-QCD pion-mass dependence of the axial charge and axial radius, as well as the momentum dependence of the form factor. At the physical point we obtain $g_A=1.257\pm 0.011$ and $\langle r_A^2\rangle=0.312\pm0.037~\mathrm{fm}^2$. Our analysis provides a model-independent and systematically improvable parametrization of the pion-mass and momentum dependence of the axial form factor, offering a framework for extrapolating lattice-QCD results to the physical point and for improving predictions of low-energy weak interactions involving nucleons.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-29T19:03:39Z</published>
+    <arxiv:comment>6 ancillary files, 17 pages, 10 figures, 4 tables</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Fernando Alvarado</name>
+    </author>
+    <author>
+      <name>Luis Alvarez-Ruso</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.19420v1</id>
+    <title>Bootstrapping Pion Form Factors at Large $N$</title>
+    <updated>2026-06-17T18:00:00Z</updated>
+    <link href="https://arxiv.org/abs/2606.19420v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.19420v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We initiate a bootstrap study of pion form factors in large $N$ QCD. We consider the mixed system of the vector-current two-point function, the pion vector form factor, and the pion scattering amplitude in the chiral limit. At large $N$ these observables are meromorphic, with spectral data constrained by unitarity, crossing symmetry, and Regge boundedness. We obtain bounds of two kinds. The first are rigorous and universal: from analyticity, unitarity and the asymptotic Brodsky-Farrar scaling, we constrain low-energy form-factor coefficients. The second are more phenomenological, of the Shifman-Vainshtein-Zakharov type: feeding in the perturbative ultraviolet behavior at a finite scale lets us bound the pion decay constant, convert a large $N$ lattice measurement into a lower bound on the scale at which asymptotic freedom sets in, and constrain the pion charge radius. Combining these inputs, the space of allowed chiral Lagrangians shrinks toward the region where large $N$ QCD is expected to sit. Our results illustrate how local gauge-invariant probes provide a canonical bridge between the hadronic bootstrap and the microscopic QCD Lagrangian.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-17T18:00:00Z</published>
+    <arxiv:comment>35+9 pages; 13 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <author>
+      <name>Jan Albert</name>
+    </author>
+    <author>
+      <name>Dilara Kosva</name>
+    </author>
+    <author>
+      <name>Leonardo Rastelli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.16433v2</id>
+    <title>Chiral-odd structure of the $N \to Δ$ transition: tensor form factors from QCD light-cone sum rules</title>
+    <updated>2026-09-15T06:07:49Z</updated>
+    <link href="https://arxiv.org/abs/2606.16433v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.16433v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We report the first calculation of the tensor transition form factors of the $N \to Δ$ transition within QCD light-cone sum rules, and use them to construct the transverse multipole structure of this chiral-odd transition. The matrix element of the tensor current between the nucleon and $Δ$ states requires six independent Lorentz structures, a number fixed by the dimension of the parity-reduced helicity amplitude space and reproduced by the same counting in the electromagnetic, axial and gravitational $N \to Δ$ channels. The six form factors organize into transverse multipoles whose rank ceiling is the sum of the spin-transition rank and the rank of the probing operator. For a spin-$1/2$ target the ceiling is two, so the diagonal tensor sector and the electromagnetic $N \to Δ$ transition both stop at a quadrupole, whereas the chiral-odd transition reaches rank three. The resulting octupole has no counterpart in the diagonal matrix elements of the vector, axial-vector and tensor currents, nor in the electromagnetic transition. Each multipole is extracted from its own sum rule rather than by combining separately fitted form factors, improving the stability against the continuum threshold by an order of magnitude. Using nucleon distribution amplitudes for two sets of light-cone parameters, we obtain the monopole and dipole in both isospin channels and for both quark flavors, and the quadrupole in the isovector channel. The multipoles fall with rank, the dipole about half the monopole and the quadrupole about a fifth. A flavor decomposition sorts the form factors into two families according to whether the Lorentz structure they multiply contains a $γ$ matrix, and the transverse dipole is carried entirely by the $d$ quark. The results provide model-independent input for analyses of chiral-odd $N \to Δ$ transition GPDs, to be checked against lattice QCD.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-15T09:06:09Z</published>
+    <arxiv:comment>27 pages, 5 Tables, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Ulaş Özdem</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.11181v1</id>
+    <title>Combined Analysis of Lattice QCD and Experimental Data on the Pion Transition Form Factor</title>
+    <updated>2026-06-09T17:56:53Z</updated>
+    <link href="https://arxiv.org/abs/2606.11181v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.11181v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The evaluation of the hadronic light-by-light scattering contribution to the muon anomalous magnetic moment requires precise knowledge of the pion transition form factor (TFF). In this work, we present a feasibility study for a combined analysis of lattice QCD (LQCD) and experimental data. Our methodology is driven by the goal of combining complementary datasets to leverage their respective kinematic advantages: while LQCD provides robust predictions for the doubly-virtual TFF, $e^+e^-$ scattering experiments offer high-precision singly-virtual measurements up to large momentum transfers. To ensure a statistically rigorous combination, we implement a global one-stage fitting approach based on the modified $z$-expansion, utilizing synthetic jackknife replicate sampling and a normalized $χ^2$ weighting scheme. We demonstrate that the inclusion of experimental data substantially tightens the constraints on the pion TFF, yielding up to a factor of three reduction in uncertainty in the singly-virtual limit. In contrast, the uncertainty of the resulting pion-pole contribution to the muon $g-2$ improves by a factor of $1.5$. This more modest improvement reflects the fact that the $g-2$ integral is heavily dominated by the low-$Q^2$ region, which is already well constrained by physical normalization constraints.</summary>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-09T17:56:53Z</published>
+    <arxiv:comment>16 pages, 10 figures, 4 tables</arxiv:comment>
+    <arxiv:primary_category term="hep-lat"/>
+    <author>
+      <name>Franziska Hagelstein</name>
+    </author>
+    <author>
+      <name>Danaheb Naomi Navarro Durán</name>
+    </author>
+    <author>
+      <name>Timon Esser</name>
+    </author>
+    <author>
+      <name>Vadim Lensky</name>
+    </author>
+    <author>
+      <name>Sotiris Pitelis</name>
+    </author>
+    <author>
+      <name>Vladyslava Sharkovska</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.09152v2</id>
+    <title>Constraining DVCS Compton Form Factors Using Lattice QCD informed Neural Network</title>
+    <updated>2026-06-11T00:53:52Z</updated>
+    <link href="https://arxiv.org/abs/2606.09152v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.09152v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The lattice QCD calculation of generalized form factors are exploited to determine the subtraction constants through all order dispersion relations of Deeply Virtual Compton Scattering (DVCS). The leading order relation is found to constrain significantly the real part of the Compton Form Factors (CFFs), and the higher order one reduces considerably both the real and imaginary part of CFFs in a global analysis of proton data. This is realized by a synthesis of the DVCS data and LQCD calculations within a neural network framework, whose architecture is specifically designed for a reliable extrapolation to unmeasured kinematic regime. By leveraging dispersion relations beyond leading order, our framework allows for adding higher moments of generalized parton distributions (GPDs) from LQCD into the extraction of CFFs from DVCS data.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-lat" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-08T07:45:53Z</published>
+    <arxiv:comment>7 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Yuan-Yuan Huang</name>
+    </author>
+    <author>
+      <name>Xu Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.12458v2</id>
+    <title>Quasi-Product States and Factor Types for the One-Dimensional Hard-Core Model</title>
+    <updated>2026-10-01T15:16:21Z</updated>
+    <link href="https://arxiv.org/abs/2606.12458v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.12458v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the von Neumann algebra generated by a quasi-product state associated with the one-dimensional hard-core lattice gas. If \(κ&gt;0\) denotes the activity (fugacity), the transfer-matrix construction gives the stationary transition matrix \[ P=\begin{pmatrix}p&amp;q\\ 1&amp;0\end{pmatrix}, \qquad p+q=1, \qquad κ=\frac{q}{p^2}. \] The stationary Markov measure on the hard-core path space induces a faithful diagonal state on the corresponding path \(AF\)-algebra. We give a state-preserving identification of its GNS von Neumann algebra with the Feldman--Moore algebra of the measured tail equivalence relation. The relation is hyperfinite and ergodic, and its nonzero ratio set is \(κ^{\mathbb Z}\). Consequently, the generated algebra is the hyperfinite factor of type \(\mathrm{II}_1\) when \(κ=1\), and of type \(\mathrm{III}_λ\), where \(λ=\min\{κ,κ^{-1}\}\), when \(κ\ne1\). The point \(κ=1\) is not a thermodynamic phase transition: the pressure and particle density are analytic for all \(κ&gt;0\). We also describe the precise support-corner relation with the GNS algebra of the diagonal Gibbs state on the quasi-local spin algebra, and we determine the centralizer and the flow of weights.</summary>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-08T04:22:52Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="math-ph"/>
+    <author>
+      <name>Farrukh Mukhamedov</name>
+    </author>
+    <author>
+      <name>Yuri Suhov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.03865v1</id>
+    <title>Space-like Sachs electric and magnetic form factors of the baryons in the asymmetric nuclear medium</title>
+    <updated>2026-06-02T16:38:51Z</updated>
+    <link href="https://arxiv.org/abs/2606.03865v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.03865v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the present work, we have studied the space-like baryon Sachs form factors in the isospin asymmetric nuclear medium using the vector meson dominance (VMD) model. The in-medium effects are incorporated through the medium-modified masses of vector mesons which are calculated using the QCD sum rule approach taking density dependent scalar quark and gluon condensates as inputs from chiral SU(3) quark mean field (CQMF) model. The effective magnetic moments of the baryons are also calculated in the CQMF model. In the framework of VMD model, the photon couples to the nucleons through intermediary vector mesons with the same quantum number as that of a photon. This coupling leads to the relation of isoscalar and isovector Dirac and Pauli form factors which are then used to calculate the Sachs electric and magnetic form factors, which provide physically measurable quantities that represent the electric and magnetic distributions of the baryons. The present work aims to study the effects of asymmetric nuclear matter at finite temperature on the Sachs form factors of baryons in the space-like region. The electric and magnetic charge radii have also been calculated for the baryons in free space and dense asymmetric nuclear matter. The results obtained have been compared with other available phenomenological models, lattice simulations, and experimental data.</summary>
+    <category term="hep-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-02T16:38:51Z</published>
+    <arxiv:comment>34 pages, 11 figures, 4 tables</arxiv:comment>
+    <arxiv:primary_category term="hep-ph"/>
+    <author>
+      <name>Ekta Rawat</name>
+    </author>
+    <author>
+      <name>Navpreet Kaur</name>
+    </author>
+    <author>
+      <name>Harleen Dahiya</name>
+    </author>
+    <author>
+      <name>Arvind Kumar</name>
+    </author>
+    <author>
+      <name>Suneel Dutt</name>
+    </author>
+  </entry>
+</feed>

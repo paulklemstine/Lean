@@ -1,0 +1,1015 @@
+STATUS      IDENTIFIER                              KIND   MATCH YEAR  REGISTRY TITLE / VENUE
+---------------------------------------------------------------------------------------------------------------------
+PHANTOM     10.1006/jabr                            doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1007/3-540-48910-X_                  doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1007/3-540-68339-9_16.pdf            doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1007/978-3-540-45772-7_19            doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1007/978-3-540-76900-2_              doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1007/978-3-540-76900-2_1.pdf         doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1007/978-3-540-89255-7_25.pdf        doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1007/978-3642-10366-7                doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1007/BF01095643.pdf                  doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1007/s001459900030.pdf               doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1016/0020-0190                       doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1016/0024-3795                       doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1016/0196-6774                       doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1016/0304-3975                       doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1016/S0747-7171                      doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1038/s41467-025-                     doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1038/s41534021-00478-z               doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1103/PhysRevA                        doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1103/phys-                           doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1109/SFCS.2000.8147xx                doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.1109/TIT                             doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.18311/jims/1951/17064                doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.2307/1971384                         doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.26421/qic3.2-                        doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.3934/amc.2009.3                      doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.4230/LIPIcs.APPROX/RANDOM.2024.75    doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.4230/LIPIcs.MFCS.2016.7              doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.48550/ARXIV.2409.11748               doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.48550/ARXIV.QUANT-                   doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.48550/ARXIV.QUANT-PH/0201067         doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.5555/20177.20194                     doi    -    -     crossref 404 AND openalex 404
+PHANTOM     10.5555/940131.940137                   doi    -    -     crossref 404 AND openalex 404
+METADATA    10.1006/jsco.1993.1055                  doi    -    1993  Factorization of Polynomials over Finite Fields and Characteristic Sequences
+                                                      venue: Journal of Symbolic Computation
+METADATA    10.1006/jsco.1994.1025                  doi    -    1994  Fast Construction of Irreducible Polynomials over Finite Fields
+                                                      venue: Journal of Symbolic Computation
+METADATA    10.1006/jsco.1995.1055                  doi    -    1995  A New Polynomial Factorization Algorithm and its Implementation
+                                                      venue: Journal of Symbolic Computation
+METADATA    10.1006/jsco.2000.0370                  doi    -    2000  Challenges of Symbolic Computation: My Favorite Open Problems
+                                                      venue: Journal of Symbolic Computation
+METADATA    10.1007/11426639_15                     doi    -    2005  A Tool Kit for Finding Small Roots of Bivariate Polynomials over the Integers
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/11426639_22                     doi    -    2005  Partial Key Exposure Attacks on RSA up to Full Size Exponents
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/11745853_1                      doi    -    2006  New Attacks on RSA with Small Secret CRT-Exponents
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/11792086_18                     doi    -    2006  LLL on the Average
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/3-540-49264-x_9                 doi    -    1995  A Block Lanczos Algorithm for Finding Dependencies over GF(2)
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/3-540-58691-1                   doi    -    1994  Algorithmic Number Theory
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/3-540-58691-1_58                doi    -    1994  Factorization of polynomials over finite fields in subexponential time under GRH
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/3-540-61581-4                   doi    -    1996  Algorithmic Number Theory
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/3-540-69053-0_18                doi    -    1997  Lower Bounds for Discrete Logarithms and Related Problems
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/978-3-319-56620-7_2             doi    -    2017  Short Generators Without Quantum Computers: The Case of Multiquadratics
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/978-3-540-24676-3_29            doi    -    2004  Finding Small Roots of Bivariate Integer Polynomial Equations Revisited
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/978-3-540-89255-7_25            doi    -    2008  Solving Linear Equations Modulo Divisors: On Factoring Given Any Bits
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/978-3-642-03356-8_1             doi    -    2009  Reconstructing RSA Private Keys from Random Key Bits
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/978-3-642-10366-7_28            doi    -    2009  Factoring pq 2 with Quadratic Forms: Nice Cryptanalyses
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/978-3-642-38631-2_29            doi    -    2013  Factoring RSA Modulus with Known Bits from Both p and q: A Lattice Method
+                                                      venue: Lecture Notes in Computer Science
+METADATA    10.1007/BF00198464                      doi    -    1993  Modifications to the Number Field Sieve
+                                                      venue: Journal of Cryptology
+METADATA    10.1007/BF01104107                      doi    -    1992  Factorization of solvable polynomials over finite fields and the generalized Riemann hyp
+                                                      venue: Journal of Soviet Mathematics
+METADATA    10.1007/BF01272074                      doi    -    1992  Computing Frobenius maps and factoring polynomials
+                                                      venue: computational complexity
+METADATA    10.1007/BF01386831                      doi    -    1993  A new efficient factorization algorithm for polynomials over small finite fields
+                                                      venue: Applicable Algebra in Engineering, Communication and Computing
+METADATA    10.1007/BF01390234                      doi    -    1979  A bound for the least prime ideal in the Chebotarev Density Theorem
+                                                      venue: Inventiones Mathematicae
+METADATA    10.1007/BF01547799                      doi    -    1983  Character sums and primitive roots in algebraic number fields
+                                                      venue: Monatshefte f�r Mathematik
+METADATA    10.1007/BF01933667                      doi    -    1975  A monte carlo method for factorization
+                                                      venue: BIT
+METADATA    10.1007/BF02124680                      doi    -    1989  Factoring polynomials modulo special primes
+                                                      venue: Combinatorica
+METADATA    10.1007/BF02351719                      doi    -    1988  A key-exchange system based on imaginary quadratic fields
+                                                      venue: Journal of Cryptology
+METADATA    10.1007/BF02843959                      doi    -    1963  Character sums and primitive roots in finite fields
+                                                      venue: Rendiconti del Circolo Matematico di Palermo
+METADATA    10.1007/BFb0091539                      doi    -    1993  Factoring integers with the number field sieve
+                                                      venue: Lecture Notes in Mathematics
+METADATA    10.1007/bf00198464                      doi    -    1993  Modifications to the Number Field Sieve
+                                                      venue: Journal of Cryptology
+METADATA    10.1007/bf01931367                      doi    -    1976  Taylor expansion of the accumulated rounding error
+                                                      venue: BIT
+METADATA    10.1007/s00037-007-0219-8               doi    -    2006  Complexity of Ring Morphism Problems
+                                                      venue: computational complexity
+METADATA    10.1007/s001459900030                   doi    -    1997  Small Solutions to Polynomial Equations, and Low Exponent RSA Vulnerabilities
+                                                      venue: Journal of Cryptology
+METADATA    10.1007/s00200-017-0336-9               doi    -    2017  On the optimality of lattices for the coppersmith technique
+                                                      venue: Applicable Algebra in Engineering, Communication and Computing
+METADATA    10.1007/s11227-024-06478-y              doi    -    2024  An optimal bound for factoring unbalanced RSA moduli by solving Generalized Implicit Fac
+                                                      venue: The Journal of Supercomputing
+METADATA    10.1007/s40993-024-00585-8              doi    -    2024  Fast square-free decomposition of integers using class groups
+                                                      venue: Research in Number Theory
+METADATA    10.1016/0020-0190(90)90195-4            doi    -    1990  On the deterministic complexity of factoring polynomials over finite fields
+                                                      venue: Information Processing Letters
+METADATA    10.1016/0020-0190(91)90212-Z            doi    -    1991  Smoothness and factoring polynomials over finite fields
+                                                      venue: Information Processing Letters
+METADATA    10.1016/0020-0190(91)90212-z            doi    -    1991  Smoothness and factoring polynomials over finite fields
+                                                      venue: Information Processing Letters
+METADATA    10.1016/0024-3795(93)90238-J            doi    -    1993  Connections between the algorithms of Berlekamp and Niederreiter for factoring polynomia
+                                                      venue: Linear Algebra and its Applications
+METADATA    10.1016/0196-6774(80)90013-9            doi    -    1980  Fast solution of toeplitz systems of equations and computation of Padé approximants
+                                                      venue: Journal of Algorithms
+METADATA    10.1016/0196-6774(88)90026-0            doi    -    1988  Addition requirements for matrix and transposed matrix products
+                                                      venue: Journal of Algorithms
+METADATA    10.1016/0196-6774(88)90029-6            doi    -    1988  Factoring polynomials over finite fields
+                                                      venue: Journal of Algorithms
+METADATA    10.1016/0304-3975(83)90054-3            doi    -    1983  On the asymptotic complexity of rectangular matrix multiplication
+                                                      venue: Theoretical Computer Science
+METADATA    10.1016/0304-3975(83)90110-X            doi    -    1983  The complexity of partial derivatives
+                                                      venue: Theoretical Computer Science
+METADATA    10.1016/0304-3975(87)90081-8            doi    -    1987  Factoring polynomials and primitive elements for special primes
+                                                      venue: Theoretical Computer Science
+METADATA    10.1016/S0022-0000(76)80043-8           doi    -    1976  Riemann's hypothesis and tests for primality
+                                                      venue: Journal of Computer and System Sciences
+METADATA    10.1016/S0747-7171(08)80013-2           doi    -    1990  Matrix multiplication via arithmetic progressions
+                                                      venue: Journal of Symbolic Computation
+METADATA    10.1016/S0747-7171(08)80158-7           doi    -    1990  Constructing normal bases in finite fields
+                                                      venue: Journal of Symbolic Computation
+METADATA    10.1016/S0893-9659(00)00159-2           doi    -    2001  Computing the order of points on an elliptic curve modulo N is as difficult as factoring
+                                                      venue: Applied Mathematics Letters
+METADATA    10.1017/9781316271575.006               doi    -    -     General Purpose Integer Factoring
+                                                      venue: Topics in Computational Number Theory Inspired by Peter L. Montgomery
+METADATA    10.1038/s41467-025-59714-1              doi    -    2025  Yoked surface codes
+                                                      venue: Nature Communications
+METADATA    10.1070/SM1989v063n02ABEH003288         doi    -    1989  CONSTRUCTION OF POLYNOMIALS IRREDUCIBLE OVER A FINITE FIELD WITH LINEARLY INDEPENDENT RO
+                                                      venue: Mathematics of the USSR-Sbornik
+METADATA    10.1070/SM1992v071n01ABEH001389         doi    -    1992  ON PRIMITIVE ELEMENTS IN FINITE FIELDS AND ON ELLIPTIC CURVES
+                                                      venue: Mathematics of the USSR-Sbornik
+METADATA    10.1090/S0025-5718-1970-0276200-X       doi    -    1970  Factoring polynomials over large finite fields
+                                                      venue: Mathematics of Computation
+METADATA    10.1090/S0025-5718-1981-0606517-5       doi    -    1981  A new algorithm for factoring polynomials over finite fields
+                                                      venue: Mathematics of Computation
+METADATA    10.1090/S0025-5718-1987-0866119-8       doi    -    1987  The multiple polynomial quadratic sieve
+                                                      venue: Mathematics of Computation
+METADATA    10.1090/S0025-5718-1990-0993933-0       doi    -    1990  New algorithms for finding irreducible polynomials over finite fields
+                                                      venue: Mathematics of Computation
+METADATA    10.1090/S0025-5718-1991-1052099-2       doi    -    1991  Finding isomorphisms between finite fields
+                                                      venue: Mathematics of Computation
+METADATA    10.1090/S0025-5718-98-00944-2           doi    -    1998  Subquadratic-time factoring of polynomials over finite fields
+                                                      venue: Mathematics of Computation
+METADATA    10.1090/dol/034/15                      doi    -    2009  A Tale of Two Sieves
+                                                      venue: Dolciani Mathematical Expositions
+METADATA    10.1090/mcom/3313                       doi    -    2018  A babystep-giantstep method for faster deterministic integer factorization
+                                                      venue: Mathematics of Computation
+METADATA    10.1090/mcom/3658                       doi    -    2021  An exponent one-fifth algorithm for deterministic integer factorisation
+                                                      venue: Mathematics of Computation
+METADATA    10.1090/s0025-5718-1985-0790658-x       doi    -    1985  Factorization of multivariate polynomials over finite fields
+                                                      venue: Mathematics of Computation
+METADATA    10.1090/s0025-5718-1993-1225541-3       doi    -    1993  A subexponential algorithm for discrete logarithms over all finite fields
+                                                      venue: Mathematics of Computation
+METADATA    10.1093/qmath/4.1.4                     doi    -    1953  DISTRIBUTION OF PRIMITIVE ROOTS IN A FINITE FIELD
+                                                      venue: The Quarterly Journal of Mathematics
+METADATA    10.1093/qmath/7.1.110                   doi    -    1956  ON THE REDUCTIBILITY OF POLYNOMIALS OVER A FINITE FIELD
+                                                      venue: The Quarterly Journal of Mathematics
+METADATA    10.1109/SFCS.1994.365700                doi    -    -     Algorithms for quantum computation: discrete logarithms and factoring
+                                                      venue: Proceedings 35th Annual Symposium on Foundations of Computer Science
+METADATA    10.1109/TIT.1986.1057137                doi    -    1986  Solving sparse linear equations over finite fields
+                                                      venue: IEEE Transactions on Information Theory
+METADATA    10.1109/TIT.1987.1057299                doi    -    1987  On the equivalence between Berlekamp's and Euclid's algorithms (Corresp.)
+                                                      venue: IEEE Transactions on Information Theory
+METADATA    10.1109/access.2023.3264590             doi    -    2023  Solving Generalized Bivariate Integer Equations and Its Application to Factoring With Kn
+                                                      venue: IEEE Access
+METADATA    10.1109/tit.1969.1054260                doi    -    1969  Shift-register synthesis and BCH decoding
+                                                      venue: IEEE Transactions on Information Theory
+METADATA    10.1112/S0025579300005027               doi    -    1972  A note on primitive roots in finite fields
+                                                      venue: Mathematika
+METADATA    10.1112/plms/s3-17.1.11                 doi    -    1967  Character Sums and Primitive Roots in Finite Fields
+                                                      venue: Proceedings of the London Mathematical Society
+METADATA    10.1112/s1461157013000065               doi    -    2013  Václav Šimerka: quadratic forms and factorization
+                                                      venue: LMS Journal of Computation and Mathematics
+METADATA    10.1137/0209024                         doi    -    1980  Probabilistic Algorithms in Finite Fields
+                                                      venue: SIAM Journal on Computing
+METADATA    10.1137/0211037                         doi    -    1982  Rapid Multiplication of Rectangular Matrices
+                                                      venue: SIAM Journal on Computing
+METADATA    10.1137/S0097539795293172               doi    -    1997  Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum 
+                                                      venue: SIAM Journal on Computing
+METADATA    10.1137/s0097539796302749               doi    -    1999  The Relationship Between Breaking the Diffie--Hellman Protocol and Computing Discrete Lo
+                                                      venue: SIAM Journal on Computing
+METADATA    10.1145/103418.103432                   doi    -    1991  Factoring numbers using singular integers
+                                                      venue: Proceedings of the twenty-third annual ACM symposium on Theory of computing  - S
+METADATA    10.1145/322092.322099                   doi    -    1978  Fast Algorithms for Manipulating Formal Power Series
+                                                      venue: Journal of the ACM
+METADATA    10.1145/3638349                         doi    -    2024  Faster Modular Composition
+                                                      venue: Journal of the ACM
+METADATA    10.1145/3708471                         doi    -    2025  An Efficient Quantum Factoring Algorithm
+                                                      venue: Journal of the ACM
+METADATA    10.1515/jmc-2020-0078                   doi    -    2020  Factoring with Hints
+                                                      venue: Journal of Mathematical Cryptology
+METADATA    10.2307/1969420                         doi    -    1952  The Least Quadratic Non Residue
+                                                      venue: The Annals of Mathematics
+METADATA    10.2307/1971363                         doi    -    1987  Factoring Integers with Elliptic Curves
+                                                      venue: The Annals of Mathematics
+METADATA    10.2307/2007842                         doi    -    1987  A probabilistic factorization algorithm with quadratic forms of negative discriminant
+                                                      venue: Mathematics of Computation
+METADATA    10.2307/2008811                         doi    -    1990  Explicit bounds for primality testing and related problems
+                                                      venue: Mathematics of Computation
+METADATA    10.26421/qic19.1-2-1                    doi    -    2019  Toward an optimal quantum algorithm for polynomial factorization over finite fields
+                                                      venue: Quantum Information and Computation
+METADATA    10.4064/aa-19-1-1-30                    doi    -    1971  On the error term in the linear sieve
+                                                      venue: Acta Arithmetica
+METADATA    10.48550/arXiv.2601.11131               doi    -    2026  Deterministic methods for finding elements of large multiplicative order
+                                                      venue: arXiv (Cornell University)
+METADATA    10.59254/sbpo-2025-212078               doi    -    2025  Boosting Shor's Factoring Success with the Jacobi Symbol in Single-Run Order Finding aga
+                                                      venue: Anais do Simpósio Brasileiro de Pesquisa Operacional
+METADATA    10.9790/5728-1205031929                 doi    -    2016  Factorization via Difference of Squares using Ambiguous Forms
+                                                      venue: IOSR Journal of Mathematics
+PASS        10.1006/jcss.2002.1826                  doi    1.00 2002  Quantum Lower Bounds by Quantum Arguments
+                                                      venue: Journal of Computer and System Sciences
+PASS        10.1006/jsco.1996.0125                  doi    1.00 1997  The Magma Algebra System I: The User Language
+                                                      venue: Journal of Symbolic Computation
+PASS        10.1006/jsco.1999.1001                  doi    1.00 2001  On the Deterministic Complexity of Factoring Polynomials
+                                                      venue: Journal of Symbolic Computation
+PASS        10.1006/jsco.1999.1002                  doi    1.00 2001  Factoring Polynomials Over Finite Fields: A Survey
+                                                      venue: Journal of Symbolic Computation
+PASS        10.1006/jsco.2002.0533                  doi    1.00 2002  Subquadratic Computation of Vector Generating Polynomials and Improvement of the Block W
+                                                      venue: Journal of Symbolic Computation
+PASS        10.1007/10722028_11                     doi    1.00 2000  Strategies in Filtering in the Number Field Sieve
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/11590156_6                      doi    1.00 2005  Proving Lower Bounds Via Pseudo-random Generators
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/11792086_37                     doi    1.00 2006  20 Years of ECM
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/3-540-39757-4_17                doi    1.00 -     The Quadratic Sieve Factoring Algorithm
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/3-540-48910-X_1                 doi    1.00 1999  Cryptanalysis of RSA with Private Key d Less than N 0.292
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/3-540-49208-9_15                doi    1.00 1999  The Hidden Subgroup Problem and Eigenvalue Estimation on a Quantum Computer
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/3-540-61581-4_45                doi    1.00 1996  A multiple polynomial general number field sieve
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/3-540-61581-4_66                doi    1.00 1996  Discrete logarithms: The effectiveness of the index calculus method
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/3-540-68339-9_14                doi    1.00 1996  Finding a Small Root of a Univariate Modular Equation
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/3-540-68339-9_16                doi    1.00 1996  Finding a Small Root of a Bivariate Integer Equation; Factoring with High Bits Known
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/3-540-68697-5_22                doi    1.00 1996  Algorithms for Black-Box Fields and their Application to Cryptography
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/3-540-69053-0_5                 doi    1.00 1997  Lattice Attacks on NTRU
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-1-4684-4730-9_9             doi    1.00 1984  Factorization Using the Quadratic Sieve Algorithm
+                                                      venue: Advances in Cryptology
+PASS        10.1007/978-1-4939-7560-0               doi    1.00 1986  Disquisitiones Arithmeticae
+PASS        10.1007/978-3-030-45388-6_17            doi    1.00 2020  Faster Cofactorization with ECM Using Mixed Representations
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-030-56880-1_3             doi    1.00 2020  Comparing the Difficulty of Factorization and Discrete Logarithm: A 240-Digit Experiment
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-030-60026-6_19            doi    1.00 2020  Hermite Rational Function Interpolation with Error Correction
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-030-65411-5_15            doi    1.00 2020  Revisiting ECM on GPUs
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-031-53368-6_18            doi    1.00 2024  Generalized Implicit Factorization Problem
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-319-05446-9_4             doi    1.00 2014  Algebraic Complexity Classes
+                                                      venue: Perspectives in Computational Complexity
+PASS        10.1007/978-3-319-22425-1_5             doi    1.00 2015  Implicit Factorization of RSA Moduli Revisited (Short Paper)
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-319-56620-7_7             doi    1.00 2017  Computation of a 768-Bit Prime Field Discrete Logarithm
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-319-56620-7_8             doi    1.00 2017  A Kilobit Hidden SNFS Discrete Logarithm Computation
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-540-70529-1_173           doi    1.00 2015  Complexity of Computational Problems in Exact Linear Algebra
+                                                      venue: Encyclopedia of Applied and Computational Mathematics
+PASS        10.1007/978-3-540-76900-2_1             doi    1.00 2007  A Kilobit Special Number Field Sieve Factorization
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-540-79456-1_12            doi    1.00 2008  Improved Stage 2 to P ± 1 Factoring Algorithms
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-642-00468-1_1             doi    1.00 2009  Implicit Factoring: On Polynomial Time Factoring Given Only an Implicit Hint
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-642-13013-7_5             doi    1.00 2010  Implicit Factoring with Shared Most Significant and Middle Bits
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-642-14623-7_18            doi    1.00 2010  Factorization of a 768-Bit RSA Modulus
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-642-31284-7               doi    1.00 2012  Applied Cryptography and Network Security
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-642-31284-7_14            doi    1.00 2012  Secure Accumulators from Euclidean Rings without Trusted Setup
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-642-31662-3_15            doi    1.00 2012  Square Root Algorithms for the Number Field Sieve
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-642-42045-0_18            doi    1.00 2013  Factoring RSA Keys from Certified Smart Cards: Coppersmith in the Wild
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-642-56755-1_25            doi    1.00 2001  Algorithms for Factoring Polynomials over Finite Fields
+                                                      venue: Finite Fields and Applications
+PASS        10.1007/978-3-662-02945-9               doi    1.00 1993  A Course in Computational Algebraic Number Theory
+                                                      venue: Graduate Texts in Mathematics
+PASS        10.1007/978-3-662-43799-5               doi    1.00 2014  Computer Mathematics
+PASS        10.1007/978-3-662-44709-3_13            doi    1.00 2014  Side-Channel Attack against RSA Key Generation Algorithms
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/978-3-662-45611-8_19            doi    1.00 2014  Mersenne Factorization Factory
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/BF00608144                      doi    1.00 1989  Determination of correlation functions of composite materials with the stochastic struct
+                                                      venue: Mechanics of Composite Materials
+PASS        10.1007/BF01202355                      doi    1.00 1993  Simultaneous reduction of a lattice basis and its reciprocal basis
+                                                      venue: Combinatorica
+PASS        10.1007/BF01389745                      doi    1.00 1974  The arithmetic of elliptic curves
+                                                      venue: Inventiones Mathematicae
+PASS        10.1007/BF01818569                      doi    1.00 1978  On the largest prime factors ofn andn + 1
+                                                      venue: Aequationes mathematicae
+PASS        10.1007/BF01840433                      doi    1.00 1986  Discrete logarithms inGF(p)
+                                                      venue: Algorithmica
+PASS        10.1007/BFb0023837                      doi    1.00 -     Polynomial factorization 1987–1991
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/BFb0091534                      doi    1.00 1993  The development of the number field sieve
+                                                      venue: Lecture Notes in Mathematics
+PASS        10.1007/BFb0091537                      doi    1.00 1993  The number field sieve
+                                                      venue: Lecture Notes in Mathematics
+PASS        10.1007/BFb0091538                      doi    1.00 1993  The lattice sieve
+                                                      venue: Lecture Notes in Mathematics
+PASS        10.1007/S001459910010                   doi    1.00 2000  A New Public-Key Cryptosystem over a Quadratic Order with Quadratic Decryption Time
+                                                      venue: Journal of Cryptology
+PASS        10.1007/bf01206320                      doi    1.00 1995  On the oracle complexity of factoring integers
+                                                      venue: Computational Complexity
+PASS        10.1007/bfb0036913                      doi    1.00 1983  Polynomial-time factorization of multivariate polynomials over finite fields
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/bfb0054125                      doi    1.00 1998  Computing discrete logarithms with quadratic number rings
+                                                      venue: Lecture Notes in Computer Science
+PASS        10.1007/bfb0091535                      doi    1.00 1993  The number field sieve: An annotated bibliography
+                                                      venue: Lecture Notes in Mathematics
+PASS        10.1007/bfb0091539                      doi    0.75 1993  Factoring integers with the number field sieve
+                                                      venue: Lecture Notes in Mathematics
+PASS        10.1007/s00022-012-0115-5               doi    1.00 2012  Conics in the hyperbolic plane intrinsic to the collineation group
+                                                      venue: Journal of Geometry
+PASS        10.1007/s00037-004-0182-6               doi    1.00 2004  Derandomizing Polynomial Identity Tests Means Proving Circuit Lower Bounds
+                                                      venue: computational complexity
+PASS        10.1007/s00037-011-0024-2               doi    1.00 2011  Small Space Analogues of Valiant’s Classes and the Limitations of Skew Formulas
+                                                      venue: computational complexity
+PASS        10.1007/s00037-013-0072-x               doi    1.00 2013  Resource Trade-offs in Syntactically Multilinear Arithmetic Circuits
+                                                      venue: computational complexity
+PASS        10.1007/s00037-021-00205-2              doi    1.00 2021  Lower Bounds for Matrix Factorization
+                                                      venue: computational complexity
+PASS        10.1007/s00037-022-00234-5              doi    1.00 2022  On sets of linear forms of maximal complexity
+                                                      venue: computational complexity
+PASS        10.1007/s00037-023-00239-8              doi    1.00 2023  Absolute reconstruction for  sums of powers of linear forms: degree 3 and beyond
+                                                      venue: computational complexity
+PASS        10.1007/s00145-001-0009-4               doi    1.00 2001  Selecting Cryptographic Key Sizes
+                                                      venue: Journal of Cryptology
+PASS        10.1007/s00200-003-0144-2               doi    1.00 2004  The Middle Product Algorithm I
+                                                      venue: Applicable Algebra in Engineering, Communication and Computing
+PASS        10.1007/s002220050059                   doi    1.00 1996  Bornes pour la torsion des courbes elliptiques sur les corps de nombres
+                                                      venue: Inventiones Mathematicae
+PASS        10.1007/s00605-024-02036-z              doi    1.00 2024  On the largest prime factors of consecutive integers
+                                                      venue: Monatshefte für Mathematik
+PASS        10.1007/s10208-019-09422-2              doi    1.00 2019  Computing Approximate Greatest Common Right Divisors of Differential Polynomials
+                                                      venue: Foundations of Computational Mathematics
+PASS        10.1007/s10240-008-0016-1               doi    1.00 2008  Automorphy for some
+                    <mml:math xmlns:mml="http://www.w3.org/1998/Math
+                                                      venue: Publications Mathématiques de l'IHÉS
+PASS        10.1007/s10623-013-9803-x               doi    1.00 2013  List decoding of number field codes
+                                                      venue: Designs, Codes and Cryptography
+PASS        10.1007/s10623-020-00783-2              doi    1.00 2020  On post-processing in the quantum algorithm for computing short discrete logarithms
+                                                      venue: Designs, Codes and Cryptography
+PASS        10.1007/s11139-011-9304-3               doi    1.00 2011  An asymptotic expansion related to the Dickman function
+                                                      venue: The Ramanujan Journal
+PASS        10.1007/s11432-017-9176-5               doi    1.00 2017  A better bound for implicit factorization problem with shared middle bits
+                                                      venue: Science China Information Sciences
+PASS        10.1016/0022-314X(83)90002-1            doi    1.00 1983  On a problem of Oppenheim concerning “factorisatio numerorum”
+                                                      venue: Journal of Number Theory
+PASS        10.1016/0022-314X(86)90013-2            doi    1.00 1986  On the number of positive integers ≦ x and free of prime factors &gt; y
+                                                      venue: Journal of Number Theory
+PASS        10.1016/0196-6774(82)90012-8            doi    1.00 1982  Refined analysis and improvements on some factoring algorithms
+                                                      venue: Journal of Algorithms
+PASS        10.1016/S0024-3795(98)10012-5           doi    1.00 1998  Computing Hermite and Smith normal forms of triangular integer matrices
+                                                      venue: Linear Algebra and its Applications
+PASS        10.1016/S0304-3975(01)00144-X           doi    1.00 2002  Complexity measures and decision tree complexity: a survey
+                                                      venue: Theoretical Computer Science
+PASS        10.1016/S1385-7258(51)50008-2           doi    1.00 1951  On The Number of Positive Integers ≤ x and Free of Prime Factors &gt; y
+                                                      venue: Indagationes Mathematicae (Proceedings)
+PASS        10.1016/j.jcss.2005.06.006              doi    1.00 2006  Polynomial degree vs. quantum query complexity
+                                                      venue: Journal of Computer and System Sciences
+PASS        10.1016/j.jnt.2017.10.019               doi    1.00 2018  Rigorous analysis of a randomised number field sieve
+                                                      venue: Journal of Number Theory
+PASS        10.1016/j.jsc.2019.07.013               doi    1.00 2020  Elimination-based certificates for triangular equivalence and rank profiles
+                                                      venue: Journal of Symbolic Computation
+PASS        10.1016/j.jsc.2020.04.006               doi    1.00 2021  Foreword
+                                                      venue: Journal of Symbolic Computation
+PASS        10.1016/j.jsc.2020.04.011               doi    1.00 2021  On computing the degree of a Chebyshev Polynomial from its value
+                                                      venue: Journal of Symbolic Computation
+PASS        10.1016/j.jsc.2025.102507               doi    1.00 2026  Early termination for sparse interpolation of polynomials in Chebyshev bases
+                                                      venue: Journal of Symbolic Computation
+PASS        10.1016/j.tcs.2005.01.019               doi    1.00 2005  On the power of Ambainis lower bounds
+                                                      venue: Theoretical Computer Science
+PASS        10.1017/S002776300000489X               doi    1.00 1994  Solvability of the diophantine equation <i>x</i><sup>2</sup> − <i>Dy</i><sup>2</sup> = ±
+                                                      venue: Nagoya Mathematical Journal
+PASS        10.1017/S0305004100049252               doi    1.00 1974  Theorems on factorization and primality testing
+                                                      venue: Mathematical Proceedings of the Cambridge Philosophical Society
+PASS        10.1017/S0305004100065841               doi    1.00 1986  Mordell's finite basis theorem revisited
+                                                      venue: Mathematical Proceedings of the Cambridge Philosophical Society
+PASS        10.1017/S0963548399003764               doi    1.00 1999  A Measure for the Non-Orthogonality of 
+a Lattice Basis
+                                                      venue: Combinatorics, Probability and Computing
+PASS        10.1017/cbo9780511662027.007            doi    1.00 1982  On the calculation of regulators and class numbers of quadratic fields
+                                                      venue: Journées Arithmétiques 1980
+PASS        10.1017/fms.2018.10                     doi    1.00 2018  ON BINARY CORRELATIONS OF MULTIPLICATIVE FUNCTIONS
+                                                      venue: Forum of Mathematics, Sigma
+PASS        10.1017/fms.2022.40                     doi    1.00 2022  The 8-rank of the narrow class group and the negative Pell equation
+                                                      venue: Forum of Mathematics, Sigma
+PASS        10.1023/A:1000281602647                 doi    1.00 1998  On Mordell‘s Equation
+                                                      venue: Compositio Mathematica
+PASS        10.1023/A:1008397921377                 doi    1.00 2000  Integer Factoring
+                                                      venue: Designs, Codes and Cryptography
+PASS        10.1023/a:1008319518035                 doi    1.00 2000  The Xedni Calculus and the Elliptic Curve Discrete Logarithm Problem
+                                                      venue: Designs, Codes and Cryptography
+PASS        10.1023/a:1008397921377                 doi    1.00 2000  Integer Factoring
+                                                      venue: Designs, Codes and Cryptography
+PASS        10.1038/s41534-020-0257-5               doi    1.00 2020  Approximate quantum Fourier transform with O(n log(n)) T gates
+                                                      venue: npj Quantum Information
+PASS        10.1038/s41598-024-53708-7              doi    1.00 2024  Effective prime factorization via quantum annealing by modular locally-structured embedd
+                                                      venue: Scientific Reports
+PASS        10.1080/07468342.2000.11974137          doi    1.00 2000  Three Fermat Trails to Elliptic Curves
+                                                      venue: The College Mathematics Journal
+PASS        10.1088/1367-2630/14/12/123011          doi    1.00 2012  Surface code quantum computing by lattice surgery
+                                                      venue: New Journal of Physics
+PASS        10.1090/CONM/754/15139                  doi    1.00 2020  A new ranking function for polynomial selection in the number field sieve
+                                                      venue: Contemporary Mathematics
+PASS        10.1090/S0025-5718-02-01482-5           doi    1.00 2002  Improvements to the general number field sieve for discrete logarithms in prime fields. 
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-06-01870-9           doi    1.00 2006  On polynomial selection for the general number field sieve
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-09-02295-9           doi    1.00 2009  Factorization with genus 2 curves
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-1969-0247789-3       doi    1.00 1969  On the numerical solution of a differential-difference equation arising in analytic numb
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-1981-0595059-1       doi    1.00 1981  Asymptotically fast factorization of integers
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-1984-0744939-5       doi    1.00 1984  A Monte Carlo factoring algorithm with linear storage
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-1989-0969490-3       doi    1.00 1989  Numerical solution of some classical differential-difference equations
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-1990-1023756-8       doi    1.00 1990  Explicit bounds for primality testing and related problems
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-1992-1106981-9       doi    1.00 1992  Searching for primitive roots in finite fields
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-1994-1192970-7       doi    1.00 1994  Solving homogeneous linear equations over 𝐺𝐹(2) via block Wiedemann algorithm
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-1995-1270621-1       doi    1.00 1995  Analysis of Coppersmith’s block Wiedemann algorithm for the parallel solution of sparse 
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-2012-02633-0         doi    1.00 2012  ECM using Edwards curves
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-2014-02919-0         doi    1.00 2014  A variant of the Bombieri-Vinogradov theorem with explicit constants and applications
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-2015-02926-3         doi    1.00 2015  Root optimization of polynomials in the number field sieve
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-96-00775-2           doi    1.00 1996  Asymptotic semismoothness probabilities
+                                                      venue: Mathematics of Computation
+PASS        10.1090/S0025-5718-99-00992-8           doi    1.00 1999  Factorization of the tenth Fermat number
+                                                      venue: Mathematics of Computation
+PASS        10.1090/conm/754                        doi    1.00 2020  75 Years of Mathematics of Computation
+                                                      venue: Contemporary Mathematics
+PASS        10.1090/gsm/047                         doi    1.00 2002  Classical and Quantum Computation
+                                                      venue: Graduate Studies in Mathematics
+PASS        10.1090/mcom/2961                       doi    1.00 2015  Convergence of an adaptive finite element method for distributed flux reconstruction
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/3058                       doi    1.00 2015  Quadratic sieving
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/3112                       doi    1.00 2016  Some mathematical remarks on the polynomial selection in NFS
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/3920                       doi    1.00 2023  Algebraic norm and 𝑝-class group capitulations in totally ramified cyclic 𝑝-extensions
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/3933                       doi    1.00 2023  The reciprocal sums of pseudoprimes and Carmichael numbers
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/3946                       doi    1.00 2026  Correcting Lehman’s theorem on Turing’s method
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4001                       doi    1.00 2024  Bohr sets generated by polynomials and Coppersmith’s method in many variables
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4107                       doi    1.00 2025  On Galois inertial types of elliptic curves over ℚ_{𝕡}
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4122                       doi    1.00 2025  Erratum to “The reciprocal sums of pseudoprimes and Carmichael numbers”
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4129                       doi    1.00 2026  A method for verifying the generalized Riemann hypothesis
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4133                       doi    1.00 2025  Improved estimates for the argument and zero-counting function of the Riemann zeta-funct
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4135                       doi    1.00 2025  Unconditional full linear convergence and optimal complexity of adaptive iteratively lin
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4140                       doi    1.00 2025  Optimal convergence of a fully decoupled finite difference scheme of the Abels–Garcke–Gr
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4141                       doi    1.00 2025  Nodal auxiliary a posteriori error estimates
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4144                       doi    1.00 2025  On the genus of one degree of freedom planar linkages via tropical geometry
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4145                       doi    1.00 2025  Large-degree asymptotic expansions for the Jacobi and related functions
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4146                       doi    1.00 2025  Variational problems with gradient constraints: A priori and a posteriori error identiti
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4147                       doi    1.00 2025  A variational approach to the analysis of the continuous space–time FEM for the wave equ
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4148                       doi    1.00 2025  Sampling recovery in 𝐿₂ and other norms
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4149                       doi    1.00 2025  Changing the ranking in eigenvector centrality of a weighted graph by small perturbation
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4150                       doi    1.00 2025  Closed bounded rational framing motions
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4151                       doi    1.00 2025  Adaptive mixed FEM for the Stokes eigenvalue problem
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4152                       doi    1.00 2026  Computation of GIT quotients of semisimple groups
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4153                       doi    1.00 2025  An effective Positivstellensatz over the rational numbers for finite semialgebraic sets
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4154                       doi    1.00 2025  Fourier optimization, the least quadratic non-residue, and the least prime in an arithme
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4155                       doi    1.00 2025  Computations directly on the cuspidal cohomology of congruence subgroups of SL(3,ℤ)
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4156                       doi    1.00 2025  A Robin-Robin splitting method for the Stokes-Biot fluid-poroelastic structure interacti
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4157                       doi    1.00 2025  Effective Whitney stratification of real algebraic varieties
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4158                       doi    1.00 2026  Data compression using rank-1 lattices for parameter estimation in machine learning
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4159                       doi    1.00 2026  Computing inverses of Stieltjes transforms of probability measures
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4160                       doi    1.00 2025  A quasi-optimal space-time FEM with local mesh refinements for parabolic problems
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4161                       doi    1.00 2025  Short Mahler-measure-preserving multiples of multivariable polynomials
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4162                       doi    1.00 2026  On inf-sup stability and optimal convergence of the quasi-reversibility method for uniqu
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4163                       doi    1.00 2026  Computing rough solutions of the stochastic nonlinear wave equation
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4166                       doi    1.00 2025  Cyclic sieving on permutations: An analysis of maps and statistics in the FindStat datab
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4167                       doi    1.00 2026  A Lax-Wendroff type theorem of doubly conservative schemes for degenerate convection-dif
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4168                       doi    1.00 2025  On adaptive stochastic extended iterative methods for solving least squares
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4169                       doi    1.00 2026  Forbidden substructure theorems: A computational tool applied to varieties of lazy magma
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4170                       doi    1.00 2026  Error analysis of DGTD for linear Maxwell equations with inhomogeneous interface conditi
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4171                       doi    1.00 2025  A random integration algorithm for high-dimensional function spaces
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4172                       doi    1.00 2025  Parallel subspace correction methods for semicoercive and nearly semicoercive convex opt
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4173                       doi    1.00 2026  Equilibrium boundary conditions for vectorial multi-dimensional lattice Boltzmann scheme
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4175                       doi    1.00 2026  𝐶¹ virtual element methods on polygonal meshes with curved edges
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4176                       doi    1.00 2025  On the minimal algebraic complexity of the rank-one approximation problem for general in
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4177                       doi    1.00 2026  Sesquilinear pairings on elliptic curves
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4179                       doi    1.00 2025  Floquet–Bloch analysis of wave propagation with time-periodic coefficients
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4180                       doi    1.00 2025  Hybridizable symmetric stress elements on the barycentric refinement in arbitrary dimens
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4181                       doi    1.00 2026  Jump-preserving polynomial interpolation in non-manifold polyhedra
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4182                       doi    1.00 2026  On the Halpern method with adaptive anchoring parameters
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4183                       doi    1.00 2026  The pollution effect for FEM approximations of the Ginzburg–Landau equation
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4184                       doi    1.00 2026  Provable low-rank tensor-train approximations in the inverse of large-scale structured m
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4185                       doi    1.00 2026  Spectral approximation to fractional integral operators
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4186                       doi    1.00 2026  Sampling via gradient flows in the space of probability measures
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4187                       doi    1.00 2026  Convergence of Random Batch Method with replacement for interacting particle systems
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4188                       doi    1.00 2026  On factoring and power divisor problems via rank-3 lattices and the second vector
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4189                       doi    1.00 2026  Rates of convergence of finite element approximations of second-order mean field games w
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4190                       doi    1.00 2026  A lower bound for the number of Egyptian fractions
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4191                       doi    1.00 2026  Multi- and infinite-variate integration and 𝐿²-approximation on Hilbert spaces with Gaus
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4192                       doi    1.00 2026  Convergence analysis of an adaptive nonconforming FEM for phase-field dependent topology
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4193                       doi    1.00 2026  On alternating-conjugate splitting methods
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4194                       doi    1.00 2026  Gautschi-type and implicit–explicit integrators for constrained wave equations
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4195                       doi    1.00 2026  An algebraic multiscale method for spatial network models
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4196                       doi    1.00 2026  Zeroth-order primal-dual alternating projection gradient algorithms for nonconvex minima
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4197                       doi    1.00 2026  Inexact Restoration via random models for unconstrained noisy optimization
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4198                       doi    1.00 2026  Sharp error bounds for edge-element discretisations of the high-frequency Maxwell equati
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4199                       doi    1.00 2026  𝑝-robust equivalence of global continuous constrained and local discontinuous unconstrai
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4200                       doi    1.00 2026  De Bruijn Sequences with Minimum Discrepancy
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4201                       doi    1.00 2026  Stability, analyticity and maximal regularity of semidiscrete isoparametric finite eleme
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4202                       doi    1.00 2026  A note on the growth factor in Gaussian elimination for generalized Higham matrices
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4203                       doi    1.00 2026  Tent transformed order 2 nets and quasi-Monte Carlo rules with quadratic error decay
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4204                       doi    1.00 2026  Certified model order reduction for parametric Hermitian eigenproblems
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4205                       doi    1.00 2026  Multiscale model reduction and two-level Schwarz preconditioner for H(curl) elliptic pro
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4206                       doi    1.00 2026  Strictly equivalent a posteriori estimators for quasi-optimal nonconforming methods: abs
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4207                       doi    1.00 2026  A Semi-Lagrangian scheme for Hamilton-Jacobi-Bellman equations with Dirichlet boundary c
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4208                       doi    1.00 2026  Dimension-independent convergence rates of randomized nets using median-of-means
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4209                       doi    1.00 2026  On the densities of covering numbers and abundant numbers
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4210                       doi    1.00 2026  BDF2-type integrator for Landau-Lifshitz-Gilbert equation in micromagnetics: Uncondition
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4211                       doi    1.00 2026  Kernel-based learning of functions with positive-definite matrix values
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4212                       doi    1.00 2026  Minimal subsampled rank-1 lattices for multivariate approximation with optimal convergen
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4213                       doi    1.00 2026  Weighted finite difference methods for the semiclassical nonlinear Schrödinger equation 
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4214                       doi    1.00 2026  Unimodular equivalence of integral simplices
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4215                       doi    1.00 2026  A path-dependent PDE solver based on signature kernels
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4216                       doi    1.00 2026  Möbius function and primes: an identity factory with applications
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4217                       doi    1.00 2026  Virtual element methods based on boundary triangulation: fitted and unfitted meshes
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4218                       doi    1.00 2026  A locally-conservative proximal Galerkin method for pointwise bound constraints
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4219                       doi    1.00 2026  Solving roughly forced nonlinear PDEs via misspecified kernel methods and neural network
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4220                       doi    1.00 2026  Regularity and tailored regularization of deep neural networks, with application to para
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4221                       doi    1.00 2026  Modular curves 𝑋₀(𝑁) of density degree 5
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4222                       doi    1.00 2026  Numerical approximation and analysis of the inverse Robin problem using the Kohn-Vogeliu
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4223                       doi    1.00 2026  Overcoming logarithmic singularities in the Cahn-Hilliard equation with Flory-Huggins po
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4224                       doi    1.00 2026  The classification of the stable marked reduction of genus 2 curves in residue character
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4225                       doi    1.00 2026  Stability of high-order Scott-Vogelius elements for 2D non-Newtonian incompressible flow
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4226                       doi    1.00 2026  Fast numerical approximation of linear, second-order hyperbolic problems using model ord
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4227                       doi    1.00 2026  Algebraic power series and their automatic complexity modulo prime powers
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4228                       doi    1.00 2026  Convergence of a stable numerical scheme to the weak solution for compressible Navier-St
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4229                       doi    1.00 2026  On the arithmetic of multidimensional continued fractions
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4230                       doi    1.00 2026  A geometric framework for stochastic iterations
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4232                       doi    1.00 2026  A multilevel stochastic regularized first-order method with application to finite sum mi
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4233                       doi    1.00 2026  Finite elements for symmetric and traceless tensors in three dimensions
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4234                       doi    1.00 2026  A non-iterative domain decomposition time integrator for linear wave equations
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4235                       doi    1.00 2026  Stable, fast, and adaptive splitting schemes for nonlinear doubly-degenerate diffusion e
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4236                       doi    1.00 2026  On the approximation of the von Neumann equation in the semiclassical limit. Part II: Nu
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4237                       doi    1.00 2026  Error analysis for a finite element discretization of a corotational harmonic map heat f
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4238                       doi    1.00 2026  Curves on the surface of cuboids
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4239                       doi    1.00 2026  Optimality of adaptive 𝐻(^cp^cp) mixed finite element methods for the Kirchhoff-Love pla
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4240                       doi    1.00 2026  On decomposability and subdifferential of the tensor nuclear norm
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4242                       doi    1.00 2026  Fully-discrete cell entropy inequality of third-order explicit Runge-Kutta discontinuous
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4243                       doi    1.00 2026  The lonely runner conjecture holds for eight runners
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4244                       doi    1.00 2026  Computing the Zariski closure of a finitely generated matrix group
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4245                       doi    1.00 2026  A framework for analysis of DEC approximations to Hodge-Laplacian problems using general
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4246                       doi    1.00 2026  Box progressions, abelian power-free morphisms and a sieving for the template method
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4247                       doi    1.00 2026  Generation of cycle permutation graphs and permutation snarks
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4248                       doi    1.00 2026  Projecting dynamical systems via a support bound
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4249                       doi    1.00 2026  Decomposing a factorial into large factors
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4250                       doi    1.00 2026  Discontinuous piecewise polynomial approximation on non-Lipschitz domains
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4251                       doi    1.00 2026  Improved error bounds of time-splitting Hermite spectral method for the highly-oscillato
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4252                       doi    1.00 2026  Fast solvers for the high-order FEM simplicial de Rham complex
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4254                       doi    1.00 2026  Infinite Euclidean distance discriminants
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4255                       doi    1.00 2026  Alleviating missing boundary conditions in elliptic partial differential equations using
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4256                       doi    1.00 2026  Structure-preserving local discontinuous Galerkin discretization of conformational conve
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4258                       doi    1.00 2026  An effective version of Kronecker’s theorem on the splitting of polynomials and the 𝑝-cu
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4259                       doi    1.00 2026  Constructive quasi-uniform sequences over triangles
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4260                       doi    1.00 2026  Interpolatory dynamical low-rank approximation: theoretical foundations and algorithms
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4261                       doi    1.00 2026  Asymptotic numerical hypocoercivity of the space-time discontinuous Galerkin method for 
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4262                       doi    1.00 2026  Interpolated drift implicit Euler MLMC method for barrier option pricing and application
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4263                       doi    1.00 2026  On the quasi-uniformity properties of quasi-Monte Carlo point sets and sequences–Part II
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4264                       doi    1.00 2026  On the quasi-uniformity properties of quasi-Monte Carlo point sets and sequences–Part I:
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4265                       doi    1.00 2026  On dense tetrahedra in binary sphere packings
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4267                       doi    1.00 2026  New operator designs for Halpern iterations with explicit rates under Hölder error bound
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4268                       doi    1.00 2026  Numerical computations concerning Landau-Siegel zeros
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4270                       doi    1.00 2026  Sufficient conditions for strong discrete maximum principles in finite element solutions
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4271                       doi    1.00 2026  The computation of higher order Alexander invariants
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4272                       doi    1.00 2026  An adaptive delaminating Levin method in two dimensions
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4273                       doi    1.00 2026  On canonical roots of fractional ideals
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4274                       doi    1.00 2026  Comparing Galois representations in the residually reducible case
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4275                       doi    1.00 2026  Stability of the variable two-step BDF scheme for parabolic equations under a sharp rati
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4276                       doi    1.00 2026  Convergence analysis of a stochastic interacting particle-field algorithm for 3D parabol
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4277                       doi    1.00 2026  The Hessian of elliptic curves as a Lattès map
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4278                       doi    1.00 2026  A wave front tracking scheme for flux reconstruction in 2×2 hyperbolic conservation laws
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4279                       doi    1.00 2026  Computing with necklaces on elliptic curves
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4281                       doi    1.00 2026  On the characteristic polynomial of linearized polynomials
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom/4284                       doi    1.00 2026  An unfitted divergence-free higher order finite element method for the Stokes problem
+                                                      venue: Mathematics of Computation
+PASS        10.1090/mcom3048                        doi    1.00 2015  Better polynomials for GNFS
+                                                      venue: Mathematics of Computation
+PASS        10.1090/s0002-9904-1949-09337-0         doi    1.00 1949  On the number of positive integers less than 𝑥 and free of prime divisors greater than 𝑥
+                                                      venue: Bulletin of the American Mathematical Society
+PASS        10.1090/s0025-5718-1984-0744939-5       doi    1.00 1984  A Monte Carlo factoring algorithm with linear storage
+                                                      venue: Mathematics of Computation
+PASS        10.1090/s0025-5718-1987-0878705-x       doi    1.00 1987  A probabilistic factorization algorithm with quadratic forms of negative discriminant
+                                                      venue: Mathematics of Computation
+PASS        10.1090/s0025-5718-1990-1023756-8       doi    1.00 1990  Explicit bounds for primality testing and related problems
+                                                      venue: Mathematics of Computation
+PASS        10.1090/s0894-0347-1992-1137100-0       doi    1.00 1992  A rigorous time bound for factoring integers
+                                                      venue: Journal of the American Mathematical Society
+PASS        10.1093/qmath/hay010                    doi    1.00 2018  Autour des plus grands facteurs premiers d’entiers consÉcutifs voisins d’un entier cribl
+                                                      venue: The Quarterly Journal of Mathematics
+PASS        10.1098/rsta.1993.0139                  doi    1.00 1993  Discrete logarithms and local units
+                                                      venue: Philosophical Transactions of the Royal Society of London. Series A: Physical an
+PASS        10.1103/PRXQuantum.3.010331             doi    1.00 2022  Universal Quantum Computing with Twist-Free and Temporally Encoded Lattice Surgery
+                                                      venue: PRX Quantum
+PASS        10.1103/PhysRevA.54.1034                doi    1.00 1996  Efficient networks for quantum factoring
+                                                      venue: Physical Review A
+PASS        10.1103/PhysRevA.71.052320              doi    1.00 2005  Fast quantum modular exponentiation
+                                                      venue: Physical Review A
+PASS        10.1103/PhysRevA.86.032324              doi    1.00 2012  Surface codes: Towards practical large-scale quantum computation
+                                                      venue: Physical Review A
+PASS        10.1103/PhysRevA.95.032338              doi    1.00 2017  Quantum computation with realistic magic-state factories
+                                                      venue: Physical Review A
+PASS        10.1103/PhysRevX.2.031007               doi    1.00 2012  Layered Architecture for Quantum Computing
+                                                      venue: Physical Review X
+PASS        10.1103/PhysRevX.8.041015               doi    1.00 2018  Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity
+                                                      venue: Physical Review X
+PASS        10.1103/physreva.54.1034                doi    1.00 1996  Efficient networks for quantum factoring
+                                                      venue: Physical Review A
+PASS        10.1103/physreva.54.147                 doi    1.00 1996  Quantum networks for elementary arithmetic operations
+                                                      venue: Physical Review A
+PASS        10.1103/physreva.71.052320              doi    1.00 2005  Fast quantum modular exponentiation
+                                                      venue: Physical Review A
+PASS        10.1103/physreva.83.012320              doi    1.00 2011  Subsystem codes with spatially local generators
+                                                      venue: Physical Review A
+PASS        10.1103/physreva.89.022326              doi    1.00 2014  Efficient Markov chain Monte Carlo algorithm for the surface code
+                                                      venue: Physical Review A
+PASS        10.1103/physrevlett.129.050504          doi    1.00 2022  Constant-Overhead Quantum Error Correction with Thin Planar Connectivity
+                                                      venue: Physical Review Letters
+PASS        10.1103/physrevlett.85.3049             doi    1.00 2000  Efficient Factorization with a Single Pure Qubit and<mml:math xmlns:mml="http://www.w3.o
+                                                      venue: Physical Review Letters
+PASS        10.1103/physrevx.11.031039              doi    1.00 2021  Subsystem Codes with High Thresholds by Gauge Fixing and Reduced Qubit Overhead
+                                                      venue: Physical Review X
+PASS        10.1103/physrevx.8.041015               doi    1.00 2018  Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity
+                                                      venue: Physical Review X
+PASS        10.1103/prxquantum.3.010331             doi    1.00 2022  Universal Quantum Computing with Twist-Free and Temporally Encoded Lattice Surgery
+                                                      venue: PRX Quantum
+PASS        10.1109/CCC.2003.1214419                doi    1.00 -     Quantum query complexity and semi-definite programming
+                                                      venue: 18th IEEE Annual Conference on Computational Complexity, 2003. Proceedings.
+PASS        10.1109/CCC.2004.1313852                doi    1.00 -     Lower bounds for randomized and quantum query complexity using Kolmogorov arguments
+                                                      venue: Proceedings. 19th IEEE Annual Conference on Computational Complexity, 2004.
+PASS        10.1109/CCC.2008.9                      doi    1.00 2008  The Multiplicative Quantum Adversary
+                                                      venue: 2008 23rd Annual IEEE Conference on Computational Complexity
+PASS        10.1109/FOCS.2004.52                    doi    1.00 -     Quantum and Classical Strong Direct Product Theorems and Optimal Time-Space Tradeoffs
+                                                      venue: 45th Annual IEEE Symposium on Foundations of Computer Science
+PASS        10.1109/HST.2017.7951801                doi    1.00 2017  Photonic side channel attacks against RSA
+                                                      venue: 2017 IEEE International Symposium on Hardware Oriented Security and Trust (HOST)
+PASS        10.1109/SFCS.1998.743485                doi    1.00 -     Quantum lower bounds by polynomials
+                                                      venue: Proceedings 39th Annual Symposium on Foundations of Computer Science (Cat. No.98
+PASS        10.1109/SFCS.2000.892140                doi    1.00 -     Fast parallel circuits for the quantum Fourier transform
+                                                      venue: Proceedings 41st Annual Symposium on Foundations of Computer Science
+PASS        10.1109/SFCS.2003.1238197               doi    1.00 -     Polynomial degree vs. quantum query complexity
+                                                      venue: 44th Annual IEEE Symposium on Foundations of Computer Science, 2003. Proceedings
+PASS        10.1109/SFFCS.1999.814608               doi    1.00 -     Optimal lower bounds for quantum automata and random access codes
+                                                      venue: 40th Annual Symposium on Foundations of Computer Science (Cat. No.99CB37039)
+PASS        10.1109/TIT.2011.2137270                doi    1.00 2011  Approximate Integer Common Divisor Problem Relates to Implicit Factorization
+                                                      venue: IEEE Transactions on Information Theory
+PASS        10.1109/ccc.2005.22                     doi    1.00 -     On the Ring Isomorphism and Automorphism Problems
+                                                      venue: 20th Annual IEEE Conference on Computational Complexity (CCC'05)
+PASS        10.1109/sfcs.2000.892140                doi    1.00 -     Fast parallel circuits for the quantum Fourier transform
+                                                      venue: Proceedings 41st Annual Symposium on Foundations of Computer Science
+PASS        10.1112/S0025579300004575               doi    1.00 1969  On the number of primes
+            <i>p</i>
+            for which
+            <i>p+a</i
+                                                      venue: Mathematika
+PASS        10.1112/S1461157016000164               doi    1.00 2016  Collecting relations for the number field sieve in
+                                                      venue: LMS Journal of Computation and Mathematics
+PASS        10.1112/jlms/s2-39.1.16                 doi    1.00 1989  Some Density Results for Negative Pell Equations; an Application of Graph Theory
+                                                      venue: Journal of the London Mathematical Society
+PASS        10.1112/plms/pdp057                     doi    1.00 2010  The parity of the period of the continued fraction of d
+                                                      venue: Proceedings of the London Mathematical Society
+PASS        10.1112/plms/s3-33.3.565                doi    1.00 1976  Integers Free From Large and Small Primes
+                                                      venue: Proceedings of the London Mathematical Society
+PASS        10.1137/05063235X                       doi    1.00 2007  Quantum and Classical Strong Direct Product Theorems and Optimal Time‐Space Tradeoffs
+                                                      venue: SIAM Journal on Computing
+PASS        10.1137/050639090                       doi    1.00 2008  Lower Bounds for Randomized and Quantum Query Complexity Using Kolmogorov Arguments
+                                                      venue: SIAM Journal on Computing
+PASS        10.1137/050643684                       doi    1.00 2007  Quantum Algorithms for the Triangle Problem
+                                                      venue: SIAM Journal on Computing
+PASS        10.1137/090765328                       doi    1.00 2011  An Overview of Mathematical Issues Arising in the Geometric Complexity Theory Approach t
+                                                      venue: SIAM Journal on Computing
+PASS        10.1137/20m1332190                      doi    1.00 2021  Koszul-Type Determinantal Formulas for Families of Mixed Multilinear Systems
+                                                      venue: SIAM Journal on Applied Algebra and Geometry
+PASS        10.1137/S0097539705447311               doi    1.00 2007  Quantum Walk Algorithm for Element Distinctness
+                                                      venue: SIAM Journal on Computing
+PASS        10.1137/S0097539796300921               doi    1.00 1997  Quantum Complexity Theory
+                                                      venue: SIAM Journal on Computing
+PASS        10.1137/S0895479892230031               doi    1.00 1994  A Uniform Approach for the Fast Computation of Matrix-Type Padé Approximants
+                                                      venue: SIAM Journal on Matrix Analysis and Applications
+PASS        10.1142/s0219749910006435               doi    1.00 2010  DISTRIBUTED QUANTUM COMPUTATION ARCHITECTURE USING SEMICONDUCTOR NANOPHOTONICS
+                                                      venue: International Journal of Quantum Information
+PASS        10.1145/100216.100295                   doi    1.00 1990  The number field sieve
+                                                      venue: Proceedings of the twenty-second annual ACM symposium on Theory of computing  - 
+PASS        10.1145/1073884.1073914                 doi    1.00 2005  On the complexity of factoring bivariate supersparse (Lacunary) polynomials
+                                                      venue: Proceedings of the 2005 international symposium on Symbolic and algebraic comput
+PASS        10.1145/1132516.1132604                 doi    1.00 2006  A new quantum lower bound method,
+                                                      venue: Proceedings of the thirty-eighth annual ACM symposium on Theory of Computing
+PASS        10.1145/1250790.1250867                 doi    1.00 2007  Negative weights make adversaries stronger
+                                                      venue: Proceedings of the thirty-ninth annual ACM symposium on Theory of computing
+PASS        10.1145/1555754.1555802                 doi    1.00 2009  A fault tolerant, area efficient architecture for Shor's factoring algorithm
+                                                      venue: Proceedings of the 36th annual international symposium on Computer architecture
+PASS        10.1145/258533.258590                   doi    1.00 1997  <i>P = BPP</i> if <i>E</i> requires exponential circuits
+                                                      venue: Proceedings of the twenty-ninth annual ACM symposium on Theory of computing  - S
+PASS        10.1145/2608628.2608647                 doi    1.00 2014  Online order basis algorithm and its impact on the block Wiedemann algorithm
+                                                      venue: Proceedings of the 39th International Symposium on Symbolic and Algebraic Comput
+PASS        10.1145/2930889.2930908                 doi    1.00 2016  Linear Time Interactive Certificates for the Minimal Polynomial and the Determinant of a
+                                                      venue: Proceedings of the ACM on International Symposium on Symbolic and Algebraic Comp
+PASS        10.1145/3292035                         doi    1.00 2018  Imperfect forward secrecy
+                                                      venue: Communications of the ACM
+PASS        10.1145/3452143.3465525                 doi    1.00 2021  Hermite Interpolation With Error Correction
+                                                      venue: Proceedings of the 2021 International Symposium on Symbolic and Algebraic Comput
+PASS        10.1145/3452143.3465543                 doi    1.00 2021  Computing Higher Polynomial Discriminants
+                                                      venue: Proceedings of the 2021 International Symposium on Symbolic and Algebraic Comput
+PASS        10.1145/3465002.3465003                 doi    1.00 2020  A note on sparse polynomial interpolation in Dickson polynomial basis
+                                                      venue: ACM Communications in Computer Algebra
+PASS        10.1145/3476446.3535501                 doi    1.00 2022  Sparse Polynomial Hermite Interpolation
+                                                      venue: Proceedings of the 2022 International Symposium on Symbolic and Algebraic Comput
+PASS        10.1145/3476446.3536183                 doi    1.00 2022  The GKR Protocol Revisited
+                                                      venue: Proceedings of the 2022 International Symposium on Symbolic and Algebraic Comput
+PASS        10.1145/359340.359342                   doi    1.00 1978  A method for obtaining digital signatures and public-key cryptosystems
+                                                      venue: Communications of the ACM
+PASS        10.1145/3597066.3597087                 doi    1.00 2023  New Sparse Multivariate Polynomial Factorization Algorithms over Integers
+                                                      venue: Proceedings of the 2023 International Symposium on Symbolic and Algebraic Comput
+PASS        10.1145/3666000.3669698                 doi    1.00 2024  Sparse Polynomial Interpolation With Error Correction: Higher Error Capacity by Randomiz
+                                                      venue: Proceedings of the 2024 International Symposium on Symbolic and Algebraic Comput
+PASS        10.1145/3666000.3672619                 doi    1.00 2024  Encounters in Symbolic Computation: Ideas for the Ages
+                                                      venue: Proceedings of the 2024 International Symposium on Symbolic and Algebraic Comput
+PASS        10.1145/3734215                         doi    1.00 2025  Superpolynomial Lower Bounds Against Low-Depth Algebraic Circuits
+                                                      venue: Journal of the ACM
+PASS        10.1145/800204.806290                   doi    1.00 1971  Factoring polynomials over large finite fields*
+                                                      venue: Proceedings of the second ACM symposium on Symbolic and algebraic manipulation  
+PASS        10.1155/2022/6360264                    doi    1.00 2022  Lattice Points on the Fermat Factorization Method
+                                                      venue: Journal of Mathematics
+PASS        10.1155/IJMMS.2005.1039                 doi    1.00 2005  Lagrange, central norms, and quadratic Diophantine equations
+                                                      venue: International Journal of Mathematics and Mathematical Sciences
+PASS        10.1215/S0012-7094-04-12235-3           doi    1.00 2004  The Average Analytic Rank of Elliptic Curves
+                                                      venue: Duke Mathematical Journal
+PASS        10.1360/SSM-2024-0264                   doi    1.00 2025  The largest prime factors of consecutive integers
+                                                      venue: SCIENTIA SINICA Mathematica
+PASS        10.1515/9783110881035.1                 doi    1.00 -     A survey on IQ cryptography
+                                                      venue: Public-Key Cryptography and Computational Number Theory
+PASS        10.1515/jmc-2019-0023                   doi    1.00 2020  Integer factoring and compositeness witnesses
+                                                      venue: Journal of Mathematical Cryptology
+PASS        10.1515/jmc-2020-0006                   doi    1.00 2021  Quantum algorithms for computing general discrete logarithms and orders with tradeoffs
+                                                      venue: Journal of Mathematical Cryptology
+PASS        10.17863/CAM.1298                       doi    1.00 2016  On the φ-Selmer groups of the elliptic curves y 2 = x 3 − Dx
+                                                      venue: Apollo (University of Cambridge)
+PASS        10.2140/ant.2019.13.2103                doi    1.00 2019  The structure of correlations of multiplicative functions at almost all scales, with app
+                                                      venue: Algebra &amp; Number Theory
+PASS        10.2140/obs.2019.2.275                  doi    1.00 2019  Higher-dimensional sieving for the number field sieve algorithms
+                                                      venue: The Open Book Series
+PASS        10.22331/q-2021-04-15-433               doi    1.00 2021  How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits
+                                                      venue: Quantum
+PASS        10.22331/q-2024-06-17-1375              doi    1.00 2024  Trading T gates for dirty qubits in state preparation and unitary synthesis
+                                                      venue: Quantum
+PASS        10.2307/2007633                         doi    1.00 1982  A p + 1 Method of Factoring
+                                                      venue: Mathematics of Computation
+PASS        10.2307/2152702                         doi    1.00 1992  A rigorous time bound for factoring integers
+                                                      venue: Journal of the American Mathematical Society
+PASS        10.2307/2310010                         doi    1.00 1959  Another Proof of Cauchy's Group Theorem
+                                                      venue: The American Mathematical Monthly
+PASS        10.2307/2372160                         doi    1.00 1951  The m-th Power Residue Symbol
+                                                      venue: American Journal of Mathematics
+PASS        10.26421/QIC14.7-8-8                    doi    1.00 2014  Fast quantum modular exponentiation architecture for Shor's factoring alogrithm
+                                                      venue: Quantum Information and Computation
+PASS        10.26421/QIC3.2-8                       doi    1.00 2003  Circuit for Shor's algorithm using 2n+3 qubits
+                                                      venue: Quantum Information and Computation
+PASS        10.26421/qic14.7-8-8                    doi    1.00 2014  Fast quantum modular exponentiation architecture for Shor's factoring alogrithm
+                                                      venue: Quantum Information and Computation
+PASS        10.2969/jmsj/01010046                   doi    1.00 1958  A reciprocity law of the power residue symbol.
+                                                      venue: Journal of the Mathematical Society of Japan
+PASS        10.3233/FI-2019-1847                    doi    1.00 2019  Jacobians of Hyperelliptic Curves over ℤn and Factorization of n
+                                                      venue: Fundamenta Informaticae
+PASS        10.3390/math8122126                     doi    1.00 2020  Factorization and Malleability of RSA Moduli, and Counting Points on Elliptic Curves Mod
+                                                      venue: Mathematics
+PASS        10.3934/amc.2009.3.205                  doi    1.00 2009  Further results on implicit factoring in polynomial time
+                                                      venue: Advances in Mathematics of Communications
+PASS        10.3934/amc.2010.4.519                  doi    1.00 2010  Some applications of lattice based root finding techniques
+                                                      venue: Advances in Mathematics of Communications
+PASS        10.4007/annals.2010.171.779             doi    1.00 2010  A family of Calabi-Yau varieties and potential automorphy
+                                                      venue: Annals of Mathematics
+PASS        10.4064/aa-83-4-331-361                 doi    1.00 1998  Shifted primes without large prime factors
+                                                      venue: Acta Arithmetica
+PASS        10.4064/cm9490-8-2025                   doi    1.00 2025  Hyperelliptic curves and integer factorization
+                                                      venue: Colloquium Mathematicum
+PASS        10.4086/toc.2010.v006a001               doi    1.00 2010  
+                                                      venue: Theory of Computing
+PASS        10.4086/toc.2021.v017a010               doi    1.00 2021  
+                                                      venue: Theory of Computing
+PASS        10.4230/LIPIcs.APPROX-RANDOM.2015.943   doi    1.00 2015  Deterministically Factoring Sparse Polynomials into Multilinear Factors and Sums of Univ
+                                                      venue: DROPS (Schloss Dagstuhl – Leibniz Center for Informatics)
+PASS        10.4230/LIPIcs.CCC.2016.32              doi    1.00 2016  Proof Complexity Lower Bounds from Algebraic Circuit Complexity
+                                                      venue: arXiv (Cornell University)
+PASS        10.4230/LIPIcs.CCC.2020.23              doi    1.00 2020  A Super-Quadratic Lower Bound for Depth Four Arithmetic Circuits
+                                                      venue: DROPS (Schloss Dagstuhl – Leibniz Center for Informatics)
+PASS        10.4230/LIPIcs.CCC.2020.33              doi    1.00 2020  Factorization of Polynomials Given By Arithmetic Branching Programs
+                                                      venue: Leibniz international proceedings in informatics
+PASS        10.4230/LIPIcs.CCC.2020.5               doi    1.00 2019  Lower Bounds for Matrix Factorization
+                                                      venue: arXiv (Cornell University)
+PASS        10.4230/LIPIcs.ITCS.2019.60             doi    1.00 2019  Simple Verifiable Delay Functions
+                                                      venue: DROPS (Schloss Dagstuhl – Leibniz Center for Informatics)
+PASS        10.4230/LIPIcs.MFCS.2016.6              doi    1.00 2016  Integer Factoring Using Small Algebraic Dependencies
+                                                      venue: DROPS (Schloss Dagstuhl – Leibniz Center for Informatics)
+PASS        10.46586/tosc.v2022.i1.183-211          doi    1.00 2022  Quantum Period Finding is Compression Robust
+                                                      venue: IACR Transactions on Symmetric Cryptology
+PASS        10.48550/ARXIV.1403.2975                doi    1.00 2014  Optimal ancilla-free Clifford+T approximation of z-rotations
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/ARXIV.1902.02332               doi    1.00 2019  Benchmarking the quantum cryptanalysis of symmetric, public-key and hash-based cryptogra
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/ARXIV.1905.07682               doi    1.00 2019  Windowed quantum arithmetic
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/ARXIV.1905.08488               doi    1.00 2019  Approximate encoded permutations and piecewise quantum adders
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/ARXIV.1905.08916               doi    1.00 2019  Flexible layout of surface code computations using AutoCCZ states
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/ARXIV.1905.09084               doi    1.00 2019  Revisiting Shor's quantum algorithm for computing general discrete logarithms
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/ARXIV.2008.04577               doi    1.00 2020  Offloading Quantum Computation by Superposition Masking
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/ARXIV.2211.15465               doi    1.00 2022  Active volume: An architecture for efficient fault-tolerant quantum computers with limit
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/ARXIV.2409.17595               doi    1.00 2024  Magic state cultivation: growing T states as cheap as CNOT gates
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/ARXIV.2502.17325               doi    1.00 2025  Optimized circuits for windowed modular arithmetic with applications to quantum attacks 
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/arXiv.1808.06709               doi    1.00 2018  Low overhead quantum computation using lattice surgery
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/arXiv.2105.03352               doi    1.00 2021  Solving Quadratic and Cubic Diophantine Equations using 2-adic Valuation Trees
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/arXiv.2304.03957               doi    1.00 2023  A Continued Fraction-Hyperbola based Attack on RSA cryptosystem
+                                                      venue: arXiv (Cornell University)
+PASS        10.48550/arXiv.2304.07474               doi    1.00 2023  A New Hyperbola based Approach to factoring Integers
+                                                      venue: arXiv (Cornell University)
+PASS        10.5281/zenodo.15347487                 doi    1.00 2025  Data for "How to factor 2048 bit RSA integers with a million noisy qubits"
+                                                      venue: Zenodo (CERN European Organization for Nuclear Research)
+PASS        10.5555/3115473.3115783                 doi    1.00 2004  The Complexity of Factors of Multivariate Polynomials
+                                                      venue: Foundations of Computational Mathematics
+PASS        10.5802/ccirm.18                        doi    1.00 2013  Factorisation des polynômes à plusieurs variables
+                                                      venue: Les cours du CIRM
+PASS        10.5802/jtnb.101                        doi    1.00 1993  Integers without large prime factors
+                                                      venue: Journal de théorie des nombres de Bordeaux
+PASS        10.5802/jtnb.170                        doi    1.00 1996  On the computation of quadratic
+                    <mml:math xmlns:mml="http://www.w3.o
+                                                      venue: Journal de théorie des nombres de Bordeaux
+PASS        10.6028/NIST.IR.8547.ipd                doi    1.00 2024  Transition to Post-Quantum Cryptography Standards
+PASS        10.6028/nist.ir.8547.ipd                doi    1.00 2024  Transition to Post-Quantum Cryptography Standards
+PASS        10.7546/nntdm.2023.29.4.737-751         doi    1.00 2023  The 2-adic valuation of the general degree-2 polynomial in 2 variables
+                                                      venue: Notes on Number Theory and Discrete Mathematics
+---------------------------------------------------------------------------------------------------------------------
+SUMMARY: METADATA=94  PASS=394  PHANTOM=32
+VERDICT: 126 row(s) need human eyes

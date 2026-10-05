@@ -1,0 +1,10 @@
+check_citations: 428 rows (428 distinct)
+  arxiv: 60/428 queried
+  arxiv: 120/428 queried
+  arxiv: 180/428 queried
+  arxiv: 240/428 queried
+  arxiv: 300/428 queried
+  arxiv: 360/428 queried
+  arxiv: 420/428 queried
+  arxiv: 428/428 queried
+wrote raw/arxiv_results.json

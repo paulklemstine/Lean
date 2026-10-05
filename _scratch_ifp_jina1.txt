@@ -1,0 +1,162 @@
+Title: An optimal bound for factoring unbalanced RSA moduli by solving Generalized Implicit Factorization Problem
+
+URL Source: https://link.springer.com/article/10.1007/s11227-024-06478-y
+
+Published Time: Tue, 23 Jun 2026 02:06:19 GMT
+
+Markdown Content:
+1.   Adeniyi EA, Falola PB, Maashi MS et al (2022) Secure sensitive data sharing using RSA and ElGamal cryptographic algorithms with hash functions. Information 13(10):442
+
+[Article](https://doi.org/10.3390%2Finfo13100442)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Secure%20sensitive%20data%20sharing%20using%20RSA%20and%20ElGamal%20cryptographic%20algorithms%20with%20hash%20functions&journal=Information&doi=10.3390%2Finfo13100442&volume=13&issue=10&publication_year=2022&author=Adeniyi%2CEA&author=Falola%2CPB&author=Maashi%2CMS)
+
+2.   Aono Y (2009) A New Lattice Construction for Partial Key Exposure Attack for RSA. Public Key Cryptography-PKC 2009: 12th International Conference on Practice and Theory in Public Key Cryptography, Irvine, CA, USA, March 18-20, 2009. Proceedings 12. Springer Berlin Heidelberg: 34-53
+
+3.   Barenghi A, Carrera D, Mella S et al (2022) Profiled side channel attacks against the RSA cryptosystem using neural networks. J Inf Secur Appl 66:103122
+
+[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Profiled%20side%20channel%20attacks%20against%20the%20RSA%20cryptosystem%20using%20neural%20networks&journal=J%20Inf%20Secur%20Appl&volume=66&publication_year=2022&author=Barenghi%2CA&author=Carrera%2CD&author=Mella%2CS)
+
+4.   Bauer A, Jaulmes E, Lomné V (2014) Side-Channel Attack Against RSA Key Generation Algorithms. Cryptographic Hardware and Embedded Systems-CHES, et al (2014) 16th International Workshop, Busan, South Korea, September 23–26, 2014. Proceedings 16. Springer, Berlin Heidelberg:223–241
+
+5.   Boneh D (1999) Twenty years of attacks on the RSA cryptosystem. Not AMS 46(2):203–213
+
+[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=1673760)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Twenty%20years%20of%20attacks%20on%20the%20RSA%20cryptosystem&journal=Not%20AMS&volume=46&issue=2&pages=203-213&publication_year=1999&author=Boneh%2CD)
+
+6.   Boneh D, Durfee G (2000) Cryptanalysis of RSA with private key d less than N/sup 0.292. IEEE trans Inf Theory 46(4):1339–1349
+
+[Article](https://doi.org/10.1109%2F18.850673)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Cryptanalysis%20of%20RSA%20with%20private%20key%20d%20less%20than%20N%2Fsup%200.292%5BJ%5D&journal=IEEE%20trans%20Inf%20Theory&doi=10.1109%2F18.850673&volume=46&issue=4&pages=1339-1349&publication_year=2000&author=Boneh%2CD&author=Durfee%2CG)
+
+7.   Brumley D, Boneh D (2005) Remote timing attacks are practical. Comput Netw 48(5):701–716
+
+[Article](https://doi.org/10.1016%2Fj.comnet.2005.01.010)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Remote%20timing%20attacks%20are%20practical&journal=Comput%20Netw&doi=10.1016%2Fj.comnet.2005.01.010&volume=48&issue=5&pages=701-716&publication_year=2005&author=Brumley%2CD&author=Boneh%2CD)
+
+8.   Carmon E, Seifert JP, Wool A (2017) Photonic Side Channel Attacks Against RSA. (2017) IEEE International Symposium on Hardware Oriented Security and Trust (HOST). IEEE:74–78
+
+9.   Chen Z, Ye G (2022) An asymmetric image encryption scheme based on hash SHA-3, RSA and compressive sensing. Optik 267:169676
+
+[Article](https://doi.org/10.1016%2Fj.ijleo.2022.169676)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=An%20asymmetric%20image%20encryption%20scheme%20based%20on%20hash%20SHA-3%2C%20RSA%20and%20compressive%20sensing&journal=Optik&doi=10.1016%2Fj.ijleo.2022.169676&volume=267&publication_year=2022&author=Chen%2CZ&author=Ye%2CG)
+
+10.   Coppersmith D (1996) Finding a Amall Root of a Bivariate Integer Equation; Factoring with High Bits Known. International Conference on the Theory and Applications of Cryptographic Techniques. Springer, Berlin, Heidelberg: 178–189
+
+11.   Coppersmith D (1996) Finding a Small Root of a Univariate Modular Equation. International Conference on the Theory and Applications of Cryptographic Techniques. Springer, Berlin, Heidelberg: 155–165
+
+12.   Coppersmith D (1997) Small solutions to polynomial equations, and low exponent RSA vulnerabilities. J cryptol 10(4):233–260
+
+[Article](https://link.springer.com/article/10.1007/s001459900030)[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=1476612)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Small%20solutions%20to%20polynomial%20equations%2C%20and%20low%20exponent%20RSA%20vulnerabilities&journal=J%20cryptol&doi=10.1007%2Fs001459900030&volume=10&issue=4&pages=233-260&publication_year=1997&author=Coppersmith%2CD)
+
+13.   Coron JS, May A (2007) Deterministic polynomial-time equivalence of computing the RSA secret key and factoring. J Cryptol 20:39–50
+
+[Article](https://link.springer.com/article/10.1007/s00145-006-0433-6)[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=2340188)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Deterministic%20polynomial-time%20equivalence%20of%20computing%20the%20RSA%20secret%20key%20and%20factoring&journal=J%20Cryptol&doi=10.1007%2Fs00145-006-0433-6&volume=20&pages=39-50&publication_year=2007&author=Coron%2CJS&author=May%2CA)
+
+14.   Cohn H, Heninger N (2013) Approximate common divisors via lattices. Open B Ser 1(1):271–293
+
+[Article](https://doi.org/10.2140%2Fobs.2013.1.271)[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=3207418)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Approximate%20common%20divisors%20via%20lattices&journal=Open%20B%20Ser&doi=10.2140%2Fobs.2013.1.271&volume=1&issue=1&pages=271-293&publication_year=2013&author=Cohn%2CH&author=Heninger%2CN)
+
+15.   Ernst M, Jochemsz E, May A et al (2005) Partial Key Exposure Attacks on RSA Up to Full Size Exponents. Advances in Cryptology-EUROCRYPT 2005: 24th Annual International Conference on the Theory and Applications of Cryptographic Techniques, Aarhus, Denmark, May 22-26, 2005. Proceedings 24. Springer Berlin Heidelberg: 371–386
+
+16.   Faugère JC, Marinier R, Renault G (2010) Implicit Factoring with Shared Most Significant and Middle Bits. Public Key Cryptography-PKC 2010: 13th International Conference on Practice and Theory in Public Key Cryptography, Paris, France, May 26-28, 2010. Proceedings 13. Springer Berlin Heidelberg: 70–87
+
+17.   Feng Y, Nitaj A, Pan Y (2023) Generalized Implicit Factorization Problem. International Conference on Selected Areas in Cryptography. Cham: Springer Nature Switzerland: 369–384
+
+18.   Feng Y, Nitaj A, Pan Y (2024) Partial prime factor exposure attacks on some RSA variants. Theor Comput Sci 999:114549
+
+[Article](https://doi.org/10.1016%2Fj.tcs.2024.114549)[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=4728644)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Partial%20prime%20factor%20exposure%20attacks%20on%20some%20RSA%20variants&journal=Theor%20Comput%20Sci&doi=10.1016%2Fj.tcs.2024.114549&volume=999&publication_year=2024&author=Feng%2CY&author=Nitaj%2CA&author=Pan%2CY)
+
+19.   Ghayvat H, Pandya S, Bhattacharya P et al (2021) CP-BDHCA: Blockchain-based Confidentiality-Privacy preserving Big Data scheme for healthcare clouds and applications. IEEE J Biomed Health Inform 26(5):1937–1948
+
+[Article](https://doi.org/10.1109%2FJBHI.2021.3097237)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=CP-BDHCA%3A%20Blockchain-based%20Confidentiality-Privacy%20preserving%20Big%20Data%20scheme%20for%20healthcare%20clouds%20and%20applications&journal=IEEE%20J%20Biomed%20Health%20Inform&doi=10.1109%2FJBHI.2021.3097237&volume=26&issue=5&pages=1937-1948&publication_year=2021&author=Ghayvat%2CH&author=Pandya%2CS&author=Bhattacharya%2CP)
+
+20.   Howgrave-Graham N (1997) Finding Small Roots of Univariate Modular Equations Revisited. IMA International Conference on Cryptography and Coding. Springer, Berlin, Heidelberg: 131–142
+
+21.   Kamel Ariffin MR, Abubakar SI, Yunos F et al (2018) New cryptanalytic attack on RSA modulus N= pq using small prime difference method. Cryptography 3(1):2
+
+[Article](https://doi.org/10.3390%2Fcryptography3010002)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=New%20cryptanalytic%20attack%20on%20RSA%20modulus%20N%3D%20pq%20using%20small%20prime%20difference%20method&journal=Cryptography&doi=10.3390%2Fcryptography3010002&volume=3&issue=1&publication_year=2018&author=Kamel%20Ariffin%2CMR&author=Abubakar%2CSI&author=Yunos%2CF)
+
+22.   Kota C M, Aissi C (2022) Implementation of the RSA algorithm and its cryptanalysis. 2002 GSW
+
+23.   Kumar R, Liu X, Suresh V et al (2021) A time-/frequency-domain side-channel attack resistant AES-128 and RSA-4K crypto-processor in 14-nm CMOS. IEEE J Solid-State Circuits 56(4):1141–1151
+
+[Article](https://doi.org/10.1109%2FJSSC.2021.3052146)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=A%20time-%2Ffrequency-domain%20side-channel%20attack%20resistant%20AES-128%20and%20RSA-4K%20crypto-processor%20in%2014-nm%20CMOS&journal=IEEE%20J%20Solid-State%20Circuits&doi=10.1109%2FJSSC.2021.3052146&volume=56&issue=4&pages=1141-1151&publication_year=2021&author=Kumar%2CR&author=Liu%2CX&author=Suresh%2CV)
+
+24.   Lenstra AK, Lenstra Jr HW, Manasse MS, et al. (1990) The Number Field Sieve. Proceedings of the twenty-second annual ACM symposium on Theory of computing: 564–572
+
+25.   Lenstra AK, Lenstra HW, Lovász L (1982) Factoring polynomials with rational coefficients. Math ann 261:515–534
+
+[Article](https://link.springer.com/article/10.1007/BF01457454)[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=682664)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Factoring%20polynomials%20with%20rational%20coefficients&journal=Math%20ann&doi=10.1007%2FBF01457454&volume=261&pages=515-534&publication_year=1982&author=Lenstra%2CAK&author=Lenstra%2CHW&author=Lov%C3%A1sz%2CL)
+
+26.   Lu Y, Zhang R, Lin D (2013) Improved bounds for the implicit factorization problem. Adv Math Commun 7:243–251
+
+[Article](https://doi.org/10.3934%2Famc.2013.7.243)[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=3092306)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Improved%20bounds%20for%20the%20implicit%20factorization%20problem&journal=Adv%20Math%20Commun&doi=10.3934%2Famc.2013.7.243&volume=7&pages=243-251&publication_year=2013&author=Lu%2CY&author=Zhang%2CR&author=Lin%2CD)
+
+27.   Lu Y, Peng L, Zhang R, (2016) Towards Optimal Bounds for Implicit Factorization Problem. Selected Areas in Cryptography-SAC (2015) 22nd International Conference, Sackville, NB, Canada, August 12–14, 2015, Revised Selected Papers 22. Springer International Publishing 2016:462–476
+
+28.   Luo P, Zhou HJ, Wang DS et al (2009) Cryptanalysis of RSA for a special case with d> e. Sci China Ser F: Inf Sci 52(4):609–616
+
+[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=2505255)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Cryptanalysis%20of%20RSA%20for%20a%20special%20case%20with%20d%3E%20e&journal=Sci%20China%20Ser%20F%3A%20Inf%20Sci&volume=52&issue=4&pages=609-616&publication_year=2009&author=Luo%2CP&author=Zhou%2CHJ&author=Wang%2CDS)
+
+29.   Luo C, Fei Y, Kaeli D (2019) Side-channel timing attack of RSA on a GPU. ACM Trans Archit Code Optim (TACO) 16(3):1–18
+
+[Article](https://doi.org/10.1145%2F3341729)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Side-channel%20timing%20attack%20of%20RSA%20on%20a%20GPU&journal=ACM%20Trans%20Archit%20Code%20Optim%20%28TACO%29&doi=10.1145%2F3341729&volume=16&issue=3&pages=1-18&publication_year=2019&author=Luo%2CC&author=Fei%2CY&author=Kaeli%2CD)
+
+30.   May A (2003) New RSA Vulnerabilities Using Lattice Reduction Methods. University of Paderborn. [http://ubdata.uni-paderborn.de/ediss/17/2003/may/disserta.pdf](http://ubdata.uni-paderborn.de/ediss/17/2003/may/disserta.pdf)
+
+31.   May A (2004) Computing the RSA Secret Key is Deterministic Polynomial Time Equivalent to Factoring. Advances in Cryptology-CRYPTO, (2004) 24th Annual International Cryptology Conference, Santa Barbara, California, USA, August 15–19, 2004. Proceedings 24. Springer, Berlin Heidelberg :213–219
+
+32.   May A, Ritzenhofen M (2009) Implicit Factoring: On Polynomial Time Factoring Given Only an Implicit Hint. International Workshop on Public Key Cryptography. Berlin, Heidelberg: Springer Berlin Heidelberg: 1–14
+
+33.   May A, Nowakowski J, Sarkar S (2022) Approximate Divisor Multiples-Factoring with Only a Third of the Secret CRT-Exponents. Annual International Conference on the Theory and Applications of Cryptographic Techniques. Cham: Springer International Publishing: 147–167
+
+34.   Nitaj A, Ariffin MRK (2015) Implicit factorization of unbalanced RSA moduli. J Appl Math Comput 48:349–363
+
+[Article](https://link.springer.com/article/10.1007/s12190-014-0806-1)[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=3340610)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Implicit%20factorization%20of%20unbalanced%20RSA%20moduli&journal=J%20Appl%20Math%20Comput&doi=10.1007%2Fs12190-014-0806-1&volume=48&pages=349-363&publication_year=2015&author=Nitaj%2CA&author=Ariffin%2CMRK)
+
+35.   Nitaj A, Susilo W, Tonien J (2023) A new attack on some RSA variants. Theor Comput Sci 960:113898
+
+[Article](https://doi.org/10.1016%2Fj.tcs.2023.113898)[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=4586792)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=A%20new%20attack%20on%20some%20RSA%20variants&journal=Theor%20Comput%20Sci&doi=10.1016%2Fj.tcs.2023.113898&volume=960&publication_year=2023&author=Nitaj%2CA&author=Susilo%2CW&author=Tonien%2CJ)
+
+36.   Nitaj A, Adenan NNH, Ariffin MRK (2024) Cryptanalysis of a New Variant of the RSA Cryptosystem. International Conference on Cryptology in Africa. Cham: Springer Nature Switzerland: 327–345
+
+37.   Peng L, Hu L, Xu J, et al (2014) Further Improvement of Factoring RSA Moduli with Implicit Hint. International Conference on Cryptology in Africa. Cham: Springer International Publishing: 165–177
+
+38.   Peng L, Hu L, Lu Y, et al. (2015) Implicit factorization of RSA Moduli Revisited (short paper). Advances in Information and Computer Security: 10th International Workshop on Security, IWSEC 2015, Nara, Japan, August 26-28, 2015, Proceedings 10. Springer International Publishing: 67–76
+
+39.   Rivest RL, Shamir A, Adleman L (1978) A method for obtaining digital signatures and public-key cryptosystems. Commun ACM 21(2):120–126
+
+[Article](https://doi.org/10.1145%2F359340.359342)[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=700103)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=A%20method%20for%20obtaining%20digital%20signatures%20and%20public-key%20cryptosystems&journal=Commun%20ACM&doi=10.1145%2F359340.359342&volume=21&issue=2&pages=120-126&publication_year=1978&author=Rivest%2CRL&author=Shamir%2CA&author=Adleman%2CL)
+
+40.   Rivest RL, Shamir A (1986) Efficient Factoring Based on Partial Information. Advances in Cryptologyâ€”EUROCRYPT’85: Proceedings of a Workshop on the Theory and Application of Cryptographic Techniques Linz, Austria, April 1985 4. Springer Berlin Heidelberg: 31–34
+
+41.   Ruzai WNAWM, Nitaj A, Ariffin MRK et al (2022) Increment of insecure RSA private exponent bound through perfect square RSA diophantine parameters cryptanalysis. Comput Stand Interfaces 80:103584
+
+[Article](https://doi.org/10.1016%2Fj.csi.2021.103584)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Increment%20of%20insecure%20RSA%20private%20exponent%20bound%20through%20perfect%20square%20RSA%20diophantine%20parameters%20cryptanalysis&journal=Comput%20Stand%20Interfaces&doi=10.1016%2Fj.csi.2021.103584&volume=80&publication_year=2022&author=Ruzai%2CWNAWM&author=Nitaj%2CA&author=Ariffin%2CMRK)
+
+42.   Ruzai WNA, Ariffin MRK, Asbullah MA et al (2024) New simultaneous Diophantine attacks on generalized RSA key equations. J K Saud Univ-Comput Inf Sci 36:102074
+
+[Google Scholar](http://scholar.google.com/scholar_lookup?&title=New%20simultaneous%20Diophantine%20attacks%20on%20generalized%20RSA%20key%20equations&journal=J%20K%20Saud%20Univ-Comput%20Inf%20Sci&volume=36&publication_year=2024&author=Ruzai%2CWNA&author=Ariffin%2CMRK&author=Asbullah%2CMA)
+
+43.   Sarkar S, Maitra S (2009) Further results on implicit factoring in polynomial time. Cryptology ePrint Archive [https://eprint.iacr.org/2009/108](https://eprint.iacr.org/2009/108)
+
+44.   Sarkar S, Sen Gupta S, Maitra S (2010) Partial Key Exposure Attack on RSA-Improvements for Limited Lattice Dimensions. Progress in Cryptology-INDOCRYPT 2010: 11th International Conference on Cryptology in India, Hyderabad, India, December 12-15, 2010. Proceedings 11. Springer Berlin Heidelberg: 2–16
+
+45.   Sarkar S (2011) Partial Key Exposure: Generalized Framework to Attack RSA. Progress in Cryptology-INDOCRYPT 2011: 12th International Conference on Cryptology in India, Chennai, India, December 11-14, 2011. Proceedings 12. Springer Berlin Heidelberg: 76–92
+
+46.   Sarkar S, Maitra S (2011) Approximate integer common divisor problem relates to implicit factorization. IEEE Trans Inf Theory 57(6):4002–4013
+
+[Article](https://doi.org/10.1109%2FTIT.2011.2137270)[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=2817072)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Approximate%20integer%20common%20divisor%20problem%20relates%20to%20implicit%20factorization&journal=IEEE%20Trans%20Inf%20Theory&doi=10.1109%2FTIT.2011.2137270&volume=57&issue=6&pages=4002-4013&publication_year=2011&author=Sarkar%2CS&author=Maitra%2CS)
+
+47.   Sun Z, Zhang T, Zheng X, et al (2018) A Method for Solving Generalized Implicit Factorization Problem. International Conference On Signal And Information Processing, Networking And Computers. Singapore: Springer Singapore: 284–290
+
+48.   Susilo W, Tonien J, Yang G (2021) Divide and capture: an improved cryptanalysis of the encryption standard algorithm RSA. Comput Stand Interfaces 74:103470
+
+[Article](https://doi.org/10.1016%2Fj.csi.2020.103470)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Divide%20and%20capture%3A%20an%20improved%20cryptanalysis%20of%20the%20encryption%20standard%20algorithm%20RSA&journal=Comput%20Stand%20Interfaces&doi=10.1016%2Fj.csi.2020.103470&volume=74&publication_year=2021&author=Susilo%2CW&author=Tonien%2CJ&author=Yang%2CG)
+
+49.   Thirumalai C, Mohan S, Srivastava G (2020) An efficient public key secure scheme for cloud and IoT security. Comput Commun 150:634–643
+
+[Article](https://doi.org/10.1016%2Fj.comcom.2019.12.015)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=An%20efficient%20public%20key%20secure%20scheme%20for%20cloud%20and%20IoT%20security&journal=Comput%20Commun&doi=10.1016%2Fj.comcom.2019.12.015&volume=150&pages=634-643&publication_year=2020&author=Thirumalai%2CC&author=Mohan%2CS&author=Srivastava%2CG)
+
+50.   Wang S, Qu L, Li C et al (2018) A better bound for implicit factorization problem with shared middle bits. Sci China Inf Sci 61:1–10
+
+[MathSciNet](http://www.ams.org/mathscinet-getitem?mr=3719667)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=A%20better%20bound%20for%20implicit%20factorization%20problem%20with%20shared%20middle%20bits&journal=Sci%20China%20Inf%20Sci&volume=61&pages=1-10&publication_year=2018&author=Wang%2CS&author=Qu%2CL&author=Li%2CC)
+
+51.   Zheng M, Hu H, Wang Z (2016) Generalized cryptanalysis of RSA with small public exponent. Sci China Inf Sci 59(3):32108
+
+[Article](https://link.springer.com/article/10.1007/s11432-015-5325-7)[Google Scholar](http://scholar.google.com/scholar_lookup?&title=Generalized%20cryptanalysis%20of%20RSA%20with%20small%20public%20exponent&journal=Sci%20China%20Inf%20Sci&doi=10.1007%2Fs11432-015-5325-7&volume=59&issue=3&publication_year=2016&author=Zheng%2CM&author=Hu%2CH&author=Wang%2CZ)

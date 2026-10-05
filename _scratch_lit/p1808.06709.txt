@@ -1,0 +1,825 @@
+                                                                 Low overhead quantum computation using lattice surgery
+
+                                                                                        Austin G. Fowler, Craig Gidney
+                                                                                Google Inc., Santa Barbara, California 93117, USA
+                                                                                             (Dated: September 4, 2019)
+                                                            When calculating the overhead of a quantum algorithm made fault-tolerant using the surface code,
+                                                         many previous works have used defects and braids for logical qubit storage and state distillation. In
+                                                         this work, we show that lattice surgery reduces the storage overhead by over a factor of 4, and the
+                                                         distillation overhead by nearly a factor of 5, making it possible to run algorithms with 108 T gates
+                                                         using only 3.7 × 105 physical qubits capable of executing gates with error p ∼ 10−3 . These numbers
+                                                         strongly suggest that defects and braids in the surface code should be deprecated in favor of lattice
+                                                         surgery.
+arXiv:1808.06709v4 [quant-ph] 30 Aug 2019
+
+
+
+
+                                                            I.   INTRODUCTION
+
+                                               In [1], we contributed overhead calculations based on
+                                            the surface code [2, 3] using defects and braiding [4–
+                                            6] showing that non-trivial post-classical computations                                             5d/4
+                                            could be performed in hours using of order a million
+                                            superconducting qubits. Here, we shall focus on lat-
+                                            tice surgery, systematically building up the techniques
+                                            required to implement an arbitrary algorithm and calcu-
+                                            late the precise time and space overhead. We find that
+                                            general algorithms can be implemented with nearly a fac-                              5d/2
+                                            tor of 5 fewer qubits and comparable time using lattice
+                                            surgery. The results here were prepared in parallel with
+                                            and are consistent with the recent work [7].
+
+
+                                                                 II.   STORAGE
+
+                                              A double-defect logical qubit (Fig. 1) consists of two
+                                            holes in a large non-rotated surface code such that each
+                                            hole’s circumference is no less than the code distance d,        FIG. 1. In terms of the code distance d, a double-defect logical
+                                            and the holes are also separated by at least d. In a simple      qubit occupies 25d2 /8 space to leading order. Each unit of d
+                                            regular packing, the kind of packing that has been used          represents two qubits, a data and measure qubit, so to leading
+                                            in many resource estimates, 12.5d2 physical qubits are           order 12.5d2 physical qubits are required.
+                                            required per logical qubit.
+                                              Lattice surgery [8], makes use of rotated logical qubits
+                                            (Fig. 2a) consisting of d2 data qubits and d2 − 1 measure        basis and, after correction, taking the product of these ±1
+                                            qubits. In this work, we shall arrange the rotated logi-         values along the indicated lines, with final modification
+                                            cal qubits being used in an algorithm in patterns similar        by any sign accumulated through operator movement or
+                                            to Fig. 2b. Such arrangements enable logical qubits to           manipulation to obtain the actual result.
+                                            be both acted on locally and easily moved to a shared
+                                            workspace if required for multi-logical-qubit operations.
+                                            To leading order, 3d2 physical qubits are required per
+                                            logical qubit, better than a factor of 4 overhead saving.
+                                                                                                               IV.    XX AND ZZ LOGICAL MEASUREMENT
+                                                  III.   LOGICAL INITIALIZATION AND
+                                                             MEASUREMENT                                       Procedures for measuring logical XX and ZZ given
+                                                                                                             qubits of equal size are shown in Figs. 5–6. All described
+                                              Logical |0i/|+i, namely |0L i/|+L i, can be prepared           actions with all stabilizer and individual qubit measure-
+                                            as shown in Fig. 3. After preparation, logical operators         ments occur only post error correction. It is also useful to
+                                            can be moved around using products of stabilizers, for           know how to measure such operators given qubits of un-
+                                            example as in Fig. 4. Logical Z or X measurements can            equal size, and an example of an unequal size ZZ logical
+                                            be achieved by measuring each data qubit in the Z or X           measurement can be found in Fig. 7.
+                                                                                                                                   2
+
+
+                                                                         a)         X                    b)         aX
+            a)
+
+                                                                                               Z                               Z
+
+
+
+
+                                                                   FIG. 4. a) Before movement. The product of the ±1 mea-
+                                                                   surement results of the stabilizers marked by blue circles shall
+                                                                   be denoted a. b) After movement, the new logical operator is
+                                                                   related to the old by a.
+            b)
+
+
+                                                                                     aX1                      cX2
+                                                                         a)
+                                                                                                   |0>
+                                                                                                   |0>
+                                                                                                   |0>
+
+                                                                          bZ1                      |0>                   dZ2
+                                                                                                   |0>
+                                                                                                   |0>
+                                                                                                   |0>
+
+
+FIG. 2. a) Distance d = 7 rotated logical qubit. Dark regions
+represent X stabilizers, light regions represent Z stabilizers.
+Each region is associated with a measurement qubit. A data                           aX1                      cX2
+qubit is located at each intersection point of dark lines. b)            b)
+Proposed layout of rotated logical qubits permitting local op-
+erations in parallel and easy movement of collections of logical
+qubits to the workspace on the left where multi-logical-qubit                                                            bdZ12
+operations can take place.
+
+
+                                              X                                                acX12
+   a)
+        |0> |0> |0> |0> |0> |0> |0>
+
+        |0> |0> |0> |0> |0> |0> |0>
+                                                                                     aX1                      cX2
+        |0> |0> |0> |0> |0> |0> |0>                                      c)
+                                                                                                MZ
+        |0> |0> |0> |0> |0> |0> |0>                        Z                                    MZ
+        |0> |0> |0> |0> |0> |0> |0>
+                                                                                                MZ
+        |0> |0> |0> |0> |0> |0> |0>                                       Z1                    MZ                       bdeZ2
+        |0> |0> |0> |0> |0> |0> |0>                                                             MZ
+                                                                                                MZ
+                                                                                                MZ
+
+
+                                              X
+   b)
+        |+> |+> |+> |+> |+> |+> |+>
+
+        |+> |+> |+> |+> |+> |+> |+>                                FIG. 5. a) Getting ready to measure the logical operator
+        |+> |+> |+> |+> |+> |+> |+>                                X12 = X1 X2 . b) The product of the stabilizers marked by
+        |+> |+> |+> |+> |+> |+> |+>                        Z       blue circles gives us the eigenvalue of the tensor product of X
+        |+> |+> |+> |+> |+> |+> |+>
+                                                                   operators along the red lines. This must then be modified by
+        |+> |+> |+> |+> |+> |+> |+>
+                                                                   the current signs of tensor products of operators along these
+                                                                   lines to give the actual desired result. This pattern of stabi-
+        |+> |+> |+> |+> |+> |+> |+>
+                                                                   lizers is measured d times. c) After splitting, the eigenvalue
+                                                                   of the measurement in green is denoted by e, and this and the
+                                                                   sign of the Z12 operator can be associated with either Z1 or
+                                                                   Z2 .
+FIG. 3. a) Preparation of |0L i. All data qubits are initialized
+to |0i then all stabilizers measured the code distance d times.
+b) Preparation of |+L i. All data qubits are initialized to |+i
+then all stabilizers measured the code distance d times.
+                                                                                                                                3
+
+
+                                aX1                                                                    X1
+             a)                                      b)                                c)
+
+
+
+              bZ1                                    bZ1                               bZ1
+
+
+
+                      |+> |+> |+> |+> |+> |+> |+>   bdZ12                                    MX MX MX MX MX MX MX
+
+
+
+
+             dZ2                                     dZ2                               dZ2
+
+
+
+                                cX2                             acX12                               aceX2
+
+
+
+FIG. 6. a) Getting ready to measure the logical operator Z12 = Z1 Z2 . b) The product of the stabilizers marked by blue circles
+gives us the eigenvalue of the tensor product of Z operators along the green lines. This must then be modified by the current
+signs of tensor products of operators along these lines to give the actual desired result. This pattern of stabilizers is measured
+d times. c) After splitting, the eigenvalue of the measurement in red is denoted by e, and this and the sign of the X12 operator
+can be associated with either X1 or X2 .
+
+
+           V.     MULTI-BODY OPERATOR                              injection was successful. We shall base our construction
+                   MEASUREMENTS                                    on clusters of 20 injection attempts (Fig. 10), ensuring
+                                                                   a heralded probability of failure of each cluster of order
+  A powerful feature of lattice surgery is the ability to          10−6 . When a state is injected successfully, it is expanded
+compactly measure multi-body X and Z operators. The                to distance 15 (Fig. 11).
+explicit steps to perform this for a multi-body X mea-
+surement are shown in Fig. 8. Fig. 9 shows the procedure
+for logical XXZ. When measuring multi-body mixed X
+and Z operators, it can be necessary to rotate logical
+qubits.                                                                             VII.    THE S/S† GATE
+
+
+                                                                      We will choose to implement these gates using the
+                VI.     STATE INJECTION                            method shown in Fig. 7 of [12]. We will assume that
+                                                                   given a d = 15 surface code it is possible in 15 error de-
+   The output probability of error po of 15-1 state distilla-      tection cycles to implement S/S† with distance no less
+tion [9, 10] depends on the injected state error probabil-         that 7. Note that implementing this gate in this manner
+ity pi as po = 35p3i . Using the state injection techniques        typically involves measuring some stabilizers of extended
+of [11], it is seems possible with approximately 50% her-          size, irregular shape, and increased weight.
+alded chance of success to create a distance 7 rotated log-
+ical qubit in an arbitrary state with probability of error
+on acceptance pi equal to the physical 2-qubit gate error
+rate p2 , however note that the simulations in [11] were
+performed using un-rotated square logical qubits. We√    are                       VIII.     THE T/T† GATE
+interested in injecting the state |T i = (|0i+eiπ/4 |1i)/ 2.
+The injection process itself takes two rounds of surface
+code error detection. We assume it takes an amount of               Fig. 12 shows how this can be build out of circuit ele-
+time equal to one further round to determine whether the           ments already described.
+                                                                                                                                      4
+
+
+            a)
+                                             aX1                                     aX1                                  eX3
+                                                                       a)                  |0> |0> |0> |0> |0> |0> |0>
+
+                                                                                           |0> |0> |0> |0> |0> |0> |0>
+
+                                                                             bZ1           |0> |0> |0> |0> |0> |0> |0>          fZ3
+                                                                                           |0> |0> |0> |0> |0> |0> |0>
+                                                                                           |0> |0> |0> |0> |0> |0> |0>
+
+                                                                                               |0> |0> |0> |0> |0>
+
+                                                                                           |0> |0> |0> |0> |0> |0>
+
+                                                                                           |0> |0> |0> |0> |0> |0>
+
+                                                                             dZ2           |0> |0> |0> |0> |0> |0>
+
+                                                                                           |0> |0> |0> |0> |0> |0>
+
+                                                                                           |0> |0> |0> |0> |0>
+
+                                                                                     cX2
+           bZ1
+                                                                                     aX1                                  eX3
+                                   |+> |+> |+> |+> |+> |+> |+>         b)
+                             dZ2                                            bfZ13
+
+                                             cX2
+
+
+            b)
+                                                                            dfZ23
+                                                                                                                     aceX123
+
+                                                                                     cX2
+
+
+                                                                                     aX1                                  eX3
+                                                                                           MZ MZ MZ MZ MZ MZ MZ
+                                                                       c)                  MZ MZ MZ MZ MZ MZ MZ
+
+                                                                            bfgZ1          MZ MZ MZ MZ MZ MZ MZ                 Z3
+                                                                                           MZ MZ MZ MZ MZ MZ MZ
+                                                                                           MZ MZ MZ MZ MZ MZ MZ
+
+                                                                                               MZ MZ MZ MZ MZ
+            bZ1
+                                                                                           MZ MZ MZ MZ MZ MZ
+
+                                                                                           MZ MZ MZ MZ MZ MZ
+                     bdZ12
+                                                                            dfhZ2          MZ MZ MZ MZ MZ MZ
+
+                             dZ2                                                           MZ MZ MZ MZ MZ MZ
+
+                                                                                           MZ MZ MZ MZ MZ
+
+                                            acX12                                    cX2
+
+                                              X1
+            c)
+
+                                                                 FIG. 8. a) Getting ready to measure the logical operator
+                                                                 X123 = X1 X2 X3 . b) The product of the stabilizers marked
+                                                                 by blue circles gives us the eigenvalue of the tensor product
+                                                                 of X operators along the red lines. This must then be modi-
+                                                                 fied by the current signs of tensor products of operators along
+                                                                 these lines to give the actual desired result. This pattern of
+                                                                 stabilizers is measured d times. c) After splitting, the eigen-
+                                                                 value of the chain of measurements in green connecting Z1 to
+                                                                 Z3 is denoted by g, and the chain connecting Z2 to Z3 by h.
+                                                                 The signs of the Z13 and Z23 operators are most conveniently
+            bZ1
+                                                                 associated with Z1 and Z2 .
+                                   MX MX MX MX MX MX MX
+
+
+                             dZ2
+                                                                            IX.     HALF DISTANCE ROTATION
+                                           aceX12
+
+
+                                                                    It is frequently useful to be able to rotate square logical
+                                                                 qubits by 90◦ . When space is limited and this rotation
+FIG. 7. Analogue of Fig. 6, namely logical ZZ measurement,
+given qubits of unequal size.
+                                                                 must be done in place, the code distance will in general
+                                                                 be reduced. In Figs. 13–14, we describe a simple rota-
+                                                                 tion method that halves the code distance but will be
+                                                                 sufficient for our purposes.
+                                                                                                                                   5
+
+
+                   aX1                                   fZ3
+      a)                  |0> |0> |0> |0> |0> |0>
+
+                          |0> |0> |0> |0> |0> |0>
+
+             bZ1          |0> |0> |0> |0> |0> |0>               eX3
+                          |0> |0> |0> |0> |0> |0>
+                          |0> |0> |0> |0> |0> |0>
+
+                              |0> |0> |0> |0> |0>
+                          |0> |0> |0> |0> |0> |0>
+
+                          |0> |0> |0> |0> |0> |0>
+
+             dZ2          |0> |0> |0> |0> |0> |0>
+
+                          |0> |0> |0> |0> |0> |0>
+                          |0> |0> |0> |0> |0>
+
+                   cX2
+
+
+                   aX1                                   fZ3
+      b)
+
+       beZ1X3
+
+
+                                                                      FIG. 10. In this figure, and all subsequent 3D figures, time
+                                                                      runs vertically. Each red cuboid
+                                                                                                     √    is an attempt to inject the
+       deZ2X3
+                                                                      state |T i = (|0i + eiπ/4 |1i)/ 2 into a distance 7 code. In 15
+                                                    acfX1X2Z3         rounds of a distance 15 code, there is space for 20 injection
+                                                                      attempts. When an injection is successful, which occurs 50%
+                   cX2                                                of the time [11], no further injection attempts are made and
+                                                                      the injected logical qubit is expanded to distance 15 (Fig. 11)
+                                                         fZ3
+                                                                      for more reliable storage.
+                   aX1
+                          MZ MZ MZ MZ MZ MZ
+      c)                  MZ MZ MZ MZ MZ MZ
+
+           begZ1          MZ MZ MZ MZ MZ MZ                     X3
+                          MZ MZ MZ MZ MZ MZ
+                                                                      15 qubits uniquely correspond to every binary number
+                          MZ MZ MZ MZ MZ MZ                           from 1 to 15. This enables a single Z error after state
+                              MZ MZ MZ MZ MZ
+                                                                      preparation to be located, and arbitrary pairs of Z errors
+                          MZ MZ MZ MZ MZ MZ
+
+                          MZ MZ MZ MZ MZ MZ
+                                                                      to be detected. This state can be considered logical |0i
+           dehZ2          MZ MZ MZ MZ MZ MZ                           of a distance 3 code.
+                          MZ MZ MZ MZ MZ MZ
+                                                                         The 5th and final column of CNOTs corresponds to
+                          MZ MZ MZ MZ MZ
+                                                                      the controlled application √ of logical X, meaning the su-
+                   cX2
+                                                                      perposition (|0L i + |1L i)/ 2 is prepared. To be √        more
+                                                                      precise, given the 16th qubit, (|0L i |0i + |1L i |1i)/ 2 is
+                                                                      prepared. States in |1L i contain 15 or 7 1s.
+FIG. 9. a) Getting ready to measure the logical operator                 The number of 1s in |0L i and |1L i implies that applying√
+X1 X2 Z3 . b) The product of the stabilizers marked by blue           transversal T† will result in (|0L i |0i + eiπ/4 |1L i |1i)/ 2.
+circles gives us the eigenvalue of the tensor product X1 X2 Z3 .      Z errors during the T† gates can then be detected by
+This must then be modified by the current signs of these in-          measuring each qubit in the X basis, as the eigenvalues
+dividul operators to get the actual desired result. This pat-         of the 4 X stabilizer generators can be reconstructed by
+tern of stabilizers is measured d times. c) After splitting, the      taking the appropriate product of X measurements. If
+eigenvalue of the chain of measurements in green connecting           any generator has a negative eigenvalue, the 16th qubit
+Z1 to X3 is denoted by g, and the chain connecting Z2 to X3
+                                                                      is discarded.
+by h. The signs of the Z1 X3 and Z2 X3 operators are most
+conveniently associated with Z1 and Z2 .                                 If the probability of a Z error during T† is p, the prob-
+                                                                      ability of rejection is approximately 15p. The collective
+                                                                      effect of the X measurements is a logical X measurement,    √
+                                                                      which cuts the output down to (|T i = (|0i+eiπ/4 |1i)/ 2
+                   X.    DISTILLATION
+                                                                      up to a possible Z correction. 35 combinations of 3 Z
+                                                                      errors are undetectable and lead to an erroneous out-
+   Consider Fig. 15a. The first 4 columns of CNOTs pre-               put of Z |T i, hence the input-output error relationship
+pare a superposition of computational basis states, each              po = 35p3i already mentioned.
+of which has either 8 or no 1s in it. Looked at another                  The 5th and final column of CNOTs is structurally
+way, each column of CNOTs modifies the initial state                  identical to the first 4 columns, meaning it can be con-
+such that it has an additional stabilizer generator corre-            sidered the 5th stabilizer generator of a 16 qubit code.
+sponding to X on the control and every target.                        This suggests an efficient method of preparing this state
+   These 8-body X stabilizer generators are constructed               using lattice surgery, namely the direct measurement of
+such that the various patterns of Xs that touch the top               the 5 stabilizer generators. Fig. 16 explicitly illustrates
+                                                                                                                                    6
+
+
+       a)                                                                     a)      T                 T            MX
+                                        0   0   0   0   0   0   0   0                                          MZZ
+                                        0   0   0   0   0   0   0   0                                   Ψ            S    Z
+                                        0   0   0   0   0   0   0   0
+                                        0   0   0   0   0   0   0   0
+
+                                        0   0   0   0   0   0   0   0
+
+                                        0   0   0   0   0   0   0   0
+                                                                              b)      T                 T            MX
+                                                                                                               MZZ
+                                        0   0   0   0   0   0   0   0
+                                                                                                        Ψ            S    Z
+            +   +   +   +   +   +   +   0   0   0   0   0   0   0   0
+
+            +   +   +   +   +   +   +   +   0   0   0   0   0   0   0
+
+            +   +   +   +   +   +   +   +   +   0   0   0   0   0   0
+
+            +   +   +   +   +   +   +   +   +   +   0   0   0   0   0   FIG. 12. a) T gate and b) T† built out of lattice-surgery
+            +   +   +   +   +   +   +   +   +   +   + 0 0 0         0   structures. Solid dots represent classically controlled execu-
+            +   +   +   +   +   +   +   +   +   +   + + 0 0         0   tion if the associated measurement is 1 (-1 eigenstate), the
+                                                                        open dot is for 0 (+1 eigenstate) triggered execution.
+            +   +   +   +   +   +   +   +   +   +   + + + 0         0
+
+            +   +   +   +   +   +   +   +   +   +   + + + +         0
+
+
+                                                                        rithms.
+                                                                           If we wish to repeat state distillation, we need to at-
+       b)                                                               tempt to prepare at least 16 first-level |T i states to reli-
+                                                                        ably get 15 inputs given the 15pi failure rate. 8 packed
+                                                                        level one distillations are shown in Fig. 18. The effective
+                                                                        height of each layer of the structure is 6.5d, where d is
+                                                                        explicitly fixed at 15.
+                                                                           For the second level of distillation, we will use the two
+                                                                        circuits of Fig.12b)–c). These circuits have been designed
+                                                                        such that the last round of CNOTs of b) slots into the
+                                                                        first round of CNOTs of c), and the last round of CNOTS
+                                                                        of c) slots into the first round of CNOTs of b). This
+                                                                        property ensures that the lattice surgery versions of these
+                                                                        circuits (Fig. 19) fit snuggly together, reducing the overall
+                                                                        height and therefore time of execution (Fig. 20).
+
+
+                                                                                           XI.     HADAMARD
+
+                                                                           The logical Hadamard gate, being a Clifford gate, can
+FIG. 11. a) Getting ready to expand a distance 7 logical                in principle be performed entirely in classical processing,
+qubit to distance 15. Initialization to |0i and |+i is denoted          by simply relabeling the logical X and Z operators [13].
+by 0 and + for visual simplicity. b) After initialization, the          When using lattice surgery, this comes at the cost of oc-
+complete pattern of stabilizers is measured. The full benefit of        casionally needing to double the size of the logical qubit,
+the increased code size will not be reached until the complete          and being able to measure logical Y operators, which dou-
+pattern has been measured 15 times ensuring that the new                bles the size again. Furthermore, physical-level stabilizer
+stabilizers are known with distance 15 confidence, however
+                                                                        measurements of weight greater than 4 and structure that
+the single-round logical error rate will be strictly lower even
+during the first complete error detection round.                        may or may not be suitable for the underlying hardware
+                                                                        are required.
+                                                                           We are therefore motivated to present a method of per-
+                                                                        forming Hadamard that does not change the definitions
+such measurements.                                                      of the logical operators and uses simple underlying cir-
+  Putting it all together, after preparing the 16 qubit                 cuits. Our proposal can be found in Figs. 21–22.
+state, 15 of these qubits get half-distance rotated and
+ZZ measured with the expanded output of multi-attempt
+state injection as shown in Fig. 17.                                                             XII.   CNOT
+  If we assume that the probability of a Z error during
+the complete T† structure is pi = 10−3 , the output prob-                 CNOT is an extremely common gate in many quantum
+ability of error will be po = 3.5 × 10−8 . This might be                algorithms. Regular CNOT and single-control multiple-
+sufficient for medium-term algorithms, however further                  target CNOT can be implemented in similar manners
+error suppression is likely necessary for long-term algo-               (Fig. 23). Note that the total time required is 2d as
+                                                                                                                             7
+
+
+       a)
+
+
+
+
+                                                                  FIG. 14. 3D version of Fig. 13 showing an additional 15
+                                                                  rounds of standard distance 15 both before and after the half
+                                                                  rotation. Light shading represents where logical Z is sup-
+       b)
+                                                                  ported, dark shading represents where logical X is supported.
+
+
+                                                                  the ancilla initialization and measurement can both be
+                                                                  performed transversely.
+
+
+                                                                                          XIII.    CZ
+
+                                                                    The CNOT of the previous section can be modified to
+                                                                  create a CZ gate simply by changing one of the operators
+                                                                  being measured (Fig. 24).
+
+
+                                                                                        XIV.      SWAP
+
+
+       c)                                                           Logical qubits can be moved around one another using
+                                                                  a series of single logical qubit moves (Fig. 25).
+
+
+                                                                            XV.    ALGORITHM OVERHEAD
+
+                                                                     In keeping with [1], we shall focus on the situation
+                                                                  where you only distill one |T i state at a time (Fig. 26).
+                                                                  To ensure a high chance of keeping pace with a super-
+                                                                  conducting quantum computer, we shall process surface
+                                                                  code detection events using the simple techniques of [14]
+                                                                  rather than the more computationally expensive and bet-
+                                                                  ter logical error suppressing techniques of [15]. This leads
+                                                                  to an approximate logical error rate per round of error
+                                                                  detection of pL = 0.1(100p)(d+1)/2 .
+                                                                     Calculating the overhead of a Clifford+T algorithm is
+                                                                  then straightforward, if you can approximate the algo-
+                                                                  rithm as being execution-time dominated by the prepa-
+FIG. 13. a) Initial distance 15 surface code marked up to show    ration of |T i states, meaning few sections of many Clif-
+the last 2 qubits interacted with when measuring each stabi-      ford gates, meaning the Clifford gates in the algorithm
+lizer. b) Modification of the boundary stabilizers and interac-   can be performed in parallel with the |T i preparations.
+tion pattern, maintained for 7 rounds. c) Further boundary
+modification leading to logical Z being supported on the lower
+half of the right boundary, maintained for 7 rounds. This is
+then followed by 7 rounds of b), then back to the a) pattern.
+                                                                                                                                   8
+
+
+   a)   +                    T   MX           b)   +                           Z   T   c)   +                              Z   T
+
+        +                    T   MX                +                  T   MX                0                     T   MX
+
+        +                    T   MX                0                  T   MX                0                     T   MX
+
+        +                    T   MX                +                  T   MX                0                     T   MX
+
+        0                    T   MX                0                  T   MX                0                     T   MX
+
+        0                    T   MX                +                  T   MX                0                     T   MX
+                                      P
+        0                    T   MX   A            0                  T   MX                0                     T   MX
+                                                                               P                                           P
+        0                    T   MX   R            0                  T   MX                0                     T   MX
+                                      I                                        A                                           A
+        0                        MX                0                      MX   R            +                         MX   R
+                             T        T                               T                                           T
+                                                                               I                                           I
+        0                        MX
+                                      Y            0                      MX                0                         MX
+                             T                                        T        T                                  T        T
+        0                    T   MX                0                  T   MX
+                                                                               Y            +                     T   MX
+                                                                                                                           Y
+
+        0                    T   MX                0                  T   MX                0                     T   MX
+
+        0                    T   MX                0                  T   MX                +                     T   MX
+
+        0                    T   MX                0                  T   MX                0                     T   MX
+
+        0                    T   MX                0                  T   MX                0                     T   MX
+
+        +                             Z   T        +                  T   MX                +                     T   MX
+
+
+
+
+                  FIG. 15. Three versions of the state distillation circuit, identical up to qubit permutation.
+
+
+
+
+FIG. 16. 5 structures corresponding to the 5 columns of
+CNOTs in Fig. 15a. Instead of implementing CNOTs, the
+same state can be prepared with multi-body X measurements.
+In each structure the left 8 blocks correspond to the lower 8
+qubits, and the right 8 blocks to the upper 8 qubits (in reverse
+order so the top qubit is the bottom right block). The ele-
+ment in the center of each structure performs the appropriate
+multi-body X measurement.
+
+
+We include a spreadsheet both describing in detail and
+performing the necessary calculations.
+
+
+                  XVI.    CONCLUSION
+
+   Using the defect and braiding overhead estimation
+techniques of [1] an algorithm involving 108 T gates and
+100 logical qubits, on hardware with a characteristic gate         FIG. 17. The first round of state distillation begins with 5
+error rate of 10−3 and surface code error detection circuit        X stabilizer generator measurements taken from Fig. 16 and
+time of 1µs takes 4.5 hours and requires 1.8 × 106 physi-          stacked one atop another, with unnecessary blocks deleted
+cal qubits. By contrast, using lattice surgery techniques          both from top and bottom (no need to create a logical qubit
+                                                                   before its first interaction, or hold onto it after its last). As
+as described in this paper and the spreadsheet, the same
+                                                                   soon as possible, appropriate outputs are half-distance ro-
+algorithm would run in 5.4 hours, so comparable, but re-           tated and unequal-size ZZ measurement interacted with the
+quire just 3.7 × 105 physical qubits. This near factor of 5        expanded output of multi-attempt state injection. The green
+qubit saving while maintaining comparable runtime im-              box capping this is an S† gate that is included or not based
+plies defects and braiding should be deprecated in favor           on whether the ZZ measurement yields 0 or 1 (Fig. 12b).
+of lattice surgery.
+                                                                                                                            9
+
+                                                                           XVII.    ACKNOWLEDGMENTS
+
+
+
+
+                                                                  We thank Daniel Litinski for discussions leading to
+FIG. 18. 8 attempts to produce a |T i state. Note that the      the simplification of stabilizers measured during mixed-
+2nd layer of distillation is mirror reflected from the first.   operator multi-body logical measurements.
+
+
+
+
+ [1] R. Babbush, C. Gidney, D. W. Berry, N. Wiebe,               [9] S. Bravyi and A. Kitaev, Phys. Rev. A 71, 022316 (2005),
+     J. McClean, A. Paler, A. Fowler, and H. Neven,                  quant-ph/0403025.
+     arXiv:1805.03662 (2018).                                   [10] B. W. Reichardt, Quant. Info. Proc. 4, 251 (2005), quant-
+ [2] S. B. Bravyi and A. Y. Kitaev, quant-ph/9811052 (1998).         ph/0411036.
+ [3] E. Dennis, A. Kitaev, A. Landahl, and J. Preskill, J.      [11] Y. Li, New J. Phys. 17, 023037 (2015), arXiv:1410.7808.
+     Math. Phys. 43, 4452 (2002), quant-ph/0110143.             [12] B. J. Brown, K. Laubscher, M. S. Kesselring, and
+ [4] R. Raussendorf and J. Harrington, Phys. Rev. Lett. 98,          J. R. Wootton, Phys. Rev. X 7, 021029 (2017),
+     190504 (2007), quant-ph/0610082.                                arXiv:1609.04673.
+ [5] R. Raussendorf, J. Harrington, and K. Goyal, New J.        [13] D. Litinski and F. von Oppen, Quantum 2, 62 (2018),
+     Phys. 9, 199 (2007), quant-ph/0703143.                          arXiv:1709.02318.
+ [6] A. G. Fowler, M. Mariantoni, J. M. Martinis, and           [14] A. G. Fowler, D. S. Wang, and L. C. L. Hollenberg,
+     A. N. Cleland, Phys. Rev. A 86, 032324 (2012),                  Quant. Info. Comput. 11, 8 (2011), arXiv:1004.0255.
+     arXiv:1208.0928.                                           [15] A. G. Fowler, arXiv:1310.0863 (2013).
+ [7] D. Litinski, arXiv:1808.02892 (2018).
+ [8] C. Horsman, A. G. Fowler, S. Devitt, and R. Van Meter,
+     New J. Phys. 14, 123011 (2012), arXiv:1111.4022.
+                                                                 10
+
+
+
+
+FIG. 19. Top: lattice surgery version of Fig.12b). Bottom:
+lattice surgery version of Fig.12c). Block position convention
+as in Fig. 17.
+                                                           11
+
+
+
+
+FIG. 20. Two rounds of two levels of state distillation.
+                                                                                                                                      12
+
+
+                          aX                                     aZ
+      a)                                           b)
+
+
+
+      bZ                                           bX
+
+
+
+
+                          aZ                                                                      acZ
+      c)                                                                        d)
+
+
+
+
+      bX                                                                        bX
+
+
+
+           |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0>
+           |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0>
+
+           |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0>
+           |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0>   c
+           |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0>
+
+           |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0>
+           |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0> |0>
+
+                                                                                         d                               bdX
+
+
+      e)                  e                                                     f)                 f
+                                                                                       |+> |+> |+> |+> |+> |+> |+>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ                                            |+> |+> |+> |+> |+> |+> |+>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ                                            |+> |+> |+> |+> |+> |+> |+>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ                                            |+> |+> |+> |+> |+> |+> |+>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ                                            |+> |+> |+> |+> |+> |+> |+>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ                                            |+> |+> |+> |+> |+> |+> |+>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ                                            |+> |+> |+> |+> |+> |+> |+>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ                                            |+> |+> |+> |+> |+> |+> |+>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ   MZ                                       |0> |0> |0> |0> |0> |0> |0> |0>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ   MZ                                       |0> |0> |0> |0> |0> |0> |0> |0>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ   MZ                                       |0> |0> |0> |0> |0> |0> |0> |0>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ   MZ
+                                                                         aceZ        g |0> |0> |0> |0> |0> |0> |0> |0>         aceZ
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ   MZ                                       |0> |0> |0> |0> |0> |0> |0> |0>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ   MZ                                       |0> |0> |0> |0> |0> |0> |0> |0>
+           MZ   MZ   MZ   MZ   MZ   MZ   MZ   MZ                                       |0> |0> |0> |0> |0> |0> |0> |0>
+
+                                                        bdX                                                              bdX
+
+
+
+FIG. 21. a) Initial state. b) State after transversal Hadamard. c) State after swap downwards and preparing to expand the
+logical qubit. d) Expanded logical qubit. Note the orientation of circuits around the corner to ensure the full code distance is
+preserved. Blue dots show how to move the logical X operator using the product d of stabilizers. e) Contraction of the logical
+qubit. f) Initialization of the way back to the original position. This and subsequent steps could be omitted if a return to the
+original position is not required.
+                                                                                                                                                                                      13
+
+
+                     f                                                                                                                              bdfhkX
+   a)                                                               b)                                                               c)
+         |+> |+> |+> |+> |+> |+> |+>
+         |+> |+> |+> |+> |+> |+> |+>
+
+         |+> |+> |+> |+> |+> |+> |+>
+
+         |+> |+> |+> |+> |+> |+> |+>                                             aceijZ                                                                                      aceijZ
+         |+> |+> |+> |+> |+> |+> |+>
+
+         |+> |+> |+> |+> |+> |+> |+>
+
+         |+> |+> |+> |+> |+> |+> |+>
+         |+> |+> |+> |+> |+> |+> |+>                                     j                           i                                    MX   MX   MX   MX   MX   MX   MX
+
+                                                                                 MZ   MZ   MZ   MZ       MZ   MZ   MZ   MZ                MX   MX   MX   MX   MX   MX   MX
+
+                                                                                 MZ   MZ   MZ   MZ       MZ   MZ   MZ   MZ                MX   MX   MX   MX   MX   MX   MX
+
+                                                                                 MZ   MZ   MZ   MZ       MZ   MZ   MZ   MZ                MX   MX   MX   MX   MX   MX   MX
+
+
+                                                             aceZ                MZ   MZ   MZ   MZ       MZ   MZ   MZ   MZ
+                                                                                                                             aceiZ        MX   MX   MX   MX   MX   MX   MX
+
+                                                                                 MZ   MZ   MZ   MZ       MZ   MZ   MZ   MZ                MX   MX   MX   MX   MX   MX   MX
+
+                                                                                 MZ   MZ   MZ   MZ       MZ   MZ   MZ   MZ                MX   MX   MX   MX   MX   MX   MX
+
+                                                                                 MZ   MZ   MZ   MZ       MZ   MZ   MZ   MZ                MX   MX   MX   MX   MX   MX   MX
+
+
+                  bdhX                 h       bdX                           bdfhX                                                                       k
+
+
+
+
+FIG. 22. a) Stabilizer pattern to move logical qubit back to original position. Movement of logical X operator. b) Trimming
+and movement of logical Z operator. c) Trimming and movement of logical X operator.
+
+
+
+
+        a)                                           Z              Z
+                                                             MZZ
+                                           0                        MX
+                                                 MXX
+                                                              X
+
+
+        b)                                           Z              Z
+                                                             MZZ
+                                           0                        MX
+
+                                                              X
+                                                     MXXXX
+
+
+
+
+                                                              X
+                                                              X
+
+
+
+FIG. 23. a) Lattice surgery implementation of CNOT. b)
+Extension to single-control multiple-target CNOT.
+                                                                14
+
+
+      a)                            Z             Z
+                                            MZZ
+                             0                    MX
+
+
+
+
+                                   MZX
+                                             Z
+
+
+      b)                            Z             Z
+                                            MZZ
+                             0                    MX
+
+                                             Z
+
+                                    MZZZX    Z
+                                             Z
+
+
+
+FIG. 24. a) Lattice surgery implementation of CZ. b) Exten-
+sion to single-control multiple-target CZ.
+
+
+
+
+       a)               b)                  c)
+
+
+
+
+       d)               e)                  f)
+
+
+
+
+       g)
+
+
+
+
+FIG. 25. a) Initial configuration. b)–c) Downward movement,
+d error detection rounds. d)–e) Rightward movement, d error
+detection rounds. f)–g) L-shaped return movement using the
+techniques in Fig. 22, a final d error detection rounds for a
+total of 3d.
+                                                                    15
+
+
+
+
+FIG. 26. Example layout of an algorithm showing a single
+level of distillation (large open rectangle), data logical qubits
+(shaded squares), and ancilla logical qubits for communica-
+tion and interaction (white squares).
+

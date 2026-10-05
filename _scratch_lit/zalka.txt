@@ -1,0 +1,497 @@
+                                                Quantum Gauß Jordan Elimination
+arXiv:quant-ph/0511062v1 7 Nov 2005
+
+
+
+
+                                                        Do Ngoc Diep and Do Hoang Giang
+
+                                                                             Abstract
+                                                In this paper we construct Gauß Jordan Elimination (QGJE) Algorithm
+                                            and estimate the complexity time of computation of Reduced Row Echelon
+                                            Form (RREF) of an N ×N matrix using QGJE procedure. The main theorem
+                                            asserts that QGJE has computation time of order 2N/2 .
+
+
+                                      1 Introduction
+                                      Let us consider a general system of linear equations
+                                                             
+                                                              a11 x1 + . . . + a1n xn = b1
+                                                                  ................... . ..
+                                                             
+                                                                 am1 x1 + . . . + amn xn = bm
+                                      Denote                                                   
+                                                        a11 . . . a1n             x1            b1
+                                                                                                 
+                                                  A =  . . . . . . . .  , x =  ...  , b =  ...  ,
+                                                        amn . . . amn             xn            bm
+                                      we have the system in the matrix form
+                                                                          Ax = b,
+                                      with the augmented matrix Ã = [A|b].
+                                          It is well known in linear algebra that by using elementary transformations we
+                                      can reduce the system to the so called Reduced Row Echelon Form (RREF) and
+                                      after reenumerate the variables we can rewrite it in the form
+                                                                                                            
+                                                                         1 ... 0 a   ^1,r+1 . . . a g    e
+                                                                                                     1,n b1
+                                                                       .. . . ..      ..      ..     ..  .. 
+                                                                       .      . .        .     .      .   . 
+                                                                                                            
+                                                    RREF ([A|b]) =  0 . . . 1 a]            . .  . a
+                                                                                                    g    er  .
+                                                                                                         b
+                                                                                     r,r+1          r,n     
+                                                                       0 ... 0         0    ... 0       0 
+                                                                         . .. . ..... .. ... .
+
+                                                                              1
+     The solutions of the system is some affine m-flat with a vector basis
+                                                   
+                      −^
+                       a1,r+1     −^
+                                   a1,r+2         −g
+                                                   a1,n
+                       ..        ..          .. 
+                        .         .          . 
+                                                   
+                     −a]
+                        r,r+1   −a]
+                                    r,r+2       −g
+                                                   ar,n 
+                             ,         ,...,       
+                       1         0           0 
+                                             . 
+                       0         1           .. 
+                         ..          ..
+                          .           .            1
+
+ and an affine point                       
+                                        b˜1
+                                       . 
+                                       .. 
+                                           
+                                       b˜r 
+                                           
+                                       0 .
+                                           
+                                       .. 
+                                       . 
+                                         0
+ In the particular case where r = n = N the system has a unique solution. Start
+ from here we consider the only this nondegenerate case. The procedure of pro-
+ ducing the RREF of the augmented matrix [A|b] is written as some computer
+ program. We refer the readers to [PTVF] for a program in C language. It is easy
+ to show that this computation needs at least the time of order 2N .
+     In this paper we try to simulate this procedure on quantum computers, and
+ show that we could have the complexity time of order 2N/2 .
+     The paper is organized as follows. We state our QGJE Algorithm and the Main
+ Theorem in §2. In §3 we analyze the structure of quantum addition and explain
+ its mechanism of work. Its seems to the authors that by using the representa-
+ tion theory and the corresponding Fast Fourier Transformation is easy to explain
+ the quantum adder and also quantum multiplication. In §5 we prepare the main
+ background of quantum computing, and finally in §5 the main theorem is proved.
+
+
+ 2 QGJE Algorithm
+Step 1 Use the Grover’s Search algorithm to find out the first non-zero ai1 6= 0.
+
+Step 2 If the search is successful, produce the first leading 1 in the first place as
+       a11 , else change to the next column and repeat step 1.
+
+                                          2
+Step 3 Eliminate all other entries a1,1 , . . . , aN,1 in the column.
+
+Step 4 Change N to N − 1, control if still N > 0, repeat the procedure from the
+       step 1.
+
+Step 5 In backward eliminate all aN −1,N , . . . , a1,N .
+
+Step 6 Check if N > 0, change N to N − 1 and repeat the step 5.
+
+ Theorem 2.1 In the Quantum Gauß-Jordan Elimination Algorithm one needs at
+ least                           "    √         #
+             N(N − 1)(2N + 1)      √ ( 2)N − 1
+                               +    2 √           ∼ O(2N/2 )
+                      3                  2−1
+ operations.
+
+ Proof of this theorem is the main goal of the paper.
+
+
+ 3 A structural comment of Quantum Adder con-
+   struction
+ In this section we give a brief review of quantum computers, as we need in the
+ rest of this paper.
+
+ 3.1 q-digit counting system
+ Let us first remind the ordinary rule of arithmetic operations. Let p be a prime and
+ r some positive integer. Write a number in series of q = pr with coefficients in
+ the finite field Fq ,
+                        m
+                        X                          n
+                                                   X
+                                   i
+                   a=          ai q ,         b=         bj q j , ai , bj ∈ Fq .
+                         i=0                       i=0
+
+ The sum a + b and the product a.b are defined as usually
+
+           a + b = (a0 + a1 q + . . .) + (b0 + b1 q + . . .) = c0 + c1 q + . . . ,
+
+               a.b = (a0 + a1 q + . . .)(b0 + b1 q + . . .) = d0 + d1 q+, . . .
+
+
+                                              3
+where
+                               c0 = a0 + b0 (mod q),
+                      c1 = a1 + b1 + [(a0 + b0 )/q](mod q),
+                                  ...............
+                                d0 = a0 .b0 (mod q),
+                         d1 = a1 .b1 + [(a0 .b0 )/q](mod q),
+                                  ...............
+
+3.2 Qubits
+A fundamental notion of quantum computers is qubit.
+Definition 3.1 A qubit is a quantum system the Hilbert space of its quantum states
+is the q-dimensional complex plane Cq , and therefore a quantum state of a qubit
+is a normalized complex vector v ∈ Cq
+                            
+                         v0
+                            
+                v =  ...  , ||v|| = |v0 |2 + . . . + |vq−1 |2 = 1.
+                       vq−1
+
+Choose the standard basis of q vectors
+                                                                    
+                                                             0
+                       1              0                         0 
+                      0            1                        
+                                                            
+               |0i =  ..  , |1i =  ..  , . . . , |q − 1i =  ...  .
+                      .            .                        
+                                                                0 
+                       0              0
+                                                                 1
+
+An arbitrary vector can be decomposed in this basis as a linear combination
+
+                     v = v0 |0i + v1 |1i + . . . + vq−1 |q − 1i.
+
+
+
+Lemma 3.2 Every n-digit integer number can be written as a tensor product of n
+qubits
+            a = a0 ⊗ . . . ⊗ an−1 ∈ (C2 )⊗n , ai ∈ Fq = Z/qZ.
+
+                                          4
+P ROOF. Every integer can be written in binary form
+
+            a = a0 + a1 2 + . . . + an 2n , ai ∈ Fq = {0, 1, . . . , q − 1}.
+
+Therefore we have |a0 i ⊗ . . . ⊗ |an i ∈ (C2 )n .                        
+                                                   n
+    Let us consider the additive groups G = (Fq ) . A unitary character is a
+continuous homomorphism χ : G → S1 = U(C) from the group G into the group
+of unitary automorphism of C, i.e. a continuous map χ : G → S1 ∼
+                                                               = U(C), such
+that                     
+                          χ(x + y) = χ(x)χ(y)
+                                    χ(0) = 1
+                         
+                                 kχ(x)k ≡ 1.
+
+
+Lemma 3.3 Every (multiplicative) unitary character of the additive groups G =
+(Fq )n if of the form
+                                     2πi P n
+                          χa (x) = e qn i=1 ai xi .
+
+P ROOF. The lemma is an easy exercise from the group representation theory. 
+   It is convenient to write the number in fractional form, i.e. write
+                                      a0     a1
+                              0.a =     n
+                                          + n−1 + . . . .
+                                      q    q
+The integers modulo 2n can be written as
+
+                             k̄ 7→ e2pii0.k , 0.k = k/q n ,
+
+for k = 0, 1, . . . , q n − 1. Let us consider the Haar measure µ(k) = qkn . Then we
+have the natural Fast Fourier Transform (FFT).
+
+Definition 3.4 The transformation
+                                               q n −1
+                                        1 X 2πiyk qkn
+                         F F T : |yi 7→ n  e          |ki
+                                       2
+                                               k=0
+
+is called the Fast Fourier Transform
+
+
+
+
+                                           5
+3.3 Quantum addition
+By using FFT we have a 1-1 correspondence
+                                  FFT
+                              a −−−→ e2πi0.an an−1 ...a0
+                                  FFT
+                              b −−−→ e2πi0.bn bn−1 ...b0
+Definition 3.5 The sum of two numbers a and b is defined as follows.
+      FFT                 add 0.0...0b0 2πi0.an an−a ...a1 (a0 +b0 ) add 0.0...0b1
+   a −−−→ e2πi0.an ...a0 −−−−−−−−→      e                            −−−−−−−−→ . . .
+                    add 0.bn 2πi0.(an +bn )...(a0 +b0 ) FFT inverse
+             . . . −−−−−→    e                          −−−−−−−−→ a + b
+Remark 3.6 The reduction (memorize [(ai + bi )/q] to ai+1 + bi+1 is the phase
+transition with the matrix "                 #
+                             1       0
+                                              [(ai +bi )/q]
+                                        2πi
+                                   0 e           q i−1
+
+
+
+
+3.4 Quantum gates
+Let us recall some fundamental gates in quantum computing.
+
+3.4.1 Hadamard gate
+Definition 3.7 The 1-qubit Hadamard gate − H − is defined by the matrix
+                                            
+                                 1    1 1
+                            H=√                .
+                                  2 1 −1
+The Hadamard gates acts on qubits as follows
+                              − H −
+                         |xi −−−−→ (−1)x |xi + |1 − xi.
+
+3.4.2 Phase gate
+Definition 3.8 The phase 2-qubit gate − Φ − is defined by the matrix
+                                              
+                                   1    1 0
+                            Φ= √           iΦ    .
+                                    2 0 e
+it produces an action
+                                  − Φ −
+                             |xi −−−−→ eiΦ |xi.
+
+                                              6
+3.4.3 CNOT(XOR) gate
+Definition 3.9 The 2-qubit C-NOT (XOR) gate is defined by the matrix
+                                             
+                                  1 0 0 0
+                                 0 1 0 0 
+                            C=  0 0 0 1 .
+                                              
+
+                                  0 0 1 0
+Action:                     
+                                |xi → |xi
+                                |yi → |x ⊕ yi,
+where x ⊕ y := x + y mod(2).
+
+3.4.4 Unitary gates
+Definition 3.10 The unitary gate − U − is defined by a unitary matrix U,
+                                           
+                                      1 0
+                               U=             .
+                                      0 U
+
+3.4.5 Problem of quantum computing
+One of the major result concerning this problem is the following classification
+result.
+Theorem 3.11 (Universal gates) One-qubit gates, CNOT gate, phase gate and
+one of unitary gate generate all the other gates.
+
+
+4 Quantum Grover’s Search Algorithm
+4.0.6 Black-box (Query) problem
+The problem is to compute some Boolean function of type
+                             f : {0, 1}n → {0, 1}.
+
+4.1 Deutsch’s original problem
+The problem is to check whether the above defined Boolean function is balance:
+the number of values 0’s equals to the numbers of values 1’s, or constant.
+
+                                      7
+4.2 Search problem
+Given a Boolean function f : {0, 1}n → {0, 1}, defined by fk (x) = δxk . Find k.
+
+4.3 Deutsch’s scheme − H − f − H −
+The Deutsch’s scheme produces the effects:
+
+                             − H − f − H −
+             |xi(|0i − |1i) −−−−−−−−−−→ (−1)f (x) |xi (|0i − |1i).
+                                           | {z }
+                                           measurement
+In this scheme, the second qubit is of no interest, while the first qubit has state
+                                       
+             f (0)          f (1)        ±(|0i + |1i), if f = const
+         (−1) |0i + (−1) |1i =
+                                         ±(|0i − |1i), if f = balanced
+
+4.4 Quantum Grover’s Search Algorithm
+Scheme: − fk − H − f0 − H −.
+   This algorithm has special effect: Choose the state
+                                            N −1
+                                          1 X
+                                 |Si =              |ii,
+                                         2N/2 i=1
+
+and produce the Grover’s iterate
+
+                        − fk − H − f0 − H −
+        |ψi(|0i − |1i) −−−−−−−−−−−−−−→ |measurementi(|0i − |1i).
+
+    This iterate does nothing to any basis element |ii except for |ki is changing
+into −|ki, i.e. reflection in the hyperplane perpendicular to the plane
+                                                  N −1
+                                                1 X
+                            H|0i = |Si =                   |ii,
+                                               2N/2 i=1
+
+i.e. rotation in the plane generate by |ki and |Si an the Grover’s iterate is a rotation
+of twice the angle from |k ⊥ i to S ⊥ i.
+
+
+
+                                           8
+5 Proof of the Main Theorem
+                                                
+                                                
+                                            a11
+                                               
+S TEP 1. Let us consider the first column  ...  . Each ai1 is either zero or
+                                               aN 1
+non-zero. We do find the first non-zero value. In classical computation we needs
+to check all possible values of column entries and we needs 2N operations. In
+quantum Grover’s Search Algorithm we need to proceed 2N/2 operations. More
+precisely, choose a state
+                                            N
+                                            X −1
+                               |Si = 2−N/2       |ii
+                                                i=0
+
+and produce the Grover’s iterate
+
+                       − fk − H − f0 − H −
+        |Ψi(|0i − |1i) −−−−−−−−−−−−−−→ |measurementi(|0i − |1i).
+
+This iteration does nothing to any basis element except for |ki is changing into
+−|ki, i.e. reflection in the hyperplane perpendicular to plane
+                                             N
+                                             X −1
+                                      −N/2
+                           H|0i = 2                 |ii = |Si,
+                                              i=0
+
+i.e. a rotation in the plane generated by |ki and |Si, and the desired state |ki
+exactly is Φ, the iterate should be repeated m times with
+                                        π         π  1
+                         (2m + 1)Φ ≈      or m ≈    − .
+                                        2        4Φ 2
+Since
+                     1                                Φ N/2
+                          = sin Φ ≈ Φ, we have m ≈       2 .
+                   2N/2                                4
+This estimate is optimal in the sense that any another quantum algorithm for
+searching an unstructured database must stake time at least of order O(2N/2 ).
+    Suppose we have found a non-zero element and denote it (the first nonzero
+element) by ai1
+    S TEP 2. Produce the first modified row
+                                        ai2       aiN
+                             r1 = [1,       ,...,     ].
+                                        ai1       ai1
+
+                                          9
+For this we need at least N − 1 multiplications with a1i1 . Register the resulted row
+as the first row.
+    S TEP 3.
+   • Multiply the new first row with −aj1 . For this we need N − 1 operations of
+     multiplication and
+   • Add the result to the j th row. For this we need another N − 1 operations.
+Totally in this step we need 2(N − 1)2 arithmetic operations.
+    S TEP 4. Now change N to N − 1 (need 1 subtraction) and control for the
+value N > 0. We need one CNOT gate.
+    Loop back to the first step produce summation from 1 to N.
+    S TEPS 5 AND 6. Eliminating backward the numbers aN −1,N , . . . , a1,N , we
+need N − 1 additions and one CNOT gate to control and change N into N − 1.
+    A LL S TEPS . Totally in all steps we need at least
+                 X
+                     n = 1N (2n/2 + 2(n − 1)2 + 2(n − 1) + 1 + 1)
+
+operations.
+   R EDUCTION . The following lemma is trivial
+Lemma 5.1 (Combinatorial Lemma)
+                           N
+                           X            N(N + 1)(2N + 1)
+                                 n2 =                    .
+                           n=1
+                                               6
+
+    F INISH THE P ROOF OF THE M AIN T HEOREM Denote the integral part of a
+real number a by [a]. Finally we have
+                  N
+                  X
+                        (2n/2 + 2(n − 1)2 + 2(n − 1) + 1 + 1) ≈
+                  n=1
+
+                         N
+                         X           N
+                                     X                XN
+                                                  2
+                                                         √ n
+                     2         n+2         (n − 1) + [    2 ]=
+                         n=1         n=1              n=1
+                                                √
+              N(N + 1)    N − 1)N(2N − 1)    √ 2N − 1
+            2          +2                 +[ 2 √         ]=
+                 2               6                2−1
+                                    √
+               (N − 1)N(2N + 1)    √ 2N − 1
+                                +[ 2√        ] ≈ O(2N/2 ).
+                       3              23 − 1
+
+                                             10
+Corollary 5.2 For N >> 1, the number of operations needed to produce the
+RREF of a square matrix using QGJE Algorithm is of order O(2N/2 ).
+
+In the next paper [DG] we apply this computation to simulating of accounting
+principles on quantum computers.
+
+
+Acknowledgments
+The work was partially reported in the Mathematical Club and Seminar of Topol-
+ogy and Geometry, Institute of Mathematics in Hanoi. We thank the people who
+attended for stimulating comments.
+
+
+References
+[D1] D. N. D IEP, Quantum computers and related mathematical structures, J.
+     of Mathematics Applications, in Vietnamese, 2(2004), No 1, 79-94.
+
+[DG] D. N. D IEP AND D. H. G IANG, Accounting Principles are simulated on
+     quantum computers, Preprint 2005.
+
+[PTVF] W. H. P RESS , S. A. T EUKOLSKY W. T. V ELTERLING AND B. P.
+     F LANNERY, Numerical Recipes in C, Cambridge University Press,
+
+I NSTITUTE OF M ATHEMATICS , V IETNAM ACADEMY OF S CIENCE AND T ECH -
+NOLOGY, 18 H OANG Q UOC V IET ROAD , C AU G IAY D ISTRICT, 10307 H ANOI ,
+V IETNAM
+Email: dndiep@math.ac.vn
+
+   AND
+
+
+    K47A1T, D EPARTMENT OF M ATHEMATICS , U NIVERSITY OF NATURAL
+S CIENCES , H ANOI V IETNAM NATIONAL U NIVERSITY, 40 N GUYEN T RAI , T HANH
+X UAN DISTRICT, H ANOI , V IETNAM
+Email: dohoanggiang@yahoo.com
+
+
+
+
+                                     11
+

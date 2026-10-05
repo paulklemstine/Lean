@@ -1,0 +1,861 @@
+STATUS      IDENTIFIER         KIND   MATCH YEAR  REGISTRY TITLE / VENUE
+------------------------------------------------------------------------------------------------
+UNVERIFIED  quant-ph/9605043   arxiv  -    -     http=400 <?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/
+UNVERIFIED  quant-ph/9710043   arxiv  -    -     http=400 <?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/
+UNVERIFIED  quant-ph/9802049   arxiv  -    -     http=400 <?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/
+UNVERIFIED  quant-ph/9805082   arxiv  -    -     http=400 <?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/
+UNVERIFIED  quant-ph/9807006   arxiv  -    -     http=400 <?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/
+UNVERIFIED  quant-ph/9901065   arxiv  -    -     http=400 <?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/
+UNVERIFIED  quantph/0303074    arxiv  -    -     http=400 <?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/
+UNVERIFIED  quantph/0304161    arxiv  -    -     http=400 <?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/
+METADATA    0905.2325          arxiv  -    2009  Factorization with genus 2 curves
+                                 venue: doi: 10.1090/S0025-5718-09-02295-9
+METADATA    0912.1585          arxiv  -    2009  Factoring with Hints
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1004.3366          arxiv  -    2010  Some integer factorization algorithms using elliptic curves
+                                 venue: journal-ref: Australian Computer Science Communications 8 (1986), 149-163
+METADATA    1007.4621          arxiv  -    2010  Statistics of the Jacobians of hyperelliptic curves over finite fields
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1009.1591          arxiv  -    2010  Smooth numbers in short intervals
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1101.0564          arxiv  -    2011  A low-memory algorithm for finding short product representations in finite groups
+                                 venue: journal-ref: Designs Codes and Cryptography 63 (2012), 1-13
+METADATA    1103.1493          arxiv  -    2011  An Improvement to the Number Field Sieve
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1112.3333          arxiv  -    2011  Another subexponential-time quantum algorithm for the dihedral hidden subgroup problem
+                                 venue: journal-ref: 8th Conference on the Theory of Quantum Computation, Communication 
+METADATA    1208.5992          arxiv  -    2012  Bombieri--Vinogradov and Barban--Davenport--Halberstam type theorems for smooth numbers
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1209.5520          arxiv  -    2012  Accelerating Iterative SpMV for Discrete Logarithm Problem Using GPUs
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1211.6246          arxiv  -    2012  On the Probability of Generating a Lattice
+                                 venue: doi: 10.1016/j.jsc.2013.12.002
+METADATA    1311.7556          arxiv  -    2013  Pólya-Vinogradov and the least quadratic nonresidue
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1408.0718          arxiv  0.25 2014  Improvements to the number field sieve for non-prime finite fields
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1410.7073          arxiv  -    2014  The Elliott-Halberstam conjecture implies the Vinogradov least quadratic nonresidue conj
+                                 venue: journal-ref: Algebra Number Theory 9 (2015) 1005-1034
+METADATA    1602.06739         arxiv  -    2016  A quality check of the $AKARI$ mid-infrared all-sky diffuse map toward the massive star-
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1605.08065         arxiv  -    2016  Cryptographic applications of capacity theory: On the optimality of Coppersmith's method
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1608.08766         arxiv  -    2016  A babystep-giantstep method for faster deterministic integer factorization
+                                 venue: doi: 10.1090/mcom/3313
+METADATA    1707.02562         arxiv  0.07 2017  Determination of the strong coupling constant $α_s$ from transverse energy-energy correl
+                                 venue: journal-ref: Eur. Phys. J. 77 (2017) 872
+METADATA    1709.02442         arxiv  -    2017  Efficient Point-Counting Algorithms for Superelliptic Curves
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1710.01848         arxiv  0.20 2017  Nonlinear descent on moduli of local systems
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1710.01970         arxiv  -    2017  Smooth values of polynomials
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1805.08873         arxiv  -    2018  Rigorous Analysis of a Randomised Number Field Sieve
+                                 venue: journal-ref: J. of Number Theory Vol. 187 (2018) 92-159
+METADATA    1807.05270         arxiv  -    2018  Curves, Jacobians, and Cryptography
+                                 venue: journal-ref: Contemp. Math., 724, pg. 279 -- 344, Amer. Math. Soc., Providence, 
+METADATA    1807.09675         arxiv  -    2018  Toward an Optimal Quantum Algorithm for Polynomial Factorization over Finite Fields
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1901.11428         arxiv  -    2019  Improved Low-qubit Hidden Shift Algorithms
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    1905.09749         arxiv  -    2019  How to factor 2048 bit RSA integers in 8 hours using 20 million noisy qubits
+                                 venue: journal-ref: Quantum 5, 433 (2021)
+METADATA    1911.11004         arxiv  -    2019  Factorization and malleability of RSA modules, and counting points on elliptic curves mo
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2001.09814         arxiv  -    2020  Canonical form of modular hyperbolas with an application to integer factorization
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2001.10860         arxiv  0.17 2020  A New Angle on Lattice Sieving for the Number Field Sieve
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2006.06197         arxiv  -    2020  Comparing the difficulty of factorization and discrete logarithm: a 240-digit experiment
+                                 venue: journal-ref: The 40th Annual International Cryptology Conference (Crypto 2020), 
+METADATA    2006.16729         arxiv  0.12 2020  A time-space tradeoff for Lehman's deterministic integer factorization method
+                                 venue: doi: 10.1090/mcom/3623
+METADATA    2007.02730         arxiv  -    2020  Refined Analysis of the Asymptotic Complexity of the Number Field Sieve
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2010.05450         arxiv  -    2020  An exponent one-fifth algorithm for deterministic integer factorisation
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2010.05490         arxiv  -    2020  A Generic Framework For Capturing Reliability in Cyber Physical Systems
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2105.11105         arxiv  -    2021  A log-log speedup for exponent one-fifth deterministic integer factorisation
+                                 venue: doi: 10.1090/mcom/3708
+METADATA    2106.00813         arxiv  0.33 2021  Geometric aspects on Humbert-Edge's curves of type 5, Kummer surfaces and hyperelliptic 
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2109.09599         arxiv  -    2021  Integer Factorization By Sieving The Delta
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2110.08354         arxiv  -    2021  Faster Modular Composition
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2111.14180         arxiv  -    2021  Two variable polynomial congruences and capacity theory
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2201.07791         arxiv  -    2022  On the success probability of quantum order finding
+                                 venue: journal-ref: ACM Trans. Quantum Comput. 5(2):11 (2024)
+METADATA    2206.14408         arxiv  -    2022  Time and Query Complexity Tradeoffs for the Dihedral Coset Problem
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2209.11650         arxiv  0.40 2022  An Algebraic-Geometry Approach to Prime Factorization
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2210.03661         arxiv  -    2022  Inertia constants for individual power plants
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2210.04835         arxiv  -    2022  Factoring Numbers with elliptic curves
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2210.05496         arxiv  -    2022  Experiment Design for Identification of Marine Models
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2211.06821         arxiv  -    2022  Factoring using multiplicative relations modulo $n$: a subexponential algorithm inspired
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2212.11724         arxiv  -    2022  ECM And The Elliott-Halberstam Conjecture For Quadratic Fields
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2301.10529         arxiv  -    2023  Smooth Subsum Search: A heuristic for practical integer factorization
+                                 venue: doi: 10.1142/s0129054123500296
+METADATA    2303.12781         arxiv  0.57 2023  Drell-Yan lepton-pair production: $q_T$ resummation at approximate N$^4$LL+N$^4$LO accur
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2308.06130         arxiv  -    2023  Fast square-free decomposition of integers using class groups
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2308.06572         arxiv  0.50 2023  An Efficient Quantum Factoring Algorithm
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2312.04522         arxiv  -    2023  Yoked surface codes
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2402.11269         arxiv  0.33 2024  A New Approach to Generic Lower Bounds: Classical/Quantum MDL, Quantum Factoring, and Mo
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2407.07103         arxiv  -    2024  The p-adic valuation of the general degree-2 and degree-3 polynomial in 2 variables
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2410.16355         arxiv  -    2024  Integer Factorization via Tensor Network Schnorr's Sieving
+                                 venue: journal-ref: Phys. Rev. A 113, 032418 (2026)
+METADATA    2504.08063         arxiv  -    2025  Deterministic factorization of constant-depth algebraic circuits in subexponential time
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2505.15917         arxiv  -    2025  How to factor 2048 bit RSA integers with less than a million noisy qubits
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2506.12844         arxiv  -    2025  Choosing iteration maps for the parallel Pollard rho method
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2506.14928         arxiv  -    2025  On the solvable-unsolvable transition due to noise-induced chaos in digital memcomputing
+                                 venue: journal-ref: Chaos 36, 013113 (2026)
+METADATA    2507.07055         arxiv  -    2025  Integer Factorization: Another perspective
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2509.05010         arxiv  -    2025  A Modular, Adaptive, and Scalable Quantum Factoring Algorithm
+                                 venue: journal-ref: Eur. Phys. J. Plus 141, 474 (2026)
+METADATA    2510.08432         arxiv  -    2025  Parallel Spooky Pebbling Makes Regev Factoring More Practical
+                                 venue: doi: 10.1007/978-3-032-25291-3_14
+METADATA    2510.19390         arxiv  -    2025  A Probabilistic Computing Approach to the Closest Vector Problem for Lattice-Based Facto
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2511.10851         arxiv  -    2025  A number-theoretic conjecture implying faster algorithms for polynomial factorization an
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2511.18198         arxiv  -    2025  Space-Optimized and Experimental Implementations of Regev's Quantum Factoring Algorithm
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2512.11004         arxiv  -    2025  Enhancing the Practical Reliability of Shor's Quantum Algorithm via Generalized Period D
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2512.15330         arxiv  -    2025  Practical Challenges in Executing Shor's Algorithm on Existing Quantum Platforms
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2512.19076         arxiv  -    2025  On Factoring and Power Divisor Problems via Rank-3 Lattices and the Second Vector
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2601.02518         arxiv  -    2026  Diffusion Computation versus Quantum Computation: A Comparative Model for Order Finding 
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2601.11131         arxiv  -    2026  Deterministic methods for finding elements of large multiplicative order
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2601.17422         arxiv  -    2026  Faster modular composition using two relation matrices
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2602.11457         arxiv  -    2026  The Pinnacle Architecture: Reducing the cost of breaking RSA-2048 to 100 000 physical qu
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2602.13371         arxiv  -    2026  Thinned Wallis-type prime products in residue classes modulo $2^m$
+                                 venue: journal-ref: INTEGERS 26 (2026) #A90
+METADATA    2603.07589         arxiv  -    2026  On Factorization of Sparse Polynomials of Bounded Individual Degree
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2603.27398         arxiv  -    2026  NP-hardness of SVP in Euclidean Space
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2606.17487         arxiv  -    2026  A combinatorial large sieve for Sidon sets, distances, and norm forms
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2606.24717         arxiv  -    2026  A new attack to RSA with small private exponent and partial information
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2606.27293         arxiv  -    2026  Deterministic Algorithms for Low Individual Degree Factors of Sparse Polynomials
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2607.02364         arxiv  0.50 2026  Deterministic Polynomial-time Exact-root Computation for Sparse Polynomials with Bounded
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    2608.06681         arxiv  -    2026  Refuting a Conjecture of Umans and Wang on Arithmetic-Progression Divisor Covers
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    math/0411096       arxiv  -    2004  Root numbers of curves
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    math/0412252       arxiv  -    2004  Logarithmic Trace of Toeplitz Projectors
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    math/0606607       arxiv  -    2006  Index calculus with double large prime variation for curves of small genus with cyclic c
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    math/0612252       arxiv  -    2006  Sharp Spectral Asymptotics for four-dimensional Schroedinger operator with a strong magn
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    quant-ph/0607148   arxiv  -    2006  Sharp probability estimates for Shor's order-finding algorithm
+                                 venue: arXiv preprint (no journal-ref)
+METADATA    quant-ph/9508027   arxiv  -    1995  Polynomial-Time Algorithms for Prime Factorization and Discrete Logarithms on a Quantum 
+                                 venue: journal-ref: SIAM J.Sci.Statist.Comput. 26 (1997) 1484
+PASS        0704.3628          arxiv  1.00 2007  A nearly optimal discrete query quantum algorithm for evaluating NAND formulas
+                                 venue: arXiv preprint (no journal-ref)
+PASS        0706.0272          arxiv  1.00 2007  Linearizing torsion classes in the Picard group of algebraic curves over finite fields
+                                 venue: journal-ref: Journal of Algebra, 321(2009), 2085-2118
+PASS        0707.4102          arxiv  1.00 2007  A deterministic version of Pollard's p-1 algorithm
+                                 venue: doi: 10.1090/S0025-5718-09-02262-5
+PASS        0801.1821          arxiv  1.00 2008  Hadronic Z- and tau-Decays in Order alpha_s^4
+                                 venue: journal-ref: Phys.Rev.Lett.101:012002,2008
+PASS        0806.1990          arxiv  1.00 2008  Coulomb Branch of the Lorentzian Three Algebra Theory
+                                 venue: arXiv preprint (no journal-ref)
+PASS        0808.0469          arxiv  1.00 2008  Non-degeneracy of Pollard Rho Collisions
+                                 venue: arXiv preprint (no journal-ref)
+PASS        0904.2759          arxiv  1.00 2009  Span programs and quantum query complexity: The general adversary bound is nearly tight 
+                                 venue: journal-ref: Extended abstract in Proc. 50th IEEE Symp. on Foundations of Comput
+PASS        1004.0519          arxiv  1.00 2010  Dickman polylogarithms and their constants
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1005.0205          arxiv  1.00 2010  Practical improvements to class group and regulator computation of real quadratic fields
+                                 venue: journal-ref: Lecture notes in computer science (2010)
+PASS        1005.3494          arxiv  1.00 2010  An asymptotic expansion related to the Dickman function
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1006.3080          arxiv  1.00 2010  Thrust at N^3LL with Power Corrections and a Precision Global Fit for alphas(mZ)
+                                 venue: journal-ref: Phys.Rev.D83:074021,2011
+PASS        1007.2351          arxiv  1.00 2010  Production of Drell--Yan lepton pairs in hadron collisions: transverse-momentum resummat
+                                 venue: journal-ref: Phys.Lett.B696:207-213,2011
+PASS        1009.0287          arxiv  1.00 2010  Random maximal isotropic subspaces and Selmer groups
+                                 venue: journal-ref: J. Amer. Math. Soc. 25 (2012), no. 1, 245-269
+PASS        1010.0262          arxiv  1.00 2010  Precise study of the Z/gamma* boson transverse momentum distribution in ppbar collisions
+                                 venue: journal-ref: Phys.Rev.Lett.106:122001,2011
+PASS        1010.1294          arxiv  1.00 2010  Extreme gaps between eigenvalues of random matrices
+                                 venue: journal-ref: Annals of Probability 2013, Vol. 41, No. 4, 2648-2681
+PASS        1103.5699          arxiv  1.00 2011  First Measurement of the Angular Coefficients of Drell-Yan $e^{+}e^{-}$ pairs in the Z M
+                                 venue: journal-ref: Phys.Rev.Lett.106:241801,2011
+PASS        1109.6398          arxiv  1.00 2011  On nonlinear polynomial selection for the number field sieve
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1111.2321          arxiv  1.00 2011  Disparity in Selmer ranks of quadratic twists of elliptic curves
+                                 venue: journal-ref: Annals of Math. 178 (2013) 287-320
+PASS        1111.4022          arxiv  1.00 2011  Surface code quantum computing by lattice surgery
+                                 venue: journal-ref: 2012 New J. Phys. 14 123011
+PASS        1112.2009          arxiv  1.00 2011  A Gross-Zagier formula for quaternion algebras over totally real fields
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1201.0266          arxiv  1.00 2011  Elliptic curves with large torsion and positive rank over number fields of small degree 
+                                 venue: journal-ref: Period. Math. Hungar. 65 (2012), 193-203
+PASS        1201.2116          arxiv  1.00 2012  Faster deterministic integer factorization
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1201.6180          arxiv  1.00 2012  Effect of changes of variable flavor number scheme on parton distribution functions and 
+                                 venue: journal-ref: Phys.Rev. D86 (2012) 074017
+PASS        1202.5707          arxiv  1.00 2012  Computing prime factors with a Josephson phase qubit quantum processor
+                                 venue: doi: 10.1038/nphys2385
+PASS        1205.5896          arxiv  1.00 2012  Approximate computations with modular curves
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1207.7138          arxiv  1.00 2012  Transverse momentum cross section of $e^+e^-$ pairs in the $Z$-boson region from $p\bar{
+                                 venue: journal-ref: Phys. Rev. D 86, 052010 (2012)
+PASS        1208.0928          arxiv  1.00 2012  Surface codes: Towards practical large-scale quantum computation
+                                 venue: journal-ref: Phys. Rev. A 86, 032324 (2012)
+PASS        1210.1267          arxiv  1.00 2012  Intrinsic transverse momentum and parton correlations from dynamical chiral symmetry bre
+                                 venue: doi: 10.1007/JHEP01(2013)163
+PASS        1210.1451          arxiv  1.00 2012  On the Complexity of the Multivariate Resultant
+                                 venue: journal-ref: Journal of Complexity, 29(2), pp 142-157, 2013
+PASS        1210.3003          arxiv  1.00 2012  Recovering the Period in Shor's Algorithm with Gauss' Algorithm for Lattice Basis Reduct
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1210.6945          arxiv  1.00 2012  Power corrections in the dispersive model for a determination of the strong coupling con
+                                 venue: doi: 10.1140/epjc/s10052-012-2265-x
+PASS        1212.1958          arxiv  1.00 2012  Root optimization of polynomials in the number field sieve
+                                 venue: journal-ref: Mathematics of Computation 84 (2015), 2447-2457
+PASS        1212.5069          arxiv  1.00 2012  Novel constructions for the fault-tolerant Toffoli gate
+                                 venue: journal-ref: Phys. Rev. A 87, 022328 (2013)
+PASS        1212.6703          arxiv  1.00 2012  Quantum "hyperbicycle" low-density parity check codes with finite rate
+                                 venue: journal-ref: Phys. Rev. A 88, 012311 (2013)
+PASS        1301.7007          arxiv  1.00 2013  Pretending to factor large numbers on a quantum computer
+                                 venue: journal-ref: Nature 499, 163-165 (2013)
+PASS        1302.3143          arxiv  1.00 2013  Quantum Walks and Electric Networks
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1303.1998          arxiv  1.00 2013  Selecting polynomials for the Function Field Sieve
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1303.7337          arxiv  1.00 2013  The Cohen-Lenstra heuristics, moments and $p^j$-ranks of some groups
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1304.3061          arxiv  1.00 2013  A variational eigenvalue solver on a quantum processor
+                                 venue: journal-ref: Nature Communications, 5:4213, (2014)
+PASS        1304.6937          arxiv  1.00 2013  Detecting squarefree numbers
+                                 venue: journal-ref: Duke Math. J. 164, no. 2 (2015), 235-275
+PASS        1307.1907          arxiv  1.00 2013  Determination of the top-quark pole mass and strong coupling constant from the t t-bar p
+                                 venue: journal-ref: Phys. Lett. B 728 (2013) 496
+PASS        1308.0395          arxiv  1.00 2013  Most hyperelliptic curves over Q have no rational points
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1309.1393          arxiv  1.00 2013  Nonperturbative contributions to a resummed leptonic angular distribution in inclusive n
+                                 venue: journal-ref: Phys. Rev. D 90, 014030 (2014)
+PASS        1309.2730          arxiv  1.00 2013  A variant of the Bombieri-Vinogradov theorem with explicit constants and applications
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1309.3595          arxiv  1.00 2013  Conditional bounds for the least quadratic non-residue and related problems
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1311.1074          arxiv  1.00 2013  Repeat-Until-Success: Non-deterministic decomposition of single-qubit unitaries
+                                 venue: journal-ref: Quantum Information &amp; Computation 14(15 &amp; 16): 1277-1301 (2
+PASS        1311.1654          arxiv  1.00 2013  Universality of transverse-momentum resummation and hard factors at the NNLO
+                                 venue: doi: 10.1016/j.nuclphysb.2014.02.011
+PASS        1402.6623          arxiv  1.00 2014  PDF reweighting in the Hessian matrix approach
+                                 venue: doi: 10.1007/JHEP12(2014)100
+PASS        1403.0184          arxiv  1.00 2014  Some mathematical remarks on the polynomial selection in NFS
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1403.1852          arxiv  1.00 2014  Delineating parton distributions and the strong coupling
+                                 venue: journal-ref: Phys. Rev. D 89, 074049 (2014)
+PASS        1404.5320          arxiv  1.00 2014  Efficient synthesis of universal Repeat-Until-Success circuits
+                                 venue: journal-ref: Phys. Rev. Lett. 114, 080502 (2015)
+PASS        1406.3073          arxiv  1.00 2014  Universal Non-perturbative Functions for SIDIS and Drell-Yan Processes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1406.3660          arxiv  1.00 2014  Measurement of the $Z/γ^*$ boson transverse momentum distribution in $pp$ collisions at 
+                                 venue: journal-ref: JHEP09(2014)145
+PASS        1408.2738          arxiv  1.00 2014  Odd orders in Shor's factoring algorithm
+                                 venue: journal-ref: Quantum Information Processing, 1570-0755, 1, (2015)
+PASS        1410.3012          arxiv  1.00 2014  An Introduction to PYTHIA 8.2
+                                 venue: doi: 10.1016/j.cpc.2015.01.024
+PASS        1410.4412          arxiv  1.00 2014  HERAFitter, Open Source QCD Fit Project
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1411.4028          arxiv  1.00 2014  A Quantum Approximate Optimization Algorithm
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1412.3820          arxiv  1.00 2014  Understanding the large-distance behavior of transverse-momentum-dependent parton densit
+                                 venue: journal-ref: Phys. Rev. D 91, 074020 (2015)
+PASS        1412.6011          arxiv  1.00 2014  Montgomery's method of polynomial selection for the number field sieve
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1412.7420          arxiv  1.00 2014  LHAPDF6: parton density access in the LHC precision era
+                                 venue: doi: 10.1140/epjc/s10052-015-3318-8
+PASS        1501.04111         arxiv  1.00 2015  A Precise Determination of $α_s$ from the C-parameter Distribution
+                                 venue: journal-ref: Phys. Rev. D 91, 094018 (2015)
+PASS        1502.07953         arxiv  1.00 2015  Unconditional Class Group Tabulation of Imaginary Quadratic Fields to $|Δ| &lt; 2^{40}$
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1503.05221         arxiv  1.00 2015  QCD analysis of $W$- and $Z$-boson production at Tevatron
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1504.00694         arxiv  1.00 2015  Uniform bounds for the number of rational points on curves of small Mordell--Weil rank
+                                 venue: journal-ref: Duke Math. J. 165, no. 16 (2016), 3189-3240
+PASS        1504.03511         arxiv  1.00 2015  Measurement of the Z boson differential cross section in transverse momentum and rapidit
+                                 venue: journal-ref: Phys. Lett. B 749 (2015) 187
+PASS        1505.01700         arxiv  1.00 2015  An Improvement on the Hasse-Weil Bound and applications to Character Sums, Cryptography 
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1505.06736         arxiv  1.00 2015  An Unbiased Hessian Representation for Monte Carlo PDFs
+                                 venue: doi: 10.1140/epjc/s10052-015-3590-7
+PASS        1506.01396         arxiv  1.00 2015  Trading classical and quantum computational resources
+                                 venue: journal-ref: Phys. Rev. X 6, 021043 (2016)
+PASS        1506.02907         arxiv  1.00 2015  Factoring numbers with a single interferogram
+                                 venue: journal-ref: Physical Review A 83, 020304(R) (2011)
+PASS        1506.06042         arxiv  1.00 2015  Combination of Measurements of Inclusive Deep Inelastic $e^{\pm}p$ Scattering Cross Sect
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1507.06937         arxiv  1.00 2015  Vector boson production at hadron colliders: transverse-momentum resummation and leptoni
+                                 venue: doi: 10.1007/JHEP12(2015)047
+PASS        1508.07660         arxiv  1.00 2015  On the possible images of the mod ell representations associated to elliptic curves over
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1508.07661         arxiv  1.00 2015  On the surjectivity of mod $\ell$ representations associated to elliptic curves
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1512.01291         arxiv  1.00 2015  Z-boson production in association with a jet at next-to-next-to-leading order in perturb
+                                 venue: journal-ref: Phys. Rev. Lett. 116, 152001 (2016)
+PASS        1512.02192         arxiv  1.00 2015  Measurement of the transverse momentum and $φ^*_η$ distributions of Drell-Yan lepton pai
+                                 venue: journal-ref: Eur. Phys. J. C 76(5), 1-61 (2016)
+PASS        1605.02162         arxiv  1.00 2016  Point counting on curves using a gonality preserving lift
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1607.04514         arxiv  1.00 2016  Black Box Linear Algebra: Extending Wiedemann's Analysis of a Sparse Matrix Precondition
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1608.05822         arxiv  1.00 2016  A rigorous treatment of moist convection in a single column
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1609.05386         arxiv  1.00 2016  Refined dimensions of cusp forms, and equidistribution and bias of signs
+                                 venue: journal-ref: J. Number Theory, Vol 188 (2018), 1-17
+PASS        1610.05759         arxiv  1.00 2016  The average size of the 3-isogeny Selmer groups of elliptic curves $y^2 = x^3 + k$
+                                 venue: doi: 10.1112/jlms.12271
+PASS        1611.03293         arxiv  1.00 2016  Experimental Adiabatic Quantum Factorization under Ambient Conditions Based on a Solid-S
+                                 venue: journal-ref: Phys. Rev. Lett. 118, 130504 (2017)
+PASS        1611.07995         arxiv  1.00 2016  Factoring using 2n+2 qubits with Toffoli based modular multiplication
+                                 venue: journal-ref: Quantum Information and Computation, Vol. 17, No. 7 &amp; 8 (2017)
+PASS        1612.04161         arxiv  1.00 2016  Existence analysis of a single-phase flow mixture model with van der Waals pressure
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1701.01450         arxiv  1.00 2017  Practical optimization for hybrid quantum-classical algorithms
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1701.05838         arxiv  1.00 2017  Parton Distribution Functions, $α_s$ and Heavy-Quark Masses for LHC Run II
+                                 venue: journal-ref: Phys. Rev. D 96, 014011 (2017)
+PASS        1701.06869         arxiv  1.00 2017  Superzeta functions, regularized products, and the Selberg zeta function on hyperbolic m
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1702.00249         arxiv  1.00 2017  Quantum algorithms for computing short discrete logarithms and factoring RSA integers
+                                 venue: journal-ref: In: PQCrypto 2017, Springer LNCS 10346, 347-363 (2017)
+PASS        1704.08670         arxiv  1.00 2017  The ZX calculus is a language for surface code lattice surgery
+                                 venue: journal-ref: Quantum 4, 218 (2020)
+PASS        1705.00343         arxiv  1.00 2017  The impact of the LHC Z-boson transverse momentum data on PDF determinations
+                                 venue: doi: 10.1007/JHEP07(2017)130
+PASS        1706.07884         arxiv  1.00 2017  Factoring with n+2 clean qubits and n-1 dirty qubits
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1708.07495         arxiv  1.00 2017  Determination of the strong coupling constant $α_s(m_Z)$ from measurements of the total 
+                                 venue: doi: 10.1140/epjc/s10052-017-5340-5
+PASS        1709.02411         arxiv  1.00 2017  Factorization tests and algorithms arising from counting modular forms and automorphic r
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1710.01350         arxiv  1.00 2017  Cohen-Lenstra heuristics and local conditions
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1711.02491         arxiv  1.00 2017  Targeted Fibonacci Exponentiation
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1711.02983         arxiv  1.00 2017  Difference of modular functions and their CM value factorization
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1711.05755         arxiv  1.00 2017  Bottom and Charm Mass determinations from global fits to $Q\bar{Q}$ bound states at N$^3
+                                 venue: doi: 10.1007/JHEP01(2018)122
+PASS        1712.05165         arxiv  1.00 2017  The strong coupling: a theoretical perspective
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1801.01081         arxiv  1.00 2018  High Performance Quantum Modular Multipliers
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1802.03398         arxiv  1.00 2018  Precision determination of the strong coupling constant within a global PDF analysis
+                                 venue: doi: 10.1140/epjc/s10052-018-5897-7
+PASS        1803.00745         arxiv  1.00 2018  Quantum Circuit Learning
+                                 venue: journal-ref: Phys. Rev. A 98, 032309 (2018)
+PASS        1803.01853         arxiv  1.00 2018  Update of the global electroweak fit and constraints on two-Higgs-doublet models
+                                 venue: journal-ref: Eur. Phys. J. C78, 675 (2018)
+PASS        1803.11173         arxiv  1.00 2018  Barren plateaus in quantum neural network training landscapes
+                                 venue: journal-ref: Nature Communications, Volume 9, Article Number: 4812 (2018)
+PASS        1804.05859         arxiv  1.00 2018  The average number of rational points on genus two curves is bounded
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1805.03662         arxiv  1.00 2018  Encoding Electronic Spectra in Quantum Circuits with Linear T Complexity
+                                 venue: journal-ref: Phys. Rev. X 8, 041015 (2018)
+PASS        1805.11948         arxiv  1.00 2018  Combining QED and QCD transverse-momentum resummation for Z boson production at hadron c
+                                 venue: doi: 10.1007/JHEP08(2018)165
+PASS        1805.12037         arxiv  1.00 2018  Performance of hybrid quantum/classical variational heuristics for combinatorial optimiz
+                                 venue: journal-ref: Phys. Rev. E 99, 013304 (2019)
+PASS        1806.05197         arxiv  1.00 2018  The charm/bottom quark mass from heavy quarkonium at N$^3$LO
+                                 venue: doi: 10.1007/JHEP09(2018)167
+PASS        1808.02892         arxiv  1.00 2018  A Game of Surface Codes: Large-Scale Quantum Computing with Lattice Surgery
+                                 venue: journal-ref: Quantum 3, 128 (2019)
+PASS        1808.06709         arxiv  1.00 2018  Low overhead quantum computation using lattice surgery
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1808.08927         arxiv  1.00 2018  Variational Quantum Factoring
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1809.02254         arxiv  1.00 2018  Quantum algorithms and approximating polynomials for composed functions with shared inpu
+                                 venue: journal-ref: Quantum 5, 543 (2021)
+PASS        1812.04133         arxiv  1.00 2018  Serre's constant of elliptic curves over the rationals
+                                 venue: journal-ref: Exp. Math. 31 (2022), no. 2, 518-536
+PASS        1812.10505         arxiv  1.00 2018  Measurement of the $\mathrm{t}\overline{\mathrm{t}}$ production cross section, the top q
+                                 venue: journal-ref: Eur. Phys. J. C 79 (2019) 368
+PASS        1901.07296         arxiv  1.00 2019  Global existence for a two-phase flow model with cross diffusion
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1902.02134         arxiv  1.00 2019  Qubitization of Arbitrary Basis Quantum Chemistry Leveraging Sparsity and Low Rank Facto
+                                 venue: journal-ref: Quantum 3, 208 (2019)
+PASS        1902.08158         arxiv  1.00 2019  High precision determination of $α_s$ from a global fit of jet rates
+                                 venue: journal-ref: JHEP 08 (2019) 129
+PASS        1902.10673         arxiv  1.00 2019  Improved Fault-Tolerant Quantum Simulation of Condensed-Phase Correlated Electrons via T
+                                 venue: journal-ref: Quantum 4, 296 (2020)
+PASS        1904.02703         arxiv  1.00 2019  Degenerate Quantum LDPC Codes With Good Finite Length Performance
+                                 venue: journal-ref: Quantum 5, 585 (2021)
+PASS        1904.07356         arxiv  1.00 2019  Asymptotically Efficient Quantum Karatsuba Multiplication
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1905.06903         arxiv  1.00 2019  Magic State Distillation: Not as Costly as You Think
+                                 venue: journal-ref: Quantum 3, 205 (2019)
+PASS        1905.07682         arxiv  1.00 2019  Windowed quantum arithmetic
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1905.09084         arxiv  1.00 2019  Revisiting Shor's quantum algorithm for computing general discrete logarithms
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1909.03123         arxiv  1.00 2019  On the Universality of the Quantum Approximate Optimization Algorithm
+                                 venue: journal-ref: Quantum Information Processing 19, 291 (2020)
+PASS        1910.07049         arxiv  1.00 2019  DYTurbo: Fast predictions for Drell-Yan processes
+                                 venue: doi: 10.1140/epjc/s10052-020-7757-5
+PASS        1910.09592         arxiv  1.00 2019  On speeding up factoring with quantum SAT solvers
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1911.06156         arxiv  1.00 2019  Syntax-Infused Transformer and BERT models for Machine Translation and Natural Language 
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1911.09176         arxiv  1.00 2019  Lower Bounds for Function Inversion with Quantum Advice
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1912.00345         arxiv  1.00 2019  On oracle factoring of integers
+                                 venue: arXiv preprint (no journal-ref)
+PASS        1912.06532         arxiv  1.00 2019  Non-perturbative structure of semi-inclusive deep-inelastic and Drell-Yan scattering at 
+                                 venue: doi: 10.1007/JHEP06(2020)137
+PASS        1912.07550         arxiv  1.00 2019  Transverse-momentum-dependent parton distributions up to N$^3$LL from Drell-Yan data
+                                 venue: doi: 10.1007/JHEP07(2020)117
+PASS        1912.10053         arxiv  1.00 2019  New CTEQ global analysis of quantum chromodynamics with high-precision data from the LHC
+                                 venue: journal-ref: Phys. Rev. D 103, 014013 (2021)
+PASS        1912.11733         arxiv  1.00 2019  Strong coupling $α_s(m_Z)$ extraction from a combined NNLO analysis of inclusive electro
+                                 venue: doi: 10.1007/JHEP06(2020)016
+PASS        2001.04986         arxiv  1.00 2020  Why $α_s$ Cannot be Determined from Hadronic Processes without Simultaneously Determinin
+                                 venue: doi: 10.1140/epjc/s10052-020-7748-6
+PASS        2001.09076         arxiv  1.00 2020  ECM factorization with QRT maps
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2002.03811         arxiv  1.00 2020  Efficient ECM factorization in parallel with the Lyness map
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2003.00077         arxiv  1.00 2020  New Rank Records For Elliptic Curves Having Rational Torsion
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2003.02288         arxiv  1.00 2020  Self-contained definition of the Collins-Soper kernel
+                                 venue: journal-ref: Phys. Rev. Lett. 125, 192002 (2020)
+PASS        2004.05150         arxiv  1.00 2020  Longformer: The Long-Document Transformer
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2005.04545         arxiv  1.00 2020  Improved strong coupling determinations from hadronic decays of electroweak bosons at N$
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2007.02689         arxiv  1.00 2020  Number Field Sieve with Provable Complexity
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2008.04020         arxiv  1.00 2020  Coherent spin qubit transport in silicon
+                                 venue: journal-ref: Nature Communications 12, 4114 (2021)
+PASS        2009.06514         arxiv  1.00 2020  Exploring non-perturbative Sudakov factor via $Z^0$-boson production in $pp$ collisions
+                                 venue: doi: 10.1016/j.physletb.2021.136356
+PASS        2010.01250         arxiv  1.00 2020  CorrAttack: Black-box Adversarial Attack with Structured Search
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2011.04149         arxiv  1.00 2020  Focus beyond quadratic speedups for error-corrected quantum advantage
+                                 venue: journal-ref: PRX Quantum 2, 010103 (2021)
+PASS        2011.14114         arxiv  1.00 2020  Infrared Renormalons in Kinematic Distributions for Hadron Collider Processes
+                                 venue: journal-ref: JHEP 06 (2021), 018
+PASS        2012.04684         arxiv  1.00 2020  Parton distributions from LHC, HERA, Tevatron and fixed target data: MSHT20 PDFs
+                                 venue: journal-ref: The European Physical Journal C volume 81, Article number: 341 (202
+PASS        2012.09238         arxiv  1.00 2020  Early fault-tolerant simulations of the Hubbard model
+                                 venue: journal-ref: Quantum Sci. Technol. 7 015007 (2021)
+PASS        2012.09265         arxiv  1.00 2020  Variational Quantum Algorithms
+                                 venue: journal-ref: Nature Reviews Physics 3, 625-644 (2021)
+PASS        2012.15297         arxiv  1.00 2020  Trapping Sets of Quantum LDPC Codes
+                                 venue: journal-ref: Quantum 5, 562 (2021)
+PASS        2101.07267         arxiv  1.00 2021  Training variational quantum algorithms is NP-hard
+                                 venue: journal-ref: Phys. Rev. Lett. 127, 120502 (2021)
+PASS        2101.09151         arxiv  1.00 2021  Probability Analysis and Comparison of Well-Known Integer Factorization Algorithms
+                                 venue: journal-ref: Global Journal of Pure and Applied Mathematics, Volume 17, Number 1
+PASS        2102.01192         arxiv  1.00 2021  Generative Spoken Language Modeling from Raw Audio
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2102.08039         arxiv  1.00 2021  Higgs $p_T$ Spectrum and Total Cross Section with Fiducial Cuts at Third Resummed and Fi
+                                 venue: journal-ref: Phys. Rev. Lett. 127, 072001 (2021)
+PASS        2103.04974         arxiv  1.00 2021  Drell-Yan lepton-pair production: $q_T$ resummation at N$^3$LL accuracy and fiducial cro
+                                 venue: doi: 10.1103/PhysRevD.104.L111503
+PASS        2103.05247         arxiv  1.00 2021  Pretrained Transformers as Universal Computation Engines
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2103.06159         arxiv  1.00 2021  Factoring 2048-bit RSA Integers in 177 Days with 13436 Qubits and a Multimode Memory
+                                 venue: journal-ref: Phys. Rev. Lett. 127, 140503 (2021)
+PASS        2103.06309         arxiv  1.00 2021  Quantum Low-Density Parity-Check Codes
+                                 venue: journal-ref: PRX Quantum 2 (4), 040101, 2021
+PASS        2103.08612         arxiv  1.00 2021  Interleaving: Modular architectures for fault-tolerant photonic quantum computing
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2104.00355         arxiv  1.00 2021  Speech Resynthesis from Discrete Disentangled Self-Supervised Representations
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2104.07509         arxiv  1.00 2021  Fiducial Higgs and Drell-Yan distributions at N$^3$LL$^\prime$+NNLO with RadISH
+                                 venue: doi: 10.1007/JHEP09(2021)108
+PASS        2105.04370         arxiv  1.00 2021  An improvement of the Hasse-Weil bound for Artin-Schreier curves via cyclotomic function
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2106.04624         arxiv  1.00 2021  SpeechBrain: A General-Purpose Speech Toolkit
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2106.10289         arxiv  1.00 2021  An investigation of the $α_S$ and heavy quark mass dependence in the MSHT20 global PDF a
+                                 venue: journal-ref: Eur. Phys. J. C 81, 744 (2021)
+PASS        2106.11260         arxiv  1.00 2021  The $q_T$ and $Δφ$ spectra in W and Z production at the LHC at N$^3$LL'+N$^2$LO
+                                 venue: journal-ref: JHEP 10 (2021) 088
+PASS        2107.05604         arxiv  1.00 2021  Direct speech-to-speech translation with discrete units
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2108.03628         arxiv  1.00 2021  On the l.c.m. of shifted Lucas numbers
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2108.08897         arxiv  1.00 2021  On linear power corrections in certain collider observables
+                                 venue: doi: 10.1007/JHEP01(2022)093
+PASS        2109.02653         arxiv  1.00 2021  The Path to Proton Structure at One-Percent Accuracy
+                                 venue: doi: 10.1140/epjc/s10052-022-10328-7
+PASS        2109.02746         arxiv  1.00 2021  Universal quantum computing with twist-free and temporally encoded lattice surgery
+                                 venue: journal-ref: PRX Quantum 3, 010331 (2022)
+PASS        2109.03264         arxiv  1.00 2021  Text-Free Prosody-Aware Generative Spoken Language Modeling
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2109.03537         arxiv  1.00 2021  On the Transferability of Pre-trained Language Models: A Study from Artificial Datasets
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2109.12072         arxiv  1.00 2021  SD-QA: Spoken Dialectal Question Answering for the Real World
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2110.10794         arxiv  1.00 2021  Low-overhead fault-tolerant quantum computing using long-range connectivity
+                                 venue: journal-ref: Sci. Adv. 8, eabn1717 (2022)
+PASS        2111.05176         arxiv  1.00 2021  The Variational Quantum Eigensolver: a review of methods and best practices
+                                 venue: doi: 10.1016/j.physrep.2022.08.003
+PASS        2111.07402         arxiv  1.00 2021  Textless Speech Emotion Conversion using Discrete and Decomposed Representations
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2111.09849         arxiv  1.00 2021  FLAG Review 2021
+                                 venue: journal-ref: Eur.Phys.J.C 82 (2022) 10, 869
+PASS        2111.10431         arxiv  1.00 2021  Measurement and QCD analysis of double-differential inclusive jet cross sections in prot
+                                 venue: journal-ref: JHEP 02 (2022) 142; JHEP 12 (2022) 035
+PASS        2111.13856         arxiv  1.00 2021  Benchmarks for quantum computers from Shor's algorithm
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2111.14509         arxiv  1.00 2021  Fiducial perturbative power corrections within the q$_{\bf T}$ subtraction formalism
+                                 venue: doi: 10.1140/epjc/s10052-022-10510-x
+PASS        2112.03923         arxiv  1.00 2021  A quantum processor based on coherent transport of entangled atom arrays
+                                 venue: journal-ref: Nature 604, 451-456 (2022)
+PASS        2112.08352         arxiv  1.00 2021  Textless Speech-to-Speech Translation on Real Data
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2112.13847         arxiv  1.00 2021  Quantum Algorithm for the Longest Trail Problem
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2201.13424         arxiv  1.00 2022  On Stevenhagen's conjecture
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2202.12401         arxiv  1.00 2022  A deterministic algorithm for finding $r$-power divisors
+                                 venue: doi: 10.1007/s40993-022-00387-w
+PASS        2203.00633         arxiv  1.00 2022  Transformer Grammars: Augmenting Transformer Language Models with Syntactic Inductive Bi
+                                 venue: doi: 10.1162/tacl_a_00526
+PASS        2203.01565         arxiv  1.00 2022  Third order fiducial predictions for Drell-Yan at the LHC
+                                 venue: doi: 10.1103/PhysRevLett.128.252001
+PASS        2203.04911         arxiv  1.00 2022  DUAL: Discrete Spoken Unit Adaptive Learning for Textless Spoken Question Answering
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2203.05394         arxiv  1.00 2022  Determination of the strong-coupling constant from the $Z$-boson transverse-momentum dis
+                                 venue: journal-ref: Eur.Phys.J.C 84 (2024) 1, 39
+PASS        2203.10064         arxiv  1.00 2022  Shorter quantum circuits via single-qubit gate approximation
+                                 venue: journal-ref: Quantum 7, 1208 (2023)
+PASS        2203.16634         arxiv  1.00 2022  Transformer Language Models without Positional Encodings Still Learn Positional Informat
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2204.10671         arxiv  1.00 2022  Exponential Separation between Quantum and Classical Ordered Binary Decision Diagrams, R
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2205.06125         arxiv  1.00 2022  Stabilizer Inactivation for Message-Passing Decoding of Quantum LDPC Codes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2205.10074         arxiv  1.00 2022  Integer factorization as subset-sum problem
+                                 venue: doi: 10.1016/j.jnt.2023.02.010
+PASS        2207.04739         arxiv  1.00 2022  Approximate N$^{3}$LO Parton Distribution Functions with Theoretical Uncertainties: MSHT
+                                 venue: journal-ref: The European Physical Journal C volume 83, Article number: 185 (202
+PASS        2207.07056         arxiv  1.00 2022  Fiducial Drell-Yan production at the LHC improved by transverse-momentum resummation at 
+                                 venue: journal-ref: Phys. Rev. D 107, L011506, 2023
+PASS        2208.05603         arxiv  1.00 2022  Explicit classification of isogeny graphs of rational elliptic curves
+                                 venue: doi: 10.1142/S179304212350046X
+PASS        2208.07085         arxiv  1.00 2022  On quantum factoring using noisy intermediate scale quantum computers
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2209.15586         arxiv  1.00 2022  A Generalization of Lehman's Method
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2210.11197         arxiv  1.00 2022  Noisy Tree Data Structures and Quantum Applications
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2210.15844         arxiv  1.00 2022  Opportunities and Challenges in Fault-Tolerant Quantum Computation
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2211.07629         arxiv  1.00 2022  Assessing requirements to scale to practical quantum advantage
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2211.14399         arxiv  1.00 2022  $S$-unit equation in two variables and Padé approximations
+                                 venue: journal-ref: International Journal of Number Theory, Vol. 19, No. 10, (2023), pp
+PASS        2212.04999         arxiv  1.00 2022  An Implementation of the Extended Tower Number Field Sieve using 4d Sieving in a Box and
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2212.06127         arxiv  1.00 2022  On the index of appearance of a Lucas sequence
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2212.12372         arxiv  1.00 2022  Factoring integers with sublinear resources on a superconducting quantum processor
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2212.14205         arxiv  1.00 2022  Lecture Notes on Quantum Algorithms
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2304.08718         arxiv  1.00 2023  Generalized Implicit Factorization Problem
+                                 venue: doi: 10.1007/978-3-031-53368-6_18
+PASS        2304.10713         arxiv  1.00 2023  Axial correlation revivals and number factorization with structured random waves
+                                 venue: doi: 10.1103/PhysRevApplied.20.L021004
+PASS        2305.12773         arxiv  1.00 2023  How to wire a 1000-qubit trapped ion quantum computer
+                                 venue: journal-ref: PRX Quantum 4, 040313 (2023)
+PASS        2306.08585         arxiv  1.00 2023  How to compute a 256-bit elliptic curve private key with only 50 million Toffoli gates
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2306.11353         arxiv  1.00 2023  Integral points on elliptic curves with $j$-invariant $0$ over $k(t)$
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2307.03065         arxiv  1.00 2023  Quantum Complexity for Discrete Logarithms and Related Problems
+                                 venue: doi: 10.1007/978-3-031-68391-6_1
+PASS        2308.07915         arxiv  1.00 2023  High-threshold and low-overhead fault-tolerant quantum memory
+                                 venue: journal-ref: Nature 627, 778-782 (2024)
+PASS        2308.11539         arxiv  1.00 2023  Finding Orientations of Supersingular Elliptic Curves and Quaternion Orders
+                                 venue: doi: 10.1007/s10623-024-01435-5
+PASS        2309.01754         arxiv  1.00 2023  On the success probability of the quantum algorithm for the short DLP
+                                 venue: journal-ref: IACR Commun. Cryptol. 3(1):10 (2026)
+PASS        2309.05295         arxiv  1.00 2023  Discrete Denoising Diffusion Approach to Integer Factorization
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2309.08198         arxiv  1.00 2023  Scaling up prime factorization with self-organizing gates: A memcomputing approach
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2309.10757         arxiv  1.00 2023  Integer Factorization by Quantum Measurements
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2310.00899         arxiv  1.00 2023  Space-Efficient and Noise-Robust Quantum Factoring
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2311.05545         arxiv  1.00 2023  Extending Regev's factoring algorithm to compute discrete logarithms
+                                 venue: journal-ref: In: PQCrypto 2024, Springer LNCS 14772, 211-242 (2024)
+PASS        2403.03991         arxiv  1.00 2024  Efficient Magic State Distillation by Zero-Level Distillation
+                                 venue: journal-ref: PRX Quantum 6, 020356 (2025)
+PASS        2403.18006         arxiv  1.00 2024  Fast quantum integer multiplication with zero ancillas
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2404.04239         arxiv  1.00 2024  Large sieve inequalities for exceptional Maass forms and the greatest prime factor of $n
+                                 venue: journal-ref: Forum of Mathematics, Pi 14 (2026) e8
+PASS        2404.16450         arxiv  1.00 2024  Unconditional correctness of recent quantum algorithms for factoring and computing discr
+                                 venue: journal-ref: Forum of Mathematics, Pi 14 (2026) e5
+PASS        2405.20552         arxiv  1.00 2024  New large value estimates for Dirichlet polynomials
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2406.18764         arxiv  1.00 2024  Resource overheads and attainable rates for trapped-ion lattice surgery
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2406.20071         arxiv  1.00 2024  SAT and Lattice Reduction for Integer Factorization
+                                 venue: doi: 10.1145/3666000.3669712
+PASS        2407.18393         arxiv  1.00 2024  Improved QLDPC Surgery: Logical Measurements and Bridging Codes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2408.10001         arxiv  1.00 2024  Coprime Bivariate Bicycle Codes and Their Layouts on Cold Atoms
+                                 venue: journal-ref: Quantum 10, 2009 (2026)
+PASS        2408.13687         arxiv  1.00 2024  Quantum error correction below the surface code threshold
+                                 venue: journal-ref: Nature 638 (2025) 920-926
+PASS        2409.03486         arxiv  1.00 2024  Integer Factorization via Continued Fractions and Quadratic Forms
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2409.05761         arxiv  1.00 2024  Asymptotics for smooth numbers in short intervals
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2409.12688         arxiv  1.00 2024  Wild conductor exponents of curves
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2409.14283         arxiv  1.00 2024  Flag Proxy Networks: Tackling the Architectural, Scheduling, and Decoding Obstacles of Q
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2409.14765         arxiv  1.00 2024  Compare the Pair: Rotated vs. Unrotated Surface Codes at Equal Logical Error Rates
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2409.17595         arxiv  1.00 2024  Magic state cultivation: growing T states as cheap as CNOT gates
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2410.02213         arxiv  1.00 2024  Low-overhead fault-tolerant quantum computation by gauging logical operators
+                                 venue: journal-ref: Nature Physics 22, 598-603 (2026)
+PASS        2410.02753         arxiv  1.00 2024  Fault-tolerant logical measurements via homological measurement
+                                 venue: journal-ref: Phys. Rev. X 15, 021088 (2025)
+PASS        2410.03628         arxiv  1.00 2024  Universal adapters between quantum LDPC codes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2410.14397         arxiv  1.00 2024  The State of Factoring on Quantum Computers
+                                 venue: journal-ref: NIC Symposium 2025, Publication Series of the John von Neumann Inst
+PASS        2410.22210         arxiv  1.00 2024  The Cohen--Lenstra moments over function fields via the stable homology of non-splitting
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2411.10406         arxiv  1.00 2024  How to Build a Quantum Supercomputer: Scaling from Hundreds to Millions of Qubits
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2411.17330         arxiv  1.00 2024  Derandomizing Multivariate Polynomial Factoring for Low Degree Factors
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2412.05425         arxiv  1.00 2024  Compiling the surface code to crossbar spin qubit architectures
+                                 venue: journal-ref: Phys. Rev. B 111, 115307 (2025)
+PASS        2501.10883         arxiv  1.00 2025  Genus formulas for families of modular curves
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2502.10530         arxiv  1.00 2025  Smooth Numbers in Short Intervals
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2502.11402         arxiv  1.00 2025  Enhanced Algorithms for the Representation of integers by Binary Quadratic forms: Reduct
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2502.19406         arxiv  1.00 2025  Single-shot and two-shot decoding with generalized bicycle codes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2503.00950         arxiv  1.00 2025  Decomposition of RSA modulus applying even order elliptic curves
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2503.05003         arxiv  1.00 2025  Parallel Logical Measurements via Quantum Code Surgery
+                                 venue: doi: 10.1103/gj8x-n5gg
+PASS        2503.10158         arxiv  1.00 2025  Solving Modular Linear Systems with a Constraint by parallel decomposition of the Smith 
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2503.10390         arxiv  1.00 2025  Extractors: QLDPC Architectures for Efficient Pauli-Based Computation
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2503.15428         arxiv  1.00 2025  Division polynomials for arbitrary isogenies
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2504.21168         arxiv  1.00 2025  A Summation-Based Algorithm For Integer Factorization
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2505.15907         arxiv  1.00 2025  Resource Analysis of Low-Overhead Transversal Architectures for Reconfigurable Atom Arra
+                                 venue: doi: 10.1145/3695053.3731039
+PASS        2505.17185         arxiv  1.00 2025  Role of Nonstabilizerness in Quantum Optimization
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2506.03094         arxiv  1.00 2025  Tour de gross: A modular quantum computer based on bivariate bicycle codes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2506.07668         arxiv  1.00 2025  On Deterministically Finding an Element of High Order Modulo a Composite
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2507.07179         arxiv  1.00 2025  Magic phase transitions in monitored gaussian fermions
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2508.05331         arxiv  1.00 2025  Quantum Circuit Benchmarking on IBM Brisbane: Performance Insights from Superconducting 
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2508.19160         arxiv  1.00 2025  Architecting Distributed Quantum Computers: Design Insights from Resource Estimation
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2509.05212         arxiv  1.00 2025  Fold-transversal surface code cultivation
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2509.12705         arxiv  1.00 2025  Deterministic polynomial factorisation modulo many primes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2510.04521         arxiv  1.00 2025  Fast surgery for quantum LDPC codes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2510.13292         arxiv  1.00 2025  Counting rational points on elliptic and hyperelliptic curves over function fields
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2510.17286         arxiv  1.00 2025  Trapped-ion two-qubit gates with &gt;99.99% fidelity without ground-state cooling
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2511.02733         arxiv  1.00 2025  Ekedahl-Oort types of $\mathbb{Z}/2\mathbb{Z}$-covers in characteristic $2$
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2511.15989         arxiv  1.00 2025  Explicit construction of low-overhead gadgets for gates on quantum LDPC codes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2512.01588         arxiv  1.00 2025  Rigorous methods for computational number theory
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2512.20636         arxiv  1.00 2025  Data-Free Pruning of Self-Attention Layers in LLMs
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2512.24685         arxiv  1.00 2025  A fast and exact approach for stabilizer Rényi entropy via the XOR-FWHT algorithm
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2601.14006         arxiv  1.00 2026  Computing Crystalline Cohomology and p-Divisible Groups for Curves over Finite Fields
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2603.28627         arxiv  1.00 2026  Shor's algorithm is possible with as few as 10,000 reconfigurable atomic qubits
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2603.28846         arxiv  1.00 2026  Securing Elliptic Curve Cryptocurrencies against Quantum Vulnerabilities: Resource Estim
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2605.05347         arxiv  1.00 2026  The true cost of factoring: Linking magic and number-theoretic complexity in Shor's algo
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2605.08846         arxiv  1.00 2026  Rational Base Descent: A Deterministic Algorithm for Factoring Structured Semiprimes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2605.09592         arxiv  1.00 2026  Deterministically finding an element of large order in $\mathbb{Z}_N^*$
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2605.18555         arxiv  1.00 2026  Three Brillhart-Lehmer-Selfridge primality proofs for Wagstaff numbers
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2606.06024         arxiv  1.00 2026  Recent Progress around Cohen-Lenstra Heuristics
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2606.07785         arxiv  1.00 2026  Explicit bounds for Dickman's function
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2606.13018         arxiv  1.00 2026  Multi-target hyperbolic sieves and elliptic trace obstructions
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2607.21883         arxiv  1.00 2026  Explicit bounds for Buchstab's function
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2609.15166         arxiv  1.00 2026  On the largest prime factors less than $y$ of consecutive shifted primes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2609.24316         arxiv  1.00 2026  A Sharp Noise Threshold for Shor's Quantum Factoring and Discrete Log Algorithms
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2609.25393         arxiv  1.00 2026  On the generation of multiplicative groups by small primes
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2609.35610         arxiv  1.00 2026  On the largest prime factors of $p-1$ and $p+1$
+                                 venue: arXiv preprint (no journal-ref)
+PASS        2610.02101         arxiv  1.00 2026  Time-space lower bounds for breaking quantum cryptography
+                                 venue: arXiv preprint (no journal-ref)
+PASS        cond-mat/9712010   arxiv  1.00 1997  The Quantum Mechanical Potential for the Prime Numbers
+                                 venue: arXiv preprint (no journal-ref)
+PASS        hep-ph/0002078     arxiv  1.00 2000  Higher-Order QCD Corrections in Prompt Photon Production
+                                 venue: journal-ref: Phys.Rev.Lett.84:4296-4299,2000
+PASS        hep-ph/0008184     arxiv  1.00 2000  Universality of non-leading logarithmic contributions in transverse-momentum distributio
+                                 venue: journal-ref: Nucl.Phys. B596 (2001) 299-312
+PASS        hep-ph/0012348     arxiv  1.00 2000  Role of the nonperturbative input in QCD resummed Drell-Yan $Q_T$-distributions
+                                 venue: journal-ref: Phys.Rev.D63:114011,2001
+PASS        hep-ph/0102237     arxiv  1.00 2001  Nonperturbative corrections to the Drell-Yan transverse momentum distribution
+                                 venue: journal-ref: JHEP 0105:004,2001
+PASS        hep-ph/0202251     arxiv  1.00 2002  Joint resummation in electroweak boson production
+                                 venue: journal-ref: Phys.Rev.D66:014011,2002
+PASS        hep-ph/0408244     arxiv  1.00 2004  Efficient evolution of unpolarized and polarized parton distributions with QCD-PEGASUS
+                                 venue: journal-ref: Comput.Phys.Commun.170:65-92,2005
+PASS        hep-ph/0411261     arxiv  1.00 2004  The Four-Loop QCD Beta-Function and Anomalous Dimensions
+                                 venue: journal-ref: Nucl.Phys.B710:485-498,2005
+PASS        hep-ph/0506225     arxiv  1.00 2005  Universality of the Collins-Soper-Sterman nonperturbative function in gauge boson produc
+                                 venue: journal-ref: Phys.Lett. B633 (2006) 710-714
+PASS        hep-ph/0508068     arxiv  1.00 2005  Transverse-momentum resummation and the spectrum of the Higgs boson at the LHC
+                                 venue: journal-ref: Nucl.Phys.B737:73-120,2006
+PASS        hep-ph/0601245     arxiv  1.00 2006  A Variable-Flavour Number Scheme for NNLO
+                                 venue: journal-ref: Phys.Rev.D73:054019,2006
+PASS        hep-ph/0607200     arxiv  1.00 2006  Non--Singlet QCD Analysis of Deep Inelastic World Data at \boldmath $O(α_s^3)$
+                                 venue: journal-ref: Nucl.Phys.B774:182-207,2007
+PASS        hep-ph/9311341     arxiv  1.00 1993  The Nonperturbative Regime in QCD Resummation for Gauge Boson Production at Hadron Colli
+                                 venue: journal-ref: Phys.Rev.D50:4239,1994
+PASS        hep-ph/9604351     arxiv  1.00 1996  The Resummation of Soft Gluon in Hadronic Collisions
+                                 venue: journal-ref: Nucl.Phys. B478 (1996) 273-310
+PASS        hep-ph/9701390     arxiv  1.00 1997  The four-loop beta-function in Quantum Chromodynamics
+                                 venue: journal-ref: Phys.Lett.B400:379-384,1997
+PASS        hep-ph/9704239     arxiv  1.00 1997  Vector boson production in hadronic collisions
+                                 venue: journal-ref: Nucl.Phys.B503:309-338,1997
+PASS        hep-ph/9709442     arxiv  1.00 1997  An Ordered Analysis of Heavy Flavour Production in Deep Inelastic Scattering
+                                 venue: journal-ref: Phys.Rev.D57:6871-6898,1998
+PASS        hep-ph/9905391     arxiv  1.00 1999  New Fits for the Non-Perturbative Parameters in the CSS Resummation Formalism
+                                 venue: journal-ref: Phys.Rev.D63:013004,2001
+PASS        math/0612734       arxiv  1.00 2006  Elliptic curves with 3-adic Galois representation surjective mod 3 but not mod 9
+                                 venue: arXiv preprint (no journal-ref)
+PASS        math/9204234       arxiv  1.00 1992  Algorithms in algebraic number theory
+                                 venue: journal-ref: Bull. Amer. Math. Soc. (N.S.) 26 (1992) 211-244
+PASS        quant-ph/0002066   arxiv  1.00 2000  Quantum lower bounds by quantum arguments
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0007010   arxiv  1.00 2000  Space-Time Structure as Hidden Variable
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0010034   arxiv  1.00 2000  Shor's Quantum Factoring Algorithm
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0011013   arxiv  1.00 2000  Basic concepts in quantum computation
+                                 venue: doi: 10.1007/3-540-45338-5_10
+PASS        quant-ph/0012086   arxiv  1.00 2000  Entangled coherent states: teleportation and decoherence
+                                 venue: journal-ref: Phys. Rev. A 64, 022313 (2001)
+PASS        quant-ph/0102078   arxiv  1.00 2001  Quantum complexities of ordered searching, sorting, and element distinctness
+                                 venue: journal-ref: 28th ICALP, LNCS 2076, pp. 346-357, July 2001
+PASS        quant-ph/0112055   arxiv  1.00 2001  A Refinement of Shor's Algorithm
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0201067   arxiv  1.00 2002  An approximate Fourier transform useful in quantum factoring
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0202053   arxiv  1.00 2002  Most Bell Operators do not Significantly Violate Locality
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0208112   arxiv  1.00 2002  Creating superpositions that correspond to efficiently integrable probability distributi
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0208183   arxiv  1.00 2002  Improving the Success Probability for Shor's Factoring Algorithm
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0301141   arxiv  1.00 2003  Shor's discrete logarithm quantum algorithm for elliptic curves
+                                 venue: journal-ref: QIC 3 (No. 4) (2003) pp.317-344
+PASS        quant-ph/0303175   arxiv  1.00 2003  Shor's Algorithm for Factoring Large Integers
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0305028   arxiv  1.00 2003  Polynomial degree vs. quantum query complexity
+                                 venue: journal-ref: Journal of Computer and System Sciences, 72(2): 220-238, 2006
+PASS        quant-ph/0305179   arxiv  1.00 2003  Polynomial Degree and Lower Bounds in Quantum Complexity: Collision and Element Distinct
+                                 venue: journal-ref: Theory of Computing, 1:37-46, 2005
+PASS        quant-ph/0310134   arxiv  1.00 2003  Quantum Algorithms for the Triangle Problem
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0311001   arxiv  1.00 2003  Quantum walk algorithm for element distinctness
+                                 venue: journal-ref: SIAM Journal on Computing, 37(1):210-239, 2007
+PASS        quant-ph/0311039   arxiv  1.00 2003  Multilinear Formulas and Skepticism of Quantum Computing
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0311060   arxiv  1.00 2003  On the power of Ambainis's lower bounds
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/0402095   arxiv  1.00 2004  Limitations of Quantum Advice and One-Way Communication
+                                 venue: journal-ref: Theory of Computing 1(1):1-28, 2005
+PASS        quant-ph/0403025   arxiv  1.00 2004  Universal Quantum Computation with ideal Clifford gates and noisy ancillas
+                                 venue: journal-ref: Phys. Rev. A 71, 022316 (2005)
+PASS        quant-ph/0406145   arxiv  1.00 2004  A precise estimation of the computational complexity in Shor's factoring algorithm
+                                 venue: journal-ref: Applied Mathematics and Information Science, Vol.1(2007),pp.313-322
+PASS        quant-ph/0406196   arxiv  1.00 2004  Improved Simulation of Stabilizer Circuits
+                                 venue: journal-ref: Phys. Rev. A 70, 052328 (2004) (14 pages)
+PASS        quant-ph/0508138   arxiv  1.00 2005  Jensen-Shannon divergence as a measure of distinguishability between mixed quantum state
+                                 venue: doi: 10.1103/PhysRevA.72.052310
+PASS        quant-ph/0607046   arxiv  1.00 2006  Quantum Hidden Subgroup Algorithms: An Algorithmic Toolkit
+                                 venue: arXiv preprint (no journal-ref)
+PASS        quant-ph/9503007   arxiv  1.00 1995  Quantum Computers, Factoring, and Decoherence
+                                 venue: doi: 10.1126/science.270.5242.1633
+PASS        quant-ph/9508015   arxiv  1.00 1995  Atomic Supersymmetry, Oscillators, and the Penning Trap
+                                 venue: arXiv preprint (no journal-ref)
+------------------------------------------------------------------------------------------------
+SUMMARY: METADATA=86  PASS=334  UNVERIFIED=8
+VERDICT: 94 row(s) need human eyes

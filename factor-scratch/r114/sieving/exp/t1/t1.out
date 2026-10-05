@@ -1,0 +1,114 @@
+# (2d98fe1) /home/raver1975/factor47/V11/cado/cado-nfs/build/Ecstasis/sieve/las -poly /tests/sieve/c90_21505.poly -lim 100000 -lpb 20 -mfb 44 -I 11 -t 1 -q0 1000 -fb1 fb1.txt -v
+# Compiled with gcc 13.3.0
+# Compilation flags (C) -Werror=all -Werror=extra -std=c99 -Wall -Wextra -O2  -msse3 -mssse3 -msse4.1 -mpopcnt -mavx -mpclmul -mavx2
+# Compilation flags (C++) -Werror=extra -Werror=all -export-dynamic -std=c++20 -Wno-c++11-compat -Wall -Wextra -O2  -Wno-stringop-overflow -Wno-literal-suffix -msse3 -mssse3 -msse4.1 -mpopcnt -mavx -mpclmul -mavx2
+# las flags: BUCKET_SIEVE_POWERS LOGNORM_GUARD_BITS=1.00
+Error, in cado_poly_read: could not open /tests/sieve/c90_21505.poly
+Usage: /home/raver1975/factor47/V11/cado/cado-nfs/build/Ecstasis/sieve/las <parameters>
+In the names and in the descriptions of the parameters, below there are often
+aliases corresponding to the convention that 0 is the rational side and 1
+is the algebraic side. If the two sides are algebraic, then the word
+'rational' just means the side number 0. Note also that for a rational
+side, the factor base is recomputed on the fly (or cached), and there is
+no need to provide a fb0 parameter.
+
+The available parameters are the following:
+    poly                 polynomial file
+    skew                 (alias -S) skewness
+    hint-table           filename with per-special q sieving data
+    fuzzy-descent        Allow descent steps to start over with fuzzier and fuzzier parameters, with no limit
+    descent-max-increase-A When retrying steps in the descent, limit the increase of A to this value
+    descent-max-increase-lpb When retrying steps in the descent, limit the increase of lpb to this value
+    poly                 polynomial file
+    skew                 (alias -S) skewness
+    lim                  sieving bounds per side
+    lpb                  large prime bounds per side, in bits
+    mfb                  post-sieve cofactor bounds per side, in bits
+    lambda               post-sieve qualification multipliers per side
+    powlim               limits on powers sieved per side
+    ncurves              cofactoring effort (number of curves) per side
+    fb                   factor base files per side
+    fbc                  factor base cache file
+    stats-cofact         write statistics about the cofactorization step in file xxx
+    batchfile            prime product tree files per side
+    batchmfb             cofactor bounds, per side, to be considered after batch cofactorization. After primes below 2^batchlpbX have been extracted, cofactors below this bound will go through ecm. Defaults to lpbX.
+    batchlpb             large prime bounds, per side, to be considered by batch cofactorization. Primes between limX and 2^batchlpbX will be extracted by product trees. Defaults to lpbX.
+    batch                (switch) use batch cofactorization
+    batch-chunk-size     hand at most that many survivors to a single batch cofactorization product tree (0 = no limit, which is the default). Smaller values save memory, at the cost of reducing the large prime product modulo more, smaller trees.
+    batch-print-survivors just print survivors to files with the given basename for an external cofactorization
+    batch-print-survivors-filesize write that many survivors per file
+    batch-print-survivors-number-of-printers use this number of I/O threads to write survivor files. defaults to 1, and should not be changed except in very unusual cases
+    relation_cache       Directory with cache of collected relation for sampling within a known data set. Useful only with --random-sample
+    galois               depending on the specified galois automorphism, sieve only part of the q's
+    dup                  (switch) suppress duplicate relations
+    dup-qmin             lower limit of global q-range for 2-sided duplicate removal
+    dup-qmax             upper limit of global q-range for 2-sided duplicate removal
+    nr-workspaces        (alias -nw) Number of bucket arrays per reservation array (default: one per thread, plus two)
+    bucket-batch-size    (alias -bbs) Number of level-1 bucket regions to downsort/process simultaneously
+    smallset-purge       (switch) use experimental 'smallset' code in purge_buckets
+    dumpfile             Dump entire sieve region to file for debugging.
+    q0                   left bound of special-q range
+    q1                   right bound of special-q range
+    rho                  sieve only root r mod q0
+    sqside               put special-q on this side
+    seed                 Use this seed for random state seeding (currently used only by --random-sample)
+    random-sample        Sample this number of special-q's at random, within the range [q0,q1[
+    nq                   Process this number of special-q's and stop
+    todo                 provide file with a list of special-q to sieve instead of qrange
+    allow-compsq         (switch) allows composite special-q
+    qfac-min             factors of q must be at least that
+    qfac-max             factors of q must be at most that
+    print-todo-list      (switch) only print the special-q's to be sieved
+    t                    Number of threads and subjobs. Use -t help for extended documentation
+    job-memory           Estimated memory per subjobs, used for job placement (see -t help) (in gigabytes, floating point values allowed)
+    memory-margin        Keep this amount of RAM free for the rest of the world (see -t help) (in gigabytes, floating point values allowed)
+    q0                   left bound of special-q range
+    q1                   right bound of special-q range
+    rho                  sieve only root r mod q0
+    sqside               put special-q on this side
+    seed                 Use this seed for random state seeding (currently used only by --random-sample)
+    random-sample        Sample this number of special-q's at random, within the range [q0,q1[
+    nq                   Process this number of special-q's and stop
+    todo                 provide file with a list of special-q to sieve instead of qrange
+    allow-compsq         (switch) allows composite special-q
+    qfac-min             factors of q must be at least that
+    qfac-max             factors of q must be at most that
+    print-todo-list      (switch) only print the special-q's to be sieved
+    v                    (switch) verbose mode, also prints sieve-area checksums
+    out                  filename where relations are written, instead of stdout
+    stats-stderr         (switch) print stats to stderr in addition to stdout/out file
+    T                    (switch) enable fine-grain timings (use twice to get them for each q)
+    production           (switch) Sort of an opposite to -v. Disable all diagnostics except the cheap or critical ones. See #21688 and #21825.
+    trialdiv-first-side  begin trial division on this side
+    print-slice-statistics (switch) print statistics on how the factor bases are split in slices
+    allow-largesq        (switch) allows large special-q, e.g. for a DL descent
+    sublat               modulus for sublattice sieving
+    log-bucket-region    (alias -B) set bucket region to 2^x
+    log-bucket-region-step (alias -Bi) set the number of level-(n-1) buckets inside a level-n bucket to 2^x
+    I                    set sieving region to 2^I times J, with J <= 2^(I-1) ; -I x is equivalent to -A (2*x-1)
+    A                    set sieving region to (at most) 2^A
+    lim                  sieving bounds per side
+    lpb                  large prime bounds per side, in bits
+    mfb                  post-sieve cofactor bounds per side, in bits
+    lambda               post-sieve qualification multipliers per side
+    powlim               limits on powers sieved per side
+    ncurves              cofactoring effort (number of curves) per side
+    fb                   factor base files per side
+    tdthresh             trial-divide primes p/r <= ththresh (r=number of roots)
+    skipped              primes below this bound are not sieved at all
+    bkthresh             bucket-sieve primes p >= bkthresh (default 2^I)
+    bkthresh1            2-level bucket-sieve primes in [bkthresh1,lim] (default=lim, meaning inactive)
+    bkthresh2            3-level bucket-sieve primes in [bkthresh2,lim] (default=lim, meaning inactive)
+    bkmult               multiplier to use for taking margin in the bucket allocation
+                         
+    unsievethresh        Unsieve all p > unsievethresh where p|gcd(a,b)
+    adjust-strategy      strategy used to adapt the sieving range to the q-lattice basis (0 = logI constant, J so that boundary is capped; 1 = logI constant, (a,b) plane norm capped; 2 = logI dynamic, skewed basis; 3 = combine 2 and then 0) ; default=0
+    exit-early           once a relation has been found, go to next special-q (value==1), or exit (value==2)
+    file-cofact          provide file with strategies for the cofactorization step
+    prepend-relation-time (switch) prefix all relation produced with time offset since beginning of special-q processing
+    sync                 (switch) synchronize all threads at each special-q
+    sync-thread-pool     (switch) synchronize the thread pool (implies -t 1 !!)
+    never-discard        (switch) Disable the discarding process for special-q's. This is dangerous. See bug #15617
+    chronogram           Output data to generate a time chart and save it to the given file
+    verbose_flags        fine grained control on which messages get printed
+Error reading polynomial file /tests/sieve/c90_21505.poly

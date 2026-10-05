@@ -1,0 +1,1654 @@
+JOURNAL OF THE
+AMERICAN MATHEMATICAL SOCIETY
+Volume 5, Number 3, July 1992
+
+
+
+
+       A RIGOROUS TIME BOUND FOR FACTORING INTEGERS
+
+                      H. W. LENSTRA, JR. AND CARL POMERANCE
+
+
+
+                                    1. INTRODUCTION
+   For real numbers X, a and b with x > e , we write
+                       Lx[a, b] = exp(b(logxt(1oglogx)l-a).
+The main result of the present paper is as follows.
+Theorem. There exists a probabilistic algorithm that factors any given positive
+integer n completely into prime factors, and that takes expected time at most
+LnH, 1 +0(1)] for n ~ 00.
+   For a discussion of the notions "probabilistic algorithm" and "expected time"
+we refer to §12. The proof of the theorem is given in §10.
+   There are many factoring algorithms that are conjectured to have expected
+running time at most LnH, 1 + 0(1)], including the quite practical quadratic
+sieve and elliptic curve methods. However, for none of these methods has this
+conjecture been proved, and for one of them it must be withdrawn, as we shall
+see below.
+   The best prior results on rigorously analyzed probabilistic factoring algo-
+rithms were a time bound of Ln H' v'2 + o( 1)] obtained by Pomerance [28]
+and a time bound of L n [!, J4/3 + 0(1)] by Vallee [33]. These algorithms are
+refinements of the random squares method of Dixon [10].
+   The algorithm on which the proof of our theorem is based is rather less el-
+ementary, and depends on the use of class groups of binary quadratic forms.
+More precisely, let .::\ be a negative integer with .::\ == 0 or 1 mod 4, and de-
+note by CtJ. the set of SL2 Z-equivalence classes of positive definite, primitive,
+binary quadratic forms of discriminant .::\, where SL2 Z denotes the group of
+2 x 2-matrices of determinant 1 with coefficients in the ring Z of rational inte-
+gers. Gaussian composition makes CtJ. into a finite abelian group; we shall call
+its elements simply "forms." In §2 we recall the main properties of CtJ.. In par-
+ticular, we shall see that there is an explicit correspondence between elements
+of order dividing 2 in CtJ.' the so-called ambiguous forms, and factorizations
+of 1.::\1 into two coprime factors. There are several factoring algorithms that
+exploit this correspondence. Thus to factor an odd number n that is not a
+  Received by the editors March 6, 1991.
+   1991 Mathematics Subject Classification. Primary 11 Y05, 11 R44, 11 N25.
+  Key words and phrases. Factorization algorithm, class groups, binary quadratic forms, smooth
+numbers.
+                                                                 © 1992 American Mathematical Society
+                                                                  0894-0347/92 $1.00 + $.25 per page
+
+                                             483
+484                   H. W. LENSTRA, JR. AND CARL POMERANCE
+
+prime power, one could choose a negative number L\ with L\ == 0 or 1 mod 4
+that is a multiple of n, and then somehow find elements of order 2 in C,:1.
+    One such algorithm, the class group relations method, is due to Seysen [32].
+Under the assumption of the generalized Riemann hypothesis (GRH) for L-
+functions of abelian characters of imaginary quadratic fields, Seysen showed
+that his method runs in expected time at most LnH, ..)5/4 + 0(1)]. A. K.
+Lenstra [20] improved one of the ingredients of Seysen's algorithm, obtaining
+the bound LnH, 1 + 0(1)] for the expected running time, but still under the
+assumption of the GRH.
+    In the present paper we remove the GRH assumption from the analysis of
+the Seysen-Lenstra class group relations algorithm. This enables us to prove the
+theorem.
+    It may very well be that some variant of the class group relations algorithm
+has practical value. However, any choices and recommendations we make in
+this paper are inspired only by the desire to give a valid and efficient proof of
+our theorem, and not by any practical considerations.
+    Another algorithm that exploits the connection between ambiguous forms and
+factorizations of IL\I is the random class groups method proposed by Schnorr
+and Lenstra [29]. This algorithm sometimes goes under the name "SPAR," after
+Shanks, Pollard, Atkin and Rickert. This was the first factoring algorithm of
+which the expected running time was conjectured to be L n [!, 1 + 0(1)], and
+it is now also the first algorithm for which that conjecture must be withdrawn.
+Namely, we shall show in the present paper that there is a fairly dense sequence
+of positive integers n for which the assumption underlying the conjectural run-
+ning time analysis is incorrect. There is no reason to think that the random
+class groups method can factor those numbers in time L n [!, 1 + 0(1)].
+    With our theorem, we hoped to bridge the gap between rigorously analyzed
+factoring algorithms and heuristically analyzed factoring algorithms. Our vic-
+tory has turned out to be an empty one, however, since in 1989 factoring broke
+through the L n [!, 1] barrier in a rather dramatic fashion. The number field
+sieve (see [23; 4]) is conjectured to run in time at most Ln[j, c + 0(1)], where
+the current best value for c, due to Coppersmith [6], is ((92+26JT3)/27) 1/3 ==
+1.90188. This method is practical for numbers of a special form, and may in
+fact prove to be practical for all numbers.
+    We now provide a brief description of the tools that we use for avoiding
+the GRH assumption. The main idea is the use of a multiplier d; that is,
+instead of working with a single discriminant L\ = -n or L\ = -3n, whichever
+is 1 mod 4, we work with the four discriminants L\ = -dn, where d ranges
+over the set {3, 4, 7, 8} if n == 1 mod 4 and over the set {1, 5, 8, 12} if
+n == 3 mod 4; for our purposes, any set of four positive integers d for which
+-d n == 0 or 1 mod 4 will do, provided that the product of no two of them is
+a square and that d is bounded independently of n.
+    To see how this helps us, let us consider at which points the GRH enters into
+the proofs in [32] and [20]. It turns out that the GRH is used twice. First, it
+is needed to guarantee the existence of sufficiently many smooth forms in C,:1.
+For the definition of smooth forms we refer to (2.9); roughly speaking, they
+are defined in terms of smooth numbers, that is, numbers built up from small
+                 A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                   485
+
+prime factors. Proving that there are sufficiently many smooth forms comes
+down to proving that there are sufficiently many smooth numbers that are built
+up from prime numbers p for which the Kronecker symbol (~) equals 1. It
+is to guarantee the existence of sufficiently many such primes that the GRH is
+used. We show that for our purposes it suffices that each of two key intervals
+contains enough such primes p. It is not difficult to see that each of these
+intervals contains, for all but at most one of the four multipliers d, enough
+primes p with (-;n) = 1; but the possible exception d depends on the interval.
+Sacrificing at most two values of d , we conclude that at least two multipliers
+d are left for which there do exist enough smooth forms in C -dn .
+    The second use of the generalized Riemann hypothesis in [32; 20] is that
+it makes it possible to construct a small set of generators of Ca' namely the
+set of prime forms fp (see (2.7)) for all prime numbers p :::; co(log 1~1)2 with
+ (~) = 1 ; here Co is some absolute positive constant. In our algorithm we obtain
+generators in a different way, namely by choosing (log 1~1)°(1) random prime
+forms fp for prime numbers p with (~) = 1 that range up to the much larger
+bound exp(c4 (log 1~1)2) ; here c4 is another absolute positive constant. To prove
+that this works, it would suffice to show (a) that there are sufficiently many such
+p , and (b) that the corresponding prime forms fp are approximately uniformly
+distributed over Ca ' so that choosing sufficiently many of them at random, one
+is very likely to obtain a set of generators for Ca' Both (a) and (b) are valid if
+GRH is true.
+    Actually, we can neither show (a) nor (b). For (a), we get around this by
+again sacrificing one of our four multipliers, so that at least one is left. Once
+(a) is valid, the only obstruction towards a proof of (b) is the possible existence
+of exceptional zeros of certain Dirichlet L-functions. Since these cannot be
+avoided by the use of a multiplier, it is fortunate that exceptional zeros actually
+help us: their presence makes it more likely that the randomly chosen prime
+forms generate Ca than if (b) were true (see the proof of Theorem 4.1).
+    Our ideas for removing the GRH assumption do not appear likely to work
+in the context of [13], where a probabilistic algorithm is given to compute the
+invariants of the group Ca' This algorithm, which is also based on Seysen's class
+group relations method, is proved to run in expected time Llal[~' V2 + 0(1)]
+for ~ --+ -00 on assumption of GRH. If one tries using a multiplier d, say, to
+avoid the need for the GRH, then the group Ca is changed to the group Cda .
+If d is not a square, then but for the parts annihilated by 2, these groups need
+bear little resemblance.
+    The structure of this paper is as follows. In §2 we recall the basic results on
+class groups that we need. In §3 we prove an estimate of certain character sums
+for Dirichlet characters of algebraic number fields, with an explicit dependence
+on possible exceptional zeros of the corresponding L-functions. This result
+is not new, but it does not appear explicitly in the literature in the form we
+wish to use, so we give a new proof here. Section 4 is devoted to an algorithm
+for finding generators of the class group Ca' The analysis of this algorithm
+depends on the result of §3. In particular we show that the algorithm is very
+486                   H. w. LENSTRA, JR. AND CARL POMERANCE
+
+
+likely to find a set of generators of Cll provided that a certain interval contains
+enough primes p with (~) = 1. In §5 we show how a set of generators can
+be used to draw random elements from Cll , with an approximately uniform
+distribution. Section 6 contains a result about the distribution of smooth num-
+bers with restricted prime factors. In §7 we discuss the method by which we
+recognize smooth numbers, which is the elliptic curve factoring method [24].
+Unfortunately we are not able to prove that the elliptic curve method can rec-
+ognize all smooth numbers efficiently. For this reason we introduce the notion
+of a recognizable smooth number. A result from [28] shows that not only do
+recognizable smooth numbers have a good probability of being recognized as
+smooth by the elliptic curve method, but a fair fraction of smooth numbers are
+recognizable. The corresponding notion of recognizable smooth forms is stud-
+ied in §8. In particular, we shall see that there are sufficiently many recognizable
+smooth forms provided that each of two particular intervals contains enough
+primes p with (~) = 1. In this section we also present a supplement to [20],
+as communicated to us by the author of [20]. In §9 we prove by an elementary
+argument that the conditions on which §§4 and 8 depend can be achieved by
+means of a multiplier. In §10 we formulate the basic factoring algorithm, and
+we show how it leads to a proof of our main result. The reader who just wants
+to see the algorithm, and is not interested in the proof, can tum directly to §10
+after §2 and a glance at Algorithms 4.4 and 7.2.
+   In §11 we exhibit a serious flaw in the heuristic analysis of the random class
+groups method, as announced above. Finally, in §12 we indicate, by lack of a
+suitable reference, what we mean by a probabilistic algorithm and its expected
+running time. Logically, this section precedes all others, and we assume famil-
+iarity with its contents throughout the paper.
+   All algorithms in this paper are probabilistic, and their running time is mea-
+sured in bit operations.
+   Except for §11, when we write "constant" in this paper, we mean an effec-
+tively computable, absolute, positive constant, even when this is not explicitly
+mentioned. The same applies to all constants that are implicit in the O-symbol.
+   In several algorithms in this paper we need to round real numbers t to inte-
+gers. For example, in Step 3 of Algorithm 7.2 the number t = exp((logy)6/7) is
+rounded down to an integer. We do not mean by this to round it to its integer
+part [t], since for all we know that might be very hard to compute, namely if
+t lies very close to an integer. It will be sufficient to round it to an integer m
+with 0 ::; t - m < 2. It is left to the reader to show that, in all cases when
+this is done, such an integer m can be efficiently calculated (cf. [3]). A similar
+convention applies to rounding up.
+
+                                2. CLASS GROUPS
+   In this section we review a few basic facts about class groups of positive
+definite quadratic forms. For more theoretical and algorithmic information the
+reader may consult [2; 7; 9; 15; 25; 30].
+   Let tl be a negative integer with tl == 0 or 1 mod 4. Such an integer will
+be called a negative discriminant. A positive definite primitive binary quadratic
+                   A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                    487
+
+form of discriminant ~ is a polynomial aX2 +bXY +cy2 E Z[X, Y] for which
+                                                  2
+(2.1)              gcd(a,b,c)=I,              b       -4ac=~,         a>O.
+The group SL2 Z acts in a natural way on the set of such forms, and each orbit
+contains exactly one form that satisfies
+(2.2)                   o : : :; b : : :; a :::::; c or 0 < -b < a < c.
+A form satisfying (2.2) is called reduced. There is a reduction algorithm that,
+given any form aX2 + bXY + cy2 as in (2.1), finds the unique reduced form
+in the same SL2 Z-orbit in time O(log(lbl + 1) + (logl~I)2)log(a + 1)).
+   We denote by Ca the set of SL2 Z-orbits of forms. For algorithmic purposes,
+we identify Ca with the set of triples of integers (a, b, c) satisfying (2.1) and
+(2.2). The elements of Ca will simply be called forms.
+   Each form (a, b, c) satisfies Ibl :::::; a :::::; JI~I/3, and since c is determined
+by a, b and ~ it follows that Ca is finite. Its cardinality is called the class
+number belonging to ~.
+   To obtain an explicit upper bound for the class number, note that for each
+value of a the number of integers b with -a < b :::::; a and b == ~ mod 2
+equals a. Therefore
+                                  [y'iW31
+(2.3)                #Ca : : :;     La:::::; i(I~1 +~) :::::; !I~I.
+                                    a=1
+
+Observing that a is a divisor of b 2 + I~I and using an upper bound for the
+divisor function one can prove that #Ca : : :; 1~11/2+0(1) for ~ ---+ -00. By using
+a more complicated argument involving the average order of a function similar
+to the divisor function, one can prove that #Ca = O(I~II/210g I~I). In (2.13) we
+give an explicit upper bound for #Ca of this nature, derived by other means.
+Siegel's theorem, which states that #Ca = 1~11/2+o(l) for ~ ---+ -00, will not be
+needed in this paper; the lower bound in Siegel's theorem is not effective.
+   Gaussian composition makes Ca into an abelian group, which is called the
+class group corresponding to ~. The neutral element of Ca will be denoted by
+la; it is the unique form (a, b, c) E Ca with a = 1. There is an algorithm
+that performs the group operation-which will be written as multiplication-in
+Ca in time o ((log 1~1)3). The inverse of (a, b, c) is (a, -b, c) if the latter
+is reduced, and (a, b, c) otherwise.
+(2.4) Ambiguous forms. An ambiguous form is an element f E Ca of order
+dividing 2. The ambiguous forms form a subgroup of Ca , which is denoted
+by Ca ,2' A form (a, b, c) is ambiguous if and only if it is equal to its own
+inverse, which by the above is equivalent to
+                             b = 0 or b = a             or a = c.
+In these three cases we see from (2.1) that
+             ~ =   -4a· c         or a· (a - 4c)       or (b - 2a) . (b + 2a),
+488                    H. W. LENSTRA, JR. AND CARL POMERANCE
+
+respectively, where the gcd of the two factors on the right divides 4. Hence,
+removing factors 2 and passing to absolute values, we see that each element
+of C,l 2 gives rise to a coprime factorization of the largest odd divisor of Ll.
+Let :7 be the set of these factorizations; so an element of :T is an unordered
+pair do, d l of odd coprime positive integers with -2 k .do·d l = Ll for some
+k E Z?o'
+Theorem 2.5. Let t be the number of distinct prime factors of Ll. The order of
+C,l 2 is equal to i if Ll == 0 mod 32, to i- 2 if Ll == 4 mod 16, and to i - I
+in ~ll remaining cases. Further, the map C,l 2 --+:T defined above is surjective,
+and the number of elements of C,l 2 mapping to any given element of :T is
+equal to 1 if Ll is odd or Ll == 4 m~d 16, to 4 if Ll == 0 mod 32, and to 2 in
+all remaining cases.
+
+Proof. This is a classical result, which is proved by a straightforward computa-
+tion. See [7, Proposition 3.11] and the references given there.
+Remark. It can be shown that the map C,l 2 --+:T is a group homomorphism if
+one makes :T into a group by letting the p~oduct of the factorizations do·d l and
+eo·e l be the factorization (lcm(do , eo)/gcd(do ' eo))·(lcm(do , el)/gcd(do ' e l )).
+(2.6) The Kronecker symbol. For any integer d that is 0 or 1 mod 4 and any
+positive integer a, the Kronecker symbol (%) is defined as follows. First let p
+be prime. If p divides d then (~) = O. If p does not divide d, then (~)
+is 1 if d is a square modulo 4p and -1 otherwise. Finally, the definition
+is extended to nonprime numbers by the rule (it) = (%) (%). Note that the
+Kronecker symbol is equal to the Jacobi symbol when both are defined.
+(2.7) Prime forms. We write
+
+                         9',l = {p: p is prime, (~) = 1}.
+
+If p is even, then p E 9',l if and only if p = 2 and Ll == 1 mod 8, by (2.6). If p
+is odd, then p E 9',l if and only if Ll(p-I )/2 == 1 mod p and p passes a primality
+test, for example the Jacobi sum test [1; 26]. It follows that a positive integer p
+can be tested for membership in 9',l in time O((log ILlI) 10gp)+(logp)O(logloglogP)
+(for p > ee).
+   Let p E 9',l' We claim that there is a unique integer b = bp for which
+o < b < p and b 2 == Ll mod 4p. For p = 2 this is obvious. For p > 2, it
+follows from (~) = 1 that there are exactly two integers b for which 0 < b < p
+and b 2 == Ll mod p , and that they add up to p ; the one that has the same parity
+as Ll is bp •
+   Let p E 9',l and bp be as just defined. Then pX2 +bpXY +((b~ _Ll)/(4p))y 2
+is a positive definite primitive binary quadratic form of discriminant Ll. We
+denote its SL2 Z-orbit by ip, which is an element of C/';. We call ip the prime
+form corresponding to p.
+                   A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                         489
+
+   Given p E 9'Ll ' the prime form fp can be computed by means of a proba-
+bilistic algorithm that runs in expected time O((logmax{p, 1.::11} )3); namely, one
+first calculates bp using a probabilistic algorithm for factoring X 2 - (.::1 modp)
+over ZjpZ (see [19]), and next one applies the reduction algorithm mentioned
+above to (p, bp ' (b~ - .::1)j(4p)).
+(2.8) Factoring forms into prime forms. Let (a, b, c) E CLl be such that
+gcd(a,.::1) = 1. From b 2 == .::1 mod 4a it follows that each prime divisor p
+of a belongs to 9'Ll' Moreover, if t(p) denotes the number of factors p in a,
+then we have
+                           (a, b, c) = II.t;(P)t(P) ,
+                                               pia
+where e(p) E {I, -I} is such that b == e(p)bp mod 2p. Note that from a ::;
+JI.::1lj3 it follows that the number of primes p appearing in the product is less
+than log 1.::11 •
+(2.9) Smooth forms. Let y be a real number. A positive integer a is called
+y-smooth if a does not have any prime factors exceeding y. An element
+(a, b, c) E CLl is called y-smooth if a is y-smooth and gcd(a,.::1) = 1. The
+following result will be used to estimate the number of smooth forms.
+Lemma 2.10. Let a be an integer with 1 ::; a ::;         t.JfL\l
+                                                      all of whose primefaetors
+belong to 9'Ll' Then there exist b, e E Z such that (a, b, c) E CLl .
+Proof. Since all prime factors of a belong to 9'Ll' there exists b E Z with
+b 2 == .::1 mod 4a; note that gcd(a, b) = 1 for any such b. Adding multiples
+of 2a to b we can achieve that -a < b ::; a. The integer e = (b 2 - .::1)j(4a)
+satisfies 4ae = b 2 + 1.::11 2: 1.::11 2: 4a 2 , and equality is possible only if b"= O. It
+follows that (2.1) and (2.2) hold, so (a, b, c) E CLl' This proves Lemma 2.10.
+(2.11) Class number formula. Let the character x: Z>o --? { -1 , 0, I} be defined
+by x(a) = (~) (see (2.6)). For a complex number s with Res> 0 we put
+
+                                  L(s, X) =    f: X(~)
+                                               a=l a
+                                                          ,
+
+which for Res> 1 equals TIp (l-x(P)p-S)-I, where p runs through the prime
+numbers. Then we have
+
+(2.12)                    #C = w.JfL\l ·L(1 X)
+                             Ll  271:        "
+where w = 6 for .::1 = -3, w = 4 for .::1 = -4, and w = 2 for .::1 < -4. It
+was proved by Schur [31] that
+                         L(l, X) < t log 1.::11 + log log 1.::11 + 1.
+From this it follows that
+(2.13)
+490                   H. w. LENSTRA, JR. AND CARL POMERANCE
+
+                         3. A CHAR.ACTER SUM ESTIMATE
+   In this section we prove a character sum estimate for Dirichlet characters
+of algebraic number fields. This estimate is essentially known (see [17] and
+the references cited there), but we have not been able to find a statement in
+the literature that gives an explicit and effective dependence on all parameters
+involved. Since that is what we need, we present a proof in this section.
+   By C we denote the field of complex numbers, and by C* its multiplicative
+group. For background on algebraic number theory we refer to [18].
+   Let K be an algebraic number field; i.e., a field extension of finite degree
+of the field Q of rational numbers. We write &' for the ring of integers of K
+and J for the group of fractional ideals of &'. By a cycle m of K we mean
+a formal product I1 pm(p) extending over all primes p of K, where the m(p)
+are nonnegative integers that are almost all 0, with m(p) = 0 for complex p
+and m(p) :::; 1 for real p. If m = I1 pm(p) is a cycle, then J(m) denotes the
+subgroup of J generated by the finite primes p for which m(p) = 0, and
+Pm c J(m) is the subgroup generated by the nonzero ideals of the form &'a,
+where a E &' is such that a == 1 mod pm(p) for each finite prime p, and a> 0
+under each embedding of K in the field of real numbers corresponding to a real
+prime p with m(p) = 1. The norm lJ1(m) of a cycle m = I1 pm(p) is defined to
+be the number I11J1(p)m(p) , where p in the latter product ranges only over the
+finite primes, and lJ1(p) denotes the norm of p.
+   By a Dirichlet character of K we mean a pair consisting of a cycle m of K
+and a group homomorphism x:J(m) ---+ C* such that Pm is contained in the
+kernel of X. We shall, by abuse of language, simply refer to X as a Dirichlet
+character, and call m the modulus of X. A character is called principal if it
+maps all elements of J(m) to 1. We extend any Dirichlet character X to
+a map J ---+ C, also denoted by X, by putting x(a) = 0 whenever a E J,
+a ¢. J(m). The Dirichlet L-series L(s, X) of a Dirichlet character X is
+defined by
+                                        '"' x(a)
+                              L(s, X) = ~ lJ1(a)S ,
+
+the sum ranging over the set of nonzero ideals a of &' , and lJ1(a) denoting the
+norm of a. This series is absolutely convergent for all SEC with Re s > 1 .
+It can be analytically continued to a meromorphic function on C; it is entire
+if X is nonprincipal, and it has a single pole, which is simple, at s = 1 if X is
+principal.
+   Let X and x' be Dirichlet characters of K with moduli m = I1 pm(p) and
+m' = I1pm'(p) , respectively. Then X is said to be induced by x' if m' divides
+m-that is, m' (p) :::; m(p) for all p-and X is the composition of the inclusion
+J(m) c J(m') and the map x':J(m') ---+ C* . A Dirichlet character is called
+primitive if it is not induced by any character different from itself. Each Dirich-
+let character X is induced by exactly one primitive character, and the modulus
+of the latter is called the conductor of X.
+   By class field theory, the primitive characters of an algebraic number field
+K can be identified with the one-dimensional continuous characters of the Ga-
+                  A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                    491
+
+lois group of the algebraic closure of Kover K. The Dirichlet L-series of a
+primitive character X coincides with the Artin L-series of X when viewed as
+a character of the Galois group. These are the L-series that occur in [17]; so
+when we make use of [17], as we shall frequently do in this section, we have to
+restrict to primitive characters. In [16] this restriction is dropped; what is called
+"Heeke character" and "conductor" in that paper is called "Dirichlet character"
+and "modulus" here.
+
+                                                                °
+   For a nonzero ideal a of &', we define A(a) = 10g'Jl(p) if a = pk for some
+prime ideal p and some positive integer k , and A( a) = otherwise. The main
+result of this section is an estimate for the sum
+                           If/(X, X) =       L x(a)A(a) ,
+                                          '.n(a)::;x
+
+the sum ranging over nonzero ideals a of &' .
+   We introduce some additional notation. For an algebraic number field K,
+we write nK for the degree of Kover Q and 11K for the discriminant of K
+over Q. When X is a Dirichlet character of a number field K, with modulus
+m, then we write
+                              A(X) = II1KI'Jl(m),
+                      L(x, X) = 10gA(X) + nK log(x + 2),
+for any nonnegative real number x .
+Theorem 3.1. There are effectively computable positive constants c1 and c2 such
+that for all algebraic number fields K, all Dirichlet characters X of K and all
+real numbers x ;::: 2 one has
+
+           IIf/(x , X) - t5(X)x + L x P I
+                                 pES(X)      P
+
+                ::; c2xL(x, x)(logx)A(X)1/(2n K ) exp ( -       V:~   log x ).
+
+Here we write t5(X) = 1 or     °  according as X is principal or not, and SeX)
+denotes the set of real zeros of L(s, X) that exceed 1 - c1/L(O, X).
+Remark. The set SeX) in this theorem consists of the "Siegel zeros" of L(s, X),
+and it satisfies #S(X) ::; 1 (by Lemma 3.5).
+Proof. In this proof, we abbreviate L(x, X) to L(x). We first give the proof
+with the additional assumption that X is primitive. This assumption will be
+removed at the end. Our proof leans heavily on arguments from [17].
+   Let x ;::: 2. We begin by approximating If/(x, X) with the negative of the
+
+                                         l
+truncated inverse Mellin transform
+                                   1         Go + iT X S L'
+                     I x (x,T)=-2·                     --L(s,x)ds,
+                                   1tl    Go-iT        s
+where ao = 1 + (logx)-1 and T;::: 2, and the path of integration is a vertical
+492                    H. W. LENSTRA, JR. AND CARL POMERANCE
+
+line segment. We have
+                              _ L' (   ) = ~ x(a)A(a)
+                                L s, X     ~ !J1(a)S ,
+
+where the sum is over nonzero ideals a of &' . The convergence is uniform for
+Res = 0"0 > I, so
+                             1            l(To+iT 1 X S
+                I>/x, T) = --2. Lx(a)A(a)          --(    )S ds.
+                             1C l a;tO      (To-iT s!J1 a
+
+Applying Lemma 3.1 from [17] to each of the integrals, we find that
+        IIx(x, T) + IfI(X, x)1 ::; (      L          (! + 0"0T-1)A(a») + Ro(x, T),
+                                       a, 'Jl(a)=x
+where the error term Ro(x, T) is given by [17, (3.9) (p. 424)]. The sum on
+the right, which corresponds to a term that is incorrectly given in [17, (3.8)], is
+easily seen to be O(nK logx) for x ~ 2, T ~ 2 and 0"0 as above. From the
+estimate [17, (3.17) (p. 428)] for Ro(x, T) we find
+
+(3.2)           Ix(x, T) + lfI(x, X) = O( K log X +  n           n; x(logx)2)
+for x ~ 2, T ~ 2, which is our approximation of IfI(X, X) by -Ix (x , T) .
+   To estimate Ix (x , T) we use the last displayed equation on p. 450 of [17].
+Correcting a sign error, we find that
+
+                                                 L          -x + L
+                                                             P
+                  Ix (x , T) + t5(X)x -
+(3.3)                                         p,IImpl<T     p     p,lpl<I/2 P
+
+                        = 0   (L (x) + L ~T) x log x)
+for x ~ 2, T ~ 2, if T does not coincide with the absolute value of the
+imaginary part of any zero of L(s, X). The sum over p, here and below,
+extends over the zeros of L(s, X) for which 0 < Re p < 1, with the proper
+multiplicities. It is for the proof of (3.3), given in [17], that we need X to be
+primitive; this assumption is needed for the existence of the functional equation
+for L(s, X).
+   We now quote two results about the zeros p of L(s, X) .
+Lemma 3.4. There is an effectively computable constant c3 such that for any
+Dirichlet character X of any algebraic number field, and any real number t, the
+number of zeros p of L(s, x) with 0 < Re p < 1, It - 1m pi ::; 1, counting
+multiplicities, is at most c3L (It I) .
+Proof. This is Lemma 5.4 of [17] in the case that X is primitive, which is the
+only case that we shall need; for the general case, see [16, Lemma 2.1].
+Lemma 3.5. There is an effectively computable positive constant c1 < 1/3 with
+the following properties. For each algebraic number field K and each Dirichlet
+character X of K the Dirichlet L-function L(s, X) has at most one zero p with
+                                        c1                          c1
+                     Rep> 1 - L(O) ,                     IImpl ::; L(O)"
+                    A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                               493
+
+If this zero exists, then it is real and simple and /       is principal. Every other zero
+p of L(s, X) satisfies
+                                                    C1
+                                   Rep ~ 1 - L(IImpl).
+Proof. This is Lemma 2.3 in [16].
+  We remark that 0 < c1 < 1/3 implies that
+                         c1      c1        c1 1
+                       L(T) ~ L(O) ~ log2 < 2
+for every real number T 2:: 0, a fact that we shall use several times.
+   Let T 2:: 2. From Lemma 3.4, we have
+
+                                  L:        1
+                                         -II = O(L(T) log T).
+                              p,lpl?:I/2 P
+                                 IImpl<T
+
+Denote by .L:' a sum over zeros p of L(s, X) with 0 < Re p < 1 and p ft
+S(X) , where S(X) is as in Theorem 3.1. Combining the estimate just proved
+with the last assertion of Lemma 3.5 we find that
+                           L:'
+                                     p
+(3.6)                              ~ = O(XI-C1/L(T)L(T) log T).
+                        p,lpl?:I/2 p
+                        IImpl<T
+  By Lemma 3.4 there are at most c3L(O) zeros p of L(s, X) with Re p > 0
+and Ipl < !. For each of these zeros we have
+
+                     Ix P - 11 = Ifo P x\logx) dsl < Iplx l / 2 Iogx.
+Hence
+          L: (-X p +.!.) = O(X I / (lOgx)L(O)) = O(XI-CdL(T)L(T)).
+                                            2
+
+        p,lpl<I/2   p P
+Combining this estimate with (3.6), we obtain
+
+                    L:'      xP   + L: .!. = O(xl-c1/L(T)L(T)logT).
+                p,IImpl<T p         p,lpl<1/2 P
+
+Putting this into (3.3) we conclude from (3.2) that if x, T are real numbers
+with 2 ~ T ~ x ,and T is not the absolute value of the imaginary part of any
+zero of L(s, X), then we have
+
+(3.7)     lfI(x, X) - J(X)x +       L: -x = O(xL(x)(logx)(T + x -c
+                                            P                       -I
+                                                                             I
+                                                                                 /L(T)
+                                                                                         )).
+
+                                   pES(x)   p
+Since the left side does not depend on T, we can now drop the restriction that
+T is not the absolute value of the imaginary part of any zero of L(s, X) .
+
+                                                  (J ~~
+   Let
+                          T = A(X)-I/(2nK ) exp           logx) - 2.
+494                    H. W. LENSTRA, JR. AND CARL POMERANCE
+
+If T < 2 , then we have
+
+                       A(x//(2nK ) exp ( -        J;~       logx) >    ~.
+In this case the inequality in the theorem holds with a suitable c2 ' because
+lfI(x, X) = O(nKx) for x ~ 2. Assume now that T ~ 2. From
+
+                         L (T) = ! log A (X) +          J 1n log x
+                                                              C    K
+
+and an easy calculation one sees that L(T) 10g(T + 2) :::; c1logx, and therefore
+
+(3.8)
+so that we may use this value of T in (3.7). But (3.8) shows that the right-hand
+side of (3.7) is O(2xL(x)(1ogx)/T) , which implies the theorem, in the case
+that X is primitive.
+   In the general case, let x' be the primitive character that induces X , and m'
+the modulus of x' . Then we have
+                     lfI(x, X') = lfI(x, X) +          L X' (a)A(a),
+                                                    '.n(a)::::;x
+
+with a ranging only over those ideals of &' that are powers of prime ideals p
+that divide m but not m'. Since each such p contributes [(log x) flog !J1(p)]
+terms to the sum, we find that
+
+         lfI(x, X') - IfI(X, X) =     o( LIogx) O((1og!J1(m/m')) logx).
+                                              p
+                                                          =
+
+
+Now we apply (3.7) for the primitive character X' . Note that
+        A(X')!J1(m/m') = A(X),               L(x, X') + 10g!J1(m/m') = L(x, X),
+                           c5(X') = c5(X) ,         SeX') :J Sex)
+(cf. [16, (2.9) (p. 276)]). From Lemma 3.5 we see that
+
+                             L                p
+                                             ~ = O(x· x -cdoL(D,x)).
+                      PES(x') , p f!. Sex)   p
+It follows that (3.7) also holds for X , for 2 :::; T :::; x, and we obtain the desired
+inequality in the same way.
+    This proves Theorem 3.1.
+                      4. GENERATORS OF THE CLASS GROUP
+   Let ~ be a negative discriminant. This section is devoted to an algorithm
+for finding a set of generators of eJl. We prove that it is likely to be successful
+provided that the set 9'Jl (see (2.7)) contains enough prime numbers up to a
+certain bound z (condition (4.3)). We write n(x; 9'Jl) = #{p E 9'Jl : p :::; x}
+for a positive real number x.
+                   A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                          495
+
+Theorem 4.1. There is an effectively computable positive constant c4 with the
+following property. Let .::1 be a negative discriminant and z a real number
+satisfying
+
+(4.2)
+(4.3)
+
+Further let H be a subgroup of Cd with H =1= Cd' Then we have
+                                                                 z
+                          #{p E.9d : p ~ z, fp       ¢. H} 2': 2010gz'
+Proof. We begin by recalling the connection between Cd and the ideal groups
+of the previous section.
+   Let K be the field Q(~) and & the ring of integers of K . Denote by .::1K
+the discriminant of Kover Q. It is well known that there is a positive integer
+f with .::1 = .::1Kf2; namely, f is the index of Z[(.::1 + ~)/2] in &. Let m
+be the &-ideal f&; replacing m by its prime ideal factorization, we shall view
+m as a cycle of K. Let J(m), Pm be as in §3. There is a surjective group
+homomorphism J(m) -- Cd' the kernel of which is generated by the set of
+nonzero ideals of the form &0., where 0. E & is such that 0. == k mod f& for
+some k E Z with gcd(k, f) = 1; see [7, Proposition 7.22]. Note that Pm is
+contained in this kernel. Checking the definition of the map one finds that for
+each prime number p with (~) = 1 the two prime ideals of norm p in J(m)
+are sent to the elements fp± I of Cd'
+   Let H be as in the theorem, and choose a nontrivial group homomorphism
+A: Cd --+ C* with He ked. Denote by X the composed map J(m) -- Cd --
+c* . By the above, this is a nonprincipal Dirichlet character of K with modulus
+m.
+   Now let z be as in the theorem, with c4 sufficiently large, as dictated by
+the proof. We compare two expressions for 'II(z, X). The first is found from
+Theorem 3.1, with x = z. We have
+        A(X) = 1.::11,        L(z, X) = log 1.::11 + 210g(z + 2),          o(X) = 0,
+and from z > exp(c4 (log 3)2) it follows that the condition z 2': 2 of Theorem
+3.1 is satisfied for c4 sufficiently large. Hence we find
+
+                          I: ~I
+                                                                           vi
+        I'II(Z,X)+
+                         pES(X)
+
+
+            ~ c2 z (log 1.::11 + 210g(z + 2)) (logz)I.::1I I / 4 exp ( -        10gZ).
+
+Using that 1.::11 < exp(J(logz)/c4 ) one easily sees that the right-hand side is
+less than z /100, for c4 sufficiently large. Therefore
+                                                                     z
+                                        I: Ii'
+                                                zp
+                   'II(z, X) = So -                    where ISol < 100'
+                                       pES(X)
+496                      H. W. LENSTRA, JR. AND CARL POMERANCE
+
+      The second expression for IfI(Z, X) is obtained from its definition:
+
+                       IfI(Z, X) =     L x(a)A(a) = s, + S2 + S3'
+                                     'Jt(a):-:;z
+
+Here s, is the sum over those a for which ~(a) = pa for some prime number
+p ~ z'/2 and some integer a ~ 1, and S2' S3 are the sums over those prime
+ideals a = p whose norm is a prime number p satisfying z'/2 < p ~ Z and
+for which the image of p under the map J(m) --+ CA is or is not in H,
+respectively.
+   For each prime number p ~ z'/2 , the ideals a of p-power norm contribute
+at most 2 log Z to s, ,so Is,1 ~ 2z'/2 10g z. Note that for c4 sufficiently large
+all primes p dividing ~ are subsumed in s, ' as we shall now assume.
+   The norm of each a = p occurring in s3 belongs to the set
+
+                      Jf' = {p : p E .9A ' z'/2 < P ~ Z, fp ¢. H}.
+Conversely, each p E Jf' gives rise to two p 's in s3' Therefore IS31 ~ 2· #Jf' .
+logz.
+   By construction, we have X(P) = 1 for each a = p that appears in S2' so S2
+is a nonnegative real number. Each prime number p E.9A with Z'/2 < P ~ Z,
+P ¢. Jf' , gives rise to two p 's in S2' Using (4.3) we thus find
+
+                        s ~ 2 (_Z_ _z'/2 - #Jf') .log(z'/2).
+                         2      610gz
+      The two expressions for lfI(z, X) combine to show that
+                                                   zP
+                              S2 +    L - = So - s, - S3'
+                                     pES(x)        P
+Using the inequalities for the Si' and noticing that the sum over S(X) is a
+nonnegative real number, we find that
+
+          ( _Z_     _ z'/2 _ #Jf') . log Z < ~ + 2z'/2 10g Z + 2· #Jf' . log z,
+            610gz                                  - 100
+For c4 sufficiently large, this implies that #Jf' ~ z/(20Iogz). From the defini-
+tion of Jf' given above we see that this estimate proves Theorem 4.1.
+Algorithm 4.4. We describe an algorithm that, given a negative discriminant
+~ and a positive integer z, produces a set Jl of elements of CA that, under
+suitable hypotheses, is likely to generate CA (see Theorem 4.5). Initially, Jl is
+empty.
+   Draw a random positive integer p with p ~ Z , from a uniform distribution.
+Test whether p belongs to .9.1' as in (2.7). If it does, determine the prime
+form fp E CA as in (2.7), and add it to the set Jl .
+   Repeat the above 60(log I~I) log Z times (rounded up to an integer). This
+completes the description of the algorithm.
+Remark. We will apply this algorithm with logz = O((logl~1)2) (cf. (4.2)).
+                 A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                    497
+
+Theorem 4.5. If z satisfies (4.2), then the expected running time ofAlgorithm 4.4
+is (1og z)O(logloglogz) , and the set Jf determined by the algorithm satisfies #Jf <
+2 + 60(log I~I) log z. If in addition (4.3) is satisfied, then the set Jf determined
+by the algorithm generates Ct,. with probability at least!.
+Proof. The running time estimate is straightforward from (2.7), and the upper
+bound for #Jf is obvious.
+   To estimate the success probability of the algorithm, let us first consider the
+variant of the algorithm that does not stop after having processed 60(1ogl~1 )log z
+values of p. Let, at each stage of that algorithm, H denote the subgroup of Ct,.
+generated by Jf; so initially H = {1t,.}. As long as H is different from Ct,.,
+the next p that is drawn will enlarge H with probability at least 1/ (20 log z) ,
+by Theorem 4.1. Hence the expected number of p 's that one needs to draw
+until H changes is at most 20 log z. Adding up expectations, one finds that
+the expected number of p 's that one needs to draw until H either becomes
+equal to Ct,. or has changed k times is at most 20k log z , for any nonnegative
+integer k.
+   From #Ct,. < I~I (see (2.3» it follows that the longest strictly increasing
+chain of proper subgroups of Ct,. has length at most [(log I~I) / log 2]. Thus the
+expected number of p 's that one needs to draw until H = Ct,. is at most
+                    20(1og z)(1og 1~I)/log2 < 30(1og z) log I~I.
+We conclude that drawing twice as many p 's-as the actual algorithm does-
+will guarantee that in the end H equals Ct,. with probability at least! .
+   This proves Theorem 4.5.
+Remark. One obtains a more efficient algorithm, running in expected time
+(logz)O(I) , by omitting the Jacobi sum primality test in (2.7), and discarding p
+if the construction of fp is unsuccessful within a reasonable amount of time.
+Remark. We know of no efficient way to test whether or not the set Jf de-
+termined by the algorithm actually generates Ct,.. If it does not, then a later
+algorithm that depends on 4.4 may fail; this provides an indirect test.
+
+Remark. To achieve success probability at least 1 - rk , for a positive integer
+k , it suffices to investigate k times as many values of p. To prove this, apply
+Theorem 4.5 to k successive independent runs of the algorithm.
+
+                               5. RANDOM FORMS
+   In the present section we prove that, given a set Jf of generators of a class
+group Ct,., we can find random elements of Ct,. with an approximately uniform
+distribution.
+Lemma 5.1. Let m, h, d, b be positive integers with d ~ b, and A c Zm a
+subgroup of index h with (dZ)m cA. Further let ~ c Zm be a coset of A.
+Then
+                                       m      bm
+                    #( {I , 2, ... , b} n~) = h exp E
+498                     H. W. LENSTRA, JR. AND CARL POMERANCE
+
+for some real number f satisfying
+                        If I ::; min{h b-d+l
+                                       - 1, m(d - I)}
+                                                      .
+
+Proof. By Lemma (4.1) in [20] and its proof, there are positive integers hI'
+... , h m dividing d for which         n:
+                                1 hi = hand
+
+
+        rrm( 1 - T
+                 h.-I)
+                       ::; bmh . #( {I , 2, . .. , b} m n~)::; rrm( 1 + T
+                                                                        h.-I)
+                                                                              .
+        ~I                                                           ~I
+
+Combining this with the inequalities 10g(1 + x) ::; x (for x 2: 0) and
+Ilog(1 - x)1 = 10g(1 + x/(1 - x)) ::; x/(1 - x) (for 0::; x < 1) we obtain
+                         m (    h. _
+                  Ifl::;L b- h.+l 1
+                                           1) ::;b_d+l
+                                                   1 L (h -l), m
+                                                                     i
+                        i=1            I                       i=1
+and the lemma follows easily.
+Theorem 5.2. Let Ll be a negative discriminant, Jl a set of generators of Cll ,
+and f E Cll . Then the number of vectors r = (r(g))gE~ in {I, 2, ... , ILlI}~
+satisfying ngE~ gr(g) = f equals
+
+                                           I LlI#~
+                                           --·expf
+                                           #Cll
+for some real number f satisfying
+                                           #Cll
+                                  If I < ILlI- #Cll < 1.
+Proof. Let L be the kernel of the group homomorphism rp: Z~ -+ Cll sending
+(r(g))gE~ to ngE~ gr(g). By hypothesis, this map is surjective. The theorem
+follows from the lemma applied to m = #Jl, h = d = #Cll , b = ILlI, A = L
+and ~ = rp -I f; note that d < !b by (2.3).
+   In the following lemma, let Ll and Jl be as in Theorem 5.2, and let L = ker rp
+be as in the proof just given. We remark that there is a group isomorphism
+(5.3)                           ((2Z)~ n L)/2L -+ Cll ,2
+sending r to rp(!r); here Cll 2 is as in (2.4).
+
+Lemma 5.4. With the above notation, let .91 C Z~ be a coset of 2L and ~ c Z~
+the coset of (2Z)~ n L containing .91. Then
+                     # ({I , 2, . .. , ILlI} ~ n.9l)       1
+                                               ~       =~.expf
+                     #({1, 2, ... ,ILlI} n~)               1l,2
+
+for some real number f satisfying
+                                             4·#Jl·#C
+                                      If I < ILlI- 2#C:·
+                 A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                   499
+
+Proof. One proves this by applying Lemma 5.1 twice, once with A = 2L and
+once with A = (2Z{ n L, and both times with b = 1.11 and d = 2· #Ce,; note
+that d < b by (2.3). By (5.3), the index of 2L in Z:§' is #Ce, 2 times as large
+as the index of (2Z):§' n L in Z:§' . This proves Lemma 5.4. '
+(5.5) Remark. We shall apply Lemma 5.4 with #:§ = O((log 1.11/) (see Theo-
+rem 4.5). From (2.13) we then see that lEI S 10g2 if 1.11 is sufficiently large.
+           6. SMOOTH NUMBERS WITH RESTRICTED PRIME FACTORS
+   For positive real numbers v, x, y, and any set of prime numbers ,9l, we
+let ",(x, y;,9l) denote the number of positive integers S x all of whose prime
+factors are at most y and belong to ,9l , and
+                         n(x; ,9l) = #{p : p E ,9l, P S x} ,
+
+                           S(v, y;,9l) =          L    1
+                                                       P
+                                             PE9", v<p-:S;y
+
+This section is devoted to the proof of the following theorem.
+Theorem 6.1. There is an effectively computable positive constant c5 with the
+following property. Let ,9l be any set of prime numbers, 11 a real number with
+o S 11 S 1, and x, y real numbers satisfying
+(6.2)            x 2: c5 ,     2 S Y S exp((10gx//2 (loglogx)rJ).
+Let
+                     logx                 I-lflogu               (logu)-~
+(6.3)          u=--,             V =y                ,    W =V              .
+                     logy
+Suppose that there are real numbers a 2: 1, P 2: 1 for which
+                                     1                             w
+(6.4)          S(v, y; ,9l) 2: - 1 - '           n(w; ,9l) 2: P l '
+                               a ogu                           ogw
+Then we have
+",(x, y; ,9l) 2: x.exp( -u(log u+ 12(10g u)rJ +loglog u+2(log u)rJ-1logP +loga)).
+
+Proof. From (6.2) we have logu 2: poglogx -11logloglogx. We let c5 be so
+large that this implies
+(6.5)                          logu 2: ~loglogx 2: 3.
+
+   Let L denote the set of integers that are the product of [u] not necessarily
+distinct primes p E,9l with v < p S y. Since w S v , we have
+(6.6)                  ",(x, y; ,9l) 2:   L ",(x/m, w; ,9l).
+Let mEL. We estimate ",(x/m, w;,9l) from below. From v u - 1 < m S
+yu = x we have
+                   1< xx     u/((logu)-l)+l  2uflogu
+(6.7)               --<--I=V
+                        m     v u-
+                                            <v,
+500                      H. W. LENSTRA, JR. AND CARL POMERANCE
+
+the last inequality being a consequence of (6.5). Let l(m) = (log ~)flogw.
+From (6.7) we have
+(6.8)                          o ~ l(m) < 2u(log U)'1-I.
+With (6.5) this gives
+(6.9)          l(m) loglog(xjm) < 2u(10gu)'1-lloglogx ~ 5u(10gu)'1.
+Assume, for the moment, that /(m) ~ 1. One obtains a lower bound for
+I{f(xjm, w;.9) by considering all products of [/(m)] not necessarily distinct
+primes P E.9 with P ~ w. Since no integer has more than [/(m)]! represen-
+tations as such a product, we find
+                                 n(w' .9)[I(m))
+             I{f(xjm, w; .9) ~     d(m)]!
+
+                               ~ n(w; .9),(m)-I I (m)-I(m)
+
+                                 1(    w           )l(m)
+                               ~ w p/(m) logw
+                                  x (        1      )l(m)
+                               = mw p log(xjm)
+                               = ~ exp( -l(m)(loglog(xjm) + 10gP»),
+                                 mw
+where in the last inequality we use that n(w;.9) ~ w. Combining this with
+(6.8) and (6.9) we obtain
+(6.10)      I{f(x/m, w; .9) > ~ exp( -5u(10g u)'1 - 2u(log u)'1- l log P) ,
+                              mw
+which is our lower bound for I{f(xjm, w;.9). It is also valid if l(m) < 1,
+since in that case I{f(xjm, w;.9) ~ 1 > xj(mw) .
+   Since no element of L has more than [u]! representations as a product of
+[u] primes P E .9, v < P ~ Y , we have
+
+                      1 > 1 S(
+                   '" m             .9)[U)    1 (  1 )[U)
+                   W      [u]! v,y;        ~[u]!alogu
+                  mEL
+                            > exp( -u(log u + log log u + log     a».
+Using this and (6.10) in (6.6), we have
+(6.11)     I{f(x, y; .9) > ~ exp( -u(log u + 5(log u)'1 + log log u
+                           w
+                                                          + 2(10gu)'1- l log p + loga».
+      It remains to estimate w. From (6.2) and (6.5) we see that
+
+               logw ~
+                          logy
+                                  ~ (logx)
+                                           1/2 (lOg log   X) '1 ~ -(logx)
+                                                                  5       1/2
+                        (log u)'1                 log u           2
+                            ~ ~u(loglogx)'1 ~ 21u(10gu)'1.
+Putting this into (6.11) we obtain the theorem.
+                 A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                   501
+
+                   7. THE ELLIPTIC CURVE SMOOTHNESS TEST
+   The elliptic curve method, as described in [24], is a probabilistic algorithm
+that, given four integers a, y, w, h exceeding 1, attempts to find a non-
+trivial divisor of a. The number y may be thought of as an upper bound for
+the divisor that one is trying to find, h is an upper bound for the number of
+elliptic curves that one tries, and w is proportional to the time spent on a single
+elliptic curve. The following theorem summarizes the results that we shall need
+about the elliptic curve method.
+   Let lfIo(x, w) denote the number of w-smooth integers in the interval
+(x - v'x, x + v'x) .
+Theorem 7.1. There is an effectively computable constant c6 with 0 < c6 < 1
+such that the following holds. Let a, y, w, h be integers exceeding 1 such that
+a has at least two distinct prime factors, and such that the least prime factor p of
+a satisfies 3 < p ::; y. Suppose further that lfIo(p, w) ~ 3. Then the probability
+that the elliptic curve method, given a, y, w, h, succeeds in finding a nontrivial
+factor of a, is at least
+                              1 _ c:lflo(P, w)/(y'Plogy)
+
+The running time of the method is O(hw(logy)(loga)2).
+Proof. The first assertion is [24, Corollary (2.8)], up to a harmless change in
+the definition of lfIo(p, w). For the running time, see [24, (2.9)]. This proves
+Theorem 7.1.
+   Theorem 7.1 asserts that the elliptic curve method will probably be effective
+in splitting a if the least prime factor p of a is such that there are many
+w-smooth numbers in (p - ,fP, p + ,fP). Let Y denote the set of primes p
+for which
+           lfIo(p, exp(logp)6/7)) > vp.exp(-t(logp)If7loglogp) ~ 3.
+For a positive real number y, let a recognizable y-smooth number be a positive
+integer all of whose prime factors are at most y and belong to Y .
+Algorithm 7.2. Given integers a and y, with a > 0, y > 1, this algorithm
+attempts to factor a completely into primes. It is designed to be very likely to
+succeed if a is a recognizable y-smooth number.
+   Step 1. Remove all factors 2 and 3 from a, and replace a by the quotient.
+If now a = 1 , the algorithm terminates at this point.
+   Step 2. Find the largest integer k such that a = m k for some positive integer
+m (cf. [22, §2]), and replace a by m.
+   Step 3. If a ::; y, test a for primality using the Jacobi sum test [1]. If a is
+composite or a > y , run the elliptic curve method with parameters a, y, w,
+h , where wand h are the numbers
+                                 exp(logy)6/7) ,
+                (1 - c6 ) -I (logy)(loga) exp( t(logy) 1f7loglogy) ,
+rounded down to integers, with c6 as in Theorem 7.1. When a proper splitting
+of a is achieved, perform Steps 2 and 3 recursively with a replaced by each
+factor that is discovered. This completes the description of the algorithm.
+502                     H. W. LENSTRA, JR. AND CARL POMERANCE
+
+Theorem 7.3. If a is a recognizable y-smooth number, then the probability that
+Algorithm 7.2factors a completely into primes is at least 1- (loga)ja. Further,
+the running time of the algorithm is O((log(a + 1»4. exp(2(logy)6/7») .
+Proof. This is a straightforward consequence of Theorem 7.1 and the definition
+of .9 . For a fuller discussion of a similar result, see [28], in particular Theorem
+2.1 in that paper. This proves Theorem 7.3.
+   The following result provides an upper bound for the number of primes not
+in .9 . Denote by .9' the set of primes that are not in .9 , and let n(x; .9')
+be the number of primes in .9' up to x, as in §6.
+Theorem 7.4. There is an effectively computable constant c7 such that for all
+real numbers x 2: 2 we have
+                         n(x; .9') ::; c7 x· eXP(-!(logx)I/6).
+
+Proof. This follows from Theorem B' in [28], which in turn relies heavily on
+the work of Friedlander and Lagarias [12]. The fact that c7 is effectively com-
+putable was not stated in [28; 12], but follows from the proof in [12] and the
+effective computability of the constants in the Vinogradov-Korobov zero-free
+region a> l-c(logltl)-2/3(loglogltl)-I/3, It I 2: to for the Riemann zeta func-
+tion C(a + it), see [11, Theoreme 11.2 (p. 423)]. This proves Theorem 7.4.
+      The notation S(v, y; .9') in the following result was introduced in §6.
+Corollary 7.5. For any two real numbers v, y with 2::; v < y we have
+
+                S(v, y; .9') < c7 exp( -!(log V)I/6) . (1 + log(y jv») ,
+with c7 as in Theorem 7.4.
+Proof. Using partial summation and Theorem 7.4 we find
+
+  S(v, y; .9, ) = -1 ( n(y;.9)
+                    y
+                                       ') +
+                             , - n(v;.9)          /,y t n(t;.9) - n(v; .9) dt
+                                                   v
+                                                        1( '
+                                                       "2                   , )
+
+
+                  < c7 exp(-!(logv)I/6). (1 +    Ivy +dt)
+                  = c7 exp(-!(logv)I/6). (1 +log(yjv»).
+
+This proves Corollary 7.5.
+Remark. It is clear that combining Theorem 6.1 with Theorem 7.4 and Corollary
+7.5, one can obtain for certain ranges of x and y the lower bound estimate
+lJI(x,y;.9) 2: x.exp(-(1 +o(I»ulogu) for u = (logx)flogy --+ 00, where
+lJI(x, y;.9) is the number of recognizable y-smooth integers up to x. It is
+known ([5]) that lJI(x, y) = X· exp(-(1 + o(1»ulogu) , in these ranges of x
+and y, where lJI(x, y) is the number of all y-smooth integers up to x. Thus
+in some sense there are essentially just as many recognizable y-smooth numbers
+in the ranges we consider as there are y-smooth numbers.
+                 A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                  S03
+
+                       8. RECOGNIZABLE SMOOTH FORMS
+   If d is a negative discriminant and y is a positivI;; real number, then by a
+recognizable y-smooth form in CIl we mean a form (a, b, c) E CIl for which
+a is a recognizable y-smooth number (see §7) with gcd(a, d) = 1.
+   In this section we prove that if the set 9'1l defined in (2.7) has sufficiently
+many elements in each of two particular intervals (condition (8.2)), then CIl
+has a fair proportion of recognizable y-smooth elements.
+   The role of the additional parameter d in Theorem 8.1 will become clear in
+§ 9. For the moment, the reader may think of d = 1 , so that x = ! M. The
+notation n(x; 9'), S(v, y; 9') is from §6.
+Theorem S.l. There are effectively computable positive constants cs ' c9 with the
+following property. Let d be a negative discriminant, and let d, x, y be real
+numbers satisfying
+
+                  x = h/ldlld,        1 ::; d ::; 12,       x> c9 '
+              exp(csloglogx) ::; y ::; exp((10gx)1/2(10glogx)1/2).
+Suppose that the numbers
+                    logx              l-lflogu                   (logU)-1/2
+               u=--             v=y              ,      W   =v
+                    logy'
+satisfy
+                                  1
+(8.2)          S(v, y; 9'1l) 2:: -61  '
+                                  ogu
+Then the number of recognizable y-smooth forms in CIl is at least
+
+                      #CIl • exp(-u(logu + 13(1ogU)1/2)).
+
+Proof. We begin by applying Theorem 6.1, with 9' = 9'1l nY and 11 = !. We
+take c9 2:: cs ' with cs as in Theorem 6.1, and we assume that (6.5) holds. The
+lower bound on y implies that
+
+  w = exp ((1- -1_1_)(10gU)-1/2 l0gy) 2:: exp (ics 10glOgl;2) 2:: exp(ics).
+                ogu                                (logu)
+Combining this with Theorem 7.4 we see that
+                                      ,          w
+                              n(w; Y) ::; 42logw
+
+if Cs is taken large enough. With (8.2) this gives
+                                                w
+                            n(w; 9'1l nY) 2:: 71ogw '
+
+which is the second condition of (6.4), with P = 7.
+504                        H. W. LENSTRA, JR. AND CARL POMERANCE
+
+      Next we apply Corollary 7.5. We have
+                          1 (/       logy  csloglogx
+                           og y v) = logu > log log x = cs '
+                            logv = (1- lo~u)logy:;::: ~logy,
+using (6.5), so from Corollary 7.5 we obtain
+                 • eLl'           (   1 2       (-I
+                                                1/6)   ) logy          1
+         S(v,y,J ):::;c7 exp -2(3 logy )      . Cs +1 ·-1-:::; 421          '
+                                                           ogu         ogu
+the last inequality by increasing c9 ' if necessary. With (8.2) this yields
+                                                    1
+                           S(V,y;9'od n9 ):;::: -71 '
+                                                   ogu
+which is the first condition of (6.4), with a = 7.
+   Theorem 6.1 now implies that 'I'(x, y ; 9'od n 9) is at least
+        x . exp( -u(log u + 12(10g U)I/2 + log log u + 2 (log u) -1/2 log 7 + log 7))
+             :;::: x . exp( -u(log u + 21 (log U)I/2)) ,
+                                                               !
+where again we may have to increase c9 • From x :::; M and Lemma 2.10
+it follows that this is also a lower bound for the number of recognizable y-
+smooth forms in Cod. To prove the theorem, it remains to find an upper bound
+for #Cod . From (2.13) and Idl :::; 48x 2 we obtain
+                          #Cod < J48. x .10g(48x 2)
+                               = x· exp(10glog(48x 2) + ! 10g48)
+                               :::; x· exp (!u(lOgU)I/2) ,
+by (6.5). This proves Theorem 8.1.
+Remark. If the generalized Riemann hypothesis is correct, then (8.2) is satisfied
+if c9 is sufficiently large; cf. [32, Theorem 5.3] (in which one should read ! Li(x)
+for Li(x)). So in that case there are sufficiently many y-smooth forms in Cod.
+The corresponding point was not satisfactorily dealt with in [20, eq. (2.10)].
+To correct this, one can either apply Theorem 8.1, or, as the author of [20]
+communicated to us, follow the proof of [32, Theorem 5.2] to estimate the
+number of smooth integers built up from the primes in 9'od n 9; this requires
+Theorem 7.4 in addition to [32, Theorem 5.3].
+                            9. THE CHOICE OF A MULTIPLIER
+  In this section we show that the conditions (4.3) and (8.2) of Theorems 4.1
+and 8.1 can be achieved by means of a small multiplier.
+Theorem 9.1. There is an effectively computable positive constant c lO with the
+following property. Let n be an odd integer with n > 1 , and let u, v, w, y,
+z be real numbers satisfoing
+                        w :;::: c lO logn,
+(9.2)         logy
+           1og--    > -1- > 0              log v :;::: C10 log u , v:;:::logn.
+              logv - logu            '
+                 A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                     505
+
+Further let [g = {3, 4, 7, 8} if n == 1 mod 4 and [g = {I, 5, 8, 12} if n ==
+3 mod 4. Then there exists an integer d E [g for which the number il = -dn
+is a negative discriminant satisfying the conditions
+                                                      z
+(9.3)                              n(z; 9'~) 2: -61
+                                                 ogz '
+                                                      w
+(9.4)                             n(w;9'~)2:61
+                                                      ogw '
+                                                    1
+(9.5)                             S(v, y; 9'~) 2: -61-.
+                                                          ogu
+
+Proof. For each d E [g, the number il = -dn is a negative discriminant. It
+will thus suffice to show that each of the three conditions (9.3), (9.4), (9.5) is
+violated by at most one d E [g .
+   Let d l , d 2 E g be two distinct elements of [g, put ill = -dl n, il2 =
+-d2 n, and 9' = {p : p is prime, (¥) = -I}. Writing ./Y for the set of prime
+divisors of n, we have from the multiplicativity of the Kronecker symbol
+                                  9' c 9'~ 1 u 9'~2 u./Y.
+It follows that for all x we have
+                   n(x; 9'~ ) + n(x; 9'~ ) 2: n(x; 9') - #./Y.
+                              1                2
+
+We have #./Y = O((logn)jloglogn), so for c lO sufficiently large we have #./Y <
+ /2xjlogx whenever x 2: clOlogn. Also, because d l d 2 is not a square, we have
+n(x; 9') '" !xjlogx for x -+ 00, so n(x; 9') 2: t2xjlogx for all x beyond
+some effectively computable constant; this constant is absolute because [g is
+finite (see [8, Chapter 20]). Hence, increasing clO if necessary, we have
+                                                                x
+                          n(x; 9'~ 1 ) + n(x ; 9'~2 ) 2: -31--
+                                                           ogx
+whenever x > clO log n. Applying this to x = z we conclude that ill and il2
+cannot both violate (9.3), and likewise for (9.4).
+  For (9.5), we have
+          S(v, y; 9'~ ) + S(v, y; 9'~ ) 2: S(v, y; 9') - S(v, y; ./Y).
+                      1                    2
+
+Since n has at most (log n) / log v prime divisors > v , we have
+                                               logn
+                          S(v,y;'/y)<-l-:S                     1    .
+                                              v ogv        c lO ogu
+Further, since d l d 2 is not a square, we have
+              S(v, y; 9') = !log logy -            ! log log v + O(ljlogv),
+with an effectively computable, absolute O-constant (again, see [8]). It follows
+that, for clO sufficiently large, we have
+                                                      1             1      1
+          S(v,y;9'~ )+S(v,y;9'~) 2: -21 - -61 = -31-'
+                      1                   2           og U          og u   og u
+506                   H. W. LENSTRA, JR. AND CARL POMERANCE
+
+which shows that Lll and Ll2 cannot both violate (9.5). This concludes the
+proof of Theorem 9.1.
+Remark. We shall apply Theorem 9.1 with u, v, W, Y as in Theorem 8.1,
+with x = 1Vn, and z as in (4.2). One verifies in a straightforward manner
+that these numbers satisfy (9.2) if
+                            y ~ exp(c ll (loglogx)3/2)
+for some absolute constant c ll .
+
+                          10. THE FACTORING ALGORITHM
+Algorithm 10.1. Given an odd positive integer n, this algorithm attempts to
+find a nontrivial factorization of n.
+   Step 1. Choose a multiplier. Let g = {3, 4, 7, 8} if n == 1 mod 4 and
+g = {I, 5, 8, 12} if n == 3mod4. Select d E g at random, with the
+uniform distribution. Put Ll = -dn. (Note that Ll is a negative discriminant,
+in the sense of §2.) ,
+   Step 2. Find a generating set. Run Algorithm 4.4 on Ll and z, where z is the
+number exp(c4 (log(12n))2), rounded up to an integer, with c4 as in Theorem
+4.1. This yields a set J1 of elements of C",. (Note that #J1 = O((log ILlI)\)
+   Step 3. Construct thefactor base. Let y be the number L x [1, 1V2], rounded
+                                    1
+down to an integer, where x = Vn. Find the prime numbers q :S y with
+(~) = 1. We write (ff for the set of these q. Construct the prime forms fq for
+                                                    1
+q E (ff, as in (2.7). (Note that #(ff:S y = L n [1, + 0(1)] for n ----+ 00.)
+   Step 4. Collect relations. In this step, one attempts to produce a sequence of
+#J1 + #(ff + 1 relations between J1 and {Iq : q E (ff}. Such a relation is, by
+definition, an element (r, t) E Z? x Ziff satisfying
+(10.2)                   (II gr(g)) . (II ;:(q)) = 1'" '
+                          gE?            qEiff
+where r = (r(g))gE?' t = (t(q))qEiff' Initially, the sequence of relations is
+empty.
+  Draw a random vector r = (r(g))gE,'q' E {I, 2, ... ,ILlI}?, with the uni-
+form distribution. Calculate TI gE ? gr(g); let it be (a, b, c). Test whether
+gcd(a, Ll) = 1 , and if so, attempt to factor a into prime numbers :S y using
+Algorithm 7.2. If this attempt is successful, use the method of (2.8) to find a
+vector t = (t( q) ) qEiff E Ziff such that
+                              (a, b, c) =   II fq-t(q).
+                                            qEiff
+Then (r, t) E Z? x Z12' is clearly a relation between J1 and {Iq : q E (ff}; it is
+the next term in the sequence of relations.
+   Repeat the above until a sequence of #J1 + #(ff + 1 relations has been found,
+or until at least
+               2(#J1 + #(ff + 1) . exp( u(log u + 13(log u) 1/2) + 2)
+                  A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                        507
+
+(rounded up to an integer) vectors r have been drawn and inspected, whatever
+happens first; here u = (log(! JIl)) flog y is as in Theorem 8.1. (Thus at most
+L n [!, 1 + 0(1)] vectors r are processed, for n -+ 00.)
+    If in this way fewer than #JJ +#& + 1 relations are found, then Algorithm 10.1
+terminates unsuccessfully at this point. Suppose now that Step 4 is successful,
+and denote by (ri' t i ) the ith relation that is found, for 1 :::; i :::; #JJ + #& + I .
+   Step 5. Solve the linear system. For 1 :::; i :::; #JJ + #& + 1, let Vi E   Ff    x ~
+be the vector that one obtains by reducing the coordinates of (ri' t) modulo
+2; here we put F 2 = Z/2Z. Use the coordinate recurrence method [34; 21,
+§2.19] to find a nonempty subset f c {I, 2, . .. ,#JJ + #& + I} for which
+L:iEf Vi = o. (Note that such a f exists, since #JJ +#& + 1 > dim F2         (Ff  x ~).)
+   Step 6. Construct an ambiguous form. Compute the components s(g), u(q)
+( g E JJ, q E & ) of the vector ! L:iEf(ri ' t i ) E Z:9' x ztff . Compute the form
+
+                            f = (ITl(g))· (ITI;(q))·
+                                   gE:9'        qEtff
+This is an ambiguous form. Calculate the corresponding factorization of Ll (see
+(2.4)) and, by taking a gcd, the resulting factorization of n. This factorization
+is the output of the algorithm. This completes the description of Algorithm
+10.1.
+Remark. The fact that, in the last step, ! L:iEf(ri , t i ) is an integer vector
+follows from L:iEf Vi = o. To see that f is ambiguous note that
+
+                    l = IT ((IT g',(g)). (IT ~i(q))) = Ill'
+                          iEf    gE:9'          qEtff
+by (10.2).
+Remark. The factorization of n obtained in Step 6 is a coprime factorization
+of n, see (2.4). It may, however, be the trivial factorization 1· n .
+Theorem 10.3. The expected running time of Algorithm 10.1 is at most
+L n [!, 1 + 0(1)] for n -+ 00. There is an effectively computable constant C12 '
+such that if n is an odd number and n > C12 ' then the probability that Algorithm
+10.1 succeeds in finding a nontrivial factorization of n is at least    l2
+                                                                         (1 - 2 -h+ 1) ,
+where h is the number of distinct prime factors of n ; this is at least      i4if n is
+not a power of a prime number.
+Proof. We first estimate the time; o( 1) will always be for n -+ 00. Steps 1 and
+2 take only time (log n)O(10g log log n) , by Theorem 4.5, and Step 3 takes expected
+time at most yl+0(1) = L n [!, ! + 0(1)]. Processing a single vector r in Step
+4 can be done in expected time (log ILllf(l) exp(2(logy)6/7) , by Theorem 7.3.
+This is absorbed in the upper bound of L n [!, 1 + 0(1)] for the number of
+vectors r to be considered in Step 4. In Step 5, we solve a system of m linear
+                                                                    !
+equations in m + 1 variables over F 2 , where m :::; L n [!, + 0(1)]. From
+(2.8) it follows that each of the vectors Vi has less than #JJ + log ILlI nonzero
+coordinates. Therefore the number of nonzero coefficients in the system of
+508                    H. W. LENSTRA, JR. AND CARL POMERANCE
+
+linear equations is at most L n [!-, !- +0(1)]. Thus from [34] it follows that Step
+5 takes expected time at most L n [!-, 1 + 0(1)]. Finally, Step 6 takes time at
+most L n [!-, !- + 0(1)]. This concludes the running time analysis.
+   Next we estimate the probability that a nontrivial factorization is obtained.
+We shall suppose that n ~ C 12 ' with c12 sufficiently large, as dictated by the
+proof.
+
+                                                   *;
+   By Theorem 9.1, the discriminant d = -dn constructed in Step 1 satisfies
+(9.3), (9.4) and (9.5) with probability at least      and if this is the case, then
+by Theorem 4.5 the set #Jf' found in Step 2 generates Ca with probability at
+least !-.
+   Suppose now that d satisfies (9.3), (9.4) and (9.5), and that Jf' generates
+Ca' We first show that the conditional probability that Step 4 of the algorithm
+is successful is at least !-. First consider the variant of Step 4 that stops only
+when #Jf' + #c2' + 1 relations have been found. From Theorem 8.1 and Theorem
+5.2 it follows that whenever a vector r is drawn, the form (a, b, c) computed
+by the algorithm is a recognizable y-smooth form with probability at least
+                        exp(-u(logu + 13(logU)I/2) - 1).
+If (a, b, c) is a recognizable y-smooth form, then the probability that Algo-
+rithm 7.2 factors a into primes ::; y is at least 1 - (log a) / a > exp( -1). It
+follows that a random r gives a relation with probability at least
+                        exp( -u(log u + 13(log u) 1/2) - 2) ,
+so that the expected number of vectors r that one needs to draw until one has
+#Jf' + #c2' + 1 relations is at most
+                (#Jf' + #c2' + 1)· exp(u(logu + 13(logU)I/2) + 2).
+Hence if one draws twice as many vectors r, one is successful with probability
+at least !-. This implies that the actual Step 4 has success probability at least
+!- ' as asserted.
+    We now restrict attention to those runs of the algorithm for which d assumes
+a given value satisfying (9.3), (9.4) and (9.5), the set Jf' is a given set of less
+than 2 + 60(log Idl) log z generators of Ca (see Theorem 4.5), and Step 4 is
+successful. It will suffice to prove that the conditional probability of obtaining
+a nontrivial factorization of n is at least !-(1 - rh+I). We do this by an
+argument that is similar to the one presented in [20].
+    The number n has 2h - 1 coprime factorizations, and only one of them is
+trivial. Hence Theorem 2.5 implies that the number of ambiguous forms that
+yield a nontrivial factorization of n is (1 - 2- h + l ) • #Ca 2' Thus it suffices to
+prove that the ambiguous form f constructed in Step 6 is equal to a given am-
+biguous form with probability at least !-. (#Ca 2)-1 . Note that f is completely
+determined by f and by the r j , since each tj is determined by r j •
+    Put J = {I , 2, . .. , #Jf' + #c2' + I} , and let f be any nonempty subset of
+J. The probability that f is the subset found by the coordinate recurrence
+method in Step 5 depends only on the vectors v j ' which in turn depend only
+                  A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                     509
+
+
+on the vectors ti and the co sets of the vectors 'i modulo (2zl. Further, ti
+depends only on the coset of 'i modulo the lattice L (defined in §5) of vectors
+, E z~ with ngE~ gr(g) = Ill' We conclude that the probability of finding a
+particular f in Step 5 depends only on the cosets of the vectors 'i modulo
+(2Z)~ nL.
+    Consider a pair consisting of a sequence of vectors ('i)iEJ and a nonempty
+subset f c J , and suppose that this pair can be produced by the algorithm.
+One such pair is called equivalent to another such pair (,;) , f ' if, first of
+all, we have f = f ' ; and, second, if j denotes the smallest element of f ,
+then 'i = ,; for all i E J, i =I j; and, finally, 'j and ,~ lie in the same
+coset, ~ (say), of Z~ modulo (2Z)~ n L. It is obvious that this is indeed an
+equivalence relation, and from what we said in the previous paragraph it follows
+that any two equivalent pairs have the same probability of being produced by
+the algorithm. Hence we may now fix f and the vectors 'i for i =I j , as well
+as the coset ~ of Z~ modulo (2Z)~ n L. It is to be proved that the fraction
+of elements 'j E ~ n {I , 2, . .. , 1L11} ~ that give rise to a given ambiguous form
+is at least! . (#CLl 2)-1 .
+   Note that one of the terms in the sum LiE)"('i' t i ) computed in Step 6 is
+equal to ('j' t). From this it follows that the ambiguous form f is equal to a
+given ambiguous form if and only if 'j belongs to a certain coset .9¥' modulo
+2L contained in ~ . Thus the fraction to be estimated is
+                            #(.9¥' n {I, 2, ... , 1L11}~)
+                            #(~ n {I, 2, ... , 1L11}~)'
+
+By Lemma 5.4 this is at least !,(#CLl 2)-1 ,if e l2 is sufficiently large (cf. (5.5)),
+as required.                         '
+   The last assertion of the theorem is obvious. This concludes the proof of
+Theorem 10.3.
+Rema,k. It can be shown that the expected running time of Algorithm 10.1 is
+actually equal to L n [!, 1+o( 1)], for n ---+ 00 , and that one cannot improve this
+by choosing the parameter y differently. The storage needed by the algorithm
+is at most L n [!, ! + 0(1)], for n ---+ 00. This follows easily from [34].
+   To obtain an algorithm for the complete prime factorization of positive in-
+tegers it now suffices to add a few embellishments to Algorithm 10.1. In §7
+we saw the elliptic curve method similarly transformed into a smoothness test
+(Algorithm 7.2).
+Algorithm 10.4. This is an algorithm that factors a given positive integer n into
+prime factors.
+   Step 1. Remove all factors 2 from n, and replace n by the quotient. Stop
+if n = 1.
+   Step 2. Find the largest integer k such that n = m k for some positive integer
+m , and replace n by m.
+510                    H. W. LENSTRA, JR. AND CARL POMERANCE
+
+   Step 3. If n :::; c l2 , with Cl2 as in Theorem 10.3, factor n into primes by
+trial division.
+   Step 4. If n > C 12 ' first test n for primality using the Jacobi sum test [1].
+Stop if n is prime. Next suppose that n is composite. Apply Algorithm 10.1
+repeatedly, until it finds a nontrivial factorization of n. Apply Steps 2, 3 and 4
+recursively to both factors of n that are found. This completes the description
+of the algorithm.
+
+Theorem 10.5. Algorithm 10.4 completely factors any positive integer n into
+prime factors in expected time at most Ln [!, 1 + o( 1)], for n -+ 00 .
+Proof. The running time estimate for Steps 1, 2 and 3 is left to the reader. It
+is easy to see that the total number of divisors of n to which Steps 2, 3 and 4
+are applied is at most the number of distinct odd prime factors of n, which is
+at most logn. In Step 4, the primality test takes time (logn)o(lOgloglogn) (for
+n > ee), by [1]. Algorithm 10.1 is applied only to odd integers larger than
+c l2 that are not prime powers. For each such number, the expected number of
+applications of Algorithm 10.1 that is necessary to find a nontrivial factorization
+is at most 64, by Theorem 10.3. Hence all applications of Algorithm 10.1
+together take expected time at most L n [!, 1 + 0(1)] for n -+ 00. This proves
+Theorem 10.5.
+
+  The theorem stated in the introduction is a direct consequence of Theorem
+10.5.
+
+                    11. THE RANDOM CLASS GROUPS METHOD
+   It is the purpose of this section to point out a serious flaw in the heuristic
+running time analysis of the random class groups method that was proposed
+in [29]. We refer to [29; 21, §4.A] for a description of this method. For our
+purposes it suffices to know that, in order to factor n, the random class groups
+method needs a "small" positive integer d for which ~ = -dn is a negative
+discriminant with the property that #C/j. is y-smooth for some "small" value of
+y. The dominating contribution to the expected running time is then, roughly,
+the upper bound for d multiplied by y. The heuristic running time analysis
+assumes that, for fixed n and variable d , the class number #C-dn is essentially
+just as likely to be smooth as a random number of the same approximate size.
+This assumption implies that one can take both d and y to be no larger than
+       !
+L n [!, + 0(1)], leading to an upper bound L n [!, 1 + 0(1)] for the expected
+running time of the random class groups algorithm, for n -+ 00.
+    In this section we prove that the assumption just stated is incorrect for a fairly
+dense sequence of integers n. Theorem 11.1 shows that for many integers n
+there is not even a single multiplier d for which #C-dn is smooth, for a very
+wide range of smoothness bounds. For example, if the smoothness bound is
+taken to be XI/9, then the number of such n up to x is at least CX 2/ 3 / logx
+for some positive constant c; there is no reason to suppose that the random
+class groups method can find a nontrivial factor of any of those n in time less
+than n 1/ 9 •
+                   A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                        511
+
+Theorem 11.1. There is a positive constant C l3 with the following property. Let
+./Y (x , y) be the set of positive integers n :$ x such that for every negative dis-
+criminant ~ == 0 mod n, the class number #C'" has a prime factor exceeding y.
+Then for all x, y with c13 < y :$ X I / 9 we have
+                                                               x
+                                    #./Y(x, y) 2: --=-3--
+                                                  40y logy
+Remark. Due to the use of the Bombieri-Vinogradov theorem in the proof of
+Lemma 11.3, the constant c13 in the theorem is ineffective.
+   Before we give the proof we treat a few lemmas. First we describe the "bad"
+integers n. Let the greatest prime factor of an integer m 2: 2 be denoted by
+P(m), and put P(I) = 1. We write !T for the set of prime numbers p with
+the property that min{P(p - 1), P(p + I)} > pl/3 > 3.
+
+Lemma 11.2. Let n be an integer that is divisible by p2 for some prime number
+p E!T with p 2: y3. Further let ~ be a negative discriminant that is divisible
+by n. Then the class number #C'" has a prime factor exceeding y.
+Proof. We can write ~ = p2~' , where ~' is also a negative discriminant. Di-
+viding the class number formula (2.12) by the same formula for ~' we find that
+#C'" = :!J(p - (f))·#C"" , where w' E {2, 4, 6}. Hence 6.#C", is divisible by
+one of the prime numbers P(p - 1), p, P(p + 1) , depending on the value of
+(f) . By hypothesis, each of these primes is larger than 3 and exceeds y. This
+implies Lemma 11.2.
+   In the following lemma, !T is as above and 1C(X;!T) is as in §6. The lemma
+asserts that, asymptotically, at least one third of all primes belong to !T .
+Lemma 11.3. We have
+                              · . f 1C(X ; !T)
+                             1Imm                  1
+                                                 >-.
+                               x ..... co xllogx - 3
+Proof. It suffices to show that
+
+(11.4)                 ~          logp 2: (! + o(I))x,               for x -    00.
+                   pE!T, p"Sx
+
+This sum is at least
+( 11.5)             ~ logp-                             logp -                 logp.
+
+
+The first sum is (1 + o( 1))x for x - 00, by the prime number theorem. The
+other two sums in (11.5) can be estimated with one argument. Let a E {I , -I} .
+Then
+( 11.6)                         logp =                      log(p + a) + O(loglogx).
+                 p"Sx                       p'5.x
+              P(p+a)"Sx l / J            P(p+a)'5.x l / J
+512                   H. W. LENSTRA, JR. AND CARL POMERANCE
+
+Now
+            log(p + a) =                     L A(d)
+                                 p~x       dlp+a
+                            P(p+a)~xl/3
+
+                        : :; L A(d)7C(X; d, -a) + L                         A(d)7C(X; d, -a) ,
+                                                                  d>XI/3
+                                                                p(d)~XI/3
+
+where A is the von Mangoldt function and 7C(X; d, -a) is the number of
+primes p :::; x with p == -a mod d. Trivially, we have 7C(X; d, -a) :::; ~ + 1,
+so the second sum is at most
+                             L          A(d)(J +     1) = O(x516) ,
+                       x l / 3<d<x+a
+                        p(d)~~1/3
+
+which we can see by noting that the sum is dominated by those d that are
+squares of primes. By the Bombieri-Vinogradov theorem (see [8, Chapter 28]),
+the first sum is
+
+                 (1 + 0(1))      L A(d) qJ(d~Ogx = U+ o(I))x
+                               d~XI/3
+
+
+for x -+ 00. Assembling these calculations in (11.6), we have
+                               L           logp:::; (! + o(I))x,
+                               p~x
+                            P(p+a)~xl/3
+
+which when put in (11.5) gives (11.4). This proves Lemma 11.3.
+Remark. The same proof shows that for each c with 0 < c <             the set of   1
+primes p for which min{P(p - 1), P(p + I)} > pC has lower density at least
+1 - 2c.
+   We now prove Theorem 11.1. Let x, y be as in the theorem. We write
+t = y3 . By Lemma 11.2, each integer n :::; x that is divisible by the square of
+a prime p ~ t, P E!T , belongs to ./Y(x, y) . Therefore
+
+                   #./Y(x, y) ~          L
+                                         pEST
+                                       t~p~XI/2
+
+The second sum is at most
+
+                                 X ( L"2
+                                            1   )2 = O(x/t2).
+                                     p?t   P
+The first sum is at least
+                                                x
+                                                "2-  (1/2) .
+                                                    7CX
+                                                P
+                  A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                 513
+
+It remains to note that n(x'/2) = o(x/(tlogt)) for x -+ 00 and that
+
+              L        1
+                       -> n(6t;!T)-n(t;!T) > (1
+                       p2 -       (6t)2
+                                              -+0 (1)) -1-
+                                                -   36          tlogt
+              pE.'7
+            t~p~Xl/2
+
+
+for t -+ 00. This last inequality follows from Lemma 11.3 and an upper bound
+for n(t;!T) afforded by the prime number theorem. Thus if c 13 is taken
+sufficiently large, we have Theorem 11.1.
+Remark. Let n, p, ~ be as in Lemma 11.2. If the number of factors p in
+~  is odd, then the large prime factor that we show to exist in #CIl is p itself,
+hence divides n. We can protect the random class groups method against
+such large prime divisors by working only with nth powers of elements in CIl •
+If the random class groups method is modified in this way, we should only
+consider integers n in Lemma 11.2 that have an even number of factors p , and
+restrict to discriminants ~ = -dn for which the multiplier d is not divisible
+by p. The arguments in this section then go through with very few changes,
+and the conclusion is that the modified random class groups method has the
+same shortcoming as the original method.
+
+                          12. PROBABILISTIC ALGORITHMS
+    In this section we discuss briefly what we mean by a "probabilistic" algorithm
+and by the "expected" running time of such an algorithm. Several definitions
+have been proposed for these notions, and the fact that they are not all mathe-
+matically equivalent is not generally appreciated. We have chosen the definitions
+below because they are natural and convenient to use. See [14] for a further
+discussion.
+    By a probabilistic algorithm we mean an algorithm that is allowed to employ
+a random number generator. Every time the random number generator is called
+it outputs 0 or 1, each with probability !. Any collection of calls is supposed
+to be independent; this also applies to calls that are made in different runs of
+the algorithm. It will be supposed that a call to the random number generator
+takes unit time. We are not concerned with the question of how the random
+number generator is to be implemented, or indeed whether this is possible at
+all.
+    It is easy to see that a random number generator can be used to draw, for a
+given positive integer m, a random number from {O, 1, ... , m - I} with the
+uniform distribution, in expected time O(log m) .
+    The course of a probabilistic algorithm is determined, not only by its input
+(for example, the number n to be factored, in the case of a factoring algorithm),
+but also by the random bits that are drawn. This means that, for a given value
+of the input, the running time of the algorithm may not be constant; instead, it
+has a distribution. The same applies to the output of the algorithm; for example,
+which factor of n is found by a factoring algorithm. Also, the correctness of
+the output of the algorithm may be subject to a distribution, as is the case for
+certain primality tests.
+514                   H. W. LENSTRA, JR. AND CARL POMERANCE
+
+    The "expected running time" of a probabilistic algorithm, for a given value
+of the input, is defined as the expectation of the running time. Note that we
+average only over the possible outputs of the random number generator, not
+over different values of the input of the algorithm. For example, when we say
+that a factoring algorithm has expected running time f(n) , then this is true for
+each individual value of n, without a single exception.
+    We mention a few rules that are helpful in computing expected running times.
+If a probabilistic algorithm consists of performing several other probabilistic
+algorithms, one after the other, and all with the same input, then its expected
+running time is simply the sum of the expected running times of the component
+algorithms. This obvious rule would not have been worth mentioning had its
+analogue not been incorrect for other definitions that have been proposed. The
+rule is even valid if one of the algorithms involved can in principle run forever;
+of course, if the expected running time is finite, this happens with probability
+zero.
+    The situation is a little more complicated if the component algorithms do
+not all have the same input. This occurs, for example, if the output of each
+algorithm is the input of the next one. In such a case it is often possible to
+find an upper bound for the input of each algorithm, and hence for its expected
+running time; the sum of the latter upper bounds is then a valid upper bound
+for the expected running time of the entire algorithm.
+    Another convenient rule is the following. Suppose that some of the outputs of
+a probabilistic algorithm are pronounced "successes" and the others "failures";
+for example, finding the factor 1 or n in a factoring algorithm is a failure,
+or finding a nonsmooth number if it is the purpose of the algorithm to find a
+smooth one. Let p be the success probability, and suppose that p > O. Then
+the expected number of times that one has to perform the algorithm until the
+first success occurs equals p -1 , and the expected time that this takes is p-1
+times the expected running time of the algorithm itself; this is even true if the
+average running time of a successful run of the algorithm is different from the
+average running time of an unsuccessful run. If one needs k successes one has
+to replace p -1 by k P -1 . In the examples just given one can tell the successes
+from the failures, but this is not always the case (see Algorithm 4.4). For an
+algorithm for which we cannot easily recognize when we are successful we have
+the option of bounding the number of iterations in advance. If this bound is at
+least 2p -1 , then the probability that at least one iteration of the algorithm is
+successful is at least! (see, for example, the proof of Theorem 4.5).
+
+
+                              ACKNOWLEDGMENTS
+
+   The authors are grateful to the Institute for Advanced Study (Princeton) for
+hospitality and support while this paper was being written. They are obliged
+to B. de Smit for pointing out an error in an earlier version of §12. They also
+gratefully acknowledge help with several of the references from P. van Emde
+Boas, A. Hildebrand, and P. Stevenhagen. The first author was supported by
+NSF under Grant No. DMS 90-02939. The second author was supported by
+NSF under Grant No. DMS 90-02538.
+                 A RIGOROUS TIME BOUND FOR FACTORING INTEGERS                                  515
+
+                                       REFERENCES
+
+ 1. L. M. Adleman, C. Pomerance, and R. S. Rumely, On distinguishing prime numbers from
+    composite numbers, Ann. of Math. (2) 117 (1983), 173-206.
+ 2. Z. I. Borevic and 1. R. Safarevic, Teorija eisel, Izdat. "Nauka", Moscow, 1964; English
+    trans!., Number theory, Academic Press, New York, 1966.
+ 3. R. P. Brent, Fast multiple-precision evaluation of elementary functions, J. Assoc. Comput.
+    Mach. 23 (1976), 242-251.
+ 4. J. P. Buhler, H. W. Lenstra, Jr., and C. Pomerance, Factoring integers with the number field
+    sieve, in preparation.
+ 5. E. R. Canfield, P. Erdos, and C. Pomerance, On a problem of Oppenheim concerning "fac-
+    torisatio numerorum," J. Number Theory 17 (1983),1-28.
+ 6. D. Coppersmith, Modifications to the number field sieve, IBM Research Report RC 16264
+    (#72241), Yorktown Heights, 1990.
+ 7. D. A. Cox, Primes of the form x 2 + nl, Wiley, New York, 1989.
+ 8. H. Davenport, Multiplicative number theory, 2nd ed., Springer-Verlag, New York, 1980.
+ 9. P. G. Lejeune Dirichlet and R. Dedekind, Vorlesungen iiber Zahlentheorie, 4th ed., Vieweg,
+    Braunschweig, 1893; reprint, Chelsea, New York, 1968.
+10. J. D. Dixon, Asymptotically fast factorization of integers, Math. Compo 36 (1981), 255-260.
+II. W. J. Ellison, Les nombres premiers, Hermann, Paris, 1975.
+12. J. B. Friedlander and J. C. Lagarias, On the distribution in short intervals of integers having
+    no large prime factor, J. Number Theory 25 (1987), 249-273.
+13. J. L. Hafner and K. S. McCurley, A rigorous subexponential algorithm for computation of
+    class groups, J. Amer. Math. Soc. 2 (1989), 837-850.
+14. D. S. Johnson, The NP-completeness column: an ongoing guide, J. Algorithms 5 (1984),
+    433-447.
+15. J. C. Lagarias, Worst-case complexity bounds for algorithms in the theory ofintegral quadratic
+    forms, J. Algorithms 1 (1980), 142-186.
+16. J. C. Lagarias, H. L. Montgomery, and A. M. Odlyzko, A bound for the least prime ideal in
+    the Chebotarev density theorem, Invent. Math. 54 (1979),271-296.
+17. J. C. Lagarias and A. M. Odlyzko, Effective versions of the Chebotarev density theorem,
+    A. Frohlich (ed.), Algebraic Number Fields: L-functions and Galois Properties, Academic
+    Press, London, 1977, pp. 409-464.
+18. S. Lang, Algebraic number theory, Addison-Wesley, Reading, Mass., 1970.
+19. A. K. Lenstra, Factorization of polynomials, in [27], pp. 169-198.
+20. __ , Fast and rigorous factorization under the generalized Riemann hypothesis, Neder!.
+    Akad. Wetensch. Proc. Ser. A 91 (Indag. Math. 50) (1988), 443-454.
+21. A. K. Lenstra and H. W. Lenstra, Jr., Algorithms in number theory, J. van Leeuwen (ed.),
+    Handbook of Theoretical Computer Science, Volume A, Algorithms and Complexity, Else-
+    vier, Amsterdam, 1990, Chapter 12, pp. 673-715.
+22. A. K. Lenstra, H. W. Lenstra, Jr., M. S. Manasse, and J. M. Pollard, The factorization of
+    the ninth Fermat number, in preparation.
+23. __ , The number field sieve, in preparation. Extended abstract: Proc. 22nd Annual ACM
+    Symp. on Theory of Computing (STOC), Baltimore, May 14-16, 1990, pp. 564-572.
+24. H. W. Lenstra, Jr., Factoring integers with elliptic curves, Ann. of Math. (2) 126 (1987),
+    649-673.
+25. __ , On the calculation ofregulators and class numbers ofquadratic fields, J. Armitage (ed.),
+    Journees Arithmetiques 1980, London Math. Soc. Lecture Note Ser., no. 56, Cambridge
+    University Press, Cambridge, 1982, pp. 123-150.
+26. __ , Primality testing algorithms, Seminaire Bourbaki 33, expo no. 576, Lecture Notes in
+    Math., vo!. 901, Springer-Verlag, Heidelberg, 1981, pp. 243-257.
+516                         H. W. LENSTRA, JR. AND CARL POMERANCE
+
+
+      27. H. W. Lenstra, Jr. and R. Tijdeman (eds), Computational methods in number theory, Math-
+          ematical Centre Tracts 154/155, Mathematisch Centrum, Amsterdam, 1982.
+      28. C. Pomerance, Fast, rigorous factorization and discrete logarithm algorithms, D. S. Johnson,
+          T. Nishizeki, A. Nozaki, H. S. Wilf (eds), Discrete Algorithms and Complexity, Academic
+          Press, Orlando, 1987, pp. 119-143.
+      29. C. P. Schnorr and H. W. Lenstra, Jr., A Monte Carlo factoring algorithm with linear storage,
+          Math. Compo 43 (1984), 289-311.
+      30. R. J. Schoof, Quadratic fields and factorization, in [27], pp. 235-286.
+      31. L Schur, Einige Bemerkungen zu der vorstehenden Arbeit des Berm G. P6lya: Uber die
+           Verteilung der quadratischen Reste und Nichtreste, Nachr. Kon. Ges. Wiss. Gottingen, Math.-
+          phys. KL (1918), 30-36; Gesammelte Abhandlungen, vol. II, Springer, Berlin, 1973, pp.
+          239-245.
+      32. M. Seysen, A probabilistic factorization algorithm with quadratic forms of negative discrim-
+          inant, Math. Compo 48 (1987), 757-780.
+      33. B. Vallee, Generation of elements with small modular squares and provably fast integer
+          factoring algorithms, Math. Compo 56 (1991), 823-849.
+      34. D. Wiedemann, Solving sparse linear equations over finite fields, IEEE Trans. Inform. Theory
+          32 (1986), 54-62.
+
+
+           ABSTRACT. In this paper a probabilistic algorithm is exhibited that factors any
+           positive integer n into prime factors in expected time at most Lnl!, 1 +0(1)]
+           for n -> 00, where Lx[a, b] = exp(b(logx)a(loglogx)l-a). Many practical
+           factoring algorithms, including the quadratic sieve and the elliptic curve method,
+           are conjectured to have an expected running time that satisfies the same bound,
+           but this is the first algorithm for which the bound can be rigorously proved.
+           Nevertheless, this does not close the gap between rigorously established time
+           bounds and merely conjectural ones for factoring algorithms. This is due to the
+           advent of a new factoring algorithm, the number field sieve, which is conjectured
+           to factor any positive integer n in time Ln   [! ' O( 1)] .
+               The algorithm analyzed in this paper is a variant of the class group relations
+           method, which makes use of class groups of binary quadratic forms of negative
+           discriminant. This algorithm was first suggested by Seysen, and later improved
+           by A. K. Lenstra, who showed that the algorithm runs in expected time at most
+           Ln[! ' 1+0(1)] if one assumes the generalized Riemann hypothesis. The main
+           device for removing the use of the generalized Riemann hypothesis from the
+           proof is the use of multipliers. In addition a character sum estimate for algebraic
+           number fields is used, with an explicit dependence on possible exceptional zeros
+           of the corresponding L-functions.
+               Another factoring algorithm using class groups that has been proposed is
+           the random class groups method. It is shown that there is a fairly large set of
+           numbers that this algorithm cannot be expected to factor as efficiently as had
+           previously been thought.
+
+      DEPARTMENT OF MATHEMATICS, UNIVERSITY OF CALIFORNIA, BERKELEY, CALIFORNIA 94720
+  E-mail address: hwI@math.berkeley.edu
+
+      DEPARTMENT OF MATHEMATICS, UNIVERSITY OF GEORGIA, ATHENS, GEORGIA 30602
+      E-mail address: carl@ada.math.uga.edu
+

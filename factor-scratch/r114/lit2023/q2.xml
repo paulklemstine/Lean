@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/ibAWc3yH6y+yk6i+YswU/pHnhqo</id>
+  <title>arXiv Query: search_query=&amp;id_list=2505.15917&amp;start=0&amp;max_results=10</title>
+  <updated>2026-10-05T15:51:21Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=10&amp;id_list=2505.15917" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2505.15917v1</id>
+    <title>How to factor 2048 bit RSA integers with less than a million noisy qubits</title>
+    <updated>2025-05-21T18:11:44Z</updated>
+    <link href="https://arxiv.org/abs/2505.15917v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.15917v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Planning the transition to quantum-safe cryptosystems requires understanding the cost of quantum attacks on vulnerable cryptosystems. In Gidney+Ekerå 2019, I co-published an estimate stating that 2048 bit RSA integers could be factored in eight hours by a quantum computer with 20 million noisy qubits. In this paper, I substantially reduce the number of qubits required. I estimate that a 2048 bit RSA integer could be factored in less than a week by a quantum computer with less than a million noisy qubits. I make the same assumptions as in 2019: a square grid of qubits with nearest neighbor connections, a uniform gate error rate of $0.1\%$, a surface code cycle time of 1 microsecond, and a control system reaction time of $10$ microseconds.
+  The qubit count reduction comes mainly from using approximate residue arithmetic (Chevignard+Fouque+Schrottenloher 2024), from storing idle logical qubits with yoked surface codes (Gidney+Newman+Brooks+Jones 2023), and from allocating less space to magic state distillation by using magic state cultivation (Gidney+Shutty+Jones 2024). The longer runtime is mainly due to performing more Toffoli gates and using fewer magic state factories compared to Gidney+Ekerå 2019. That said, I reduce the Toffoli count by over 100x compared to Chevignard+Fouque+Schrottenloher 2024.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-21T18:11:44Z</published>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Craig Gidney</name>
+    </author>
+  </entry>
+</feed>

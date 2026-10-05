@@ -1,0 +1,1519 @@
+                                            The Pinnacle Architecture: Reducing the cost of breaking RSA-2048 to 100 000 physical
+                                                                     qubits using quantum LDPC codes
+                                                                     Paul Webster,∗ Lucas Berent, Omprakash Chandra, Evan T. Hockings,
+                                                                   Nouédyn Baspin, Felix Thomsen, Samuel C. Smith, and Lawrence Z. Cohen†
+                                                                                                Iceberg Quantum, Sydney
+
+                                                         The realisation of utility-scale quantum computing inextricably depends on the design of practical, low-
+                                                      overhead fault-tolerant architectures. We introduce the Pinnacle Architecture, which uses quantum low-density
+                                                      parity check (QLDPC) codes to allow for universal, fault-tolerant quantum computation with a spacetime
+                                                      overhead significantly smaller than that of any competing architecture. With this architecture, we show that
+                                                      2048-bit RSA integers can be factored with fewer than one hundred thousand physical qubits, given a physical
+                                                      error rate of 10−3 , code cycle time of 1 µs and a reaction time of 10 µs. We thereby demonstrate the feasibility
+                                                      of utility-scale quantum computing with an order of magnitude fewer physical qubits than has previously been
+arXiv:2602.11457v2 [quant-ph] 5 May 2026
+
+
+
+
+                                                      believed necessary.
+
+
+                                                              I.    INTRODUCTION                                a method for efficient parallelism of operations across pro-
+                                                                                                                cessing units. In particular, this allows for parallel access to
+                                              Quantum computers offer the promise of efficient solu-            a quantum memory that can allow for spacetime overhead
+                                           tions to currently intractable problems with the potential           reductions by enabling algorithms to be parallelised by
+                                           to allow breakthroughs in areas such as cryptography [1],            duplicating processing units while keeping only a single
+                                           materials science and chemistry [2]. However, due to the             memory. Scalability and hardware-compatibility is also
+                                           precision required and the significant levels of noise that          ensured through a modular structure which ensures that
+                                           afflict all engineered quantum systems, this is only possible        connectivity between physical qubits is only required on a
+                                           if quantum computers are fault tolerant [3]. Fault-tolerant          length scale constant in the number of logical qubits. We
+                                           quantum architectures are therefore a cornerstone of all             summarise the main features of the architecture in Sec-
+                                           efforts to build useful quantum computers.                           tion II A and, after reviewing relevant background concepts
+                                              Sophisticated fault-tolerant architectures have been de-          in Section III, we then provide a full presentation of the
+                                           veloped based on the surface code [4–8]. However, these              general architecture Section IV, and a specific instantiation
+                                           suffer from a very high overhead, since they require hun-            in Section V.
+                                           dreds or thousands of physical qubits to encode a single
+                                           logical qubit with a low enough failure rate to allow utility-          We benchmark the performance of the Pinnacle Archi-
+                                           scale computations. As a result, utility-scale quantum com-          tecture by presenting a compilation to a standard applica-
+                                           puters based on such architectures are expected to require           tion: factoring 2048-bit RSA integers [7, 8]. With standard
+                                           at least one million physical qubits [8, 9]. Scaling quantum         hardware assumptions (i.e., a physical error rate of 10−3 ,
+                                           hardware to this size poses formidable challenges [9]. De-           code cycle time of 1 µs and reaction time of 10 µs), we
+                                           veloping fault-tolerant quantum architectures with lower             show that factoring can be achieved with fewer than one
+                                           overhead is therefore of the utmost importance.                      hundred thousand physical qubits. This outperforms the
+                                              To meet this goal, we introduce the Pinnacle Architec-            previous best result by an order of magnitude [8]. We fur-
+                                           ture. This architecture achieves substantial spacetime re-           ther show the broad applicability of the architecture by
+                                           ductions compared with prior state-of-the-art architec-              showing that it allows for classically intractable instances
+                                           tures [8, 10] by reducing the space overhead relative to sur-        of the problem of determining the ground-state energy
+                                           face code architectures without a commensurate increase              of the Fermi-Hubbard model to be achieved with tens of
+                                           in time overhead. We realise these savings through the use           thousands of physical qubits, under the same assumptions.
+                                           of processing units constructed from bridged QLDPC code              Again, this amounts to an order-of-magnitude improve-
+                                           blocks equipped with modular, efficient gadgets for per-             ment on the best prior end-to-end resource estimates [13].
+                                           forming gates by generalised surgery [11]. We also intro-            In addition to these results, we also apply our compila-
+                                           duce a new component—the magic engine—which exploits                 tions under alternative hardware assumptions to provide
+                                           the multiple logical qubits of QLDPC codes to simulta-               optimised resource estimates applicable across a range of
+                                           neously support magic state distillation and injection in            hardware platforms. We summarise these results in Sec-
+                                           a single code block, allowing for constant throughput of             tion II B and present further details in Section VI.
+                                           high-fidelity magic states with low overhead. Moreover, we
+                                           use the technique of Clifford frame cleaning [12] to develop
+                                                                                                                   Through the Pinnacle Architecture, we thus open the
+                                                                                                                door to utility-scale quantum computing on one hundred
+                                                                                                                thousand physical qubit devices. This has the potential to
+                                           ∗ paul@iceberg-quantum.com
+                                                                                                                significantly accelerate the timescale for commercialised
+                                           † larry@iceberg-quantum.com
+                                                                                                                and impactful quantum computers.
+                                                                                                                            2
+
+         II.   SUMMARY OF CONTRIBUTIONS                               arbitrary quantum circuits can be performed effi-
+                                                                      ciently using a static configuration of processing
+                A.   Pinnacle Architecture                            blocks without depending on long-distance routing.
+
+                                                                    • Modularity and Parallelism: Computations can be
+  The Pinnacle Architecture consists of:                              separated across multiple processing units with lim-
+                                                                      ited connectivity between them, allowing compati-
+    • Processing Units consisting of bridged processing
+                                                                      bility with modular hardware. Efficient parallelism
+      blocks each constructed from a QLDPC code block
+                                                                      of non-Clifford gates is also supported to supplement
+      with an ancillary measurement gadget system [11].
+                                                                      this modular structure. In particular this also allows
+      An arbitrary logical Pauli product measurement can
+                                                                      parallel, read-only access to memory by multiple
+      be performed on the logical qubits of the unit in each
+                                                                      processing units.
+      logical cycle.
+                                                                   The Pinnacle architecture therefore offers a new alterna-
+    • Magic Engines consisting of a QLDPC code block            tive architecture that is both practical for implementation
+      along with ancillary systems for injecting noisy          on a range of hardware platforms and significantly more
+      magic states. In each logical cycle, the magic engine     efficient than previous state-of-the-art alternatives.
+      stores a high-fidelity magic state as it is injected
+      into a processing unit in parallel with hosting magic
+      state distillation to prepare a high-fidelity magic                               B.   Results
+      state for the next logical cycle. It thereby provides a
+      high-fidelity magic state per logical cycle for each
+      processing unit to allow for universal quantum com-          For concreteness, we present a specific instantiation of
+      puting.                                                   the Pinnacle Architecture using the family of generalised
+                                                                bicycle codes and the modular, efficient measurement gad-
+    • Memory included as an optional component that             gets introduced in Ref. [11]. Based on compilation to this
+      allows for especially low overhead quantum storage        instantiation, we present resource estimates for two bench-
+      in code blocks, which can be accessed by processing       mark applications.
+      units via ports.                                             First, we consider determination of the ground state
+                                                                energy of the Fermi-Hubbard model via plaquette Trot-
+Figure 1 shows how the Pinnacle Architecture is assembled       terisation [15]. As shown in Fig. 2, we achieve order-of-
+from these modules.                                             magnitude reductions in physical qubit number relative
+   Compilation is performed via Pauli-based computa-            to the best available end-to-end surface code analysis [13].
+tion [14]. This allows for universal fault-tolerant quantum     For example, we find that at a lattice size of L = 16 (with a
+computing on arbitrarily many logical qubits with a time        coupling strength of u/τ = 4), only 58 thousand physical
+cost that scales with the T count.                              qubits are required at a physical error rate of p = 10−3
+   Features of the Pinnacle Architecture include:               and only 20 thousand at p = 10−4 . This compares with 940
+                                                                thousand and 200 thousand, respectively, in Ref. [13]. We
+    • Low Spacetime Overhead: The use of QLDPC codes            achieve these results while maintaining a modest runtime
+      allows order-of-magnitude reductions in physical          per shot of 1–4 minutes with microsecond code cycle times
+      qubit number compared with surface code architec-         or 1–3 days with millisecond code cycle times.
+      tures. This is achieved without the corresponding            Second, we analyse factoring RSA integers using an al-
+      increase in time overhead of the previous state-of-       gorithm based on that of Ref. [8]. Fig. 3 shows the required
+      the-art QLDPC code architecture—the bicycle archi-        physical qubits and runtime to factor a 2048-bit integer for
+      tecture of Ref. [10]–through the use of efficient gad-    different code cycle times and physical error rates. With
+      get systems that allow for arbitrary logical Pauli        standard assumptions of a physical error rate of p = 10−3
+      measurements instead of only a subset of them. It         and a code cycle time of 1 µs and a 10 µs reaction time (see
+      therefore substantially reduces the total spacetime       Section III for definitions of these timescales), factoring is
+      overhead compared to previous fault-tolerant archi-       possible with fewer than one hundred thousand physical
+      tectures.                                                 qubits, compared with the previous best result of close to
+                                                                one million physical qubits [8]. Moreover, through paral-
+    • Limited Connectivity and Routing: The architecture        lelising the algorithm, we achieve an efficient spacetime
+      requires only interactions between physical qubits        trade-off that allows for low overhead factoring in feasible
+      on the scale of a processing block, which is constant     runtimes even with longer code cycle times. For example,
+      in the number of logical qubits. This means that it       with a code cycle time of 1 ms, factoring can be completed
+      does not depend on all-to-all connectivity but in-        in one month with 2.7 million physical qubits at a physical
+      stead is implementable on hardware platforms that         error rate of p = 10−4 (typical of trapped ions [16]) or
+      support quasi-local connections between physical          with 9.5 million physical qubits at a physical error rate of
+      qubits separated by a bounded distance. Moreover,         p = 10−3 (typical of, for example, neutral atoms [17]).
+                                                                                                                                                        3
+
+
+
+
+                            (a) Example of the Pinnacle Architecture with one processing unit and approximately one hundred thousand physical qubits.
+
+
+
+
+                                 (b) Example of the Pinnacle Architecture with 81 processing units and approximately one million physical qubits.
+
+FIG. 1. Examples of the Pinnacle Architecture. These two examples represent specific examples of different space-time trade-offs and
+code block choices, optimised for RSA-2048 factoring in different hardware regimes. Example (a) allows factoring in one month with a
+physical error rate of p = 10−3 and a code cycle time of tc = 1 µs. Example (b) allows factoring in three months with a physical error
+rate of p = 10−4 and a code cycle time of tc = 1 ms. Shorter runtimes can be achieved by adding more processing units, increasing
+paralellisation at the cost of additional physical qubits.
+
+
+                  106                                                                        We therefore conclude that the Pinnacle Architecture
+                                                                                           can be used to achieve utility-scale quantum computation
+                                                                                           with significantly reduced overhead across multiple appli-
+                                                                                           cations and a range of hardware regimes.
+Physical qubits
+
+
+
+
+                  105
+
+
+                                                                                                                 III.   BACKGROUND
+
+                                                                                              In this section we review relevant concepts of fault-
+                  104                                                                      tolerant quantum computation with QLDPC codes.
+
+                        8         12        16          20     24        28           32
+                                       L (Hubbard model lattice size)
+                                                                                                                   A.    Code Blocks
+                               Pinnacle, p = 10−3            Pinnacle, p = 10−4
+                               Surface Code, p = 10−3        Surface Code, p = 10−4
+                                                                                              A code block is an instantiation of an Jn, k, dK quantum
+                                                                                           error-correcting code. Error correction is facilitated by
+FIG. 2. Physical qubits required for determining the ground state                          repeatedly performing a syndrome extraction circuit on
+energy of the Fermi-Hubbard model on an L × L lattice to 0.5%                              the code block. This circuit involves measuring a set of
+relative precision. Surface code values correspond to the mini-                            parity check operators, which collectively yield an error
+mum quoted number of physical qubits with u/τ = 4 in Ref. [13].                            syndrome. This is done with the use of nc ancilla qubits;
+                                                                                           in each code cycle, each of these is entangled with the
+                                                                                           code qubits in accordance with one of the parity check
+                                                                                           operators and then destructively measured. A code block
+                                                                                                                                     4
+
+                          108
+
+
+
+
+                                                                                                                10 years
+                                   1 hour
+
+
+                                                                                                                1 year
+                          107
+                                                                  1 day
+        Physical qubits
+
+
+
+
+                                                                                                                1 month
+
+
+
+
+                                                                                                                           Runtime
+                                                                                                                1 week
+                                                                          1 week
+
+
+                                                                                                                1 day
+                          106
+
+                                                                          1 month
+
+
+                                                                                                                1 hour
+                                                                                            1 year
+
+
+
+                          105
+
+
+
+                            10−6                     10−5                            10−4                10−3
+                                                            Code cycle time (s)
+
+                                                                              (a)
+
+
+                          108
+
+
+
+
+                                                                                                                10 years
+
+
+
+                                            1 hour                                                              1 year
+                          107
+                                                                                    1 day
+        Physical qubits
+
+
+
+
+                                                                                                                1 month
+
+                                                                                                                           Runtime
+                                                                                                                1 week
+
+
+                                                                                                                1 day
+                          106
+                                                                          1 week
+
+
+
+                                                                                                                1 hour
+                                                                              1 month
+
+
+
+
+                          105                                                                   1 year
+
+
+
+
+                            10−6                     10−5                            10−4                10−3
+                                                            Code cycle time (s)
+
+                                                                              (b)
+
+FIG. 3. Optimal expected runtime for factoring an RSA-2048 integer on the Pinnacle Architecture as a function of the number of
+physical qubits and the code cycle time at physical error rates of (a) p = 10−3 and (b) p = 10−4 . White areas indicate insufficient
+physical qubits to implement the algorithm. The reaction time in all cases is assumed to be equal to ten times the code cycle time.
+                                                                                                                            5
+
+therefore requires a total of ncb = n + nc physical qubits.                  C.    Pauli-Based Computation
+In order to ensure robustness against measurement errors,
+the results of dt = Θ(d) code cycles must be combined             When combined with injected magic states, logical mea-
+to yield a reliable error syndrome; this is referred to as a   surements across bridged processing blocks support uni-
+logical cycle.                                                 versal quantum computation on the encoded logical qubits
+   We assume the use of QLDPC codes [18, 19]. These are        using Pauli-based computation [14]. Indeed, a quantum
+defined by having low parity check operator weights and        circuit on κ qubits with a T count of τ and any num-
+qubit degrees (i.e., the number of parity checks supported     ber of Clifford gates can be performed using τ + κ Pauli
+on each qubit). Precisely, these check weights and qubit       measurements and one |T ⟩ state for each of the first τ
+degrees are bounded by a constant independent of the code      measurements [6]. More generally, if the circuit also con-
+distance. This ensures that syndrome extraction circuits       tains o intermediate Pauli measurements on which later
+can have constant depth, and therefore be fault tolerant.      operations adaptively depend, then the circuit can be per-
+The most widely used QLDPC codes are distance-d (ro-           formed using τ + κ + o Pauli measurements without any
+tated) surface codes [4], which are Jd2 , 1, dK codes with     additional |T ⟩ states. This implies that such a circuit can be
+nc = d2 − 1 parity checks which have weight at most four       performed fault-tolerantly using ⌈κ/k⌉ Jn, k, dK bridged
+and require only nearest-neighbour interactions. Surface       processing blocks in τ + κ + o logical cycles.
+code blocks therefore use 2d2 −1 physical qubits to encode        The compilation which allows for this implementation
+one logical qubit. However, by relaxing the requirement        follows that presented in Ref. [6]. First, each T gate is re-
+of nearest-neighbour interactions, more general QLDPC          placed by a magic state injection circuit, which requires
+codes can allow for many logical qubits to be encoded          one Pauli measurement with support on the processing
+in a single code block. This can allow for significant re-     block. Then, all Clifford gates are commuted through to
+ductions in the overhead of physical qubits required per       the end of the circuit and absorbed into the final measure-
+logical qubit [19]. The required non-local interactions are    ment of each of the κ qubits. This is done using the rule
+supported on a range of hardware platforms [20–24].            that the Pauli defining the basis of each measurement is
+                                                               transformed by conjugation by each Clifford that either
+                                                               passes through it or (in the case of the final measurements)
+                  B.   Processing Blocks                       that it absorbs. By definition, Clifford gates map Pauli oper-
+                                                               ators to Pauli operators under conjugation, so the resulting
+   To allow for fault-tolerant quantum computation, in-        circuit consists of τ + κ + o Pauli measurements, along
+stead of only passive storage of quantum information, the      with a |T ⟩ state for each T gate, as required.
+concept of a code block must be generalised to a processing
+block. A processing block allows for logical operations to
+be implemented on its encoded logical qubits.                                     D.   Relevant Timescales
+   A QLDPC code block can be turned into a processing
+block by appending a measurement gadget system that al-           There are three relevant timescales that we use in the
+lows for generalised lattice surgery [25–27]. This construc-   determination of the runtime of a fault-tolerant quantum
+tion ensures that the combined code block-gadget system        circuit. First, there is the code cycle time tc , which is the
+constituting the processing block remains a QLDPC code,        time required for the completion of one code cycle (i.e.,
+while also ensuring that measuring a selected Pauli logical    one round of syndrome extraction). This time is hardware-
+operator of the code is equivalent to the product of a set     dependent, with typical estimates for different platforms
+of parity check measurements on the gadget system. This        ranging from 1 µs to 1 ms [17, 23, 32–34]. Second, there
+allows for a logical Pauli to be measured in parallel with     is the logical cycle time tl , which is the time required for
+error correction within a logical cycle by performing a        one logical cycle. Since a logical cycle consists of dt code
+modified circuit for syndrome extraction on the full pro-      cycles, this is related to the code cycle time by tl = dt tc .
+cessing block [28]. Arbitrary logical Pauli measurements          Finally, there is the reaction time tr [7]. This is defined
+can then be performed across multiple processing blocks        as the minimum time between the start of one logical mea-
+by bridging the gadget systems of these blocks [29, 30].       surement, M and the start of any subsequent measurement
+The number of physical qubits in the processing block is       whose basis depends adaptively on the outcome of M . The
+given by npb = ncb + nG + nb , where nG is the number of       reaction time is dependent on the classical control sys-
+physical qubits in the gadget system and nb is the number      tem of the quantum hardware. For simplicity, we assume
+of physical qubits used to bridge it to another processing     throughout that the reaction time is equal to ten times
+block.                                                         the code cycle time, i.e., tr = 10tc . Since tc ≥ 1 µs for
+   This processing block construction is underpinned by a      all resource estimates we present, this implies that the re-
+rich history of prior work on generalised lattice surgery.     action time always exceeds the conventionally-assumed
+For brevity, we have here outlined only the most relevant      minimum value of 10 µs [7]. With this reaction time, our
+aspects, but we refer the reader to Ref. [31] (particularly    architecture is not reaction-limited provided that dt ≥ 10
+Sec. 3.2) for a more complete review of this literature.       for all code blocks which is true for all resource estimates
+                                                                                                                                    6
+
+we present, with one exception addressed that is noted and
+addressed in Section V B 2.
+
+
+         IV.   THE PINNACLE ARCHITECTURE
+
+  In this section we present the Pinnacle Architecture, a
+low-overhead, modular and parallelisable quantum com-
+puting architecture based on QLDPC codes. We begin by
+presenting the modules that constitute the architecture—
+processing units, magic engines and memory—and then
+describe the overall operation, structure, and scalability of                 states injected
+the architecture.
+
+
+                           A.   Modules
+                                                                 FIG. 4. Structure and operation of a magic engine. Magic state
+                                                                 distillation is applied on one logical sector of a QLDPC code block
+                     1.     Processing Units
+                                                                 using noisy |T ⟩ states injected from ancillary systems. In parallel,
+                                                                 an arbitrary Pauli measurement on the processing unit joint with
+  The primary modules of the architecture are process-           Z̄1 on the other logical sector injects an encoded |T̄ ⟩ state that
+ing units. A processing unit uses β processing blocks of         was distilled in the previous logical cycle.
+an Jn, k, dK QLDPC code to allow fault-tolerant quantum
+computation on κ := βk logical qubits. These processing
+blocks can be arranged in a line with bridges connecting         R by performing a logical measurement of an arbitrary
+nearest-neighbour blocks. This allows for the measure-           logical operator on the processing unit joint with Z̄ on
+ment of an arbitrary logical Pauli operator, supported on        the first logical qubit of R. This allows for the injection
+any or all of the logical qubits in the processing unit, in      of the |T̄ ⟩ state to perform arbitrary π/8 Pauli rotations
+each logical cycle.                                              on the processing unit. To complete the injection, an X̄
+                                                                 measurement is also required on the first logical qubit of
+                                                                 R; a change of basis can be performed between logical
+                      2.    Magic Engines                        cycles to allow that logical qubit to be offline while it is
+                                                                 performed in parallel with the continued operation of the
+    To allow for universal computation, we introduce a new       engine. In even-numbered logical cycles, the roles of the
+module, which we refer to as a magic engine. A magic en-         two logical sectors are swapped.
+gine allows magic states to simultaneously be produced              Since magic state distillation relies on post-selection,
+and consumed to provide a continuous throughput of               for each logical cycle there is some probability pr that
+magic states to an associated processing unit.                   the state produced by the magic engine is rejected. When
+    Specifically, each processing unit is equipped with one      this happens—and if a magic state is required for the next
+magic engine. The magic engine produces one encoded |T̄ ⟩        logical cycle—the processing unit can be left idle for the
+magic state in each logical cycle, and is also bridged to its    next logical cycle to allow for a new magic state to be
+associated processing unit to allow a joint measurement          prepared. This causes the expected number of logical cycles
+with that unit in parallel with state production. This is        required per T gate to increase from 1 to α = (1 − pr )−1 .
+intended to ensure that in each logical cycle there is a         The distillation protocol should be chosen such that pr is
+magic state available for the processing unit to consume         small to ensure that this effect is also small.
+(i.e., the state produced in the previous logical cycle).
+    A magic engine can be constructed from an Jne , ke , de K
+QLDPC code block as follows. Partition the logical qubits                                       3.   Memory
+of the code block into two halves, which we label the left
+(L) and right (R) logical sectors. In odd-numbered logical          The architecture can also include memory. This is op-
+cycles, a magic state is produced by performing a magic          tional, but it is useful in cases where a large number of logi-
+state distillation circuit consisting of a sequence of magic     cal qubits must be stored but not processed. It consists of ν
+state injections. These are implemented by joint logical         code blocks of an Jnm , km , dm K quantum error-correcting
+measurements on the logical qubits of the L logical sector       code encoding µ = νkm logical qubits. Since these log-
+and small ancilla systems that hold noisy |T ⟩ states. The       ical qubits are not processed, full processing blocks are
+result is that the first logical qubit of the L logical sector   not required. However, to facilitate rearrangement of the
+is in an encoded |T̄ ⟩ state at the end of the logical cycle.    memory, we ensure that each code block has nm ancilla
+In parallel, a magic state is consumed from logical sector       qubits (including those used for syndrome extraction). This
+                                                                                                                            7
+
+means that the memory consists of a total of 2νnm physical                              1.   Serial Operation
+qubits.
+   Memory is accessed by processing units via ports. To             As a baseline, let us first consider a serial mode of op-
+facilitate this, we partition the logical qubits of the mem-     eration. In this mode, there is a single processing unit
+ory into sets of size w, which we refer to as windows. For       with κ logical qubits (and, for simplicity, we assume there
+simplicity, we enforce the condition that each window is         is no memory). During each logical cycle, a joint logical
+contained within a single code block; this implies that w        Pauli measurement is performed on the processing unit
+divides km such that there are a total of νkm /w windows.        and magic engine. In parallel, the magic engine produces
+Each port is associated with one window and consists of          a magic state for the next logical cycle. Accounting for a
+a gadget that allows for arbitrary logical Z-type measure-       magic engine reject rate of pr , this allows for an arbitrary
+ments on the w logical qubits of that window. Bridging a         Clifford+T circuit on κ qubits with a T count of τ and o in-
+processing unit to a port then allows for any circuit with       termediate measurements to be performed fault-tolerantly
+arbitrary gates on the processing unit and controls on the       in an average of τ /(1 − pr ) + κ + o logical cycles.
+w logical qubits of the memory window to be implemented
+(via Pauli-based computation). This is sufficient to allow
+read-only access to that window of memory by the pro-                             2.    Fully Parallel Operation
+cessing unit [35]. More generally, we can assign a port to
+any subset of the windows of the memory. Provided the               As a next step, we can consider the case of implement-
+gadgets constituting each of these ports allow for arbitrary     ing a circuit that can be completely separated out into
+logical Z measurements to be performed in parallel, this         two or more independent circuits. In this context, we
+can allow for up to νkm /w processing units to access the        can separate the architecture up into a separate process-
+memory in parallel.                                              ing unit for each independent circuit and perform all the
+   For each processing unit to access the full memory, the       circuits in parallel. This reduces the number of logical
+memory code blocks must be permuted. To ensure that              timesteps required from τ /(1 − pr )+ κ + o to approxi-
+this does not require arbitrary routing, we impose the           mately maxi τi /(1 − pr ) + κi + oi where τi , κi and oi
+constraint that each code block is to be shifted by at most      denote the number of T gates, logical qubits and interme-
+one position per logical cycle. We may then perform the          diate logical measurementsin the ith independent
+                                                                                                                     circuit.
+                                                                 This expression omits an O       maxi (τi ) correction aris-
+                                                                                                p
+required permutation without requiring connectivity on a
+longer scale than the size of a code block as follows. The       ing from variance in the proportion of magic states rejected
+ν memory code blocks are arranged such that the ith and          in different processing units across the duration of the cir-
+(i + 1)th (mod ν) code blocks are adjacent for 1 ≤ i ≤ ν         cuit. Since we are interested in circuits where the T count
+(e.g., in a loop). A cyclic shift of memory code blocks is       is large, we assume this correction is negligible.
+performed by physical SWAPs of the jth data qubit in code           An example of where this mode could be used is in
+block i with the jth ancilla qubit in code block i+1 (mod ν)     implementing multiple shots of an algorithm in parallel.
+for 1 ≤ i ≤ ν and 1 ≤ j ≤ n, followed by a (local) SWAP          In this context, it can be considered a way to use a greater
+of the jth data qubit and jth ancilla qubit in each code         number of qubits to reduce the runtime compared to when
+block. Since such a circuit requires only one layer of non-      all shots are performed in series.
+local gates confined to the scale of a code block, whereas
+a QLDPC syndrome extraction circuit generally requires
+many such gates, we assume that this rearrangement can                           3.    Flexibly Parallel Operation
+be completed during a code cycle and so its time cost is
+negligible. By applying ν of these cyclic shifts over a period
+of at least ν logical cycles, every window of memory can             More common and general is the case where a circuit can
+be accessed by each processing unit.                             be implemented partially in parallel. In such a circuit, no
+                                                                 subset of logical qubits is entirely separable from the rest,
+                                                                 but significant parts of the circuit involve operations on
+                                                                 disjoint registers of logical qubits. A conventional circuit
+                                                                 implementation would allow such parts of the circuit to
+                                                                 be performed in parallel on the disjoint registers. We now
+                       B.   Operation                            show how this can be done in the Pinnacle Architecture.
+                                                                     Parallelism of this kind is inherently challenging with
+                                                                 Pauli-based computation because of the effect of commut-
+   We now consider how the architecture operates while           ing Clifford gates through to the end. To see this, consider
+performing a quantum computation. To aid understand-             the case of a Clifford frame at a given point in the circuit
+ing, we start with a simplified baseline operation (Sec-         (i.e., the product of Clifford gates up to that point) that
+tion IV B 1) and incrementally build up to the most general      corresponds to an entangling gate between two processing
+operation (Section IV B 4).                                      units. Then, as Cliffords are commuted through the circuit
+                                                                                                                                        8
+
+the supports of the logical measurements on one process-
+ing unit will spread out to straddle both. In particular, this
+means that a logical measurement corresponding to a |T̄ ⟩
+state injection—required to perform a T̄ gate on either pro-
+cessing unit—comes to have support on both units. Since
+each processing unit only allows one logical measurement
+per logical cycle, this implies that a T̄ gate on a logical
+qubit on one processing unit cannot be performed in par-
+allel with a T̄ gate acting on a logical qubit of the other
+processing unit.
+                                                                    (a) Two separate processing units initially operate in parallel.
+   Parallelism therefore requires that the Clifford frame
+acts as a tensor product across the units which are to be
+parallelised. One way to achieve this (following Ref. [31])
+could be to perform CNOT gates that entangle processing
+units physically using additional logical measurements, so
+that they can be excluded from the Clifford frame. How-
+ever, this approach leads to a time cost that scales with the
+number of CNOT gates, which can quickly cause the ben-
+efits of parallelism to be erased. In particular, it performs
+poorly in the common setting where one part of the circuit
+is highly parallelisable but another is not, since the cost
+of parallelising the former part scales with the number of
+entangling gates in the latter part.                                      (b) A point in the circuit is reached where a CNOT
+                                                                        straddles the two processing units, causing the Clifford
+   We instead propose a more flexible alternative that al-              frame to become entangling across the units. This joins
+lows for parallelism when it is beneficial but avoids the cost         the units, requiring all subsequent logical measurements
+of physically implementing every CNOT gate. To develop                          on either unit to be performed serially.
+this approach, we use the technique of Clifford frame clean-
+ing. Precisely, let K be a set of logical qubits and K′ ⊂ K
+be a subset of K′ of these logical qubits. If C is a Clifford
+frame acting on K, cleaning C off K′ means physically
+performing a Clifford U such that CU acts trivially on
+K′ . We show in Lemma 1 that this can be done using at
+most 4 K′ logical Pauli product measurements on K. We
+note that an instance of Clifford frame cleaning was pre-
+viously introduced in Ref. [12] for the specific purpose of
+caching in surface code architectures; the construction we
+present is more generally applicable to arbitrary gener-
+alised surgery architectures.                                          (c) At any later point, the Clifford frame can be cleaned
+   Harnessing this tool, our flexible parallelism framework            by performing up to 4k additional logical measurements
+is as follows. We consider processing units to automatically                       on the joined processing units.
+be joined into larger units at any point in the circuit where
+there is an entangling gate between the units. From that
+point on, T̄ gates and logical measurements on any of the
+constituent processing units of this joined unit are assumed
+to require joint logical Pauli product measurements across
+the entire joined unit, meaning that only one such gate can
+be implemented on the joined unit per logical timestep. At
+any later time, we can then separate a processing unit (with
+κ logical qubits) from a joined unit by cleaning the Clifford
+frame off the joined unit, at a cost of at most 4κ additional
+logical timesteps. From then on, logical measurements on
+the separated unit can again be performed in parallel with         (d) After Clifford frame cleaning is completed, the two processing
+the unit it was separated from. This process is shown in             units are separated again, allowing parallel measurements to
+Fig. 5.                                                                                         resume.
+   This framework allows for processing units to be joined
+                                                                 FIG. 5. Process of joining and separating processing units with
+during parts of a circuit in which many inter-unit gates
+                                                                 Clifford frame cleaning to allow for flexible parallelism.
+occur, but then to be separated again (at a relatively small
+                                                                                                                             9
+
+cost) for parts of the circuit that are more amenable to         physical connections of constant scale. For example, in a
+parallelisation. The choice of if and when to separate units     two-dimensional arrangement of qubits, this scale is ap-
+can be specifically optimised for compilation of any partic-     proximately the square-root of the size of the processing
+                                                                        √
+ular circuit, with the potential for significant time savings    block npb .
+compared to either a fully serial approach or an approach           This means that the architecture can be supported even
+that depends on physical implementation of all inter-unit        on hardware platforms that only support interactions
+entangling gates.                                                whose fidelity decreases continuously with the interac-
+                                                                 tion distance. Moreover, it means that no routing of logi-
+                                                                 cal qubits across the architecture is required. Instead, all
+                    4.    General Operation                      changes between logical cycles required to support dif-
+                                                                 ferent logical operations are confined to the scale of a
+   The final step to our fully general operation is to option-   processing block. As discussed in Section V A, code choice
+ally incorporate the memory. Recall that each processing         and gadget design can minimise the dynamism required
+unit accesses memory via a port. We allow for read-only          even on this scale to be very limited. In summary, the sig-
+memory access, which requires only gates that act as a con-      nificant overhead reductions supported by QLDPC codes
+trol on the port and a target on the processing unit [8, 35].    can be realised with interactions and rewiring confined to
+This means that the access can be provided by using logical      a fixed scale, which can be chosen to be consistent with a
+CNOT gates with controls on the logical qubits in a port         given hardware platform.
+and targets on ancillary logical qubits in the processing           The further modularisation of the architecture into pro-
+unit to fan out memory data onto the processing unit at          cessing units provides an additional benefit. Specifically,
+the start of the access and fan in at the end of the access.     feasibility limitations are expected to require large-scale
+Since such operations commute, arbitrarily many process-         quantum computers on many hardware platforms to be
+ing units can access the memory in parallel, provided they       assembled from smaller modules [9, 10, 36]. This opens up
+each have ports with measurement gadgets that can be             an opportunity for hardware and architecture co-design
+used in parallel.                                                that can be realised by associating these hardware modules
+   Implementing memory access on the Pinnacle Architec-          with processing units of the Pinnacle Architecture. This is
+ture uses the same concepts of joining and separating units      beneficial because it aligns compilation imperatives with
+presented in Section IV B 3. Specifically, when a processing     hardware constraints. Gates between hardware modules
+unit accesses a window of the memory, the port associated        should be minimised since they are likely to have poorer
+with that window is joined onto the processing unit by           performance than intra-module gates, while gates between
+the logical CNOTs which implement the fan-out. Since no          processing units should also be minimised to maximise
+entangling gates act within the memory, these ports can          parallelism.
+always be assumed to be separate from one another. More-
+over, as all gates between a port and processing unit act
+as controls on the port, commuting through the Clifford                                 D.   Structure
+frame only gives rise to Z-type logical measurements on
+the port. When the access is finished, the Clifford frame            The only constraint on the assembly of the architecture
+is cleaned off the port such that the port can be separated      is that modules that are joined together at any time must be
+from the processing unit again. As shown in Lemma 2,             connected in the architecture. This ensures that these mod-
+this requires only 2w logical cycles for a port of w qubits.     ules can be bridged, and therefore logical measurements
+This ensures that subsequent logical measurements on the         are possible across them, without requiring long-distance
+processing unit act trivially on the memory logical qubits,      transport. In particular, this means that each processing
+enabling subsequent access by different processing units.        unit must be adjacent to its associated magic engine and—if
+                                                                 a memory is present—a port of memory. If a set of process-
+                                                                 ing units is to be joined, these processing units should also
+                         C.   Scalability                        be adjacent to each other.
+                                                                     The structure of the architecture for different example
+   The architecture is designed to ensure that its opera-        instantiations is shown in Fig. 1.
+tion remains feasible at large scale. Specifically, because
+the processing units are assembled from individual pro-
+cessing blocks that are all connected via bridges between            V.   INSTANTIATION OF THE ARCHITECTURE
+nearest neighbours, logical operators with support across
+any subset of processing blocks in a processing unit can            In this section, we present a specific instantiation of the
+be measured using connections between physical qubits            Pinnacle Architecture using a family of generalised bicycle
+that are restricted to the scale of one processing block.        (GB) codes, along with numerical simulation results used
+This means that arbitrarily large processing units support-      to determine the logical error rates that can be achieved
+ing arbitrarily many logical qubits can be realised with         for different of code distances and physical error rates.
+                                                                                                                             10
+
+                          A.   Setup                               Therefore, letting ng be the number of physical qubits
+                                                                 per gadget and nb be the number of physical qubits per
+  GB codes are defined by a lift l ∈ N and sets A, B ⊆           bridge, and accounting for nc = n check qubits, the total
+Zl [37]. They have n = 2l physical qubits which can be           number of physical qubits per processing block is given by
+divided into two sectors of l physical qubits each, which
+we label L and R. The parity check operators of the code                           npb = ncb + 4ng + 4nb .                  (3)
+are then
+                   Y             Y                               The values of these parameters are provided in Table I.
+           SX,j =      X(j+a),L      X(j+b),R ,        (1)          These gadgets can also be used to measure certain sets
+                    a∈A              b∈B                         of logical operators in parallel (i.e., in a single logical cy-
+                                                                 cle) via the inclusion of duplicate gadgets. Specifically, a
+                    Y                Y
+           SZ,j =         Z(j−a),R         Z(j−b),L .     (2)
+                    a∈A              b∈B
+                                                                 set of m logical operators P1 , . . . Pm can be measured in
+                                                                 parallel by using a different copy of the gadget to measure
+Here, the first subscript on each operator denotes the posi-     each, provided they commute on every physical qubit. This
+tion of a qubit within the sector and the second denotes the     qubit-wise commutation condition ensures that the check
+sector. For any σ ∈ Zl , a cyclic shift of all physical qubits   operators from different gadgets all commute. Connecting
+by σ sites preserves the group of parity check operators,        m gadgets to the same code block can increase code check
+making it a qubit automorphism.                                  weights and qubit degrees in places where multiple gad-
+   We construct code blocks from the specific family of          gets are joined to the same qubit or check. In theory, this
+GB codes presented in Ref. [11], which were first discov-        increase can be by up to m but, with in an appropriately
+ered in Ref. [38] and subsequently explored in Refs. [39–        chosen basis, it is typically significantly less than this. If
+41]. These codes have weight-six parity check operators          necessary, a small number of ancillary qubits can also be
+and require only simple, relatively short-distance trans-        used to reduce check weights and/or qubit degrees [26, 43].
+port patterns for syndrome extraction. The code family
+is parameterised by an integer m > 3, and defined by
+choosing the lift to be l = 2m − 1, as well asPthe sets                                     B.   Modules
+A and B such that the polynomials A(x) =               a∈A x
+                                                             a
+
+and B(x) =         b∈B x generate the parity check ma-
+                          b
+                 P
+                                                                                      1.     Processing Units
+trices of the classical simplex codes. Classical simplex
+codes have parameters [2m − 1, m, 2m−1 ] [42]. We con-
+jecture that there exist choices of A and B such that              Using β processing blocks constructed from the GB code
+the GB codes constructed in this way have parameters             family introduced above (for any β ∈ N), we can encode
+J2(2m − 1), 2m, m + (m − 4)2 K. We present explicit in-          κ = βk logical qubits in βnpb physical qubits. Specifically,
+stances for the first five codes in the family in Table I.       with a code distance of d = 16, we can encode 14β logical
+   For these codes, we empirically find that performance         qubits in 860β physical qubits. For better protection, we
+is improved by allowing for slightly more rounds of syn-         can instead use a code distance of d = 24 and encode 16β
+drome extraction than the code distance. Guided by this          logical qubits in 1620β physical qubits.
+observation, we choose to use dt = d + 2 code cycles per
+logical cycle.
+   The code blocks are extended to processing blocks by                                2.    Magic Engines
+supplementing them with the gadget system presented
+in Ref. [11]. This gadget system consists of four gadgets           We construct each magic engine from code blocks of
+which correspond to four seed operators chosen such that         the same GB code family as those used for the processing
+all logical Pauli operators are products of cyclic shifts of     blocks. These blocks naturally have the required L and R
+the seed operators. In particular, the k logical qubits of       logical sectors, with k/2 > 5 logical qubits in each sector
+each codes naturally divide into two logical sectors (L          when d ≥ 10.
+and R) with k/2 logical qubits in each such that one X-             We use 15-to-1 magic state distillation on these code
+type and one Z-type seed operator suffice for each logical       blocks to produce encoded |T̄ ⟩ magic states [44]. Follow-
+sector. Constructing, bridging, and shifting four gadgets        ing Ref. [45], this can be done using fifteen Z-type π/8
+capable of measuring each of the seed operators therefore        rotations, followed by four logical measurements used for
+suffices to measure arbitrary logical Pauli operators on a       post-selection. Each of the rotations is implemented by in-
+code block. This means that only minor alterations are           jecting a noisy |T ⟩ state from a small ancillary Jna , 1, da K
+required to allow the same syndrome extraction circuit to        code. This is done using generalised surgery to perform
+measure any logical Pauli operator. Four bridges are also        a joint measurement (repeated da times) between the L
+included per processing block; three are used to bridge the      logical sector of the GB code and the ancillary code. The
+four gadgets within the block, while the fourth is used to       noisy |T ⟩ states are prepared using standard techniques (in-
+bridge the last gadget of the block to the first gadget of the   cluding, if necessary, methods to increase the input state
+next block.                                                      fidelity, such as zero-level distillation [46, 47] or magic
+                                                                                                                                     11
+
+
+TABLE I. Instances of the family of generalised bicycle codes. For each code, the parameters Jn, k, dK are provided, along with the
+number of code cycles per logical cycle, dt = d + 2. The codes are defined by l, A, and B, alongside Eq. (1) and Eq. (2). The remaining
+columns show the number of physical qubits in their code blocks, gadgets, bridges and processing blocks. See Ref. [11] for more details.
+   Jn, k, dK     dt     l      A            B      Code Block Qubits Gadget Qubits Bridge Qubits Processing Block Qubits
+              (d + 2)                                 (ncb = 2n)         (ng )          (nb )    (npb = ncb + 4ng + 4nb )
+  J30, 8, 4K     6     15 {0, 6, 13}    {0, 1, 4}          60             13              7                140
+ J62, 10, 6K     8     31 {0, 6, 15}    {0, 5, 7}         124             19             11                244
+J126, 12, 10K   12     63 {0, 4, 37} {0, 29, 49}          252             31             19                452
+J254, 14, 16K   18    127 {0, 32, 100} {0, 28, 49}        508             57             31                860
+J510, 16, 24K   26    255 {0, 39, 55} {0, 70, 127}       1020             99             51               1620
+
+
+state cultivation [48, 49]). Four post-selection measure-             of the output state can therefore be approximated by
+ments (each repeated r times) are then performed in series
+on the L logical sector, and the state is rejected if any round        pout ≈ 35p3rot + 6prot p2m
+of any of these measurements gives a −1 result.                                                       3
+                                                                                                           + 6pr pin + (da + 1)pa
+                                                                                                                                  
+                                                                            ≈ 35 pin + (da + 1)pa
+   While in principle the fifteen rotations could be imple-                                                                     (5)
+mented in parallel, in practice it is preferable to split them
+into two batches so that at most eight states are injected in         The reject rate is approximately
+parallel. Accounting also for the measurements required
+for injecting the high-fidelity state into the processing unit,                        pr ≈ 15prot + 4rpm + 4pα                     (6)
+this means that a maximum of ten logical measurements
+are required in parallel. Since these operators are fixed, a          where pα is the probability that preparation of sufficiently
+basis can be chosen that limits their overlap to ensure that          many noisy |T ⟩ states for the protocol fails (e.g., because
+these measurements do not result in a large increase in               of post-selection in magic state cultivation).
+qubit degrees of check weights.                                          Motivated by the applications of Section VI, we consider
+   The physical qubits that must be accounted for in this             two target output infidelities: pout ≤ 10−9 (suitable for
+protocol are GB code block itself (ncb ), gadgets used to             the Fermi-Hubbard model) and pout ≤ 10−11 (suitable for
+perform up to ten logical measurements in parallel (10ng ),           RSA-2048 factoring). We also consider two physical error
+fifteen ancillary Jna , 1, da K codes (15 × (2na − 1)) with           rates, p = 10−4 and p = 10−3 ; motivated by the results of
+bridges used to connect these ancillary codes to the GB               Section V C we choose de = 10 and de = 24 respectively
+code block (15×(2d−1)) and (if necessary) ancillary qubits            for these error rates. In the case where pout = 10−9 and
+(nα ) used to reduce the infidelity of input states (e.g., by         p = 10−4 , it is sufficient to use a physical |T ⟩ state (i.e.,
+magic state cultivation). The total overhead of the magic             to choose the trivial code where na = da = 1) and r = 1.
+engine is therefore given by                                          Indeed, in this case pin = pa = p = 10−4 so that pout ≈
+                                                                      41(3 × 10−4 )3 = 10−9 . The number of qubits required by
+      nme = ncb + 10ng + 30(na + da − 1) + nα .               (4)     the magic engine is then
+
+                                                                                         nme; 10−4 → 10−9 = 592.                    (7)
+   The parameters of the engine are chosen to achieve a
+target output infidelity, pout . Specifically, we choose the          The reject rate is given by pr ≈ 19p ≈ 0.2%.
+distance of the GB code block, de , to be large enough that              For all other cases, we use a version of fold-transversal
+the logical error rate of this block is much smaller than             cultivation [49]. Specifically, in each case we perform the
+pout , which ensures that the contribution to the output              injection and cultivation steps in one or more ancillary
+infidelity from errors on this code block is negligible. The          systems of 25 qubits per injected state, which each produce
+probability of an error in one of the Z-type rotations can            a magic state in no more than eight code cycles. These
+then be approximated by prot ≈ pin + (da + 1)pa , where               states can then be grown into fifteen distance-da rotated
+pin is the error of the noisy |T ⟩ state, pa is the logical error     surface codes of required distance da and post-selected to
+rate per code cycle of the ancillary code and the coefficient         have an infidelity of pin before injection into the QLDPC
+da + 1 accounts for da rounds of joint measurements with              code block. The magic engine reject rate is dominated by
+the GB block and one destructive measurement on the                   this post-selection in cultivation (i.e., pr ≈ pα ) [50]. For
+ancillary code. The probability of an undetected error in             p = 10−4 and pout = 10−11 , we choose da = 5 (such that
+the post-selection measurements is pm = pr . In the 15-to-            pa = 5 × 10−7 [51]), pin = 5 × 10−5 and r = 1, and
+1 distillation scheme, there are thirty-five failure modes            we provision one ancilla system per injected state. The
+arising from errors in Z-type rotations [45], and a further           number of physical qubits required is then:
+six resulting from a rotation error combined with two
+errors in the post-selection measurements. The infidelity                               nme; 10−4 → 10−11 = 1807.                   (8)
+                                                                                                                             12
+
+and the estimated reject rate is pr ≈ 2%. For p = 10−3 and
+                                                                TABLE II. Fitted parameters with 95% confidence intervals for
+pout = 10−9 , we choose da = 7 (such that pa = 2 × 10−5
+                                                                the ansatz in Eq. 12 for memory experiments and logical mea-
+[51]), pin = 10−4 and r = 2, and we provision two ancilla       surement experiments.
+systems per injected state. The number of physical qubits
+required is then:                                                       Experiment     A          B                     C
+                                                                         Memory      5.9+1.8       +0.0006     +0.09
+                                                                                        −1.4 0.0179−0.0006 0.50−0.09
+                 nme; 10−3 → 10−9 = 4410.                (9)            Log. Meas. 6.2+1.9       +0.0007     +0.09
+                                                                                      −1.4 0.0158−0.0007 0.47−0.09
+
+For p = 10−3 and pout = 10−11 , we choose da = 9 (such
+that pa = 2 × 10−6 [51]), pin = 5 × 10−5 and r = 2, and
+                                                                ports, these measurements increase the check weight and
+we provision two ancilla systems per injected state. The
+                                                                qubit degree by at most two.
+number of physical qubits required is then:
+                                                                    Referring to Table I, the additional number of physical
+                 nme; 10−3 → 10−9 = 5430.               (10)    qubits per port is ng +nb = 88 at d = 16 or ng +nb = 150
+                                                                at d = 24. Hence, for any ν ∈ N, we can encode 14ν logical
+For both p = 10−3 cases, the estimated reject rate is pr ≈      qubits in memory such that ρ processing units can access
+10%.                                                            it in parallel with 508ν + 88ρ physical qubits at d = 16 or
+   Since the engine is intended to produce a magic state for    16ν logical qubits in memory with 1020ν + 150ρ physical
+each logical cycle, the time, tme , required for distillation   qubits at d = 24.
+places a lower bound on the logical cycle time of the associ-
+ated processing unit. The time required for the logical mea-
+surements in distillation themselves is (2da + 4r)tc . How-                       C.   Simulation Results
+ever, in some cases this scheme can be reaction-limited,
+since the post-selection measurement bases depend on the           To assess the logical error rates achievable with different
+outcome of the injection measurements. Specifically, we         code choices, we perform numerical simulations of both
+must allow at least the reaction time of tr = 10tc from the     memory and logical measurements by generalised surgery.
+beginning of the protocol to the first post-selection mea-      These are performed for one logical cycle (dt = d + 2
+surement and from the beginning of the second injection         rounds of syndrome extraction) with standard circuit-level
+batch to the second post-selection measurement [52]. This       depolarising noise. For memory experiments we instead
+means the number of code cycles required is:                    simulated d rounds of syndrome extraction and rescaled
+                                                                the logical failure rates by (d + 2)/d. Circuits for the mem-
+ tme = max{2da tc +4rtc , tr +4rtc , da tc +tr +3rtc } (11)     ory simulations are constructed as in Ref. [40], while cir-
+For the p = 10−3 and p = 10−4 magic engines, we find            cuits for the surgery simulations are constructed using
+that tme ≤ 26tc and tme ≤ 18tc respectively, which en-          integer linear programming [53]. We perform uncorre-
+sures that distillation completes within d = 24 and d = 16      lated (only X-type detectors) most-likely error decoding
+GB code logical cycles. This ensures compatibility for the      by converting the decoding problem into a mixed integer
+applications in Section VI without any increase in logical      program and allow the solver to obtain an optimal solution.
+cycle time, with the sole exception of the Fermi-Hubbard        Results of these simulations are shown in Fig. 6.
+model with p = 10−4 . In that case, the use of d = 10 pro-         We assume each point is binomially distributed and use
+cessing blocks with the pout = 10−9 magic engine implies        maximum likelihood estimation to fit the points to the
+a modest increase in logical cycle time from dt = 12tc          sub-threshold ansatz
+to tme = 14tc code cycles, which is accounted for in the                                                  d2 +C
+presented runtimes.                                                                                   p
+                                                                               pL,cb (p, d) = A                     .       (12)
+                                                                                                      B
+
+                        3.   Memory                             Here pL is the total logical failure rate for all k logical
+                                                                observables over dt rounds. It follows from this that the
+   For the memory, we use the same code blocks as are used      error rate per logical observable and logical cycle is given
+for the processing blocks. For simplicity, we match the         by
+window size with the number of logical qubits in a logical                                                 d2 +C
+sector, k/2. Each port then corresponds to one of the Z-
+                                                                                                  
+                                                                                              A       p
+                                                                               pL (p, k, d) =                       .       (13)
+type gadgets used in the gadget system of the processing                                      k       B
+blocks, along with a bridge to connect to a processing unit.
+The logical operators that must be measured to access the       The fitted parameters for the ansatz with 95% confidence
+memory commute on every physical qubit and so can be            intervals are given in Table II. Table III shows the logical
+measured in parallel, as they act across disjoint processing    error rates per logical qubit per logical cycle derived from
+units and act only as Z-type operators on the memory.           this ansatz for each of the GB codes considered at physical
+Moreover, since each memory code block has at most two          error rates of p = 10−3 and p = 10−4 .
+                                                                                                                                                             13
+
+                                                                                                                      VI.    APPLICATIONS
+                      10 1
+
+
+                                                                                                   In this section, we show how the Pinnacle Architecture
+                      10 3
+                                                                                                can be applied to two applications: determining the ground
+ Logical error rate
+
+
+
+
+                                                                                                state energy of the Fermi-Hubbard model, and factoring
+                      10 5
+                                                                                                RSA integers.
+                      10 7
+
+
+                                                                                                                A.     Fermi-Hubbard Model
+                      10 9
+
+
+
+                      10 11                                                                        In this subsection, we determine the resources required
+                                                                                                to estimate the ground state energy of the two-dimensional
+                      10 13                                                                     Fermi-Hubbard model using the Pinnacle Architecture.
+                              3×10 3         2×10 3                  1×10 3            5×10 4
+                                                      Physical error rate
+
+                                       d=4            d=6      d=10           d=16    d=24
+                                                                                                                            1.   Algorithm
+
+FIG. 6. Simulation results to determine logical error rates per                                    The two-dimensional Fermi-Hubbard model represents
+processing block (of k logical qubits) per logical cycle of the                                 a system of interacting fermions and has the Hamiltonian
+Pinnacle Architecture using GB codes of different distances and
+across different physical error rates. Solid markers show results                               H = Hh + HI
+for X-basis memory experiments decoded with most-likely error                                       X X  †                       
+                                                                                                            ai,σ aj,σ + a†j,σ ai,σ + u
+                                                                                                                                       X
+decoding. Hollow markers show results for logical measurements                                    =                                      n̂i,↑ n̂i,↓ .
+by generalised surgery; data was collected for the d = 4, d = 6                                       ⟨i,j⟩ σ∈{↑,↓}                               i
+and d = 10 codes at the same physical error rates as for the                                                                                               (14)
+memory experiments. Highlighted regions are 99% confidence
+intervals for the memory experiment data points. The solid and
+                                                                                                Here, i denotes the sites of an L × L lattice, ⟨i, j⟩ denotes
+dashed lines are fits of the ansatz in Eq. (12) to the memory
+experiment data and logical measurement data respectively. We                                   pairs of nearest neighbours on this lattice, σ ∈ {↑, ↓}
+emphasise that ansatz parameters are independent of distance                                    denotes spins states, a† and a represent creation and an-
+(i.e., the same equations are used for all codes), which allows for                             nihilation operators, respectively, n̂ = a† a denotes the
+extrapolation of the collected data across the code family.                                     number operator, and u denotes the (dimensionless) cou-
+                                                                                                pling strength.
+                                                                                                   We follow Ref. [15] in using plaquette Trotterisation to
+                                                                                                determine the ground state energy of the Fermi-Hubbard
+                                                                                                model with a relative error of 0.5% of the total lattice energy.
+TABLE III. Error rates per logical qubit and logical cycle for logical
+                                                                                                In order to minimise the number of qubits required, we
+measurement in GB codes of each distance at physical error rates
+of p = 10−3 and p = 10−4 . Values correspond to the central                                     modify this method by omitting Hamming weight phasing
+estimates of the fit parameters from the Logical Measurement                                    (which requires a system of 1 ≤ α ≤ L2 /2 ancillary
+row of Table II substituted into the ansatz presented in Eq. (13).                              logical qubits), instead simply performing each required
+                                                                                                phase rotation in sequence. With this simplification, the
+           p                  d=4            d=6            d = 10        d = 16     d = 24
+                                                                                                number of logical qubits required is
+10−3 8 × 10−4 4 × 10−5 1 × 10−7 3 × 10−11 4 × 10−16
+10−4 3 × 10−6 1 × 10−8 5 × 10−13 1 × 10−19 1 × 10−28                                                                        N = 2L2 + 2.                   (15)
+
+                                                                                                This accounts for two logical qubits for each lattice site
+                                                                                                (one for each spin state) and two additional logical ancilla
+                                                                                                qubits (one for phase estimation and one for repeat until
+  We emphasise that the purpose of these simulation re-                                         success synthesis) [15]. From Eq. (F10) of Ref. [15], the T
+sults is to benchmark the capabilities of the architecture                                      count for one shot of the algorithm is given by
+and guide code distance choice for resource estimation.
+This informs the decision to use most-likely error decod-                                                   s
+                                                                                                                   W
+ing which correctly decodes all faults of weight less than                                       τ = 6.203               3 ×
+d/2 and avoids error floors that can arise from alternatives                                                   ε(1 − x)
+such as belief propagation decoders [54]. The problem of                                                                   √        !                
+developing a sufficiently fast decoder for real-time use                                                                  NR 3W
+                                                                                                   NR 1.15 log2         √      √      + 9.2 + NT  .
+                                                                                                                                                       
+by the classical control system of quantum hardware is                                                                  x 1−x ε     3
+outside the scope of this paper, and we look forward to
+addressing it in future work.                                                                                                                              (16)
+                                                                                                                                  14
+
+Here, NT = 12L2 and NR = 4L2 are the number of T
+                                                               TABLE IV. Physical qubits and runtime required to perform one
+gates and arbitrary Z rotations (which are each synthesised
+                                                               shot of Fermi-Hubbard ground state energy estimation on an
+from a number of T̄ gates) required per Trotter step. The      L × L lattice with a relative error of ≤ 0.5% of the total lattice
+number of Trotter steps required for the target precision      energy. The runtime is approximately independent of L because
+is given by the prefactor. In this prefactor, ε = 0.005E0      the relative error allows for fewer Trotter steps for larger lattices;
+corresponds to the required relative error of 0.5%, where      runtimes for each value of L are equal to or slightly smaller than
+the energy per site E0 is estimated at 1.02 hartrees for       those given. kq represents kiloqubits (×103 qubits).
+u = 4 and 0.74 hartrees for u = 8 [13]. W is a parameter                                 Physical Qubits
+that bounds the Trotter error; bounds on this parameter                              L       p = 10−3 p = 10−4
+are provided in Ref. [15]. The parameter x reflects a choice                          8         19 kq     5.6 kq
+of how to split the error budget across different sources;                           10         25 kq     8.3 kq
+we optimise over this in our analysis.                                               12         35 kq      12 kq
+   In addition to T gates, the algorithm also requires ad-                           14         45 kq      16 kq
+ditional logical measurements. In particular, repeat-until-                          16         58 kq      20 kq
+                                                                                     18         71 kq      25 kq
+success synthesis is used to perform each of the NR ar-
+                                                                                     20         87 kq      31 kq
+bitrary Z rotations in each Trotter step [55, 56][57]. This                          22        103 kq      37 kq
+method successfully performs the correct rotation with a                             24        123 kq      44 kq
+probability of at least one half [56], and so the expected                           26        142 kq      52 kq
+number of attempts per rotation is at most two. Since one                            28        165 kq      60 kq
+logical measurement is required per attempt (in addition to                          30        187 kq      69 kq
+the T gates), this adds an average of up to two logical mea-                         32        213 kq      78 kq
+surements per arbitrary rotation. Logical measurements                               Runtime (Upper Bound)
+are also required for the final phase estimation. However,                     Code Cycle p = 10−3 p = 10−4
+since this is only performed once (not for each Trotter                             1 µs       3.8 min   1.8 min
+step), it is negligible compared with the T count. We there-                       1 ms       2.6 days 1.3 days
+fore express T —the sum of the T count and number of
+logical measurements—as
+                                                                  To implement this on the Pinnacle
+                                                                                                 Architecture,   we use a
+                                                               single processing unit with β = N/k processing blocks
+              s                                                                                      
+                      W
+T = 6.203                  3 ×                                to ensure there are κ ≥ N logical qubits available. We also
+                  ε(1 − x)                                     account for a magic engine for this processing unit, but
+                             √       !                     do not include memory. The required number of physical
+                            NR 3W                              qubits is therefore given by
+   NR 1.15 log2          √      √      + 11.2 + NT  .
+                                                        
+                          x 1−x ε    3                                                     
+                                                                                            N
+                                                                                 n = npb        + nme .               (18)
+                                                       (17)                                 k
+
+This quantity determines the number of logical cycles on       Substituting N = 2L2 + 2 and the values for npb , nme and
+the Pinnacle Architecture. It is approximately constant in     k from Section V B, the numbers of physical qubits required
+L because the allowed error is relative to the total energy,   with physical error rates of p = 10−3 and p = 10−4 ,
+which scales as L2 [13].                                       respectively, are therefore
+                                                                                           &        '
+                                                                                             L2 + 1
+               2.   Implementation and Results                             n10−3 = 1620               + 4410,         (19)
+                                                                                               8
+                                                                                         &        '
+   Concretely, we consider the case of even L ≤ 32 and                                     L2 + 1
+                                                                           n10−4 = 452               + 1807.          (20)
+u = 4. In this regime, N ≤ 2050 and we find numerically                                       6
+that the number of logical cycles satisfies T = 8 × 106 ,
+which also upper bounds the T count. This implies that the     Table IV shows the number of physical qubits required
+logical spacetime volume satisfies N T ≤ 2 × 1010 . Hence,     for even L ≤ 32, along with the runtimes with code cycle
+the algorithm can be implemented with negligible failure       times of 1 µs and 1 ms. Figure 2 shows that the number of
+probability provided the error rate per logical qubit and      physical qubits required is an order of magnitude smaller
+logical cycle satisfies pL ≪ 5 × 10−11 and the |T ⟩ state      than those required using surface codes in Ref. [13].
+fidelity satisfies pT ≪ 10−7 . With reference to Table III,       A full determination of the ground state energy requires
+this is satisfied by using the d = 24 GB code instantiation    multiple shots of the algorithm, with the number depen-
+of the architecture for a physical error rate of p = 10−3      dent on the overlap between the initial state and the true
+and the d = 10 instantiation for p = 10−4 , along with the     ground state. These shots can be performed in series (with
+corresponding pout = 10−9 magic engines.                       a proportional increase in run time) or could be performed
+                                                                                                                                                                      15
+
+in parallel using multiple separate processing units (with
+
+
+
+
+                                                                 Ratio of Parallelised to Serial Algorithm
+a proportional increase in the required physical qubits).                                                    101
+
+
+
+
+                    B.    RSA Factoring                                                                      100
+
+
+
+  In this subsection, we show that the Pinnacle Archi-
+tecture can be used to efficiently perform the factoring                                                     10−1
+
+necessary to break RSA encryption.
+
+                                                                                                             10−2
+                                                                                                                        20          40      60         80       100
+                         1.   Algorithm
+                                                                                                                              Parallelisation Factor, ρ
+
+                                                                                                                    Logical Qubit Ratio          Logical Spacetime Ratio
+   The algorithm we use is a generalisation of that pre-                                                            Runtime Ratio
+sented by Gidney in Ref. [8], which uses techniques de-
+veloped by Ekerå and Håstad [58] and by Chevignard et
+al. [59]. We refer to this algorithm as Gidney’s algorithm.      FIG. 7. Comparison of space, time and spacetime cost for our
+This algorithm uses residue number system arithmetic to          parallelised algorithm to Gidney’s algorithm or Ref. [8]. For the
+replace modular arithmetic over NRSA (the number being           purpose of this plot, all algorithmic parameters (other than ρ) are
+factored) with modular arithmetic over a set of primes           chosen to match those of the n = 2048 row of Table 5 of Ref. [8].
+P that each have size polylogarithmic in NRSA . This re-
+duces the number of qubits required for the working regis-
+ter required for modular exponentiation (the dominant            104 for RSA-2048 [8]), this can allow for a reduction in the
+part of the factoring algorithm) from Θ (log NRSA ) to           time cost by many orders of magnitude.
+Θ (log log NRSA ), reducing the space overhead. For each            Importantly, the additional space incurred by this form
+individual prime, the time overhead for the modular expo-        of parallelisation is not proportional to the reduction in
+nentiation is also significantly reduced since the time cost     time cost. To see why, note that the full register in Gid-
+for arithmetic operations such as addition scales with the       ney’s algorithm has two components — an input register of
+size of the input registers. However, in Gidney’s algorithm,     m = Θ (log NRSA ) logical qubits and a working register
+this does not translate to an overall reduction in runtime       of Nw = Θ (log log NRSA ) logical qubits used to perform
+because the |P | primes are processed in series.                 the approximate modular exponentiation. While the work-
+                                                                 ing register must be duplicated to allow for parallelisation,
+   We generalise Gidney’s algorithm by allowing for the
+                                                                 the same input register can be reused for many primes
+possibility of processing multiple primes in parallel. This
+                                                                 as it is only accessed by lookup operations. These opera-
+is done by adding ρ − 1 additional ancillary working reg-
+                                                                 tions commute for different primes since they all use only
+isters, for any positive integer ρ ≤ |P |. The outer loop of
+                                                                 gates with controls on the input qubits. More precisely,
+Gidney’s algorithm can then be parallelised across the ρ
+                                                                 given that a working register accesses the input register
+working registers, allowing the |P | primes to be processed
+                                                                 in windows of w1 logical qubits at a time, pipelining these
+in ⌈|P |/ρ⌉ batches. Between computation and uncompu-
+                                                                 accesses can allow ⌈m/w1 ⌉ registers to run in parallel us-
+tation of each batch, parallel reduction is used to combine
+                                                                 ing a single input register. Therefore, the required number
+the accumulators of each register onto the accumulator
+                                                                 of logical qubits is
+of the first working register by aggregating accumulators
+pairwise in the form a binary tree. This ensures that the                              
+                                                                                             ρ
+                                                                                                  
+final value of this accumulator matches that of Gidney’s                         N=                 m + ρNw .             (22)
+algorithm, since it simply amounts to a reordering of the                                 ⌈m/w1 ⌉
+sum used to calculate the approximate modular exponen-                         l         m
+tial (Eq. (20) of Ref. [8]), while the other working registers   Noting that ⌈m/w  ρ
+                                                                                      1⌉
+                                                                                           = 1 for ρ ≲ 200 and m is an order
+are fully uncomputed after each batch is processed to en-        of magnitude larger than Nw , this can be significantly
+sure that they end in the trivial state. The required result     smaller than ρN1 = ρ(m + Nw ) (where N1 is the number
+may therefore be extracted by measurement and classical          of logical qubits required for Gidney’s algorithm). This
+processing in the same way. Letting TG be the time cost          leads to significant spacetime savings from parallelisation,
+for Gidney’s algorithm, our algorithm has a time cost of         as shown in Fig. 7.
+                                                                    Our modified algorithm allows for very efficient paral-
+                                                                 lelism, with orders of magnitude reductions in the time
+                                             
+                     |P |     1
+            T =                   TG + O (log ρ) ,        (21)
+                      ρ      |P |                                overhead achievable with a smaller increase in the space
+                                                                 overhead. In particular, we note that while Gidney’s algo-
+where the O (log ρ) term accounts for cost associated with       rithm has a longer runtime than the earlier implementa-
+combining accumulators. Since |P | is large (e.g., ≈ 2.1 ×       tion of Gidney and Ekerå [7], our parallelised version can
+                                                                                                                              16
+
+achieve a significantly faster runtime. This motivates our         as given in Eq. (23), along with a magic engine. The num-
+choice of this algorithm even for architectures with slow          ber of physical qubits required for the ρ working registers
+clock cycles, where runtime is especially important.               is therefore
+                                                                                                              !
+                                                                                              κ(f, ℓ, m)
+                                                                             nw = ρ npb                    + nme .        (24)
+         2.   Implementation on Pinnacle Architecture                                             k
+
+                                                                   Each   memory    stores m logical qubits and there are
+   To implement the algorithm on the Pinnacle Architec-
+                                                                   l          m
+                                                                        ρ
+                                                                                such memories. Each memory requires ν =
+ture, we begin by allocating a processing unit for each             ⌈m/w1 ⌉
+working register. These processing units can run in parallel        m/k code blocks of an Jn, k, dK code (with 2n physical
+throughout most of the computation. The only exception             qubits each). For each processing unit, we also require a
+is the relatively short periods when the accumulators of           port with ng + nb additional physical qubits. The number
+the working registers are being aggregated; during this            of physical qubits required for the memory and ports is
+process, Clifford frame cleaning is used following each            therefore
+pairwise interaction of accumulators to ensure that the
+                                                                                               
+                                                                                          ρ       m
+processing units do not remain joined thereafter.                          nm = 2n                     + ρ(ng + nb ).   (25)
+                                                                                       ⌈m/w1 ⌉    k
+   Each of these working registers is equipped with enough
+logical qubits to allow implementation of Gidney’s algo-           Hence the total number of physical qubits is ntotal = nw +
+rithm. This corresponds to: an f logical qubit sub-register        nm .
+for the overall accumulator; an ℓ + len(m) logical qubit              b. Runtime: We define the total number of logical
+sub-register on which discrete-log values are accumu-              cycles required per iteration of the outer loop of Gidney’s
+lated for each prime;two ancillary sub-registers each with        algorithm to be Σ, which is equal to the sum of the final
+max f, ℓ + len(m) logical qubits; a third ancillary sub-           column of Table V. We define the number of additional
+register with ℓ logical qubits; and one additional ancillary       logical cycles required to combine the accumulators in
+logical qubit for compiling Toffoli gates from T gates using       each batch of our parallelised version of the algorithm to
+the circuit of Ref. [60]. As in Ref. [8], f is the length of the   be Λ. When ρ = 1, Λ = 0; otherwise, we have:
+truncated accumulator, ℓ is the bit length of the residue           Λ = 27f ⌈log2 (ρ)⌉ − 4f + 9⌈l/w4 ⌉(2w4 − w4 − 1) (26)
+primes and len(m) = ⌊log2 (m)⌋ + 1 is the bit length of
+m. We therefore require κ logical qubits, given by                 which accounts for the binary tree used to combine ac-
+                                                                   cumulators, its uncomputation, Clifford frame cleaning
+ κ = f + 2ℓ + len(m) + 2 max(f, ℓ + len(m)) + 1. (23)              between pairs of accumulators, and the uncomputation of
+                                                                   loop   4 on
+                                                                             the ancillary working registers. Since we require
+To achieve this, we allocate ⌈κ/k⌉ processing blocks to              |P |/ρ iterations, this implies that the number of logical
+                                                                   
+each processing unit, where k is the number of logical             cycles required for the full outer loop is |P |/ρ (Σ + Λ).
+                                                                                                              
+qubits per code block.                                                 Following the completion of this outer loop, we have
+   The input register (or multiple input registers if ρ ≥          two further minor steps that are performed once. First,
+⌈m/w1 ⌉) is associated with memory in the architecture.            the uncomputation of loop 1 [8]—which is performed in
+Access to this memory occurs during loop 1 of Gidney’s             parallel on all streams—consists of a single instance of the
+algorithm, when windows of w1 logical qubits are used              loop 1 lookup and addition. Referring to Table V,   it takes
+as the address for a lookup operation targeted on each                                                                        
+                                                                   υ = ⌈m/w1 ⌉ 6 2w1 − w1 + ℓ + len(m) − 2 + 2w1
+working register. As discussed in Section V B 3, we fix w1 =
+k/2, and we also enforce the condition that ℓ ≥ w1 . This          logical cycles. Second, there is a frequency measurement
+ensures that there are at least w1 unused logical qubits           (i.e. inverse quantum Fourier transform followed by mea-
+onto which the window can be fanned out, since at the              surement); the number of logical cycles required for this is
+time of this loop, f + 3ℓ + 3 len(m) logical qubits of each        negligible compared to Σ so we follow Ref. [8] in omitting
+working register are in use, meaning that there are at least       it from our accounting. Assuming a perfect success rate of
+ℓ unused logical qubits.                                           magic engines we can therefore write the total number of
+   Otherwise, we follow the decomposition into addition,           logical cycles as
+lookup and phaseup subroutines and implementation of
+                                                                                                
+                                                                                            |P |
+these subroutines presented in Ref. [8].                                            T′=            (Σ + Λ) + υ.              (27)
+                                                                                              ρ
+                                                                   The proportion of logical cycles requiring T states is ap-
+                     3.   Resource Analysis                        proximately (in fact, slightly less than) 2/3, which leads to
+                                                                   an adjusted formula for the true number of logical cycles
+                                                                   accounting for the magic engine rejection rate of pr of
+   a. Physical Qubits: We now determine the number
+of physical qubits required. Each working register corre-
+                                                                                                            
+                                                                                         2                 1
+                                                                                T =                  −1
+                                                                                           (1 − pr ) +         T ′.         (28)
+sponds to a processing unit with κ(f, ℓ, m) logical qubits,                              3                 3
+                                                                                                                                  17
+
+Then the total runtime per shot t = tl T is the product of            we fix the loop 1 window size as w1 = k/2. Following
+the number of logical cycles T and the time per logical               Ref. [8], we also impose the feasibility condition that the
+cycle tl = dt tc .                                                    number of primes of bit length ℓ, π(ℓ) ≈ 2ℓ−1 /ℓ ln(2),
+   The expected number of shots required for the factoring,           cannot be smaller than the number of primes |P |. The
+from Ref. [8], is given by                                            results of this optimisation are shown in Table VI and
+                                                                      Fig. 3.
+                                s+1                                      We find that fewer than one hundred thousand phys-
+         σ=                                              ,   (29)
+                                                                      ical qubits are required for factoring at a physical error
+                                          q
+                                                 s+2
+               0.99pS 1 − 2NRSA               2f +1 sw1
+                                                                      rate of p = 10−3 in an expected runtime of one month.
+                                                                      Alternatively, with the same error rate and code cycle time,
+where s is the Ekera-Håstad parameter, and pS is the prob-            factoring can be completed in one week with 139 thousand
+ability that a shot does not have a logical error, which is           physical qubits—compared to one million in Ref. [8]—or
+given by                                                              in one day with 400 thousand physical qubits. With one
+                                 NT               τ                   million physical qubits, factoring takes an expected time
+              pS = (1 − pL )          (1 − pT ) ,              (30)   of eight hours, compared with five days in Ref. [8].
+where pL is the logical error rate per logical qubit per                 We can also consider our results in regimes relevant
+logical cycle, pT is the infidelity of output T states from           to other hardware platforms. For example, at a physical
+the magic engine, N and T are the total number of logical             error rate of p = 10−4 —relevant to trapped ions [16]—the
+qubits and logical cycles per shot and τ is the T count per           minimum number of physical qubits required for factoring
+shot, which is upper bounded by                                       is 53 thousand. For a typical trapped ion code cycle time of
+                                                                      1 ms [61], factoring with one million physical qubits takes
+                      2                                               an expected time of less than three months. Factoring in a
+                                                               (31)
+                                       
+                τ≤      |P |(Σ + Λ) + υ ,                             shorter time with these parameters is also possible with a
+                      3
+                                                                      feasible number of physical qubits. For example, factoring
+Hence the expected runtime for the factoring is ttotal = σt.          can be completed in one month with 2.7 million physical
+                                                                      qubits or in one week with 12 million physical qubits. By
+                                                                      comparison, adjusting the results of Ref. [8] to such a code
+                           4.   Results
+                                                                      cycle time would give a prohibitively long runtime, while
+                                                                      Ref. [62] estimated a runtime of 3 years with 8.6 million
+   We now consider the resources—both physical qubits                 qubits for a surface code architecture with trapped ion
+and time—required to factor an RSA-2048 integer on the                parameters.
+instantiation of the Pinnacle architecture presented in Sec-             Our results are also comparable to the results of Ref. [17],
+tion V, given different hardware parameters, namely the               which apply to a neutral atom platform with physical error
+code cycle time and physical error rate. Following Ref. [8],          rate of p = 10−3 and a code cycle time of 1 ms. Specifically,
+we expect the required logical error rate per logical qubit           with 19 million qubits we find a runtime of 15 days, com-
+per logical cycle to be ≲ 10−14 (i.e., ≲ 10−15 per code               pared with the result of 5.6 days in Ref. [17] The low run-
+cycle). With reference to Table III, this motivates a choice          time achieved by that work is achieved by using transversal
+of the d = 24 GB code architecture for a physical error               gates with algorithmic fault tolerance to reduce the logical
+rate of p = 10−3 and d = 16 for the p = 10−4 architec-                cycle time to be equal to the code cycle time, compared
+ture. The precise logical failure rate of the algorithm varies        with dt = 26 code cycles on our architecture. Our architec-
+somewhat as other parameters affect the number of logical             ture has the potential to support an analogous reduction
+qubits and logical cycles; this effect is accounted for in the        by incorporating fast surgery [63], with the potential to
+number of shots, given in Eq. (29).                                   achieve an order-of-magnitude lower runtime or physical
+   To determine the minimal required physical qubits and              qubit number. We look forward to realising this potential
+runtime, we optimise over the algorithmic parameters of               in future work.
+Gidney’s algorithm with the following ranges:
+    • Ekerå-Håstad parameter, 1 ≤ s ≤ 16;
+                                                                                          VII.   CONCLUSION
+    • Accumulator truncation, 24 ≤ f ≤ 59;
+    • Prime bit length, 18 ≤ ℓ ≤ 25;                                     We have presented the Pinnacle Architecture, which
+                                                                      leverages the high encoding rate of QLDPC codes to
+    • Loop 3 window size, 2 ≤ w3 ≤ 6;                                 achieve universal quantum computing with order-of-
+    • Loop 4 window size, 2 ≤ w4 ≤ 6.                                 magnitude overhead reductions compared with surface
+                                                                      code architectures. In particular, we have shown that factor-
+We also optimise the parallelisation factor over the range            ing 2048-bit RSA integers, which requires close to a million
+1 ≤ ρ ≤ |P |, where |P | ≈ nm/ℓw1 is the number of                    physical qubits using surface code architectures [8], can
+primes in the residue system. Recall that, unlike in Ref. [8],        be done with fewer than one hundred thousand physical
+                                                                                                                                                                           18
+
+
+TABLE V. Time cost accounting for all subroutines required for each prime in Gidney’s algorithm. Loop numbers refer to Gidney’s
+algorithm, as presented in Ref. [8]. For lookups and phaseups, the size is the address size; for additions, it is the size of the registers
+being added. For addition (loop 2) the size is the average over the loop, since it varies. The T Count column is the number of T gates
+required, which is four times the Toffoli count. The Logical Cycles column is the total number of logical cycles, including both T state
+injections and other logical measurements. Since each Toffoli gate requires four T gates and one logical measurement [60], and one
+additional logical measurement is required for measurement-based uncompute, this is nearly always 3/2 times the T count. The only
+exception is Lookup (Loop 1) which also requires additional logical measurements for Clifford frame cleaning.
+    Subroutine              Size                  Instances                              T Count                                           Logical Cycles
+  Lookup (Loop 1)                                                               4⌈m/w1 ⌉ (2w1 − w1 − 1)                          ⌈m/w1 ⌉ 6 (2w1 − w1 − 1) + 2w1
+                                                                                                                                                                   
+                             w1                    ⌈m/w1 ⌉
+ Addition (Loop 1)
+                                                                                                                                                             
+                          ℓ + len(m)               ⌈m/w1 ⌉                     4⌈m/w1 ⌉ ℓ + len(m) − 1                              6⌈m/w1 ⌉ ℓ + len(m) − 1
+ Addition (Loop 2)
+                                                                                                                                                             
+                      2ℓ + len(m) + 1 /2          4 len(m)                     8 len(m) 2ℓ + len(m) − 1                            12 len(m) 2ℓ + len(m) − 1
+                                                                                                                                                 
+  Lookup (Loop 3)           2w3            4⌈ℓ/w3 ⌉2 − 8⌈ℓ/w3 ⌉ + 1             2
+                                                                      4 4⌈ℓ/w3 ⌉ − 8⌈ℓ/w3 ⌉ + 1 2  2w3
+                                                                                                       − 2w3 − 1                      2
+                                                                                                                            6 4⌈ℓ/w3 ⌉ − 8⌈ℓ/w3 ⌉ + 1 (2  2w3
+                                                                                                                                                              − 2w3 − 1)
+                                                                                                                                                              
+ Addition (Loop 3)            ℓ             7⌈ℓ/w3 ⌉2 − 14⌈ℓ/w3 ⌉           28 ⌈ℓ/w3 ⌉2 − 2⌈ℓ/w3 ⌉ (ℓ − 1)                        42(ℓ − 1) ⌈ℓ/w3 ⌉2 − 2⌈ℓ/w3 ⌉
+  Lookup (Loop 4)            w4                  3⌈ℓ/w4 ⌉/2                      6⌈ℓ/w4 ⌉ (2w4 − w4 − 1)                               9⌈ℓ/w4 ⌉ (2w4 − w4 − 1)
+ Addition (Loop 4)           f                   5⌈ℓ/w4 ⌉/2                          10(f − 1)⌈ℓ/w4 ⌉                                   15(f − 1)⌈ℓ/w4 ⌉
+                                                                                                                                                                 
+  Phaseup (Loop 4)           w4                    ⌈ℓ/w4 ⌉              4⌈ℓ/w4 ⌉ 2⌈w4 /2⌉ + 2⌊w4 /2⌋ − w4 − 2                6⌈ℓ/w4 ⌉ 2⌈w4 /2⌉ + 2⌊w4 /2⌋ − w4 − 2
+                                                                                                                                                                     
+ Phaseup (Loop 3.2)          w3                    2                       2
+                                           3⌈ℓ/w3 ⌉ /2 − 3⌈ℓ/w3 ⌉ 6 ⌈ℓ/w3 ⌉ − 2⌈ℓ/w3 ⌉ 2   ⌈w3 /2⌉
+                                                                                                   +2 ⌊w3 /2⌋                   2
+                                                                                                              − w3 − 2 9 ⌈ℓ/w3 ⌉ − 2⌈ℓ/w3 ⌉ 2   ⌈w3 /2⌉
+                                                                                                                                                        +2 ⌊w3 /2⌋
+                                                                                                                                                                   − w3 − 2
+                                                                                                                                                       
+ Phaseup (Loop 3.1)         2w3                      1                          4 2w3 +1 − 2w3 − 2                                   6 2w3 +1 − 2w3 − 2
+
+
+
+
+                                                                                                             VIII.    ACKNOWLEDGEMENTS
+TABLE VI. Minimum number of physical qubits required to com-
+plete factoring in a range of expected runtimes for a range of
+hardware parameters. Mq and kq represent megaqubits (i.e., ×106                              We thank Stephen Bartlett and Kevin Obenland for dis-
+qubits) and kiloqubits (×103 qubits) respectively.                                        cussions, Calida Tang for organisational support, Fernando
+       Code Physical Physical Qubits for Runtime ≤                                        Borretti for software engineering support, Max McIsted for
+       Cycle Error Rate 1 year 1 month 1 week 1 day                                       assistance with preparing the figures, and Scott Aaronson
+                                                                                          for thoughtful feedback on the title. We also thank Marcel
+               10−3     94 kq 94 kq 135 kq 381 kq
+        1 µs                                                                              Hinsche for identifying a technical error in the method
+               10−4     53 kq 53 kq 64 kq 141 kq
+                                                                                          used to combine accumulators during factoring in the first
+               10−3     94 kq 193 kq 501 kq 2.9 Mq                                        version of this paper, and for assisting in its correction.
+       10 µs
+               10−4     53 kq 82 kq 176 kq 845 kq
+               10 −3
+                        179 kq 1.0 Mq 4.1 Mq 30 Mq
+       100 µs
+               10−4     77 kq 323 kq 1.2 Mq 8.2 Mq                                                 Appendix A: Cost of Clifford Frame Cleaning
+               10−3     871 kq 9.5 Mq 44 Mq     -
+        1 ms
+               10−4     278 kq 2.7 Mq 12 Mq 108 Mq                                           In this appendix, we show that Clifford frame cleaning
+                                                                                          can be completed using the number of logical measure-
+                                                                                          ments claimed in Section IV B 3. Specifically, we show that
+                                                                                          it can be completed in the same number of Pauli π/4 ro-
+qubits on the Pinnacle Architecture. Given the challenges                                 tations, which we write as Rπ/4 (P ) for a Pauli rotation
+posed in scaling from one hundred thousand to one mil-                                    axis P . Each such rotation can be implemented by a joint
+lion physical qubits, such as the need on many hardware                                   logical Pauli measurement with a single logical ancilla in
+platforms for networking between separated devices [9],                                   the |0̄⟩ state [6].
+this has the potential to significantly hasten the onset of                                  We present our proofs using the Pauli and Clifford
+practical quantum computing.                                                              operator representation of Ref. [64]. Specifically, an n-
+   Importantly, this is only the beginning of the story for                               qubit Pauli operator is associated (uniquely, up to a global
+QLDPC architectures. While it has been suggested that re-                                 phase)   with an element v ∈ Z2n   2 by the expression Pv =
+                                                                                          Qn        vi vn+i
+ducing the physical qubit count for 2048-bit RSA factoring                                   i=1 Xi Zi        . In this formalism, Pu Pv = Pu+v . Com-
+by an order of magnitude (i.e., to one hundred thousand                                   mutation relations are specified by the symplectic inner
+physical qubits) is implausible on surface code architec-                                 product
+tures [8], the same cannot be said of QLDPC architectures.
+Indeed, a range of higher rate QLDPC codes are known
+                                                                                                                                              
+                                                                                                                                          0 In
+                                                                                                            ⟨u, v⟩ = uJv ,     T
+                                                                                                                                      J=         ,                      (A1)
+than the generalised bicycle codes used here [19]. Incorpo-                                                                              In 0
+rating such codes into the Pinnacle Architecture, combined
+with further optimisation of its components, could plausi-                                and u and v are treated as row vectors. Specifically, Pu and
+bly achieve such a reduction. As such, this work serves not                               Pv commute if ⟨u, v⟩ = 0, and anti-commute if ⟨u, v⟩ =
+only as a major step forward in its own right, but also a                                 1. The symplectic complement W ⊥ of subspace W is a
+foundation on which we expect to make substantial further                                 subspace whose elements commute with all elements in
+progress.                                                                                 W.
+                                                                                                                                      19
+
+   In the same formalism, an n-qubit Clifford operator                Then ⟨v (k) , v (k) + uk ⟩ = ⟨uk , ek + uk ⟩ = 1, and so
+U can be represented by a 2n × 2n matrix MU that
+preserves the symplectic inner product (i.e., such that                  Eek +uk Ev(k) +uk v (k) = Eek +uk (uk ) = ek .        (A4)
+                                                                                                   
+MU JMUT = J). The action of U on Pv by conjugation
+corresponds to matrix multiplication on the right (i.e.,                 Let M̃ (k−1) = Eek +u Ev(k) +u M (k−1) and the ith row
+                                                                                                                      
+P 7→ U P U † corresponds to v 7→ vMU ). The product                   of M̃ (k−1) be ṽ (i) . As this preserves the symplectic product,
+of two Clifford operators V U therefore corresponds to                1 = ⟨v (k) , v (n+k) ⟩ = ⟨ṽ (k) , ṽ (n+k) ⟩ = ⟨ek , ṽ (n+k) ⟩. We
+the product of their matrix representations MU MV . A                 now consider two cases, and in each choose α3 , α4 such
+Pauli π/4 rotation Rπ/4 (Q) is a special type of Clifford             that they fix ek and map ṽ (n+k) to fk .
+operator which is specified by an n-qubit Pauli opera-                   First, if ⟨ṽ (n+k) , fk ⟩ = 1, let α3 = ṽ (n+k) + fk and
+tor Q. It acts as Rπ/4 (Q)P Rπ/4 (Q)† = P Q if P and Q                α4 = 0. Then ⟨ṽ (n+k) , ṽ (n+k) + fk ⟩ = 1, and so
+anti-commute, and as Rπ/4 (Q)P Rπ/4 (Q)† = P if P and
+Q commute. Therefore, Rπ/4 (Pu ) acts on v ∈ Z2n     2 as                               Eṽ(n+k) +fk (ṽ (n+k) ) = fk .             (A5)
+Eu (v) = v + ⟨u, v⟩u.
+   There are two cases of Clifford frame cleaning to con-             We also have ⟨ek , ṽ (n+k) + fk ⟩ = 0, which implies that
+sider: the general case, where 4w steps are required to               Eṽ(n+k) +fk (ek ) = ek .
+clean off w qubits; and the case of cleaning a memory port,              Second, if ⟨ṽ (n+k) , fk ⟩ = 0, let α3 = ṽ (n+k) + ek + fk
+where only 2w steps are required. We first consider the               and α4 = ek . Then ⟨ṽ (n+k) , ṽ (n+k) + ek + fk ⟩ = 1, and
+general case.                                                         so
+Lemma 1. Let U be an n-qubit Clifford opera-                           Eek Eṽ(n+k) +ek +fk (ṽ (n+k) ) = Eek (ek + fk ) = fk . (A6)
+tor. Then for w ≤ n, there exists a sequence
+of 4w Pauli operators P1 , . . . , P4w such that                      We also have ⟨ek , ṽ (n+k) + ek + fk ⟩ = 0, which implies
+Rπ/4 (P1 )Rπ/4 (P2 ) . . . Rπ/4 (P4w )U is a Clifford op-             that Eek Eṽ(n+k) +ek +fk (ek ) = ek .
+erator supported only on the last n − w qubits.                         Hence in all cases
+Proof. We proceed by induction. Let
+                                                                                   M (k) = Eα4 Eα3 Eα2 Eα1 M (k−1) ,                (A7)
+                                   
+                         Ik 0 0 0                                     which completes the proof.
+                        0 ∗ 0 ∗
+               M (k) = 
+                        0 0 Ik 0  .                        (A2)
+                                                                        Now we consider the specific case of cleaning a memory
+                                    
+                          0 ∗ 0 ∗                                     port.
+
+We will show for 1 ≤ k ≤ w, given a matrix of the form                Lemma 2. Let U be an n-qubit Clifford operator that is
+M (k−1) , that there exists a product of four Pauli π/4 ro-           a product of Clifford operators that act either trivially or
+tations with matrices Eα1 , Eα2 , Eα3 , and Eα4 , such that           as the control of a CNOT on the first w ≤ n qubits. Then
+Eα4 Eα3 Eα2 Eα1 M (k−1) is of the form M (k) . It follows             there exists a sequence of 2w Pauli operators P1 , . . . , P2w
+that U = M (0) can be mapped to an operator M (w) that                such that Rπ/4 (P1 )Rπ/4 (P2 ) . . . Rπ/4 (P2w )U is a Clifford
+has support only on the last n − w qubits with 4w Pauli               operator supported only on the last n − w qubits.
+π/4 rotations.                                                        Proof. Since CNOTs commute with Z operators on their
+   Let v (k) denote the kth row of M (k−1) , ek denote                control qubits, U must commute with all Z-type operators
+the kth vector in the standard symplectic basis and                   with support on the first w qubits. Consequently, the matrix
+fk = en+k , and let Ak−1 be the symplectic subspace                   representation of U has the form
+spanned by {e1 , . . . ek−1 , f1 , . . . fk−1 } corresponding to
+the Pauli group on the first k − 1 qubits. We will choose                                     
+                                                                                                Iw ∗ ∗ ∗
+                                                                                                              
+α1 , α2 , α3 , α4 ∈ A⊥   k−1 to ensure that these operations act                               0 ∗ ∗ ∗
+as the identity on all a ∈ Ak−1 . We now consider two                                   U =   0 0 Iw 0  .
+                                                                                                                            (A8)
+cases, and in each choose α1 , α2 such that they map v (k)                                       0 ∗ ∗ ∗
+to ek .
+   First, if ⟨v (k) , ek ⟩ = 1, let α1 = v (k) + ek and α2 = 0.         We proceed by induction, analogously to the proof of
+Then ⟨v (k) , v (k) + ek ⟩ = 1, and so                                Lemma 1. Let
+
+                                                             (A3)
+                                                                                                                
+                     Ev(k) +ek (v (k) ) = ek .                                          Ik 0 0 0         0 0
+                                                                                      0 Iw−k ∗ 0        ∗ ∗
+                                                                                                                
+   Second, if ⟨v (k) , ek ⟩ = 0, then if ⟨v (k) , fk ⟩ = 1 let uk =          M  (k)
+                                                                                     
+                                                                                    =
+                                                                                        0    0    ∗  0   ∗ ∗    .    (A9)
+fk , and if ⟨v (k) , fk ⟩ = 0 let uk = fk + en+δ (mod 2n) ,
+                                                                                     
+                                                                                      0     0 0 Ik 0 0 
+where δ > k is the position of the first nonzero element
+                                                                                                                 
+                                                                                      0     0 0 0 Iw−k 0 
+of v (k) . Moreover, let α1 = v (k) + uk and α2 = ek + uk .                             0    0 ∗ 0       ∗ ∗
+                                                                                                                                          20
+
+We will show for 1 ≤ k ≤ w, given a matrix of the                         Then ⟨v (k) , v (k) + ek ⟩ = 1, and so
+form M (k−1) , that there exists a product of two Pauli
+π/4 rotations with matrices Eα1 and Eα2 , such that                                            Ev(k) +ek v (k) = ek .                  (A10)
+                                                                                                              
+Eα2 Eα1 M (k−1) is of the form M (k) . It follows that U =
+M (0) can be mapped to an operator M (w) that has support                 We also have ⟨fj , v (k) + ek ⟩ = 2δjk = 0 for k ≤ j ≤ w,
+only on the last n − w qubits with 2w Pauli π/4 rotations.                which implies that Ev(k) +ek (fj ) = fj .
+                                                                            Second, if ⟨v (k) , ek ⟩ = 0, let α1 = v (k) + ek + fk and
+   Let v (k) denote the kth row of M (k−1) , ek denote the                α2 = fk . Then ⟨v (k) , v (k) + ek + fk ⟩ = 1, and so
+kth vector in the standard symplectic basis and fk =
+en+k , and let Ak−1 be the symplectic subspace spanned                       Efk Ev(k) +ek +fk v (k) = Efk (ek + fk ) = ek . (A11)
+                                                                                                      
+by {e1 , . . . ek−1 , f1 , . . . fk−1 } corresponding to the Pauli
+group on the first k − 1 qubits. We will choose α1 , α2 ∈                 We also have ⟨fj , v (k) + ek ⟩ = 2δjk = 0 for k ≤ j ≤ w,
+A⊥k−1 to ensure that these operations act as the identity on              which implies that Efk Ev(k) +ek +fk (fj ) = fj .
+all a ∈ Ak−1 , and such that they also fix fj for k ≤ j ≤ w                 Hence in all cases
+and map v (k) to ek . We now consider two cases, noting
+that the structure of M (k−1) implies that ⟨v (k) , fj ⟩ = δjk                              M (k) = Eα2 Eα1 M (k−1) ,                  (A12)
+for 1 ≤ j ≤ w.
+                                                                          which completes the proof.
+   First, if ⟨v (k) , ek ⟩ = 1, let α1 = v (k) + ek and α2 = 0.
+
+
+
+
+ [1] P. Shor, Algorithms for quantum computation: Discrete loga-               tion of low-overhead gadgets for gates on quantum LDPC
+     rithms and factoring, in Proceedings 35th Annual Symposium                codes (2025), arXiv:2511.15989.
+     on Foundations of Computer Science (1994) pp. 124–134.               [12] C. Chamberland and E. T. Campbell, Universal quantum
+ [2] S. Lloyd, Universal quantum simulators, Science 273, 1073                 computing with twist-free and temporally encoded lattice
+     (1996).                                                                   surgery, PRX Quantum 3, 010331 (2022), arXiv:2109.02746.
+ [3] D. Gottesman, Opportunities and challenges in fault-                 [13] I. D. Kivlichan, C. Gidney, D. W. Berry, N. Wiebe, J. McClean,
+     tolerant quantum computation (2022), arXiv:2210.15844.                    W. Sun, Z. Jiang, N. Rubin, A. Fowler, A. Aspuru-Guzik,
+ [4] A. G. Fowler, M. Mariantoni, J. M. Martinis, and A. N. Cle-               H. Neven, and R. Babbush, Improved fault-tolerant quan-
+     land, Surface codes: Towards practical large-scale quan-                  tum simulation of condensed-phase correlated electrons via
+     tum computation, Physical Review A 86, 032324 (2012),                     Trotterization, Quantum 4, 296 (2020), arXiv:1902.10673.
+     arXiv:1208.0928.                                                     [14] S. Bravyi, G. Smith, and J. Smolin, Trading classical and
+ [5] D. Horsman, A. G. Fowler, S. Devitt, and R. V. Meter, Surface             quantum computational resources, Physical Review X 6,
+     code quantum computing by lattice surgery, New Journal                    021043 (2016), arXiv:1506.01396.
+     of Physics 14, 123011 (2012), arXiv:1111.4022.                       [15] E. T. Campbell, Early fault-tolerant simulations of the Hub-
+ [6] D. Litinski, A game of surface codes: Large-scale quantum                 bard model, Quantum Science and Technology 7, 015007
+     computing with lattice surgery, Quantum 3, 128 (2019),                    (2022), arXiv:2012.09238.
+     arXiv:1808.02892.                                                    [16] A. C. Hughes, R. Srinivas, C. M. Löschnauer, H. M.
+ [7] C. Gidney and M. Ekerå, How to factor 2048 bit RSA integers               Knaack, R. Matt, C. J. Ballance, M. Malinowski, T. P.
+     in 8 hours using 20 million noisy qubits, Quantum 5, 433                  Harty, and R. T. Sutherland, Trapped-ion two-qubit gates
+     (2021), arXiv:1905.09749.                                                 with >99.99% fidelity without ground-state cooling (2025),
+ [8] C. Gidney, How to factor 2048 bit RSA integers with less                  arXiv:2510.17286.
+     than a million noisy qubits (2025), arXiv:2505.15917.                [17] H. Zhou, C. Duckering, C. Zhao, D. Bluvstein, M. Cain, A. Ku-
+ [9] M. Mohseni, A. Scherer, K. G. Johnson, O. Wertheim, M. Ot-                bica, S.-T. Wang, and M. D. Lukin, Resource analysis of
+     ten, N. A. Aadit, Y. Alexeev, K. M. Bresniker, K. Y. Cam-                 low-overhead transversal architectures for reconfigurable
+     sari, B. Chapman, S. Chatterjee, G. A. Dagnew, A. Espos-                  atom arrays, in Proceedings of the 52nd Annual International
+     ito, F. Fahim, M. Fiorentino, A. Gajjar, A. Khalid, X. Kong,              Symposium on Computer Architecture (2025) pp. 1432–1448,
+     B. Kulchytskyy, E. Kyoseva, R. Li, P. A. Lott, I. L. Markov, R. F.        arXiv:2505.15907.
+     McDermott, G. Pedretti, P. Rao, E. Rieffel, A. Silva, J. Sorebo,     [18] D. J. C. MacKay, G. Mitchison, and P. L. McFadden, Sparse
+     P. Spentzouris, Z. Steiner, B. Torosov, D. Venturelli, R. J.              graph codes for quantum error-correction, IEEE Transac-
+     Visser, Z. Webb, X. Zhan, Y. Cohen, P. Ronagh, A. Ho, R. G.               tions on Information Theory 50, 2315 (2004), arXiv:quant-
+     Beausoleil, and J. M. Martinis, How to build a quantum su-                ph/0304161.
+     percomputer: Scaling from hundreds to millions of qubits             [19] N. P. Breuckmann and J. N. Eberhardt, Quantum low-
+     (2025), arXiv:2411.10406.                                                 density parity-check codes, PRX Quantum 2, 040101 (2021),
+[10] T. J. Yoder, E. Schoute, P. Rall, E. Pritchett, J. M. Gambetta,           arXiv:2103.06309.
+     A. W. Cross, M. Carroll, and M. E. Beverland, Tour de gross:         [20] J. Yoneda, W. Huang, M. Feng, C. H. Yang, K. W. Chan,
+     A modular quantum computer based on bivariate bicycle                     T. Tanttu, W. Gilbert, R. C. C. Leon, F. E. Hudson, K. M. Itoh,
+     codes (2025), arXiv:2506.03094.                                           A. Morello, S. D. Bartlett, A. Laucht, A. Saraiva, and A. S.
+[11] P. Webster, S. C. Smith, and L. Z. Cohen, Explicit construc-              Dzurak, Coherent spin qubit transport in silicon, Nature
+                                                                                                                                             21
+
+     Communications 12, 4114 (2021), arXiv:2008.04020.                        F. Kostritsa, R. Kothari, B. Kozlovskii, J. M. Kreikebaum,
+[21] M. Malinowski, D. T. C. Allcock, and C. J. Ballance, How                 V. D. Kurilovich, N. Lacroix, D. Landhuis, T. Lange-Dei,
+     to wire a 1000-qubit trapped ion quantum computer, PRX                   B. W. Langley, P. Laptev, K.-M. Lau, L. L. Guevel, J. Led-
+     Quantum 4, 040313 (2023), arXiv:2305.12773.                              ford, K. Lee, Y. D. Lensky, S. Leon, B. J. Lester, W. Y. Li, Y. Li,
+[22] D. Bluvstein, H. Levine, G. Semeghini, T. T. Wang, S. Ebadi,             A. T. Lill, W. Liu, W. P. Livingston, A. Locharla, E. Lucero,
+     M. Kalinowski, A. Keesling, N. Maskara, H. Pichler,                      D. Lundahl, A. Lunt, S. Madhuk, F. D. Malone, A. Maloney,
+     M. Greiner, V. Vuletic, and M. D. Lukin, A quantum proces-               S. Mandrá, L. S. Martin, S. Martin, O. Martin, C. Maxfield,
+     sor based on coherent transport of entangled atom arrays,                J. R. McClean, M. McEwen, S. Meeks, A. Megrant, X. Mi,
+     Nature 604, 451 (2022), arXiv:2112.03923.                                K. C. Miao, A. Mieszala, R. Molavi, S. Molina, S. Montazeri,
+[23] H. Bombin, I. H. Kim, D. Litinski, N. Nickerson, M. Pant,                A. Morvan, R. Movassagh, W. Mruczkiewicz, O. Naaman,
+     F. Pastawski, S. Roberts, and T. Rudolph, Interleaving: Mod-             M. Neeley, C. Neill, A. Nersisyan, H. Neven, M. Newman,
+     ular architectures for fault-tolerant photonic quantum com-              J. H. Ng, A. Nguyen, M. Nguyen, C.-H. Ni, T. E. O’Brien, W. D.
+     puting (2021), arXiv:2103.08612.                                         Oliver, A. Opremcak, K. Ottosson, A. Petukhov, A. Pizzuto,
+[24] S. Bravyi, A. W. Cross, J. M. Gambetta, D. Maslov, P. Rall, and          J. Platt, R. Potter, O. Pritchard, L. P. Pryadko, C. Quintana,
+     T. J. Yoder, High-threshold and low-overhead fault-tolerant              G. Ramachandran, M. J. Reagor, D. M. Rhodes, G. Roberts,
+     quantum memory, Nature 627, 778 (2024), arXiv:2308.07915.                E. Rosenberg, E. Rosenfeld, P. Roushan, N. C. Rubin, N. Saei,
+[25] L. Z. Cohen, I. H. Kim, S. D. Bartlett, and B. J. Brown, Low-            D. Sank, K. Sankaragomathi, K. J. Satzinger, H. F. Schurkus,
+     overhead fault-tolerant quantum computing using long-                    C. Schuster, A. W. Senior, M. J. Shearn, A. Shorter, N. Shutty,
+     range connectivity, Science Advances 8, eabn1717 (2022),                 V. Shvarts, S. Singh, V. Sivak, J. Skruzny, S. Small, V. Smelyan-
+     arXiv:2110.10794.                                                        skiy, W. C. Smith, R. D. Somma, S. Springer, G. Sterling,
+[26] D. J. Williamson and T. J. Yoder, Low-overhead fault-tolerant            D. Strain, J. Suchard, A. Szasz, A. Sztein, D. Thor, A. Tor-
+     quantum computation by gauging logical operators (2024),                 res, M. M. Torunbalci, A. Vaishnav, J. Vargas, S. Vdovichev,
+     arXiv:2410.02213.                                                        G. Vidal, B. Villalonga, C. V. Heidweiller, S. Waltman, S. X.
+[27] B. Ide, M. G. Gowda, P. J. Nadkarni, and G. Dauphi-                      Wang, B. Ware, K. Weber, T. White, K. Wong, B. W. K. Woo,
+     nais, Fault-tolerant logical measurements via homologi-                  C. Xing, Z. J. Yao, P. Yeh, B. Ying, J. Yoo, N. Yosri, G. Young,
+     cal measurement, Physical Review X 15, 021088 (2025),                    A. Zalcman, Y. Zhang, N. Zhu, and N. Zobrist, Quantum
+     arXiv:2410.02753.                                                        error correction below the surface code threshold, Nature
+[28] Following Refs [6, 10], we assume that the time required                 638, 920 (2025), arXiv:2408.13687.
+     between logical measurements is negligible compared with            [33] D. Pataki and A. Pályi, Compiling the surface code to cross-
+     the timescale of a logical cycle.                                        bar spin qubit architectures, Physical Review B 111, 115307
+[29] A. W. Cross, Z. He, P. J. Rall, and T. J. Yoder, Improved                (2025), arXiv:2412.05425.
+     QLDPC surgery: Logical measurements and bridging codes              [34] H. Leone, T. Le, S. Srikara, and S. Devitt, Resource overheads
+     (2025), arXiv:2407.18393.                                                and attainable rates for trapped-ion lattice surgery, Physical
+[30] E. Swaroop, T. Jochym-O’Connor, and T. J. Yoder, Universal               Review Research 7, 023088 (2025), arXiv:2406.18764.
+     adapters between quantum low-density parity check codes,            [35] R. Babbush, C. Gidney, D. W. Berry, N. Wiebe, J. McClean,
+     PRX Quantum 7, 010324 (2026), arXiv:2410.03628.                          A. Paler, A. Fowler, and H. Neven, Encoding electronic spec-
+[31] Z. He, A. Cowtan, D. J. Williamson, and T. J. Yoder, Extrac-             tra in quantum circuits with linear T complexity, Physical
+     tors: QLDPC architectures for efficient Pauli-based compu-               Review X 8, 041015 (2018), arXiv:1805.03662.
+     tation (2025), arXiv:2503.10390.                                    [36] D. Filippov, P. Yang, and P. Murali, Architecting distributed
+[32] R. Acharya, L. Aghababaie-Beni, I. Aleiner, T. I. Andersen,              quantum computers: Design insights from resource estima-
+     M. Ansmann, F. Arute, K. Arya, A. Asfaw, N. Astrakhantsev,               tion (2025), arXiv:2508.19160.
+     J. Atalaya, R. Babbush, D. Bacon, B. Ballard, J. C. Bardin,         [37] A. A. Kovalev and L. P. Pryadko, Quantum Kronecker sum-
+     J. Bausch, A. Bengtsson, A. Bilmes, S. Blackwell, S. Boixo,              product low-density parity-check codes with finite rate,
+     G. Bortoli, A. Bourassa, J. Bovaird, L. Brill, M. Broughton,             Physical Review A 88, 012311 (2013), arXiv:1212.6703.
+     D. A. Browne, B. Buchea, B. B. Buckley, D. A. Buell, T. Burger,     [38] P. Panteleev and G. Kalachev, Degenerate quantum LDPC
+     B. Burkett, N. Bushnell, A. Cabrera, J. Campero, H.-S. Chang,            codes with good finite length performance, Quantum 5, 585
+     Y. Chen, Z. Chen, B. Chiaro, D. Chik, C. Chou, J. Claes,                 (2021), arXiv:1904.02703.
+     A. Y. Cleland, J. Cogan, R. Collins, P. Conner, W. Courtney,        [39] J. du Crest, M. Mhalla, and V. Savin, Stabilizer inactiva-
+     A. L. Crook, B. Curtin, S. Das, A. Davies, L. D. Lorenzo,                tion for message-passing decoding of quantum LDPC codes
+     D. M. Debroy, S. Demura, M. Devoret, A. D. Paolo, P. Dono-               (2023), arXiv:2205.06125.
+     hoe, I. Drozdov, A. Dunsworth, C. Earle, T. Edlich, A. Eick-        [40] H.-K. Lin, X. Liu, P. K. Lim, and L. P. Pryadko, Single-shot
+     busch, A. M. Elbag, M. Elzouka, C. Erickson, L. Faoro,                   and two-shot decoding with generalized bicycle codes (2025),
+     E. Farhi, V. S. Ferreira, L. F. Burgos, E. Forati, A. G. Fowler,         arXiv:2502.19406.
+     B. Foxen, S. Ganjam, G. Garcia, R. Gasca, É. Genois, W. Giang,      [41] M. Wang and F. Mueller, Coprime bivariate bicycle codes
+     C. Gidney, D. Gilboa, R. Gosula, A. G. Dau, D. Graumann,                 and their layouts on cold atoms, Quantum 10, 2009 (2026),
+     A. Greene, J. A. Gross, S. Habegger, J. Hall, M. C. Hamilton,            arXiv:2408.10001.
+     M. Hansen, M. P. Harrigan, S. D. Harrington, F. J. H. Heras,        [42] F. J. MacWilliams and N. J. A. Sloane, The Theory of Error-
+     S. Heslin, P. Heu, O. Higgott, G. Hill, J. Hilton, G. Holland,           Correcting Codes, North-Holland Mathematical Library,
+     S. Hong, H.-Y. Huang, A. Huff, W. J. Huggins, L. B. Ioffe,               Vol. 16 (Elsevier, 1977).
+     S. V. Isakov, J. Iveland, E. Jeffrey, Z. Jiang, C. Jones, S. Jor-   [43] A. Cowtan, Z. He, D. J. Williamson, and T. J. Yoder, Paral-
+     dan, C. Joshi, P. Juhas, D. Kafri, H. Kang, A. H. Karamlou,              lel logical measurements via quantum code surgery (2026),
+     K. Kechedzhi, J. Kelly, T. Khaire, T. Khattar, M. Khezri, S. Kim,        arXiv:2503.05003.
+     P. V. Klimov, A. R. Klots, B. Kobrin, P. Kohli, A. N. Korotkov,     [44] S. Bravyi and A. Kitaev, Universal quantum computation
+                                                                                                                                       22
+
+     with ideal Clifford gates and noisy ancillas, Physical Review          codes, Quantum 5, 562 (2021), arXiv:2012.15297.
+     A 71, 022316 (2005), arXiv:quant-ph/0403025.                      [55] A. Paetznick and K. M. Svore, Repeat-until-success: Non-
+[45] D. Litinski, Magic state distillation: Not as costly as you            deterministic decomposition of single-qubit unitaries,
+     think, Quantum 3, 205 (2019), arXiv:1905.06903.                        Quantum Information and Computation 14, 1277 (2014),
+[46] H. Goto, Minimizing resource overheads for fault-tolerant              arXiv:1311.1074.
+     preparation of encoded states of the Steane code, Scientific      [56] A. Bocharov, M. Roetteler, and K. M. Svore, Efficient syn-
+     Reports 6, 19578 (2016).                                               thesis of universal repeat-until-success circuits, Physical
+[47] T. Itogawa, Y. Takada, Y. Hirano, and K. Fujii, Efficient magic        Review Letters 114, 080502 (2015), arXiv:1404.5320.
+     state distillation by zero-level distillation, PRX Quantum 6,     [57] For simplicity, we here follow Ref. [15] in using this ap-
+     020356 (2025), arXiv:2403.03991.                                       proach. We note that more recent advances in rotation syn-
+[48] C. Gidney, N. Shutty, and C. Jones, Magic state cultiva-               thesis have since been presented [65], which may allow for
+     tion: Growing T states as cheap as CNOT gates (2024),                  reduced runtimes if incorporated in future.
+     arXiv:2409.17595.                                                 [58] M. Ekerå and J. Håstad, Quantum algorithms for computing
+[49] K. Sahay, P.-K. Tsai, K. Chang, Q. Su, T. B. Smith, S. Singh,          short discrete logarithms and factoring RSA integers, in
+     and S. Puri, Fold-transversal surface code cultivation (2025),         Post-Quantum Cryptography, Vol. 10346 (2017) pp. 347–363,
+     arXiv:2509.05212.                                                      arXiv:1702.00249.
+[50] We estimate these reject rates using data on expected at-         [59] C. Chevignard, P.-A. Fouque, and A. Schrottenloher, Reduc-
+     tempts (which we denote γ) from Ref. [49], extrapolating               ing the number of qubits in quantum factoring, in Advances
+     under the assumption that the failure rate is linear in p for          in Cryptology – CRYPTO 2025, edited by Y. Tauman Kalai
+     the case of p = 10−4 . Specifically, the overall reject rate           and S. F. Kamara (2025) pp. 384–415.
+     is then given by pr = (1 − (1 − 1/γ)ξ )15 , where ξ is the        [60] C. Jones, Low-overhead constructions for the fault-
+     number of attempts that are possible in the available time             tolerant Toffoli gate, Physical Review A 87, 022328 (2013),
+     and with the throughput provided by the ancilla systems                arXiv:1212.5069.
+     (ξ = 2 for the p = 10−4 case and ξ = 5 for the p = 10−3           [61] D. Litinski, How to compute a 256-bit elliptic curve
+     cases).                                                                private key with only 50 million Toffoli gates (2023),
+[51] A. R. O’Rourke and S. Devitt, Compare the pair: Rotated ver-           arXiv:2306.08585.
+     sus unrotated surface codes at equal logical error rates, Phys-   [62] M. E. Beverland, P. Murali, M. Troyer, K. M. Svore, T. Hoefler,
+     ical Review Research 7, 033074 (2025), arXiv:2409.14765.               V. Kliuchnikov, G. H. Low, M. Soeken, A. Sundaram, and
+[52] This suffices since we can choose the eight logical measure-           A. Vaschillo, Assessing requirements to scale to practical
+     ments in the first batch to act trivially on one of the four           quantum advantage (2022), arXiv:2211.07629.
+     logical qubits involved in post-selection.                        [63] N. Baspin, L. Berent, and L. Z. Cohen, Fast surgery for quan-
+[53] S. Vittal, A. Javadi-Abhari, A. W. Cross, L. S. Bishop, and            tum LDPC codes (2025), arXiv:2510.04521.
+     M. Qureshi, Flag-proxy networks: Overcoming the archi-            [64] S. Aaronson and D. Gottesman, Improved simulation of
+     tectural, scheduling and decoding obstacles of quantum                 stabilizer circuits, Physical Review A 70, 052328 (2004),
+     LDPC codes, in 2024 57th IEEE/ACM International Sym-                   arXiv:quant-ph/0406196.
+     posium on Microarchitecture (MICRO) (2024) pp. 718–734,           [65] V. Kliuchnikov, K. Lauter, R. Minko, A. Paetznick, and C. Pe-
+     arXiv:2409.14283.                                                      tit, Shorter quantum circuits via single-qubit gate approxi-
+[54] N. Raveendran and B. Vasić, Trapping sets of quantum LDPC              mation, Quantum 7, 1208 (2023), arXiv:2203.10064.
+

@@ -1,0 +1,892 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Qyeb7vF43T0SMczt1A4dPxcw9rg</id>
+  <title>arXiv Query: search_query=abs:"Coppersmith"&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-10-05T15:30:36Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=abs:%22Coppersmith%22&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>83</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2606.24717v2</id>
+    <title>A new attack to RSA with small private exponent and partial information</title>
+    <updated>2026-06-24T16:02:52Z</updated>
+    <link href="https://arxiv.org/abs/2606.24717v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.24717v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We give a new algorithm to attack RSA with small private exponent, when some partial information of $p+q$ is given.The algorithm is a very simple modification of original Wiener's attack with continued fractions, and allows to factor $n$ whenever $d&lt;n^{(1+δ)/4}$ if we know a $δ$-fraction of the most significant bits of $p+q$. The algorithm is unconditional, which is not the case in previous improvements that use Coppersmith method. As an example, ouir algorithm can be applied to break any criptosystem with modulus of $512$ bits and $d&lt;n^{0.3}$, giving an improvement in the original attack of Wiener.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-23T15:39:30Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Jorge Urroz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.04858v1</id>
+    <title>Integer points close to a transcendental curve: an algorithmic approach</title>
+    <updated>2026-06-03T13:25:50Z</updated>
+    <link href="https://arxiv.org/abs/2606.04858v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.04858v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this article, we propose an algorithmic approach to determine the integer points located near a transcendental curve. This approach is closely related to a celebrated work by Bombieri and Pila and to the so-called Coppersmith's method. We establish the underlying theoretical foundations, prove the algorithms, study their complexity and present practical experiments; we also compare our approach with previously existing ones. From a practical point of view, we focus on an instance of our general problem, called the Table Maker's Dilemma, whose solving makes it possible to evaluate a given function with correct rounding. Our experiments show a significant speedup. In particular, our results show that the development of a correctly rounded mathematical library for the binary128 format is now possible at a much smaller cost than with previously existing approaches.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-03T13:25:50Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Nicolas Brisebarre</name>
+    </author>
+    <author>
+      <name>Guillaume Hanrot</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.21738v2</id>
+    <title>Asymptotic Rank Speedup Theorems, Revisited</title>
+    <updated>2026-09-23T12:24:15Z</updated>
+    <link href="https://arxiv.org/abs/2605.21738v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.21738v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Motivated by fast matrix multiplication and recent connections between asymptotic tensor rank and fine-grained complexity, we revisit classical tools from the matrix multiplication literature and develop a framework for obtaining improved asymptotic rank upper bounds for tensors beyond matrix multiplication.
+  In the 1980s, Coppersmith-Winograd and Strassen discovered a series of speedup theorems for asymptotic rank: in certain regimes, one can extract additional terms from a border rank upper bound on a tensor $T$, and then use these terms to obtain an improved asymptotic rank of $T$. We establish general speedup theorems that subsume these results and enable quantitative improvements. Two representative applications are:
+  (1) The asymptotic rank of the small Coppersmith-Winograd tensor $\mathrm{cw}_q$ is less than its border rank. For instance, we prove the asymptotic rank of $\mathrm{cw}_2$ is smaller than $3.931$, improving on $\underline{\mathrm{R}}(\mathrm{cw}_2)=4$. It is known that if the asymptotic rank of $\mathrm{cw}_2$ equals $3$, this would imply $ω=2$.
+  (2) A general improvement over Strassen's bound: we obtain an upper bound below $d^{2ω/3}$ on the asymptotic rank of any $d\times d\times d$ tensor.
+  To make full use of speedups, we analyze degenerations in which both sides are nontrivial direct sums, a setting where the optimal quantitative bound one can achieve was previously unclear. We do so via an approach we call Strassen calculus: a systematic method for converting such degeneration data into explicit asymptotic rank bounds using Strassen's theory of the asymptotic spectrum.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-20T21:03:34Z</published>
+    <arxiv:comment>43 pages, minor typos fixed compared with proceeding version in CCC 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Josh Alman</name>
+    </author>
+    <author>
+      <name>Baitian Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.19076v1</id>
+    <title>On Factoring and Power Divisor Problems via Rank-3 Lattices and the Second Vector</title>
+    <updated>2025-12-22T06:36:44Z</updated>
+    <link href="https://arxiv.org/abs/2512.19076v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.19076v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a deterministic algorithm based on Coppersmith's method that employs a rank-3 lattice to address factoring-related problems. An interesting aspect of our approach is that we utilize the second vector in the LLL-reduced basis to avoid trivial collisions in the Baby-step Giant-step method, rather than the shortest vector as is commonly used in the literature. Our results are as follows:
+  1. Compared to the result by Harvey and Hittmeir (Math. Comp. 91 (2022), 1367 - 1379), who achieved a complexity of O( N^(1/5) log^(16/5) N / (log log N)^(3/5)) for factoring a semiprime N = pq, we demonstrate that in the balanced p and q case, the complexity can be improved to O( N^(1/5) log^(13/5) N / (log log N)^(3/5) ).
+  2. For factoring sums and differences of powers, that is, numbers of the form N = a^n plus or minus b^n, we improve Hittmeir's result (Math. Comp. 86 (2017), 2947 - 2954) from O( N^(1/4) log^(3/2) N ) to O( N^(1/5) log^(13/5) N ).
+  3. For the problem of finding r-power divisors, that is, finding all integers p such that p^r divides N, Harvey and Hittmeir (Proceedings of ANTS XV, Research in Number Theory 8 (2022), no. 4, Paper No. 94) recently directly applied Coppersmith's method and achieved a complexity of O( N^(1/(4r)) log^(10+epsilon) N / r^3 ). By using faster LLL-type algorithms and sieving on small primes, we improve their result to O( N^(1/(4r)) log^(7+3 epsilon) N / ((log log N minus log(4r)) r^(2+epsilon)) ). The worst-case running time for their algorithm occurs when N = p^r q with q on the order of N^(1/2). By focusing on this case and employing our rank-3 lattice approach, we achieve a complexity of O( r^(1/4) N^(1/(4r)) log^(5/2) N ).
+  In conclusion, we offer a new perspective on these problems, which we hope will provide further insights.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-22T06:36:44Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Yiming Gao</name>
+    </author>
+    <author>
+      <name>Yansong Feng</name>
+    </author>
+    <author>
+      <name>Honggang Hu</name>
+    </author>
+    <author>
+      <name>Yanbin Pan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.23363v1</id>
+    <title>Homomorphism Testing with Resilience to Online Manipulations</title>
+    <updated>2025-11-28T17:09:08Z</updated>
+    <link href="https://arxiv.org/abs/2511.23363v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.23363v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A central challenge in property testing is verifying algebraic structure with minimal access to data. A landmark result addressing this challenge, the linearity test of Blum, Luby, and Rubinfeld (JCSS `93), spurred a rich body of work on testing algebraic properties such as linearity and its generalizations to low-degree polynomials and group homomorphisms. However, classical tests for these properties assume unrestricted, noise-free access to the input function--an assumption that breaks down in adversarial or dynamic settings. To address this, Kalemaj, Raskhodnikova, and Varma (Theory of Computing `23) introduced the online manipulation model, where an adversary may erase or corrupt query responses over time, based on the tester's past queries.
+  We initiate the study of {manipulation-resilient} testing for {group homomorphism} in this online model. Our main result is an {optimal} tester that makes $O(1/\varepsilon+\log t)$ queries, where $\varepsilon$ is the distance parameter and $t$ is the number of function values the adversary can erase or corrupt per query. Our result recovers the celebrated $O(1/\varepsilon)$ bound by Ben-Or, Coppersmith, Luby, and Rubinfeld (Random Struct.\ Algorithms `08) for homomorphism testing in the standard property testing model, albeit with a different tester. Our tester, $\mathsf{Random\ Signs\ Test}$, {lifts} known manipulation-resilient linearity testers for $\mathbb{F}_2^n\to \mathbb{F}_2$ to general group domains and codomains by introducing more randomness: instead of verifying the homomorphism condition for a sum of random elements, it uses additions and subtractions of random elements, randomly selecting a sign for each element. We also obtain improved group-specific query bounds for key families of groups.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-28T17:09:08Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Esty Kelman</name>
+    </author>
+    <author>
+      <name>Uri Meir</name>
+    </author>
+    <author>
+      <name>Debanuj Nayak</name>
+    </author>
+    <author>
+      <name>Sofya Raskhodnikova</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.13126v1</id>
+    <title>Some concerns on the border rank of Kronecker products of the Coppersmith-Winograd tensor</title>
+    <updated>2025-07-17T13:44:16Z</updated>
+    <link href="https://arxiv.org/abs/2507.13126v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.13126v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This note provides a detailed proof of Conner--Gesmundo--Landsberg--Ventura's result that the border rank of the Kronecker square of the little Coppersmith--Winograd tensor is $(q+2)^{2}$.We also indicate how the same ideas seem to extend to the case of the Kronecker cube, pointing toward the conjectural value $(q+2)^{m}$ for $m\ge 4$, although a full proof is left for future work.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-17T13:44:16Z</published>
+    <arxiv:comment>Although the note remains unfinished and partly inaccurate for $m=3$ and $m\ge 4$, it is being released for the seminar presentation</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Daiki Kawabe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.07055v1</id>
+    <title>Integer Factorization: Another perspective</title>
+    <updated>2025-07-09T17:20:49Z</updated>
+    <link href="https://arxiv.org/abs/2507.07055v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.07055v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integer factorization is a fundamental problem in algorithmic number theory and computer science. It is considered as a one way or trapdoor function in the (RSA) cryptosystem. To date, from elementary trial division to sophisticated methods like the General Number Field Sieve, no known algorithm can break the problem in polynomial time, while its proved that Shor's algorithm could on a quantum computer. In this paper, we recall some factorization algorithms and then approach the problem under different angles. Firstly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right)$ to the Lebesgue space $\mathcal{L}^{1}\left(X\right)$ where $X$ can be $\mathbb{Q}$ or any given interval setting. From this first perspective, integer factorization becomes equivalent to finding the perimeter of a rectangle whose area is known. In this case, it is equivalent to either finding bounds of integrals or finding primitives for some given bounds. Secondly, we take the problem from the ring $\displaystyle\left(\mathbb{Z}, \text{+}, \cdot\right) $ to the ring of matrices $\left( M_{2}\text{(}\mathbb{Z}\text{)}, \ \text{+} \ \cdot\right)$ and show that this problem is equivalent to matrix decomposition, and therefore present some possible computing algorithms, particularly using Gröbner basis and through matrix diagonalization. Finally, we address the problem depending on algebraic forms of factors and show that this problem is equivalent to finding small roots of a bivariate polynomial through coppersmith's method.
+  The aim of this study is to propose innovative methodological approaches to reformulate this problem, thereby offering new perspectives.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-09T17:20:49Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Gilda Rech Bansimba</name>
+    </author>
+    <author>
+      <name>Regis Freguin Babindamana</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.20471v1</id>
+    <title>Improved Online Reachability Preservers</title>
+    <updated>2024-10-27T15:17:53Z</updated>
+    <link href="https://arxiv.org/abs/2410.20471v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.20471v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A reachability preserver is a basic kind of graph sparsifier, which preserves the reachability relation of an $n$-node directed input graph $G$ among a set of given demand pairs $P$ of size $|P|=p$. We give constructions of sparse reachability preservers in the online setting, where $G$ is given on input, the demand pairs $(s, t) \in P$ arrive one at a time, and we must irrevocably add edges to a preserver $H$ to ensure reachability for the pair $(s, t)$ before we can see the next demand pair. Our main results are:
+  -- There is a construction that guarantees a maximum preserver size of $$|E(H)| \le O\left( n^{0.72}p^{0.56} + n^{0.6}p^{0.7} + n\right).$$ This improves polynomially on the previous online upper bound of $O( \min\{np^{0.5}, n^{0.5}p\}) + n$, implicit in the work of Coppersmith and Elkin [SODA '05].
+  -- Given a promise that the demand pairs will satisfy $P \subseteq S \times V$ for some vertex set $S$ of size $|S|=:σ$, there is a construction that guarantees a maximum preserver size of $$|E(H)| \le O\left( (npσ)^{1/2} + n\right).$$ A slightly different construction gives the same result for the setting $P \subseteq V \times S$. This improves polynomially on the previous online upper bound of $O( σn)$ (folklore).
+  All of these constructions are polynomial time, deterministic, and they do not require knowledge of the values of $p, σ$, or $S$. Our techniques also give a small polynomial improvement in the current upper bounds for offline reachability preservers, and they extend to a stronger model in which we must commit to a path for all possible reachable pairs in $G$ before any demand pairs have been received. As an application, we improve the competitive ratio for Online Unweighted Directed Steiner Forest to $O(n^{3/5 + \varepsilon})$.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-27T15:17:53Z</published>
+    <arxiv:comment>SODA 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Greg Bodwin</name>
+    </author>
+    <author>
+      <name>Tuong Le</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.20071v1</id>
+    <title>SAT and Lattice Reduction for Integer Factorization</title>
+    <updated>2024-06-28T17:30:20Z</updated>
+    <link href="https://arxiv.org/abs/2406.20071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.20071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The difficulty of factoring large integers into primes is the basis for cryptosystems such as RSA. Due to the widespread popularity of RSA, there have been many proposed attacks on the factorization problem such as side-channel attacks where some bits of the prime factors are available. When enough bits of the prime factors are known, two methods that are effective at solving the factorization problem are satisfiability (SAT) solvers and Coppersmith's method. The SAT approach reduces the factorization problem to a Boolean satisfiability problem, while Coppersmith's approach uses lattice basis reduction. Both methods have their advantages, but they also have their limitations: Coppersmith's method does not apply when the known bit positions are randomized, while SAT-based methods can take advantage of known bits in arbitrary locations, but have no knowledge of the algebraic structure exploited by Coppersmith's method. In this paper we describe a new hybrid SAT and computer algebra approach to efficiently solve random leaked-bit factorization problems. Specifically, Coppersmith's method is invoked by a SAT solver to determine whether a partial bit assignment can be extended to a complete assignment. Our hybrid implementation solves random leaked-bit factorization problems significantly faster than either a pure SAT or pure computer algebra approach.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-28T17:30:20Z</published>
+    <arxiv:comment>To appear in the 2024 Proceedings of the International Symposium on Symbolic and Algebraic Computation</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yameen Ajani</name>
+    </author>
+    <author>
+      <name>Curtis Bright</name>
+    </author>
+    <arxiv:doi>10.1145/3666000.3669712</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3666000.3669712" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.20342v1</id>
+    <title>Bohr sets generated by polynomials and Coppersmith's method in many variables</title>
+    <updated>2023-10-31T10:33:05Z</updated>
+    <link href="https://arxiv.org/abs/2310.20342v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.20342v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We obtain bounds on the average size of Bohr sets with coefficients parametrised by polynomials over finite fields and obtain a series of general results and also some sharper results for specific sets which are important for applications to computer science. In particular, we use our estimates to show that a heuristic assumption used in the many variable version of Coppersmith's method holds with high probability. We demonstrate the use of our results on the approximate greatest common divisor problem and obtain a fully rigorous version of the heuristic algorithm of H. Cohn and N. Heninger (2013).</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-31T10:33:05Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Riley Baird</name>
+    </author>
+    <author>
+      <name>Bryce Kerr</name>
+    </author>
+    <author>
+      <name>Igor Shparlinski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.08304v1</id>
+    <title>Lattice attack on group ring NTRU: The case of the dihedral group</title>
+    <updated>2023-09-15T10:50:46Z</updated>
+    <link href="https://arxiv.org/abs/2309.08304v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.08304v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Group ring NTRU (GR-NTRU) provides a general structure to design different variants of NTRU-like schemes by employing different groups. Although, most of the schemes in literature are built over cyclic groups, nonabelian groups can also be used. Coppersmith and Shamir in 1997 have suggested that noncommutativity may result in better security against some lattice attacks for some groups. Lattice attacks on the public key of NTRU-like cryptosystems try to retrieve the private key by solving the shortest vector problem (SVP) or its approximation in a lattice of a certain dimension, assuming the knowledge of the public key only. This paper shows that dihedral groups do not guarantee better security against this class of attacks. We prove that retrieving the private key is possible by solving the SVP in two lattices with half the dimension of the original lattice generated for GR-NTRU based on dihedral groups. The possibility of such an attack was mentioned by Yasuda et al.(IACR/2015/1170). In contrast to their proposed approach, we explicitly provide the lattice reduction without any structure theorem from the representation theory for finite groups. Furthermore, we demonstrate the effectiveness of our technique with experimental results.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-15T10:50:46Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Vikas Kumar</name>
+    </author>
+    <author>
+      <name>Ali Raya</name>
+    </author>
+    <author>
+      <name>Sugata Gangopadhyay</name>
+    </author>
+    <author>
+      <name>Aditi Kar Gangopadhyay</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.06535v2</id>
+    <title>Faster Rectangular Matrix Multiplication by Combination Loss Analysis</title>
+    <updated>2023-12-27T23:34:14Z</updated>
+    <link href="https://arxiv.org/abs/2307.06535v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.06535v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Duan, Wu and Zhou (FOCS 2023) recently obtained the improved upper bound on the exponent of square matrix multiplication $ω&lt;2.3719$ by introducing a new approach to quantify and compensate the ``combination loss" in prior analyses of powers of the Coppersmith-Winograd tensor. In this paper we show how to use this new approach to improve the exponent of rectangular matrix multiplication as well. Our main technical contribution is showing how to combine this analysis of the combination loss and the analysis of the fourth power of the Coppersmith-Winograd tensor in the context of rectangular matrix multiplication developed by Le Gall and Urrutia (SODA 2018).</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-13T02:47:27Z</published>
+    <arxiv:comment>35 pages; v2: minor corrections; accepted to SODA 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>François Le Gall</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.14095v2</id>
+    <title>Partial Degeneration of Tensors</title>
+    <updated>2024-06-03T08:29:48Z</updated>
+    <link href="https://arxiv.org/abs/2212.14095v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.14095v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Tensors are often studied by introducing preorders such as restriction and degeneration: the former describes transformations of the tensors by local linear maps on its tensor factors; the latter describes transformations where the local linear maps may vary along a curve, and the resulting tensor is expressed as a limit along this curve. In this work we introduce and study partial degeneration, a special version of degeneration where one of the local linear maps is constant whereas the others vary along a curve. Motivated by algebraic complexity, quantum entanglement and tensor networks, we present constructions based on matrix multiplication tensors and find examples by making a connection to the theory of prehomogeneous tensor spaces. We highlight the subtleties of this new notion by showing obstruction and classification results for the unit tensor. To this end, we study the notion of aided rank, a natural generalization of tensor rank. The existence of partial degenerations gives strong upper bounds on the aided rank of a tensor, which allows one to turn degenerations into restrictions. In particular, we present several examples, based on the W-tensor and the Coppersmith-Winograd tensors, where lower bounds on aided rank provide obstructions to the existence of certain partial degenerations.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-28T20:49:16Z</published>
+    <arxiv:comment>31 pages, final version</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <arxiv:journal_ref>SIAM Journal on Matrix Analysis and Applications (SIMAX), 45(1), pp. 771-800 (2024)</arxiv:journal_ref>
+    <author>
+      <name>Matthias Christandl</name>
+    </author>
+    <author>
+      <name>Fulvio Gesmundo</name>
+    </author>
+    <author>
+      <name>Vladimir Lysikov</name>
+    </author>
+    <author>
+      <name>Vincent Steffan</name>
+    </author>
+    <arxiv:doi>10.1137/23M1554898</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1137/23M1554898" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.16500v1</id>
+    <title>A sharp leading order asymptotic of the diameter of a long range percolation graph</title>
+    <updated>2022-11-29T18:59:41Z</updated>
+    <link href="https://arxiv.org/abs/2211.16500v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.16500v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many real-world networks exhibit the so-called small-world phenomenon: their typical distances are much smaller than their sizes. One mathematical model for this phenomenon is a long-range percolation graph on a $d$-dimensional box $\{0, 1, \cdots, N\}^d$, in which edges are independently added between far-away sites with probability falling off as a power of the Euclidean distance. A natural question is how the resulting diameter of the box of size $N$, measured in graph-theoretical distance, scales with $N$. This question has been intensely studied in the past and the answer depends on the exponent $s$ in the connection probabilities. In this work we focus on the critical regime $s = d$ studied earlier in a work by Coppersmith, Gamarnik, and Sviridenko and improve the bounds obtained there to a sharp leading-order asymptotic, by exploiting the high degree of concentration due to the large amount of independence in the model.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-11-29T18:59:41Z</published>
+    <arxiv:comment>10 pages, improves the bounds obtained in arXiv:math/0112029v1 to a sharp leading order asymptotic</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Tianqi Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.10173v5</id>
+    <title>Faster Matrix Multiplication via Asymmetric Hashing</title>
+    <updated>2023-11-28T08:00:15Z</updated>
+    <link href="https://arxiv.org/abs/2210.10173v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.10173v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Fast matrix multiplication is one of the most fundamental problems in algorithm research. The exponent of the optimal time complexity of matrix multiplication is usually denoted by $ω$. This paper discusses new ideas for improving the laser method for fast matrix multiplication. We observe that the analysis of higher powers of the Coppersmith-Winograd tensor [Coppersmith &amp; Winograd 1990] incurs a "combination loss", and we partially compensate for it using an asymmetric version of CW's hashing method. By analyzing the eighth power of the CW tensor, we give a new bound of $ω&lt;2.371866$, which improves the previous best bound of $ω&lt;2.372860$ [Alman &amp; Vassilevska Williams 2020]. Our result breaks the lower bound of $2.3725$ in [Ambainis, Filmus &amp; Le Gall 2015] because of the new method for analyzing component (constituent) tensors.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-18T21:32:35Z</published>
+    <arxiv:comment>87 pages, in FOCS 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Ran Duan</name>
+    </author>
+    <author>
+      <name>Hongxun Wu</name>
+    </author>
+    <author>
+      <name>Renfei Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.11832v2</id>
+    <title>New Additive Spanner Lower Bounds by an Unlayered Obstacle Product</title>
+    <updated>2022-10-05T20:04:31Z</updated>
+    <link href="https://arxiv.org/abs/2207.11832v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.11832v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>For an input graph $G$, an additive spanner is a sparse subgraph $H$ whose shortest paths match those of $G$ up to small additive error. We prove two new lower bounds in the area of additive spanners:
+  1) We construct $n$-node graphs $G$ for which any spanner on $O(n)$ edges must increase a pairwise distance by $+Ω(n^{1/7})$. This improves on a recent lower bound of $+Ω(n^{1/10.5})$ by Lu, Wein, Vassilevska Williams, and Xu [SODA '22].
+  2) A classic result by Coppersmith and Elkin [SODA '05] proves that for any $n$-node graph $G$ and set of $p = O(n^{1/2})$ demand pairs, one can exactly preserve all pairwise distances among demand pairs using a spanner on $O(n)$ edges. They also provided a lower bound construction, establishing that that this range $p = O(n^{1/2})$ cannot be improved. We strengthen this lower bound by proving that, for any constant $k$, this range of $p$ is still unimprovable even if the spanner is allowed $+k$ additive error among the demand pairs. This negatively resolves an open question asked by Coppersmith and Elkin [SODA '05] and again by Cygan, Grandoni, and Kavitha [STACS '13] and Abboud and Bodwin [SODA '16].
+  At a technical level, our lower bounds are obtained by an improvement to the entire obstacle product framework used to compose "inner" and "outer" graphs into lower bound instances. In particular, we develop a new strategy for analysis that allows certain non-layered graphs to be used in the product, and we use this freedom to design better inner and outer graphs that lead to our new lower bounds.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-24T22:22:45Z</published>
+    <arxiv:comment>FOCS 2022, fixed Definition 3</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Greg Bodwin</name>
+    </author>
+    <author>
+      <name>Gary Hoppenworth</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.04047v3</id>
+    <title>An exact quantum hidden subgroup algorithm and applications to solvable groups</title>
+    <updated>2022-05-02T12:21:41Z</updated>
+    <link href="https://arxiv.org/abs/2202.04047v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.04047v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a polynomial time exact quantum algorithm for the hidden subgroup problem in $Z_{m^k}^n$. The algorithm uses the quantum Fourier transform modulo m and does not require factorization of m. For smooth m, i.e., when the prime factors of m are of size poly(log m), the quantum Fourier transform can be exactly computed using the method discovered independently by Cleve and Coppersmith, while for general m, the algorithm of Mosca and Zalka is available. Even for m=3 and k=1 our result appears to be new. We also present applications to compute the structure of abelian and solvable groups whose order has the same (but possibly unknown) prime factors as m. The applications for solvable groups also rely on an exact version of a technique proposed by Watrous for computing the uniform superposition of elements of subgroups.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-08T18:22:35Z</published>
+    <arxiv:comment>Further minor changes and corrections, further new references</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <author>
+      <name>Muhammad Imran</name>
+    </author>
+    <author>
+      <name>Gabor Ivanyos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.14180v1</id>
+    <title>Two variable polynomial congruences and capacity theory</title>
+    <updated>2021-11-28T15:40:40Z</updated>
+    <link href="https://arxiv.org/abs/2111.14180v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.14180v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We use capacity theory to analyze Coppersmith's method for finding small solutions of linear two variable polynomial congruences. We show that the method will succeed in a positive proportion of cases and fail in a different positive proportion of cases. We also bound the number of small solutions via capacity theory.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-28T15:40:40Z</published>
+    <arxiv:comment>15 pages</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>T. Chinburg</name>
+    </author>
+    <author>
+      <name>B. Hemenway Falk</name>
+    </author>
+    <author>
+      <name>N. Heninger</name>
+    </author>
+    <author>
+      <name>Z. Scherr</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2104.02497v1</id>
+    <title>Computing the Characteristic Polynomial of Generic Toeplitz-like and Hankel-like Matrices</title>
+    <updated>2021-04-06T13:29:36Z</updated>
+    <link href="https://arxiv.org/abs/2104.02497v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2104.02497v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>New algorithms are presented for computing annihilating polynomials of Toeplitz, Hankel, and more generally Toeplitz+ Hankel-like matrices over a field. Our approach follows works on Coppersmith's block Wiedemann method with structured projections, which have been recently successfully applied for computing the bivariate resultant. A first baby-step/giant step approach -- directly derived using known techniques on structured matrices -- gives a randomized Monte Carlo algorithm for the minimal polynomial of an $n\times n$ Toeplitz or Hankel-like matrix of displacement rank $α$ using $\tilde O(n^{ω- c(ω)} α^{c(ω)})$ arithmetic operations, where $ω$ is the exponent of matrix multiplication and $c(2.373)\approx 0.523$ for the best known value of $ω$. For generic Toeplitz+Hankel-like matrices a second algorithm computes the characteristic polynomial in $\tilde O(n^{2-1/ω})$ operations when the displacement rank is considered constant. Previous algorithms required $O(n^2)$ operations while the exponents presented here are respectively less than $1.86$ and $1.58$ with the best known estimate for $ω$.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-04-06T13:29:36Z</published>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Clément Pernet</name>
+      <arxiv:affiliation>CASC</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Hippolyte Signargout</name>
+      <arxiv:affiliation>ARIC, CASC</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Pierre Karpman</name>
+      <arxiv:affiliation>CASC</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Gilles Villard</name>
+      <arxiv:affiliation>ARIC</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.15474v4</id>
+    <title>Hermitian K-theory via oriented Gorenstein algebras</title>
+    <updated>2022-09-13T12:26:35Z</updated>
+    <link href="https://arxiv.org/abs/2103.15474v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.15474v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We show that the hermitian K-theory space of a commutative ring R can be identified, up to A^1-homotopy, with the group completion of the groupoid of oriented finite Gorenstein R-algebras, i.e., finite locally free R-algebras with trivialized dualizing sheaf. We deduce that hermitian K-theory is universal among generalized motivic cohomology theories with transfers along oriented finite Gorenstein morphisms. As an application, we obtain a Hilbert scheme model for hermitian K-theory as a motivic space. We also give an application to computational complexity: we prove that 1-generic minimal border rank tensors degenerate to the big Coppersmith-Winograd tensor.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.KT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-29T10:15:13Z</published>
+    <arxiv:comment>30 pages. v4: final version, to appear in J. reine angew. Math. v3: minor changes. v2: Added section 4 on complexity theory</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Marc Hoyois</name>
+    </author>
+    <author>
+      <name>Joachim Jelisiejew</name>
+    </author>
+    <author>
+      <name>Denis Nardin</name>
+    </author>
+    <author>
+      <name>Maria Yakerson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.12598v3</id>
+    <title>Bounds on complexity of matrix multiplication away from CW tensors</title>
+    <updated>2022-04-11T19:55:54Z</updated>
+    <link href="https://arxiv.org/abs/2103.12598v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.12598v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present three families of minimal border rank tensors: they come from highest weight vectors, smoothable algebras, or monomial algebras. We analyse them using Strassen's laser method and obtain an upper bound $2.431$ on $ω$. We also explain how in certain monomial cases using the laser method directly is less profitable than first degenerating. Our results form possible paths in the search for valuable tensors for the laser method away from Coppersmith-Winograd tensors.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-23T14:53:22Z</published>
+    <arxiv:comment>v3: final v2: minor changes v1: 14 pages, comments welcome!</arxiv:comment>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Roser Homs</name>
+    </author>
+    <author>
+      <name>Joachim Jelisiejew</name>
+    </author>
+    <author>
+      <name>Mateusz Michałek</name>
+    </author>
+    <author>
+      <name>Tim Seynnaeve</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.08988v3</id>
+    <title>The *-Vertex-Reinforced Jump Process</title>
+    <updated>2024-12-27T15:41:59Z</updated>
+    <link href="https://arxiv.org/abs/2102.08988v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.08988v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the non-reversible generalization of the Vertex-Reinforced Jump Process (VRJP), called the *-Vertex-Reinforced Jump Process (*-VRJP) and introduced by Bacallado, Sabot and Tarrès (2020). It can be seen as the continuous-time counterpart to the *-Edge-Reinforced Random Walk (*-ERRW), see Bacallado (2011) and Bacallado, Sabot and Tarrès (2020), which is itself a non-reversible, and in fact Yaglom reversible, generalization of the original ERRW introduced by Coppersmith and Diaconis (1986). In contrast to the classical VRJP, the *-VRJP is not exchangeable after time-change, which leads to several difficulties and new phenomena.
+  Firstly, we show that with some appropriate randomization of the initial local time, it becomes partially exchangeable after time-change. We provide a representation of the "randomized" *-VRJP as a mixture of Yaglom reversible Markov jump processes with an explicit mixing measure, and we prove that the non-randomized *-VRJP can be written as a mixture of conditioned Markov processes.
+  Secondly, we give a representation of the *-VRJP in terms of a random Schrödinger operator. The corresponding representation for the classical VRJP has proved to be very useful in the understanding of its asymptotic behavior. The construction is based on several new and rather remarkable identities between integrals on the space of *-symmetric and *-antisymmetric functions on vertices. We give a description of the randomized *-VRJP in terms of that random Schrödinger operator, which allows us to prove the representation of the randomized *-VRJP as a mixture of Markov jump processes in a different and more analytic manner. Similarly as for the VRJP, we think that the representation by a random Schrödinger operator and the associated identities are key-features of the *-VRJP.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-17T19:31:06Z</published>
+    <arxiv:comment>This version merges the previous version, dedicated to exchangeability and mixing measure, with the second one on the random Schr{ö}dinger representation, which also appears separately in arXiv:2401.02782</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Christophe Sabot</name>
+    </author>
+    <author>
+      <name>Pierre Tarrès</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2102.08984v2</id>
+    <title>The *-Edge-Reinforced Random Walk</title>
+    <updated>2023-11-29T18:19:17Z</updated>
+    <link href="https://arxiv.org/abs/2102.08984v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2102.08984v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We define a linearly reinforced process called the *-Edge-Reinforced Random Walk (*-ERRW ) which can be seen as a Yaglom reversible, hence non-reversible, extension of the Edge-Reinforced Random Walk (ERRW) introduced by Coppersmith and Diaconis in 1986. This family of processes also generalizes the r-dependent ERRW introduced by Bacallado (2009). Under some assumptions on the initial weights, the *-ERRW is partially exchangeable in the sense of Diaconis and Freedman (1980), and thus it is a random walk in a random environment. The main result of the paper gives the explicit expression of the mixing law, hence extending the "magic formula" of Coppersmith and Diaconis from the case of mixtures of reversible Markov chains to the case of mixtures of Yaglom reversible Markov chains.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-17T19:25:27Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Sergio Bacallado</name>
+    </author>
+    <author>
+      <name>Christophe Sabot</name>
+    </author>
+    <author>
+      <name>Pierre Tarrès</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.11391v1</id>
+    <title>Bad and good news for Strassen's laser method: Border rank of the 3x3 permanent and strict submultiplicativity</title>
+    <updated>2020-09-23T21:40:15Z</updated>
+    <link href="https://arxiv.org/abs/2009.11391v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.11391v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We determine the border ranks of tensors that could potentially advance the known upper bound for the exponent $ω$ of matrix multiplication. The Kronecker square of the small $q=2$ Coppersmith-Winograd tensor equals the $3\times 3$ permanent, and could potentially be used to show $ω=2$. We prove the negative result for complexity theory that its border rank is $16$, resolving a longstanding problem. Regarding its $q=4$ skew cousin in $ C^5\otimes C^5\otimes C^5$, which could potentially be used to prove $ω\leq 2.11$, we show the border rank of its Kronecker square is at most $42$, a remarkable sub-multiplicativity result, as the square of its border rank is $64$. We also determine moduli spaces $\underline{VSP}$ for the small Coppersmith-Winograd tensors.</summary>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-23T21:40:15Z</published>
+    <arxiv:primary_category term="math.AG"/>
+    <author>
+      <name>Austin Conner</name>
+    </author>
+    <author>
+      <name>Hang Huang</name>
+    </author>
+    <author>
+      <name>J. M. Landsberg</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.03019v2</id>
+    <title>Barriers for rectangular matrix multiplication</title>
+    <updated>2025-11-07T02:40:59Z</updated>
+    <link href="https://arxiv.org/abs/2003.03019v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.03019v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the algorithmic problem of multiplying large matrices that are rectangular. We prove that the method that has been used to construct the fastest algorithms for rectangular matrix multiplication cannot give algorithms with complexity $n^{p + 1}$ for $n \times n$ by $n \times n^p$ matrix multiplication. In fact, we prove a precise numerical barrier for this method. Our barrier improves the previously known barriers, both in the numerical sense, as well as in its generality. In particular, we prove that any lower bound on the dual exponent of matrix multiplication $α$ via the big Coppersmith-Winograd tensors cannot exceed 0.6218.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-06T03:28:04Z</published>
+    <arxiv:comment>Journal version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>comput. complex. 34, 4 (2025)</arxiv:journal_ref>
+    <author>
+      <name>Matthias Christandl</name>
+    </author>
+    <author>
+      <name>François Le Gall</name>
+    </author>
+    <author>
+      <name>Vladimir Lysikov</name>
+    </author>
+    <author>
+      <name>Jeroen Zuiddam</name>
+    </author>
+    <arxiv:doi>10.1007/s00037-025-00264-9</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00037-025-00264-9" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.11004v1</id>
+    <title>Factorization and malleability of RSA modules, and counting points on elliptic curves modulo N</title>
+    <updated>2019-11-25T15:50:43Z</updated>
+    <link href="https://arxiv.org/abs/1911.11004v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.11004v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we address two different problems related with the factorization of an RSA module N. First we can show that factoring is equivalent in deterministic polynomial time to counting points on a pair of twisted Elliptic curves modulo N. Also we settle the malleability of factoring an RSA module, as described in [9], using the number of points of a single elliptic curve modulo N, and Coppersmith's algorithm.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-25T15:50:43Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>Luis Dieulefait</name>
+    </author>
+    <author>
+      <name>Jorge Urroz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.02181v1</id>
+    <title>Monotonicity and phase transition for the VRJP and the ERRW</title>
+    <updated>2019-11-06T03:25:22Z</updated>
+    <link href="https://arxiv.org/abs/1911.02181v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.02181v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The vertex-reinforced jump process (VRJP), introduced by Davis and Volkov, is a continuous-time process that tends to come-back to already visited vertices. It is closely linked to the edge-reinforced random walk (ERRW) introduced by Coppersmith and Diaconis in 1986 which is more likely to cross edges it has already crossed. On $\mathbb{Z}^d$ for $d\geq 3$, both models where shown to be recurrent for small enough initial weights (by Sabot, Tarrès(2015) and Angel,Crawford,Kozma(2014)) and transient for large enough initial weights (by Disertori,Sabot,Tarrès(2015) and Sabot,Tarrès(2015)). We show through a coupling of the VRJP for different weights that the VRJP (and the ERRW) exhibits some monotonicity. In particular, we show that increasing the initial weights of the VRJP and the ERRW makes them more transient which means that the recurrence/transience phase transition is necessarily unique. Furthermore, by making the weights go to infinity, we show that the recurrence of the ERRW and the VRJP is implied by the recurrence of a random walk in deterministic electrical network.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-06T03:25:22Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <author>
+      <name>Rémy Poudevigne</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1909.09518v2</id>
+    <title>Tensors with maximal symmetries</title>
+    <updated>2021-10-08T16:50:56Z</updated>
+    <link href="https://arxiv.org/abs/1909.09518v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1909.09518v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We classify tensors with maximal and next to maximal dimensional symmetry groups under a natural genericity assumption (1-genericity), in dimensions greater than 7. In other words, we classify minimal dimensional orbits in the space of (m,m,m) tensors assuming 1-genericity. Our study uncovers new tensors with striking geometry. This paper was motivated by Strassen's laser method for bounding the exponent of matrix multiplication. The best known tensor for the laser method is the large Coppersmith-Winograd tensor, and our study began with the observation that it has a large symmetry group, of dimension m^2/2 +m/2. We show that in odd dimensions, this is the largest possible for a 1-generic tensor, but in even dimensions we exhibit a tensor with a larger dimensional symmetry group. In the course of the proof, we classify nondegenerate bilinear forms with large dimensional stabilizers, which may be of interest in its own right.</summary>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-09-20T14:09:21Z</published>
+    <arxiv:comment>Much cleaner proof of main theorem and additional results added</arxiv:comment>
+    <arxiv:primary_category term="math.RT"/>
+    <author>
+      <name>Austin Conner</name>
+    </author>
+    <author>
+      <name>Fulvio Gesmundo</name>
+    </author>
+    <author>
+      <name>Joseph M. Landsberg</name>
+    </author>
+    <author>
+      <name>Emanuele Ventura</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1909.04785v2</id>
+    <title>Rank and border rank of Kronecker powers of tensors and Strassen's laser method</title>
+    <updated>2021-12-27T10:43:47Z</updated>
+    <link href="https://arxiv.org/abs/1909.04785v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1909.04785v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove that the border rank of the Kronecker square of the little Coppersmith-Winograd tensor $T_{cw,q}$ is the square of its border rank for $q &gt; 2$ and that the border rank of its Kronecker cube is the cube of its border rank for $q &gt; 4$. This answers questions raised implicitly in [Coppersmith-Winograd, 1990] and explicitly in [Bläser, 2013] and rules out the possibility of proving new upper bounds on the exponent of matrix multiplication using the square or cube of a little Coppersmith-Winograd tensor in this range.
+  In the positive direction, we enlarge the list of explicit tensors potentially useful for Strassen's laser method, introducing a skew-symmetric version of the Coppersmith-Winograd tensor, $T_{skewcw,q}$. For $q = 2$, the Kronecker square of this tensor coincides with the $3\times 3$ determinant polynomial, $\det_3 \in \mathbb{C}^9\otimes \mathbb{C}^9\otimes \mathbb{C}^9$, regarded as a tensor. We show that this tensor could potentially be used to show that the exponent of matrix multiplication is two.
+  We determine new upper bounds for the (Waring) rank and the (Waring) border rank of $\det_3$, exhibiting a strict submultiplicative behaviour for $T_{skewcw,2}$ which is promising for the laser method.
+  We establish general results regarding border ranks of Kronecker powers of tensors, and make a detailed study of Kronecker squares of tensors in $\mathbb{C}^3\otimes \mathbb{C}^3\otimes \mathbb{C}^3$.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-09-10T22:44:36Z</published>
+    <arxiv:comment>Final Version</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>computational complexity, 31 (1), 2022</arxiv:journal_ref>
+    <author>
+      <name>Austin Conner</name>
+    </author>
+    <author>
+      <name>Fulvio Gesmundo</name>
+    </author>
+    <author>
+      <name>Joseph M. Landsberg</name>
+    </author>
+    <author>
+      <name>Emanuele Ventura</name>
+    </author>
+    <arxiv:doi>10.1007/s00037-021-00217-y</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s00037-021-00217-y" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1905.03148v1</id>
+    <title>The asymptotic induced matching number of hypergraphs: balanced binary strings</title>
+    <updated>2019-05-08T15:23:22Z</updated>
+    <link href="https://arxiv.org/abs/1905.03148v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1905.03148v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We compute the asymptotic induced matching number of the $k$-partite $k$-uniform hypergraphs whose edges are the $k$-bit strings of Hamming weight $k/2$, for any large enough even number $k$. Our lower bound relies on the higher-order extension of the well-known Coppersmith-Winograd method from algebraic complexity theory, which was proven by Christandl, Vrana and Zuiddam. Our result is motivated by the study of the power of this method as well as of the power of the Strassen support functionals (which provide upper bounds on the asymptotic induced matching number), and the connections to questions in tensor theory, quantum information theory and theoretical computer science.
+  Phrased in the language of tensors, as a direct consequence of our result, we determine the asymptotic subrank of any tensor with support given by the aforementioned hypergraphs. In the context of quantum information theory, our result amounts to an asymptotically optimal $k$-party stochastic local operations and classical communication (slocc) protocol for the problem of distilling GHZ-type entanglement from a subfamily of Dicke-type entanglement.</summary>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-05-08T15:23:22Z</published>
+    <arxiv:primary_category term="math.CO"/>
+    <author>
+      <name>Srinivasan Arunachalam</name>
+    </author>
+    <author>
+      <name>Péter Vrana</name>
+    </author>
+    <author>
+      <name>Jeroen Zuiddam</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1812.08731v2</id>
+    <title>Limits on the Universal Method for Matrix Multiplication</title>
+    <updated>2019-05-01T13:56:29Z</updated>
+    <link href="https://arxiv.org/abs/1812.08731v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1812.08731v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we prove limitations on the known methods for designing matrix multiplication algorithms. Alman and Vassilevska Williams recently defined the Universal Method, which substantially generalizes all the known approaches including Strassen's Laser Method and Cohn and Umans' Group Theoretic Method. We prove concrete lower bounds on the algorithms one can design by applying the Universal Method to many different tensors. Our proofs use new tools for upper bounding the asymptotic slice rank of a wide range of tensors. Our main result is that the Universal method applied to any Coppersmith-Winograd tensor $CW_q$ cannot yield a bound on $ω$, the exponent of matrix multiplication, better than $2.16805$. By comparison, it was previously only known that the weaker `Galactic Method' applied to $CW_q$ could not achieve an exponent of $2$.
+  We also study the Laser Method (which is, in principle, a highly special case of the Universal Method) and prove that it is "complete" for matrix multiplication algorithms: when it applies to a tensor $T$, it achieves $ω= 2$ if and only if it is possible for the Universal method applied to $T$ to achieve $ω= 2$. Hence, the Laser Method, which was originally used as an algorithmic tool, can also be seen as a lower bounding tool. For example, in their landmark paper, Coppersmith and Winograd achieved a bound of $ω\leq 2.376$, by applying the Laser Method to $CW_q$. By our result, the fact that they did not achieve $ω=2$ implies a lower bound on the Universal Method applied to $CW_q$. Indeed, if it were possible for the Universal Method applied to $CW_q$ to achieve $ω=2$, then Coppersmith and Winograd's application of the Laser Method would have achieved $ω=2$.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-12-20T18:04:08Z</published>
+    <arxiv:comment>25 pages, to appear in 34th Computational Complexity Conference (CCC 2019)</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Josh Alman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1812.06952v4</id>
+    <title>Barriers for fast matrix multiplication from irreversibility</title>
+    <updated>2022-03-05T13:05:55Z</updated>
+    <link href="https://arxiv.org/abs/1812.06952v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1812.06952v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Determining the asymptotic algebraic complexity of matrix multiplication, succinctly represented by the matrix multiplication exponent $ω$, is a central problem in algebraic complexity theory. The best upper bounds on $ω$, leading to the state-of-the-art $ω\leq 2.37..$, have been obtained via the laser method of Strassen and its generalization by Coppersmith and Winograd. Recent barrier results show limitations for these and related approaches to improve the upper bound on $ω$.
+  We introduce a new and more general barrier, providing stronger limitations than in previous work. Concretely, we introduce the notion of "irreversibility" of a tensor and we prove (in some precise sense) that any approach that uses an irreversible tensor in an intermediate step (e.g., as a starting tensor in the laser method) cannot give $ω= 2$. In quantitative terms, we prove that the best upper bound achievable is lower bounded by two times the irreversibility of the intermediate tensor. The quantum functionals and Strassen support functionals give (so far, the best) lower bounds on irreversibility. We provide lower bounds on the irreversibility of key intermediate tensors, including the small and big Coppersmith--Winograd tensors, that improve limitations shown in previous work. Finally, we discuss barriers on the group-theoretic approach in terms of "monomial" irreversibility.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.AC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-12-17T18:49:18Z</published>
+    <arxiv:comment>Updated Example 13</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <arxiv:journal_ref>Theory of Computing 17(2), 2021, 1--32</arxiv:journal_ref>
+    <author>
+      <name>Matthias Christandl</name>
+    </author>
+    <author>
+      <name>Péter Vrana</name>
+    </author>
+    <author>
+      <name>Jeroen Zuiddam</name>
+    </author>
+    <arxiv:doi>10.4086/toc.2021.v017a002</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.4086/toc.2021.v017a002" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1810.08671v1</id>
+    <title>Limits on All Known (and Some Unknown) Approaches to Matrix Multiplication</title>
+    <updated>2018-10-19T20:07:08Z</updated>
+    <link href="https://arxiv.org/abs/1810.08671v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1810.08671v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the known techniques for designing Matrix Multiplication algorithms. The two main approaches are the Laser method of Strassen, and the Group theoretic approach of Cohn and Umans. We define a generalization based on zeroing outs which subsumes these two approaches, which we call the Solar method, and an even more general method based on monomial degenerations, which we call the Galactic method.
+  We then design a suite of techniques for proving lower bounds on the value of $ω$, the exponent of matrix multiplication, which can be achieved by algorithms using many tensors $T$ and the Galactic method. Some of our techniques exploit `local' properties of $T$, like finding a sub-tensor of $T$ which is so `weak' that $T$ itself couldn't be used to achieve a good bound on $ω$, while others exploit `global' properties, like $T$ being a monomial degeneration of the structural tensor of a group algebra.
+  Our main result is that there is a universal constant $\ell&gt;2$ such that a large class of tensors generalizing the Coppersmith-Winograd tensor $CW_q$ cannot be used within the Galactic method to show a bound on $ω$ better than $\ell$, for any $q$. We give evidence that previous lower-bounding techniques were not strong enough to show this. We also prove a number of complementary results along the way, including that for any group $G$, the structural tensor of $\mathbb{C}[G]$ can be used to recover the best bound on $ω$ which the Coppersmith-Winograd approach gets using $CW_{|G|-2}$ as long as the asymptotic rank of the structural tensor is not too large.</summary>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-10-19T20:07:08Z</published>
+    <arxiv:comment>32 pages. A preliminary version appeared in the 59th Annual IEEE Symposium on Foundations of Computer Science (FOCS 2018)</arxiv:comment>
+    <arxiv:primary_category term="cs.CC"/>
+    <author>
+      <name>Josh Alman</name>
+    </author>
+    <author>
+      <name>Virginia Vassilevska Williams</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1807.05782v2</id>
+    <title>Determining the Optimal Random-padding Size for Rabin Cryptosystems</title>
+    <updated>2019-03-17T07:09:32Z</updated>
+    <link href="https://arxiv.org/abs/1807.05782v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1807.05782v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Rabin encryption and a secure ownership transfer protocol based on the difficulty of factorization of a public key use a small public exponent. Such encryption requires random number padding. The Coppersmith's shortpad attack works effectively on short padding, thereby allowing an adversary to extract the secret message. However, the criteria for determining the appropriate padding size remains unclear. In this paper, we derived the processing-time formula for the shortpad attack and determined the optimal random-padding size in order to achieve the desired security.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-07-16T10:44:39Z</published>
+    <arxiv:comment>We decided to withdraw this paper in order to significantly rewrite this paper</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Masahiro Kaminaga</name>
+    </author>
+    <author>
+      <name>Toshinori Suzuki</name>
+    </author>
+    <author>
+      <name>Masaharu Fukase</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1805.09096v2</id>
+    <title>Distillation of Greenberger-Horne-Zeilinger states by combinatorial methods</title>
+    <updated>2020-01-24T20:19:33Z</updated>
+    <link href="https://arxiv.org/abs/1805.09096v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.09096v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We prove a lower bound on the rate of Greenberger-Horne-Zeilinger states distillable from pure multipartite states by local operations and classical communication (LOCC). Our proof is based on a modification of a combinatorial argument used in the fast matrix multiplication algorithm of Coppersmith and Winograd. Previous use of methods from algebraic complexity in quantum information theory concerned transformations with stochastic local operations and classical operation (SLOCC), resulting in an asymptotically vanishing success probability. In contrast, our new protocol works with asymptotically vanishing error.</summary>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-23T12:40:46Z</published>
+    <arxiv:comment>26 pages, 2 figures; v2: updated to match published version</arxiv:comment>
+    <arxiv:primary_category term="quant-ph"/>
+    <arxiv:journal_ref>IEEE Transactions on Information Theory, vol. 65, no. 9, pp. 5945-5958, Sept. 2019</arxiv:journal_ref>
+    <author>
+      <name>Péter Vrana</name>
+    </author>
+    <author>
+      <name>Matthias Christandl</name>
+    </author>
+    <arxiv:doi>10.1109/TIT.2019.2908646</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TIT.2019.2908646" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1805.08873v1</id>
+    <title>Rigorous Analysis of a Randomised Number Field Sieve</title>
+    <updated>2018-05-22T21:36:24Z</updated>
+    <link href="https://arxiv.org/abs/1805.08873v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1805.08873v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Factorisation of integers $n$ is of number theoretic and cryptographic significance. The Number Field Sieve (NFS) introduced circa 1990, is still the state of the art algorithm, but no rigorous proof that it halts or generates relationships is known. We propose and analyse an explicitly randomised variant. For each $n$, we show that these randomised variants of the NFS and Coppersmith's multiple polynomial sieve find congruences of squares in expected times matching the best-known heuristic estimates.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-05-22T21:36:24Z</published>
+    <arxiv:primary_category term="math.NT"/>
+    <arxiv:journal_ref>J. of Number Theory Vol. 187 (2018) 92-159</arxiv:journal_ref>
+    <author>
+      <name>Jonathan Lee</name>
+    </author>
+    <author>
+      <name>Ramarathnam Venkatesan</name>
+    </author>
+    <arxiv:doi>10.1016/j.jnt.2017.10.019</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.jnt.2017.10.019" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1712.04177v2</id>
+    <title>Block-Krylov techniques in the context of sparse-FGLM algorithms</title>
+    <updated>2019-01-15T12:26:57Z</updated>
+    <link href="https://arxiv.org/abs/1712.04177v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1712.04177v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Consider a zero-dimensional ideal $I$ in $\mathbb{K}[X_1,\dots,X_n]$. Inspired by Faugère and Mou's Sparse FGLM algorithm, we use Krylov sequences based on multiplication matrices of $I$ in order to compute a description of its zero set by means of univariate polynomials.
+  Steel recently showed how to use Coppersmith's block-Wiedemann algorithm in this context; he describes an algorithm that can be easily parallelized, but only computes parts of the output in this manner. Using generating series expressions going back to work of Bostan, Salvy, and Schost, we show how to compute the entire output for a small overhead, without making any assumption on the ideal $I$ other than it having dimension zero. We then propose a refinement of this idea that partially avoids the introduction of a generic linear form. We comment on experimental results obtained by an implementation based on the C++ libraries Eigen, LinBox and NTL.</summary>
+    <category term="cs.SC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-12-12T08:56:20Z</published>
+    <arxiv:comment>32 pages, 7 algorithms, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.SC"/>
+    <author>
+      <name>Seung Gyu Hyun</name>
+    </author>
+    <author>
+      <name>Vincent Neiger</name>
+    </author>
+    <author>
+      <name>Hamid Rahkooy</name>
+    </author>
+    <author>
+      <name>Eric Schost</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1712.01834v2</id>
+    <title>Optimal Quasi-Gray Codes: The Alphabet Matters</title>
+    <updated>2018-07-17T12:44:18Z</updated>
+    <link href="https://arxiv.org/abs/1712.01834v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1712.01834v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A quasi-Gray code of dimension $n$ and length $\ell$ over an alphabet $Σ$ is a sequence of distinct words $w_1,w_2,\dots,w_\ell$ from $Σ^n$ such that any two consecutive words differ in at most $c$ coordinates, for some fixed constant $c&gt;0$. In this paper we are interested in the read and write complexity of quasi-Gray codes in the bit-probe model, where we measure the number of symbols read and written in order to transform any word $w_i$ into its successor $w_{i+1}$.
+  We present construction of quasi-Gray codes of dimension $n$ and length $3^n$ over the ternary alphabet $\{0,1,2\}$ with worst-case read complexity $O(\log n)$ and write complexity $2$. This generalizes to arbitrary odd-size alphabets. For the binary alphabet, we present quasi-Gray codes of dimension $n$ and length at least $2^n - 20n$ with worst-case read complexity $6+\log n$ and write complexity $2$. This complements a recent result by Raskin [Raskin '17] who shows that any quasi-Gray code over binary alphabet of length $2^n$ has read complexity $Ω(n)$.
+  Our results significantly improve on previously known constructions and for the odd-size alphabets we break the $Ω(n)$ worst-case barrier for space-optimal (non-redundant) quasi-Gray codes with constant number of writes. We obtain our results via a novel application of algebraic tools together with the principles of catalytic computation [Buhrman et al. '14, Ben-Or and Cleve '92, Barrington '89, Coppersmith and Grossman '75].</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-12-05T14:43:45Z</published>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Diptarka Chakraborty</name>
+    </author>
+    <author>
+      <name>Debarati Das</name>
+    </author>
+    <author>
+      <name>Michal Koucký</name>
+    </author>
+    <author>
+      <name>Nitin Saurabh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1710.00528v3</id>
+    <title>Plethysm and fast matrix multiplication</title>
+    <updated>2018-04-09T14:37:37Z</updated>
+    <link href="https://arxiv.org/abs/1710.00528v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1710.00528v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Motivated by the symmetric version of matrix multiplication we study the plethysm $S^k(\mathfrak{sl}_n)$ of the adjoint representation $\mathfrak{sl}_n$ of the Lie group $SL_n$. In particular, we describe the decomposition of this representation into irreducible components for $k=3$, and find highest weight vectors for all irreducible components. Relations to fast matrix multiplication, in particular the Coppersmith-Winograd tensor are presented.</summary>
+    <category term="math.RT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-02T08:27:06Z</published>
+    <arxiv:comment>5 pages</arxiv:comment>
+    <arxiv:primary_category term="math.RT"/>
+    <arxiv:journal_ref>Comptes Rendus Mathematique 356 (2018) 52-55</arxiv:journal_ref>
+    <author>
+      <name>Tim Seynnaeve</name>
+    </author>
+    <arxiv:doi>10.1016/j.crma.2017.11.012</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.crma.2017.11.012" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1708.09445v3</id>
+    <title>Coppersmith's lattices and "focus groups": an attack on small-exponent RSA</title>
+    <updated>2020-12-16T19:35:35Z</updated>
+    <link href="https://arxiv.org/abs/1708.09445v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1708.09445v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a principled technique for reducing the lattice and matrix size in some applications of Coppersmith's lattice method for finding roots of modular polynomial equations. Motivated by ideas from machine learning, it relies on extrapolating patterns from the actual behavior of Coppersmith's attack for smaller parameter sizes, which can be thought of as "focus group" testing. When applied to the small-exponent RSA problem, our technique reduces lattice dimensions and consequently running times, and hence can be applied to a wider range of exponents. Moreover, in many difficult examples our attack is not only faster but also more successful in recovering the RSA secret key. We include a discussion of subtleties concerning whether or not existing metrics (such as enabling condition bounds) are decisive in predicting the true efficacy of attacks based on Coppersmith's method. Finally, indications are given which suggest certain lattice basis reduction algorithms (such as Nguyen-Stehlé's L2) may be particularly well-suited for Coppersmith's method.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-08-30T19:50:10Z</published>
+    <arxiv:comment>21 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Stephen D. Miller</name>
+    </author>
+    <author>
+      <name>Bhargav Narayanan</name>
+    </author>
+    <author>
+      <name>Ramarathnam Venkatesan</name>
+    </author>
+  </entry>
+</feed>
