@@ -52,13 +52,8 @@ never reaches length ngens — while working m return `ok`.
 
 The script sets `t = round((1−√α)·m)` and `s = round(√α·m)`. These integers
 drive the shift-polynomial weighting. Comparing the rounded `t` against the
-ideal `(1−√α)m`:
-
-| m | 2 | 3 | **4** | 5 | 6 | **7** | 8 | **9** | **10** |
-|---|---|---|---|---|---|---|---|---|---|
-| ideal (1−√α)m | 1.37 | 2.05 | **2.74** | 3.42 | 4.10 | **4.79** | 5.47 | **6.15** | **6.84** |
-| t = round(ideal) | 1 | 2 | **3** | 3 | 4 | **5** | 5 | **6** | **7** |
-| works? | ✗ | ✗ | ✓ | ✗ | ✗ | ✓ | ✗ | ✓ | ✓ |
+ideal `(1−√α)m`: working m are those where the rounding does not undershoot.
+Confirmed causally below.
 
 **Working m are exactly those where `round` does not undershoot the ideal** —
 `t ≥ ⌈ideal⌉`. At m=2,3,5,6,8 the rounding truncates and the balance required
@@ -78,18 +73,45 @@ I flagged the converse as untested in the first write-up, then tested it: force
 | 6 | 4.10 | 4 → **0/4** | 5 → **4/4** |
 | 8 | 5.47 | 5 → **0/4** | 6 → **4/4** |
 
-m=3, 6 and 8 flip from 0/4 to 4/4 purely by removing the undershoot. So the
-m-resonance is **a rounding artefact in the reference implementation**, not a
-property of the attack — `gifp.sage:339-340` computes `t` and `s` by rounding
-the ideal balance, and that rounding is lossy.
-
-**m=5 is a genuine exception**: it fails at both t=3 and t=4, so the undershoot
-is not the whole story there. I have not isolated what else constrains m=5, and
-am not claiming the predictor is complete.
+m=3, 6 and 8 flip from 0/4 to 4/4 purely by removing the undershoot. So for
+those m the resonance is **a rounding artefact in the reference implementation**,
+not a property of the attack — `gifp.sage:339-340` computes `t` and `s` by
+rounding the ideal balance, and that rounding is lossy. The full α×m grid below
+shows this is only *part* of the story (m=5 and α=0.15 have separate causes).
 
 Practical consequence: **do not tune m by trial and error** — compute
 `t = ⌈(1−√α)·m⌉` directly. Every "m=4 works, m=5 doesn't" observation in the
 literature on this construction may be this rounding, not the mathematics.
+
+### The rounding effect and the α-ceiling are INDEPENDENT
+
+Running both `t=round` and `t=ceil` at each (α, m) separates the two phenomena
+(4 seeds/point, γ=0.50 for α≤0.10, γ=0.60 for α=0.15):
+
+| α | m=3 | m=4 | m=5 | m=6 | m=7 | m=8 |
+|---|---|---|---|---|---|---|
+| 0.05 round | 0/4 | 4/4 | 4/4 | 4/4 | 4/4 | 4/4 |
+| 0.05 ceil | **4/4** | 4/4 | 4/4 | 4/4 | 4/4 | 4/4 |
+| 0.10 round | 0/4 | 4/4 | 0/4 | 0/4 | 4/4 | 0/4 |
+| 0.10 ceil | **4/4** | 4/4 | **0/4** | **4/4** | 4/4 | **4/4** |
+| 0.15 round | 0/4 | 0/4 | 0/4 | 0/4 | 0/4 | 0/4 |
+| 0.15 ceil | **0/4** | **0/4** | **0/4** | **0/4** | **0/4** | **0/4** |
+
+Three things follow:
+
+1. **α=0.05** — `t=round` already succeeds for m≥4; the undershoot only bit at
+   m=3, and `t=ceil` fixes it. `t=ceil` never makes anything worse.
+2. **α=0.10** — the rounding fixes m=3, 6, 8, but **m=5 fails at both t=3 and
+   t=4**. So a second, distinct constraint exists at m=5 that is not the
+   undershoot. Not isolated.
+3. **α=0.15** — `t=ceil` rescues **nothing**: 0/4 at every m. The α≥0.15
+   ceiling from Q1 is therefore **not** a rounding artefact. It is a genuine
+   geometric/feasibility wall of this construction in the tested regime, and it
+   is independent of the m-rounding bug.
+
+So the two failures have different causes and should not be conflated: the
+**m-resonance is an implementation rounding bug** (fixable), while the
+**α≥0.15 wall is real** (not fixable by t, and not explained here).
 
 ## Harness notes (bugs that produced wrong numbers first)
 
@@ -115,4 +137,6 @@ All three are properties of the authors' reference code, not of the attack.
 - `gifp_alpha_sweep.sage` — the α × ratio table above.
 - `gifp_m_scan.sage` — the m-scan and the t-balance table.
 - `gifp_t_rounding_test.sage` — the causal test that `t=ceil` rescues the
-  failing m (the script that produced the "0/4 → 4/4" flips).
+  failing m at α=0.10 (the "0/4 → 4/4" flips).
+- `gifp_round_vs_ceil.sage` — the full α×m round-vs-ceil grid that separates the
+  rounding bug from the independent α≥0.15 wall.
