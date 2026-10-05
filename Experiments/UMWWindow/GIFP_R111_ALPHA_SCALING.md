@@ -1,19 +1,32 @@
-> ## ⚠️ PARTIALLY RETRACTED (round 112)
+> ## ⚠️ HEADLINE CLAIM REFUTED (round 112) — the α-table below is invalid
 >
-> **The α ≥ 0.15 ceiling below is an ARTEFACT of the reference implementation's
-> parameter choice, not a property of the GIFP construction.** `gifp.sage:339`
-> sets `t = round((1−√α)·m)`, a staircase that steps 3 → 2 at α ≈ 0.145 for
-> m=4, collapsing `unknown_modular` from 640 to 440 bits — a full n=200 bits.
-> Forcing `t=3, s=0` factors α=0.15 at **3/3** (ground-truth verified).
+> **r111's conclusion that "the bound's shape is wrong" is REFUTED.** Measured
+> at corrected (t,s), α=0.15 needs γ ≈ 0.62 ≈ **1.7× the proven 0.3676** — the
+> same looseness r110 measured at α=0.10. Success is never observed below the
+> proven threshold. So `γ > 4α(1−√α)` is **sufficient-but-loose by ≈1.6–1.7×**,
+> and its functional form is **not** contradicted.
 >
-> α = 0.20 **is** a real wall. Also: the "γ cannot rescue it" observation is
-> correct but vacuous — γ does not appear in the modulus at all, so sweeping it
-> was sweeping a disconnected knob.
+> **Why the α-table below is invalid:** the sweep used the reference's own
+> `t = round((1−√α)m)` / `s = round(√α·m)` (`gifp.sage:339-340`). At m=4, `t`
+> steps 3→2 at α≈0.145, collapsing `unknown_modular` by a full n=200 bits; and
+> γ does not enter the modulus at all. The table therefore measured a
+> two-variable parameter failure as if it were an α-dependent wall.
 >
-> **The r111 table's α-dependence conclusion was measured THROUGH this
-> collapse and must be re-measured at a non-collapsing `t` before it is
-> restated.** What still stands: the r110 threshold verification, the m-rounding
-> bug, and the m-scan. See `factor-scratch/r112/LEAD_SYNTHESIS.md`.
+> **Three DISTINCT ceilings were merged into one "0/8 everywhere":**
+> - **α ≤ 0.15** — parameter bug; fixed by (t,s), factors ~85–100%.
+> - **α ≈ 0.17–0.18** — lattice healthy (27/28 vanishing) but **Gröbner never
+>   closes**; no (t,s) fixes it.
+> - **α ≥ 0.19–0.20** — **genuine geometric ceiling**: zero vanishing
+>   polynomials at every (t,s,m,β,n) tried, stable to n=600. This one really
+>   does bound the published construction.
+>
+> **Still standing from this document:** the m-rounding bug (t=ceil fixes it at
+> α=0.10) and the m-scan. **Unreliable:** the intermediate `nz` counts — the
+> sweeps used `M^m·N1^t` where `gifp.sage:341` uses `M^m·p1^t`, overstating by
+> 28–99 bits. Accepted factors were ground-truth checked, so verdicts hold.
+>
+> Full detail: `factor-scratch/r112/gifp_wall/RESULT.md`,
+> `factor-scratch/r112/LEAD_SYNTHESIS.md`.
 
 # GIFP round 111 — the bound's shape is wrong, and m is a resonance knob
 
