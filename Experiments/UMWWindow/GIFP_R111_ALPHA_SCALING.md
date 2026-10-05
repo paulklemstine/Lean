@@ -1,3 +1,20 @@
+> ## ⚠️ PARTIALLY RETRACTED (round 112)
+>
+> **The α ≥ 0.15 ceiling below is an ARTEFACT of the reference implementation's
+> parameter choice, not a property of the GIFP construction.** `gifp.sage:339`
+> sets `t = round((1−√α)·m)`, a staircase that steps 3 → 2 at α ≈ 0.145 for
+> m=4, collapsing `unknown_modular` from 640 to 440 bits — a full n=200 bits.
+> Forcing `t=3, s=0` factors α=0.15 at **3/3** (ground-truth verified).
+>
+> α = 0.20 **is** a real wall. Also: the "γ cannot rescue it" observation is
+> correct but vacuous — γ does not appear in the modulus at all, so sweeping it
+> was sweeping a disconnected knob.
+>
+> **The r111 table's α-dependence conclusion was measured THROUGH this
+> collapse and must be re-measured at a non-collapsing `t` before it is
+> restated.** What still stands: the r110 threshold verification, the m-rounding
+> bug, and the m-scan. See `factor-scratch/r112/LEAD_SYNTHESIS.md`.
+
 # GIFP round 111 — the bound's shape is wrong, and m is a resonance knob
 
 Builds on `GIFP_R110_RESULTS.md` (threshold verified end-to-end). Two new

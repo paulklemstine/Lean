@@ -111,6 +111,12 @@ is unaffected. What is new: the **GIFP threshold itself** is now verified, and
 the `w`-variable recovery path is understood well enough to state *why* the
 authors' script under-reports (it only reads univariate Gröbner elements).
 
+> ⚠️ **r111–r111c are partially RETRACTED (round 112).** The α ≥ 0.15 wall they
+> reported is an artefact of `gifp.sage:339`'s `t = round((1−√α)m)` collapsing the
+> modulus by a full n bits, not a property of the construction. The threshold
+> verification *in this document* is unaffected. See
+> `factor-scratch/r112/LEAD_SYNTHESIS.md`.
+
 Follow-up rounds r111–r111c (see `GIFP_R111_ALPHA_SCALING.md`) push further:
 - The bound's **shape** is wrong, not just its constant: the observed success
   threshold tracks `γ/[4α(1−√α)]` differently at each α, and fails entirely for
