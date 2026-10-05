@@ -110,3 +110,11 @@ Round 109's "polynomial-time IFP corollary" (r109, 8/8) was already verified and
 is unaffected. What is new: the **GIFP threshold itself** is now verified, and
 the `w`-variable recovery path is understood well enough to state *why* the
 authors' script under-reports (it only reads univariate Gröbner elements).
+
+Follow-up rounds r111–r111c (see `GIFP_R111_ALPHA_SCALING.md`) push further:
+- The bound's **shape** is wrong, not just its constant: the observed success
+  threshold tracks `γ/[4α(1−√α)]` differently at each α, and fails entirely for
+  α ≥ 0.15 at every feasible γ and m.
+- The apparent "m-resonance" (m=4 works, m=3/5/6/8 fail) is a **t-rounding bug**
+  in `gifp.sage:339-340`, confirmed causally — compute `t = ⌈(1−√α)m⌉` instead.
+  This is independent of the α ≥ 0.15 wall, which `t=ceil` does not rescue.
