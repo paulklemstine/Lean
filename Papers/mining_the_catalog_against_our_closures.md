@@ -234,6 +234,22 @@ which **guarantees** the wrong row survives.
 off-discipline IDs**; spot-verified live: `1605.08065` ✓, `2111.14180` ✓, `2512.19076` ✓,
 `2105.11105` ✓, `2601.11131` ✓.
 
+> ### ⚠️ ROUND 55 — the sub-scan's `2601.11131` suspicion is **WITHDRAWN**
+>
+> A round-54 sub-scan flagged `2601.11131` (16 citations, the most-cited ID in the
+> directory) as unverifiable. **That flag was a false positive, caused by a fetch
+> that returned HTTP 200 with a genuine abstract for a DIFFERENT paper** —
+> `arXiv:2010.05450`, Harvey's `N^{1/5}` paper, which contains **zero** mentions of
+> `2601.11131`. *A response that succeeds for the wrong document is indistinguishable
+> from one that succeeds for the right one, unless you check that the returned
+> identifier matches the one you asked for.*
+>
+> **Verified against the arXiv API (`totalResults=1`, full metadata) and OpenAlex,
+> independently:** **David Harvey and Markus Hittmeir**, *"Deterministic methods for
+> finding elements of large multiplicative order"*, `arXiv:2601.11131v2`, v1 16 Jan 2026.
+> **The `✓` above stands and the sub-scan's doubt is withdrawn.** See
+> `no_bottleneck_and_no_regime_boundary.md` (#539).
+
 ## 3. Which closures are genuinely well-supported
 
 As valuable as a contradiction.

@@ -461,3 +461,15 @@ The corpus cites many 2025–2026 IDs. I attempted `export.arxiv.org` and it ret
 **M3.** The three best untouched axes are **the `Σw > 3/2` weight question** (`RESEARCH.md:9617-9619`, formalised in `HarveyFloor.lean`, Round ~40 — **not determinable here** — partially advanced but not closed by Round 52), **bounding `t` for rank-2 UMW gaps** (`Round60_HeSahaiProof.md:169-175`, Round 60, untouched by any of rounds 61–109), and **the shape-aware sieve** (`Round51_ShapeGap.md:162-166`, Round 51, mentioned by no later round).
 
 **Cross-cutting caution for our own programme:** the corpus demonstrates both failure modes we worry about — a *single unvalidated experiment* promoted to a closure (§M2.4), and *one row in a table* surviving while the caveat that refutes it sits unread two rows above (§M2.6). Its own rule *"a table row propagates; prose caveats do not"* is correct and should be applied to our own summaries, not just to theirs.
+
+> ### ⚠️ ROUND 55 — **THE `2601.11131` SUSPICION IS WITHDRAWN. IT IS NOT A PHANTOM.**
+> **Verified against the arXiv API (`totalResults=1`, full metadata) and OpenAlex, independently:
+> David Harvey and Markus Hittmeir, *Deterministic methods for finding elements of large
+> multiplicative order*, `arXiv:2601.11131v2` [math.NT], v1 16 Jan 2026, v2 5 Jun 2026, 13 pp.
+> The attribution recorded above (Harvey & Hittmeir) was **correct all along**.
+> **ROOT CAUSE OF THE FALSE FLAG:** the round-54 fetch requested `2601.11131` and returned
+> **HTTP 200 with a real abstract for a DIFFERENT paper** — `arXiv:2010.05450`, Harvey's
+> `N^{1/5}` paper — which contains **zero** mentions of `2601.11131`. *A response that
+> succeeds for the wrong document is indistinguishable from one that succeeds for the right
+> one, unless you verify the returned identifier matches the requested one.*
+> See `Papers/no_bottleneck_and_no_regime_boundary.md` (#539).

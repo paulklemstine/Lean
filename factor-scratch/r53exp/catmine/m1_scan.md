@@ -416,3 +416,15 @@ off-discipline ID found.**
 5. **Closure 3 should note** that Round 51 proposes the class-group route as open/highest-ceiling
    and that `RESEARCH.md:7303-7306` asserts class-group smoothness is *proven* with an optimal
    sieve — neither corrected.
+
+> ### ⚠️ ROUND 55 — **THE `2601.11131` SUSPICION IS WITHDRAWN. IT IS NOT A PHANTOM.**
+> **Verified against the arXiv API (`totalResults=1`, full metadata) and OpenAlex, independently:
+> David Harvey and Markus Hittmeir, *Deterministic methods for finding elements of large
+> multiplicative order*, `arXiv:2601.11131v2` [math.NT], v1 16 Jan 2026, v2 5 Jun 2026, 13 pp.
+> The attribution recorded above (Harvey & Hittmeir) was **correct all along**.
+> **ROOT CAUSE OF THE FALSE FLAG:** the round-54 fetch requested `2601.11131` and returned
+> **HTTP 200 with a real abstract for a DIFFERENT paper** — `arXiv:2010.05450`, Harvey's
+> `N^{1/5}` paper — which contains **zero** mentions of `2601.11131`. *A response that
+> succeeds for the wrong document is indistinguishable from one that succeeds for the right
+> one, unless you verify the returned identifier matches the requested one.*
+> See `Papers/no_bottleneck_and_no_regime_boundary.md` (#539).

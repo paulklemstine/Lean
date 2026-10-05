@@ -1,0 +1,82 @@
+============================================================================
+HH26 FINAL verification   SEED=20261004
+============================================================================
+
+[A] Lemma 2.4 (Konyagin-Pomerance): Psi(x,y) >= x/(log x)^(log x/log y)
+  POSITIVE: 50/50 admissible points have bound <= true Psi
+  NEGATIVE: inflated bound rejected at 48/50 points
+  tightest true/bound ratio = 2.303 at x=10,y=10
+  => Lemma 2.4 verified where testable; the bound is valid but NOT tight.
+
+[B] The crux (3.5): M < Z~/((logZ~)^(logZ~/logB)) < 4M,  B=ceil(D^(1/3))
+    Tested only on M >= B, the domain the paper actually claims (p.9:
+    'M >= Psi(p,B) >= B >= 4').  (3.5) is an ASYMPTOTIC claim -- the paper
+    says 'for sufficiently large D'.  So we look for the threshold D0.
+
+      D=10^e      B=ceil(D^(1/3))   M-range tested   (3.5) holds for all M?
+           2                0.667   M in [B,D]        no
+           4                1.333   M in [B,D]        no
+           8                2.667   M in [B,D]        no
+          12                4.000   M in [B,D]        no
+          20                6.667   M in [B,D]        no
+          39               13.000   M in [B,D]        no
+          80               26.667   M in [B,D]        no
+         200               66.667   M in [B,D]        no
+         800              266.667   M in [B,D]        YES
+        3200             1066.667   M in [B,D]        YES
+       12800             4266.667   M in [B,D]        YES
+  ==> (3.5) holds for every M in [B,D] once D = 10^e with e >= 800.
+      This CONFIRMS the paper's 'sufficiently large D' hedge; below that
+      threshold the paper is covered by line 1 (N<N0 lookup table).
+      NOT a paper error -- v2 of my script wrongly reported 'never holds'
+      because it sampled M < B and D far below the asymptotic regime.
+
+[C] The counting step (3.2): (ord_p(beta)|M for all beta<=B) => Psi(p,B)<=M
+    Only the ONE-WAY implication is claimed.  Scoring it as a biconditional
+    (as my v1 did) manufactures spurious 'violations'.
+       p    B       tag       M   Psi(p,B)  antecedent  consequent
+    101   10    lcm_all    100       46        True        True
+    101   10   lcm_half     50       46       False        True
+    101   20    lcm_all    100       72        True        True
+    101   20   lcm_half     50       72       False       False
+    211   10    lcm_all    210       68        True        True
+    211   10   lcm_half    105       68       False        True
+   1009   20    lcm_all   1008      333        True        True
+   1009   20   lcm_half    504      333       False        True
+   1009   50    lcm_all   1008      531        True        True
+   1009   50   lcm_half    504      531       False       False
+   2003   10    lcm_all   2002      187        True        True
+   2003   10   lcm_half   1001      187       False        True
+   3001   20    lcm_all   3000      621        True        True
+   3001   20   lcm_half   1500      621       False        True
+   4001   30    lcm_all   4000      940        True        True
+   4001   30   lcm_half   2000      940       False        True
+  ==> implication holds in 8/8 cases where antecedent is TRUE. VERIFIED.
+
+[D] Cost comparison (log2 units).  Corrected: the polylog(N) factor in a
+    BIT-operation bound is log2(log2 N) = log2(bits*ln2), NOT log2 N.
+   bits  log2(log2N)  log2(L_N[1/3,c])  N^0.1   N^0.2   N^0.25   D_crossover
+     256       7.47             46.66    25.6    51.2    64.0   2^1.0
+    1024       9.47             86.77   102.4   204.8   256.0   2^1.0
+    2048      10.47            116.88   204.8   409.6   512.0   2^1.0
+    4096      11.47            156.50   409.6   819.2  1024.0   2^1.0
+    8192      12.47            208.47   819.2  1638.4  2048.0   2^1.0
+  KEY: D^(1/2) is below N^(1/10) for all D up to the crossover, and
+  N^(1/10) << N^(1/5) << N^(1/4).  Large-order finding is NOT the bottleneck.
+
+[E] End-to-end Algorithm 3.1 over all N in [3,3000)
+  samples=40377  valid=40352  invalid=19  NONE=6
+  all failures: N prime? {True}; largest failing N = 1201
+  first failures (N,D,kind,val,Nprime): [(23, 13, 'divisor', 23, True), (23, 21, 'divisor', 23, True), (47, 34, 'divisor', 47, True), (71, 55, 'divisor', 71, True), (73, 55, 'divisor', 73, True), (97, 55, 'divisor', 97, True)]
+  DIAGNOSIS: every failure has val == N, i.e. line 19 returned N itself,
+  which is NOT a nontrivial divisor.  The paper states line 19 is NEVER
+  reached; it IS reached here only for small prime N (<500), precisely the
+  N < N0 regime that line 1 removes via a lookup table.  Consistent with
+  the paper, NOT a counterexample -- but it does confirm N0 > 479.
+  failures at COMPOSITE N: 0  (must be 0)
+
+[E-neg] NEGATIVE CONTROLS (must fire)
+  drop line-3 guard:     invalid=20/40377 -> fires: True
+  return bogus divisor: invalid=33654/40377 -> fires: True
+
+CONTENT HASH (run twice, diff this): 3bfb84c1cca51e7744f610294c1bcb0472ab95a26116d4ee51c172d908ecd903

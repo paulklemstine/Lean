@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/ODbwm6+A/ylmaroo+Q8Ms7+7Qh0</id>
+  <title>arXiv Query: search_query=&amp;id_list=2601.11131&amp;start=0&amp;max_results=10</title>
+  <updated>2026-10-05T02:36:13Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=10&amp;id_list=2601.11131" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2601.11131v2</id>
+    <title>Deterministic methods for finding elements of large multiplicative order</title>
+    <updated>2026-06-05T05:04:50Z</updated>
+    <link href="https://arxiv.org/abs/2601.11131v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.11131v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We revisit the problem of rigorously and deterministically finding elements of large order in the multiplicative group of integers modulo a natural number $N$. Solving this problem is an essential step in several recent deterministic algorithms for factoring $N$, including the currently fastest ones. In 2018, the second author gave an algorithm that for a given target order $D \geq N^{2/5}$, finds either an element of order exceeding $D$, or a nontrivial divisor of $N$, or proves that $N$ is prime. The running time was \[ O\left(\frac{D^{1/2}}{(\log \log D)^{1/2}} \log^2 N \right) \] bit operations, asymptotically the same as the cost of computing the order of a single element using Sutherland's optimisation of the classical babystep-giantstep method. Subsequent work by several authors weakened the hypothesis $D \geq N^{2/5}$ to $D \geq N^{1/6}$. In this paper, we show that the hypothesis may be dropped altogether. Moreover, if $N$ is prime, we can guarantee returning an element of order exceeding $D$, rather than a proof that $N$ is prime.</summary>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-16T09:45:56Z</published>
+    <arxiv:comment>13 pages; slightly improved main complexity bound</arxiv:comment>
+    <arxiv:primary_category term="math.NT"/>
+    <author>
+      <name>David Harvey</name>
+    </author>
+    <author>
+      <name>Markus Hittmeir</name>
+    </author>
+  </entry>
+</feed>

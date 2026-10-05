@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/aeXszEJ1MxdM9f53u+emrT97yOY</id>
+  <title>arXiv Query: search_query=&amp;id_list=2605.09592&amp;start=0&amp;max_results=10</title>
+  <updated>2026-10-05T02:36:57Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=10&amp;id_list=2605.09592" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>1</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2605.09592v1</id>
+    <title>Deterministically finding an element of large order in $\mathbb{Z}_N^*$</title>
+    <updated>2026-05-10T15:08:51Z</updated>
+    <link href="https://arxiv.org/abs/2605.09592v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.09592v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we present an improvement for the problem of deterministically finding an element of large multiplicative order modulo some integer $N$. This problem arises as a key subroutine in current deterministic factoring algorithms, such as those proposed by Harvey and Hittmeir [Mathematics of Computation, 2021].
+  Specifically, let $D&lt;N$ be positive integers with \begin{equation}\label{eq:abs} D &gt; \exp\left(\sqrt{2\log N \log \log N}\right). \end{equation} We give a deterministic algorithm that does one of the following: Returns an element $a \in \mathbb{Z}_N^*$ with $\operatorname{ord}_N(a) &gt; D$; Returns a non-trivial factor of $N$; Or reports that $N$ is prime. The running time of our algorithm is $O(D^{1/2 + o(1)})$. Similar results were independently and concurrently obtained by Harvey and Hittmeir [arXiv:2601.11131, 2026] in work that appeared while this manuscript was in preparation. Prior to these works, the best known algorithm for finding an element with order larger than $D$ was given by Oznovich and Volk [SODA 2026], requiring $D &gt; N^{\frac{1}{6}}$. We also present a simpler algorithm that applies for any $D &lt; N$ and runs in $O(D^{2.5+o(1)}\operatorname{polylog}(N))$.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-10T15:08:51Z</published>
+    <arxiv:primary_category term="cs.DS"/>
+    <author>
+      <name>Itamar Nir</name>
+    </author>
+  </entry>
+</feed>
