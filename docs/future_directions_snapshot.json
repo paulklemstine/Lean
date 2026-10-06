@@ -11773,6 +11773,43 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Automorphic commutator relations in relative geometric Langlands' and formalize its key results. Abstract: We prove the automorphic commutator relation conjectured by Liu and Wang arXiv:2504.00275, which is the geometric input for the automorphic Clifford relations in their framework relating higher period integrals to higher derivatives of $L$-functions over function fields. The relation was previously established only under additional cohomological vanishing assumptions and for curves of genus different from one; we remove these assumptions. The main new ingredient is a \"universal-local\" stage between the local and the semi-local settings: we introduce the classifying stack of formal multidisks with two ordered marked sections, and we construct universal-local analogues of the Hecke stacks, unit objects, Hecke actions and special cohomological correspondences. Fusion and purity on this stack yield a universal-local commutator identity, which is proved using only the local assumptions on the Plancherel algebra that enter the conjecture. Specialization to a curve and the six-functor formali",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_5167",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2610.05781v1",
+    "status": "available",
+    "timestamp": "2026-10-06T02:33:57.767596+00:00",
+    "title": "ArXiv paper: Automorphic commutator relations in relative geometric Langlands"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On three conjectures of Kimberling concerning the array $\\lfloor k\\varphi^n\\rfloor$' and formalize its key results. Abstract: Let $\\varphi$ be the golden ratio and let $R_n=\\{\\lfloor k\\varphi^n\\rfloor : k\\ge 1\\}$ be the $n$-th row of the array $T(n,k)=\\lfloor k\\varphi^n\\rfloor$ (OEIS A128440). In 2022 Kimberling conjectured that the rows $R_{2n-1}$ and $R_{2n}$ are disjoint, and that after the two rows are merged and each entry is replaced by its rank, they become the lower and upper Wythoff sequences. He also conjectured (OEIS A358359) that if $a(N)$ is the number of rows containing $N$, then every positive integer occurs infinitely often among the values of $a$. We show that the first two conjectures follow quickly from the Skolem-Bang theorem, which also yields the exact rule for when two rows are disjoint: $R_i\\cap R_j=\\emptyset$ ($i<j$) if and only if $j-i$ is odd and divides $i$. We then prove the third conjecture. The main tools are an explicit determination of the rows containing an odd-indexed Lucas number, which extends a result of Noppakaew, Kanwarunyu and Wanitchatchawan, and a \"Lucas shift\" lemma",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_5167",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2610.05776v1",
+    "status": "available",
+    "timestamp": "2026-10-06T02:34:01.253903+00:00",
+    "title": "ArXiv paper: On three conjectures of Kimberling concerning the array $\\lfloor k\\varphi^n\\rfloor$"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domain_bridges": [],
     "domains": [
