@@ -3835,16 +3835,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-37 #6 \u2014 CHEBOTAREV-PRECISION: the master table reproduces simultaneously, max deviation 0.00048 bits (paper 134)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "43e1310b",
     "description": "## NET-49 \u2014 limited-memory axis, round 1 (paper 134, /tmp/exp_net49_qwen_topk.py + exp_net49b_sub32.py, /tmp/net49.log + net49b.log)\n\n**Verdict name: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES.**\n\n### Result\nOn a REAL PRETRAINED LLM \u2014 **Qwen2.5-0.5B** (24 layers, GQA kv=2), wikitext-103 held-out eval, fp32, forward validated EXACTLY against HF eager before any measurement (max|\u0394logit| = 0.0000) \u2014 the lossless attention knee is:\n\n| ctx | full acc | k\\* | toy product d\u00b7ctx/32 | ratio |\n|---|---|---|---|---|\n| 512 | 0.4460 | **16** | 384 | **1/24** |\n| 1024 | 0.4612 | **32** | 768 | **1/24** |\n| 2048 | 0.4787 | **24** | 1536 | **1/64** |\n\nScaling \u00d72.0 then **\u00d70.75 \u2014 sub-linear and already DECLINING**: P3 confirmed, P1 refuted 16\u00d7 beyond its floor, P2's linearity half-refuted (its concentration half held: k\\* \u2264 ctx/8 everywhere). **The DEPTH MULTIPLIER of the toy law collapses from d to ~1 on pretrained weights** \u2014 no compounding r(k)^d penalty binds trained attention.\n\n### Key numbers\n- Sweeps (retained): 512: 8 0.9617 \u2717, **16 0.9834 \u2713 (+0.44 SE razor)** \u2026 192 0.9997; 1024: 16 0.9771 \u2717 (\u22120.55 SE), **32 0.9912 \u2713** \u2026 384 1.0003; 2048: 4 0.8762 \u2717, 8 0.9408 \u2717, 16 0.9708 \u2717 (\u22122.5 SE), **24 0.9818 \u2713 (+0.5 SE razor, bracket (16, 24])**, 32 0.9867 \u2026 768 0.9997.\n- **Selection importance inflates an ORDER OF MAGNITUDE**: random-k gaps **+82.0/+71.8/+81.9/+70.0/+79.9/+68.0 pts** (the toy programme's entire range was +1.7\u201311.7); local-window gaps +40\u201355 pts \u2014 k=256 local reaches only **0.598 retained at 2048** while oracle top-k is 0.9867 with 8\u00d7 fewer keys.\n- **Depth-resolved concentration map (new measurement class)**: median-layer effective support \u2248 10\u201312 keys, context-INDEPENDENT across 512\u21922048 (toy: 46\u2192526); the ONLY diffuse attention lives in **L22/L23** (eff 51\u219283\u2192128.5 and 33\u219250\u219272, sub-linear growth; even L22@2048 is 3.9\u00d7 less diffuse than the toy MEAN layer); minimum at L16 (2.9 keys).\n- **Practical**: oracle working set = 24 of 2048 rows \u2192 **85\u00d7 fewer KV reads / 64\u00d7 fewer KV bytes per sequence**. Deployable policy needs a cheap selector \u2014 the oracle-to-policy gap is named as the next cell, not claimed.\n\n### All 8 barriers\n(a) clean \u2014 data-free oracle from the model's own scores; horns concerned position/scaling, not existence; (b) confronted \u2014 sparse/oracle attention and heavy-hitter eviction exist (H2O/StreamingLLM/SnapKV lineage); NEW content = measured laws: first transfer under this programme's fixed 0.98-retention protocol, the depth-multiplier collapse, the ctx/32-then-decline shape, the 10\u00d7 selection-gap inflation, the depth map \u2014 none in Catalog re-scan or literature; (c) CONFRONTED HEAD-ON \u2014 this IS the real-scale cell (pretrained 0.5B, natural web text, 151k vocab); honest limit: ONE model, ONE size; (d) clean \u2014 last 10% held out, zero training; (e) SUBSTANCE + limits \u2014 deterministic eval (addendum reproduced the baseline EXACTLY, 0.4787/2.6355), binomial SEs 0.17\u20130.35%, TWO razor-thin knees documented, the 1024 bracket (16, 32] un-pinned at 24 (the decline could be flat ~24), one model one corpus (Gutenberg rate-limited mid-round; wikitext fallback engaged automatically); (f) clean \u2014 validation gate passed exactly pre-measurement, fp32 throughout, loss tracks accuracy at every k, NO crash (ALL_DONE_NET49 + ALL_DONE_NET49B); (g) fair \u2014 full reference + the SAME 0.98 bar as all 48 prior rounds + random-k AND local-window at matched k, both dominated; (h) DIRECT \u2014 the axis's founding question answered with a 64\u00d7 KV-byte reduction at the knee vs the toy family's best-ever 12.8\u00d7 attention reading.\n\n### Next\n(1) per-layer pruning ablation \u2014 is L22's diffusion load-bearing? (2) size transfer \u2014 Qwen2.5-1.5B / quantized-offloaded 7B: does ~ctx/32 saturation persist? does the two-layer tail recur? (3) oracle-to-policy gap \u2014 online accumulated-score eviction vs this upper bound; (4) corpus robustness; (5) weight-quantization floors on the same harness (limited-memory iteration 2).\n\nNow 49 network experiments. Assessment v49. Paper 134.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3553",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T03:08:29.730320+00:00",
     "title": "NET-49: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES \u2014 on Qwen2.5-0.5B the lossless attention knee is {16,32,24} at ctx={512,1024,2048}, 24\u201364x below the toy law d*ctx/32, sub-linear and declining; selection importance inflates an order of magnitude"
   },
@@ -8724,7 +8725,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_5169",
+    "id": "fd_5170",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2610.06707v1",
