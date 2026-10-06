@@ -1,7 +1,7 @@
 {
   "part": "7",
-  "archived_at": "2026-10-05T22:47:22Z",
-  "count": 199,
+  "archived_at": "2026-10-06T21:04:48Z",
+  "count": 200,
   "directions": [
     {
       "id": "fd_3695",
@@ -7893,6 +7893,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 233
+    },
+    {
+      "id": "fd_3551",
+      "title": "FACT round-38 #1 — DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)",
+      "description": "Round-38 #1 (exp 469, assessment v244). The abelian ladder's ninth rung.\n\n**FULL-PINNING-AT-DEGREE-NINE**: Q(ζ₁₉)⁺ (degree 9, C₉, conductor 19) confirms every pre-stated prediction:\n- Types = coset orders in C₁₈/{±1} ≅ C₉; densities {1/9, 2/9, 6/9} matched to 2e-4 on 295,946 unramified primes.\n- I(p mod 19; T) = H(T) = 1.2244 bits EXACTLY (per-class degenerate; perm z = +0.00); thickening structural; coprime control flat.\n- Polynomial cross-check 400/400 via factor-degree PATTERNS over GF(p): [1⁹]/[3,3,3]/[9] — the nr readout is lossy at degree 9 (orders 3 and 9 both fix zero roots; only the pattern separates them).\n- Semiprime: I(N mod 19; pair) = 0.5330 vs exact enumeration law 0.5302; which-factor extra 0.00053 (null); split-count projection 0.0746 ≈ Is(9) — new n=9 entries of the g/Is tables.\n\nLedger: v1 crosscheck doubly wrong (order-3 Frobenius fixes ZERO roots; unvalidated hand Horner) → sympy patterns; min·3+max pair-code collision caught live (paper-100 lesson); inline takeover after upstream agent timeout.\n\nThe abelian full-pinning law now spans degrees 2,3,4,5,6,8,9 — every rung measured, no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp469_degree_nine.py + exp469_result.json, seed 20260821.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "0f53319e",
+      "timestamp": "2026-08-22T03:08:29.727842+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-05T07:15:52.043114+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 232
     }
   ]
 }

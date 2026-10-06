@@ -3805,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "0f53319e",
-    "description": "Round-38 #1 (exp 469, assessment v244). The abelian ladder's ninth rung.\n\n**FULL-PINNING-AT-DEGREE-NINE**: Q(\u03b6\u2081\u2089)\u207a (degree 9, C\u2089, conductor 19) confirms every pre-stated prediction:\n- Types = coset orders in C\u2081\u2088/{\u00b11} \u2245 C\u2089; densities {1/9, 2/9, 6/9} matched to 2e-4 on 295,946 unramified primes.\n- I(p mod 19; T) = H(T) = 1.2244 bits EXACTLY (per-class degenerate; perm z = +0.00); thickening structural; coprime control flat.\n- Polynomial cross-check 400/400 via factor-degree PATTERNS over GF(p): [1\u2079]/[3,3,3]/[9] \u2014 the nr readout is lossy at degree 9 (orders 3 and 9 both fix zero roots; only the pattern separates them).\n- Semiprime: I(N mod 19; pair) = 0.5330 vs exact enumeration law 0.5302; which-factor extra 0.00053 (null); split-count projection 0.0746 \u2248 Is(9) \u2014 new n=9 entries of the g/Is tables.\n\nLedger: v1 crosscheck doubly wrong (order-3 Frobenius fixes ZERO roots; unvalidated hand Horner) \u2192 sympy patterns; min\u00b73+max pair-code collision caught live (paper-100 lesson); inline takeover after upstream agent timeout.\n\nThe abelian full-pinning law now spans degrees 2,3,4,5,6,8,9 \u2014 every rung measured, no exceptions.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp469_degree_nine.py + exp469_result.json, seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3551",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T03:08:29.727842+00:00",
-    "title": "FACT round-38 #1 \u2014 DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)"
-  },
-  {
     "consumed_by_exp_id": "6da44148",
     "description": "Round-37 #6 (exp 463, assessment v243). First simultaneous re-measurement of the ENTIRE type-channel master table \u2014 15 canonical fields, one protocol, one seed, 295,946 unramified primes/field < 2^22, law values computed fresh from explicit permutation groups.\n\n**H0 \u2014 PRECISION HOLDS**: global max |I_meas \u2212 I_law| = **0.00048 bits**, 20x inside the pre-stated 0.01 budget. No flags.\n\n- Every recorded headline reproduced within max(0.01, 3\u03c3).\n- The one anomaly diagnosed: S3d's historical 1.0078 vs exact law 1.0000 (simultaneous remeasurement 0.9998\u00b10.001) = small-population plug-in bias on the sparse 229-class dial \u2014 not physics, not dictionary drift.\n- Fresh law constants matched hand-derived values to 6 decimals on all 10 groups (incl. D4 = 1.655639, A4 = 0.918296).\n- Controls: thickening \u22120.00044; coprime flatness below null bias floor on six fields; sympy ground truth 0 mismatches \u00d715 fields; abelian dictionaries 100%.\n\nThe lab's ~128-paper measurement record is internally consistent to 5e-4 bits \u2014 extending the reproducibility-audit line (papers 97/103) from stored-seed re-runs to cross-field simultaneous measurement.\n\nLedger: 7 catches, ALL before results (D4 generator \u2192 S4 closure exposed by hand constants; F20 seeded as C5; LSB/MSB exponent mismatch; q\u00b2|disc ramified test; ...).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp463_precision.py + exp463_result.json + exp463_full_run.log, seed 20260821.",
     "domains": [
@@ -3850,16 +3835,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-49: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES \u2014 on Qwen2.5-0.5B the lossless attention knee is {16,32,24} at ctx={512,1024,2048}, 24\u201364x below the toy law d*ctx/32, sub-linear and declining; selection importance inflates an order of magnitude"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2b42a28a",
     "description": "Round-37 #5 (exp 462, assessment v242). The open cell between paper 91's coprime-synergy (+0.129) and shared-disc-redundancy (\u22120.99) is CLOSED.\n\n**H1 CONFIRMED \u2014 PARTIAL-OVERLAP-LAW**: two genuinely different S3 fields sharing their quadratic subfield are EXACTLY one bit redundant.\n\nPairs found by scanning 56,410 S3 cubics: d=\u22127: x\u00b3\u22125x\u22125 (disc \u2212175=\u22127\u00b75\u00b2) & x\u00b3\u22123x\u22125 (\u2212567=\u22127\u00b79\u00b2); d=\u22123: x\u00b3\u22126x\u22126 (\u2212108) & x\u00b3\u22123 (\u2212243). Measured deficits +0.9998/+0.9998/+1.0000 vs the 1-bit law (deviations \u2264 0.0002).\n\nDerivation committed BEFORE simulation: Gal(L\u2081L\u2082/Q) = S\u2083 \u00d7_{C\u2082} S\u2083 (order 18); co-information = H(C) \u2212 H(C|X) = 1.5 \u2212 0.5 exactly; all fiber-product correlation beyond the shared sign character confined to the residue-invisible \u03c7_d=+1 fiber. Joint Chebotarev distribution matches order-18 class proportions; off-diagonal mass 34,375 vs predicted 34,307.\n\nControls clean: coprime synergy reproduced (0.1300 vs lab 0.1290), conjugate pair at full redundancy, which-factor wall NULL on the new joint.\n\nInsights for the programme: (L11) MI signatures CANNOT distinguish partial-overlap from same-field pairs \u2014 discriminators are type-agreement (7/9 vs 1.0) and off-diagonal mass; sparse joint moduli distort plug-in MI badly (~\u00b10.5 bits at 2 samples/cell) \u2014 joints need ~100 samples/cell or explicit bias modeling; disc-value arguments are not field arguments (index\u00b2 trap caught live).\n\nThe overlap ladder is closed at the pair level: coprime (+synergy) / shared-subfield (exactly \u22121 bit) / same-field (full redundancy).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp462_overlap_law.py + addendum462.py + result JSONs, seed 20260821.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3554",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T03:08:29.731549+00:00",
     "title": "FACT round-37 #5 \u2014 DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
   },
@@ -36183,6 +36169,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-05T22:47:21.826282+00:00",
     "title": "Survivor-Filter Optimality of the Exact Log Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The splitting-type entropy of a cyclic field of degree m is the totient entropy H_phi(m), now proved additive over coprime factors. Determine the prime-power profile: it should increase to the entropy of a geometric law. That would make abelian-rung information bounded on average.\n\nFor every prime p, H_phi(p^k) is strictly increasing in k with limit L_p = log(p/(p-1)) + log(p)/(p-1); hence H_phi(m) < sum over p dividing m of L_p, and (1/X) sum_{m<=X} H_phi(m) converges to a finite explicit constant.\n\nCompute H_phi(p^k) for p <= 50, k <= 30 and the running mean for m <= 10^6; in Lean, prove the prime-power closed form and monotonicity.\n\nSplitting-type information on the abelian ladder is bounded on average and dominated by small primes dividing the degree.\n\nThe prime-power profile is not monotone, so information is not ordered by the p-adic valuation of the degree.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5171",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0f53319e",
+    "status": "available",
+    "timestamp": "2026-10-06T21:04:47.422205+00:00",
+    "title": "Totient-Entropy Profile on the Abelian Ladder"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Exact enumeration gives I(N; unordered type pair) = 0.526502 bits at degree nine, not the reported 0.5302. Derive the closed form for all cyclic rungs via Ramanujan sums and test whether it factors over coprime parts of m.\n\nThe joint law of (N, ord p, ord q) in C_m is given by Ramanujan-sum convolutions, and I(N; pair) is additive over coprime factorisations of m.\n\nCompare the enumerated value with the conjectured formula for m <= 60; formalise the m = 9 value in Lean via fibre counts.\n\nGives a complete exact theory of semiprime pair dials on the abelian ladder.\n\nThe pair law has cross-terms between coprime parts and only the split-count statistic factors.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5172",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0f53319e",
+    "status": "available",
+    "timestamp": "2026-10-06T21:04:47.852530+00:00",
+    "title": "Ramanujan-Sum Closed Form of the Semiprime Pair Law"
   },
   {
     "consumed_by_exp_id": "",

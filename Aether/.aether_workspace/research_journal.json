@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e0933184",
-      "domain": "Computation",
-      "key_insight": "# Future directions: beyond the sub-quadratic root law\n\nFour research cycles closed the conjecture that motivated this project — the\nper-candidate batching cost `A/k + c + q(k^(μ−1) − 1)` has, for eve",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-09-11T20:07:05",
-      "title": "Square-Root Law for Optimal Batch Size under Sub-Quadratic Multiplication"
-    },
-    {
       "cycle_id": "b4f715c2",
       "domain": "Shared",
       "key_insight": "# Future Directions — general separated principal filtrations\n\nDerived from the verified content of\n\n* `Catalog/Shared/SeparatedPrincipalFiltration.lean` (core theory),\n* `Catalog/Shared/SeparatedPrin",
@@ -499,19 +489,19 @@
       "theorem_count": 56,
       "timestamp": "2026-10-04T05:45:08",
       "title": "FACT round-35 #9 — BIQUADRATIC-TYPE-CHANNEL: two types, full pinning (paper 127)"
+    },
+    {
+      "cycle_id": "0f53319e",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after the degree-nine rung (paper 135)\n\n## What this cycle established (all in Lean, 0 sorries)\n\n| File | Main results |\n|---|---|\n| `Catalog/Probability/ForkPinningDegreeNine.le",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-10-06T21:05:02",
+      "title": "FACT round-38 #1 — DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "733effba",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — after the H0 window-geometry cycle (exp 581 / paper 231)\n\n## What this cycle established\n\nThree Lean files (`Catalog/Algebra/HumpWindowGeometry.lean`,\n`Catalog/Algebra/HumpFitted",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-08-26T04:57:04",
-      "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE — n"
-    },
     {
       "cycle_id": "c2e74b6a",
       "domain": "Logic",
@@ -2501,27 +2491,19 @@
       "theorem_count": 11,
       "timestamp": "2026-10-05T22:47:37",
       "title": "FACT round-38 #2 — TOY-QS-YIELD: the sieve's advantage is the survivor filter; relation pool is QR-r"
+    },
+    {
+      "cycle_id": "0f53319e",
+      "domain": "Probability",
+      "key_insight": "# Future directions — after the degree-nine rung (paper 135)\n\n## What this cycle established (all in Lean, 0 sorries)\n\n| File | Main results |\n|---|---|\n| `Catalog/Probability/ForkPinningDegreeNine.le",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-10-06T21:05:02",
+      "title": "FACT round-38 #1 — DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "79072e03",
-      "domain": "Computation",
-      "name": "eq_of_close_rat_sharp",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0c9eb490",
-      "domain": "Shared",
-      "name": "fermat_cost_p_units",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0c9eb490",
-      "domain": "Shared",
-      "name": "fermat_cost_ratio_law",
-      "quality": 0.82
-    },
     {
       "cycle_id": "0c9eb490",
       "domain": "Shared",
@@ -2803,9 +2785,27 @@
       "domain": "Novelty",
       "name": "logb_two_three_gt",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "0f53319e",
+      "domain": "Probability",
+      "name": "card_sq_eq_one",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "0f53319e",
+      "domain": "Probability",
+      "name": "card_sq_fiber",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "0f53319e",
+      "domain": "Probability",
+      "name": "exists_sq_of_pow_eq_one",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-05T22:47:37",
+  "last_updated": "2026-10-06T21:05:02",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3765,12 +3765,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "9c1e5dc4",
-        "quality": 0.84,
-        "theorems": 101,
-        "title": "FACT round-71 #2 — TDIAL-U116: the fade REBOUNDS, floor forming near 0.46–0.49 ("
-      },
-      {
         "cycle_id": "c4f754ac",
         "quality": 0.83,
         "theorems": 114,
@@ -3823,6 +3817,12 @@
         "quality": 0.72,
         "theorems": 24,
         "title": "FACT round-36 #1 — RAMIFIED-TYPE-CHANNEL: ramified contribution is negligible (p"
+      },
+      {
+        "cycle_id": "0f53319e",
+        "quality": 0.72,
+        "theorems": 66,
+        "title": "FACT round-38 #1 — DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)"
       }
     ],
     "Pythagorean": [
