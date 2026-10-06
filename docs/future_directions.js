@@ -8694,13 +8694,43 @@ window.FUTURE_DIRECTIONS = [
     "consumed_by_exp_id": "",
     "description": "Investigate the ArXiv paper 'On three conjectures of Kimberling concerning the array $\\lfloor k\\varphi^n\\rfloor$' and formalize its key results. Abstract: Let $\\varphi$ be the golden ratio and let $R_n=\\{\\lfloor k\\varphi^n\\rfloor : k\\ge 1\\}$ be the $n$-th row of the array $T(n,k)=\\lfloor k\\varphi^n\\rfloor$ (OEIS A128440). In 2022 Kimberling conjectured that the rows $R_{2n-1}$ and $R_{2n}$ are disjoint, and that after the two rows are merged and each entry is replaced by its rank, they become the lower and upper Wythoff sequences. He also conjectured (OEIS A358359) that if $a(N)$ is the number of rows containing $N$, then every positive integer occurs infinitely often among the values of $a$. We show that the first two conjectures follow quickly from the Skolem-Bang theorem, which also yields the exact rule for when two rows are disjoint: $R_i\\cap R_j=\\emptyset$ ($i<j$) if and only if $j-i$ is odd and divides $i$. We then prove the third conjecture. The main tools are an explicit determination of the rows containing an odd-indexed Lucas number, which extends a result of Noppakaew, Kanwarunyu and Wanitchatchawan, and a \"Lucas shift\" lemma",
     "domains": [],
-    "id": "fd_5167",
+    "id": "fd_5168",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2610.05776v1",
     "status": "available",
     "timestamp": "2026-10-06T02:34:01.253903+00:00",
     "title": "ArXiv paper: On three conjectures of Kimberling concerning the array $\\lfloor k\\varphi^n\\rfloor$"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Isomorphism Criterion of Monomial Digraphs over Prime Fields' and formalize its key results. Abstract: For any Galois field $\\mathbb{F}_q$ with $q$ elements and any positive integers $m$ and $n$, the directed graph $D(q;m,n)$ has vertex set $\\mathbb{F}_q\\times\\mathbb{F}_q$, and there is an arc from vertex $(x_1,x_2)$ to vertex $(y_1,y_2)$ if and only if $x_2+y_2=x_1^my_1^n$. It was conjectured in earlier work that two digraphs $D(q;m_1,n_1)$ and $D(q;m_2,n_2)$ are isomorphic if and only if there exists an integer $k$ relatively prime to $q-1$ such that $m_2\\equiv km_1$ and $n_2 \\equiv kn_1$, where both congruences are modulo $q-1$. We prove this conjecture over prime fields and construct an infinite family of counterexamples over extension fields.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5169",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.06735v1",
+    "status": "available",
+    "timestamp": "2026-10-06T09:24:30.594387+00:00",
+    "title": "ArXiv paper: Isomorphism Criterion of Monomial Digraphs over Prime Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Spreading out perverse sheaves' and formalize its key results. Abstract: We spread out geometrically irreducible perverse sheaves. Over an arithmetic base scheme, such sheaves extend from the generic fiber to a relatively perverse, universally locally acyclic sheaf over a dense open of the base scheme. As an application, we prove the arithmetic Kashiwara conjecture by Esnault and Kerz for geometric traits in equicharacteristic and generalize the decomposition theorem for arithmetic complexes to fields finitely generated over a separably closed field. We also recover the Hard Lefschetz theorem for arithmetic perverse sheaves.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_5169",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.06707v1",
+    "status": "available",
+    "timestamp": "2026-10-06T09:24:33.933792+00:00",
+    "title": "ArXiv paper: Spreading out perverse sheaves"
   },
   {
     "consumed_by_exp_id": "",
