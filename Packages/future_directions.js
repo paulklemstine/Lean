@@ -3805,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "43e1310b",
-    "description": "## NET-49 \u2014 limited-memory axis, round 1 (paper 134, /tmp/exp_net49_qwen_topk.py + exp_net49b_sub32.py, /tmp/net49.log + net49b.log)\n\n**Verdict name: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES.**\n\n### Result\nOn a REAL PRETRAINED LLM \u2014 **Qwen2.5-0.5B** (24 layers, GQA kv=2), wikitext-103 held-out eval, fp32, forward validated EXACTLY against HF eager before any measurement (max|\u0394logit| = 0.0000) \u2014 the lossless attention knee is:\n\n| ctx | full acc | k\\* | toy product d\u00b7ctx/32 | ratio |\n|---|---|---|---|---|\n| 512 | 0.4460 | **16** | 384 | **1/24** |\n| 1024 | 0.4612 | **32** | 768 | **1/24** |\n| 2048 | 0.4787 | **24** | 1536 | **1/64** |\n\nScaling \u00d72.0 then **\u00d70.75 \u2014 sub-linear and already DECLINING**: P3 confirmed, P1 refuted 16\u00d7 beyond its floor, P2's linearity half-refuted (its concentration half held: k\\* \u2264 ctx/8 everywhere). **The DEPTH MULTIPLIER of the toy law collapses from d to ~1 on pretrained weights** \u2014 no compounding r(k)^d penalty binds trained attention.\n\n### Key numbers\n- Sweeps (retained): 512: 8 0.9617 \u2717, **16 0.9834 \u2713 (+0.44 SE razor)** \u2026 192 0.9997; 1024: 16 0.9771 \u2717 (\u22120.55 SE), **32 0.9912 \u2713** \u2026 384 1.0003; 2048: 4 0.8762 \u2717, 8 0.9408 \u2717, 16 0.9708 \u2717 (\u22122.5 SE), **24 0.9818 \u2713 (+0.5 SE razor, bracket (16, 24])**, 32 0.9867 \u2026 768 0.9997.\n- **Selection importance inflates an ORDER OF MAGNITUDE**: random-k gaps **+82.0/+71.8/+81.9/+70.0/+79.9/+68.0 pts** (the toy programme's entire range was +1.7\u201311.7); local-window gaps +40\u201355 pts \u2014 k=256 local reaches only **0.598 retained at 2048** while oracle top-k is 0.9867 with 8\u00d7 fewer keys.\n- **Depth-resolved concentration map (new measurement class)**: median-layer effective support \u2248 10\u201312 keys, context-INDEPENDENT across 512\u21922048 (toy: 46\u2192526); the ONLY diffuse attention lives in **L22/L23** (eff 51\u219283\u2192128.5 and 33\u219250\u219272, sub-linear growth; even L22@2048 is 3.9\u00d7 less diffuse than the toy MEAN layer); minimum at L16 (2.9 keys).\n- **Practical**: oracle working set = 24 of 2048 rows \u2192 **85\u00d7 fewer KV reads / 64\u00d7 fewer KV bytes per sequence**. Deployable policy needs a cheap selector \u2014 the oracle-to-policy gap is named as the next cell, not claimed.\n\n### All 8 barriers\n(a) clean \u2014 data-free oracle from the model's own scores; horns concerned position/scaling, not existence; (b) confronted \u2014 sparse/oracle attention and heavy-hitter eviction exist (H2O/StreamingLLM/SnapKV lineage); NEW content = measured laws: first transfer under this programme's fixed 0.98-retention protocol, the depth-multiplier collapse, the ctx/32-then-decline shape, the 10\u00d7 selection-gap inflation, the depth map \u2014 none in Catalog re-scan or literature; (c) CONFRONTED HEAD-ON \u2014 this IS the real-scale cell (pretrained 0.5B, natural web text, 151k vocab); honest limit: ONE model, ONE size; (d) clean \u2014 last 10% held out, zero training; (e) SUBSTANCE + limits \u2014 deterministic eval (addendum reproduced the baseline EXACTLY, 0.4787/2.6355), binomial SEs 0.17\u20130.35%, TWO razor-thin knees documented, the 1024 bracket (16, 32] un-pinned at 24 (the decline could be flat ~24), one model one corpus (Gutenberg rate-limited mid-round; wikitext fallback engaged automatically); (f) clean \u2014 validation gate passed exactly pre-measurement, fp32 throughout, loss tracks accuracy at every k, NO crash (ALL_DONE_NET49 + ALL_DONE_NET49B); (g) fair \u2014 full reference + the SAME 0.98 bar as all 48 prior rounds + random-k AND local-window at matched k, both dominated; (h) DIRECT \u2014 the axis's founding question answered with a 64\u00d7 KV-byte reduction at the knee vs the toy family's best-ever 12.8\u00d7 attention reading.\n\n### Next\n(1) per-layer pruning ablation \u2014 is L22's diffusion load-bearing? (2) size transfer \u2014 Qwen2.5-1.5B / quantized-offloaded 7B: does ~ctx/32 saturation persist? does the two-layer tail recur? (3) oracle-to-policy gap \u2014 online accumulated-score eviction vs this upper bound; (4) corpus robustness; (5) weight-quantization floors on the same harness (limited-memory iteration 2).\n\nNow 49 network experiments. Assessment v49. Paper 134.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3553",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T03:08:29.730320+00:00",
-    "title": "NET-49: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES \u2014 on Qwen2.5-0.5B the lossless attention knee is {16,32,24} at ctx={512,1024,2048}, 24\u201364x below the toy law d*ctx/32, sub-linear and declining; selection importance inflates an order of magnitude"
-  },
-  {
     "consumed_by_exp_id": "2b42a28a",
     "description": "Round-37 #5 (exp 462, assessment v242). The open cell between paper 91's coprime-synergy (+0.129) and shared-disc-redundancy (\u22120.99) is CLOSED.\n\n**H1 CONFIRMED \u2014 PARTIAL-OVERLAP-LAW**: two genuinely different S3 fields sharing their quadratic subfield are EXACTLY one bit redundant.\n\nPairs found by scanning 56,410 S3 cubics: d=\u22127: x\u00b3\u22125x\u22125 (disc \u2212175=\u22127\u00b75\u00b2) & x\u00b3\u22123x\u22125 (\u2212567=\u22127\u00b79\u00b2); d=\u22123: x\u00b3\u22126x\u22126 (\u2212108) & x\u00b3\u22123 (\u2212243). Measured deficits +0.9998/+0.9998/+1.0000 vs the 1-bit law (deviations \u2264 0.0002).\n\nDerivation committed BEFORE simulation: Gal(L\u2081L\u2082/Q) = S\u2083 \u00d7_{C\u2082} S\u2083 (order 18); co-information = H(C) \u2212 H(C|X) = 1.5 \u2212 0.5 exactly; all fiber-product correlation beyond the shared sign character confined to the residue-invisible \u03c7_d=+1 fiber. Joint Chebotarev distribution matches order-18 class proportions; off-diagonal mass 34,375 vs predicted 34,307.\n\nControls clean: coprime synergy reproduced (0.1300 vs lab 0.1290), conjugate pair at full redundancy, which-factor wall NULL on the new joint.\n\nInsights for the programme: (L11) MI signatures CANNOT distinguish partial-overlap from same-field pairs \u2014 discriminators are type-agreement (7/9 vs 1.0) and off-diagonal mass; sparse joint moduli distort plug-in MI badly (~\u00b10.5 bits at 2 samples/cell) \u2014 joints need ~100 samples/cell or explicit bias modeling; disc-value arguments are not field arguments (index\u00b2 trap caught live).\n\nThe overlap ladder is closed at the pair level: coprime (+synergy) / shared-subfield (exactly \u22121 bit) / same-field (full redundancy).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp462_overlap_law.py + addendum462.py + result JSONs, seed 20260821.",
     "domains": [
@@ -3835,16 +3820,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-37 #5 \u2014 DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f516785",
     "description": "## NET-50 \u2014 limited-memory axis, round 2 (paper 135, /tmp/exp_net50_tropical.py, /tmp/net50.log)\n\n**Verdict name: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST.**\n\n### Result\nPushing the NET-49 oracle top-k sweep down to the tropical limit on Qwen2.5-0.5B (same gates; forward validated exactly vs HF before measurement):\n\n| k | 512 | 1024 | 2048 |\n|---|---|---|---|\n| 1 | 0.3637 | 0.2885 | **0.2503** |\n| 2 | 0.7865 | 0.7398 | 0.7002 |\n| 4 | 0.9097 | 0.8906 | 0.8762 |\n| 8 | 0.9617 | 0.9485 | 0.9408 |\n| knee | **16 \u2713** | **32 \u2713** | **24 \u2713** |\n\n- **P1 CONFIRMED**: pure argmax attention is catastrophic everywhere and WORSE at longer context (0.364 \u2192 0.289 \u2192 0.250).\n- **P2 CONFIRMED**: k=2 recovers ~0.70\u20130.79, k=4 ~0.88\u20130.91 (razor over the 0.90 bar at 512), k=8 ~0.94\u20130.96.\n- **Knee chain {16, 32, 24} replicates NET-49 EXACTLY** \u2014 different script, different session: deterministic-eval reproducibility proven.\n\n### The Maslov-gap map (new measurement)\nPer-row LSE \u2212 max of causal scores, per layer: bulk medians **0.17\u20131.86 nats** (within log 8 \u2248 2.08) at 512/1024; at 2048 all bulk layers \u2264 1.46. The ONLY far-from-tropical region is the diffuse tail: **L22/L23 medians 2.33/2.16 \u2192 2.55/2.37 \u2192 2.69/2.52 across contexts**, p90 \u2248 3.4. Crystallization loss \u03a3p(1\u2212p): per-layer means **0.34\u20130.97** \u2014 P3's \"\u2264 0.25\" REFUTED honestly. Real attention carries heavy soft mass that is individually tiny but collectively load-bearing: top-k to 24 keys still retains \u226598%.\n\n### Practical reading\nThe deployable regime is **\"tropical core + thin soft correction\"**: pointer-style (k\u22481\u20134) caches sit far below the knee, but the measured recovery curve quantifies exactly what each added key buys (k=1\u21922: +0.34\u20130.45; k=2\u21924: +0.12\u20130.17; k=4\u21928: +0.05\u20130.07). This is the deployment-relevant curve for aggressive KV compression on small-VRAM hosts.\n\n### All 8 barriers\n(a) clean \u2014 cliff/recovery/budget horns pre-stated; (b) clean \u2014 argmax-limit sweeps + Maslov/crystallization budget measurements on a pretrained LM not in Catalog or literature as measured laws; (c) confronted \u2014 real-scale pretrained model, natural text; honest limit: ONE model; (d) clean \u2014 held-out last 10%, data-free selection; (e) SUBSTANCE + limits \u2014 cross-session exact replication of {16,32,24} is the strongest reproducibility evidence of the axis; P3's crystallization half honestly refuted; single model/corpus; (f) clean \u2014 exact validation gate, fp32 throughout, NO crash (ALL_DONE_NET50); (g) fair \u2014 full reference, same 0.98 bar; random-k/local-window controls inherited from NET-49 (not re-run here \u2014 noted); (h) DIRECT \u2014 sub-k\\* recovery curve is what an aggressive KV policy needs.\n\n### Next\nPer-layer ablation (prune ONLY L22/L23?); size transfer (1.5B / offloaded 7B); oracle-to-policy eviction gap; corpus robustness; weight quantization vs the 2Lr defect band (NET-52 next).\n\nNow 50 network experiments. Assessment v50. Paper 135.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3562",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T03:58:05.370553+00:00",
     "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST \u2014 argmax attention retains only 0.25-0.36 on Qwen2.5-0.5B, k=4 recovers to ~0.9, knees {16,32,24} replicate NET-49 exactly; Maslov-gap map isolates the diffuse tail as the only far-from-tropical region"
   },
@@ -8726,7 +8712,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Combinatorics"
     ],
-    "id": "fd_5176",
+    "id": "fd_5177",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2610.08707v1",
@@ -16527,6 +16513,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "L22 provably keeps less than 43.3% of its mass at the 24-key knee, yet accuracy survives. The conjecture explains this through the logit margin.\n\nFor at least 98% of eval tokens, the logit margin m exceeds 4\u00b7L\u00b7B\u00b7(1 \u2212 \u03c1_L22(24)), where \u03c1_L22(24) < 0.433.\n\nLog per-token margins and value-vector norms in L22 at ctx 2048, and check the retention_threshold inequality.\n\nThe accuracy knee is margin-governed and the mass knee is irrelevant in tail layers.\n\nRetention in L22 comes from redundancy across heads, not from the margin.",
+    "domains": [],
+    "id": "fd_5179",
+    "priority_score": 0.5928260869565218,
+    "research_mode": "team",
+    "source_exp_id": "43e1310b",
+    "status": "available",
+    "timestamp": "2026-10-07T13:57:40.084919+00:00",
+    "title": "Accuracy-Knee Margin Law for Diffuse Layers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The bitlen \u00d7 cap ceiling table of the zero-fit dial factorises exactly into a row function and a column function. We conjecture this is not an accident of the dyadic profile but the signature of two knobs acting on disjoint parts of the tie profile: truncation of the tail versus rescaling of the whole space. A converse would make rank deficiency a diagnostic for knob independence.\n\nIf a two-parameter family of tie profiles is obtained by applying a tail-truncation operation indexed by u and a self-similar scaling indexed by b, then spearmanSq is a product f(u)\u00b7g(b); conversely, a nonvanishing 2x2 determinant in the ceiling table implies the two operations do not commute on the profile.\n\nFormalise truncation and scaling as operations on List N, prove the product form in general, and exhibit a non-commuting pair whose ceiling table has rank two.\n\nEvery dial in the programme can be certified interaction-free by checking two one-parameter families instead of a full grid.\n\nRank-one is specific to the 2-adic profile and grid sweeps remain necessary.",
     "domains": [],
     "id": "fd_4558",
@@ -17088,6 +17086,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-21T01:37:44.339048+00:00",
     "title": "Cell-Count Bias Bound for Plug-In Capacity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Per-layer accuracy deficits of top-k pruning add up, and only L22/L23 contribute at the knee. The proved depth sandwich makes the gate a function of the summed deficit, so per-layer ablations measure all relevant quantities. This tests whether the depth-multiplier collapse is mechanistic.\n\nWith \u03b4_l(k) the accuracy deficit of pruning layer l alone to k keys, the joint knee satisfies k*_joint \u2264 min{k : \u03a3_{l\u2208{22,23}} \u03b4_l(k) \u2264 1 \u2212 g} + one grid step, and \u03a3_{l\u2209{22,23}} \u03b4_l(k*) \u2264 0.002.\n\nPer-layer pruning ablation on Qwen2.5-0.5B at ctx 512/1024/2048 under the NET-49 harness; compare with the joint sweep.\n\nThe depth multiplier equals the number of diffuse layers; KV budgets can be allocated per layer.\n\nDeficits interact super-additively, so the compounding model needs cross-layer terms.",
+    "domains": [],
+    "id": "fd_5178",
+    "priority_score": 0.591875,
+    "research_mode": "team",
+    "source_exp_id": "43e1310b",
+    "status": "available",
+    "timestamp": "2026-10-07T13:57:39.456599+00:00",
+    "title": "Two-Layer Tail Additivity Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -36257,6 +36267,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-07T06:37:51.281884+00:00",
     "title": "Sandwich Saturation Classification"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The knee of a fixed geometric-decay profile is provably eventually constant. The conjecture is that real models of every size sit on such a plateau below 32 keys.\n\nFor Qwen2.5-{0.5B,1.5B,7B}, k*(2048) = k*(4096) = K* \u2264 32 at gate 0.98.\n\nRun the NET-49 sweep with a fine grid (step 4) at ctx 2048 and 4096 for each size.\n\nThe KV working set is O(1) in context, so long-context memory is dominated by selection, not storage.\n\nA growing knee refutes geometric decay of the sorted profile (contrapositive of kstar_eventually_constant_of_geometric_decay).",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_5180",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "43e1310b",
+    "status": "available",
+    "timestamp": "2026-10-07T13:57:40.706796+00:00",
+    "title": "Size-Invariant Saturation Plateau"
   },
   {
     "consumed_by_exp_id": "",
