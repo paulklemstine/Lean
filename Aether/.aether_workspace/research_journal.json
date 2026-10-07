@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "b4f715c2",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — general separated principal filtrations\n\nDerived from the verified content of\n\n* `Catalog/Shared/SeparatedPrincipalFiltration.lean` (core theory),\n* `Catalog/Shared/SeparatedPrin",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 85,
-      "timestamp": "2026-09-12T09:16:31",
-      "title": "General separated principal filtrations"
-    },
-    {
       "cycle_id": "1494cb60",
       "domain": "Applications",
       "key_insight": "# Future directions — Gaussian binomials after the q-Vandermonde cycle\n\nWhat this cycle established (all sorry-free, in `Catalog/Applications/`):\n\n* `qBinom` over an arbitrary commutative semiring, bo",
@@ -499,19 +489,19 @@
       "theorem_count": 66,
       "timestamp": "2026-10-06T21:05:02",
       "title": "FACT round-38 #1 — DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)"
+    },
+    {
+      "cycle_id": "6da44148",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Paper 134 (Chebotarev precision)\n\n## What this cycle established (all in `Catalog/Cryptography/ChebotarevPrecision/`, 0 sorries)\n\n* **Fine-dial reduction** (`FineDial.lean`). Mod",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-10-07T06:38:05",
+      "title": "FACT round-37 #6 — CHEBOTAREV-PRECISION: the master table reproduces simultaneously, max deviation 0"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c2e74b6a",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — Temporal Gödel–Löb logic after the finite model property\n\n## What this cycle established\n\nThe assignment conjectured that every non-derivable formula `A` of the temporal\nGödel–Lö",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 114,
-      "timestamp": "2026-08-26T05:52:11",
-      "title": "Finite model property with an explicit bound"
-    },
     {
       "cycle_id": "55b01213",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 66,
       "timestamp": "2026-10-06T21:05:02",
       "title": "FACT round-38 #1 — DEGREE-NINE: full pinning extends to Q(zeta_19)+ (paper 135)"
+    },
+    {
+      "cycle_id": "6da44148",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Paper 134 (Chebotarev precision)\n\n## What this cycle established (all in `Catalog/Cryptography/ChebotarevPrecision/`, 0 sorries)\n\n* **Fine-dial reduction** (`FineDial.lean`). Mod",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-10-07T06:38:05",
+      "title": "FACT round-37 #6 — CHEBOTAREV-PRECISION: the master table reproduces simultaneously, max deviation 0"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "0c9eb490",
-      "domain": "Shared",
-      "name": "fermat_cost_p_units_64",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "6c5b75ba",
-      "domain": "NumberTheory",
-      "name": "rot_run",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "6c5b75ba",
-      "domain": "NumberTheory",
-      "name": "rot_states",
-      "quality": 0.75
-    },
     {
       "cycle_id": "6c5b75ba",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "exists_sq_of_pow_eq_one",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "6da44148",
+      "domain": "Cryptography",
+      "name": "for",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "6da44148",
+      "domain": "Cryptography",
+      "name": "card_filter_fst_of_uniform",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "6da44148",
+      "domain": "Cryptography",
+      "name": "entropy_comp_fst_of_uniform",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-06T21:05:02",
+  "last_updated": "2026-10-07T06:38:05",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "9b32ba78",
-        "quality": 0.83,
-        "theorems": 80,
-        "title": "Local character at every point"
-      },
-      {
         "cycle_id": "54a9fda9",
         "quality": 0.82,
         "theorems": 71,
@@ -3389,6 +3383,12 @@
         "quality": 0.66,
         "theorems": 58,
         "title": "FACT round-38 #3 — POSITIONAL-FILTER: position pays 5.19x, the stratum beyond th"
+      },
+      {
+        "cycle_id": "6da44148",
+        "quality": 0.72,
+        "theorems": 74,
+        "title": "FACT round-37 #6 — CHEBOTAREV-PRECISION: the master table reproduces simultaneou"
       }
     ],
     "Geometry": [

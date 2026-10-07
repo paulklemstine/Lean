@@ -1,0 +1,47 @@
+{
+  "part": 8,
+  "archived_at": "2026-10-07T06:37:51Z",
+  "count": 1,
+  "directions": [
+    {
+      "id": "fd_3552",
+      "title": "FACT round-37 #6 — CHEBOTAREV-PRECISION: the master table reproduces simultaneously, max deviation 0.00048 bits (paper 134)",
+      "description": "Round-37 #6 (exp 463, assessment v243). First simultaneous re-measurement of the ENTIRE type-channel master table — 15 canonical fields, one protocol, one seed, 295,946 unramified primes/field < 2^22, law values computed fresh from explicit permutation groups.\n\n**H0 — PRECISION HOLDS**: global max |I_meas − I_law| = **0.00048 bits**, 20x inside the pre-stated 0.01 budget. No flags.\n\n- Every recorded headline reproduced within max(0.01, 3σ).\n- The one anomaly diagnosed: S3d's historical 1.0078 vs exact law 1.0000 (simultaneous remeasurement 0.9998±0.001) = small-population plug-in bias on the sparse 229-class dial — not physics, not dictionary drift.\n- Fresh law constants matched hand-derived values to 6 decimals on all 10 groups (incl. D4 = 1.655639, A4 = 0.918296).\n- Controls: thickening −0.00044; coprime flatness below null bias floor on six fields; sympy ground truth 0 mismatches ×15 fields; abelian dictionaries 100%.\n\nThe lab's ~128-paper measurement record is internally consistent to 5e-4 bits — extending the reproducibility-audit line (papers 97/103) from stored-seed re-runs to cross-field simultaneous measurement.\n\nLedger: 7 catches, ALL before results (D4 generator → S4 closure exposed by hand constants; F20 seeded as C5; LSB/MSB exponent mismatch; q²|disc ramified test; ...).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp463_precision.py + exp463_result.json + exp463_full_run.log, seed 20260821.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "6da44148",
+      "timestamp": "2026-08-22T03:08:29.729074+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-05T22:48:14.746277+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 231
+    }
+  ]
+}

@@ -3805,28 +3805,13 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "6da44148",
-    "description": "Round-37 #6 (exp 463, assessment v243). First simultaneous re-measurement of the ENTIRE type-channel master table \u2014 15 canonical fields, one protocol, one seed, 295,946 unramified primes/field < 2^22, law values computed fresh from explicit permutation groups.\n\n**H0 \u2014 PRECISION HOLDS**: global max |I_meas \u2212 I_law| = **0.00048 bits**, 20x inside the pre-stated 0.01 budget. No flags.\n\n- Every recorded headline reproduced within max(0.01, 3\u03c3).\n- The one anomaly diagnosed: S3d's historical 1.0078 vs exact law 1.0000 (simultaneous remeasurement 0.9998\u00b10.001) = small-population plug-in bias on the sparse 229-class dial \u2014 not physics, not dictionary drift.\n- Fresh law constants matched hand-derived values to 6 decimals on all 10 groups (incl. D4 = 1.655639, A4 = 0.918296).\n- Controls: thickening \u22120.00044; coprime flatness below null bias floor on six fields; sympy ground truth 0 mismatches \u00d715 fields; abelian dictionaries 100%.\n\nThe lab's ~128-paper measurement record is internally consistent to 5e-4 bits \u2014 extending the reproducibility-audit line (papers 97/103) from stored-seed re-runs to cross-field simultaneous measurement.\n\nLedger: 7 catches, ALL before results (D4 generator \u2192 S4 closure exposed by hand constants; F20 seeded as C5; LSB/MSB exponent mismatch; q\u00b2|disc ramified test; ...).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp463_precision.py + exp463_result.json + exp463_full_run.log, seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3552",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T03:08:29.729074+00:00",
-    "title": "FACT round-37 #6 \u2014 CHEBOTAREV-PRECISION: the master table reproduces simultaneously, max deviation 0.00048 bits (paper 134)"
-  },
-  {
     "consumed_by_exp_id": "43e1310b",
     "description": "## NET-49 \u2014 limited-memory axis, round 1 (paper 134, /tmp/exp_net49_qwen_topk.py + exp_net49b_sub32.py, /tmp/net49.log + net49b.log)\n\n**Verdict name: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES.**\n\n### Result\nOn a REAL PRETRAINED LLM \u2014 **Qwen2.5-0.5B** (24 layers, GQA kv=2), wikitext-103 held-out eval, fp32, forward validated EXACTLY against HF eager before any measurement (max|\u0394logit| = 0.0000) \u2014 the lossless attention knee is:\n\n| ctx | full acc | k\\* | toy product d\u00b7ctx/32 | ratio |\n|---|---|---|---|---|\n| 512 | 0.4460 | **16** | 384 | **1/24** |\n| 1024 | 0.4612 | **32** | 768 | **1/24** |\n| 2048 | 0.4787 | **24** | 1536 | **1/64** |\n\nScaling \u00d72.0 then **\u00d70.75 \u2014 sub-linear and already DECLINING**: P3 confirmed, P1 refuted 16\u00d7 beyond its floor, P2's linearity half-refuted (its concentration half held: k\\* \u2264 ctx/8 everywhere). **The DEPTH MULTIPLIER of the toy law collapses from d to ~1 on pretrained weights** \u2014 no compounding r(k)^d penalty binds trained attention.\n\n### Key numbers\n- Sweeps (retained): 512: 8 0.9617 \u2717, **16 0.9834 \u2713 (+0.44 SE razor)** \u2026 192 0.9997; 1024: 16 0.9771 \u2717 (\u22120.55 SE), **32 0.9912 \u2713** \u2026 384 1.0003; 2048: 4 0.8762 \u2717, 8 0.9408 \u2717, 16 0.9708 \u2717 (\u22122.5 SE), **24 0.9818 \u2713 (+0.5 SE razor, bracket (16, 24])**, 32 0.9867 \u2026 768 0.9997.\n- **Selection importance inflates an ORDER OF MAGNITUDE**: random-k gaps **+82.0/+71.8/+81.9/+70.0/+79.9/+68.0 pts** (the toy programme's entire range was +1.7\u201311.7); local-window gaps +40\u201355 pts \u2014 k=256 local reaches only **0.598 retained at 2048** while oracle top-k is 0.9867 with 8\u00d7 fewer keys.\n- **Depth-resolved concentration map (new measurement class)**: median-layer effective support \u2248 10\u201312 keys, context-INDEPENDENT across 512\u21922048 (toy: 46\u2192526); the ONLY diffuse attention lives in **L22/L23** (eff 51\u219283\u2192128.5 and 33\u219250\u219272, sub-linear growth; even L22@2048 is 3.9\u00d7 less diffuse than the toy MEAN layer); minimum at L16 (2.9 keys).\n- **Practical**: oracle working set = 24 of 2048 rows \u2192 **85\u00d7 fewer KV reads / 64\u00d7 fewer KV bytes per sequence**. Deployable policy needs a cheap selector \u2014 the oracle-to-policy gap is named as the next cell, not claimed.\n\n### All 8 barriers\n(a) clean \u2014 data-free oracle from the model's own scores; horns concerned position/scaling, not existence; (b) confronted \u2014 sparse/oracle attention and heavy-hitter eviction exist (H2O/StreamingLLM/SnapKV lineage); NEW content = measured laws: first transfer under this programme's fixed 0.98-retention protocol, the depth-multiplier collapse, the ctx/32-then-decline shape, the 10\u00d7 selection-gap inflation, the depth map \u2014 none in Catalog re-scan or literature; (c) CONFRONTED HEAD-ON \u2014 this IS the real-scale cell (pretrained 0.5B, natural web text, 151k vocab); honest limit: ONE model, ONE size; (d) clean \u2014 last 10% held out, zero training; (e) SUBSTANCE + limits \u2014 deterministic eval (addendum reproduced the baseline EXACTLY, 0.4787/2.6355), binomial SEs 0.17\u20130.35%, TWO razor-thin knees documented, the 1024 bracket (16, 32] un-pinned at 24 (the decline could be flat ~24), one model one corpus (Gutenberg rate-limited mid-round; wikitext fallback engaged automatically); (f) clean \u2014 validation gate passed exactly pre-measurement, fp32 throughout, loss tracks accuracy at every k, NO crash (ALL_DONE_NET49 + ALL_DONE_NET49B); (g) fair \u2014 full reference + the SAME 0.98 bar as all 48 prior rounds + random-k AND local-window at matched k, both dominated; (h) DIRECT \u2014 the axis's founding question answered with a 64\u00d7 KV-byte reduction at the knee vs the toy family's best-ever 12.8\u00d7 attention reading.\n\n### Next\n(1) per-layer pruning ablation \u2014 is L22's diffusion load-bearing? (2) size transfer \u2014 Qwen2.5-1.5B / quantized-offloaded 7B: does ~ctx/32 saturation persist? does the two-layer tail recur? (3) oracle-to-policy gap \u2014 online accumulated-score eviction vs this upper bound; (4) corpus robustness; (5) weight-quantization floors on the same harness (limited-memory iteration 2).\n\nNow 49 network experiments. Assessment v49. Paper 134.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3553",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
@@ -8718,6 +8703,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-06T09:24:33.933792+00:00",
     "title": "ArXiv paper: Spreading out perverse sheaves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'New algebraic points on covers of elliptic curves' and formalize its key results. Abstract: For a smooth projective curve $C/\\mathbb{Q}$ of genus $\\geq 2$ and $L/\\mathbb{Q}$ an extension, we write $C(L)_{\\text{new}}=\\{P\\in C(L):\\mathbb{Q}(P)=L\\}$. Recent work of Khawaja and Siksek conjectures that this set is empty for $100\\%$ of degree $n$ number fields $L$, when ordered by absolute discriminant. Moreover, they bring evidence towards this conjecture when $C$ is a degree $n$ cover of $\\mathbb{P}^1$. We complement their work by proving analogous results for degree $n$ covers $\u03c8:C\\to E$ of elliptic curves $E$. Our main result shows that, under suitable hypotheses, the number of distinct absolute discriminants at most $X$ of primitive degree $n$ fields $L$ with $C(L)_{\\text{new}}\\neq\\varnothing$ is $O(X^{1/2})$ or $O(X/(\\log X)^\u03b1)$, for some $\u03b1>0$. In degrees $2,3,4$ and $5$ we show that these fields have density $0$ among all fields of the same degree (in degree $4$, also among the primitive ones). The novelty is for degrees $4$ and $5$, where we use work of Bhargava--Shankar--",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_5176",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.08753v1",
+    "status": "available",
+    "timestamp": "2026-10-07T06:38:18.799653+00:00",
+    "title": "ArXiv paper: New algebraic points on covers of elliptic curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Random independent sets in uncrowded hypergraphs' and formalize its key results. Abstract: Given any fixed integer $k \\ge 2$ and sufficiently large $d$, we show that the largest possible fractional chromatic number of a $k$-uniform $d$-degenerate uncrowded hypergraph $H$ (i.e., with girth at least $5$) satisfies \\[ \u03c7_f(H) = (1 + o_d(1)) \\left((k-1)\\,\\frac{d}{\\log d}\\right)^{\\frac{1}{k-1}}. \\] In fact, we prove that this holds for $k$-uniform $d$-degenerate hypergraphs of girth at least $g$, for any given $g \\ge 5$. As a corollary, we obtain improved bounds on the fractional chromatic number of $d$-degenerate linear hypergraphs. This work builds upon a recent result by Allen, Dhawan, and Noel, extending it from graphs to hypergraphs. In addition to overcoming the new difficulties that arise in the hypergraph setting, our approach yields a simpler proof even in the original graph case. Our proof of the upper bound uses a simpler iterative procedure for sampling independent sets. We also establish bounds for fractional colorings with local demands, a framework introduced by Kel",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_5176",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.08707v1",
+    "status": "available",
+    "timestamp": "2026-10-07T06:38:21.846668+00:00",
+    "title": "ArXiv paper: Random independent sets in uncrowded hypergraphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -36198,6 +36213,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-06T21:04:47.852530+00:00",
     "title": "Ramanujan-Sum Closed Form of the Semiprime Pair Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Type channels depend only on the joint (coset, type) law, so non-isomorphic groups can collide. F20 and C4 collide at 3/2 bits; conjecture a full family AGL(1,p) versus C_{p-1}.\n\nFor every prime p, the type channel of AGL(1,p) acting on p points equals log2(p-1) - H(coset | T), and coincides with the channel of some abelian group of order p-1 for p in {3,5}; characterize all collisions.\n\nExtend affPerm to Fin p, compute channels for p = 7, 11 by decide, compare with abelian law values.\n\nA single scalar channel provably cannot certify the Galois group; batteries are necessary for group identification.\n\nCollisions are sporadic (p = 5 only), giving a rigidity theorem for type channels.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5173",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6da44148",
+    "status": "available",
+    "timestamp": "2026-10-07T06:37:50.057925+00:00",
+    "title": "Abelianization-Shadow Collisions for Frobenius Groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In simultaneous measurement, linearly disjoint fields have exactly zero crosstalk (proved). Conjecture that crosstalk between non-disjoint fields is quantized by shared abelian subfields.\n\nFor two Galois fields whose compositum has Galois group the fibre product over a shared quotient Q, the cross channel I(c_A ; T_B) equals I(c_A restricted to Q ; T_B restricted to Q), in particular 1 bit per shared quadratic character when types detect it.\n\nInstantiate fineDial_reduction with Q as the dial; measure on the exp463 15-field data for field pairs with common quadratic subfields.\n\nThe simultaneous master table has a predicted, exactly computable crosstalk matrix.\n\nJoint Frobenius laws are not fibre products, signalling a modelling gap in the type-channel framework.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5174",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6da44148",
+    "status": "available",
+    "timestamp": "2026-10-07T06:37:50.678290+00:00",
+    "title": "Shared-Subfield Crosstalk Quantization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Classify the groups attaining the lower sandwich bound I = H(T) - log2|G'|, now known to hold for every residue dial.\n\nI(coset;T) = H(T) - log2|G'| iff the type readout is injective on every coset of G'; among transitive groups of degree <= 6 this happens only for abelian G.\n\nFinite check over the catalog groups (S3, S4, A4, D4, V4, C4, D6, regular S3, F20) with decide; general proof via condEntropy characterization.\n\nThe sandwich is tight exactly on the abelian locus, giving a type-channel certificate of non-abelianness.\n\nA non-abelian group with type-separated cosets exists, a new structural phenomenon.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_5175",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6da44148",
+    "status": "available",
+    "timestamp": "2026-10-07T06:37:51.281884+00:00",
+    "title": "Sandwich Saturation Classification"
   },
   {
     "consumed_by_exp_id": "",
