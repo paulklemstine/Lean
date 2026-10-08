@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "1494cb60",
-      "domain": "Applications",
-      "key_insight": "# Future directions — Gaussian binomials after the q-Vandermonde cycle\n\nWhat this cycle established (all sorry-free, in `Catalog/Applications/`):\n\n* `qBinom` over an arbitrary commutative semiring, bo",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 431,
-      "timestamp": "2026-09-12T12:57:40",
-      "title": "q-Vandermonde / q-binomial theorem"
-    },
-    {
       "cycle_id": "a118b9c6",
       "domain": "Novelty",
       "key_insight": "# Future directions — effective reconstruction\n\nThis cycle separated three notions that the finite theory of\n`Catalog/Novelty/BoundedError.lean` conflates:\n\n* **fibre constancy** of a quantity along a",
@@ -499,19 +489,19 @@
       "theorem_count": 74,
       "timestamp": "2026-10-07T06:38:05",
       "title": "FACT round-37 #6 — CHEBOTAREV-PRECISION: the master table reproduces simultaneously, max deviation 0"
+    },
+    {
+      "cycle_id": "2b42a28a",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — after DIAL-OVERLAP-LAW (paper 133)\n\n## What survived (Stage 3)\n- **True, and proved in general.** Redundancy equals the entropy of the shared Galois quotient. Readouts that deter",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-10-08T13:49:11",
+      "title": "FACT round-37 #5 — DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (pape"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "3b9c1eb4",
-      "domain": "Computation",
-      "key_insight": "# FUTURE DIRECTIONS — U065 mechanism, after five research cycles\n\n## What these cycles established (formally, 0 sorries, standard axioms only)\n\n* **Mean preservation, any modulus.** `sum_rootCountM`:",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-26T08:01:01",
-      "title": "FACT round-86 #1 — U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL — hump REAL over exact Dic"
-    },
     {
       "cycle_id": "92ebc5bc",
       "domain": "MachineLearning",
@@ -2501,6 +2491,16 @@
       "theorem_count": 33,
       "timestamp": "2026-10-08T06:21:03",
       "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST — argmax attention retains only 0.25-0."
+    },
+    {
+      "cycle_id": "2b42a28a",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — after DIAL-OVERLAP-LAW (paper 133)\n\n## What survived (Stage 3)\n- **True, and proved in general.** Redundancy equals the entropy of the shared Galois quotient. Readouts that deter",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 64,
+      "timestamp": "2026-10-08T13:49:11",
+      "title": "FACT round-37 #5 — DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (pape"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-08T06:21:03",
+  "last_updated": "2026-10-08T13:49:11",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "eb2ba545",
-        "quality": 0.85,
-        "theorems": 65,
-        "title": "prove *completeness* — every labelling is dominated by some DP run;"
-      },
-      {
         "cycle_id": "8828af22",
         "quality": 0.79,
         "theorems": 63,
@@ -3513,6 +3507,12 @@
         "quality": 0.8,
         "theorems": 81,
         "title": "FACT round-37 #1 — HINT-SIZE-SCALING: hint value is size-stable across a 16,384x"
+      },
+      {
+        "cycle_id": "2b42a28a",
+        "quality": 0.72,
+        "theorems": 64,
+        "title": "FACT round-37 #5 — DIAL-OVERLAP-LAW: partially overlapping dials are exactly one"
       }
     ],
     "MachineLearning": [

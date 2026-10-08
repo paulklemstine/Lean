@@ -3805,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "2b42a28a",
-    "description": "Round-37 #5 (exp 462, assessment v242). The open cell between paper 91's coprime-synergy (+0.129) and shared-disc-redundancy (\u22120.99) is CLOSED.\n\n**H1 CONFIRMED \u2014 PARTIAL-OVERLAP-LAW**: two genuinely different S3 fields sharing their quadratic subfield are EXACTLY one bit redundant.\n\nPairs found by scanning 56,410 S3 cubics: d=\u22127: x\u00b3\u22125x\u22125 (disc \u2212175=\u22127\u00b75\u00b2) & x\u00b3\u22123x\u22125 (\u2212567=\u22127\u00b79\u00b2); d=\u22123: x\u00b3\u22126x\u22126 (\u2212108) & x\u00b3\u22123 (\u2212243). Measured deficits +0.9998/+0.9998/+1.0000 vs the 1-bit law (deviations \u2264 0.0002).\n\nDerivation committed BEFORE simulation: Gal(L\u2081L\u2082/Q) = S\u2083 \u00d7_{C\u2082} S\u2083 (order 18); co-information = H(C) \u2212 H(C|X) = 1.5 \u2212 0.5 exactly; all fiber-product correlation beyond the shared sign character confined to the residue-invisible \u03c7_d=+1 fiber. Joint Chebotarev distribution matches order-18 class proportions; off-diagonal mass 34,375 vs predicted 34,307.\n\nControls clean: coprime synergy reproduced (0.1300 vs lab 0.1290), conjugate pair at full redundancy, which-factor wall NULL on the new joint.\n\nInsights for the programme: (L11) MI signatures CANNOT distinguish partial-overlap from same-field pairs \u2014 discriminators are type-agreement (7/9 vs 1.0) and off-diagonal mass; sparse joint moduli distort plug-in MI badly (~\u00b10.5 bits at 2 samples/cell) \u2014 joints need ~100 samples/cell or explicit bias modeling; disc-value arguments are not field arguments (index\u00b2 trap caught live).\n\nThe overlap ladder is closed at the pair level: coprime (+synergy) / shared-subfield (exactly \u22121 bit) / same-field (full redundancy).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp462_overlap_law.py + addendum462.py + result JSONs, seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3554",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T03:08:29.731549+00:00",
-    "title": "FACT round-37 #5 \u2014 DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
-  },
-  {
     "consumed_by_exp_id": "acb7b707",
     "description": "Round-39 #1, cron iteration (exp 471, assessment v248). Paper 136's queued follow-up \u2014 and a correction of it.\n\n**Ensemble: the QR restriction carries NO penalty.** x\u00b2\u2212N smoothness equals UNRESTRICTED-random smoothness at every cell (emp_x2 \u2248 emp_rnd within noise; 0.87\u20130.99 of mean-\u03c1 = paper 130's finite-x factor). Mechanism: (N|p)=+1 primes divide x\u00b2\u2212N for TWO residue classes of x mod p \u2014 double rate on the halved pool compensates exactly. The pre-stated H1 refuted spectacularly: QR-pool-restricted randoms run 21\u201356\u00d7 lower. Paper 136's effective-u story RETIRED.\n\n**Per-N variance is the real mechanism**: corr(per-N smooth rate, #{odd primes \u2264100 that are QRs of N}) = 0.50/0.45/0.48/0.40 across cells; decile spread 2.4\u00d7 at u=2.5 and **9.3\u00d7** at u=3.5.\n\nResolves paper 136's anomaly: its ONE-N-per-scale design sampled this variance (the 0.54\u20130.76 yield ratios were draw luck, not a systematic deficit). Actionable: per-N relation yield is cheaply predictable a priori from ~20 Euler-criterion tests.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp471_qr_smoothness.py + exp471_result.json, seed 20260821, 4 cells \u00d7 100k values.",
     "domains": [
@@ -3835,16 +3820,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #1 \u2014 QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce6eb638",
     "description": "Round-38 #4 (exp 468, assessment v247). The third row of the barrier map, derived and machine-verified.\n\n**Master law**: Speedup(H) = 1/(1 \u2212 (1\u2212\u03b8)\u00b7P_hit) \u2014 ALL information acts through the single scalar P_hit. Paper 132's 4/3 cap is exactly the UNINFORMATIVE POINT of this law (H \u22a5 p).\n\n- **Symmetry break located**: internal readings die on the fiber-uniformity step; a hint's likelihood lives on the non-c-measurable coordinate and survives it verbatim.\n- **Canonical partition law** 8/(7\u22122\u03b1): \u03b1=\u00bd reproduces 4/3; \u03b1=1 gives only 8/5 < 2 \u2014 the WHICH-FACTOR CEILING: external hints capped at 2\u00d7 per dial; beyond it only via ISOLATION-COST log\u2082\u03c0(\u221aN) oracle queries (net-positive from t=5).\n- **Certain-hint ladder** 2^(t\u22122)/(1\u22122^(1\u2212t)): two bit-losses identified (parity + which-factor).\n- **Trace hints** 2^(t\u22121)/C_t: GENERIC-RECOVERY's ~5\u00d7/bit is a constant divisor, not a rate penalty.\n- **Break-even** surface \u03b1*(\u03b8,\u03b5); internal filters tolerate \u03b5 \u2264 1/6, external up to 3/5.\n\nVerification: m=31/400k dev \u22640.0032 across \u03b1; \u03c7(c)-split pointwise exact; exhaustive m=3..8 max dev 0.0089; ladder ratios 0.9986\u20131.0045; break-even verdicts 20/20.\n\nTHE COMPLETED MAP: residues cap 4/3 (theorem) | position 5.19\u00d7 measured (paper 137) | external linear-in-bits with the 2\u00d7 per-dial ceiling (theorem here). External info priced linearly \u2014 capacity synergy does not transfer to work bits.\n\nLedger: 9 self-caught errors incl. a label-space bug producing a flat-\u03b1 artifact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp468_proofs.md + exp468_verify.py + exp468_result.json, seed 20260821.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3564",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T03:58:05.372817+00:00",
     "title": "FACT round-38 #4 \u2014 EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)"
   },
@@ -8728,7 +8714,7 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics",
       "Computation"
     ],
-    "id": "fd_5184",
+    "id": "fd_5185",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2610.10380v1",
@@ -36338,6 +36324,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-08T06:20:47.521199+00:00",
     "title": "Compounded Readout Law for Retention"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the overlap law from abelian (character) quotients to arbitrary shared quotients Q, with conjugacy-class readouts. The predicted redundancy is the Chebotarev entropy of the Q-class distribution rather than log2|Q|. This would close the ladder for shared non-abelian subfields such as a shared S3 resolvent of two S4 quartics.\n\nIf G and H surject onto Q and T1, T2 are class functions determining the Q-class of the image, then I(T1;T2) on G x_Q H equals H(class_Q) under the uniform measure.\n\nInstantiate mutInfo_eq_uEnt_label with kappa = Q-class of chi1(x.1); check fibre split for class readouts; verify S4 x_{S3} S4 numerically and by decide.\n\nRedundancy of any two Galois dials is computable from the shared quotient's class equation alone.\n\nClass readouts can carry hidden cross-fibre correlation, so the fibre-split mechanism fails for non-normal readouts.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5186",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "2b42a28a",
+    "status": "available",
+    "timestamp": "2026-10-08T13:48:53.209502+00:00",
+    "title": "Non-abelian Overlap Law for Shared Galois Quotients"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Generalise the proved three-dial result to n fields sharing one subfield. Total correlation should be (n-1) log2|C| and co-information +log2|C| for every n. This is the redundancy-only counterpart of the coprime synergy observations.\n\nOn the n-fold fibre product G1 x_C ... x_C Gn with character-determining readouts, sum_i H(T_i) - H(T_1,...,T_n) = (n-1) log2|C|.\n\nFormalise an iterated fibre product over Fin n and prove by induction using mutInfo_eq_uEnt_label; check n=4 for S3 by decide.\n\nShared-subfield families are exactly characterised by linear growth of total correlation.\n\nHigher-order interactions appear beyond triples, contradicting conditional independence given the shared character.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5187",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "2b42a28a",
+    "status": "available",
+    "timestamp": "2026-10-08T13:48:53.839507+00:00",
+    "title": "n-Dial Total-Correlation Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Plug-in mutual information on fibre-product joints has bias governed by the number of structurally non-zero cells, not the full table size. This quantifies L11's warning about sparse moduli and explains the 4-digit accuracy of exp 462.\n\nThe leading bias of plug-in I(T1;T2) on G x_C H is (k_joint - k1 - k2 + 1)/(2 n ln 2) with k_joint the number of non-empty cells of the proved joint table.\n\nMonte Carlo on the exact 1:2:2:4:9 law versus the 9-cell product law at n = 50..5000; compare with the prediction.\n\nExperiments can certify exact overlap laws with far fewer primes than generic MI estimates require.\n\nStructural zeros interact with sampling zeros in a non-additive way, requiring explicit bias modelling.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5188",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "2b42a28a",
+    "status": "available",
+    "timestamp": "2026-10-08T13:48:54.584980+00:00",
+    "title": "Structural-Zero Bias Correction for Fibre-Product Joints"
   },
   {
     "consumed_by_exp_id": "",

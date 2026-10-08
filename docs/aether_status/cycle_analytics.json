@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-08T06:21:04.716784+00:00",
+  "last_updated": "2026-10-08T13:49:11.954567+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -77424,6 +77424,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-08T06:21:04.336193+00:00",
       "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST \u2014 argmax attention retains only 0.25-0."
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Logic",
+      "duration_seconds": 26883.131540060043,
+      "end_time": 1791467320.569217,
+      "files_integrated": 4,
+      "job_id": "2b42a28a",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1791440437.437677,
+      "strategy_count": 0,
+      "theorem_count": 64,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 54,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-08T13:49:11.574859+00:00",
+      "title": "FACT round-37 #5 \u2014 DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (pape"
     }
   ]
 }

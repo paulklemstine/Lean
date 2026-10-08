@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-08T06:20:48Z",
-  "count": 3,
+  "archived_at": "2026-10-08T13:48:54Z",
+  "count": 4,
   "directions": [
     {
       "id": "fd_3552",
@@ -122,6 +122,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 237
+    },
+    {
+      "id": "fd_3554",
+      "title": "FACT round-37 #5 — DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)",
+      "description": "Round-37 #5 (exp 462, assessment v242). The open cell between paper 91's coprime-synergy (+0.129) and shared-disc-redundancy (−0.99) is CLOSED.\n\n**H1 CONFIRMED — PARTIAL-OVERLAP-LAW**: two genuinely different S3 fields sharing their quadratic subfield are EXACTLY one bit redundant.\n\nPairs found by scanning 56,410 S3 cubics: d=−7: x³−5x−5 (disc −175=−7·5²) & x³−3x−5 (−567=−7·9²); d=−3: x³−6x−6 (−108) & x³−3 (−243). Measured deficits +0.9998/+0.9998/+1.0000 vs the 1-bit law (deviations ≤ 0.0002).\n\nDerivation committed BEFORE simulation: Gal(L₁L₂/Q) = S₃ ×_{C₂} S₃ (order 18); co-information = H(C) − H(C|X) = 1.5 − 0.5 exactly; all fiber-product correlation beyond the shared sign character confined to the residue-invisible χ_d=+1 fiber. Joint Chebotarev distribution matches order-18 class proportions; off-diagonal mass 34,375 vs predicted 34,307.\n\nControls clean: coprime synergy reproduced (0.1300 vs lab 0.1290), conjugate pair at full redundancy, which-factor wall NULL on the new joint.\n\nInsights for the programme: (L11) MI signatures CANNOT distinguish partial-overlap from same-field pairs — discriminators are type-agreement (7/9 vs 1.0) and off-diagonal mass; sparse joint moduli distort plug-in MI badly (~±0.5 bits at 2 samples/cell) — joints need ~100 samples/cell or explicit bias modeling; disc-value arguments are not field arguments (index² trap caught live).\n\nThe overlap ladder is closed at the pair level: coprime (+synergy) / shared-subfield (exactly −1 bit) / same-field (full redundancy).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp462_overlap_law.py + addendum462.py + result JSONs, seed 20260821.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "2b42a28a",
+      "timestamp": "2026-08-22T03:08:29.731549+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-06T21:05:38.034094+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 229
     }
   ]
 }
