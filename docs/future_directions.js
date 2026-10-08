@@ -3835,16 +3835,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-38 #4 \u2014 EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14ed24f6",
     "description": "Round-39 #6, cron iteration (exp 476, assessment v253). Full-scale validation of paper 142's predictor.\n\n**PER-N-PREDICTOR-REPLICATED**: base effect at all three scales (r = 0.497\u20130.521 u=2.5); H1 confirmed (R\u00b2=0.3041/slope 1.128 test at u=2.5); **transfer shape PERFECT \u2014 transfer R\u00b2 equals target-scale corr\u00b2 (0.2719 vs 0.2717)**; slopes in-band 4/4 cells. Weighted feature NULL (+0.009). Floor attribution: residual 1.31\u00d7 floor at u=2.5 (real structure remains), 1.05\u00d7 at u=3.5 (noise-bound).\n\nAdopted form: rate(N) \u2248 \u22120.0035 + 0.01156\u00b7QR(\u2264100) from ~20 Euler tests \u2014 a validated per-N sieve-yield dial for QS calibration. Barriers 5/8 intact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp476_per_n_predictor_full.py + exp476_result.json, seed 20260827.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3576",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T04:50:57.569717+00:00",
     "title": "FACT round-39 #6 \u2014 PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks each population (paper 144)"
   },
