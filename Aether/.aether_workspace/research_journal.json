@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5e9b52ad",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Kneser input for many lines\n\nThis cycle settled the assigned conjecture (negatively) and replaced it with a\n*sharp* positive criterion together with a matching family of extremal",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 48,
-      "timestamp": "2026-08-26T07:10:28",
-      "title": "Kneser input for many lines"
-    },
-    {
       "cycle_id": "3b9c1eb4",
       "domain": "Computation",
       "key_insight": "# FUTURE DIRECTIONS — U065 mechanism, after five research cycles\n\n## What these cycles established (formally, 0 sorries, standard axioms only)\n\n* **Mean preservation, any modulus.** `sum_rootCountM`:",
@@ -2501,6 +2491,16 @@
       "theorem_count": 27,
       "timestamp": "2026-10-07T13:57:55",
       "title": "NET-49: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES — on Qwen2.5-0.5B the lossless attention knee is"
+    },
+    {
+      "cycle_id": "4f516785",
+      "domain": "Novelty",
+      "key_insight": "# Future directions after NET-50 (TropicalLimitRecovery)\n\n## 1. Layer-selective tropicalization\nConjecture: if argmax/top-4 caches are used only in layers whose median Maslov gap is ≤ log 4, and\nL22/L",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-10-08T06:21:03",
+      "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST — argmax attention retains only 0.25-0."
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-07T13:57:55",
+  "last_updated": "2026-10-08T06:21:03",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "41afeb86",
-        "quality": 0.87,
-        "theorems": 120,
-        "title": "FACT round-41 #1 — PHASE-FEATURES: low-prime phases are sub-threshold and window"
-      },
-      {
         "cycle_id": "e6e33149",
         "quality": 0.86,
         "theorems": 76,
@@ -3637,6 +3631,12 @@
         "quality": 0.62,
         "theorems": 37,
         "title": "FACT round-35 #8 — CONJUGATE-S3-TEST: conjugate fields produce identical type ch"
+      },
+      {
+        "cycle_id": "4f516785",
+        "quality": 0.62,
+        "theorems": 33,
+        "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST — argmax attention "
       }
     ],
     "NumberTheory": [

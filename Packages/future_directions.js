@@ -3820,21 +3820,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-37 #5 \u2014 DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (paper 133)"
   },
   {
-    "consumed_by_exp_id": "4f516785",
-    "description": "## NET-50 \u2014 limited-memory axis, round 2 (paper 135, /tmp/exp_net50_tropical.py, /tmp/net50.log)\n\n**Verdict name: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST.**\n\n### Result\nPushing the NET-49 oracle top-k sweep down to the tropical limit on Qwen2.5-0.5B (same gates; forward validated exactly vs HF before measurement):\n\n| k | 512 | 1024 | 2048 |\n|---|---|---|---|\n| 1 | 0.3637 | 0.2885 | **0.2503** |\n| 2 | 0.7865 | 0.7398 | 0.7002 |\n| 4 | 0.9097 | 0.8906 | 0.8762 |\n| 8 | 0.9617 | 0.9485 | 0.9408 |\n| knee | **16 \u2713** | **32 \u2713** | **24 \u2713** |\n\n- **P1 CONFIRMED**: pure argmax attention is catastrophic everywhere and WORSE at longer context (0.364 \u2192 0.289 \u2192 0.250).\n- **P2 CONFIRMED**: k=2 recovers ~0.70\u20130.79, k=4 ~0.88\u20130.91 (razor over the 0.90 bar at 512), k=8 ~0.94\u20130.96.\n- **Knee chain {16, 32, 24} replicates NET-49 EXACTLY** \u2014 different script, different session: deterministic-eval reproducibility proven.\n\n### The Maslov-gap map (new measurement)\nPer-row LSE \u2212 max of causal scores, per layer: bulk medians **0.17\u20131.86 nats** (within log 8 \u2248 2.08) at 512/1024; at 2048 all bulk layers \u2264 1.46. The ONLY far-from-tropical region is the diffuse tail: **L22/L23 medians 2.33/2.16 \u2192 2.55/2.37 \u2192 2.69/2.52 across contexts**, p90 \u2248 3.4. Crystallization loss \u03a3p(1\u2212p): per-layer means **0.34\u20130.97** \u2014 P3's \"\u2264 0.25\" REFUTED honestly. Real attention carries heavy soft mass that is individually tiny but collectively load-bearing: top-k to 24 keys still retains \u226598%.\n\n### Practical reading\nThe deployable regime is **\"tropical core + thin soft correction\"**: pointer-style (k\u22481\u20134) caches sit far below the knee, but the measured recovery curve quantifies exactly what each added key buys (k=1\u21922: +0.34\u20130.45; k=2\u21924: +0.12\u20130.17; k=4\u21928: +0.05\u20130.07). This is the deployment-relevant curve for aggressive KV compression on small-VRAM hosts.\n\n### All 8 barriers\n(a) clean \u2014 cliff/recovery/budget horns pre-stated; (b) clean \u2014 argmax-limit sweeps + Maslov/crystallization budget measurements on a pretrained LM not in Catalog or literature as measured laws; (c) confronted \u2014 real-scale pretrained model, natural text; honest limit: ONE model; (d) clean \u2014 held-out last 10%, data-free selection; (e) SUBSTANCE + limits \u2014 cross-session exact replication of {16,32,24} is the strongest reproducibility evidence of the axis; P3's crystallization half honestly refuted; single model/corpus; (f) clean \u2014 exact validation gate, fp32 throughout, NO crash (ALL_DONE_NET50); (g) fair \u2014 full reference, same 0.98 bar; random-k/local-window controls inherited from NET-49 (not re-run here \u2014 noted); (h) DIRECT \u2014 sub-k\\* recovery curve is what an aggressive KV policy needs.\n\n### Next\nPer-layer ablation (prune ONLY L22/L23?); size transfer (1.5B / offloaded 7B); oracle-to-policy eviction gap; corpus robustness; weight quantization vs the 2Lr defect band (NET-52 next).\n\nNow 50 network experiments. Assessment v50. Paper 135.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3562",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T03:58:05.370553+00:00",
-    "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST \u2014 argmax attention retains only 0.25-0.36 on Qwen2.5-0.5B, k=4 recovers to ~0.9, knees {16,32,24} replicate NET-49 exactly; Maslov-gap map isolates the diffuse tail as the only far-from-tropical region"
-  },
-  {
     "consumed_by_exp_id": "acb7b707",
     "description": "Round-39 #1, cron iteration (exp 471, assessment v248). Paper 136's queued follow-up \u2014 and a correction of it.\n\n**Ensemble: the QR restriction carries NO penalty.** x\u00b2\u2212N smoothness equals UNRESTRICTED-random smoothness at every cell (emp_x2 \u2248 emp_rnd within noise; 0.87\u20130.99 of mean-\u03c1 = paper 130's finite-x factor). Mechanism: (N|p)=+1 primes divide x\u00b2\u2212N for TWO residue classes of x mod p \u2014 double rate on the halved pool compensates exactly. The pre-stated H1 refuted spectacularly: QR-pool-restricted randoms run 21\u201356\u00d7 lower. Paper 136's effective-u story RETIRED.\n\n**Per-N variance is the real mechanism**: corr(per-N smooth rate, #{odd primes \u2264100 that are QRs of N}) = 0.50/0.45/0.48/0.40 across cells; decile spread 2.4\u00d7 at u=2.5 and **9.3\u00d7** at u=3.5.\n\nResolves paper 136's anomaly: its ONE-N-per-scale design sampled this variance (the 0.54\u20130.76 yield ratios were draw luck, not a systematic deficit). Actionable: per-N relation yield is cheaply predictable a priori from ~20 Euler-criterion tests.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp471_qr_smoothness.py + exp471_result.json, seed 20260821, 4 cells \u00d7 100k values.",
     "domains": [
@@ -8720,6 +8705,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-07T06:38:21.846668+00:00",
     "title": "ArXiv paper: Random independent sets in uncrowded hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Cocycle Relations and Elliptic Gamma Values' and formalize its key results. Abstract: In the recent work of Bergeron-Charollois-Garc\u00eda \\cite{BCG23}, a conjectural analytic expression for elliptic units for complex cubic fields was proposed: namely, as the value of a smoothed quotient of elliptic Gamma functions. The complex number depended on the conductor ideal, ray class group element, smoothing ideal, and a `torsion point' $h$. If this analytic function is to fit into the framework of explicit class field theory, then, as in the case of torsion points on CM elliptic curves, our choice of $h$ should only depend on its congruence class modulo some lattice $L$. This conjecture has been supported by much numerical evidence. In this paper, we use the cocycle relations satisfied by the smoothed elliptic Gamma function to prove that the construction is indeed independent of $h$.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5184",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.10365v1",
+    "status": "available",
+    "timestamp": "2026-10-08T06:21:17.975948+00:00",
+    "title": "ArXiv paper: Cocycle Relations and Elliptic Gamma Values"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Perfect matchings in hypergraphs and Feige's inequality' and formalize its key results. Abstract: How large of a minimum degree does an $n$-vertex graph need before we are sure that it contains a perfect matching? Dirac's theorem states that a graph on an even number of vertices in which each vertex has degree at least $n/2$ has this property. In this short expository note, intended to be used in the classroom, we discuss how this statement generalizes to hypergraphs. In particular, we highlight an elegant connection between fractional perfect matchings in hypergraphs and a probabilistic inequality about nonnegative random variables, which was conjectured by Feige. We also present a very short self-contained proof of Feige's conjecture.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_5184",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.10380v1",
+    "status": "available",
+    "timestamp": "2026-10-08T06:21:21.206952+00:00",
+    "title": "ArXiv paper: Perfect matchings in hypergraphs and Feige's inequality"
   },
   {
     "consumed_by_exp_id": "",
@@ -17279,6 +17294,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-18T16:20:58.504839+00:00",
     "title": "Sparse Plug-In Bias Bound for Residue Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cauchy\u2013Schwarz gives knee \u2265 \u03c4\u00b2/\u03a3p\u00b2. This conjecture uses that lower bound as an online per-head budget and asks how close it comes to oracle top-k.\n\nThe policy with budget \u2308\u03c4\u00b2/\u03a3p\u00b2\u2309 per head reaches oracle top-k retention within 0.01.\n\nImplement it in the NET-50 harness and compare against the oracle sweep.\n\nThere is a cheap, provably necessary budget that is also nearly sufficient.\n\nCollision underestimates the heavy diffuse tail, and higher R\u00e9nyi orders are needed.",
+    "domains": [],
+    "id": "fd_5183",
+    "priority_score": 0.5912962962962964,
+    "research_mode": "team",
+    "source_exp_id": "4f516785",
+    "status": "available",
+    "timestamp": "2026-10-08T06:20:48.145568+00:00",
+    "title": "R\u00e9nyi-2 Eviction Certificate"
   },
   {
     "consumed_by_exp_id": "",
@@ -36282,6 +36309,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-07T13:57:40.706796+00:00",
     "title": "Size-Invariant Saturation Plateau"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Use the Maslov gap map to give argmax-style caches only to near-tropical layers and keep full caches in the diffuse tail. The Lean bound #S \u2265 \u03c4 e^{g} gives the per-layer key count. This tests whether L22/L23 alone carry the NET-50 loss.\n\nWith k=4 in layers whose median gap \u2264 log 4 and a full cache in L22/L23, global retention \u2265 0.98 at contexts 512, 1024 and 2048 on Qwen2.5-0.5B.\n\nRun per-layer ablation in the NET-50 harness; formally, extend card_ge_of_mass_gap to a sum of per-layer budgets.\n\nCache memory drops by about 90% in 22 of 24 layers with no measurable loss.\n\nThe bulk layers also carry load-bearing soft mass, so the gap map is not a sufficient budget statistic.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_5181",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4f516785",
+    "status": "available",
+    "timestamp": "2026-10-08T06:20:46.882544+00:00",
+    "title": "Layer-Selective Tropicalization Budget"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The measured recovery curve more than doubles from k=1 to k=2, which no sorted mass curve can do. The conjecture is that measured retention is a product of per-layer kept masses.\n\nR(k) = \u220f_l m_l(k) up to 5% relative error, where m_l(k) is the mean top-k softmax mass of layer l.\n\nLog m_l(k) per layer and compare the product to R(k). In Lean, prod_one_sub_ge and prod_one_sub_le_exp already give the two-sided budget.\n\nRetention can be predicted from per-layer statistics without end-to-end runs.\n\nCross-layer interactions dominate, and the per-layer oracle is not additive in log space.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_5182",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4f516785",
+    "status": "available",
+    "timestamp": "2026-10-08T06:20:47.521199+00:00",
+    "title": "Compounded Readout Law for Retention"
   },
   {
     "consumed_by_exp_id": "",

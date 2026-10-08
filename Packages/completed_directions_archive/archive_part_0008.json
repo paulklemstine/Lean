@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-07T13:57:41Z",
-  "count": 2,
+  "archived_at": "2026-10-08T06:20:48Z",
+  "count": 3,
   "directions": [
     {
       "id": "fd_3552",
@@ -82,6 +82,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 230
+    },
+    {
+      "id": "fd_3562",
+      "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST — argmax attention retains only 0.25-0.36 on Qwen2.5-0.5B, k=4 recovers to ~0.9, knees {16,32,24} replicate NET-49 exactly; Maslov-gap map isolates the diffuse tail as the only far-from-tropical region",
+      "description": "## NET-50 — limited-memory axis, round 2 (paper 135, /tmp/exp_net50_tropical.py, /tmp/net50.log)\n\n**Verdict name: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST.**\n\n### Result\nPushing the NET-49 oracle top-k sweep down to the tropical limit on Qwen2.5-0.5B (same gates; forward validated exactly vs HF before measurement):\n\n| k | 512 | 1024 | 2048 |\n|---|---|---|---|\n| 1 | 0.3637 | 0.2885 | **0.2503** |\n| 2 | 0.7865 | 0.7398 | 0.7002 |\n| 4 | 0.9097 | 0.8906 | 0.8762 |\n| 8 | 0.9617 | 0.9485 | 0.9408 |\n| knee | **16 ✓** | **32 ✓** | **24 ✓** |\n\n- **P1 CONFIRMED**: pure argmax attention is catastrophic everywhere and WORSE at longer context (0.364 → 0.289 → 0.250).\n- **P2 CONFIRMED**: k=2 recovers ~0.70–0.79, k=4 ~0.88–0.91 (razor over the 0.90 bar at 512), k=8 ~0.94–0.96.\n- **Knee chain {16, 32, 24} replicates NET-49 EXACTLY** — different script, different session: deterministic-eval reproducibility proven.\n\n### The Maslov-gap map (new measurement)\nPer-row LSE − max of causal scores, per layer: bulk medians **0.17–1.86 nats** (within log 8 ≈ 2.08) at 512/1024; at 2048 all bulk layers ≤ 1.46. The ONLY far-from-tropical region is the diffuse tail: **L22/L23 medians 2.33/2.16 → 2.55/2.37 → 2.69/2.52 across contexts**, p90 ≈ 3.4. Crystallization loss Σp(1−p): per-layer means **0.34–0.97** — P3's \"≤ 0.25\" REFUTED honestly. Real attention carries heavy soft mass that is individually tiny but collectively load-bearing: top-k to 24 keys still retains ≥98%.\n\n### Practical reading\nThe deployable regime is **\"tropical core + thin soft correction\"**: pointer-style (k≈1–4) caches sit far below the knee, but the measured recovery curve quantifies exactly what each added key buys (k=1→2: +0.34–0.45; k=2→4: +0.12–0.17; k=4→8: +0.05–0.07). This is the deployment-relevant curve for aggressive KV compression on small-VRAM hosts.\n\n### All 8 barriers\n(a) clean — cliff/recovery/budget horns pre-stated; (b) clean — argmax-limit sweeps + Maslov/crystallization budget measurements on a pretrained LM not in Catalog or literature as measured laws; (c) confronted — real-scale pretrained model, natural text; honest limit: ONE model; (d) clean — held-out last 10%, data-free selection; (e) SUBSTANCE + limits — cross-session exact replication of {16,32,24} is the strongest reproducibility evidence of the axis; P3's crystallization half honestly refuted; single model/corpus; (f) clean — exact validation gate, fp32 throughout, NO crash (ALL_DONE_NET50); (g) fair — full reference, same 0.98 bar; random-k/local-window controls inherited from NET-49 (not re-run here — noted); (h) DIRECT — sub-k\\* recovery curve is what an aggressive KV policy needs.\n\n### Next\nPer-layer ablation (prune ONLY L22/L23?); size transfer (1.5B / offloaded 7B); oracle-to-policy eviction gap; corpus robustness; weight quantization vs the 2Lr defect band (NET-52 next).\n\nNow 50 network experiments. Assessment v50. Paper 135.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "4f516785",
+      "timestamp": "2026-08-22T03:58:05.370553+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.62,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-07T13:58:37.565132+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 237
     }
   ]
 }
