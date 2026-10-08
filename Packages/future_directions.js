@@ -3835,16 +3835,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST \u2014 argmax attention retains only 0.25-0.36 on Qwen2.5-0.5B, k=4 recovers to ~0.9, knees {16,32,24} replicate NET-49 exactly; Maslov-gap map isolates the diffuse tail as the only far-from-tropical region"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acb7b707",
     "description": "Round-39 #1, cron iteration (exp 471, assessment v248). Paper 136's queued follow-up \u2014 and a correction of it.\n\n**Ensemble: the QR restriction carries NO penalty.** x\u00b2\u2212N smoothness equals UNRESTRICTED-random smoothness at every cell (emp_x2 \u2248 emp_rnd within noise; 0.87\u20130.99 of mean-\u03c1 = paper 130's finite-x factor). Mechanism: (N|p)=+1 primes divide x\u00b2\u2212N for TWO residue classes of x mod p \u2014 double rate on the halved pool compensates exactly. The pre-stated H1 refuted spectacularly: QR-pool-restricted randoms run 21\u201356\u00d7 lower. Paper 136's effective-u story RETIRED.\n\n**Per-N variance is the real mechanism**: corr(per-N smooth rate, #{odd primes \u2264100 that are QRs of N}) = 0.50/0.45/0.48/0.40 across cells; decile spread 2.4\u00d7 at u=2.5 and **9.3\u00d7** at u=3.5.\n\nResolves paper 136's anomaly: its ONE-N-per-scale design sampled this variance (the 0.54\u20130.76 yield ratios were draw luck, not a systematic deficit). Actionable: per-N relation yield is cheaply predictable a priori from ~20 Euler-criterion tests.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp471_qr_smoothness.py + exp471_result.json, seed 20260821, 4 cells \u00d7 100k values.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3563",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T03:58:05.371702+00:00",
     "title": "FACT round-39 #1 \u2014 QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
   },

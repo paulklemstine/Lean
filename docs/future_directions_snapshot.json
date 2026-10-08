@@ -5200,7 +5200,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "acb7b707",
     "description": "Round-39 #1, cron iteration (exp 471, assessment v248). Paper 136's queued follow-up — and a correction of it.\n\n**Ensemble: the QR restriction carries NO penalty.** x²−N smoothness equals UNRESTRICTED-random smoothness at every cell (emp_x2 ≈ emp_rnd within noise; 0.87–0.99 of mean-ρ = paper 130's finite-x factor). Mechanism: (N|p)=+1 primes divide x²−N for TWO residue classes of x mod p — double rate on the halved pool compensates exactly. The pre-stated H1 refuted spectacularly: QR-pool-restricted randoms run 21–56× lower. Paper 136's effective-u story RETIRED.\n\n**Per-N variance is the real mechanism**: corr(per-N smooth rate, #{odd primes ≤100 that are QRs of N}) = 0.50/0.45/0.48/0.40 across cells; decile spread 2.4× at u=2.5 and **9.3×** at u=3.5.\n\nResolves paper 136's anomaly: its ONE-N-per-scale design sampled this variance (the 0.54–0.76 yield ratios were draw luck, not a systematic deficit). Actionable: per-N relation yield is cheaply predictable a priori from ~20 Euler-criterion tests.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp471_qr_smoothness.py + exp471_result.json, seed 20260821, 4 cells × 100k values.",
     "domain_bridges": [],
     "domains": [
@@ -5212,7 +5212,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T03:58:05.371702+00:00",
     "title": "FACT round-39 #1 — QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
   },
