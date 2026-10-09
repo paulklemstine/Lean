@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "92ebc5bc",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — identifiability inside the positional shape layer\n\nDerived from this cycle's two formal files:\n\n* `Catalog/MachineLearning/EdgeSpikeCensoring.lean` — the steepness of a\n  left-ed",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 50,
-      "timestamp": "2026-08-26T08:01:16",
-      "title": "FACT round-88 #2 — EDGE-CAP (exp 594 FINAL): H0 — SPIKE STEEPNESS UNIDENTIFIABLE AT THIS DATA SIZE ("
-    },
-    {
       "cycle_id": "220a83a3",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Berggren moves on `(ℤ/m)³`\n\nThis cycle established, with complete Lean proofs in\n`Catalog/Cryptography/BerggrenModular/`:\n\n* the exact linear classifier `whichMove (a,b,c) = [5a<",
@@ -2501,6 +2491,16 @@
       "theorem_count": 64,
       "timestamp": "2026-10-08T13:49:11",
       "title": "FACT round-37 #5 — DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (pape"
+    },
+    {
+      "cycle_id": "ce6eb638",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after paper 138 (external-hint filters)\n\n## What this cycle established (Lean, 0 sorries)\n\n* **Master law** `Speedup = 1/(1-(1-θ)P_hit)` on any finite probability space;\n  the fi",
+      "quality_score": 0.66,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-10-09T06:02:14",
+      "title": "FACT round-38 #4 — EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych comp"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-08T13:49:11",
+  "last_updated": "2026-10-09T06:02:14",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "e6e33149",
-        "quality": 0.86,
-        "theorems": 76,
-        "title": "One-Sidedness of Conditional-Independence Artifacts"
-      },
-      {
         "cycle_id": "4b011f56",
         "quality": 0.82,
         "theorems": 57,
@@ -3637,6 +3631,12 @@
         "quality": 0.62,
         "theorems": 33,
         "title": "NET-50: THE-TROPICAL-LIMIT-IS-LOSSY-BUT-THE-RECOVERY-IS-FAST — argmax attention "
+      },
+      {
+        "cycle_id": "ce6eb638",
+        "quality": 0.66,
+        "theorems": 66,
+        "title": "FACT round-38 #4 — EXTERNAL-HINT-FILTER: one scalar prices everything, the barri"
       }
     ],
     "NumberTheory": [

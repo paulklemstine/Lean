@@ -3820,21 +3820,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #1 \u2014 QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
   },
   {
-    "consumed_by_exp_id": "ce6eb638",
-    "description": "Round-38 #4 (exp 468, assessment v247). The third row of the barrier map, derived and machine-verified.\n\n**Master law**: Speedup(H) = 1/(1 \u2212 (1\u2212\u03b8)\u00b7P_hit) \u2014 ALL information acts through the single scalar P_hit. Paper 132's 4/3 cap is exactly the UNINFORMATIVE POINT of this law (H \u22a5 p).\n\n- **Symmetry break located**: internal readings die on the fiber-uniformity step; a hint's likelihood lives on the non-c-measurable coordinate and survives it verbatim.\n- **Canonical partition law** 8/(7\u22122\u03b1): \u03b1=\u00bd reproduces 4/3; \u03b1=1 gives only 8/5 < 2 \u2014 the WHICH-FACTOR CEILING: external hints capped at 2\u00d7 per dial; beyond it only via ISOLATION-COST log\u2082\u03c0(\u221aN) oracle queries (net-positive from t=5).\n- **Certain-hint ladder** 2^(t\u22122)/(1\u22122^(1\u2212t)): two bit-losses identified (parity + which-factor).\n- **Trace hints** 2^(t\u22121)/C_t: GENERIC-RECOVERY's ~5\u00d7/bit is a constant divisor, not a rate penalty.\n- **Break-even** surface \u03b1*(\u03b8,\u03b5); internal filters tolerate \u03b5 \u2264 1/6, external up to 3/5.\n\nVerification: m=31/400k dev \u22640.0032 across \u03b1; \u03c7(c)-split pointwise exact; exhaustive m=3..8 max dev 0.0089; ladder ratios 0.9986\u20131.0045; break-even verdicts 20/20.\n\nTHE COMPLETED MAP: residues cap 4/3 (theorem) | position 5.19\u00d7 measured (paper 137) | external linear-in-bits with the 2\u00d7 per-dial ceiling (theorem here). External info priced linearly \u2014 capacity synergy does not transfer to work bits.\n\nLedger: 9 self-caught errors incl. a label-space bug producing a flat-\u03b1 artifact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp468_proofs.md + exp468_verify.py + exp468_result.json, seed 20260821.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3564",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T03:58:05.372817+00:00",
-    "title": "FACT round-38 #4 \u2014 EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)"
-  },
-  {
     "consumed_by_exp_id": "14ed24f6",
     "description": "Round-39 #6, cron iteration (exp 476, assessment v253). Full-scale validation of paper 142's predictor.\n\n**PER-N-PREDICTOR-REPLICATED**: base effect at all three scales (r = 0.497\u20130.521 u=2.5); H1 confirmed (R\u00b2=0.3041/slope 1.128 test at u=2.5); **transfer shape PERFECT \u2014 transfer R\u00b2 equals target-scale corr\u00b2 (0.2719 vs 0.2717)**; slopes in-band 4/4 cells. Weighted feature NULL (+0.009). Floor attribution: residual 1.31\u00d7 floor at u=2.5 (real structure remains), 1.05\u00d7 at u=3.5 (noise-bound).\n\nAdopted form: rate(N) \u2248 \u22120.0035 + 0.01156\u00b7QR(\u2264100) from ~20 Euler tests \u2014 a validated per-N sieve-yield dial for QS calibration. Barriers 5/8 intact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp476_per_n_predictor_full.py + exp476_result.json, seed 20260827.",
     "domains": [
@@ -17197,6 +17182,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-25T08:00:42.372461+00:00",
     "title": "Certified Decimal Enclosure of Euler's Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Joint use of two correlated hints should buy at most 2^(t1+t2-I) where I is their mutual information. The independent case is already proved; correlation can only shrink the joint fibre count.\n\nIf H1, H2 take at most 2^t1, 2^t2 values and their joint image has at most 2^(t1+t2-I) values, the speedup of any strategy using both is at most 2^(t1+t2-I).\n\nApply speedup_le_card to the joint map restricted to its image; enumerate small correlated hint pairs.\n\nCapacity synergy provably fails for correlated external hints: work bits are sub-additive.\n\nThere exist correlated hints whose joint work gain exceeds the size of their joint image, contradicting the fibre picture.",
+    "domains": [],
+    "id": "fd_5191",
+    "priority_score": 0.5916666666666668,
+    "research_mode": "team",
+    "source_exp_id": "ce6eb638",
+    "status": "available",
+    "timestamp": "2026-10-09T06:01:58.326092+00:00",
+    "title": "Mutual-Information Sub-Additivity of Joint Hints"
   },
   {
     "consumed_by_exp_id": "",
@@ -36369,6 +36366,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-08T13:48:54.584980+00:00",
     "title": "Structural-Zero Bias Correction for Fibre-Product Joints"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A hint that names its factor with probability beta interpolates between the anonymous which-factor ceiling and the isolated ceiling K. Because P_hit is affine in mixtures, the master law should price the which-factor bit continuously in beta.\n\nFor r factors, dial size K and naming probability beta, the supremum over hint likelihoods of the speedup at cost 1/K equals 1/(1-(1-1/K)(beta+(1-beta)(1+(r-1)/K)/r)).\n\nExtend wfrLaw by a Bernoulli(beta) naming coordinate; prove the phit formula by the same Fin.sum_univ_succ computation and the sup via accuracy_le_one.\n\nThe which-factor bit is a continuously priced resource, and isolation queries can be traded against naming probability on an explicit curve.\n\nNaming interacts non-affinely with hint accuracy, so partial isolation has a threshold effect.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_5189",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ce6eb638",
+    "status": "available",
+    "timestamp": "2026-10-09T06:01:57.041586+00:00",
+    "title": "Partial-Naming Interpolation of the Which-Factor Ceiling"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the uniform t-bit guessing bound to arbitrary priors. The expected guess count with a t-bit hint should be bounded below by an Arikan-type Renyi-1/2 expression divided by 2^t. This would price external hints for structured (non-uniform) factor distributions.\n\nFor any prior p on a finite set and any hint with at most 2^t values, E[guesses] >= (sum_x sqrt(p x))^2 / (2^t (1 + ln M)).\n\nFormalise on Fintype with a weighted version of fibre_sum_bound; check exhaustively for M <= 8 with random rational priors.\n\nExternal information is priced linearly in bits for every prior, with the prior entering only through its Renyi-1/2 entropy.\n\nSome priors allow superlinear work gains per hint bit, breaking the linear row of the barrier map.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_5190",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ce6eb638",
+    "status": "available",
+    "timestamp": "2026-10-09T06:01:57.692910+00:00",
+    "title": "Renyi-Half Pricing of External Hints under Non-Uniform Priors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 4/3 internal cap is exact under fibre uniformity. A delta-perturbation of fibre uniformity in total variation should move every internal reading's hit probability by at most delta.\n\nIf every fibre law of the label is delta-close to uniform in total variation, every c-measurable reading has P_hit <= 1/K + delta, hence internal speedup <= 1/(1-(1-theta)(1/K+delta)).\n\nGeneralise jointLaw to fibre laws q c b with sum_b |q c b - 1/K| <= 2 delta; prove the bound with the same sum manipulation as internal_phit_eq.\n\nThe 4/3 cap is stable, so measured residue-filter gains above 4/3 quantify the departure from fibre uniformity.\n\nSmall departures from uniformity can be amplified by internal readings, and the 4/3 cap is fragile.",
+    "domains": [
+      "Computation",
+      "MachineLearning"
+    ],
+    "id": "fd_5192",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ce6eb638",
+    "status": "available",
+    "timestamp": "2026-10-09T06:01:59.128845+00:00",
+    "title": "Total-Variation Robustness of the Uninformative 4/3 Point"
   },
   {
     "consumed_by_exp_id": "",

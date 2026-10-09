@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-08T13:48:54Z",
-  "count": 4,
+  "archived_at": "2026-10-09T06:01:59Z",
+  "count": 5,
   "directions": [
     {
       "id": "fd_3552",
@@ -162,6 +162,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 229
+    },
+    {
+      "id": "fd_3564",
+      "title": "FACT round-38 #4 — EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych completes (paper 138)",
+      "description": "Round-38 #4 (exp 468, assessment v247). The third row of the barrier map, derived and machine-verified.\n\n**Master law**: Speedup(H) = 1/(1 − (1−θ)·P_hit) — ALL information acts through the single scalar P_hit. Paper 132's 4/3 cap is exactly the UNINFORMATIVE POINT of this law (H ⊥ p).\n\n- **Symmetry break located**: internal readings die on the fiber-uniformity step; a hint's likelihood lives on the non-c-measurable coordinate and survives it verbatim.\n- **Canonical partition law** 8/(7−2α): α=½ reproduces 4/3; α=1 gives only 8/5 < 2 — the WHICH-FACTOR CEILING: external hints capped at 2× per dial; beyond it only via ISOLATION-COST log₂π(√N) oracle queries (net-positive from t=5).\n- **Certain-hint ladder** 2^(t−2)/(1−2^(1−t)): two bit-losses identified (parity + which-factor).\n- **Trace hints** 2^(t−1)/C_t: GENERIC-RECOVERY's ~5×/bit is a constant divisor, not a rate penalty.\n- **Break-even** surface α*(θ,ε); internal filters tolerate ε ≤ 1/6, external up to 3/5.\n\nVerification: m=31/400k dev ≤0.0032 across α; χ(c)-split pointwise exact; exhaustive m=3..8 max dev 0.0089; ladder ratios 0.9986–1.0045; break-even verdicts 20/20.\n\nTHE COMPLETED MAP: residues cap 4/3 (theorem) | position 5.19× measured (paper 137) | external linear-in-bits with the 2× per-dial ceiling (theorem here). External info priced linearly — capacity synergy does not transfer to work bits.\n\nLedger: 9 self-caught errors incl. a label-space bug producing a flat-α artifact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp468_proofs.md + exp468_verify.py + exp468_result.json, seed 20260821.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "ce6eb638",
+      "timestamp": "2026-08-22T03:58:05.372817+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.66,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-08T13:49:49.600900+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 235
     }
   ]
 }
