@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "8eac1b6d",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — ECA fixed-point varieties after five research cycles\n\n## What the cycles established\n\nThe starting conjecture — *\"the dimension of the fixed-point variety\n`V(f) = {s : f(s) = s}`",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 137,
-      "timestamp": "2026-08-26T10:53:16",
-      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
-    },
-    {
       "cycle_id": "837a61ec",
       "domain": "Tropical",
       "key_insight": "# Future directions — the weight-exponent layer of the QR product dial\n\nThis cycle formalized the mathematics underlying exp-586's refinement `1/ℓ → 1/√ℓ`:\nthe weight family and its log-convexity, the",
@@ -2501,6 +2491,16 @@
       "theorem_count": 27,
       "timestamp": "2026-10-09T13:10:20",
       "title": "FACT round-39 #1 — QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
+    },
+    {
+      "cycle_id": "14ed24f6",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — per-N sieve-yield dial (after exp 476 / paper 144)\n\n## What this cycle established (Lean, 0 sorries, `Catalog/Cryptography/PerNPredictor/`)\n\n* **Shape is exact arithmetic.** For",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 51,
+      "timestamp": "2026-10-09T23:13:14",
+      "title": "FACT round-39 #6 — PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks each population (pa"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-09T13:10:20",
+  "last_updated": "2026-10-09T23:13:14",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "54a9fda9",
-        "quality": 0.82,
-        "theorems": 71,
-        "title": "FACT round-54 #1 — BALANCED-BKEY: the T-dial is robust across bitlen and u (pape"
-      },
-      {
         "cycle_id": "88e58a70",
         "quality": 0.78,
         "theorems": 55,
@@ -3389,6 +3383,12 @@
         "quality": 0.72,
         "theorems": 74,
         "title": "FACT round-37 #6 — CHEBOTAREV-PRECISION: the master table reproduces simultaneou"
+      },
+      {
+        "cycle_id": "14ed24f6",
+        "quality": 0.62,
+        "theorems": 51,
+        "title": "FACT round-39 #6 — PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks"
       }
     ],
     "Geometry": [

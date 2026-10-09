@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-09T13:10:04Z",
-  "count": 6,
+  "archived_at": "2026-10-09T23:13:00Z",
+  "count": 7,
   "directions": [
     {
       "id": "fd_3552",
@@ -242,6 +242,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 236
+    },
+    {
+      "id": "fd_3576",
+      "title": "FACT round-39 #6 — PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks each population (paper 144)",
+      "description": "Round-39 #6, cron iteration (exp 476, assessment v253). Full-scale validation of paper 142's predictor.\n\n**PER-N-PREDICTOR-REPLICATED**: base effect at all three scales (r = 0.497–0.521 u=2.5); H1 confirmed (R²=0.3041/slope 1.128 test at u=2.5); **transfer shape PERFECT — transfer R² equals target-scale corr² (0.2719 vs 0.2717)**; slopes in-band 4/4 cells. Weighted feature NULL (+0.009). Floor attribution: residual 1.31× floor at u=2.5 (real structure remains), 1.05× at u=3.5 (noise-bound).\n\nAdopted form: rate(N) ≈ −0.0035 + 0.01156·QR(≤100) from ~20 Euler tests — a validated per-N sieve-yield dial for QS calibration. Barriers 5/8 intact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp476_per_n_predictor_full.py + exp476_result.json, seed 20260827.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "14ed24f6",
+      "timestamp": "2026-08-22T04:50:57.569717+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.62,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-08T23:57:32.461535+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 245
     }
   ]
 }

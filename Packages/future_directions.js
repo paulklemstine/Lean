@@ -3805,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "14ed24f6",
-    "description": "Round-39 #6, cron iteration (exp 476, assessment v253). Full-scale validation of paper 142's predictor.\n\n**PER-N-PREDICTOR-REPLICATED**: base effect at all three scales (r = 0.497\u20130.521 u=2.5); H1 confirmed (R\u00b2=0.3041/slope 1.128 test at u=2.5); **transfer shape PERFECT \u2014 transfer R\u00b2 equals target-scale corr\u00b2 (0.2719 vs 0.2717)**; slopes in-band 4/4 cells. Weighted feature NULL (+0.009). Floor attribution: residual 1.31\u00d7 floor at u=2.5 (real structure remains), 1.05\u00d7 at u=3.5 (noise-bound).\n\nAdopted form: rate(N) \u2248 \u22120.0035 + 0.01156\u00b7QR(\u2264100) from ~20 Euler tests \u2014 a validated per-N sieve-yield dial for QS calibration. Barriers 5/8 intact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp476_per_n_predictor_full.py + exp476_result.json, seed 20260827.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3576",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T04:50:57.569717+00:00",
-    "title": "FACT round-39 #6 \u2014 PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks each population (paper 144)"
-  },
-  {
     "consumed_by_exp_id": "f3f73074",
     "description": "Round-39 #5, cron iteration (exp 474, assessment v252). Paper 138's stated residual priced.\n\n**INTERVAL-HINTS-TWO-NUMBERS**: under truthful conditioning (J ~ real min-law; oracle covers w.p. \u03b1), the committed procedure is Bayes-optimal in every cell and its speedup table is:\n\u03bc/M=0.02: 1.86/3.50/7.41/**29.13**\u00d7 at \u03b1=0.5/0.75/0.9/1.0 \u00b7 \u03bc/M=0.05: 13.12\u00d7 max \u00b7 \u03bc/M=0.10: 7.11\u00d7 \u00b7 \u03bc/M=0.20: 3.96\u00d7.\n\n**Crossing**: paper 137's magnitude-ordering gain (5.19\u00d7) equals an oracle knowing p's position within a 2\u20135%-wide window at ~90% reliability. External positional information IS a two-number law: coverage \u00d7 width.\n\nExact grid and MC agree (5.59 vs 5.70; 29.1 vs 34.0 \u2014 gaps disclosed). Ledger: v1 MC ignored \u03b1; v2's uniform-given-hit assumption inconsistent with the target law \u2014 exposed by model-vs-MC disagreement.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp474_et_hints.py + exp474_result.json, seed 20260828.",
     "domains": [
@@ -3835,16 +3820,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #5 \u2014 ET-HINTS: interval hints priced by coverage x width (paper 143)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5d4613bb",
     "description": "## NET-53 \u2014 limited-memory axis, round 5 (paper 138, /tmp/exp_net53_gptq.py + /tmp/test_gptq.py regression gate, /tmp/net53.log)\n\n**Verdict name: COMPENSATION-WORKS-ON-THE-REAL-FLOORS.**\n\n### Result\nFaithful GPTQ (sequential layer-wise with input recapture, hooks on actual linear modules, group-aligned blocks, escalating-damping Cholesky retry; calibration train-side only) on Qwen2.5-0.5B:\n\n| arm | \u0394CE | retained acc |\n|---|---|---|\n| **GPTQ 4-bit g128 ALL** | **+0.1512** | **0.9546** |\n| GPTQ 4-bit g128 CORE (L0\u201321) | +0.1235 | 0.9641 |\n| GPTQ 3-bit g128 ALL | +1.1932 | 0.7086 |\n\nReference floors (NET-52): per-channel 4-bit +0.788 / grouped RTN 4-bit +0.318 / per-channel 6-bit +0.035.\n\n- **P1 CONFIRMED at the boundary**: +0.151 \u2264 0.15 by 0.001 \u2014 2.1\u00d7 better than grouped RTN.\n- **P2 REFUTED by a hair**: the \u22640.14 floor-approach bar missed.\n- **P3 REFUTED**: the L22/L23 \"personal tail\" increment is real (+0.0277) but only **18% of the compensated total**, not >25% \u2014 curvature-aware compensation shrinks the tail's disproportionate cost that RTN suffered.\n- **Bonus law**: the 3-bit ladder +9.23 \u2192 +2.72 \u2192 +1.19 mirrors the 4-bit ladder +0.79 \u2192 +0.32 \u2192 +0.15: each structural lever (grouping, then compensation) multiplies the previous floor down.\n\n### Deployment table for the 6 GB host\nper-channel RTN unusable below 6 bits \u00b7 grouped RTN viable at 4 (+0.32) \u00b7 **grouped GPTQ viable at 4 (+0.15), survivable at 3 (+1.19)** \u2014 all measured on one validated harness.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) confronted \u2014 GPTQ is prior art (Frantar et al.); NEW = fixed-protocol ladder across RTN/group/GPTQ at matched bits, the tail-share quantification, and the compensation-shrinks-tail-cost finding; (c) confronted \u2014 real pretrained model; limits: ONE model, ctx=512, no act-order reordering, 16-sequence calibration; (d) clean \u2014 calibration train-side only; (e) deterministic evals, damping schedule fixed pre-run; (f) clean \u2014 exact baseline reproduction (0.4460/2.8697), ALL_DONE_NET53; (g) fair \u2014 shared reference/protocol/granularity across arms; (h) DIRECT \u2014 this IS the deployment-table cell.\n\nEngineering record: three silent-science hazards caught en route (container-vs-linear hook targets \u2014 found via width diagnostics; column-rank broadcasting; Cholesky PD under partially-quantized activations) \u2014 a single-matrix unit test (/tmp/test_gptq.py: GPTQ must beat RTN on layer output error) is retained as the regression gate.\n\n### Next\nact-order variant; joint weight+KV budget optimizer; tail-aware mixed precision (keep L22/L23 at higher bits per NET-51); size transfer to Qwen2.5-1.5B.\n\nNow 53 network experiments. Assessment v53. Paper 138.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3578",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T04:50:57.571700+00:00",
     "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS \u2014 sequential GPTQ 4-bit group-128 lands at +0.151 dCE (2.1x better than grouped RTN); 3-bit rescued +9.23 -> +1.19; tail-share 18% < 25%"
   },
@@ -17545,6 +17531,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T23:36:22.757901+00:00",
     "title": "Curvature Decay for Tensor-Power Pools"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The transfer law makes the R^2 gap an exact quadratic in the slope mismatch. Recomputing corr^2 and the transfer R^2 on one held-out sample should match the formula exactly and give a certified slope band.\n\nFor each scale pair in exp 476, corr^2 - R2_transfer = (b_src - beta_tgt)^2 * Sxx/Syy on the same sample, and every in-band cell has (b - beta)^2 <= 1e-3 * Syy/Sxx.\n\nRerun exp476 with a single evaluation sample; compare with transferR2_formula.\n\nIn-band transfer becomes a formal certificate; the 0.2719 > 0.2717 anomaly is a sample-mixing artifact.\n\nThe pipeline computes R^2 with a different convention (e.g. no level refit or a different denominator), which must be fixed before using the dial.",
+    "domains": [],
+    "id": "fd_5199",
+    "priority_score": 0.5894444444444445,
+    "research_mode": "team",
+    "source_exp_id": "14ed24f6",
+    "status": "available",
+    "timestamp": "2026-10-09T23:12:59.623708+00:00",
+    "title": "Slope-Band Certificate for Cross-Scale Transfer"
   },
   {
     "consumed_by_exp_id": "",
@@ -36467,6 +36465,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-09T13:10:03.174194+00:00",
     "title": "Exponential Variance Growth in Sieving Depth"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The exact 1/p-weighted sieve yield and the unweighted QR count are both linear in the Legendre vector of N. Under independent fair Legendre bits their correlation is a closed form in the weights. We conjecture it is at least 0.95 for p <= 100, which would explain the NULL weighted-feature result.\n\nFor B = 100 and N uniform on a complete period, corr(W, QR) >= 0.95 where W(N) = sum_{p<=B} (2[(N/p)=1] + [p|N]) / p.\n\nCompute the closed-form correlation from the per-prime variances; formalize as a finite-sum identity over a CRT period, then check numerically.\n\nThe weighted feature carries essentially no new information; the dial cannot be improved by reweighting.\n\nA reweighted dial should give a measurable R^2 gain and the exp 476 NULL needs another explanation.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_5198",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "14ed24f6",
+    "status": "available",
+    "timestamp": "2026-10-09T23:12:58.985836+00:00",
+    "title": "Log-Weighted Root-Mass Dial Equivalence"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The root-mass identity holds for every prime set, so extending QR(<=100) to QR(<=B) adds only Legendre bits whose yield weights decay like 1/p. The transfer R^2 should saturate.\n\nR2_transfer(B) - R2_transfer(100) = O(1/log B) on the exp 476 populations.\n\nRecompute the dial for B in {100, 200, 500, 1000, 5000}, fit the increments against 1/log B.\n\nQR(<=100) is already a near-optimal cheap dial for QS calibration.\n\nLarge primes carry yield information the 1/p heuristic misses; the factor-base bound should enter the dial.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5200",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "14ed24f6",
+    "status": "available",
+    "timestamp": "2026-10-09T23:13:00.246497+00:00",
+    "title": "Prime-Range Saturation of the QR Dial"
   },
   {
     "consumed_by_exp_id": "",
