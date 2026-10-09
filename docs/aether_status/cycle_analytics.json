@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-09T06:02:15.573836+00:00",
+  "last_updated": "2026-10-09T13:10:21.591584+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -77510,6 +77510,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-09T06:02:15.184012+00:00",
       "title": "FACT round-38 #4 \u2014 EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych comp"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Novelty",
+      "duration_seconds": 25681.26370692253,
+      "end_time": 1791551388.570432,
+      "files_integrated": 4,
+      "job_id": "acb7b707",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.62,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.454,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.62,
+        "novelty": 0.62,
+        "proof_depth": 0.62,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1791525707.306725,
+      "strategy_count": 0,
+      "theorem_count": 27,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 24,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-09T13:10:21.182656+00:00",
+      "title": "FACT round-39 #1 \u2014 QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
     }
   ]
 }

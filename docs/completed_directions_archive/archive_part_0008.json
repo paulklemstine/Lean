@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-09T06:01:59Z",
-  "count": 5,
+  "archived_at": "2026-10-09T13:10:04Z",
+  "count": 6,
   "directions": [
     {
       "id": "fd_3552",
@@ -202,6 +202,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 235
+    },
+    {
+      "id": "fd_3563",
+      "title": "FACT round-39 #1 — QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)",
+      "description": "Round-39 #1, cron iteration (exp 471, assessment v248). Paper 136's queued follow-up — and a correction of it.\n\n**Ensemble: the QR restriction carries NO penalty.** x²−N smoothness equals UNRESTRICTED-random smoothness at every cell (emp_x2 ≈ emp_rnd within noise; 0.87–0.99 of mean-ρ = paper 130's finite-x factor). Mechanism: (N|p)=+1 primes divide x²−N for TWO residue classes of x mod p — double rate on the halved pool compensates exactly. The pre-stated H1 refuted spectacularly: QR-pool-restricted randoms run 21–56× lower. Paper 136's effective-u story RETIRED.\n\n**Per-N variance is the real mechanism**: corr(per-N smooth rate, #{odd primes ≤100 that are QRs of N}) = 0.50/0.45/0.48/0.40 across cells; decile spread 2.4× at u=2.5 and **9.3×** at u=3.5.\n\nResolves paper 136's anomaly: its ONE-N-per-scale design sampled this variance (the 0.54–0.76 yield ratios were draw luck, not a systematic deficit). Actionable: per-N relation yield is cheaply predictable a priori from ~20 Euler-criterion tests.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp471_qr_smoothness.py + exp471_result.json, seed 20260821, 4 cells × 100k values.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "acb7b707",
+      "timestamp": "2026-08-22T03:58:05.371702+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.62,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-08T00:10:27.948452+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 236
     }
   ]
 }

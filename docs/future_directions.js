@@ -3805,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "acb7b707",
-    "description": "Round-39 #1, cron iteration (exp 471, assessment v248). Paper 136's queued follow-up \u2014 and a correction of it.\n\n**Ensemble: the QR restriction carries NO penalty.** x\u00b2\u2212N smoothness equals UNRESTRICTED-random smoothness at every cell (emp_x2 \u2248 emp_rnd within noise; 0.87\u20130.99 of mean-\u03c1 = paper 130's finite-x factor). Mechanism: (N|p)=+1 primes divide x\u00b2\u2212N for TWO residue classes of x mod p \u2014 double rate on the halved pool compensates exactly. The pre-stated H1 refuted spectacularly: QR-pool-restricted randoms run 21\u201356\u00d7 lower. Paper 136's effective-u story RETIRED.\n\n**Per-N variance is the real mechanism**: corr(per-N smooth rate, #{odd primes \u2264100 that are QRs of N}) = 0.50/0.45/0.48/0.40 across cells; decile spread 2.4\u00d7 at u=2.5 and **9.3\u00d7** at u=3.5.\n\nResolves paper 136's anomaly: its ONE-N-per-scale design sampled this variance (the 0.54\u20130.76 yield ratios were draw luck, not a systematic deficit). Actionable: per-N relation yield is cheaply predictable a priori from ~20 Euler-criterion tests.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp471_qr_smoothness.py + exp471_result.json, seed 20260821, 4 cells \u00d7 100k values.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3563",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T03:58:05.371702+00:00",
-    "title": "FACT round-39 #1 \u2014 QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
-  },
-  {
     "consumed_by_exp_id": "14ed24f6",
     "description": "Round-39 #6, cron iteration (exp 476, assessment v253). Full-scale validation of paper 142's predictor.\n\n**PER-N-PREDICTOR-REPLICATED**: base effect at all three scales (r = 0.497\u20130.521 u=2.5); H1 confirmed (R\u00b2=0.3041/slope 1.128 test at u=2.5); **transfer shape PERFECT \u2014 transfer R\u00b2 equals target-scale corr\u00b2 (0.2719 vs 0.2717)**; slopes in-band 4/4 cells. Weighted feature NULL (+0.009). Floor attribution: residual 1.31\u00d7 floor at u=2.5 (real structure remains), 1.05\u00d7 at u=3.5 (noise-bound).\n\nAdopted form: rate(N) \u2248 \u22120.0035 + 0.01156\u00b7QR(\u2264100) from ~20 Euler tests \u2014 a validated per-N sieve-yield dial for QS calibration. Barriers 5/8 intact.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp476_per_n_predictor_full.py + exp476_result.json, seed 20260827.",
     "domains": [
@@ -3835,16 +3820,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #6 \u2014 PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks each population (paper 144)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f3f73074",
     "description": "Round-39 #5, cron iteration (exp 474, assessment v252). Paper 138's stated residual priced.\n\n**INTERVAL-HINTS-TWO-NUMBERS**: under truthful conditioning (J ~ real min-law; oracle covers w.p. \u03b1), the committed procedure is Bayes-optimal in every cell and its speedup table is:\n\u03bc/M=0.02: 1.86/3.50/7.41/**29.13**\u00d7 at \u03b1=0.5/0.75/0.9/1.0 \u00b7 \u03bc/M=0.05: 13.12\u00d7 max \u00b7 \u03bc/M=0.10: 7.11\u00d7 \u00b7 \u03bc/M=0.20: 3.96\u00d7.\n\n**Crossing**: paper 137's magnitude-ordering gain (5.19\u00d7) equals an oracle knowing p's position within a 2\u20135%-wide window at ~90% reliability. External positional information IS a two-number law: coverage \u00d7 width.\n\nExact grid and MC agree (5.59 vs 5.70; 29.1 vs 34.0 \u2014 gaps disclosed). Ledger: v1 MC ignored \u03b1; v2's uniform-given-hit assumption inconsistent with the target law \u2014 exposed by model-vs-MC disagreement.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp474_et_hints.py + exp474_result.json, seed 20260828.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3577",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T04:50:57.570717+00:00",
     "title": "FACT round-39 #5 \u2014 ET-HINTS: interval hints priced by coverage x width (paper 143)"
   },
@@ -8707,6 +8693,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-08T06:21:21.206952+00:00",
     "title": "ArXiv paper: Perfect matchings in hypergraphs and Feige's inequality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Geometrically Abelian Sections on Higher-Dimensional Varieties' and formalize its key results. Abstract: We investigate how much arithmetic information about a variety can be detected by sections of the geometrically abelian fundamental groups of sufficiently small open subvarieties. Over a \\(p\\)-adic field, such a section determines a rational point on the Albanese torsor, and, under a conjectural assumption, this point is represented by a \\(0\\)-cycle of degree \\(1\\) on the original variety if the variety has index \\(1\\). For curves, the latter statement holds unconditionally. Over finitely generated fields, such sections still force the relative Brauer group to vanish away from the characteristic. The key input is an identification of the Chern class obstruction attached to a section with the obstruction arising from local Tate duality. As a byproduct, we give a new proof of an open-subvariety strengthening of a theorem of Esnault and Wittenberg.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_5196",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.12344v1",
+    "status": "available",
+    "timestamp": "2026-10-09T13:10:34.829543+00:00",
+    "title": "ArXiv paper: Geometrically Abelian Sections on Higher-Dimensional Varieties"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Measurable obstructions for unmeasurable colourings' and formalize its key results. Abstract: Due to the availability of powerful analytic techniques, vastly superior lower bounds are known for the measurable chromatic number of Euclidean spaces compared to their ordinary chromatic number. Indeed, even the breakthrough lower bound of 5 for the famous Hadwiger-Nelson problem lagged over 35 years behind that of the measurable setting. This raises the fundamental question of whether the measurable and ordinary chromatic number of Euclidean spaces differ as conjectured by Sz\u00e9kely in 1984. Our main result is that $\\overline\u03b1(\\mathbb{R}^4)=m_1(\\mathbb{R}^4)$ and $\u03c7(\\mathbb{R}^4)=\u03c7^{(m)}(\\mathbb{R}^4)$, and for $d\\ge5$ that \\[ \\overline\u03b1(\\mathbb{Q}^d) = \\overline\u03b1(\\mathbb{R}^d)=m_1(\\mathbb{R}^d) \\qquad\\text{and}\\qquad \u03c7(\\mathbb{Q}^d) = \u03c7(\\mathbb{R}^d)=\u03c7^{(m)}(\\mathbb{R}^d). \\] Our theorem also holds for multiple forbidden distances $D=\\{d_1,\\ldots,d_t\\}$ provided that $d_1^2,\\ldots,d_t^2 \\in \\mathbb{Q}$. As a consequence, we immediately lift numerous measurable chromatic number result",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5197",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.12301v1",
+    "status": "available",
+    "timestamp": "2026-10-09T13:10:38.148912+00:00",
+    "title": "ArXiv paper: Measurable obstructions for unmeasurable colourings"
   },
   {
     "consumed_by_exp_id": "",
@@ -16990,6 +17005,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-04T22:31:47.288174+00:00",
     "title": "Adaptive Decision-Tree Filter Lower Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Knuth-Schroeppel multipliers draw approximately independent samples from the exact local-rate distribution. Selecting the best one exploits the variance, not the mean.\n\nThe expected log-yield gain from the best of K multipliers is (1+o(1)) sigma_B sqrt(2 log K).\n\nFor 1000 N, compute yields for all square-free multipliers up to 100 and compare the maximal gain with sigma_B sqrt(2 log K).\n\nGives a parameter-free formula for the benefit of multiplier search.\n\nCorrelation between kN for different k would show up as reduced gain.",
+    "domains": [],
+    "id": "fd_5195",
+    "priority_score": 0.591969696969697,
+    "research_mode": "team",
+    "source_exp_id": "acb7b707",
+    "status": "available",
+    "timestamp": "2026-10-09T13:10:03.792144+00:00",
+    "title": "Multiplier Selection as Extreme-Value Variance Harvesting"
   },
   {
     "consumed_by_exp_id": "",
@@ -36411,6 +36438,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-09T06:01:59.128845+00:00",
     "title": "Total-Variation Robustness of the Uninformative 4/3 Point"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Per-N smooth yield of x^2-N should be log-normally distributed across N, with Dickman mean and variance driven by independent Legendre bits. The exact mean and variance identities over (Z/M)^x are proved. The open step is a CLT plus a Dickman transfer.\n\nFor fixed u, (log Y(N) - log rho(u)) / sigma_B converges in distribution to N(0,1) over random N, with sigma_B^2 ~ c(u) * sum_{p<=B} (log p/(p-1))^2.\n\nSample 10^4 N per cell at u in {2.5,3,3.5,4}, fit a normal distribution to log-yield, run a KS test, and regress the variance on sum (log p/(p-1))^2.\n\nRelation yield of QS/NFS runs becomes predictable a priori with calibrated error bars.\n\nHeavy tails would point to correlations between primes beyond the CRT independence proved here.",
+    "domains": [
+      "NumberTheory",
+      "Pythagorean"
+    ],
+    "id": "fd_5193",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "acb7b707",
+    "status": "available",
+    "timestamp": "2026-10-09T13:10:02.546082+00:00",
+    "title": "Log-Normal Yield Law for Quadratic-Sieve Relations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved identity sum (r_M - 1)^2 = phi(M)(2^k - 1) predicts that per-N dispersion of yield grows with the effective number of sieving primes, which itself grows with u.\n\nThe decile spread D(u) of per-N smooth yield is strictly increasing in u, and D(4.5) > 30.\n\nExtend exp 471 with cells u = 4.0, 4.5 and the same seed protocol.\n\nConfirms the variance mechanism as the dominant per-N effect at large u.\n\nSaturation would indicate that only a bounded number of small primes matter.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5194",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "acb7b707",
+    "status": "available",
+    "timestamp": "2026-10-09T13:10:03.174194+00:00",
+    "title": "Exponential Variance Growth in Sieving Depth"
   },
   {
     "consumed_by_exp_id": "",

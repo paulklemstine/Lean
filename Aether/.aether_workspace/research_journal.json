@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "220a83a3",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Berggren moves on `(ℤ/m)³`\n\nThis cycle established, with complete Lean proofs in\n`Catalog/Cryptography/BerggrenModular/`:\n\n* the exact linear classifier `whichMove (a,b,c) = [5a<",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 145,
-      "timestamp": "2026-08-26T09:03:40",
-      "title": "Fix a large modulus `m` and consider the Berggren moves acting on `(ℤ/m)³`."
-    },
-    {
       "cycle_id": "8eac1b6d",
       "domain": "Novelty",
       "key_insight": "# Future Directions — ECA fixed-point varieties after five research cycles\n\n## What the cycles established\n\nThe starting conjecture — *\"the dimension of the fixed-point variety\n`V(f) = {s : f(s) = s}`",
@@ -2501,6 +2491,16 @@
       "theorem_count": 66,
       "timestamp": "2026-10-09T06:02:14",
       "title": "FACT round-38 #4 — EXTERNAL-HINT-FILTER: one scalar prices everything, the barrier-map triptych comp"
+    },
+    {
+      "cycle_id": "acb7b707",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — QR-smoothness after paper 139\n\n## What this cycle established (all proofs in `Catalog/Novelty/QRSmoothnessVarianceNotMean.lean`, no `sorry`)\n\n- **Mean compensation is exact, at e",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-10-09T13:10:20",
+      "title": "FACT round-39 #1 — QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-09T06:02:14",
+  "last_updated": "2026-10-09T13:10:20",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "4b011f56",
-        "quality": 0.82,
-        "theorems": 57,
-        "title": "Uniqueness of the A/X Crossing"
-      },
-      {
         "cycle_id": "a118b9c6",
         "quality": 0.82,
         "theorems": 47,
@@ -3637,6 +3631,12 @@
         "quality": 0.66,
         "theorems": 66,
         "title": "FACT round-38 #4 — EXTERNAL-HINT-FILTER: one scalar prices everything, the barri"
+      },
+      {
+        "cycle_id": "acb7b707",
+        "quality": 0.62,
+        "theorems": 27,
+        "title": "FACT round-39 #1 — QR-SMOOTHNESS: the QR bite is variance, not mean (paper 139)"
       }
     ],
     "NumberTheory": [
