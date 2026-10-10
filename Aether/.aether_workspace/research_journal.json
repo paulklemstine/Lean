@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "837a61ec",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — the weight-exponent layer of the QR product dial\n\nThis cycle formalized the mathematics underlying exp-586's refinement `1/ℓ → 1/√ℓ`:\nthe weight family and its log-convexity, the",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 58,
-      "timestamp": "2026-08-26T10:53:39",
-      "title": "FACT round-83 #2 — WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED — dial weight exponent alpha_h"
-    },
-    {
       "cycle_id": "44bf5a41",
       "domain": "Combinatorics",
       "key_insight": "# Future directions\n\nDerived from the three cycles in `Catalog/Combinatorics/WindowSaturation*.lean`:\n(1) the OLS window calculus and the matched-filter dominance theorem, (2) the\nexact step law, the",
@@ -2501,6 +2491,16 @@
       "theorem_count": 51,
       "timestamp": "2026-10-09T23:13:14",
       "title": "FACT round-39 #6 — PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks each population (pa"
+    },
+    {
+      "cycle_id": "f3f73074",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — interval hints priced by coverage and width\n\nEverything below is derived from the theorems in `Catalog/Logic/IntervalHintsTwoNumbers.lean`.\n\n## 1. Additive two-number law for eve",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-10-10T19:23:56",
+      "title": "FACT round-39 #5 — ET-HINTS: interval hints priced by coverage x width (paper 143)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-09T23:13:14",
+  "last_updated": "2026-10-10T19:23:56",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "8828af22",
-        "quality": 0.79,
-        "theorems": 63,
-        "title": "FACT round-41 #2 — HIGH-PHASE: the linear phase route is closed at both prime ra"
-      },
-      {
         "cycle_id": "e4ce2d9a",
         "quality": 0.78,
         "theorems": 115,
@@ -3513,6 +3507,12 @@
         "quality": 0.72,
         "theorems": 64,
         "title": "FACT round-37 #5 — DIAL-OVERLAP-LAW: partially overlapping dials are exactly one"
+      },
+      {
+        "cycle_id": "f3f73074",
+        "quality": 0.62,
+        "theorems": 33,
+        "title": "FACT round-39 #5 — ET-HINTS: interval hints priced by coverage x width (paper 14"
       }
     ],
     "MachineLearning": [

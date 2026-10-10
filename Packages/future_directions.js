@@ -3805,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "f3f73074",
-    "description": "Round-39 #5, cron iteration (exp 474, assessment v252). Paper 138's stated residual priced.\n\n**INTERVAL-HINTS-TWO-NUMBERS**: under truthful conditioning (J ~ real min-law; oracle covers w.p. \u03b1), the committed procedure is Bayes-optimal in every cell and its speedup table is:\n\u03bc/M=0.02: 1.86/3.50/7.41/**29.13**\u00d7 at \u03b1=0.5/0.75/0.9/1.0 \u00b7 \u03bc/M=0.05: 13.12\u00d7 max \u00b7 \u03bc/M=0.10: 7.11\u00d7 \u00b7 \u03bc/M=0.20: 3.96\u00d7.\n\n**Crossing**: paper 137's magnitude-ordering gain (5.19\u00d7) equals an oracle knowing p's position within a 2\u20135%-wide window at ~90% reliability. External positional information IS a two-number law: coverage \u00d7 width.\n\nExact grid and MC agree (5.59 vs 5.70; 29.1 vs 34.0 \u2014 gaps disclosed). Ledger: v1 MC ignored \u03b1; v2's uniform-given-hit assumption inconsistent with the target law \u2014 exposed by model-vs-MC disagreement.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp474_et_hints.py + exp474_result.json, seed 20260828.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3577",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T04:50:57.570717+00:00",
-    "title": "FACT round-39 #5 \u2014 ET-HINTS: interval hints priced by coverage x width (paper 143)"
-  },
-  {
     "consumed_by_exp_id": "5d4613bb",
     "description": "## NET-53 \u2014 limited-memory axis, round 5 (paper 138, /tmp/exp_net53_gptq.py + /tmp/test_gptq.py regression gate, /tmp/net53.log)\n\n**Verdict name: COMPENSATION-WORKS-ON-THE-REAL-FLOORS.**\n\n### Result\nFaithful GPTQ (sequential layer-wise with input recapture, hooks on actual linear modules, group-aligned blocks, escalating-damping Cholesky retry; calibration train-side only) on Qwen2.5-0.5B:\n\n| arm | \u0394CE | retained acc |\n|---|---|---|\n| **GPTQ 4-bit g128 ALL** | **+0.1512** | **0.9546** |\n| GPTQ 4-bit g128 CORE (L0\u201321) | +0.1235 | 0.9641 |\n| GPTQ 3-bit g128 ALL | +1.1932 | 0.7086 |\n\nReference floors (NET-52): per-channel 4-bit +0.788 / grouped RTN 4-bit +0.318 / per-channel 6-bit +0.035.\n\n- **P1 CONFIRMED at the boundary**: +0.151 \u2264 0.15 by 0.001 \u2014 2.1\u00d7 better than grouped RTN.\n- **P2 REFUTED by a hair**: the \u22640.14 floor-approach bar missed.\n- **P3 REFUTED**: the L22/L23 \"personal tail\" increment is real (+0.0277) but only **18% of the compensated total**, not >25% \u2014 curvature-aware compensation shrinks the tail's disproportionate cost that RTN suffered.\n- **Bonus law**: the 3-bit ladder +9.23 \u2192 +2.72 \u2192 +1.19 mirrors the 4-bit ladder +0.79 \u2192 +0.32 \u2192 +0.15: each structural lever (grouping, then compensation) multiplies the previous floor down.\n\n### Deployment table for the 6 GB host\nper-channel RTN unusable below 6 bits \u00b7 grouped RTN viable at 4 (+0.32) \u00b7 **grouped GPTQ viable at 4 (+0.15), survivable at 3 (+1.19)** \u2014 all measured on one validated harness.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) confronted \u2014 GPTQ is prior art (Frantar et al.); NEW = fixed-protocol ladder across RTN/group/GPTQ at matched bits, the tail-share quantification, and the compensation-shrinks-tail-cost finding; (c) confronted \u2014 real pretrained model; limits: ONE model, ctx=512, no act-order reordering, 16-sequence calibration; (d) clean \u2014 calibration train-side only; (e) deterministic evals, damping schedule fixed pre-run; (f) clean \u2014 exact baseline reproduction (0.4460/2.8697), ALL_DONE_NET53; (g) fair \u2014 shared reference/protocol/granularity across arms; (h) DIRECT \u2014 this IS the deployment-table cell.\n\nEngineering record: three silent-science hazards caught en route (container-vs-linear hook targets \u2014 found via width diagnostics; column-rank broadcasting; Cholesky PD under partially-quantized activations) \u2014 a single-matrix unit test (/tmp/test_gptq.py: GPTQ must beat RTN on layer output error) is retained as the regression gate.\n\n### Next\nact-order variant; joint weight+KV budget optimizer; tail-aware mixed precision (keep L22/L23 at higher bits per NET-51); size transfer to Qwen2.5-1.5B.\n\nNow 53 network experiments. Assessment v53. Paper 138.\n",
     "domains": [
@@ -3850,16 +3835,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #4 \u2014 PER-N-PREDICTOR: one feature captures two-thirds of the achievable signal (paper 142)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cebb5735",
     "description": "Round-39 #3, cron iteration (exp 473, assessment v250). The abelian ladder's tenth rung.\n\n**FULL-PINNING-AT-DEGREE-TEN**: Q(\u03b6\u2081\u2081) full cyclotomic (degree 10, C\u2081\u2080 \u2245 (Z/11)^\u00d7, conductor 11) confirms every pre-stated prediction:\n- T(p) = ord\u2081\u2081(p) \u2208 {1,2,5,10}, densities {1/10, 1/10, 4/10, 4/10} on 295,946 unramified primes.\n- I(p mod 11; T) = H(T) = 1.7219 bits EXACTLY (per-class degenerate; thickening structural; coprime flat).\n- Polynomial cross-check 400/400 via factor-degree patterns \u2014 order-t elements act as 10/t cycles of length t: [1\u00b9\u2070]/[2\u2075]/[5,5]/[10].\n- Semiprime: I(N mod 11; pair) = 1.2002 vs fresh enumeration law 1.1999 and paper-78 closed-form anchor 1.2027; wall 0.0005; Is(10)-projection 0.0586 \u2014 new n=10 g/Is entries.\n\nThe abelian full-pinning law now spans degrees 2\u20136, 8, 9, 10 \u2014 real-subfield AND full-cyclotomic constructions, no exceptions.\n\nLedger: double-wrapped tuple comparison (400/400 false mismatches while PATTERN was perfect); residue-vs-type lookup; inline takeover after the channel's 6th agent death (the dying agent recovered the paper-78 anchor first \u2014 credited).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp473_degree_ten.py + exp473_result.json, seed 20260823.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3580",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T04:50:57.573731+00:00",
     "title": "FACT round-39 #3 \u2014 DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
   },
@@ -48841,6 +48827,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: under the min-law prior `P(J=j) = (2(M-j)+1)/M\u00b2`, a truthful aligned block hint of\nwidth `W = wM` with coverage \u03b1 has Bayes-optimal continuum speedup `S(\u03b1,w)` given by a closed\nrational function of (\u03b1, w) that reduces to `2/(w(3-w))` at \u03b1 = 1 (`minLaw_block_speedup`), and the\ncommitted (block-first) procedure is Bayes-optimal iff \u03b1 exceeds an explicit block-dependent\nthreshold (the min-law analogue of `committed_bayes_optimal`).\nThe key insight is that the posterior is still two-level *up to the min-law tilt*, so the\nexchange argument of `committed_not_optimal` applies to the edge cells of the block.\nWhy now? The misspecified-coverage case is now closed for the uniform prior\n(`misspecified_coverage_regret`, `misspecified_strict_regret`), leaving the min-law with \u03b1 < 1 as\nthe only uncovered cell of the reported speedup table.",
+    "domains": [],
+    "id": "fd_5203",
+    "priority_score": 0.4361176470588235,
+    "research_mode": "team",
+    "source_exp_id": "f3f73074",
+    "status": "available",
+    "timestamp": "2026-10-10T19:23:42.076466+00:00",
+    "title": "Exact min-law speedup with imperfect coverage (the residual table)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize normal fans and prove that vertices of a full-dimensional lattice polytope correspond to maximal cones of its normal fan.",
     "domains": [
       "Cryptography"
@@ -48940,6 +48938,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-23T18:49:23.297257+00:00",
     "title": "D3 \u2014 The increment law is a translation cocycle"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: for any non-increasing prior and truthful window hints of relative width w and\ncoverage \u03b1 \u2265 w, the continuum speedup is `1 / ((1-\u03b1)\u00b7c\u2080 + w\u00b7c\u2081)` with constants c\u2080, c\u2081 depending only\non the prior's shape. For the min-law with \u03b1 = 1, `minLaw_block_speedup` gives `2/(w(3-w))`.\nThe key insight is that the exact uniform law `S = (M+1)/((1-\u03b1)M + W + 1)` is *additive* in the\ncoverage deficit and the width. \"Coverage \u00d7 width\" is the wrong reading.\nWhy now? Both endpoints (uniform prior, any \u03b1; min-law, \u03b1 = 1) are now proved exactly.",
+    "domains": [],
+    "id": "fd_5201",
+    "priority_score": 0.4336666666666666,
+    "research_mode": "team",
+    "source_exp_id": "f3f73074",
+    "status": "available",
+    "timestamp": "2026-10-10T19:23:40.998299+00:00",
+    "title": "Additive two-number law for every monotone prior"
   },
   {
     "consumed_by_exp_id": "",
@@ -56461,5 +56471,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-04T15:54:37.262506+00:00",
     "title": "True and proved: invariance under rational changes of generator."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: window-first is Bayes-optimal iff `\u03b1\u00b7min_S \u03c0 / \u03c0(S) \u2265 (1-\u03b1)\u00b7max_{S\u1d9c} \u03c0 / \u03c0(S\u1d9c)`.\nFor the uniform prior this reduces to \u03b1 \u2265 w (`committed_bayes_optimal` / `committed_not_optimal`).\nThe key insight is that optimality depends only on comparing the two edge posteriors (the\nsingle-swap witness in `committed_not_optimal`).\nWhy now? `probeCost_le_of_antitone` reduces the question to monotonicity of a two-block profile.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5202",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f3f73074",
+    "status": "available",
+    "timestamp": "2026-10-10T19:23:41.509896+00:00",
+    "title": "Sharp Bayes-optimality threshold for general priors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: hint A dominates hint B for every prior iff A's posterior partition refines B's in\nthe Blackwell sense. Concavity (`optCost_concave`) gives one direction.\nThe key insight is that the Bayes search cost is a concave (min-of-linear) functional, so\nBlackwell's theorem applies to search.\nWhy now? The concavity lemma is proved for every finite n.\n\n```json future_directions.json\n[\n {\"title\": \"Additive Coverage-Width Law for Monotone Priors\",\n  \"domain\": \"Probability\",\n  \"description\": \"Extend the exact uniform-prior law S = (M+1)/((1-\u03b1)M+W+1) to all non-increasing priors. Show that the speedup's reciprocal is affine in the coverage deficit and the width. The min-law, perfect-coverage case 2/(w(3-w)) is already proved.\",\n  \"conjecture\": \"For a non-increasing prior with continuum density f and aligned windows of width w, 1/S(\u03b1,w) = (1-\u03b1)\u00b7A(f) + w\u00b7B(f) + o(w) for constants A, B depending only on f.\",\n  \"test\": \"Formalize min-law posteriors with \u03b1<1 over aligned blocks and compute the exact cost by induction as in minLaw_block_cost.\",\n  \"if_true\": \"External positional information is priced by an additive two-number law for all monotone priors.\",\n  \"if_false\": \"The prior's shape interacts non-additively with coverage, so a third number is needed.\",\n  \"proof_strategy\": \"Split the cost into the in-block term (minLaw_block_cost) and the miss term (blind scan of the complement), then use exact polynomial sums.\",\n  \"catalog_references\": [\"Logic.IntervalHintsTwoNumbers\"]},\n {\"title\": \"Edge-Posterior Threshold for Bayes-Optimal Window Search\",\n  \"domain\": \"Logic\",\n  \"description\": \"Characterize exactly when scanning the hinted window first is Bayes-optimal under an arbitrary prior. The uniform case is the sharp threshold \u03b1 \u2265 W/M.\",\n  \"conjecture\": \"Window-first is optimal iff \u03b1\u00b7min_S \u03c0/\u03c0(S) \u2265 (1-\u03b1)\u00b7max_{S\u1d9c} \u03c0/\u03c0(S\u1d9c).\",\n  \"test\": \"Prove in Lean with probeCost_le_of_antitone for sufficiency and a single swap for necessity.\",\n  \"if_true\": \"Bayes-optimality of the committed procedure becomes a one-line check per cell.\",\n  \"if_false\": \"Optimal procedures interleave window and complement non-trivially.\",\n  \"proof_strategy\": \"Rearrangement inequality, plus the explicit adjacent-swap witness of committed_not_optimal.\",\n  \"catalog_references\": [\"Logic.IntervalHintsTwoNumbers\"]},\n {\"title\": \"Imperfect-Coverage Min-Law Speedup Law\",\n  \"domain\": \"Probability\",\n  \"description\": \"Compute the exact Bayes-optimal speedup of an aligned block hint with coverage \u03b1 < 1 under the min-law prior, the setting of the reported speedup table. The \u03b1 = 1 case 2/(w(3-w)) and the uniform-prior case with misspecified coverage are already proved.\",\n  \"conjecture\": \"Under the min-law prior with an aligned block hint of relative width w and coverage \u03b1, the Bayes-optimal speedup tends (M \u2192 \u221e) to an explicit rational function S(\u03b1,w) with S(1,w) = 2/(w(3-w)), and block-first is Bayes-optimal iff \u03b1 is at least an explicit threshold depending on w and the block position.\",\n  \"test\": \"Extend mi",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_5204",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "f3f73074",
+    "status": "available",
+    "timestamp": "2026-10-10T19:23:42.776771+00:00",
+    "title": "Information ordering of hints by concave Bayes cost"
   }
 ];
