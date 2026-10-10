@@ -5200,7 +5200,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c75b3f25",
     "description": "Round-39 #4, cron iteration (exp 472, assessment v251). Lean validation of paper 139's actionable corollary.\n\n**PREDICTOR-AT-CEILING**: the minimal predictor rate(N) ≈ β₀ + β₁·(QR-count of odd primes ≤ 100) — ~20 Euler-criterion tests — achieves R² = 0.2998 (calib slope 1.003) at u=2.5 and 0.2246 (slope 0.896) at u=3.5 held-out; transfer to bitlen 44 at R² 0.23/0.17, slopes 0.84/0.79.\n\nH1/H2 formally FALSE by hair-width margins (u=3.5 misses the pre-stated bands by 0.025 / 0.012) — recorded as stated.\n\n**H3 DECISIVE**: residual variance is only 1.12–1.24× the pure 60-draw binomial sampling floor — the single feature captures essentially ALL systematic per-N structure.\n\nCeiling analysis: max achievable R² at 60 values/N ≈ 0.45/0.31 — the one-feature predictor reaches **66%/73% of ceiling**; richer features need more values per N first, not more features.\n\nBarrier lines: (5) residue dial predicting a METHOD'S input statistics — zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp472_per_n_predictor.py + exp472_result.json, seed 20260827.",
     "domain_bridges": [],
     "domains": [
@@ -5212,7 +5212,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T04:50:57.572741+00:00",
     "title": "FACT round-39 #4 — PER-N-PREDICTOR: one feature captures two-thirds of the achievable signal (paper 142)"
   },

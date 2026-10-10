@@ -3835,16 +3835,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS \u2014 sequential GPTQ 4-bit group-128 lands at +0.151 dCE (2.1x better than grouped RTN); 3-bit rescued +9.23 -> +1.19; tail-share 18% < 25%"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c75b3f25",
     "description": "Round-39 #4, cron iteration (exp 472, assessment v251). Lean validation of paper 139's actionable corollary.\n\n**PREDICTOR-AT-CEILING**: the minimal predictor rate(N) \u2248 \u03b2\u2080 + \u03b2\u2081\u00b7(QR-count of odd primes \u2264 100) \u2014 ~20 Euler-criterion tests \u2014 achieves R\u00b2 = 0.2998 (calib slope 1.003) at u=2.5 and 0.2246 (slope 0.896) at u=3.5 held-out; transfer to bitlen 44 at R\u00b2 0.23/0.17, slopes 0.84/0.79.\n\nH1/H2 formally FALSE by hair-width margins (u=3.5 misses the pre-stated bands by 0.025 / 0.012) \u2014 recorded as stated.\n\n**H3 DECISIVE**: residual variance is only 1.12\u20131.24\u00d7 the pure 60-draw binomial sampling floor \u2014 the single feature captures essentially ALL systematic per-N structure.\n\nCeiling analysis: max achievable R\u00b2 at 60 values/N \u2248 0.45/0.31 \u2014 the one-feature predictor reaches **66%/73% of ceiling**; richer features need more values per N first, not more features.\n\nBarrier lines: (5) residue dial predicting a METHOD'S input statistics \u2014 zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp472_per_n_predictor.py + exp472_result.json, seed 20260827.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3579",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T04:50:57.572741+00:00",
     "title": "FACT round-39 #4 \u2014 PER-N-PREDICTOR: one feature captures two-thirds of the achievable signal (paper 142)"
   },
