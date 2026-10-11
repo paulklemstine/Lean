@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-11T07:59:17Z",
-  "count": 9,
+  "archived_at": "2026-10-11T14:53:40Z",
+  "count": 10,
   "directions": [
     {
       "id": "fd_3552",
@@ -362,6 +362,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 242
+    },
+    {
+      "id": "fd_3578",
+      "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS — sequential GPTQ 4-bit group-128 lands at +0.151 dCE (2.1x better than grouped RTN); 3-bit rescued +9.23 -> +1.19; tail-share 18% < 25%",
+      "description": "## NET-53 — limited-memory axis, round 5 (paper 138, /tmp/exp_net53_gptq.py + /tmp/test_gptq.py regression gate, /tmp/net53.log)\n\n**Verdict name: COMPENSATION-WORKS-ON-THE-REAL-FLOORS.**\n\n### Result\nFaithful GPTQ (sequential layer-wise with input recapture, hooks on actual linear modules, group-aligned blocks, escalating-damping Cholesky retry; calibration train-side only) on Qwen2.5-0.5B:\n\n| arm | ΔCE | retained acc |\n|---|---|---|\n| **GPTQ 4-bit g128 ALL** | **+0.1512** | **0.9546** |\n| GPTQ 4-bit g128 CORE (L0–21) | +0.1235 | 0.9641 |\n| GPTQ 3-bit g128 ALL | +1.1932 | 0.7086 |\n\nReference floors (NET-52): per-channel 4-bit +0.788 / grouped RTN 4-bit +0.318 / per-channel 6-bit +0.035.\n\n- **P1 CONFIRMED at the boundary**: +0.151 ≤ 0.15 by 0.001 — 2.1× better than grouped RTN.\n- **P2 REFUTED by a hair**: the ≤0.14 floor-approach bar missed.\n- **P3 REFUTED**: the L22/L23 \"personal tail\" increment is real (+0.0277) but only **18% of the compensated total**, not >25% — curvature-aware compensation shrinks the tail's disproportionate cost that RTN suffered.\n- **Bonus law**: the 3-bit ladder +9.23 → +2.72 → +1.19 mirrors the 4-bit ladder +0.79 → +0.32 → +0.15: each structural lever (grouping, then compensation) multiplies the previous floor down.\n\n### Deployment table for the 6 GB host\nper-channel RTN unusable below 6 bits · grouped RTN viable at 4 (+0.32) · **grouped GPTQ viable at 4 (+0.15), survivable at 3 (+1.19)** — all measured on one validated harness.\n\n### All 8 barriers\n(a) clean — three horns pre-stated incl. two refuted; (b) confronted — GPTQ is prior art (Frantar et al.); NEW = fixed-protocol ladder across RTN/group/GPTQ at matched bits, the tail-share quantification, and the compensation-shrinks-tail-cost finding; (c) confronted — real pretrained model; limits: ONE model, ctx=512, no act-order reordering, 16-sequence calibration; (d) clean — calibration train-side only; (e) deterministic evals, damping schedule fixed pre-run; (f) clean — exact baseline reproduction (0.4460/2.8697), ALL_DONE_NET53; (g) fair — shared reference/protocol/granularity across arms; (h) DIRECT — this IS the deployment-table cell.\n\nEngineering record: three silent-science hazards caught en route (container-vs-linear hook targets — found via width diagnostics; column-rank broadcasting; Cholesky PD under partially-quantized activations) — a single-matrix unit test (/tmp/test_gptq.py: GPTQ must beat RTN on layer output error) is retained as the regression gate.\n\n### Next\nact-order variant; joint weight+KV budget optimizer; tail-aware mixed precision (keep L22/L23 at higher bits per NET-51); size transfer to Qwen2.5-1.5B.\n\nNow 53 network experiments. Assessment v53. Paper 138.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "5d4613bb",
+      "timestamp": "2026-08-22T04:50:57.571700+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.62,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-09T23:13:55.331464+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 243
     }
   ]
 }

@@ -3805,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "5d4613bb",
-    "description": "## NET-53 \u2014 limited-memory axis, round 5 (paper 138, /tmp/exp_net53_gptq.py + /tmp/test_gptq.py regression gate, /tmp/net53.log)\n\n**Verdict name: COMPENSATION-WORKS-ON-THE-REAL-FLOORS.**\n\n### Result\nFaithful GPTQ (sequential layer-wise with input recapture, hooks on actual linear modules, group-aligned blocks, escalating-damping Cholesky retry; calibration train-side only) on Qwen2.5-0.5B:\n\n| arm | \u0394CE | retained acc |\n|---|---|---|\n| **GPTQ 4-bit g128 ALL** | **+0.1512** | **0.9546** |\n| GPTQ 4-bit g128 CORE (L0\u201321) | +0.1235 | 0.9641 |\n| GPTQ 3-bit g128 ALL | +1.1932 | 0.7086 |\n\nReference floors (NET-52): per-channel 4-bit +0.788 / grouped RTN 4-bit +0.318 / per-channel 6-bit +0.035.\n\n- **P1 CONFIRMED at the boundary**: +0.151 \u2264 0.15 by 0.001 \u2014 2.1\u00d7 better than grouped RTN.\n- **P2 REFUTED by a hair**: the \u22640.14 floor-approach bar missed.\n- **P3 REFUTED**: the L22/L23 \"personal tail\" increment is real (+0.0277) but only **18% of the compensated total**, not >25% \u2014 curvature-aware compensation shrinks the tail's disproportionate cost that RTN suffered.\n- **Bonus law**: the 3-bit ladder +9.23 \u2192 +2.72 \u2192 +1.19 mirrors the 4-bit ladder +0.79 \u2192 +0.32 \u2192 +0.15: each structural lever (grouping, then compensation) multiplies the previous floor down.\n\n### Deployment table for the 6 GB host\nper-channel RTN unusable below 6 bits \u00b7 grouped RTN viable at 4 (+0.32) \u00b7 **grouped GPTQ viable at 4 (+0.15), survivable at 3 (+1.19)** \u2014 all measured on one validated harness.\n\n### All 8 barriers\n(a) clean \u2014 three horns pre-stated incl. two refuted; (b) confronted \u2014 GPTQ is prior art (Frantar et al.); NEW = fixed-protocol ladder across RTN/group/GPTQ at matched bits, the tail-share quantification, and the compensation-shrinks-tail-cost finding; (c) confronted \u2014 real pretrained model; limits: ONE model, ctx=512, no act-order reordering, 16-sequence calibration; (d) clean \u2014 calibration train-side only; (e) deterministic evals, damping schedule fixed pre-run; (f) clean \u2014 exact baseline reproduction (0.4460/2.8697), ALL_DONE_NET53; (g) fair \u2014 shared reference/protocol/granularity across arms; (h) DIRECT \u2014 this IS the deployment-table cell.\n\nEngineering record: three silent-science hazards caught en route (container-vs-linear hook targets \u2014 found via width diagnostics; column-rank broadcasting; Cholesky PD under partially-quantized activations) \u2014 a single-matrix unit test (/tmp/test_gptq.py: GPTQ must beat RTN on layer output error) is retained as the regression gate.\n\n### Next\nact-order variant; joint weight+KV budget optimizer; tail-aware mixed precision (keep L22/L23 at higher bits per NET-51); size transfer to Qwen2.5-1.5B.\n\nNow 53 network experiments. Assessment v53. Paper 138.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3578",
-    "phase": "B",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T04:50:57.571700+00:00",
-    "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS \u2014 sequential GPTQ 4-bit group-128 lands at +0.151 dCE (2.1x better than grouped RTN); 3-bit rescued +9.23 -> +1.19; tail-share 18% < 25%"
-  },
-  {
     "consumed_by_exp_id": "cebb5735",
     "description": "Round-39 #3, cron iteration (exp 473, assessment v250). The abelian ladder's tenth rung.\n\n**FULL-PINNING-AT-DEGREE-TEN**: Q(\u03b6\u2081\u2081) full cyclotomic (degree 10, C\u2081\u2080 \u2245 (Z/11)^\u00d7, conductor 11) confirms every pre-stated prediction:\n- T(p) = ord\u2081\u2081(p) \u2208 {1,2,5,10}, densities {1/10, 1/10, 4/10, 4/10} on 295,946 unramified primes.\n- I(p mod 11; T) = H(T) = 1.7219 bits EXACTLY (per-class degenerate; thickening structural; coprime flat).\n- Polynomial cross-check 400/400 via factor-degree patterns \u2014 order-t elements act as 10/t cycles of length t: [1\u00b9\u2070]/[2\u2075]/[5,5]/[10].\n- Semiprime: I(N mod 11; pair) = 1.2002 vs fresh enumeration law 1.1999 and paper-78 closed-form anchor 1.2027; wall 0.0005; Is(10)-projection 0.0586 \u2014 new n=10 g/Is entries.\n\nThe abelian full-pinning law now spans degrees 2\u20136, 8, 9, 10 \u2014 real-subfield AND full-cyclotomic constructions, no exceptions.\n\nLedger: double-wrapped tuple comparison (400/400 false mismatches while PATTERN was perfect); residue-vs-type lookup; inline takeover after the channel's 6th agent death (the dying agent recovered the paper-78 anchor first \u2014 credited).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp473_degree_ten.py + exp473_result.json, seed 20260823.",
     "domains": [
@@ -3835,16 +3820,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #3 \u2014 DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "919796f3",
     "description": "Round-39 #2, cron iteration (exp 475, assessment v249). Fresh-seed audit of paper 139 (seed 20260826 vs original 20260821) \u2014 the reproducibility-audit discipline applied one firing after a seed-luck embarrassment (paper 136).\n\n**EVERY HEADLINE REPLICATES EXACTLY**:\n- Ensemble equality: emp_x2 \u2248 emp_rnd at all four cells (0.12859/0.12786, 0.02004/0.02023, 0.12854/0.12585, 0.02004/0.01869); QR-restricted randoms 32\u2013200\u00d7 lower.\n- Per-N correlations: 0.503/0.415/0.480/0.403 vs original 0.504/0.452/0.483/0.401 (max drift 0.037).\n- Decile spreads replicate (low/high 0.076\u20130.082 / 0.186\u20130.188 at u=2.5; 0.006\u20130.008 / 0.039\u20130.043 at u=3.5).\n\nVerdict: THE-QR-BITE-IS-VARIANCE is seed-robust; paper 139 stands without qualification; the per-N yield predictor's training target is stable (validation in flight as exp 472).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp475_qr_replication.py + exp475_result.json, seed 20260826.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3581",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T04:50:57.574708+00:00",
     "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
   },
@@ -17299,6 +17285,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T19:38:08.791559+00:00",
     "title": "Rank Threshold for Nowhere-Vanishing Twisted Sections"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The compensation lever drifts from 2.103 at 4 bits to 2.280 at 3 bits, which by scale invariance must be a change of error shape. Normalising error directions should remove the drift.\n\nThe GPTQ/RTN ratio depends only on the normalised error direction u/|u|, and the measured drift is fully explained by the change in this direction between 4 and 3 bits.\n\nRecord per-layer error vectors at 4 and 3 bits, compute direction-only predicted ratios, and compare to measured ratios.\n\nBit-width effects split cleanly into a scale law (4^-b) and a shape correction.\n\nNon-quadratic loss effects contribute materially at 3 bits.",
+    "domains": [],
+    "id": "fd_5209",
+    "priority_score": 0.5911538461538463,
+    "research_mode": "team",
+    "source_exp_id": "5d4613bb",
+    "status": "available",
+    "timestamp": "2026-10-11T14:53:40.439533+00:00",
+    "title": "Shape-Drift Decomposition of the Bit Ladder"
   },
   {
     "consumed_by_exp_id": "",
@@ -36478,6 +36476,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-09T23:13:00.246497+00:00",
     "title": "Prime-Range Saturation of the QR Dial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Predict the GPTQ/RTN loss ratio from the calibration curvature alone. Each compensated column costs e^2/[H^-1]_qq versus e^2 H_qq for RTN, so the lever is a spectral functional of H. This would turn the measured 2.1x into a per-layer prediction.\n\nUnder i.i.d. uniform rounding errors, E[GPTQ loss]/E[RTN loss] = (sum_q 1/[H^-1]_qq)/(sum_q H_qq) up to sequential-order corrections bounded by the off-diagonal mass of H^-1.\n\nCompute the predicted ratio from captured per-module H in the NET-53 harness and compare to measured layer output errors; formalize the expectation identity in Lean via gptq_column_formula.\n\nThe compensation lever becomes predictable before running GPTQ, enabling bit allocation from H alone.\n\nSequential re-rounding interactions dominate, and the one-column OBS model is insufficient.",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_5206",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5d4613bb",
+    "status": "available",
+    "timestamp": "2026-10-11T14:53:39.211339+00:00",
+    "title": "Correlation-Spectrum Law for the Compensation Lever"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Sequential column-wise compensation should telescope into a sum of Cholesky pivot costs via the quotient property of Schur complements. This would give an exact loss formula for any column order and a criterion for act-order.\n\nFor fixed errors e_q, the loss of sequential OBS compensation in order sigma equals sum_q e_q^2 / d_q(sigma) where d_q(sigma) are LDL^T pivots of H^-1 in that order.\n\nFormalize the two-block quotient identity schur(schur) = schur in Lean, then induct on the number of columns; check numerically on random PD matrices.\n\nAct-order gains become computable a priori and optimal orders can be searched combinatorially.\n\nOrder effects arise only through re-rounding, so act-order gains must be studied empirically.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_5207",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5d4613bb",
+    "status": "available",
+    "timestamp": "2026-10-11T14:53:39.664587+00:00",
+    "title": "Sequential Quotient Telescoping for GPTQ Order"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Compensation should shrink the share of the L22/L23 tail when tail errors are more correlated with free weights. The measured compensated share is 18%; the RTN share should be larger.\n\nIf the relative compensation gain of the tail block exceeds that of the core block, then tail share under GPTQ is strictly below tail share under RTN.\n\nRun the grouped-RTN CORE arm (L0-21) on the NET-53 harness and compare shares; formalize the share inequality from rtn_sub_schur.\n\nTail-aware mixed precision matters less after compensation, reallocating bits to the core.\n\nTail cost is curvature-intrinsic and must be protected with extra bits regardless of compensation.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5208",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "5d4613bb",
+    "status": "available",
+    "timestamp": "2026-10-11T14:53:40.043966+00:00",
+    "title": "Tail-Share Compression under Compensation"
   },
   {
     "consumed_by_exp_id": "",
