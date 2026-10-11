@@ -3820,21 +3820,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS \u2014 sequential GPTQ 4-bit group-128 lands at +0.151 dCE (2.1x better than grouped RTN); 3-bit rescued +9.23 -> +1.19; tail-share 18% < 25%"
   },
   {
-    "consumed_by_exp_id": "c75b3f25",
-    "description": "Round-39 #4, cron iteration (exp 472, assessment v251). Lean validation of paper 139's actionable corollary.\n\n**PREDICTOR-AT-CEILING**: the minimal predictor rate(N) \u2248 \u03b2\u2080 + \u03b2\u2081\u00b7(QR-count of odd primes \u2264 100) \u2014 ~20 Euler-criterion tests \u2014 achieves R\u00b2 = 0.2998 (calib slope 1.003) at u=2.5 and 0.2246 (slope 0.896) at u=3.5 held-out; transfer to bitlen 44 at R\u00b2 0.23/0.17, slopes 0.84/0.79.\n\nH1/H2 formally FALSE by hair-width margins (u=3.5 misses the pre-stated bands by 0.025 / 0.012) \u2014 recorded as stated.\n\n**H3 DECISIVE**: residual variance is only 1.12\u20131.24\u00d7 the pure 60-draw binomial sampling floor \u2014 the single feature captures essentially ALL systematic per-N structure.\n\nCeiling analysis: max achievable R\u00b2 at 60 values/N \u2248 0.45/0.31 \u2014 the one-feature predictor reaches **66%/73% of ceiling**; richer features need more values per N first, not more features.\n\nBarrier lines: (5) residue dial predicting a METHOD'S input statistics \u2014 zero factor information; (8) QS calibration context.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp472_per_n_predictor.py + exp472_result.json, seed 20260827.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3579",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T04:50:57.572741+00:00",
-    "title": "FACT round-39 #4 \u2014 PER-N-PREDICTOR: one feature captures two-thirds of the achievable signal (paper 142)"
-  },
-  {
     "consumed_by_exp_id": "cebb5735",
     "description": "Round-39 #3, cron iteration (exp 473, assessment v250). The abelian ladder's tenth rung.\n\n**FULL-PINNING-AT-DEGREE-TEN**: Q(\u03b6\u2081\u2081) full cyclotomic (degree 10, C\u2081\u2080 \u2245 (Z/11)^\u00d7, conductor 11) confirms every pre-stated prediction:\n- T(p) = ord\u2081\u2081(p) \u2208 {1,2,5,10}, densities {1/10, 1/10, 4/10, 4/10} on 295,946 unramified primes.\n- I(p mod 11; T) = H(T) = 1.7219 bits EXACTLY (per-class degenerate; thickening structural; coprime flat).\n- Polynomial cross-check 400/400 via factor-degree patterns \u2014 order-t elements act as 10/t cycles of length t: [1\u00b9\u2070]/[2\u2075]/[5,5]/[10].\n- Semiprime: I(N mod 11; pair) = 1.2002 vs fresh enumeration law 1.1999 and paper-78 closed-form anchor 1.2027; wall 0.0005; Is(10)-projection 0.0586 \u2014 new n=10 g/Is entries.\n\nThe abelian full-pinning law now spans degrees 2\u20136, 8, 9, 10 \u2014 real-subfield AND full-cyclotomic constructions, no exceptions.\n\nLedger: double-wrapped tuple comparison (400/400 false mismatches while PATTERN was perfect); residue-vs-type lookup; inline takeover after the channel's 6th agent death (the dying agent recovered the paper-78 anchor first \u2014 credited).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp473_degree_ten.py + exp473_result.json, seed 20260823.",
     "domains": [
@@ -17530,6 +17515,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-09T23:12:59.623708+00:00",
     "title": "Slope-Band Certificate for Cross-Scale Transfer"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The identity 1-R\u00b2=\u03ba(1-ceiling) ties the three reported numbers; at u=2.5 they are in tension.\n\nOn a common held-out sum of squares the u=2.5 ceiling lies in [0.425, 0.436].\n\nRecompute SSW/SST on the held-out fold of exp 472.\n\nPaper 142's fraction-of-ceiling rises to about 0.69-0.70 at u=2.5.\n\n\u03ba at u=2.5 is about 1.27, outside the stated 1.12-1.24 band, and H3 must be restated.",
+    "domains": [],
+    "id": "fd_5205",
+    "priority_score": 0.5891111111111113,
+    "research_mode": "team",
+    "source_exp_id": "c75b3f25",
+    "status": "available",
+    "timestamp": "2026-10-11T07:59:16.994407+00:00",
+    "title": "Same-Basis Recalibration of the u=2.5 Ceiling"
   },
   {
     "consumed_by_exp_id": "",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "44bf5a41",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions\n\nDerived from the three cycles in `Catalog/Combinatorics/WindowSaturation*.lean`:\n(1) the OLS window calculus and the matched-filter dominance theorem, (2) the\nexact step law, the",
-      "quality_score": 0.72,
-      "sorry_count": 1,
-      "theorem_count": 111,
-      "timestamp": "2026-08-26T11:46:34",
-      "title": "FACT round-83 #3 — BSTAR-TRANSFER (exp 587): H1_BSTAR_TRANSFERS — B*=400 transfers to the sqrt-weigh"
-    },
-    {
       "cycle_id": "20511e4a",
       "domain": "Pythagorean",
       "key_insight": "# Future directions — after the U9-DRIFT-GATE rejection (paper 222)\n\nThe round closed a gate by *sign flip*: two seed families disagree on the direction of a\nfew-percent deviation, so nothing is banke",
@@ -2501,6 +2491,16 @@
       "theorem_count": 33,
       "timestamp": "2026-10-10T19:23:56",
       "title": "FACT round-39 #5 — ET-HINTS: interval hints priced by coverage x width (paper 143)"
+    },
+    {
+      "cycle_id": "c75b3f25",
+      "domain": "Computation",
+      "key_insight": "# Future directions — after paper 142 (exp 472, per-N predictor at the ceiling)\n\n## What this cycle established (Lean, 0 sorries)\n\n* `PerNPredictorCeiling.lean`: residual decomposition `RSS(f) = SSW +",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 61,
+      "timestamp": "2026-10-11T07:59:31",
+      "title": "FACT round-39 #4 — PER-N-PREDICTOR: one feature captures two-thirds of the achievable signal (paper "
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-10T19:23:56",
+  "last_updated": "2026-10-11T07:59:31",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "128c5007",
-        "quality": 0.74,
-        "theorems": 30,
-        "title": "FACT round-82 #1 — BINWIDTH-USHIFT-PROBE (exp 582): MIXED-INCONCLUSIVE — STABLE "
-      },
-      {
         "cycle_id": "5e9b52ad",
         "quality": 0.82,
         "theorems": 48,
@@ -3327,6 +3321,12 @@
         "quality": 0.66,
         "theorems": 11,
         "title": "FACT round-38 #2 — TOY-QS-YIELD: the sieve's advantage is the survivor filter; r"
+      },
+      {
+        "cycle_id": "c75b3f25",
+        "quality": 0.62,
+        "theorems": 61,
+        "title": "FACT round-39 #4 — PER-N-PREDICTOR: one feature captures two-thirds of the achie"
       }
     ],
     "Cryptography": [

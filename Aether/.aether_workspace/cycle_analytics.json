@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-10T19:23:57.255214+00:00",
+  "last_updated": "2026-10-11T07:59:32.784803+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -77639,6 +77639,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-10T19:23:56.958502+00:00",
       "title": "FACT round-39 #5 \u2014 ET-HINTS: interval hints priced by coverage x width (paper 143)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Computation",
+      "duration_seconds": 22145.523737430573,
+      "end_time": 1791705545.4326892,
+      "files_integrated": 4,
+      "job_id": "c75b3f25",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.62,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.454,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.62,
+        "novelty": 0.62,
+        "proof_depth": 0.62,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1791683399.9089518,
+      "strategy_count": 0,
+      "theorem_count": 61,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 56,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-11T07:59:32.483893+00:00",
+      "title": "FACT round-39 #4 \u2014 PER-N-PREDICTOR: one feature captures two-thirds of the achievable signal (paper "
     }
   ]
 }
