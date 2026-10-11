@@ -3835,16 +3835,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b8d07ad",
     "description": "Round-40 #4, cron iteration (exp 481, assessment v257). Third and deepest of three mutually-consistent interval-hint results (with papers 143/146).\n\n**HEDGE-AND-CAPACITY**:\n- **T7 hedging hump**: E_opt(\u03b1) concave piecewise-linear \u2014 intermediate trust can be WORSE than both endpoints AND than no-hint (196.09 vs 171.17 measured). Partial trust is the most expensive regime.\n- **T8 placement ceilings**: cap = 2/(3x) centered/left, but **\u2192 1/x for RIGHT-placed windows** (truncated w reproduces min-of-two-uniforms) \u2014 placement doubles what width buys. Best cell: right x=1/16 \u03b1=1 \u2192 **14.69\u00d7**.\n- **Calibration gate**: uniform-given-hit hints exist only at tiny \u03b1 \u2014 that family can never reach magnitude-ordering gains.\n- Crossing for 5.19\u00d7: \u03b1* = 0.832 (x=1/64) \u2192 0.996 (x=1/8) \u2014 narrow AND near-certain.\n\nScope: interval hints escape paper 138's which-factor ceiling \u2014 order-action via direct J-correlation with MI(hint; factor)=0; the two functionals price orthogonally. Fermat named: 'start at \u221aN' = rightmost-interval commitment with CAL capacity \u2192 0.\n\nVerification: exhaustive permutations M=5\u20138 (gap 1.3e-16); MC max |z| = 2.343 over 40 configs. Ledger: complement-mass bug caught only by MC z=\u221272.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp481_proofs.md + exp481_verify.py + exp481_result.json, seed 20260824.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3593",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T05:43:53.956820+00:00",
     "title": "FACT round-40 #4 \u2014 ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)"
   },
