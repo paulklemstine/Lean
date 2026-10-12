@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-11T14:53:53.847259+00:00",
+  "last_updated": "2026-10-12T02:31:27.977730+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -77725,6 +77725,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-11T14:53:53.610215+00:00",
       "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS \u2014 sequential GPTQ 4-bit group-128 lands at +0.151 dCE "
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Tropical",
+      "duration_seconds": 12151.185284376144,
+      "end_time": 1791772254.9280891,
+      "files_integrated": 4,
+      "job_id": "919796f3",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.6,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.445,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.6,
+        "novelty": 0.6,
+        "proof_depth": 0.6,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1791760103.7428048,
+      "strategy_count": 0,
+      "theorem_count": 33,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 31,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-12T02:31:27.485821+00:00",
+      "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
     }
   ]
 }

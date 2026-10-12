@@ -3820,21 +3820,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-39 #3 \u2014 DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
   },
   {
-    "consumed_by_exp_id": "919796f3",
-    "description": "Round-39 #2, cron iteration (exp 475, assessment v249). Fresh-seed audit of paper 139 (seed 20260826 vs original 20260821) \u2014 the reproducibility-audit discipline applied one firing after a seed-luck embarrassment (paper 136).\n\n**EVERY HEADLINE REPLICATES EXACTLY**:\n- Ensemble equality: emp_x2 \u2248 emp_rnd at all four cells (0.12859/0.12786, 0.02004/0.02023, 0.12854/0.12585, 0.02004/0.01869); QR-restricted randoms 32\u2013200\u00d7 lower.\n- Per-N correlations: 0.503/0.415/0.480/0.403 vs original 0.504/0.452/0.483/0.401 (max drift 0.037).\n- Decile spreads replicate (low/high 0.076\u20130.082 / 0.186\u20130.188 at u=2.5; 0.006\u20130.008 / 0.039\u20130.043 at u=3.5).\n\nVerdict: THE-QR-BITE-IS-VARIANCE is seed-robust; paper 139 stands without qualification; the per-N yield predictor's training target is stable (validation in flight as exp 472).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp475_qr_replication.py + exp475_result.json, seed 20260826.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3581",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T04:50:57.574708+00:00",
-    "title": "FACT round-39 #2 \u2014 QR-REPLICATION: the variance law is seed-robust (paper 140)"
-  },
-  {
     "consumed_by_exp_id": "4b8d07ad",
     "description": "Round-40 #4, cron iteration (exp 481, assessment v257). Third and deepest of three mutually-consistent interval-hint results (with papers 143/146).\n\n**HEDGE-AND-CAPACITY**:\n- **T7 hedging hump**: E_opt(\u03b1) concave piecewise-linear \u2014 intermediate trust can be WORSE than both endpoints AND than no-hint (196.09 vs 171.17 measured). Partial trust is the most expensive regime.\n- **T8 placement ceilings**: cap = 2/(3x) centered/left, but **\u2192 1/x for RIGHT-placed windows** (truncated w reproduces min-of-two-uniforms) \u2014 placement doubles what width buys. Best cell: right x=1/16 \u03b1=1 \u2192 **14.69\u00d7**.\n- **Calibration gate**: uniform-given-hit hints exist only at tiny \u03b1 \u2014 that family can never reach magnitude-ordering gains.\n- Crossing for 5.19\u00d7: \u03b1* = 0.832 (x=1/64) \u2192 0.996 (x=1/8) \u2014 narrow AND near-certain.\n\nScope: interval hints escape paper 138's which-factor ceiling \u2014 order-action via direct J-correlation with MI(hint; factor)=0; the two functionals price orthogonally. Fermat named: 'start at \u221aN' = rightmost-interval commitment with CAL capacity \u2192 0.\n\nVerification: exhaustive permutations M=5\u20138 (gap 1.3e-16); MC max |z| = 2.343 over 40 configs. Ledger: complement-mass bug caught only by MC z=\u221272.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp481_proofs.md + exp481_verify.py + exp481_result.json, seed 20260824.",
     "domains": [
@@ -8667,6 +8652,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-09T13:10:38.148912+00:00",
     "title": "ArXiv paper: Measurable obstructions for unmeasurable colourings"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On the saturability of $p$-adic Lie groups' and formalize its key results. Abstract: Lazard theory is becoming increasingly important in $p$-adic representation theory, especially when studying mod $p$ representations. For $G$ a connected reductive group defined over a finite extension $K/\\mathbb Q_p$, a question going back to Lazard is when a pro-$p$ Iwahori subgroup of $G(K)$ admits a saturated $p$-valuation. In this article, we establish a deep connection to Moy-Prasad theory, and show that the Moy-Prasad filtration defines a saturated $p$-valuation on $G_{x,\\frac{1}{p-1}+}$ for any point $x$ in the semisimple Bruhat-Tits building of $G$, given a mild assumption on the maximal torus of $G$ and that $p>2$. We also compute Lazard Lie algebras defined over $\\mathbb Z_p$ and the polynomial ring $\\mathbb F_p[\\varepsilon]$ associated to the saturated group $G_{x,\\frac{1}{p-1}+}$, which allows us to reinterpret the Moy-Prasad isomorphism as an isomorphism of Lie algebras over $\\mathbb F_p[\\varepsilon]$.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5213",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.13877v1",
+    "status": "available",
+    "timestamp": "2026-10-12T02:31:40.773133+00:00",
+    "title": "ArXiv paper: On the saturability of $p$-adic Lie groups"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Clique and chromatic numbers of graph powers: spectral bounds and anticodes' and formalize its key results. Abstract: Using spectral and polynomial methods, we show several sharp spectral bounds for the clique and chromatic numbers of graph powers that only use spectral information from the original graph. In particular, we strengthen earlier spectral-radius estimates to obtain an asymptotically sharp colouring bound for general graph powers, and prove a sharp bound for powers of line graphs with a complete characterisation of equality. We also develop polynomial methods yielding upper and lower bounds for clique numbers of graph powers. Regarding the connection between the clique and coloring parameters of graph powers, we propose a spectral analogue of Wegner's conjecture, determine the extremal values for graph squares, and establish the conjecture for all powers when the spectral-radius bound is sufficiently small. Finally, we connect our spectral polynomial method with coding theory: we prove that for distance-regular graphs, optimisation over the adjacency algebra recovers Delsarte's linear prog",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_5213",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.13852v1",
+    "status": "available",
+    "timestamp": "2026-10-12T02:31:43.936165+00:00",
+    "title": "ArXiv paper: Clique and chromatic numbers of graph powers: spectral bounds and anticodes"
   },
   {
     "consumed_by_exp_id": "",
@@ -48598,6 +48612,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The fourth moment of the centred QR sample sum is\n`\u2211_x S(x)\u2074 = n \u03c6\u207f (t\u22121)(t\u00b2\u22123t+3) + 3 n(n\u22121) \u03c6\u207f (t\u22121)\u00b2` (for `t = 2^k`).\nThe key insight is that `r \u2212 1` takes only two values (`\u22121` and `t \u2212 1`), so all its moments are\nexplicit polynomials in `t`. Why now? The second-moment machinery (`sum_pi_succ`, cross-term\ncancellation) is in place and extends mechanically to four indices, giving sub-Gaussian-type\ntails sharper than Chebyshev.",
+    "domains": [],
+    "id": "fd_5210",
+    "priority_score": 0.4381538461538461,
+    "research_mode": "team",
+    "source_exp_id": "919796f3",
+    "status": "available",
+    "timestamp": "2026-10-12T02:31:10.687913+00:00",
+    "title": "Fourth-moment law for seed drift"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Generalize the finite-support argument from `\u211d` to\n   suitable linearly ordered additive groups admitting finite suprema.",
     "domains": [
       "Algebra"
@@ -56540,5 +56566,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-10T19:23:42.776771+00:00",
     "title": "Information ordering of hints by concave Bayes cost"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For `M = 2^e \u220f p\u1d62^{a\u1d62}`, the variance of `r_M` over units is `t(M) \u2212 1` with `t(M)` the\n2-torsion of `(\u2124/M)\u02e3` (`2^{k+\u03b4(e)}` with `\u03b4(1)=0, \u03b4(2)=1, \u03b4(e\u22653)=2`).\nThe key insight is that the group-layer identity `\u2211 (r\u22121)\u00b2 = |G|(t\u22121)` is already proved for any\nfinite abelian group, so only the 2-torsion count needs computing. Why now? Real sieving uses\nprime powers and the multiplier `2`.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5211",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "919796f3",
+    "status": "available",
+    "timestamp": "2026-10-12T02:31:11.351924+00:00",
+    "title": "Non-squarefree moduli and the prime 2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Among scores `\u2211 w\u1d62 r_{p\u1d62}` with fixed variance `\u2211 w\u1d62\u00b2 = 1`, the covariance with a target\n`Y(N) = \u2211 c\u1d62 r_{p\u1d62}(N)` is maximised at `w \u221d c`, with maximal correlation `1`.\nThe key insight is that the `k` coordinates `r_{p\u1d62} \u2212 1` are orthonormal in `\u2113\u00b2` of the units\n(proved here), so the predictor problem is Euclidean projection. Why now? Exp 472 is validating\nthe per-`N` predictor; this gives the exact theoretical ceiling.\n\n```json future_directions.json\n[\n  {\"title\": \"Fourth-Moment Law for QR Seed Drift\",\n   \"domain\": \"Probability\",\n   \"description\": \"Extend the exact second-moment replication law to the fourth moment of the centred QR sample sum. Because r \u2212 1 is two-valued, all moments are polynomials in t = 2^k. This yields sharper seed-drift tails than Chebyshev.\",\n   \"conjecture\": \"For seeds of n uniform draws from (Z/M)^x with t = 2^k, sum_x S(x)^4 = n \u03c6^n (t\u22121)(t^2\u22123t+3) + 3n(n\u22121) \u03c6^n (t\u22121)^2.\",\n   \"test\": \"Exhaustive enumeration for M \u2208 {7, 15, 105}, n \u2264 3; Lean proof by induction on n using sum_pi_succ.\",\n   \"if_true\": \"Fourth-moment Markov bound gives drift tails of order 1/c^4, explaining the tight replication of exp 475.\",\n   \"if_false\": \"Hidden higher-order correlations between draws would exist, contradicting independence of the seed model.\",\n   \"proof_strategy\": \"Expand (f a + S y)^4 with Fin.cons splitting; odd central moments of S vanish only at order 1, so track the third moment as well.\",\n   \"catalog_references\": [\"Tropical.QRSeedRobustVariance\", \"Novelty.QRSmoothnessVarianceNotMean\"]},\n  {\"title\": \"Hoeffding Bound for QR Sample Sums\",\n   \"domain\": \"Probability\",\n   \"description\": \"Upgrade the counting Chebyshev bound to an exponential one using boundedness of r \u2212 1 in [\u22121, t\u22121]. The exponential moment factorises over independent draws exactly.\",\n   \"conjecture\": \"#{x : |S(x)| \u2265 c} \u2264 2 \u03c6(M)^n exp(\u22122c^2/(n t^2)).\",\n   \"test\": \"Check numerically on M = 105, n \u2264 4; formalise via Real.exp and Hoeffding's lemma.\",\n   \"if_true\": \"Seed-robustness failures are exponentially rare in the sample size.\",\n   \"if_false\": \"The bounded-range heuristic fails for this lattice-valued statistic, requiring a different concentration argument.\",\n   \"proof_strategy\": \"Prove the exponential-moment factorisation over Fin n \u2192 G by induction, then apply Hoeffding's lemma per draw and Markov.\",\n   \"catalog_references\": [\"Tropical.QRSeedRobustVariance\"]},\n  {\"title\": \"Two-Torsion Variance Law for Non-Squarefree Moduli\",\n   \"domain\": \"NumberTheory\",\n   \"description\": \"Compute the QR variance t(M) \u2212 1 for general M, including prime powers and the prime 2, from the already-proved group identity sum (r\u22121)^2 = |G|(t\u22121).\",\n   \"conjecture\": \"For M = 2^e prod p_i^{a_i} (odd p_i distinct), the number of square roots of 1 in (Z/M)^x is 2^{k+\u03b4(e)} with \u03b4(0)=\u03b4(1)=0, \u03b4(2)=1, \u03b4(e\u22653)=2.\",\n   \"test\": \"Enumerate t(M) for M \u2264 10^4; formalise via CRT and cyclicity of (Z/p^a)^x.\",\n   \"if_true\": \"The variance law covers the moduli actually used in sieving with multipliers.\",\n   \"i",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5212",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "919796f3",
+    "status": "available",
+    "timestamp": "2026-10-12T02:31:12.383227+00:00",
+    "title": "Optimal yield-predictor weights"
   }
 ];

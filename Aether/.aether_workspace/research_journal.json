@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5260665b",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — scan-order tilt, after three cycles\n\n## What this cycle settled\n\nThe scan-order question (\"does scanning the balance window upward beat scanning down from\n`√N`?\") has been reduce",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 96,
-      "timestamp": "2026-08-26T13:18:20",
-      "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style pools read z=0.6356 ["
-    },
-    {
       "cycle_id": "6ca543a1",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Kernel Patterns and the Braid Arrangement\n\nTwo full research cycles were run on the topic *\"kernel patterns are complete\n`G`-invariants of a tuple, counted by the Bell numbers\"*.",
@@ -2501,6 +2491,16 @@
       "theorem_count": 37,
       "timestamp": "2026-10-11T14:53:53",
       "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS — sequential GPTQ 4-bit group-128 lands at +0.151 dCE "
+    },
+    {
+      "cycle_id": "919796f3",
+      "domain": "Tropical",
+      "key_insight": "# Future directions after paper 140 (QR-replication)\n\n## Stage 3 — Analysis\n\n* **Survived (proved, 0 sorry).** The replication of a Monte-Carlo estimate of the QR statistic\n  follows an exact law: the",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-10-12T02:31:26",
+      "title": "FACT round-39 #2 — QR-REPLICATION: the variance law is seed-robust (paper 140)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-11T14:53:53",
+  "last_updated": "2026-10-12T02:31:26",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "837a61ec",
-        "quality": 0.72,
-        "theorems": 58,
-        "title": "FACT round-83 #2 — WEIGHT-EXPONENT-FIT (exp 586): H1_HARMONIC_REFINED — dial wei"
-      },
-      {
         "cycle_id": "6060f6d0",
         "quality": 0.78,
         "theorems": 80,
@@ -4009,6 +4003,12 @@
         "quality": 0.72,
         "theorems": 4,
         "title": "FACT round-35 #4 — COMPOSITE-DIAL: emergence in the composite type channel (pape"
+      },
+      {
+        "cycle_id": "919796f3",
+        "quality": 0.6,
+        "theorems": 33,
+        "title": "FACT round-39 #2 — QR-REPLICATION: the variance law is seed-robust (paper 140)"
       }
     ]
   }

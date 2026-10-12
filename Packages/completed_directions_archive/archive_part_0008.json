@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-11T14:53:40Z",
-  "count": 10,
+  "archived_at": "2026-10-12T02:31:12Z",
+  "count": 11,
   "directions": [
     {
       "id": "fd_3552",
@@ -402,6 +402,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 243
+    },
+    {
+      "id": "fd_3581",
+      "title": "FACT round-39 #2 — QR-REPLICATION: the variance law is seed-robust (paper 140)",
+      "description": "Round-39 #2, cron iteration (exp 475, assessment v249). Fresh-seed audit of paper 139 (seed 20260826 vs original 20260821) — the reproducibility-audit discipline applied one firing after a seed-luck embarrassment (paper 136).\n\n**EVERY HEADLINE REPLICATES EXACTLY**:\n- Ensemble equality: emp_x2 ≈ emp_rnd at all four cells (0.12859/0.12786, 0.02004/0.02023, 0.12854/0.12585, 0.02004/0.01869); QR-restricted randoms 32–200× lower.\n- Per-N correlations: 0.503/0.415/0.480/0.403 vs original 0.504/0.452/0.483/0.401 (max drift 0.037).\n- Decile spreads replicate (low/high 0.076–0.082 / 0.186–0.188 at u=2.5; 0.006–0.008 / 0.039–0.043 at u=3.5).\n\nVerdict: THE-QR-BITE-IS-VARIANCE is seed-robust; paper 139 stands without qualification; the per-N yield predictor's training target is stable (validation in flight as exp 472).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp475_qr_replication.py + exp475_result.json, seed 20260826.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "919796f3",
+      "timestamp": "2026-08-22T04:50:57.574708+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.6,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-11T14:54:24.064891+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 240
     }
   ]
 }
