@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a118b9c6",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — effective reconstruction\n\nThis cycle separated three notions that the finite theory of\n`Catalog/Novelty/BoundedError.lean` conflates:\n\n* **fibre constancy** of a quantity along a",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 47,
-      "timestamp": "2026-09-12T18:31:43",
-      "title": "Effective reconstruction"
-    },
-    {
       "cycle_id": "cc88cab4",
       "domain": "Algebra",
       "key_insight": "# Future directions — after the sign-blind dial cycle\n\n## What this cycle settled\n\nWorking from `Catalog.Combinatorics.ExtendedDialMomentGeometry` (five-moment formula\n`pgain_moment_formula`, the supp",
@@ -499,19 +489,19 @@
       "theorem_count": 64,
       "timestamp": "2026-10-08T13:49:11",
       "title": "FACT round-37 #5 — DIAL-OVERLAP-LAW: partially overlapping dials are exactly one bit redundant (pape"
+    },
+    {
+      "cycle_id": "cebb5735",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — after FULL-PINNING-AT-DEGREE-TEN (paper 141)\n\n## What survived, what failed, and why (analysis and critique summary)\n\n- **Survived, now theorems.** All degree-ten predictions hol",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 86,
+      "timestamp": "2026-10-12T09:44:20",
+      "title": "FACT round-39 #3 — DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "6ca543a1",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Kernel Patterns and the Braid Arrangement\n\nTwo full research cycles were run on the topic *\"kernel patterns are complete\n`G`-invariants of a tuple, counted by the Bell numbers\"*.",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 127,
-      "timestamp": "2026-08-26T14:08:32",
-      "title": "Kernel patterns"
-    },
     {
       "cycle_id": "1bcec21a",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 33,
       "timestamp": "2026-10-12T02:31:26",
       "title": "FACT round-39 #2 — QR-REPLICATION: the variance law is seed-robust (paper 140)"
+    },
+    {
+      "cycle_id": "cebb5735",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — after FULL-PINNING-AT-DEGREE-TEN (paper 141)\n\n## What survived, what failed, and why (analysis and critique summary)\n\n- **Survived, now theorems.** All degree-ten predictions hol",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 86,
+      "timestamp": "2026-10-12T09:44:20",
+      "title": "FACT round-39 #3 — DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6c5b75ba",
-      "domain": "NumberTheory",
-      "name": "rot_states_card",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "5a9c6b89",
-      "domain": "Computation",
-      "name": "applies",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "5a9c6b89",
-      "domain": "Computation",
-      "name": "below",
-      "quality": 0.82
-    },
     {
       "cycle_id": "5a9c6b89",
       "domain": "Computation",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "entropy_comp_fst_of_uniform",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "cebb5735",
+      "domain": "Cryptography",
+      "name": "lt_logb_of_pow_lt",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "cebb5735",
+      "domain": "Cryptography",
+      "name": "logb_lt_of_pow_lt",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "cebb5735",
+      "domain": "Cryptography",
+      "name": "logb2_five_bounds",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-12T02:31:26",
+  "last_updated": "2026-10-12T09:44:20",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "88e58a70",
-        "quality": 0.78,
-        "theorems": 55,
-        "title": "FACT round-52 #1 — T-DIAL-UNIF-48: the zero-fit dial holds on uniform draws at b"
-      },
-      {
         "cycle_id": "173bd3d0",
         "quality": 0.84,
         "theorems": 198,
@@ -3389,6 +3383,12 @@
         "quality": 0.62,
         "theorems": 51,
         "title": "FACT round-39 #6 — PER-N-PREDICTOR-FULL: shape transfers perfectly, level tracks"
+      },
+      {
+        "cycle_id": "cebb5735",
+        "quality": 0.72,
+        "theorems": 86,
+        "title": "FACT round-39 #3 — DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (p"
       }
     ],
     "Geometry": [

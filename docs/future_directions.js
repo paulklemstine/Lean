@@ -3805,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "cebb5735",
-    "description": "Round-39 #3, cron iteration (exp 473, assessment v250). The abelian ladder's tenth rung.\n\n**FULL-PINNING-AT-DEGREE-TEN**: Q(\u03b6\u2081\u2081) full cyclotomic (degree 10, C\u2081\u2080 \u2245 (Z/11)^\u00d7, conductor 11) confirms every pre-stated prediction:\n- T(p) = ord\u2081\u2081(p) \u2208 {1,2,5,10}, densities {1/10, 1/10, 4/10, 4/10} on 295,946 unramified primes.\n- I(p mod 11; T) = H(T) = 1.7219 bits EXACTLY (per-class degenerate; thickening structural; coprime flat).\n- Polynomial cross-check 400/400 via factor-degree patterns \u2014 order-t elements act as 10/t cycles of length t: [1\u00b9\u2070]/[2\u2075]/[5,5]/[10].\n- Semiprime: I(N mod 11; pair) = 1.2002 vs fresh enumeration law 1.1999 and paper-78 closed-form anchor 1.2027; wall 0.0005; Is(10)-projection 0.0586 \u2014 new n=10 g/Is entries.\n\nThe abelian full-pinning law now spans degrees 2\u20136, 8, 9, 10 \u2014 real-subfield AND full-cyclotomic constructions, no exceptions.\n\nLedger: double-wrapped tuple comparison (400/400 false mismatches while PATTERN was perfect); residue-vs-type lookup; inline takeover after the channel's 6th agent death (the dying agent recovered the paper-78 anchor first \u2014 credited).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp473_degree_ten.py + exp473_result.json, seed 20260823.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3580",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T04:50:57.573731+00:00",
-    "title": "FACT round-39 #3 \u2014 DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
-  },
-  {
     "consumed_by_exp_id": "4b8d07ad",
     "description": "Round-40 #4, cron iteration (exp 481, assessment v257). Third and deepest of three mutually-consistent interval-hint results (with papers 143/146).\n\n**HEDGE-AND-CAPACITY**:\n- **T7 hedging hump**: E_opt(\u03b1) concave piecewise-linear \u2014 intermediate trust can be WORSE than both endpoints AND than no-hint (196.09 vs 171.17 measured). Partial trust is the most expensive regime.\n- **T8 placement ceilings**: cap = 2/(3x) centered/left, but **\u2192 1/x for RIGHT-placed windows** (truncated w reproduces min-of-two-uniforms) \u2014 placement doubles what width buys. Best cell: right x=1/16 \u03b1=1 \u2192 **14.69\u00d7**.\n- **Calibration gate**: uniform-given-hit hints exist only at tiny \u03b1 \u2014 that family can never reach magnitude-ordering gains.\n- Crossing for 5.19\u00d7: \u03b1* = 0.832 (x=1/64) \u2192 0.996 (x=1/8) \u2014 narrow AND near-certain.\n\nScope: interval hints escape paper 138's which-factor ceiling \u2014 order-action via direct J-correlation with MI(hint; factor)=0; the two functionals price orthogonally. Fermat named: 'start at \u221aN' = rightmost-interval commitment with CAL capacity \u2192 0.\n\nVerification: exhaustive permutations M=5\u20138 (gap 1.3e-16); MC max |z| = 2.343 over 40 configs. Ledger: complement-mass bug caught only by MC z=\u221272.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp481_proofs.md + exp481_verify.py + exp481_result.json, seed 20260824.",
     "domains": [
@@ -3835,16 +3820,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-40 #4 \u2014 ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "95dd71d4",
     "description": "Round-40 #3, cron iteration (exp 478, assessment v256).\n\n**DIAL-TRANSFERS**: the footprint-weighted yield dial fitted at bitlen 44 transfers to bitlen {48, 52} with calibration slopes 0.896/0.834 (80 values/N) and 0.912/0.834 (240 values/N) \u2014 all four cells in band. The direct divisibility feature d(N) stays independently significant in 12/12 cells (min |t| = 3.92). R\u00b2 rises substantially with relation count (0.41 \u2192 0.60 at u=2.5/bl48 for 80\u2192240 values).\n\nCaveat handled: the agent's first assembly had duplicated u-blocks and one out-of-band cell \u2014 caught by coordinator review, fixed surgically on demand; its ceiling column was definition-inconsistent with the lab convention and was NOT adopted.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp478_footprint_scale.py + exp478_result.json, seed 20260830.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3594",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T05:43:53.957883+00:00",
     "title": "FACT round-40 #3 \u2014 FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
   },
@@ -8674,7 +8660,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Combinatorics"
     ],
-    "id": "fd_5213",
+    "id": "fd_5214",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2610.13852v1",
@@ -36535,6 +36521,65 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-11T14:53:40.043966+00:00",
     "title": "Tail-Share Compression under Compensation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The type-entropy gap between Q(zeta_p) and its maximal real subfield is a pure power of 2 determined by the 2-adic valuation of p-1. It was proved for p = 11 (gap = 1 bit) and fits the exact data for every p < 45. It would turn the ladder's real-versus-full comparison into a single closed formula.\n\nFor every odd prime p, H_{C_{p-1}}(ord) - H_{C_{(p-1)/2}}(ord) = 2^{1 - v_2(p-1)}.\n\nExact enumeration for p < 10^4; formalize via entropy_prod_indep plus a Lean proof that H(C_{2^k}) = 2 - 2^{1-k}.\n\nFull and real-subfield channels differ by an explicitly computable dyadic amount, giving a closed-form ladder for all prime conductors.\n\nThe odd part of p-1 interacts with the 2-part in type entropy, so CRT independence fails for order readouts.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5215",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cebb5735",
+    "status": "available",
+    "timestamp": "2026-10-12T09:44:02.984528+00:00",
+    "title": "2-adic Tower-Gap Law for Cyclotomic Type Entropy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Frobenius-type entropy of a cyclic field is additive over coprime factorizations of its degree and strictly subadditive otherwise. This is the structural reason the degree-ten value equals 1 + (log2 5 - 8/5).\n\nFor coprime m, n: H_{C_{mn}}(ord) = H_{C_m}(ord) + H_{C_n}(ord); for gcd(m,n) > 1 the left side is strictly smaller.\n\nFormalize with ZMod.chineseRemainder transported through entropy_image_of_injOn; check non-coprime strictness on (2,4), (3,9).\n\nThe type entropy of every abelian field is computable from its prime-power layers.\n\nThere is a hidden correlation between prime-power layers of the order statistic.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5216",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cebb5735",
+    "status": "available",
+    "timestamp": "2026-10-12T09:44:03.609638+00:00",
+    "title": "CRT Additivity of Cyclotomic Type Entropy"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Seeing two Frobenius types only through N = pq always costs information once the conductor is at least 5. The exact degree-ten loss is 32/25 - (12/25) log2 3. This bounds what a residue oracle can learn about the factor types of an RSA-style modulus.\n\nFor every prime l >= 5, I(N mod l ; {T(p), T(q)}) < H(T_l), and sup over l of [H(T_l) - I_semi] is infinite.\n\nExact enumeration over C_{l-1} x C_{l-1} for l < 2000; formalize further instances with the 34-cell method of Semiprime.lean.\n\nSemiprime residue channels are uniformly lossy, a structural limit for residue-based factor-type leakage.\n\nSome conductor makes the unordered type pair a sufficient statistic for N mod l.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5217",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cebb5735",
+    "status": "available",
+    "timestamp": "2026-10-12T09:44:04.240794+00:00",
+    "title": "Strict Semiprime Attenuation for Prime Conductors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "This extends the all-primes factor-pattern theorem from Phi_n to the minimal polynomial of 2cos(2 pi / n). It would certify the real-subfield half of the abelian full-pinning law at the polynomial level.\n\nFor p not dividing n, the minimal polynomial of 2cos(2 pi/n) over F_p factors into phi(n)/(2 t+) irreducibles of degree t+, where t+ is the order of p in (Z/n)^x / {+-1}.\n\nFactor the minimal polynomials of 2cos(2pi/11) and 2cos(2pi/13) mod many p; formalize via the Frobenius action on the real conjugates.\n\nReal-subfield and full-cyclotomic pinning are both theorems about polynomials, not just about group models.\n\nReduction of the real subfield's ring of integers is not monogenic at some p, and the pattern must be read from prime ideals instead.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5218",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "cebb5735",
+    "status": "available",
+    "timestamp": "2026-10-12T09:44:04.879919+00:00",
+    "title": "Real-Subfield Polynomial Pinning"
   },
   {
     "consumed_by_exp_id": "",
