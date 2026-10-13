@@ -175719,7 +175719,7 @@
       "depth_estimate": 3,
       "description": "# The three open doors, probed: each is genuinely open, and each is now precisely bounded\n\nAfter the frontier closed (33 papers, #451), the campaign's three remaining open doors were\nprobed directly. All three return **honest negatives that narrow exactly what an attack must\novercome** — the sharpest possible statement short of solving them.\n\n## Door 1 — UMW rank-2 additive separability: structurally distinct, no covering\nA **rank-2** GAP difference set has **gcd = 1** (no common factor), whereas a 1-D AP's\ndifferences are all `(i−j)c` sharing a factor `c > 1`. **So He–Sahai's 1-D incidence bound\n(arXiv:2608.06681) provably does NOT transfer to rank-2** — the remaining door is genuinely a\ndifferent object, not secretly closed. But a small rank-2 GAP reaches only **38/40** coverage,\nfar from the `n^{1/3}` regime the conjecture needs. **The door is open; no covering built.**\n\n## Door 2 — the smooth-value upper bound: the horn is NOT broken by the QS form\nFor `F(t) = t² − N` (the quadratic-sieve polynomial), the observed count of `B`-smooth values\nover a window is **1–3, versus ρ(u) ≈ 2440 predicted — an excess of 0.00×.** The structured\nform produces **far fewer** smooth values than random integers of the same size — the\n**opposite** of what would break the smoothness-escape horn. So the horn **survives** for\n`t²−N`; the structure makes it *sparser*, not denser. (Consistent with round 38's \"Dickman is\nblind to structure\" — here in the safe direction.)\n\n## Door 3 — the per-instance class-number bound: `h` is generically `~√D`, not small\nFor a real balanced semiprime, `h(Q(√(−pq))) ≈ 0.26–0.44·√D` (analytic class-number formula,\n`L(1,χ) = O(1)`) — so **`h` is generically `~√D`, not small**. The Hafner–McCurley\nsubexponential gain therefore must come from the **largest prime factor (or smooth part) of\n`h`**, not from `h` being small. The real open object is a per-instance bound on `lpf(h)`,\nwhich is the **class-number problem in disguise** — consistent with round 40's\nfamily→subfamily equidistribution failure (`z = −41.4`) and #436's `h` measurement.\n\n## Net\nAll three doors are **genuinely open and hard**, and each is now bounded by a clean negative\nthat says what an attack must beat. None is closed; none is a method. This is the campaign's\nfinal, precise statement of the frontier after closing every factoring family.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Novelty"
       ],
@@ -182833,7 +182833,7 @@
       "depth_estimate": 3,
       "description": "In simultaneous measurement, linearly disjoint fields have exactly zero crosstalk (proved). Conjecture that crosstalk between non-disjoint fields is quantized by shared abelian subfields.\n\nFor two Galois fields whose compositum has Galois group the fibre product over a shared quotient Q, the cross channel I(c_A ; T_B) equals I(c_A restricted to Q ; T_B restricted to Q), in particular 1 bit per shared quadratic character when types detect it.\n\nInstantiate fineDial_reduction with Q as the dial; measure on the exp463 15-field data for field pairs with common quadratic subfields.\n\nThe simultaneous master table has a predicted, exactly computable crosstalk matrix.\n\nJoint Frobenius laws are not fibre products, signalling a modelling gap in the type-channel framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -183338,7 +183338,7 @@
       "depth_estimate": 3,
       "description": "Extend the overlap law from abelian (character) quotients to arbitrary shared quotients Q, with conjugacy-class readouts. The predicted redundancy is the Chebotarev entropy of the Q-class distribution rather than log2|Q|. This would close the ladder for shared non-abelian subfields such as a shared S3 resolvent of two S4 quartics.\n\nIf G and H surject onto Q and T1, T2 are class functions determining the Q-class of the image, then I(T1;T2) on G x_Q H equals H(class_Q) under the uniform measure.\n\nInstantiate mutInfo_eq_uEnt_label with kappa = Q-class of chi1(x.1); check fibre split for class readouts; verify S4 x_{S3} S4 numerically and by decide.\n\nRedundancy of any two Galois dials is computable from the shared quotient's class equation alone.\n\nClass readouts can carry hidden cross-fibre correlation, so the fibre-split mechanism fails for non-normal readouts.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra"
       ],
@@ -185681,7 +185681,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 0c9eb490 (Q=0.820), which proved 45 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-28 #2 — THE-GAP-LOCAL-METHOD (paper 96, /tmp/exp_gaplocal.py, /tmp/r28n2d.log)\n\n**Verdict name: THE-TAXONOMY-IS-COMPLETE.**\n\n### Result\nFermat — the one classical method never locality-classified — measured: its iteration count is **exactly (p+q)/2 − √N** (identity 24/24 with per-draw ",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Shared"
       ],
@@ -187281,7 +187281,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 24d71196 (Q=0.820), which proved 83 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: ## FACT round-25 #1 — QUBIT-TRADE2 (paper 85, /tmp/exp_qubittrade2.py, /tmp/r25n1g.log)\n\n**Verdict name: ONE-REGISTER-BIT-IS-WORTH-ONE-SAMPLE.**\n\n### Result\nThe qubit/sample phase diagram of Shor period-finding is a **fungibility ramp**, not a wall. The pre-stated vertical-wall hypothesis (odd r ⟹ d",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Shared"
       ],
@@ -192601,7 +192601,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 794ffb3f (Q=0.820), which proved 582 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: define “quotient step” and “evolutionary path” before attempting the full\n  decomposition conjecture;",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.4,
+      "domain_quality_penalty": 0.5,
       "domains": [
         "Shared"
       ],
@@ -195801,7 +195801,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle b4f715c2 (Q=0.780), which proved 85 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Replace `2 ∈ ℤ` by an element\n   `a` in a domain and identify hypotheses under which `⋂ n, (a^n) = 0`.\n   This points toward the Krull intersection theorem rather than a new\n   ascending-chain invariant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.30000000000000004,
+      "domain_quality_penalty": 0.4,
       "domains": [
         "Shared"
       ],

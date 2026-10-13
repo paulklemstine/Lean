@@ -3821,21 +3821,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-40 #3 \u2014 FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
   },
   {
-    "consumed_by_exp_id": "5cdba14c",
-    "description": "Round-40 #2, cron iteration (exp 480, assessment v255). Paper 143's grid promoted to closed form.\n\n**HINT-COST-PRICED**: closed forms for baseline/committed/interleaved (closed = brute-exact at M=300, relgap 0.0; MC max |z|=1.52); **Bayes \u2261 Committed PROVEN** (two-valued posterior + rearrangement); interleaved strictly dominated everywhere.\n\n**THE CROSSING LAW**: reaching speedup s requires **\u03b1 > \u03b1_min(s) = 1 \u2212 2/(3s)** \u2014 a HARD RELIABILITY GATE regardless of width. For paper 137's measured 5.19\u00d7: \u03b1 > 0.87155; above the gate **\u03bc/M = \u03b1 \u2212 0.87155** (linear). Paper 137's magnitude gain \u2194 effective interval quality (\u03b1\u22480.90, \u03bc/M\u22480.028), matching exp 474's numerical estimate. **Width alone can never substitute for reliability.**\n\nConservative pricing: under w-anchored conditioning speedups move UP (7.62\u00d7 vs 5.56\u00d7) \u2014 the stipulated pricing understates real oracle value.\n\nLedger: 7 machine-caught errors incl. a Bayes block that marginalized instead of conditioning (degenerating to the hint-blind floor).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp480_proofs.md + exp480_verify.py + exp480_result.json, seed 20260828.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3595",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T05:43:53.958922+00:00",
-    "title": "FACT round-40 #2 \u2014 ET-HINTS-THEORY: the crossing law \u2014 width can never substitute for reliability (paper 146)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Building on cycle 152d60cd (Q=0.800), which proved 81 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Round-37 #1 (exp 464, assessment v238). First test of the hint programme's size axis.\n\n**SIZE-STABLE-PLATEAU**: hint value I((p mod m*, q mod m*); labels) \u2212 I(N mod m*; labels) is size-stable to \u22645.3% across factor sizes k=14\u219222 (a 16,384-fold span); abelian dials \u22641.6%, with abelian residual entrop",
     "domains": [
@@ -48930,6 +48915,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Suppose an oracle names \\(k\\) nested windows \\(w_1 < \\dots < w_k\\) with cumulative reliabilities \\(\\alpha_1 < \\dots < \\alpha_k\\). Under stipulated pricing, speedup \\(s\\) is reachable iff \\(\\sum_i (\\alpha_i - \\alpha_{i-1})\\,\\cdot\\) (mean slot of block \\(i\\)) is at most \\(1/(3s)\\). This is a polyhedral gate whose single-window case is `crossing_law`.\nThe key insight is that the displacement law extends to step posteriors: the cost of an order is a sum of the block-weight jumps times the index sums of the upper sets.\nWhy now? `displacement_law` and `exchange_sum_le` already give the single-step case.",
+    "domains": [],
+    "id": "fd_5223",
+    "priority_score": 0.4364444444444444,
+    "research_mode": "team",
+    "source_exp_id": "5cdba14c",
+    "status": "available",
+    "timestamp": "2026-10-13T21:32:17.143668+00:00",
+    "title": "Multi-window crossing law"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.** For every seed and every width `k \u2265 3`, the single-coordinate\nflip is a no-op; at `k = 2` the flip read is *equivalent* to the whole-block read\n(`flip` hits \u27fa boundary-dependent), with no false positives or negatives.\n\n*The key insight is* that on a block read collectively the flip costs exactly\n`2\u00b7a` of aggregate drive while the whole-block ablation costs `k\u00b7a`, so the flip\nthreshold is `(k-2)\u00b7a`: it degenerates to the `zeroN` threshold precisely at\n`k = 2` (`flip_iff_selfSufficient_at_width_two`) and becomes strictly weaker for\n`k \u2265 3` (`flip1_noop_of_width_three`). At the arithmetic layer sign flips are\n*always* free (`resolves_neg`), so sign sensitivity can never be a capacity\neffect.\n\n*Why now?* The round observed `flip = 0 %` in all 12 arms at `k = 3` and\n`\u22127 \u2026 \u221225 %` in 4/4 dependent arms at `k = 2` \u2014 precisely the predicted\ndegeneracy. **Test:** run `k = 4` and `k = 5`. The conjecture forbids *any*\nflip effect at `k \u2265 3`, and predicts that a two-coordinate flip at `k = 4`\nbehaves like a one-coordinate flip at `k = 2`.\n\n---",
     "domains": [],
     "id": "fd_3300",
@@ -56657,5 +56654,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-12T02:31:12.383227+00:00",
     "title": "Optimal yield-predictor weights"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Take any strictly decreasing prior and its prior-proportional hint posterior with window mass \\(\\alpha \\in (0,1)\\) and \\(2 \\le W \\le M-2\\). Then the Bayes cost is *strictly* below the stipulated cost \\((W+1+(1-\\alpha)M)/2\\). Under the min-law it falls below by \\(\\Theta(M)\\), which would explain the w-anchored speedup moving from 5.56\u00d7 to 7.62\u00d7.\nThe key insight is that the pairing identity `refl_add_blockRev` turns the gap into half the difference between the cost of the committed scan and the cost of its block reversal, and Chebyshev's sum inequality makes that difference strict.\nWhy now? `optCost_le_stipulated` gives the inequality for every posterior. Strictness only needs a strict-rearrangement step.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5221",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5cdba14c",
+    "status": "available",
+    "timestamp": "2026-10-13T21:32:15.854984+00:00",
+    "title": "Strict conservative pricing for prior-proportional hints"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** Consider any posterior that is uniform on each of the window and its complement. For every \\(s\\), the set of \\(\\alpha\\) at which the Bayes speedup reaches \\(s\\) is \\((\\alpha_{\\min}+w,\\,1] \\cup [0,\\,1-\\alpha_{\\min}-(1-w))\\) in the continuum. It is therefore empty for \\(s > 2/(3\\max(w,1-w))\\) once \\(\\alpha\\) is fixed.\nThe key insight is `bayes_cost_exact`: the Bayes cost is the minimum of two affine functions of \\(\\alpha\\), so the reachable set is a union of two half-lines.\nWhy now? The exact Bayes cost is proved. Only the continuum bookkeeping remains.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_5222",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5cdba14c",
+    "status": "available",
+    "timestamp": "2026-10-13T21:32:16.499873+00:00",
+    "title": "Two-sided gate as a general Bayes law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**Conjecture.** If the oracle claims reliability \\(\\alpha\\) but the truth is \\(\\beta\\), the realised stipulated speedup reaches \\(s\\) iff \\(w \\le \\beta - \\alpha_{\\min}(s)\\), independently of \\(\\alpha\\). The claimed reliability has no influence on the gate.\nThe key insight is that the committed order does not depend on \\(\\alpha\\) (`misspecified_coverage_regret`), so the true \\(\\beta\\) enters linearly.\nWhy now? Composing `misspecified_coverage_regret` with `crossing_law` is a one-step formalisation.\n\n```json future_directions.json\n[\n {\"title\": \"Strict Conservative Pricing for Prior-Proportional Hints\",\n  \"domain\": \"Probability\",\n  \"description\": \"The stipulated two-number cost is an upper bound on the Bayes cost for every posterior. The conjecture is that it is strict, with a Theta(M) gap, for prior-proportional hints under strictly decreasing priors. This would explain the w-anchored 7.62x vs 5.56x observation.\",\n  \"conjecture\": \"For strictly decreasing p, 2<=W<=M-2 and 0<alpha<1, optCost(trustPost p S alpha) < (W+1+(1-alpha)M)/2 where S is the first W cells.\",\n  \"test\": \"Exact rational evaluation of optCost via sorted posteriors for M up to 512 under the min-law; formalize via refl_add_blockRev plus strict rearrangement.\",\n  \"if_true\": \"Real oracle value strictly exceeds stipulated pricing, so the crossing law is a strict lower benchmark.\",\n  \"if_false\": \"Some prior-proportional hints are exactly priced by the two-number law, identifying a rigidity class.\",\n  \"proof_strategy\": \"Pairing identity: cost(refl)+cost(blockRev)=2*stipulated. Show cost(refl)<cost(blockRev) by strict Chebyshev within each block.\",\n  \"catalog_references\": [\"Shared.IntervalHintsCrossingLaw\", \"Combinatorics.IntervalHintsHedgingHump\"]},\n {\"title\": \"Two-Sided Reachability Set of the Bayes Speedup\",\n  \"domain\": \"Probability\",\n  \"description\": \"The Bayes cost of a two-valued hint is the minimum of two affine functions of alpha. The conjecture is that the set of alpha reaching speedup s is a union of two explicit half-lines, which become empty above an explicit width-dependent ceiling.\",\n  \"conjecture\": \"In the continuum, 2/(3*min(1-alpha+w, 1-w+alpha)) >= s iff alpha >= alphaMin(s)+w or alpha <= w - alphaMin(s).\",\n  \"test\": \"Formalize from bayes_cost_exact and take the continuum limit as in pricedSpeedupM_tendsto.\",\n  \"if_true\": \"A complete Bayes analogue of the crossing law with a reliably-wrong branch.\",\n  \"if_false\": \"The finite-M corrections change the reachable set qualitatively.\",\n  \"proof_strategy\": \"Case split on which affine branch is active, then apply crossing_law to the window and to its complement.\",\n  \"catalog_references\": [\"Shared.IntervalHintsCrossingLaw\", \"Logic.IntervalHintsTwoNumbers\"]},\n {\"title\": \"Polyhedral Gate for Nested Multi-Window Hints\",\n  \"domain\": \"Combinatorics\",\n  \"description\": \"The displacement law generalizes from two-valued to step posteriors. The conjecture is that the reachable region for nested windows is a polyhedron whose single-window fa",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_5224",
+    "priority_score": 0.4,
+    "research_mode": "team",
+    "source_exp_id": "5cdba14c",
+    "status": "available",
+    "timestamp": "2026-10-13T21:32:17.910767+00:00",
+    "title": "Misspecification under the crossing law"
   }
 ];

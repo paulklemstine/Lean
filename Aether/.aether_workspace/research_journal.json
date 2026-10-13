@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "87769612",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — dependent tropical fibre families\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Tropical/DependentFibers/` (all statements there are proved, with n",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 569,
-      "timestamp": "2026-09-13T11:45:25",
-      "title": "Genuinely dependent solutions at every nontrivial finite cardinality"
-    },
-    {
       "cycle_id": "cb6515e1",
       "domain": "Novelty",
       "key_insight": "# Future directions\n\n## Status of the assigned conjecture\n\n**Refuted.** For the seven canonical interval representatives of\n`Novelty.SonicCounterpointCategory`, the reflexive-transitive closure of\n`Ca",
@@ -499,19 +489,19 @@
       "theorem_count": 48,
       "timestamp": "2026-10-13T01:37:21",
       "title": "FACT round-40 #4 — ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)"
+    },
+    {
+      "cycle_id": "5cdba14c",
+      "domain": "Shared",
+      "key_insight": "# Future directions — after the crossing law (paper 146)\n\n## 1. Strict conservative pricing for prior-proportional hints\n**Conjecture.** Take any strictly decreasing prior and its prior-proportional h",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 49,
+      "timestamp": "2026-10-13T21:32:34",
+      "title": "FACT round-40 #2 — ET-HINTS-THEORY: the crossing law — width can never substitute for reliability (p"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "b3980a1a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nDerived from the analysis and adversarial review of this cycle.  The cycle\nestablished three things, and each conjecture below pushes on one of them:\n\n1. **Reflection is free** —",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 110,
-      "timestamp": "2026-08-26T17:00:47",
-      "title": "Strengthen certified computation"
-    },
     {
       "cycle_id": "1a774383",
       "domain": "Probability",
@@ -2501,21 +2491,19 @@
       "theorem_count": 48,
       "timestamp": "2026-10-13T01:37:21",
       "title": "FACT round-40 #4 — ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)"
+    },
+    {
+      "cycle_id": "5cdba14c",
+      "domain": "Shared",
+      "key_insight": "# Future directions — after the crossing law (paper 146)\n\n## 1. Strict conservative pricing for prior-proportional hints\n**Conjecture.** Take any strictly decreasing prior and its prior-proportional h",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 49,
+      "timestamp": "2026-10-13T21:32:34",
+      "title": "FACT round-40 #2 — ET-HINTS-THEORY: the crossing law — width can never substitute for reliability (p"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "15a3f6e6",
-      "domain": "Physics",
-      "name": "realDeg_dvd_iff",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "15a3f6e6",
-      "domain": "Physics",
-      "name": "sextic_table",
-      "quality": 0.72
-    },
     {
       "cycle_id": "15a3f6e6",
       "domain": "Physics",
@@ -2803,9 +2791,21 @@
       "domain": "Combinatorics",
       "name": "one_le_optCost",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "5cdba14c",
+      "domain": "Shared",
+      "name": "for",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "5cdba14c",
+      "domain": "Shared",
+      "name": "exchange_sum_le",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-13T01:37:21",
+  "last_updated": "2026-10-13T21:32:34",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "79285565",
-        "quality": 0.87,
-        "theorems": 106,
-        "title": "Pole-order obstruction"
-      },
-      {
         "cycle_id": "42a2aa0b",
         "quality": 0.84,
         "theorems": 100,
@@ -3947,6 +3941,12 @@
         "quality": 0.62,
         "theorems": 37,
         "title": "NET-53: COMPENSATION-WORKS-ON-THE-REAL-FLOORS — sequential GPTQ 4-bit group-128 "
+      },
+      {
+        "cycle_id": "5cdba14c",
+        "quality": 0.72,
+        "theorems": 49,
+        "title": "FACT round-40 #2 — ET-HINTS-THEORY: the crossing law — width can never substitut"
       }
     ],
     "Tropical": [

@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-13T01:37:06Z",
-  "count": 13,
+  "archived_at": "2026-10-13T21:32:18Z",
+  "count": 14,
   "directions": [
     {
       "id": "fd_3552",
@@ -522,6 +522,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 250
+    },
+    {
+      "id": "fd_3595",
+      "title": "FACT round-40 #2 — ET-HINTS-THEORY: the crossing law — width can never substitute for reliability (paper 146)",
+      "description": "Round-40 #2, cron iteration (exp 480, assessment v255). Paper 143's grid promoted to closed form.\n\n**HINT-COST-PRICED**: closed forms for baseline/committed/interleaved (closed = brute-exact at M=300, relgap 0.0; MC max |z|=1.52); **Bayes ≡ Committed PROVEN** (two-valued posterior + rearrangement); interleaved strictly dominated everywhere.\n\n**THE CROSSING LAW**: reaching speedup s requires **α > α_min(s) = 1 − 2/(3s)** — a HARD RELIABILITY GATE regardless of width. For paper 137's measured 5.19×: α > 0.87155; above the gate **μ/M = α − 0.87155** (linear). Paper 137's magnitude gain ↔ effective interval quality (α≈0.90, μ/M≈0.028), matching exp 474's numerical estimate. **Width alone can never substitute for reliability.**\n\nConservative pricing: under w-anchored conditioning speedups move UP (7.62× vs 5.56×) — the stipulated pricing understates real oracle value.\n\nLedger: 7 machine-caught errors incl. a Bayes block that marginalized instead of conditioning (degenerating to the hint-blind floor).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp480_proofs.md + exp480_verify.py + exp480_result.json, seed 20260828.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "5cdba14c",
+      "timestamp": "2026-08-22T05:43:53.958922+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-13T01:38:05.438849+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 248
     }
   ]
 }
