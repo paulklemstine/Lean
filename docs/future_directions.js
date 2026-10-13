@@ -3805,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
   },
   {
-    "consumed_by_exp_id": "4b8d07ad",
-    "description": "Round-40 #4, cron iteration (exp 481, assessment v257). Third and deepest of three mutually-consistent interval-hint results (with papers 143/146).\n\n**HEDGE-AND-CAPACITY**:\n- **T7 hedging hump**: E_opt(\u03b1) concave piecewise-linear \u2014 intermediate trust can be WORSE than both endpoints AND than no-hint (196.09 vs 171.17 measured). Partial trust is the most expensive regime.\n- **T8 placement ceilings**: cap = 2/(3x) centered/left, but **\u2192 1/x for RIGHT-placed windows** (truncated w reproduces min-of-two-uniforms) \u2014 placement doubles what width buys. Best cell: right x=1/16 \u03b1=1 \u2192 **14.69\u00d7**.\n- **Calibration gate**: uniform-given-hit hints exist only at tiny \u03b1 \u2014 that family can never reach magnitude-ordering gains.\n- Crossing for 5.19\u00d7: \u03b1* = 0.832 (x=1/64) \u2192 0.996 (x=1/8) \u2014 narrow AND near-certain.\n\nScope: interval hints escape paper 138's which-factor ceiling \u2014 order-action via direct J-correlation with MI(hint; factor)=0; the two functionals price orthogonally. Fermat named: 'start at \u221aN' = rightmost-interval commitment with CAL capacity \u2192 0.\n\nVerification: exhaustive permutations M=5\u20138 (gap 1.3e-16); MC max |z| = 2.343 over 40 configs. Ledger: complement-mass bug caught only by MC z=\u221272.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp481_proofs.md + exp481_verify.py + exp481_result.json, seed 20260824.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3593",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T05:43:53.956820+00:00",
-    "title": "FACT round-40 #4 \u2014 ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)"
-  },
-  {
     "consumed_by_exp_id": "95dd71d4",
     "description": "Round-40 #3, cron iteration (exp 478, assessment v256).\n\n**DIAL-TRANSFERS**: the footprint-weighted yield dial fitted at bitlen 44 transfers to bitlen {48, 52} with calibration slopes 0.896/0.834 (80 values/N) and 0.912/0.834 (240 values/N) \u2014 all four cells in band. The direct divisibility feature d(N) stays independently significant in 12/12 cells (min |t| = 3.92). R\u00b2 rises substantially with relation count (0.41 \u2192 0.60 at u=2.5/bl48 for 80\u2192240 values).\n\nCaveat handled: the agent's first assembly had duplicated u-blocks and one out-of-band cell \u2014 caught by coordinator review, fixed surgically on demand; its ceiling column was definition-inconsistent with the lab convention and was NOT adopted.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp478_footprint_scale.py + exp478_result.json, seed 20260830.",
     "domains": [
@@ -3835,16 +3820,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-40 #3 \u2014 FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5cdba14c",
     "description": "Round-40 #2, cron iteration (exp 480, assessment v255). Paper 143's grid promoted to closed form.\n\n**HINT-COST-PRICED**: closed forms for baseline/committed/interleaved (closed = brute-exact at M=300, relgap 0.0; MC max |z|=1.52); **Bayes \u2261 Committed PROVEN** (two-valued posterior + rearrangement); interleaved strictly dominated everywhere.\n\n**THE CROSSING LAW**: reaching speedup s requires **\u03b1 > \u03b1_min(s) = 1 \u2212 2/(3s)** \u2014 a HARD RELIABILITY GATE regardless of width. For paper 137's measured 5.19\u00d7: \u03b1 > 0.87155; above the gate **\u03bc/M = \u03b1 \u2212 0.87155** (linear). Paper 137's magnitude gain \u2194 effective interval quality (\u03b1\u22480.90, \u03bc/M\u22480.028), matching exp 474's numerical estimate. **Width alone can never substitute for reliability.**\n\nConservative pricing: under w-anchored conditioning speedups move UP (7.62\u00d7 vs 5.56\u00d7) \u2014 the stipulated pricing understates real oracle value.\n\nLedger: 7 machine-caught errors incl. a Bayes block that marginalized instead of conditioning (degenerating to the hint-blind floor).\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp480_proofs.md + exp480_verify.py + exp480_result.json, seed 20260828.",
     "domains": [
       "Novelty"
     ],
     "id": "fd_3595",
+    "phase": "A",
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-22T05:43:53.958922+00:00",
     "title": "FACT round-40 #2 \u2014 ET-HINTS-THEORY: the crossing law \u2014 width can never substitute for reliability (paper 146)"
   },
@@ -36580,6 +36566,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-12T09:44:04.879919+00:00",
     "title": "Real-Subfield Polynomial Pinning"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Quantify the hedging hump peak of the Bayes-optimal search cost under the min-law prior as a function of window fraction and placement. The hump equals the level-set cross term of the decreasing rearrangement.\n\nFor the min-law prior and a right window of fraction x, max_alpha E_opt(alpha)/M -> 1/3 + H(x) with an explicit algebraic H, maximized near x = 1/2, and H(x) ~ c x for small x.\n\nExact rational evaluation of sorted posteriors for M up to 4096 on fine alpha grids; formalize via the layer-cake identity sum (i+1) q*_i = sum_s lambda(s)(lambda(s)+1)/2.\n\nThe 196 vs 171 measurement becomes a closed-form prediction, and the most expensive trust level is computable.\n\nThe hump height depends on discretization in a non-universal way and only the existence theorem survives.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5219",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4b8d07ad",
+    "status": "available",
+    "timestamp": "2026-10-13T01:37:05.551909+00:00",
+    "title": "Exact Hump Height Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend signal_value_le and the right-placement gate from one signal to a full calibrated hint alphabet, bounding total saving by the firing-rate-weighted capacity of the lightest window cells.\n\nFor a calibrated K-outcome hint whose posteriors are uniform on windows S_k with coverage alpha_k, the expected saving is at most n * sum_k W_k * min_{j in S_k} p_j / alpha_k.\n\nLP computation of the maximal saving over calibrated kernels for M <= 10; formal proof by summing uniform_hit_mass_le.\n\nUniform-given-hit hint alphabets under decreasing priors provably cannot reach magnitude-ordering gains unless they use heavy (left) cells.\n\nMulti-signal coordination beats the linear bound, which would show a genuine synergy between hints.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_5220",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "4b8d07ad",
+    "status": "available",
+    "timestamp": "2026-10-13T01:37:06.181086+00:00",
+    "title": "Linear Value-of-Information Bound for Hint Alphabets"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cc88cab4",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — after the sign-blind dial cycle\n\n## What this cycle settled\n\nWorking from `Catalog.Combinatorics.ExtendedDialMomentGeometry` (five-moment formula\n`pgain_moment_formula`, the supp",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-09-13T00:56:46",
-      "title": "Inadmissibility of Sign-Blind Dial Reporting"
-    },
-    {
       "cycle_id": "87769612",
       "domain": "Tropical",
       "key_insight": "# Future directions — dependent tropical fibre families\n\nDerived from the analysis and adversarial review of the results in\n`Catalog/Tropical/DependentFibers/` (all statements there are proved, with n",
@@ -499,19 +489,19 @@
       "theorem_count": 86,
       "timestamp": "2026-10-12T09:44:20",
       "title": "FACT round-39 #3 — DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
+    },
+    {
+      "cycle_id": "4b8d07ad",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — after ET-HINTS-FULL (paper 148)\n\nThis cycle proved the following in Lean:\n- the hedging hump is universal for strictly decreasing priors (`hedging_hump`);\n- the uniform level \\((",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-10-13T01:37:21",
+      "title": "FACT round-40 #4 — ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "1bcec21a",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — canonical α-connections, after the analytic core\n\nThis cycle turned the catalog's *algebraic* α-connection identities\n(`Probability/InformationGeometryContrarian.lean`: `((1-α)/2",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 68,
-      "timestamp": "2026-08-26T15:55:04",
-      "title": "Canonical alpha-connections"
-    },
     {
       "cycle_id": "b3980a1a",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 86,
       "timestamp": "2026-10-12T09:44:20",
       "title": "FACT round-39 #3 — DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (paper 141)"
+    },
+    {
+      "cycle_id": "4b8d07ad",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — after ET-HINTS-FULL (paper 148)\n\nThis cycle proved the following in Lean:\n- the hedging hump is universal for strictly decreasing priors (`hedging_hump`);\n- the uniform level \\((",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 48,
+      "timestamp": "2026-10-13T01:37:21",
+      "title": "FACT round-40 #4 — ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5a9c6b89",
-      "domain": "Computation",
-      "name": "is",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0ed62b99",
-      "domain": "Bridges",
-      "name": "factor_root_iff_sqrt_discr",
-      "quality": 0.82
-    },
-    {
-      "cycle_id": "0ed62b99",
-      "domain": "Bridges",
-      "name": "exists_distinct_roots_iff_exists_sqrt",
-      "quality": 0.82
-    },
     {
       "cycle_id": "15a3f6e6",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "logb2_five_bounds",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "4b8d07ad",
+      "domain": "Combinatorics",
+      "name": "uniform_hit_mass_le",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "4b8d07ad",
+      "domain": "Combinatorics",
+      "name": "probeCost_le_card",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "4b8d07ad",
+      "domain": "Combinatorics",
+      "name": "one_le_optCost",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-12T09:44:20",
+  "last_updated": "2026-10-13T01:37:21",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3207,12 +3207,6 @@
     ],
     "Combinatorics": [
       {
-        "cycle_id": "108711a9",
-        "quality": 0.82,
-        "theorems": 70,
-        "title": "FACT round-55 #2 — D12-SEMIPRIME: the degree-12 semiprime pair channel matches l"
-      },
-      {
         "cycle_id": "384c4d0f",
         "quality": 0.84,
         "theorems": 103,
@@ -3265,6 +3259,12 @@
         "quality": 0.72,
         "theorems": 44,
         "title": "FACT round-35 #2 — UNIVERSAL-S3-FIFTH: five fields, one law (paper 123)"
+      },
+      {
+        "cycle_id": "4b8d07ad",
+        "quality": 0.72,
+        "theorems": 48,
+        "title": "FACT round-40 #4 — ET-HINTS-FULL: the hedging hump and placement-structured ceil"
       }
     ],
     "Computation": [

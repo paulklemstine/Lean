@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-12T09:44:05Z",
-  "count": 12,
+  "archived_at": "2026-10-13T01:37:06Z",
+  "count": 13,
   "directions": [
     {
       "id": "fd_3552",
@@ -482,6 +482,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 241
+    },
+    {
+      "id": "fd_3593",
+      "title": "FACT round-40 #4 — ET-HINTS-FULL: the hedging hump and placement-structured ceilings (paper 148)",
+      "description": "Round-40 #4, cron iteration (exp 481, assessment v257). Third and deepest of three mutually-consistent interval-hint results (with papers 143/146).\n\n**HEDGE-AND-CAPACITY**:\n- **T7 hedging hump**: E_opt(α) concave piecewise-linear — intermediate trust can be WORSE than both endpoints AND than no-hint (196.09 vs 171.17 measured). Partial trust is the most expensive regime.\n- **T8 placement ceilings**: cap = 2/(3x) centered/left, but **→ 1/x for RIGHT-placed windows** (truncated w reproduces min-of-two-uniforms) — placement doubles what width buys. Best cell: right x=1/16 α=1 → **14.69×**.\n- **Calibration gate**: uniform-given-hit hints exist only at tiny α — that family can never reach magnitude-ordering gains.\n- Crossing for 5.19×: α* = 0.832 (x=1/64) → 0.996 (x=1/8) — narrow AND near-certain.\n\nScope: interval hints escape paper 138's which-factor ceiling — order-action via direct J-correlation with MI(hint; factor)=0; the two functionals price orthogonally. Fermat named: 'start at √N' = rightmost-interval commitment with CAL capacity → 0.\n\nVerification: exhaustive permutations M=5–8 (gap 1.3e-16); MC max |z| = 2.343 over 40 configs. Ledger: complement-mass bug caught only by MC z=−72.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp481_proofs.md + exp481_verify.py + exp481_result.json, seed 20260824.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "4b8d07ad",
+      "timestamp": "2026-08-22T05:43:53.956820+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-11T23:08:56.252136+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 250
     }
   ]
 }
