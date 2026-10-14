@@ -1,6 +1,6 @@
 {
-  "detected_limit": 2,
-  "last_queue_full_time": 1791974143.92066,
+  "detected_limit": 1,
+  "last_queue_full_time": 1791991762.0791945,
   "success_count_at_limit": 0,
   "cooldown_seconds": 3600.0
 }

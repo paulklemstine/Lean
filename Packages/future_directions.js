@@ -18,21 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-36 \u2014 THE UMW COVERING: six constructive strategies, 15 adversarial verdicts, ZERO coverings \u2014 the one standing door is confirmed OPEN-AND-HARD. (1/3,1/3) divisibility-covering of [n] NOT constructed (multi-scale, smooth-difference, prime-power, Cantor-structured, Lemma-6.2-AP-build, lower-bound strategies all fail at target; verifiers re-ran every harness, 15/15 is_real_covering=False, several forced headline retractions). Main-loop empirical frontier (disjoint-guarded, full [n] incl composites): full coverage 1.00 only at traded (alpha,beta)=(1/2,2/3); target (1/3,1/3) reaches only 0.40-0.54. Tightness at (1/3,1/3) open in BOTH directions (paper: 'we do not know if alpha=1-2beta is achievable'); alpha is a DOUBLE-exponential unit (measured alpha=ln ln M/ln n, NOT ln M/ln n \u2014 a real trap); UMW's three conflatable statements disambiguated (abstract trivial alpha+beta<=1; constraint alpha>=1-2beta; trivial covering alpha=1-beta+o(1); open gap trivial alpha=2/3 to floor alpha=1/3 at beta=1/3)"
   },
   {
-    "consumed_by_exp_id": "d20ea988",
-    "description": "# Closing the Galois-table completeness gap: AGL(1,8) has the LARGEST abelianization examined and leaks the LEAST \u2014 extending the semiprime REVERSAL\n\nThe `semiprime_reversal` (D\u2084 1.43 bits > S\u2084 1 bit) showed the semiprime splitting-type\nchannel is driven by coset SEPARATION, not group size. That raised a completeness question:\nthe catalog machine-checked only groups with `|G^ab| \u2264 4` (S\u2083, S\u2084, A\u2084, D\u2084, V\u2084, C\u2084), so the\ncap-headroom above 2 bits was **entirely untested**. This note computes the first case with\n`|G^ab| > 4` \u2014 and it **reverses the reversal**.\n\n## AGL(1,8) = GF(8) \u22ca GF(8)\u00d7 , order 56\n- Derived subgroup `[G,G]` = the translation group `C\u2082\u00b3` (order 8) \u2014 verified normal.\n- Abelianization `G^ab = C\u2087` (order 7), **cap = log\u20827 = 2.807 bits** \u2014 the largest\n  abelianization of any group examined.\n- Type readout `T(g)` = cycle type of `g` as a permutation of the 8 field points;\n  **verified to be a class function** (conjugation-invariant, 200 random checks).\n\n**Computed exactly over all 3136 = 56\u00b2 ordered pairs (x,y):**\n- Prime channel `I\u2081 = I(coset(x); T(x)) = 0.5917 bits` \u2014 only **21.1%** of the cap.\n- **Semiprime channel `I\u2082 = I(coset(xy); {Tx,Ty}) = 0.1141 bits` \u2014 only 4.1% of the cap.**\n\n(Consistency: `0 \u2264 I\u2082 \u2264 I\u2081 \u2264 cap`, as required.)\n\n## The extended reversal\n| group | order | \\|G^ab\\| | cap | I\u2082 (semiprime) | % of cap realized |\n|---|---|---|---|---|---|\n| V\u2084 | 4 | 4 | 2.00 | 0.295 | 14.7% |\n| **AGL(1,8)** | **56** | **7** | **2.807** | **0.114** | **4.1%** |\n| S\u2084 | 24 | 2 | 1.00 | 1.000 | 100% |\n| D\u2084 | 8 | 4 | 2.00 | 1.430 | 71.5% |\n\n(Values for V\u2084, S\u2084, D\u2084 are the catalog's machine-checked closed forms, `Semiprime.lean`.)\n\n\u21d2 **Having the LARGEST abelianization (7) gives the SMALLEST semiprime leakage (0.114) of any\ngroup examined.** So the channel richness is not merely \"not monotone in group size\" (the\noriginal D\u2084>S\u2084 reversal) \u2014 it is **not monotone in the abelianization order either**. What\nmatters is how much of `G^ab` the class-function type readout `T` actually RESOLVES: D\u2084's `T`\nresolves 71.5% of its 2-bit cap; AGL(1,8)'s `T` resolves only 4.1% of its 2.807-bit cap.\nLarge abelianization with a **coarse** (lossy) class function is a *worse* channel than a small\none with a faithful class function.\n\n## Why it matters (and what it does NOT claim)\n- It **completes the machine-checked table's headroom** (the first `|G^ab| > 4` case) and\n  makes the \"coset separation drives leakage\" reading precise: it is **separation as resolved\n  by `T`**, i.e. `I(coset;T)`, not `log\u2082|G^ab|` alone.\n- It does **NOT** threaten factoring: `I\u2082` is a bounded (O(1)-per-fixed-field) number of bits\n  about a residue of `N`, versus \u0398(log N) needed to localise `p`; and per the harvest (#420)\n  the family lands on existing primitives (1)/(4) \u2014 real mechanism, wrong quantity.\n- The structural lemma it instantiates: `I(coset;T) = log\u2082|G^ab| \u2212 H(coset|T)`, so the deficit\n  `H(coset|T)` (the `loss_eq` of `GroupChannel.lean`) is what varies wildly across groups, and\n  it is maximised exactly when `T` is a coarse class function on a large abelian quotient.\n\nComputed with python3/sympy, exact rationals, all `G\u00d7G` enumerated; the derived subgroup and\nclass-function property were verified in code, not assumed.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4954",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-25T17:57:24.491402+00:00",
-    "title": "FACT round-35 (cont.) \u2014 CLOSING THE GALOIS-TABLE GAP: AGL(1,8) (order 56, G^ab=C7, cap log2 7=2.807 \u2014 the LARGEST abelianization examined) leaks I2=0.114 bits, only 4.1% of cap, the SMALLEST of any group tested \u2014 EXTENDING the semiprime reversal: channel richness is not monotone in group size (D4 1.43>S4 1.0) NOR in abelianization order (AGL 0.114, cap 2.807). What matters is how much of G^ab the class-function type T RESOLVES: I(coset;T)=log2|G^ab| - H(coset|T), and the deficit H(coset|T) varies wildly (D4 resolves 71.5% of cap, AGL 4.1%). First |G^ab|>4 case in the catalog's table \u2014 the completeness gap closed with exact computation. Does NOT threaten factoring (O(1) bits about a residue of N, lands on primitives (1)/(4))"
-  },
-  {
     "consumed_by_exp_id": "c22c0d2c",
     "description": "# Round 35 (full) \u2014 Faithful-model SLACKNESS: the interior and m-leg are non-binding, and it CORRECTS #421/#422\n\n**KILL on all four channels** \u2014 but the kill is stronger than any hypothesis claimed, and it\n**corrects the main loop's own #421 and #422**. `N^{1/5}` is an UPPER bound attained by\nHarvey, never a floor. Two independent refuters reached the decisive fact by different routes.\n\n## THE DECISIVE FACT (found by the refuters, not the hypotheses)\nHarvey's **Algorithm 4.3 Step 2 forces `M := \u2308(N/r)^{1/2}\u2309`** (hypothesis 3.1), costing\n`(N/r)^{1/4}\u00b7lg\u00b3 N` (Prop 2.5). With that leg restored, the **faithful** implemented model is\n`T = max{ (N/r)^{1/4},  N^{1/2}/(r^{1/2}m),  r,  m }`, and\n\n> **`min_\u03c1 max{ (N/r)^{1/4}, r } = N^{1/5}` with the interior and the m-leg DELETED OUTRIGHT.**\n\n\u21d2 **The interior and the m-leg are SLACK (non-binding) at Harvey's operating point.** No\nimprovement to either, of any size, can move `1/5`.\n\n## CORRECTIONS to the main loop's papers\n- **#422 / capstone \"three-way co-binding\" was based on a model that DROPS the M-leg** \u2014 the\n  `max{interior, r, m}` screen. Harvey actually **implements** the M-leg (hypothesis 3.1).\n  With it restored, the interior and m-leg are slack. So \"add a floor\" is refined to: a\n  **fourth floor of weight \u2265 1/2** is needed to reach `1/6` (see the lever below). My\n  independent `lp-threeway.md` screen dropped the M-leg and so mis-called the interior and\n  m-leg \"co-binding\" \u2014 they are non-binding in the implemented model.\n- **#421 \"m-leg deletion \u21d2 N^{1/20}\" is flagged as a MIS-ATTRIBUTION.** The synthesis notes\n  `N^{1/20} = 1/4 \u2212 1/5` is the **PAIR-leg** deletion; the **m-leg** deletion gives `2/15`.\n  Flagged for the round-34 author (me), not asserted \u2014 the collapse experiment conflated the\n  two deletions. **This needs re-checking before it is relied on.**\n- **#422's premise was factually wrong:** the m baby-step list is NOT built by a product tree\n  and `m` is NOT \"the Bluestein count.\" Alg 4.1 Step 1 builds a degree-`n` polynomial by\n  product tree (Lemma 2.3); Lemma 2.4's Bluestein **evaluates** it at the `m` points. This\n  kills idea (a) in one line: **the FFT/batching idea IS already the algorithm.**\n\n## New theorem-worthy facts\n- **Faithful-model slackness (the round's deliverable).** `HarveyFloor.max_ge_n_fifth` is a\n  **relaxation** that happens to be tight; its two binding terms are NOT the ones the\n  algorithm pays for. Anyone re-deriving a `2/5` exchange rate from it is reading a\n  relaxation as the algorithm.\n- **\u2605 Partition lemma** (generalises `TradeoffBarrier`; ~15 lines of Lean): any `k`-level\n  baby-step structure over a fixed pool `S` with `L_i\u00b7T_i \u2265 S_i`, `\u03a3 S_i = S`, satisfies\n  `\u03a3 L_i + \u03a3 T_i \u2265 2\u221aS`, **equality iff one level carries the whole pool**. This retires\n  variable-step/two-level BSGS **by theorem**, not by experiment.\n- The m-invariance `m\u00b7(N^{1/2}/(r^{1/2}m)) = N^{1/2}r^{\u22121/2}` is TRUE and already in the\n  ledger (RESEARCH.md:3901, HarveyBalance.lean:26-45) \u2014 do not re-file it.\n- Log-factor (reported, not built on): `c_{2a,2b} = 2c_{a,b} + \u03b4`, `\u03b4\u2208{0,1}` (0/5000\n  violations, \u2264300 bits) \u21d2 the pair family needs `O(r)` modular exponentiations, not `O(r lg r)`.\n  A log factor on the pair leg is worth nothing in `N`.\n\n## Channels\n| channel | verdict | reason |\n|---|---|---|\n| twostep | KILLED | `m`\u00b7interior invariant; AM-GM \u21d2 any re-split \u2265 uniform; measured 1.55\u00d7\u201316.40\u00d7 worse, slope 0.2000 unchanged |\n| mbatch | KILLED \u00d72 | Bluestein already in Alg 4.1 Step 2; and the mechanism is already retracted twice in-repo (\u00a77-XLIV Costa\u2013Harvey arXiv:1201.2116; \u00a7XLVIII Harvey Lemma 2.4) |\n| lpinherit | KILLED | the m-invariance is already recorded (exec summary + HarveyBalance.lean) |\n| interior | KILLED, wrong target | d-level schedule exponent-neutral (fitted 0.2179/0.2190/0.2195/0.2197 for d=1,2,4,8; difference zero); and the target is slack (above) |\n\n## The lever, refined: a FOURTH floor, not a cheapened leg\nThe exponent is exactly `1/(2 + 2\u03a3w)`. **Raising `\u03a3w` above 3/2 by ADDING a search dimension\n\u2014 a fourth floor \u2014 gives `1/6` at weight `1/2`, `1/7` at weight `1`.** This is NOT round\n33's r-filter (that raised `\u03b8`, the weight on an *existing* leg, needing `s = N^{1/18}`); a\n**fourth floor does not face that obstruction.** The LP says: *if* a fourth floor of weight\n`1/2` with genuine `N`-weighted benefit exists, the answer is `1/6`. Establishing that such a\nfloor exists is the entire content of a future round. (Arithmetic inside a cost model whose\ncost shape is ASSUMED \u2014 flagged per Rule 6.)\n",
     "domains": [
@@ -8655,6 +8640,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-14T05:24:21.995125+00:00",
     "title": "ArXiv paper: Multidimensional Szemer\u00e9di Theorem for Pairwise Independent Jointly Intersective Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Proofs of four Takigiku--Tsuchioka conjectures on level $2$ principal characters of $A_{2\\ell-1}^{(2)}$' and formalize its key results. Abstract: We prove four conjectures of Takigiku and Tsuchioka consisting of eight Rogers--Ramanujan type identities. Two conjectures involve triple sums and a third involves quadruple sums, and their product sides are certain level $2$ principal characters of $A_{13}^{(2)}$. The fourth conjecture gives multisum representations of certain level $2$ principal characters of $A_{2\\ell-1}^{(2)}$. The proofs rely on the Bailey pair method, finite sum identities involving Gaussian polynomials, and the quintuple product identity.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_5234",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.18666v1",
+    "status": "available",
+    "timestamp": "2026-10-14T15:29:39.468826+00:00",
+    "title": "ArXiv paper: Proofs of four Takigiku--Tsuchioka conjectures on level $2$ principal characters of $A_{2\\ell-1}^{(2)}$"
   },
   {
     "consumed_by_exp_id": "",
@@ -36652,6 +36652,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-14T00:36:23.602637+00:00",
     "title": "Effect-Size Stability of the Divisibility Feature"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The type channel equals the entropy of the coarsest function of the coset that the type readout determines. Specialises to the detector law and to the catalog's totient loss formula for every AGL(1,q).\n\nIf T refines rho o coset and every fibre of T meets a single fibre of rho o coset, then I(coset; T) = H(rho(coset)); for AGL(1,q), I = log2(q-1) - sum_{d | q-1} (phi(d)/(q-1)) log2 phi(d).\n\nProve abstractly in Cryptography.NonabelianTypeChannel.Entropy; instantiate at AGL(1,16) and AGL(1,9) built as in Geometry.AGL8Channel.Group.\n\nEvery affine Frobenius row of the law table becomes a corollary; aglLoss is a theorem for all q.\n\nSome type value straddles fibres of rho, and the loss depends on finer class structure.",
+    "domains": [
+      "Geometry",
+      "NumberTheory"
+    ],
+    "id": "fd_5231",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d20ea988",
+    "status": "available",
+    "timestamp": "2026-10-14T15:28:53.782019+00:00",
+    "title": "Coarsest-Resolved-Quotient Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Along AGL(1,2^p) with 2^p - 1 prime the prime channel decays like (log n)/n (proved) and the semiprime-to-prime ratio decays like 1/n.\n\nn * I2(n) / I1(n) -> 1 as n -> infinity over detector groups with G^ab = C_n.\n\nAsymptotic expansion of delta_2(n)/delta(n) in Lean using Real.binEntropy and the Taylor bounds of Real.log.\n\nThe semiprime residue leak of detector fields is asymptotically 1/n of the prime leak, quantifying the which-factor wall.\n\nA second-order term survives and pairing retains a constant fraction of the prime channel.",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5232",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d20ea988",
+    "status": "available",
+    "timestamp": "2026-10-14T15:28:54.393848+00:00",
+    "title": "Mersenne Vanishing Rate for Semiprime Channels"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The affine-ladder channel is not monotone in q: it collapses on Mersenne-prime rungs and rebounds when q - 1 has many divisors.\n\nFor q with q - 1 composite, I1(AGL(1,q)) > I1(AGL(1,q')) for every prime power q' < q with q' - 1 prime and q' > 3.\n\nExact computation for q = 9, 16, 25, 27 with the Group.lean construction; compare against delta(q'-1).\n\nThe channel is governed by the arithmetic of q - 1 (number of divisors, totients), not by the size of the group or of its abelianization.\n\nSome composite rung is also nearly a detector (e.g. q - 1 = 2r with r prime), giving a finer arithmetic classification.",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5233",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d20ea988",
+    "status": "available",
+    "timestamp": "2026-10-14T15:28:55.011131+00:00",
+    "title": "Divisor-Lattice Rebound at Composite q - 1"
   },
   {
     "consumed_by_exp_id": "",

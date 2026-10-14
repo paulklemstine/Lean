@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-14T00:36:24Z",
-  "count": 15,
+  "archived_at": "2026-10-14T15:28:55Z",
+  "count": 16,
   "directions": [
     {
       "id": "fd_3552",
@@ -602,6 +602,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 249
+    },
+    {
+      "id": "fd_3961",
+      "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut-1e6 r=0.99 CI [0.919,1.010] covers 1); pooled with paper 214 pilot joint point ~0.97 — banked tension downgraded to open at reduced weight",
+      "description": "Exp 569 · paper 216 · assessment v323 · script ResearchOutput/scripts/2026-08-24-round74/exp569_u9_drift_power.py (precision-patched POST-run; stored exp569_result.json is the pre-patch output) · seed 20260824 · wall 1467.4 s at 76.4 µs/value.\n\n**Question.** Paper 214 banked a direction-stable sub-1 drift in x²−N smoothness at band 9 (bitlen-96 balanced semiprimes): −5.3% at its primary 1e6 LPF-CDF cut and −13.6% at the 1e5 cut, every CI covering 1 but every split-half pointing the same way. Does a fresh independent seed/population at higher pair count replicate the drift downward?\n\n**Role honesty.** Throughput reality (76.4 µs/val) caps the night at ~1× the paper-214 pilot power, NOT the aspirational 10–30×; role reframed PRE-RUN as scoping (documented in-script): this run IS gate G1 (fresh-seed replication) of paper 214's own confirmation protocol; G2 control integrity is satisfied by construction (paired matching + identical tester code path).\n\n**Design.** 128 distinct N (seed 20260824), v = j²−N for j ∈ (s, 3s], 150k samples/N → exactly 19.2M candidate/control pairs. Tester: cumulative segment-primorial gcd chains (strip primes ≤1e5 then ≤1e6). Controls PAIRED per draw — same bit length, same 3-bit mantissa head, random low bits — through the IDENTICAL classify() code path. Cluster bootstrap NB=2000 percentile CIs over N-clusters / size-matched pseudo-clusters. Decision cut stays 1e5 per header pre-registration; 1e6 secondary (higher event rate → better powered, weight disclosed).\n\n**VERDICT: RANDOMNESS-EXTENDED (pre-registered H0 branch), no gate armed:**\n- PRIMARY cut 1e5: ratio CI95 [0.8571, 1.1488], excludes_1 FALSE ⇒ H0.\n- Secondary cut 1e6 (best powered): r = 0.0005/0.000506 ≈ 0.99, cluster-boot CI95 [0.919, 1.010] over 128 clusters on 19.2M pairs — tightest interval yet above u≈9; max CI-edge |r−1| = 0.081 tightens paper 214's 0.137 deliverable (H0 deliverable met).\n- POOLED with paper 214's pilot at matched conditions: @1e6 pilot 0.947 [0.8630, 1.0389] vs this 0.99 [0.919, 1.0101] — mutually consistent, joint point ≈ 0.97 (√2-tightened). The sub-1 drift does NOT replicate downward; residual tension DOWNGRADED from \"banked\" to \"open at reduced weight\". Decisive resolution still needs the 10–30× power run (queued named follow-up).\n\n**DISPLAY DEFECT disclosed prominently:** the pre-patch writer stored round(r,4), so the ~3e-5 candidate rate prints as stored \"r_cand\": 0.0 and raw hit counts were NOT persisted (unrecoverable post-hoc). True value is CI-pinned to [2.66e-5, 3.56e-5] (= CI × rate_ctrl 3.1e-5). Cite CI-implied bounds everywhere; NEVER the stored 0.0. Script precision-patched post-run (raw-count persistence added for any rerun).\n\n**Other ledger catches:** wall overshoot 1467 s vs ~1104 s estimate (candidate j²−N strips slower than random strips); smoke-leg verdict field is a NaN artifact of the starved-regime bootstrap (<100 non-degenerate resamples → NaN bounds → excludes_1 trivially True) — non-canonical, full-run verdict governs.\n\n**Barrier framing:** scale-smoothness frontier u ≥ 6–14; an H0 here STRENGTHENS papers 130/209/214 randomness into the Dickman approach zone through u≈11.7. No barrier breached, no constant shaved.\n\nArtifacts: exp569_u9_drift_power.py, exp569_result.json (pre-patch canonical), exp569_smoke_result.json, exp569_full.log, exp569_findings.md.\n",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "523b9317",
+      "timestamp": "2026-08-24T09:06:21.852886+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.76,
+      "domain_quality_penalty": 0.8999999999999999,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 3,
+      "last_attempt_time": "2026-08-27T09:52:12.628998+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 362
     }
   ]
 }

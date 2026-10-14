@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "cb6515e1",
-      "domain": "Novelty",
-      "key_insight": "# Future directions\n\n## Status of the assigned conjecture\n\n**Refuted.** For the seven canonical interval representatives of\n`Novelty.SonicCounterpointCategory`, the reflexive-transitive closure of\n`Ca",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 95,
-      "timestamp": "2026-09-13T18:12:37",
-      "title": "Seven-state strong-connectivity conjecture"
-    },
-    {
       "cycle_id": "5c150b3f",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — Moonshine from the null cone (after cycle v19c)\n\n## Build status\n\n`lake build` now completes successfully on the whole repository (all declared library\ntargets, no errors), and n",
@@ -499,19 +489,19 @@
       "theorem_count": 49,
       "timestamp": "2026-10-13T21:32:34",
       "title": "FACT round-40 #2 — ET-HINTS-THEORY: the crossing law — width can never substitute for reliability (p"
+    },
+    {
+      "cycle_id": "d20ea988",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — after the AGL(1,8) gap closure\n\n## What this cycle established (all in `Catalog/Geometry/AGL8Channel/`, 0 sorries)\n\n* `AGL(1,8)` built as a genuine subgroup of `Sym(𝔽₈)`, with a",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 135,
+      "timestamp": "2026-10-14T15:29:11",
+      "title": "FACT round-35 (cont.) — CLOSING THE GALOIS-TABLE GAP: AGL(1,8) (order 56, G^ab=C7, cap log2 7=2.807 "
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "95a534e1",
-      "domain": "Combinatorics",
-      "key_insight": "# Future directions — the κ rate-dial layer\n\nThe cycle closed the two-run-surviving part of the composition layer as exact theorems: the\ndivisibility pattern controls the *rate* of a cell exactly and",
-      "quality_score": 0.81,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-26T19:21:10",
-      "title": "FACT round-87 #2 — U065-FRESH-SEED-GATE (exp 592 FINAL): GATE-H0 FIRES — feature DOES NOT REPLICATE "
-    },
     {
       "cycle_id": "40d19005",
       "domain": "Physics",
@@ -2501,21 +2491,19 @@
       "theorem_count": 54,
       "timestamp": "2026-10-14T00:36:36",
       "title": "FACT round-40 #3 — FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
+    },
+    {
+      "cycle_id": "d20ea988",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — after the AGL(1,8) gap closure\n\n## What this cycle established (all in `Catalog/Geometry/AGL8Channel/`, 0 sorries)\n\n* `AGL(1,8)` built as a genuine subgroup of `Sym(𝔽₈)`, with a",
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "theorem_count": 135,
+      "timestamp": "2026-10-14T15:29:11",
+      "title": "FACT round-35 (cont.) — CLOSING THE GALOIS-TABLE GAP: AGL(1,8) (order 56, G^ab=C7, cap log2 7=2.807 "
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "15a3f6e6",
-      "domain": "Physics",
-      "name": "realDeg_13_eq",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "e43cce79",
-      "domain": "Cryptography",
-      "name": "units8_inv_eq_self",
-      "quality": 0.72
-    },
     {
       "cycle_id": "e43cce79",
       "domain": "Cryptography",
@@ -2803,9 +2791,21 @@
       "domain": "Shared",
       "name": "exchange_sum_le",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "d20ea988",
+      "domain": "Geometry",
+      "name": "detectorInfo_eq_binEntropy",
+      "quality": 0.8
+    },
+    {
+      "cycle_id": "d20ea988",
+      "domain": "Geometry",
+      "name": "detector_law",
+      "quality": 0.8
     }
   ],
-  "last_updated": "2026-10-14T00:36:36",
+  "last_updated": "2026-10-14T15:29:11",
   "open_questions": [
     {
       "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "1e89ff02",
-        "quality": 0.72,
-        "theorems": 143,
-        "title": "p-adic Berggren Dynamics — The Tree of Pythagorean Triples as a p-adic Dynamical"
-      },
-      {
         "cycle_id": "d588a53d",
         "quality": 0.82,
         "theorems": 135,
@@ -3451,6 +3445,12 @@
         "quality": 0.6,
         "theorems": 27,
         "title": "NET-49: THE-REAL-MODEL-KNEE-COLLAPSES-AND-SATURATES — on Qwen2.5-0.5B the lossle"
+      },
+      {
+        "cycle_id": "d20ea988",
+        "quality": 0.8,
+        "theorems": 135,
+        "title": "FACT round-35 (cont.) — CLOSING THE GALOIS-TABLE GAP: AGL(1,8) (order 56, G^ab=C"
       }
     ],
     "Logic": [

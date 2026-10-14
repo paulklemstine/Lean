@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-14T00:36:37.907631+00:00",
+  "last_updated": "2026-10-14T15:29:13.173273+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -77940,6 +77940,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-14T00:36:37.505362+00:00",
       "title": "FACT round-40 #3 \u2014 FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Geometry",
+      "duration_seconds": 17614.08455133438,
+      "end_time": 1791991717.645075,
+      "files_integrated": 4,
+      "job_id": "d20ea988",
+      "outcome_quality": 0.8,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.8,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.535,
+        "cross_domain": 0.5,
+        "grade": "substantial",
+        "importance": 0.8,
+        "novelty": 0.8,
+        "proof_depth": 0.8,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.8,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1791974103.5605237,
+      "strategy_count": 0,
+      "theorem_count": 135,
+      "theorem_novelty_disproof": 1,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 111,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-14T15:29:12.798345+00:00",
+      "title": "FACT round-35 (cont.) \u2014 CLOSING THE GALOIS-TABLE GAP: AGL(1,8) (order 56, G^ab=C7, cap log2 7=2.807 "
     }
   ]
 }
