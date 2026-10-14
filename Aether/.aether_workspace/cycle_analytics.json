@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-13T21:32:35.935749+00:00",
+  "last_updated": "2026-10-14T00:36:37.907631+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -77897,6 +77897,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-13T21:32:35.523966+00:00",
       "title": "FACT round-40 #2 \u2014 ET-HINTS-THEORY: the crossing law \u2014 width can never substitute for reliability (p"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Tropical",
+      "duration_seconds": 11041.60167837143,
+      "end_time": 1791938167.6754646,
+      "files_integrated": 4,
+      "job_id": "95dd71d4",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.55,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.4225,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.55,
+        "novelty": 0.55,
+        "proof_depth": 0.55,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1791927126.0737863,
+      "strategy_count": 0,
+      "theorem_count": 54,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 54,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-14T00:36:37.505362+00:00",
+      "title": "FACT round-40 #3 \u2014 FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
     }
   ]
 }

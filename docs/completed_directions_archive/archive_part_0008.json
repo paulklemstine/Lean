@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-13T21:32:18Z",
-  "count": 14,
+  "archived_at": "2026-10-14T00:36:24Z",
+  "count": 15,
   "directions": [
     {
       "id": "fd_3552",
@@ -562,6 +562,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 248
+    },
+    {
+      "id": "fd_3594",
+      "title": "FACT round-40 #3 — FOOTPRINT-SCALE: the dial transfers across scale (paper 147)",
+      "description": "Round-40 #3, cron iteration (exp 478, assessment v256).\n\n**DIAL-TRANSFERS**: the footprint-weighted yield dial fitted at bitlen 44 transfers to bitlen {48, 52} with calibration slopes 0.896/0.834 (80 values/N) and 0.912/0.834 (240 values/N) — all four cells in band. The direct divisibility feature d(N) stays independently significant in 12/12 cells (min |t| = 3.92). R² rises substantially with relation count (0.41 → 0.60 at u=2.5/bl48 for 80→240 values).\n\nCaveat handled: the agent's first assembly had duplicated u-blocks and one out-of-band cell — caught by coordinator review, fixed surgically on demand; its ceiling column was definition-inconsistent with the lab convention and was NOT adopted.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp478_footprint_scale.py + exp478_result.json, seed 20260830.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "95dd71d4",
+      "timestamp": "2026-08-22T05:43:53.957883+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.55,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-12T09:44:56.249942+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 249
     }
   ]
 }

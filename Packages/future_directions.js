@@ -18,16 +18,17 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-36 \u2014 THE UMW COVERING: six constructive strategies, 15 adversarial verdicts, ZERO coverings \u2014 the one standing door is confirmed OPEN-AND-HARD. (1/3,1/3) divisibility-covering of [n] NOT constructed (multi-scale, smooth-difference, prime-power, Cantor-structured, Lemma-6.2-AP-build, lower-bound strategies all fail at target; verifiers re-ran every harness, 15/15 is_real_covering=False, several forced headline retractions). Main-loop empirical frontier (disjoint-guarded, full [n] incl composites): full coverage 1.00 only at traded (alpha,beta)=(1/2,2/3); target (1/3,1/3) reaches only 0.40-0.54. Tightness at (1/3,1/3) open in BOTH directions (paper: 'we do not know if alpha=1-2beta is achievable'); alpha is a DOUBLE-exponential unit (measured alpha=ln ln M/ln n, NOT ln M/ln n \u2014 a real trap); UMW's three conflatable statements disambiguated (abstract trivial alpha+beta<=1; constraint alpha>=1-2beta; trivial covering alpha=1-beta+o(1); open gap trivial alpha=2/3 to floor alpha=1/3 at beta=1/3)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d20ea988",
     "description": "# Closing the Galois-table completeness gap: AGL(1,8) has the LARGEST abelianization examined and leaks the LEAST \u2014 extending the semiprime REVERSAL\n\nThe `semiprime_reversal` (D\u2084 1.43 bits > S\u2084 1 bit) showed the semiprime splitting-type\nchannel is driven by coset SEPARATION, not group size. That raised a completeness question:\nthe catalog machine-checked only groups with `|G^ab| \u2264 4` (S\u2083, S\u2084, A\u2084, D\u2084, V\u2084, C\u2084), so the\ncap-headroom above 2 bits was **entirely untested**. This note computes the first case with\n`|G^ab| > 4` \u2014 and it **reverses the reversal**.\n\n## AGL(1,8) = GF(8) \u22ca GF(8)\u00d7 , order 56\n- Derived subgroup `[G,G]` = the translation group `C\u2082\u00b3` (order 8) \u2014 verified normal.\n- Abelianization `G^ab = C\u2087` (order 7), **cap = log\u20827 = 2.807 bits** \u2014 the largest\n  abelianization of any group examined.\n- Type readout `T(g)` = cycle type of `g` as a permutation of the 8 field points;\n  **verified to be a class function** (conjugation-invariant, 200 random checks).\n\n**Computed exactly over all 3136 = 56\u00b2 ordered pairs (x,y):**\n- Prime channel `I\u2081 = I(coset(x); T(x)) = 0.5917 bits` \u2014 only **21.1%** of the cap.\n- **Semiprime channel `I\u2082 = I(coset(xy); {Tx,Ty}) = 0.1141 bits` \u2014 only 4.1% of the cap.**\n\n(Consistency: `0 \u2264 I\u2082 \u2264 I\u2081 \u2264 cap`, as required.)\n\n## The extended reversal\n| group | order | \\|G^ab\\| | cap | I\u2082 (semiprime) | % of cap realized |\n|---|---|---|---|---|---|\n| V\u2084 | 4 | 4 | 2.00 | 0.295 | 14.7% |\n| **AGL(1,8)** | **56** | **7** | **2.807** | **0.114** | **4.1%** |\n| S\u2084 | 24 | 2 | 1.00 | 1.000 | 100% |\n| D\u2084 | 8 | 4 | 2.00 | 1.430 | 71.5% |\n\n(Values for V\u2084, S\u2084, D\u2084 are the catalog's machine-checked closed forms, `Semiprime.lean`.)\n\n\u21d2 **Having the LARGEST abelianization (7) gives the SMALLEST semiprime leakage (0.114) of any\ngroup examined.** So the channel richness is not merely \"not monotone in group size\" (the\noriginal D\u2084>S\u2084 reversal) \u2014 it is **not monotone in the abelianization order either**. What\nmatters is how much of `G^ab` the class-function type readout `T` actually RESOLVES: D\u2084's `T`\nresolves 71.5% of its 2-bit cap; AGL(1,8)'s `T` resolves only 4.1% of its 2.807-bit cap.\nLarge abelianization with a **coarse** (lossy) class function is a *worse* channel than a small\none with a faithful class function.\n\n## Why it matters (and what it does NOT claim)\n- It **completes the machine-checked table's headroom** (the first `|G^ab| > 4` case) and\n  makes the \"coset separation drives leakage\" reading precise: it is **separation as resolved\n  by `T`**, i.e. `I(coset;T)`, not `log\u2082|G^ab|` alone.\n- It does **NOT** threaten factoring: `I\u2082` is a bounded (O(1)-per-fixed-field) number of bits\n  about a residue of `N`, versus \u0398(log N) needed to localise `p`; and per the harvest (#420)\n  the family lands on existing primitives (1)/(4) \u2014 real mechanism, wrong quantity.\n- The structural lemma it instantiates: `I(coset;T) = log\u2082|G^ab| \u2212 H(coset|T)`, so the deficit\n  `H(coset|T)` (the `loss_eq` of `GroupChannel.lean`) is what varies wildly across groups, and\n  it is maximised exactly when `T` is a coarse class function on a large abelian quotient.\n\nComputed with python3/sympy, exact rationals, all `G\u00d7G` enumerated; the derived subgroup and\nclass-function property were verified in code, not assumed.\n",
     "domains": [
       "Novelty"
     ],
     "id": "fd_4954",
+    "phase": "A",
     "priority_score": 1000.0,
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-25T17:57:24.491402+00:00",
     "title": "FACT round-35 (cont.) \u2014 CLOSING THE GALOIS-TABLE GAP: AGL(1,8) (order 56, G^ab=C7, cap log2 7=2.807 \u2014 the LARGEST abelianization examined) leaks I2=0.114 bits, only 4.1% of cap, the SMALLEST of any group tested \u2014 EXTENDING the semiprime reversal: channel richness is not monotone in group size (D4 1.43>S4 1.0) NOR in abelianization order (AGL 0.114, cap 2.807). What matters is how much of G^ab the class-function type T RESOLVES: I(coset;T)=log2|G^ab| - H(coset|T), and the deficit H(coset|T) varies wildly (D4 resolves 71.5% of cap, AGL 4.1%). First |G^ab|>4 case in the catalog's table \u2014 the completeness gap closed with exact computation. Does NOT threaten factoring (O(1) bits about a residue of N, lands on primitives (1)/(4))"
   },
@@ -3804,21 +3805,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-13T03:21:12.748859+00:00",
     "title": "Stein-Method: Quantitative Normal Approximation Bounds"
-  },
-  {
-    "consumed_by_exp_id": "95dd71d4",
-    "description": "Round-40 #3, cron iteration (exp 478, assessment v256).\n\n**DIAL-TRANSFERS**: the footprint-weighted yield dial fitted at bitlen 44 transfers to bitlen {48, 52} with calibration slopes 0.896/0.834 (80 values/N) and 0.912/0.834 (240 values/N) \u2014 all four cells in band. The direct divisibility feature d(N) stays independently significant in 12/12 cells (min |t| = 3.92). R\u00b2 rises substantially with relation count (0.41 \u2192 0.60 at u=2.5/bl48 for 80\u2192240 values).\n\nCaveat handled: the agent's first assembly had duplicated u-blocks and one out-of-band cell \u2014 caught by coordinator review, fixed surgically on demand; its ceiling column was definition-inconsistent with the lab convention and was NOT adopted.\n\nRepro: ResearchOutput/scripts/2026-08-21-resume/exp478_footprint_scale.py + exp478_result.json, seed 20260830.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_3594",
-    "phase": "A",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-08-22T05:43:53.957883+00:00",
-    "title": "FACT round-40 #3 \u2014 FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
   },
   {
     "consumed_by_exp_id": "",
@@ -17378,6 +17364,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-11T14:00:24.758033+00:00",
     "title": "Self-Certifying Deceleration Ratio"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Under the attenuation model a slope that does not change with relation count has no relation-noise component, so the bitlen-52 deficit is scale drift. Conjecture: the drift is log-linear in bit length.\n\nslope(b, m) = c(b) for all m at b \u2265 52, with log c(b) = -\u03ba (b - 44) + o(1) for some \u03ba > 0.\n\nMeasure slopes at b \u2208 {52, 56, 60} for m \u2208 {80, 240, 480} and fit log slope against b.\n\nThe dial is recalibrated across scale by a single exponent \u03ba.\n\nThe deficit includes relation noise; attSlope_mono predicts how it should move with m.",
+    "domains": [],
+    "id": "fd_5226",
+    "priority_score": 0.5904545454545456,
+    "research_mode": "team",
+    "source_exp_id": "95dd71d4",
+    "status": "available",
+    "timestamp": "2026-10-14T00:36:22.117982+00:00",
+    "title": "Scale-Drift Law for Transferred Dial Slopes"
   },
   {
     "consumed_by_exp_id": "",
@@ -36581,6 +36579,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-13T01:37:06.181086+00:00",
     "title": "Linear Value-of-Information Bound for Hint Alphabets"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The reliability curve R\u00b2(m)=V/(V+F+\u03c3/m), fitted exactly from the exp-478 cells (80, 0.41) and (240, 0.60), predicts that R\u00b2 \u2265 0.70 requires at least 626 values per modulus. A rerun at 600 and 650 values tests the model's affine-in-1/m form.\n\nFor the u=2.5/bitlen-48 cell, R\u00b2(m) \u2265 0.70 iff m \u2265 626, and R\u00b2(m) < 82/105 for all m.\n\nRerun exp478_footprint_scale.py at m \u2208 {400, 600, 650, 1000} with seed 20260830; compare with 1/(105/82 + (3800/41)/m).\n\nThe relation-count model is predictive, and relation budgets can be planned exactly.\n\n1/R\u00b2 is not affine in 1/m; the noise is not averaged by relations, or F depends on m.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_5225",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "95dd71d4",
+    "status": "available",
+    "timestamp": "2026-10-14T00:36:21.451209+00:00",
+    "title": "626-Relation Threshold for the u=2.5 Footprint Cell"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "As the weight exponent \u03b1 \u2192 \u221e, the R\u00b2 of the normalised log-dial converges to that of the min-plus statistic. Conjecture: R\u00b2 is unimodal in \u03b1, and its interior optimum strictly beats the tropical endpoint.\n\n\u03b1 \u21a6 rsq((log S_\u03b1)/\u03b1, y) is unimodal on (0, \u221e), and sup_\u03b1 rsq > lim_{\u03b1\u2192\u221e} rsq = rsq(-log min supp, y).\n\nScan \u03b1 \u2208 [0, 8] on exp-478 cells; compare with the min-prime regression.\n\nWeighting carries information beyond the min-plus skeleton at every scale.\n\nAt large scale the tropical statistic is as good, and the dial is dominated by its smallest active prime.",
+    "domains": [
+      "Tropical",
+      "NumberTheory"
+    ],
+    "id": "fd_5227",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "95dd71d4",
+    "status": "available",
+    "timestamp": "2026-10-14T00:36:22.957082+00:00",
+    "title": "Tropical Endpoint Inferiority of the Weighted Dial"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A fixed |t| cutoff corresponds to a partial-R\u00b2 threshold that falls with degrees of freedom. Conjecture: the partial R\u00b2 of d(N) is constant in relation count, and |t| grows like \u221adf.\n\npartial R\u00b2(d(N) | dial) at 240 values equals that at 80 values within \u00b10.05, in all 12 cells.\n\nCompute the residualised regression (fwl_partial_slope) per cell and report \u03c1 = t\u00b2/(t\u00b2+df).\n\nd(N) is a fixed-strength independent feature, and 12/12 significance reflects sample size.\n\nd(N) importance changes with relation density, which suggests an interaction with the dial.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5228",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "95dd71d4",
+    "status": "available",
+    "timestamp": "2026-10-14T00:36:23.602637+00:00",
+    "title": "Effect-Size Stability of the Divisibility Feature"
   },
   {
     "consumed_by_exp_id": "",
