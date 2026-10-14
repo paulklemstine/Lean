@@ -8628,6 +8628,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Szemer\u00e9di's theorem with random differences and arithmetic Kakeya' and formalize its key results. Abstract: We prove that there exists an absolute constant $c > 0$ such that the following holds for every $k \\ge 3$ and $p \\ge n^{-c / \\log \\log k}$. Letting $\u03b4> 0$ and $D \\sim [n]_p$, with high probability every ${S \\subset [n]}$ with $|S| \\ge \u03b4n$ contains a $k$-term arithmetic progression whose common difference lies in $D$. This improves the best known bounds for the threshold of Szemer\u00e9di's theorem with random differences for all sufficiently large $k$, previously of the form ${p \\ge n^{-2/k+o(1)}}$, due to Bri\u00ebt and Castro-Silva. We obtain our improvement via a small cover lemma, in the sense of Alon and Pham's work on random Cayley graphs, and its proof crucially relies on a construction of Green and Ruzsa in the context of the arithmetic Kakeya conjecture. The usage of the latter was suggested to us by GPT 6 Astra.",
+    "domains": [
+      "Computation",
+      "Combinatorics"
+    ],
+    "id": "fd_5229",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.18859v1",
+    "status": "available",
+    "timestamp": "2026-10-14T05:24:18.407804+00:00",
+    "title": "ArXiv paper: Szemer\u00e9di's theorem with random differences and arithmetic Kakeya"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Multidimensional Szemer\u00e9di Theorem for Pairwise Independent Jointly Intersective Polynomials' and formalize its key results. Abstract: We develop a new approach to the Joint Intersectivity Conjecture of Bergelson, Leibman, and Lesigne for commuting transformations. The conjecture asserts that the necessary divisibility condition is the only obstruction to polynomial multiple recurrence and, consequently, to the multidimensional polynomial Szemer\u00e9di theorem. We establish the conjecture for pairwise independent polynomials, obtaining the first general result for sequences of arbitrary length beyond the classical one-transformation setting. Our argument is inspired by the Furstenberg-Katznelson approach and its polynomial enhancement due to Bergelson-Leibman. Its main novelty, however, lies in the development of new techniques that allow us to bypass the use of the polynomial van der Waerden theorem, on which these methods traditionally rely, and for which no suitable analogue is currently available in our setting. In particular, we prove a Nil-Bohr returns theorem for compact extensions in systems with nilpotent structu",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5229",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.18657v1",
+    "status": "available",
+    "timestamp": "2026-10-14T05:24:21.995125+00:00",
+    "title": "ArXiv paper: Multidimensional Szemer\u00e9di Theorem for Pairwise Independent Jointly Intersective Polynomials"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
