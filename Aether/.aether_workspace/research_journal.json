@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "40d19005",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Square-core stack polyominoes\n\nThe formalized development (`Catalog/Physics/StackSquareCore*.lean`) establishes:\nthe combinatorial decomposition `a(n) = Σ_{k²≤n} Σ_{i+j=n-k²} p_{",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 122,
-      "timestamp": "2026-08-26T23:34:23",
-      "title": "OEIS sequence: Stack polyominoes with square core."
-    },
-    {
       "cycle_id": "7ae2917a",
       "domain": "MachineLearning",
       "key_insight": "# Future directions\n\nDerived from this cycle's analysis of *committed local-oracle protocols* — the\ncompilation of a constant-query (PCP-style) verifier with a hiding commitment —\nformalized in\n\n* `Ca",
@@ -2501,6 +2491,16 @@
       "theorem_count": 135,
       "timestamp": "2026-10-14T15:29:11",
       "title": "FACT round-35 (cont.) — CLOSING THE GALOIS-TABLE GAP: AGL(1,8) (order 56, G^ab=C7, cap log2 7=2.807 "
+    },
+    {
+      "cycle_id": "2ae00fd4",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — after the UMW covering frontier (round 36)\n\nMachine-checked baseline (`Catalog/Cryptography/FactoringBarriers/UMWCoveringFrontier.lean`):\n* every feasible `(α, βS, βT)` satisfies",
+      "quality_score": 0.6,
+      "sorry_count": 1,
+      "theorem_count": 38,
+      "timestamp": "2026-10-14T19:41:12",
+      "title": "FACT round-36 — THE UMW COVERING: six constructive strategies, 15 adversarial verdicts, ZERO coverin"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-10-14T15:29:11",
+  "last_updated": "2026-10-14T19:41:12",
   "open_questions": [
-    {
-      "context": "Everything is unconditional; no `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.; No `sorry`, no `native_decide`.",
-      "cycle_id": "9cc9a6e9",
-      "domain": "Algebra",
-      "sorry_count": 4,
-      "timestamp": "2026-08-14T06:50:29"
-    },
     {
       "context": "This file gives a complete, sorry-free proof of that formula, together with the",
       "cycle_id": "64406111",
@@ -3016,6 +3009,13 @@
       "domain": "Computation",
       "sorry_count": 2,
       "timestamp": "2026-09-20T23:30:23"
+    },
+    {
+      "context": "**no `sorry` and no axiom**, is the exact region the round-36 discussion talks about:",
+      "cycle_id": "2ae00fd4",
+      "domain": "Cryptography",
+      "sorry_count": 1,
+      "timestamp": "2026-10-14T19:41:12"
     }
   ],
   "research_threads": {
@@ -3331,12 +3331,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "173bd3d0",
-        "quality": 0.84,
-        "theorems": 198,
-        "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abel"
-      },
-      {
         "cycle_id": "9c40082c",
         "quality": 0.87,
         "theorems": 98,
@@ -3389,6 +3383,12 @@
         "quality": 0.72,
         "theorems": 86,
         "title": "FACT round-39 #3 — DEGREE-TEN: full pinning at the full cyclotomic Q(zeta_11) (p"
+      },
+      {
+        "cycle_id": "2ae00fd4",
+        "quality": 0.6,
+        "theorems": 38,
+        "title": "FACT round-36 — THE UMW COVERING: six constructive strategies, 15 adversarial ve"
       }
     ],
     "Geometry": [

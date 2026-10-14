@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-14T15:28:55Z",
-  "count": 16,
+  "archived_at": "2026-10-14T19:40:59Z",
+  "count": 17,
   "directions": [
     {
       "id": "fd_3552",
@@ -642,6 +642,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 362
+    },
+    {
+      "id": "fd_3962",
+      "title": "NET-94 THE-ROLE-SPLIT-CONFIRMED: K8/V4 cache is quality-free (+0.14%) at ~6 avg bits — the serving default; key-side cliff is a two-stage fall (free @8b, +868% @5b, +38,000% @4b) while values stay free to raw 4-bit",
+      "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 69 (compact cell completing the NET-92/93/94 KV trilogy).\n\n| arm | PPL | dPPL vs f16 control |\n|---|---|---|\n| **K q8_0 / V q4_0** | **7.1194** | **+0.142%** |\n| K q5_1 / V q5_1 | 68.7963 | +867.694% |\n\n**Findings:** (1) The NET-93 role-split prescription is DIRECTLY CONFIRMED: keys @8 bits + values @raw 4 bits = quality-free while halving KV memory (~6 avg bits/element) — the CPU serving default (-ctk q8_0 -ctv q4_0). (2) The key-side cliff is a TWO-STAGE FALL: free at 8 bits, severely broken (+868%) already at 5 bits, annihilated (+38,000%) at 4; values remain free at every width tested down to raw 4-bit. Key floor bracketed (5, 8]; llama.cpp offers no q6 cache type.\n\nSetup identical to NET-92/93 (llama-perplexity, ctx=2048, threads=8, 250KB held-out wikitext slice). Script ResearchOutput/exp_net94_rolesplit.py; results in ~/f3cache/net94_results.json.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "94eeec9f",
+      "timestamp": "2026-08-24T09:06:21.854276+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.83,
+      "domain_quality_penalty": 0.9999999999999999,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-27T09:52:23.733228+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 361
     }
   ]
 }
