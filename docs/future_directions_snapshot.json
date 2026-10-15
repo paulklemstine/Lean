@@ -2,25 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "c22c0d2c",
-    "description": "# Round 35 (full) — Faithful-model SLACKNESS: the interior and m-leg are non-binding, and it CORRECTS #421/#422\n\n**KILL on all four channels** — but the kill is stronger than any hypothesis claimed, and it\n**corrects the main loop's own #421 and #422**. `N^{1/5}` is an UPPER bound attained by\nHarvey, never a floor. Two independent refuters reached the decisive fact by different routes.\n\n## THE DECISIVE FACT (found by the refuters, not the hypotheses)\nHarvey's **Algorithm 4.3 Step 2 forces `M := ⌈(N/r)^{1/2}⌉`** (hypothesis 3.1), costing\n`(N/r)^{1/4}·lg³ N` (Prop 2.5). With that leg restored, the **faithful** implemented model is\n`T = max{ (N/r)^{1/4},  N^{1/2}/(r^{1/2}m),  r,  m }`, and\n\n> **`min_ρ max{ (N/r)^{1/4}, r } = N^{1/5}` with the interior and the m-leg DELETED OUTRIGHT.**\n\n⇒ **The interior and the m-leg are SLACK (non-binding) at Harvey's operating point.** No\nimprovement to either, of any size, can move `1/5`.\n\n## CORRECTIONS to the main loop's papers\n- **#422 / capstone \"three-way co-binding\" was based on a model that DROPS the M-leg** — the\n  `max{interior, r, m}` screen. Harvey actually **implements** the M-leg (hypothesis 3.1).\n  With it restored, the interior and m-leg are slack. So \"add a floor\" is refined to: a\n  **fourth floor of weight ≥ 1/2** is needed to reach `1/6` (see the lever below). My\n  independent `lp-threeway.md` screen dropped the M-leg and so mis-called the interior and\n  m-leg \"co-binding\" — they are non-binding in the implemented model.\n- **#421 \"m-leg deletion ⇒ N^{1/20}\" is flagged as a MIS-ATTRIBUTION.** The synthesis notes\n  `N^{1/20} = 1/4 − 1/5` is the **PAIR-leg** deletion; the **m-leg** deletion gives `2/15`.\n  Flagged for the round-34 author (me), not asserted — the collapse experiment conflated the\n  two deletions. **This needs re-checking before it is relied on.**\n- **#422's premise was factually wrong:** the m baby-step list is NOT built by a product tree\n  and `m` is NOT \"the Bluestein count.\" Alg 4.1 Step 1 builds a degree-`n` polynomial by\n  product tree (Lemma 2.3); Lemma 2.4's Bluestein **evaluates** it at the `m` points. This\n  kills idea (a) in one line: **the FFT/batching idea IS already the algorithm.**\n\n## New theorem-worthy facts\n- **Faithful-model slackness (the round's deliverable).** `HarveyFloor.max_ge_n_fifth` is a\n  **relaxation** that happens to be tight; its two binding terms are NOT the ones the\n  algorithm pays for. Anyone re-deriving a `2/5` exchange rate from it is reading a\n  relaxation as the algorithm.\n- **★ Partition lemma** (generalises `TradeoffBarrier`; ~15 lines of Lean): any `k`-level\n  baby-step structure over a fixed pool `S` with `L_i·T_i ≥ S_i`, `Σ S_i = S`, satisfies\n  `Σ L_i + Σ T_i ≥ 2√S`, **equality iff one level carries the whole pool**. This retires\n  variable-step/two-level BSGS **by theorem**, not by experiment.\n- The m-invariance `m·(N^{1/2}/(r^{1/2}m)) = N^{1/2}r^{−1/2}` is TRUE and already in the\n  ledger (RESEARCH.md:3901, HarveyBalance.lean:26-45) — do not re-file it.\n- Log-factor (reported, not built on): `c_{2a,2b} = 2c_{a,b} + δ`, `δ∈{0,1}` (0/5000\n  violations, ≤300 bits) ⇒ the pair family needs `O(r)` modular exponentiations, not `O(r lg r)`.\n  A log factor on the pair leg is worth nothing in `N`.\n\n## Channels\n| channel | verdict | reason |\n|---|---|---|\n| twostep | KILLED | `m`·interior invariant; AM-GM ⇒ any re-split ≥ uniform; measured 1.55×–16.40× worse, slope 0.2000 unchanged |\n| mbatch | KILLED ×2 | Bluestein already in Alg 4.1 Step 2; and the mechanism is already retracted twice in-repo (§7-XLIV Costa–Harvey arXiv:1201.2116; §XLVIII Harvey Lemma 2.4) |\n| lpinherit | KILLED | the m-invariance is already recorded (exec summary + HarveyBalance.lean) |\n| interior | KILLED, wrong target | d-level schedule exponent-neutral (fitted 0.2179/0.2190/0.2195/0.2197 for d=1,2,4,8; difference zero); and the target is slack (above) |\n\n## The lever, refined: a FOURTH floor, not a cheapened leg\nThe exponent is exactly `1/(2 + 2Σw)`. **Raising `Σw` above 3/2 by ADDING a search dimension\n— a fourth floor — gives `1/6` at weight `1/2`, `1/7` at weight `1`.** This is NOT round\n33's r-filter (that raised `θ`, the weight on an *existing* leg, needing `s = N^{1/18}`); a\n**fourth floor does not face that obstruction.** The LP says: *if* a fourth floor of weight\n`1/2` with genuine `N`-weighted benefit exists, the answer is `1/6`. Establishing that such a\nfloor exists is the entire content of a future round. (Arithmetic inside a cost model whose\ncost shape is ASSUMED — flagged per Rule 6.)\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4955",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-25T17:57:24.493333+00:00",
-    "title": "FACT round-35 (full) — FAITHFUL-MODEL SLACKNESS: Harvey Alg 4.3 Step 2 forces M=ceil((N/r)^(1/2)) (hyp 3.1), so the real model is max{(N/r)^(1/4), interior, r, m} and min max{(N/r)^(1/4), r} = N^(1/5) WITH THE INTERIOR AND m-LEG DELETED — the interior/m-leg are SLACK (non-binding) at Harvey's operating point, so no improvement moves 1/5. CORRECTS the main loop's own #421/#422 (my three-way screen DROPPED the M-leg Harvey actually implements; #421's N^(1/20) is flagged as the PAIR-leg deletion, m-leg gives 2/15; #422's premise wrong — Bluestein is ALREADY the algorithm). New theorems: partition lemma (sum L_i+sum T_i >= 2sqrt(S), equality iff one level carries the pool — retires two-level BSGS by theorem); HarveyFloor.max_ge_n_fifth is a RELAXATION whose binding terms are not the ones paid for. Lever refined: a FOURTH FLOOR of weight 1/2 gives 1/6 (not a cheapened leg; unlike the r-filter it faces no s=N^(1/18) obstruction)"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "9c219acb",
     "description": "# CAPSTONE — the deterministic N^{1/5} barrier is a property of the baby-step/giant-step MOTIF, re-derived three independent ways\n\nRounds 33–35 established, by three unrelated methods, the same structural conclusion. This\nnote consolidates them because the agreement is the strongest statement the campaign can\nmake, and it sharpens the one remaining exit.\n\n`N^{1/5}` is an **upper bound** on the deterministic record, never a floor. No unconditional\nsuperpolynomial lower bound for factoring is known in any model. Zero new factoring methods\nhave been found; what follows is a barrier, re-derived and re-instrumented.\n\n## Three independent re-derivations that the barrier is MOTIF-INTRINSIC\n\n1. **Slack-constraint lemma** (round 33, #417/#418). The Jan-2026 order-finding collapse\n   (arXiv:2601.11131) moves the exponent only if the order's constraint is ACTIVE at the\n   unconstrained optimum. It is slack by an unbounded `lg^{0.8}N` factor; the order enters\n   only an N-exponent-0 term. ⇒ Hypothesis collapse cannot move `1/5`.\n2. **Delete-a-term / closed-variable screens** (rounds 34–35, #421/#422). `1/5` is pinned by\n   the three co-binding legs `{interior, r, m}`; the M-leg is exponent-redundant; the m-leg\n   is a closed variable (cost `Θ(m)` by output counting, benefit weight 1 by injectivity,\n   `A·C` invariant under re-split). ⇒ No single-leg, and no polylog, attack moves the\n   exponent.\n3. **Add-a-floor / motif-exhaustion** (main loop, this round). The three legs split into\n   **C = space, A = time, B = search**. A floor on C is a memory optimisation (does not lower\n   time); lowering time requires reducing A, which is invariant-and-pinned; supplying the\n   structure otherwise is **discrete-log/order-finding, which is randomly equivalent to\n   factoring** (circular). ⇒ Every term-level escape inside the motif is exhausted.\n\n## The one exit: UMW changes the MOTIF\n\nAll three derivations converge: the deterministic barrier is a property of the\nbaby-step/giant-step **motif** itself, and the only non-circular way past it is to leave the\nmotif. That is exactly the Umans–Wang route (arXiv:2511.10851): a divisibility-**covering of\nthe index set `[n]`** (sets `S,T`, `|S|,|T| ≤ n^β`, elements `≤ e^{n^α}`, every `i ∈ [n]`\ndivides some `s−t`) rather than a baby-step/giant-step search.\n\n- The counting constraint is **`α ≥ 1−2β`**; at `α = β = 1/3` this is **exactly zero\n  slack** (#419). So the deterministic integer `1/5 → 1/6` sits exactly on UMW's wall.\n- Lemma 6.2 (primorial AP) is verified by execution; Lemma 6.3 kills only GENERIC\n  factorizations, so structured ones are the sole door. A `(1/3,1/3)` covering is **not\n  constructed here** — the door is open and unclaimed.\n\n## What this means for the campaign\nThe \"openings\" of the last three rounds have each closed, and they closed for a general,\nreusable reason rather than a search failure. The campaign's durable output is: a\nmachine-checked negative result, a set of five screening lemmas (slack-constraint,\ndelete-a-term, three-way-balance, symmetric-readout vacuity, closed-variable), and ONE\nprecisely-stated, unclaimed formal door (the UMW covering at its zero-slack point). Any\nfuture round that re-proposes an order-finding, pair-filter, m-leg, or side-channel idea is\nre-deriving a theorem already in this catalog's Lean files.\n\n**Next, honestly:** the UMW covering search (Lemma 6.2 building block + non-generic\nfactorizations, under the `S ∩ T = ∅` and coverage-monotonicity guards), and the\ncoset-separation headroom in the Galois table (`AGL(1,8)`, cap ~2.807 bits — a\ncompleteness gap, not a threat). Neither is a sub-`1/5` method; both are the only doors\nleft standing.\n",
     "domain_bridges": [],
@@ -40,7 +21,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "346ce553",
     "description": "# Round 35 — The m-leg is a CLOSED VARIABLE (kill by theorem), and the untried lever is ADD A FLOOR\n\nThe delete-a-term LP screen — run BEFORE spending the round, as the campaign's discipline\nnow requires — returned a **kill by theorem, not by failure to search**. The frontier as\nposed (the baby-step `m`-leg and the `m`-dependent interior) is closed by three independent\npins, two of them Harvey's own words. Independently re-derived as a corollary of the\nmachine-checked `HarveyFloor.lean` weighted-AM-GM (`max(r_i, N^g / Π r_i^{w_i})` has optimal\nexponent exactly `g/(1+Σw_i)`), with Harvey Prop 4.2 (p.10, PDF opened) giving the terms.\n\n`N^{1/5}` remains an **upper bound**, never a floor.\n\n## The three pins on the m-leg `C` and the interior `A`\nHarvey's cost = `max{ A = N^{1/2}/(r^{1/2}m), B = r, C = m }`.\n\n1. **A·C is ONE degree of freedom, not two.** `A·C = N^{1/2}/r^{1/2}` is invariant under any\n   re-split of `m`, and the balanced split is already AM-GM optimal. So the m-leg and its\n   interior are the two halves of a single quantity: cheapening one merely re-balances the\n   other. There is no slack to exploit.\n2. **C's cost is pinned at `Θ(m)` by output counting.** A straight-line group program with\n   `t` multiplications yields at most `t+1` distinct elements. Harvey Step (1) is already a\n   bare chain of `m` single multiplications (and Alg 4.1 Step 3a does `m` gcds), so `Θ(m)` is\n   the information-theoretic floor for producing `m` distinct group elements — already met.\n3. **C's benefit is pinned at weight 1 by injectivity** (Harvey Step 3, verbatim): *\"the\n   powers α_i in the first list are distinct thanks to the hypothesis ord_N(α) ≥ m, so each\n   v_{a,b,j} is equal to at most one α_i.\"* This is a **correctness hypothesis, not an\n   accident** — the interior cannot be cheapened below weight 1 without breaking correctness.\n\n⇒ The m-leg is a **closed variable**: no power-of-`N` gain exists, and the pins show why\nwithout any search. Any single-leg power-of-`N` attack on the m-leg or the interior is\nprovably worthless (this generalizes the main loop's independent three-way-balance screen:\n`{A, r, m}` are all co-binding, so freeing any one still leaves the other two to rebalance\nto `1/5`).\n\n## ★ THE LEVER NOBODY ATTACKED IN 34 ROUNDS: ADD A FLOOR\n\nThe LP shows the only term with any slack is **B, the pair leg (weight 1/2)** — round 33's\nresidue-uniformity-killed territory. But the deeper structural point is this: **every round\nso far tried to CHEAPEN an existing term of `max{A, r, m}`.** The move nobody tried is to\n**ADD A FLOOR** — introduce a new term that is small at the current optimum but binds after\na rebalance, i.e. change the **functional form** of the cost so a new, lower-exponent term\ndominates. This is the honest, screen-calibrated next frontier, and it is precisely what\nrunning the screen FIRST revealed: it killed the round before the round was spent and\npointed at a lever the round's own framing had excluded.\n\n## Why this is the right way to fail\nThe screen's value is not the kill — it is that a kill by theorem costs an afternoon and\n**redirects** the search, whereas the same kill discovered by search would have cost a full\nmulti-agent round and yielded only a closed door. This is the payoff of the campaign's\ndiscipline: rounds now end with a **theorem and a new lever**, not just a dead channel.\n\n## Honest status\nZero new factoring methods. The frontier is the \"add a floor\" functional-form lever; the\nformally-open door remains the UMW covering (`α ≥ 1−2β`, zero slack at `1/3,1/3`).\n",
     "domain_bridges": [],
     "domains": [
@@ -52,7 +33,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-25T17:57:24.497081+00:00",
     "title": "FACT round-35 — THE m-LEG IS A CLOSED VARIABLE (kill by theorem, delete-a-term LP screen run BEFORE the round): A·C=N^(1/2)/r^(1/2) is ONE degree of freedom (m-leg+interior = two halves of one quantity, split already AM-GM optimal); C's cost pinned at Theta(m) by OUTPUT COUNTING; C's benefit pinned at weight 1 by INJECTIVITY (Harvey Step 3, a CORRECTNESS hypothesis). No power-of-N gain exists. {A,r,m} all CO-BINDING (three-way screen). THE UNTRIED LEVER: ADD A FLOOR — change the cost's FUNCTIONAL FORM, don't cheapen a term"
   },
@@ -11720,6 +11701,46 @@
     "status": "available",
     "timestamp": "2026-10-14T15:29:39.468826+00:00",
     "title": "ArXiv paper: Proofs of four Takigiku--Tsuchioka conjectures on level $2$ principal characters of $A_{2\\ell-1}^{(2)}$"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'The existence of small defining polynomials for number fields' and formalize its key results. Abstract: We prove that every number field of degree $n$ and absolute discriminant $D$ has a defining integral polynomial of degree $n$ whose coefficients are all $O_n(\\sqrt D)$ in size, thus resolving a 1998 conjecture of Ruppert. Our proof compares ideal lattices with their trace duals, via which we handle all number fields with the exception of CM fields whose maximal totally real subfields have small discriminant. We then treat the remaining fields by averaging completed Epstein zeta functions over all possible ideal classes and archimedean scalings, for which we make critical use of Hecke's formula and the subconvexity theorem of Michel and~Venkatesh. Our proof does not use the Quasi-Riemann Hypothesis.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_5238",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2610.20600v1",
+    "status": "available",
+    "timestamp": "2026-10-15T05:52:50.769339+00:00",
+    "title": "ArXiv paper: The existence of small defining polynomials for number fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Effective equidistribution of polynomial trajectories in $\\operatorname{SL}_3(\\mathbb R)/\\operatorname{SL}_3(\\mathbb Z)$' and formalize its key results. Abstract: For a fixed matrix-polynomial trajectory in $\\operatorname{SL}_3(\\mathbb R)/\\operatorname{SL}_3(\\mathbb Z)$, we give a necessary and sufficient intrinsic Diophantine condition for its time averages to equidistribute at a power rate on its homogeneous orbit closure. The condition uses a lattice in the space of polynomial functions on the normalized orbit-closure group, each admitting a representative of total degree at most two in the matrix entries. These polynomial tests have a common degree bound of two, independent of the curve degree and optimal in general. The proof begins with a classification of the possible orbit-closure groups and derives lower bounds for polynomial coefficient vectors from the intrinsic condition. It combines quantitative nilmanifold equidistribution, unipotent tangent approximation, and effective flow estimates, with arithmetic separation and quantitative nondivergence controlling cusp excursions and periodic-orbit obstructions.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_5239",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2610.20513v1",
+    "status": "available",
+    "timestamp": "2026-10-15T05:52:53.947272+00:00",
+    "title": "ArXiv paper: Effective equidistribution of polynomial trajectories in $\\operatorname{SL}_3(\\mathbb R)/\\operatorname{SL}_3(\\mathbb Z)$"
   },
   {
     "ambition_level": "extension",
@@ -70195,6 +70216,23 @@
     "status": "available",
     "timestamp": "2026-08-20T08:57:31.476640+00:00",
     "title": "Sparse corpora never approach the binomial ceiling.*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "**coupled M-leg threshold** (`coupling_alone_useless`, `coupled_sixth_iff`): if the M-leg\n  becomes `(N/r)^{1/4}/m^θ`, coupling alone never beats `1/5`. With a fourth floor of weight\n  `1/2`, the cost `1/6` is reachable **iff** `θ ≥ 1/4`. The previous draft's direction 2\n  claimed \"below 1/5 iff θ > 0\". That claim was false, because the interior triple still\n  forces `1/5`. The corrected statement is the one proved here;",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_5237",
+    "lineage_refs": [],
+    "priority_score": 0.4302222222222222,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c22c0d2c",
+    "status": "available",
+    "timestamp": "2026-10-15T05:52:20.655744+00:00",
+    "title": "coupled M-leg threshold"
   },
   {
     "ambition_level": "extension",

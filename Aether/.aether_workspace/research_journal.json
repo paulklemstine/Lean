@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "7ae2917a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions\n\nDerived from this cycle's analysis of *committed local-oracle protocols* — the\ncompilation of a constant-query (PCP-style) verifier with a hiding commitment —\nformalized in\n\n* `Ca",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 63,
-      "timestamp": "2026-08-27T09:50:06",
-      "title": "Composition of PCP locality with commitment hiding"
-    },
-    {
       "cycle_id": "9524045a",
       "domain": "Shared",
       "key_insight": "# Future directions — after the stage-1 order-completion / collision separation\n\n## What this cycle settled\n\nThe mechanism question behind the experimental chain (\"is low-`B1` success a collision\nacci",
@@ -2501,6 +2491,16 @@
       "theorem_count": 38,
       "timestamp": "2026-10-14T19:41:12",
       "title": "FACT round-36 — THE UMW COVERING: six constructive strategies, 15 adversarial verdicts, ZERO coverin"
+    },
+    {
+      "cycle_id": "c22c0d2c",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — after Round 35 (faithful-model slackness)\n\nProved this round in `Catalog/Logic/HarveyFaithfulSlackness.lean` (31 theorems, no `sorry`,\nonly the standard axioms `propext`, `Classi",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-10-15T05:52:35",
+      "title": "FACT round-35 (full) — FAITHFUL-MODEL SLACKNESS: Harvey Alg 4.3 Step 2 forces M=ceil((N/r)^(1/2)) (h"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-10-14T19:41:12",
+  "last_updated": "2026-10-15T05:52:35",
   "open_questions": [
     {
       "context": "This file gives a complete, sorry-free proof of that formula, together with the",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "e4ce2d9a",
-        "quality": 0.78,
-        "theorems": 115,
-        "title": "NET-71: THE-TOKENIZER-TAX-IS-FOUR-KEYS — German prose shifts knees up exactly on"
-      },
-      {
         "cycle_id": "f099f0f6",
         "quality": 0.85,
         "theorems": 64,
@@ -3513,6 +3507,12 @@
         "quality": 0.62,
         "theorems": 33,
         "title": "FACT round-39 #5 — ET-HINTS: interval hints priced by coverage x width (paper 14"
+      },
+      {
+        "cycle_id": "c22c0d2c",
+        "quality": 0.62,
+        "theorems": 38,
+        "title": "FACT round-35 (full) — FAITHFUL-MODEL SLACKNESS: Harvey Alg 4.3 Step 2 forces M="
       }
     ],
     "MachineLearning": [

@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-14T19:40:59Z",
-  "count": 17,
+  "archived_at": "2026-10-15T05:52:21Z",
+  "count": 18,
   "directions": [
     {
       "id": "fd_3552",
@@ -682,6 +682,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 361
+    },
+    {
+      "id": "fd_3963",
+      "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separated accounting — B1 ≥ p+1+2√p makes every curve succeed, not die (self-audit of paper 159)",
+      "description": "**Paper 215 · exp 568 · round-74 #6 · assessment v322**\n\nVERDICT: **H3 CONFIRMED (strong form)** — H1/H0 moot-by-absence.\n\nPaper 159 headlines an ECM self-destruction wall: \"when B1 ≳ min(p,q), every Hasse-window order divides lcm(1..B1), all curves degenerate simultaneously, uncapped E[T] infinite\", with a validity edge B1 ≲ min(p,q)/2. Exp568 tests that boundary under outcome-separated accounting {found_p, found_q, dead, nothing}.\n\n**Design.** Bitlen-26 q≫p stratum (generator nextprime(3p+U[1,200))), n_N=40/cell, grid B1/p ∈ {0.125, 0.25, 0.5, 0.9, 1.05} × arms B2/B1 ∈ {1 (control), 4, 16}; guarded affine EC ops reused VERBATIM from exp488_true_ecm.py (validated there 10/10 ladder + 100/100 mod-12); true-lcm stage-1 schedule; NEW true difference-stage stage-2. Pre-registration verbatim before any data: H1 slope(log w* vs log(B2/B1)) CI covers 1 / H0 covers 0 / MIXED; H3 ADDED after reading the mechanism sentence, BEFORE data (timing disclosed): the wall is a detection/accounting artifact — gcd(den,N)==N 'dead' events or missing p-vs-q separation — not method failure.\n\n**Results (600 trials).**\n- ZERO 'dead' outcomes in the entire grid.\n- Success 1.000 in every cell at B1/p ≥ 0.25; **6/6 cells at 1.000 at B1/p = 0.9 AND 1.05** — exactly where paper 159 records uncapped E[T] infinite.\n- Only misses: two low-edge cells at B1/p = 0.125 (arm-4 0.875, arm-16 0.95), all misses 'nothing', never 'dead'.\n- No w* exists anywhere → H1/H0 never arm.\n\n**Mechanism (pre-data note, vindicated).** B1 ≥ p+1+2√p ⇒ every Hasse-window order n ≤ B1 ⇒ every prime power l^e ‖ n has l^e ≤ B1 ⇒ n | lcm(1..B1) ⇒ [L]P = O mod p on EVERY curve ⇒ first guarded inversion with vanishing denominator returns gcd = p: GUARANTEED SUCCESS, not death. Simultaneous degeneracy mod q impossible for q ≫ B1. \"All curves degenerate\" can only have read as death if accounting conflated gcd=p wins with gcd=N losses or lacked p-vs-q separation.\n\n**Structural insight (ledger-grade).** Guarded-affine accounting carries a scale-independent random-collision baseline ≈ 1 − exp(−c·B1/p) (#ops ~ 1.44·B1, per-op hit ~1/p): ~17% predicted at B1/p = 0.125 vs 68% observed found-p share (collision-luck + order-divisibility mixed). Any historical success/E[T] accounting that did not separate collision-hits from order-hits could have manufactured the wall sentence. Named follow-up BEFORE amending paper 159 either way: larger-p rerun with per-op outcome tracing (order-hit vs collision-hit).\n\n**Honest disclosures.** (a) toy bitlen 26; (b) stage-2 arms UNTESTED DEAD CODE this run — stage 1 succeeded first everywhere, zero s2 outcomes; new difference-stage machinery validated only by smoke buckets + sign-convention note; cross-arm differences at fixed B1 are per-cell RNG drift; (c) inline coordinator implementation after 3× agent-channel failures (stall watchdog ×2, silent no-write ×1); (d) recorder catch: findings.md says \"14/15 cells at 1.000\" but canonical result.json shows TWO sub-1.000 cells (both at B1/p = 0.125) — JSON canonical, verdict unaffected.\n\n**Barrier framing.** Barrier-8 adjacency (known-method bookkeeping); self-audit genre — precedent: paper 91 stands / paper 99 retraction handled by side-by-side reconstruction. If the independent follow-up confirms, paper 159's wall sentence gets an AMENDMENT, not a silent rewrite; until then 159 stands as recorded with this audit appended.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/exp568_* ; paper ResearchOutput/NewMathematics/215_EcmStage2Wall.md.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "497c96d6",
+      "timestamp": "2026-08-24T09:06:21.855664+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.9999999999999999,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-27T20:33:51.563447+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 360
     }
   ]
 }
