@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "9524045a",
-      "domain": "Shared",
-      "key_insight": "# Future directions — after the stage-1 order-completion / collision separation\n\n## What this cycle settled\n\nThe mechanism question behind the experimental chain (\"is low-`B1` success a collision\nacci",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 67,
-      "timestamp": "2026-08-27T09:50:25",
-      "title": "FACT round-88 #1 — LARGE-P-TRACE (exp 595 FINAL): H1 TRUE / H0 REFUTED — exp570's picture REPLICATES"
-    },
-    {
       "cycle_id": "10b0e429",
       "domain": "Probability",
       "key_insight": "# Future directions — F1 tightness after the bound-slack-by-X result\n\nThe first formal cycle closed four things: the identity chain\n(`X = (1+Λ)/(2Λ) = 1/Θ`, `bound = X·S_asc`), the strict unattainabil",
@@ -2501,6 +2491,16 @@
       "theorem_count": 38,
       "timestamp": "2026-10-15T05:52:35",
       "title": "FACT round-35 (full) — FAITHFUL-MODEL SLACKNESS: Harvey Alg 4.3 Step 2 forces M=ceil((N/r)^(1/2)) (h"
+    },
+    {
+      "cycle_id": "346ce553",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions (after Round 35)\n\nRound 35 proved (in `Catalog/Bridges/HarveyMLegClosed.lean`) that the `m`-leg of Harvey's\ncost is closed by three pins (product invariance → the `M`-leg; output c",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 34,
+      "timestamp": "2026-10-15T19:18:44",
+      "title": "FACT round-35 — THE m-LEG IS A CLOSED VARIABLE (kill by theorem, delete-a-term LP screen run BEFORE "
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8
     }
   ],
-  "last_updated": "2026-10-15T05:52:35",
+  "last_updated": "2026-10-15T19:18:44",
   "open_questions": [
     {
       "context": "This file gives a complete, sorry-free proof of that formula, together with the",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "ad3686b6",
-        "quality": 0.83,
-        "theorems": 82,
-        "title": "Comonotone Repair Distance"
-      },
-      {
         "cycle_id": "5c4155a3",
         "quality": 0.70417,
         "theorems": 42,
@@ -3203,6 +3197,12 @@
         "quality": 0.66,
         "theorems": 36,
         "title": "FACT round-35 #5 — HINT-VALUE-SCALING: hints compound (paper 124)"
+      },
+      {
+        "cycle_id": "346ce553",
+        "quality": 0.6,
+        "theorems": 34,
+        "title": "FACT round-35 — THE m-LEG IS A CLOSED VARIABLE (kill by theorem, delete-a-term L"
       }
     ],
     "Combinatorics": [

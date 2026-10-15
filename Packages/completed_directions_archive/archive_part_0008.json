@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-15T05:52:21Z",
-  "count": 18,
+  "archived_at": "2026-10-15T19:18:28Z",
+  "count": 19,
   "directions": [
     {
       "id": "fd_3552",
@@ -722,6 +722,48 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 360
+    },
+    {
+      "id": "seed_140",
+      "title": "The P vs NP of Cooking: Computational Complexity of Recipes",
+      "description": "Every recipe is an algorithm: it takes ingredients (inputs) and produces a dish (output). The question is: can you verify a good dish faster than you can cook it? This is exactly P vs NP, but in the kitchen. Define the verification time V(R) of a recipe R as the time it takes to taste the dish and determine if it's good. Define the cooking time C(R) as the time it takes to prepare the dish. Conjecture: For most traditional recipes, C(R) > V(R) — cooking takes longer than tasting (P != NP in the kitchen). But there exist 'quick recipes' where C(R) = V(R) — assemble-and-serve dishes like salads (P = NP in the kitchen). The interesting class is 'NP-hard recipes' — dishes where even VERifying the result is hard. Example: is the souffle risen? You can only verify by cutting it open, which destroys it. Theorem: souffle verification is co-NP-hard because determining if a souffle will rise requires simulating the thermodynamic process, which is PSPACE-hard. More formally: the souffle function S(ingredients, temperature, time) -> {risen, collapsed} requires computing the Navier-Stokes equations for the batter, which is PSPACE-hard. Test: classify 100 recipes by their C(R)/V(R) ratio. Verify that P = NP recipes have C = V, while P != NP recipes have C >> V. Impact: computational complexity is not abstract — it shows up in your kitchen. Some dishes are inherently harder to make than to verify.",
+      "source_exp_id": "seed",
+      "source_path": "seed:manual_v2",
+      "domains": [
+        "Novelty",
+        "Computation",
+        "Speculative"
+      ],
+      "proof_strategy": "Define kitchen complexity: a recipe R is a tuple (ingredients, operations, output). Verification time V(R) = time to determine output quality (tasting). Cooking time C(R) = time to execute operations. Define Kitchen-P = {R : C(R) = O(poly(|R|))} — recipes that can be cooked in polynomial time. Define Kitchen-NP = {R : V(R) = O(poly(|R|))} — recipes that can be verified in polynomial time. Prove: salad is in Kitchen-P (chop and mix, linear time). Prove: souffle is Kitchen-NP-hard: verifying a souffle's rise requires computing the Navier-Stokes dynamics of the batter, which is PSPACE-hard. Prove Kitchen-P != Kitchen-NP for souffles: the Navier-Stokes computation cannot be shortcut. Classify 100 recipes: P=P (salads, sandwiches, smoothies), P<NP (baked goods, braises, ferments), P<<NP (souffles, tempered chocolate, molecular gastronomy). Test: time 50 people making 10 recipes each, measure cooking time vs verification time.",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.71,
+      "status": "completed",
+      "consumed_by_exp_id": "99ec0ece",
+      "timestamp": "",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-24T09:07:13.729134+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "famous_subtask",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

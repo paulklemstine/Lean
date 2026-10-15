@@ -21,25 +21,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "346ce553",
-    "description": "# Round 35 — The m-leg is a CLOSED VARIABLE (kill by theorem), and the untried lever is ADD A FLOOR\n\nThe delete-a-term LP screen — run BEFORE spending the round, as the campaign's discipline\nnow requires — returned a **kill by theorem, not by failure to search**. The frontier as\nposed (the baby-step `m`-leg and the `m`-dependent interior) is closed by three independent\npins, two of them Harvey's own words. Independently re-derived as a corollary of the\nmachine-checked `HarveyFloor.lean` weighted-AM-GM (`max(r_i, N^g / Π r_i^{w_i})` has optimal\nexponent exactly `g/(1+Σw_i)`), with Harvey Prop 4.2 (p.10, PDF opened) giving the terms.\n\n`N^{1/5}` remains an **upper bound**, never a floor.\n\n## The three pins on the m-leg `C` and the interior `A`\nHarvey's cost = `max{ A = N^{1/2}/(r^{1/2}m), B = r, C = m }`.\n\n1. **A·C is ONE degree of freedom, not two.** `A·C = N^{1/2}/r^{1/2}` is invariant under any\n   re-split of `m`, and the balanced split is already AM-GM optimal. So the m-leg and its\n   interior are the two halves of a single quantity: cheapening one merely re-balances the\n   other. There is no slack to exploit.\n2. **C's cost is pinned at `Θ(m)` by output counting.** A straight-line group program with\n   `t` multiplications yields at most `t+1` distinct elements. Harvey Step (1) is already a\n   bare chain of `m` single multiplications (and Alg 4.1 Step 3a does `m` gcds), so `Θ(m)` is\n   the information-theoretic floor for producing `m` distinct group elements — already met.\n3. **C's benefit is pinned at weight 1 by injectivity** (Harvey Step 3, verbatim): *\"the\n   powers α_i in the first list are distinct thanks to the hypothesis ord_N(α) ≥ m, so each\n   v_{a,b,j} is equal to at most one α_i.\"* This is a **correctness hypothesis, not an\n   accident** — the interior cannot be cheapened below weight 1 without breaking correctness.\n\n⇒ The m-leg is a **closed variable**: no power-of-`N` gain exists, and the pins show why\nwithout any search. Any single-leg power-of-`N` attack on the m-leg or the interior is\nprovably worthless (this generalizes the main loop's independent three-way-balance screen:\n`{A, r, m}` are all co-binding, so freeing any one still leaves the other two to rebalance\nto `1/5`).\n\n## ★ THE LEVER NOBODY ATTACKED IN 34 ROUNDS: ADD A FLOOR\n\nThe LP shows the only term with any slack is **B, the pair leg (weight 1/2)** — round 33's\nresidue-uniformity-killed territory. But the deeper structural point is this: **every round\nso far tried to CHEAPEN an existing term of `max{A, r, m}`.** The move nobody tried is to\n**ADD A FLOOR** — introduce a new term that is small at the current optimum but binds after\na rebalance, i.e. change the **functional form** of the cost so a new, lower-exponent term\ndominates. This is the honest, screen-calibrated next frontier, and it is precisely what\nrunning the screen FIRST revealed: it killed the round before the round was spent and\npointed at a lever the round's own framing had excluded.\n\n## Why this is the right way to fail\nThe screen's value is not the kill — it is that a kill by theorem costs an afternoon and\n**redirects** the search, whereas the same kill discovered by search would have cost a full\nmulti-agent round and yielded only a closed door. This is the payoff of the campaign's\ndiscipline: rounds now end with a **theorem and a new lever**, not just a dead channel.\n\n## Honest status\nZero new factoring methods. The frontier is the \"add a floor\" functional-form lever; the\nformally-open door remains the UMW covering (`α ≥ 1−2β`, zero slack at `1/3,1/3`).\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4957",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-25T17:57:24.497081+00:00",
-    "title": "FACT round-35 — THE m-LEG IS A CLOSED VARIABLE (kill by theorem, delete-a-term LP screen run BEFORE the round): A·C=N^(1/2)/r^(1/2) is ONE degree of freedom (m-leg+interior = two halves of one quantity, split already AM-GM optimal); C's cost pinned at Theta(m) by OUTPUT COUNTING; C's benefit pinned at weight 1 by INJECTIVITY (Harvey Step 3, a CORRECTNESS hypothesis). No power-of-N gain exists. {A,r,m} all CO-BINDING (three-way screen). THE UNTRIED LEVER: ADD A FLOOR — change the cost's FUNCTIONAL FORM, don't cheapen a term"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "031d8542",
     "description": "# Round 34 — Attacking the order-free balance: the M-leg is exponent-REDUNDANT, and the `m`-reuse is load-bearing\n\nSeven fresh-frontier channels against the order-free balance that (round 33) pins Harvey's\n`N^{1/5}`. **Zero new methods, zero exponents moved — but two genuine corrections to the\nrecord and to #417/#418, and one transferable screening tool.**\n\n`N^{1/5}` remains an **upper bound**, never a floor. No unconditional superpolynomial\nlower bound for factoring is known in any model. A kill is success.\n\n## Headline 1 — the M-leg is exponent-REDUNDANT (a correction to the round-33 map)\n\nRound 33 concluded `1/5` is pinned by the three-term order-free triangle\n`{r·lg³N vs N^{1/4}r^{(-1/4)}lg³N} + {m·lg²N vs N^{1/2}/(r^{1/2}m)}`. Brute-force LP over the\nthree **N-exponent** terms `{BSGS interior N^{1/2}/(r^{1/2}m), pair family r, baby-step list\nm}` gives minimax exactly `1/5`. The round-34 finding:\n\n> Adding the M-leg `M^{1/2} = (N/r)^{1/4}`, or **deleting it entirely**, leaves the minimax\n> at `1/5` — and it stays at `1/5` even when the M-leg is made **completely free**\n> (constant-factor `M⁰`). The M-leg carries ~25% of the polylog-weighted budget at\n> `N = 2^100` and is **arithmetically inert**.\n\nSo the smoothness-sieve term is a large-looking, zero-leverage term. This is the campaign's\ndiagnosed failure mode with the sign flipped: a term that *looks* load-bearing because it is\nbig is worth exactly nothing. **Correction to #418's \"three co-leaders\"** — the M-leg is a\nco-leader only in polylog weight, not in exponent; the exponent is carried by the interior,\n`r`, and `m` alone.\n\n## Headline 2 — the m-reuse is load-bearing, not slack (experiment refuted the survivor)\n\nThe one channel to survive both refuters was `nonlegendre`: a \"collapse coupling\" that\nremoves the baby-step split to reinterpret the `(a,b)` grid via a product tree with\nseparable exponents (essentially Strassen's `N^{1/4}`, Harvey Prop 2.5 / Remark 2.6). A\nground-truth-verified pipeline (real NTT product trees, remainder-tree multievaluation) was\nbuilt and run:\n\n> The mechanism is a **correct** factoring algorithm, but its dominant input-size exponent\n> is **0.2500**, not `≤ 0.20`. The fitted penalty slope is `0.046–0.052` against the exact\n> closed form `1/20 = 0.0500`, confirming an `N^{1/20}` penalty.\n\nInterpretation: **dropping the baby-step split deletes the `m` term, degrading a 3-term\nbalance to a 2-term one.** The `m`-reuse (the zero-sum trade in `m`) is **load-bearing, not\nslack** — a direct, experiment-backed statement about the record's core reuse mechanism. The\nhunt's fabricated constant (\"256\") table is refuted by the fit.\n\n## Headline 3 — the transferable tool: the \"delete-a-term\" LP screen\n\n> **Screening rule.** In a minimax cost `max{term_1, …, term_k}`, a term is worth optimising\n> **iff deleting it (or making it free) moves the minimax value.** A term that does not move\n> the value is worthless regardless of its weight. Run this LP before spending a round on any\n> term.\n\nThis is the round's most transferable artefact and costs an afternoon. It is in the same\nfamily as the round-33 **slack-constraint lemma** and the **symmetric-readout vacuity lemma**\n— a small set of general screening tools the campaign now carries.\n\n## Other theorem-worthy facts\n\n- **Any extreme of the gcd-reveal family is algebraically solvable.** `q = k(p−1) − 1` gives\n  `kp² − (k+1)p − N = 0`, discriminant `≡ (2kp − (k+1))²` — one integer square root. More\n  generally, in the gcd-reveal family the density-1 extreme is always the algebraically\n  solvable case. (The `eulergap2` cross attempt died here: its surviving extreme is a\n  closed-form quadratic with an exactly-square discriminant.)\n- **General-exponent reveal identity.** `R(E) = d_p(q−1) + d_q(p−1) − 2 d_p d_q`, with\n  `d_p = gcd(E, p−1)`, valid for **all** exponents `E`; it recovers `card_revealing` at\n  `E = N−1`. Verified numerically. This generalises round 33's Euler-gap count from the single\n  exponent `N−1` to arbitrary `E`.\n\n## The next concrete target (untouched)\n\nRound 33 attacked `r` (pair filter; killed on residue-uniformity). Round 34 showed `M` is\nredundant and `m`-reuse is load-bearing. That leaves **the baby-step `m`-leg and the\n`m`-dependent BSGS interior — the only two terms never attacked with a power-of-`N`\nmechanism.** `m` is untouched. (Flagged per Rule 6: the proposed `T = N^{(1/2−δ)/5}` target\nis unverified arithmetic — run the delete-a-term LP before committing a round.)\n\n**Do NOT** spend a round on LLL/flatness over the UMW CRT lattice: the prefactoring kill\nsupersedes it — within that framework the `c=1` branch cannot reach `1/6` at any window size.\n\n## Honest summary\nZero new factoring methods across 32 → 34 rounds — but the failures are now sharp,\nnon-repeating, and each round yields reusable general lemmas (slack-constraint, delete-a-term\nLP, symmetric-readout vacuity) plus machine-checked corrections. The frontier is the\nbaby-step `m`-leg; the formally-open door remains the UMW covering.\n",
     "domain_bridges": [],
@@ -53008,6 +52989,92 @@
     "status": "available",
     "timestamp": "2026-10-14T15:28:55.011131+00:00",
     "title": "Divisor-Lattice Rebound at Composite q - 1"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.HarveyMLegClosed",
+      "Logic.HarveyFaithfulSlackness"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Search for an arithmetic floor that enters both the M-leg (weight θ) and the BSGS interior (weight w) of Harvey's algorithm. The faithful law says 1/6 is reachable iff θ ≥ 1/4 and w ≥ 1/2. This converts the 'add a floor' lever into two concrete numerical targets.\n\nNo floor parameter s arising from Lehman-type pair search achieves θ ≥ 1/4 and w ≥ 1/2 simultaneously with overhead exponent δ < w/5.\n\nEnumerate candidate floors (extra multipliers, extra bases), compute (θ, w, δ) exponents, check against faithful_floor_lower.\n\nThe Lehman-BSGS family is closed at 1/5 in the faithful model.\n\nA concrete deterministic N^{1/6}-type algorithm design emerges.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_5240",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Extend faithfulFloorExp with an overhead term and prove a dual certificate for each candidate.",
+    "research_mode": "team",
+    "source_exp_id": "346ce553",
+    "status": "available",
+    "timestamp": "2026-10-15T19:18:26.515806+00:00",
+    "title": "Dual-Coupled Floor Existence Problem"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.HarveyMLegClosed"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extend the straight-line output counting bound to two-list collision search. Conjecture the interior cost is Ω(candidates/stored) for generic programs. Would formally pin the interior weight.\n\nAny generic straight-line program finding a collision between a stored list of size m and a candidate set of size K uses Ω(K/m) multiplications.\n\nFormalise generic programs as slpRun over a free group and count distinct comparisons.\n\nAll three legs are pinned by counting; the family bound becomes a model lower bound.\n\nThere is a generic shortcut in the interior, reopening the m-leg.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5241",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Adversary argument plus slp_distinct_le.",
+    "research_mode": "team",
+    "source_exp_id": "346ce553",
+    "status": "available",
+    "timestamp": "2026-10-15T19:18:27.149442+00:00",
+    "title": "Generic-Group Collision Counting Bound"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.HarveyMLegClosed",
+      "Cryptography.FactoringBarriers.HarveyFloor"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Adding faithful legs to a max-of-affine cost should not lower shadow prices of binding original legs. Tests whether faithful refinements can create slack. Uses LP duality.\n\nFor max-of-affine costs, refining by extra legs weakly increases the dual price of every original leg that stays binding at the optimum.\n\nCompute duals for Harvey's three-leg and four-leg (M-leg) models; prove in Lean via dual_certificate.\n\nFaithful modelling never manufactures cheap levers.\n\nA refinement can redistribute price onto a cheapenable leg.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_5242",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Complementary slackness on the finite LP.",
+    "research_mode": "team",
+    "source_exp_id": "346ce553",
+    "status": "available",
+    "timestamp": "2026-10-15T19:18:27.757951+00:00",
+    "title": "Shadow-Price Monotonicity Under Faithful Refinement"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.HarveyMLegClosed"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Relax Harvey's injectivity (each match hits ≤ 1 baby step) to ≤ k. Needs ord(α) ≥ m/k only, but each match costs k checks. Conjecture net gain is zero.\n\nAllowing k-fold collisions changes the cost to max(r, m, k·N^{1/2}/(r^{1/2} m)) with ord ≥ m/k, whose optimum is ≥ N^{1/5}.\n\nFormalise k-collision baby chains (generalising babyChain_collision) and the modified exponent LP.\n\nPin 3 is robust, not just a hypothesis of one proof.\n\nWeaker order hypotheses give a genuine exponent gain.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic"
+    ],
+    "id": "fd_5243",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "orderOf periodicity of the chain plus the weighted AM-GM.",
+    "research_mode": "team",
+    "source_exp_id": "346ce553",
+    "status": "available",
+    "timestamp": "2026-10-15T19:18:28.383573+00:00",
+    "title": "Injectivity-Relaxation Trade-off"
   },
   {
     "ambition_level": "extension",
