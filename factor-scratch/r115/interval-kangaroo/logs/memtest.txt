@@ -1,0 +1,14 @@
+/tmp/sage_eu5n4bp9/kangaroo_law44ds5p_l.sage.py:305: DeprecationWarning: Use sage.version.version instead.
+See https://github.com/sagemath/sage/issues/39015 for details.
+  sage_version=str(version())),
+GROUND TRUTH: y^2 = x^3 + 7 over GF(2^256-2^32-977), smooth,
+  #E = n (cofactor 1), ord(G) = n, n prime with 256 bits
+==========================================================================
+kangaroo_law.sage  RUN=memtest SEED=1150041
+  interval [0,2^b), 2 seeds/cell, KFAC=3.0, mean_jump=1.0*sqrt(w)
+==========================================================================
+  b= 40 w=2^40  M=2097152 K=3145728  mean ops 7.294e+06 = 2^22.798  recovery 2/2 (plant 2/2)
+      seed  0 d=137796399862  tame  3145728 wild  2072128 tot   7315088  t=138.45s hit=137796399862 ok=True
+      seed  1 d=181915168151  tame  3145728 wild  2030163 tot   7273123  t=147.38s hit=181915168151 ok=True
+
+wrote /home/raver1975/lean/factor-scratch/r115/interval-kangaroo/logs/kangaroo_law_memtest.json

@@ -147,3 +147,14 @@ BREAKS others (m=4 and m=7 go 4/4 -> 0/4). There is no one-sided closed-form fix
   from the primary source, or you inherit their bugs;
 - cite a source you have not fetched, with a verbatim quote (16 phantoms so far);
 - commit. The lead reviews before anything lands.
+
+## TROPS ADDED IN ROUND 118 (verify operators before trusting a null)
+
+- **In Sage, `^` is EXPONENTIATION and `^^` is XOR.** `((1 << nbits) - 1) ^ block` silently
+  evaluates to `(1 << nbits - 1) ** block` — e.g. `262143^15 ~ 2^351` instead of `262128`. A
+  mask built this way does nothing, and the resulting "impossible" measurement (a survivor
+  count of 0, when membership is guaranteed by construction) is the symptom. Clear a bit-block
+  with `k - (k & block)` instead of relying on XOR.
+- **Success by MEMBERSHIP is not success by IDENTIFICATION.** `d_true in survivors` is true
+  with 16378 survivors and means nothing; the honest criterion is "the survivor set is small
+  enough to check against the public key".

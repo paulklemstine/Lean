@@ -1,0 +1,47 @@
+[
+ {
+  "ell": 4,
+  "t": 32,
+  "tell": 128,
+  "lll": 10,
+  "bkz": 10,
+  "nseeds": 10,
+  "nbits": 61
+ },
+ {
+  "ell": 5,
+  "t": 26,
+  "tell": 130,
+  "lll": 10,
+  "bkz": 10,
+  "nseeds": 10,
+  "nbits": 61
+ },
+ {
+  "ell": 6,
+  "t": 22,
+  "tell": 132,
+  "lll": 10,
+  "bkz": 10,
+  "nseeds": 10,
+  "nbits": 61
+ },
+ {
+  "ell": 7,
+  "t": 18,
+  "tell": 126,
+  "lll": 10,
+  "bkz": 10,
+  "nseeds": 10,
+  "nbits": 61
+ },
+ {
+  "ell": 8,
+  "t": 16,
+  "tell": 128,
+  "lll": 10,
+  "bkz": 10,
+  "nseeds": 10,
+  "nbits": 61
+ }
+]

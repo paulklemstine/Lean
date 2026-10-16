@@ -1,0 +1,55 @@
+GROUND TRUTH: secp256k1, #E = n prime, ord(G) = n, 256 bits
+==========================================================================
+kangaroo_dp.sage  RUN=run1 SEED=1150043  dplens=[0, 2, 4, 6, 8, 10, 12]
+==========================================================================
+  b= 12 dplen= 0  traps=     192  mean ops       423 = 2^8.72  recovery 12/12
+  b= 12 dplen= 2  traps=      47  mean ops       399 = 2^8.64  recovery 12/12
+  b= 12 dplen= 4  traps=       7  mean ops       449 = 2^8.81  recovery 12/12
+  b= 12 dplen= 6  traps=       2  mean ops       492 = 2^8.94  recovery 12/12
+  b= 12 dplen= 8  traps=       1  mean ops       557 = 2^9.12  recovery 12/12
+  b= 12 dplen=10  traps=       0  mean ops       984 = 2^9.94  recovery  0/12
+  b= 12 dplen=12  traps=       0  mean ops       984 = 2^9.94  recovery  0/12
+
+  b= 16 dplen= 0  traps=     768  mean ops      1568 = 2^10.61  recovery 12/12
+  b= 16 dplen= 2  traps=     199  mean ops      1563 = 2^10.61  recovery 12/12
+  b= 16 dplen= 4  traps=      45  mean ops      1573 = 2^10.62  recovery 12/12
+  b= 16 dplen= 6  traps=      10  mean ops      1624 = 2^10.67  recovery 12/12
+  b= 16 dplen= 8  traps=       5  mean ops      1635 = 2^10.67  recovery 12/12
+  b= 16 dplen=10  traps=       0  mean ops      3872 = 2^11.92  recovery  0/12
+  b= 16 dplen=12  traps=       0  mean ops      3872 = 2^11.92  recovery  0/12
+
+  b= 20 dplen= 0  traps=    3072  mean ops      6325 = 2^12.63  recovery 12/12
+  b= 20 dplen= 2  traps=     750  mean ops      6496 = 2^12.67  recovery 12/12
+  b= 20 dplen= 4  traps=     179  mean ops      6127 = 2^12.58  recovery 12/12
+  b= 20 dplen= 6  traps=      50  mean ops      6052 = 2^12.56  recovery 12/12
+  b= 20 dplen= 8  traps=      20  mean ops      6264 = 2^12.61  recovery 12/12
+  b= 20 dplen=10  traps=       7  mean ops      6862 = 2^12.74  recovery 12/12
+  b= 20 dplen=12  traps=       2  mean ops      7242 = 2^12.82  recovery 12/12
+
+  b= 24 dplen= 0  traps=   12288  mean ops     24445 = 2^14.58  recovery 12/12
+  b= 24 dplen= 2  traps=    3048  mean ops     23780 = 2^14.54  recovery 12/12
+  b= 24 dplen= 4  traps=     741  mean ops     24415 = 2^14.58  recovery 12/12
+  b= 24 dplen= 6  traps=     183  mean ops     24944 = 2^14.61  recovery 12/12
+  b= 24 dplen= 8  traps=      38  mean ops     25063 = 2^14.61  recovery 12/12
+  b= 24 dplen=10  traps=       7  mean ops     25887 = 2^14.66  recovery 12/12
+  b= 24 dplen=12  traps=       3  mean ops     28876 = 2^14.82  recovery 12/12
+
+  b= 28 dplen= 0  traps=   49152  mean ops    109102 = 2^16.74  recovery 12/12
+  b= 28 dplen= 2  traps=   12174  mean ops    119055 = 2^16.86  recovery 12/12
+  b= 28 dplen= 4  traps=    3030  mean ops    120925 = 2^16.88  recovery 12/12
+  b= 28 dplen= 6  traps=     726  mean ops    121439 = 2^16.89  recovery 12/12
+  b= 28 dplen= 8  traps=     180  mean ops    115092 = 2^16.81  recovery 12/12
+  b= 28 dplen=10  traps=      47  mean ops    107479 = 2^16.71  recovery 12/12
+  b= 28 dplen=12  traps=      15  mean ops    111942 = 2^16.77  recovery 12/12
+
+--------------------------------------------------------------------------
+FRONTIER (tame-walk ops K vs stored traps) at b=28
+--------------------------------------------------------------------------
+   dplen= 0 : K=  49152  traps=   49152  memory=       2.9 MB   ops=2^16.74  rec 12/12
+   dplen= 2 : K=  49152  traps=   12174  memory=       0.7 MB   ops=2^16.86  rec 12/12
+   dplen= 4 : K=  49152  traps=    3030  memory=       0.2 MB   ops=2^16.88  rec 12/12
+   dplen= 6 : K=  49152  traps=     726  memory=       0.0 MB   ops=2^16.89  rec 12/12
+   dplen= 8 : K=  49152  traps=     180  memory=       0.0 MB   ops=2^16.81  rec 12/12
+   dplen=10 : K=  49152  traps=      47  memory=       0.0 MB   ops=2^16.71  rec 12/12
+   dplen=12 : K=  49152  traps=      15  memory=       0.0 MB   ops=2^16.77  rec 12/12
+wrote /home/raver1975/lean/factor-scratch/r115/interval-kangaroo/logs/kangaroo_dp_run1.json

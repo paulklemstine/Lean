@@ -1,0 +1,25 @@
+/tmp/sage_pnqwcv2i/rateuz70qdf4.sage.py:44: DeprecationWarning: Use sage.version.version instead.
+See https://github.com/sagemath/sage/issues/39015 for details.
+  print("rate.sage -- measured group-operation throughput (Sage %s)" % str(version()))
+/tmp/sage_pnqwcv2i/rateuz70qdf4.sage.py:212: DeprecationWarning: Use sage.version.version instead.
+See https://github.com/sagemath/sage/issues/39015 for details.
+  out = dict(machine=os.uname().nodename, sage=str(version()), results=res)
+==========================================================================
+rate.sage -- measured group-operation throughput (Sage SageMath version 10.9, Release Date: 2026-05-04)
+==========================================================================
+  PART A  pure point addition, table   512 : 74133 ops/s  (mean 72682)
+  PART A  pure point addition, table  2048 : 74953 ops/s  (mean 73347)
+  PART A  pure point addition, table  8192 : 75277 ops/s  (mean 73918)
+  PART B  kangaroo step (hash+add), table  2048: 63364 ops/s  (mean 62147)
+  PART C  BSGS step (add + dict lookup)    : 77130 ops/s  (mean 76178)
+  PART D  Jacobian implementation validated against Sage on 6 test scalars
+  PART D  pure-Python Jacobian addition     : 128303 ops/s  (mean 127855)
+
+  SUMMARY (best of 5 reps, machine: Ecstasis)
+    add_M512                74133 ops/s   (13.489 us/op)
+    add_M2048               74953 ops/s   (13.342 us/op)
+    add_M8192               75277 ops/s   (13.284 us/op)
+    kangaroo_step           63364 ops/s   (15.782 us/op)
+    bsgs_step               77130 ops/s   (12.965 us/op)
+    jacobian_py            128303 ops/s   (7.794 us/op)
+wrote /home/raver1975/lean/factor-scratch/r115/interval-kangaroo/logs/rate.json

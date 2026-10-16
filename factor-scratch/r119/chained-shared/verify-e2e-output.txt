@@ -1,0 +1,42 @@
+====================================================================================================
+0. sanity check of the INDEPENDENT machinery (not the attack)
+====================================================================================================
+  5/5 freshly signed signatures verify under their own public key
+  5/5 the same signatures FAIL under a wrong public key (so verification is discriminating)
+
+====================================================================================================
+1. HEADLINE -- D=1, L=10, 30 signatures (3 per key): every key falls
+====================================================================================================
+              L=10 t=3 hdr-a: rank 12/12 | d_rec*G == Q 10/10 | all sigs verify under Q_rec 10/10
+              L=10 t=3 hdr-b: rank 12/12 | d_rec*G == Q 10/10 | all sigs verify under Q_rec 10/10
+              L=10 t=3 hdr-c: rank 12/12 | d_rec*G == Q 10/10 | all sigs verify under Q_rec 10/10
+  TOTAL: 30/30 keys recovered, each verified two independent ways
+
+====================================================================================================
+2. THE NULL -- D=1, L=10, 20 signatures (2 per key): nothing falls
+====================================================================================================
+              L=10 t=2 nul-a: rank 10/12 | d_rec*G == Q 0/10 | all sigs verify under Q_rec 0/10
+              L=10 t=2 nul-b: rank 10/12 | d_rec*G == Q 0/10 | all sigs verify under Q_rec 0/10
+              L=10 t=2 nul-c: rank 10/12 | d_rec*G == Q 0/10 | all sigs verify under Q_rec 0/10
+              L=10 t=2 nul-d: rank 10/12 | d_rec*G == Q 0/10 | all sigs verify under Q_rec 0/10
+  TOTAL: 0/40 keys recovered.  The solver still returns *a* solution of the
+  underdetermined system, and that solution FAILS full ECDSA verification --
+  so the null is a real information deficit, not a solver artefact.
+
+====================================================================================================
+3. THE SEED NONCES AS UNKNOWNS -- the accounting that says '20 >= 12, so it works'
+====================================================================================================
+  Treat each per-key seed nonce k_{k,0} as an extra unknown.  Unknowns = D+1+2L,
+  equations = L*t.  For L=10, D=1: 22 unknowns against 20 equations.
+  equations 20   unknowns 22   rank 20   kernel dim 2
+  -> still short by 2: every seed signature introduces exactly
+     one new unknown (its own seed nonce), so it buys no information whatsoever.
+  the TRUE vector satisfies this system too: True
+  (so the failure is not a modelling error -- the system is genuinely 2 short)
+
+====================================================================================================
+CONCLUSION: 3 signatures per key (30 total, 20 usable equations) break all 10 keys,
+verified by d_rec*G == Q AND by full ECDSA verification under Q_rec, both with an
+independent pure-Python secp256k1.  2 per key (20 total, 10 usable equations) break
+none, and no alternative accounting of the seed signatures changes that.
+====================================================================================================

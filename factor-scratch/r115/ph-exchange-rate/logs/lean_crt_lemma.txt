@@ -1,0 +1,6 @@
+note: using toolchain 'leanprover/lean4:v4.28.0' from override set on '/home/raver1975/lean/Catalog'
+note: to remove: elan override unset --path '/home/raver1975/lean/Catalog' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+'PohligHellman.pohlig_hellman_crt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PohligHellman.pohlig_hellman_crt_additive' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PohligHellman.ph_restrict_m' depends on axioms: [propext, Classical.choice, Quot.sound]
+'PohligHellman.orderOf_pow_mul' depends on axioms: [propext, Classical.choice, Quot.sound]

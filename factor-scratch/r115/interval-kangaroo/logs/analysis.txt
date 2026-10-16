@@ -1,0 +1,131 @@
+==============================================================================
+Axis K analysis -- short-interval ECDLP on secp256k1
+==============================================================================
+
+[1] RUN-TWICE CHECK (fixed seed; op counts should be identical)
+   cells matched: 108
+   identical total_ops: 108 / 108
+   identical hit/success: 108 / 108
+   max |wall-clock difference|: 17.318 s
+
+[2] POSITIVE CONTROL -- recovery of the PLANTED d (known d)
+    b      M      mean ops     2^ops      tame      wild     
+    8      32     121          6.917      48        25          recovery 12/12
+    12     128    394          8.622      192       50          recovery 12/12
+    16     512    1592         10.637     768       280         recovery 12/12
+    20     2048   6166         12.590     3072      1006        recovery 12/12
+    24     8192   25273        14.625     12288     4745        recovery 12/12
+    28     32768  114742       16.808     49152     32766       recovery 12/12
+    32     131072 429300       18.712     196608    101556      recovery 12/12
+    36     524288 1521059      20.537     786432    210267      recovery 12/12
+    40     2097152 6902190      22.719     3145728   1659230     recovery 12/12
+
+[3] SCALING LAW  log2(ops) = c + beta*log2(w)
+   measured points: b=8, b=12, b=16, b=20, b=24, b=28, b=32, b=36, b=40
+   beta = 0.49716  +/- 0.00393
+   c     = 2.75337
+   R^2   = 0.999562709
+   predicted beta = 0.5
+   |beta - 0.5| = 0.00284   (0.72 standard errors)
+   => CONSISTENT with sqrt(w)
+   seed-to-seed sd of log2(ops): mean 0.1178, max 0.1603
+   refit on b>=16 only: beta = 0.50200 +/- 0.00463, R^2 = 0.999574740, c = 2.6051
+
+[4] MEASURED THROUGHPUT (this machine)
+   machine: Ecstasis, sage SageMath version 10.9, Release Date: 2026-05-04
+     add_M2048               74953 ops/s   (13.342 us/op)
+     add_M512                74133 ops/s   (13.489 us/op)
+     add_M8192               75277 ops/s   (13.284 us/op)
+     bsgs_step               77130 ops/s   (12.965 us/op)
+     jacobian_py            128303 ops/s   (7.794 us/op)
+     kangaroo_step           63364 ops/s   (15.782 us/op)
+   empirical rate from the runs themselves (ops/mean seconds):
+     mean 61662  min 57005  max 66391 ops/s
+
+[5] EXTRAPOLATION TABLE  (b = interval half-width in bits)
+    w = 2^b, cost = C * 2^(b/2) group ops, C from the fit
+    fitted C = 2^2.7534 = 6.743  (kangaroo, kfac=3, full trap table)
+    measured group-op rates used for wall clock:
+       kangaroo step (hash+add+dict) : 63364 ops/s
+       BSGS step (add+dict lookup)   : 77130 ops/s
+
+    b     kangaroo ops   BSGS ops       kang. wall       BSGS wall           
+    --------------------------------------------------------------------------
+    96    1.9e+15        3.94e+14       949.16 year      161.90 year         
+    112   4.86e+17       1.01e+17       242.99 millennia 41.45 millennia     
+    128   1.24e+20       2.58e+19       62.20 Myr        10.61 Myr           
+    160   8.15e+24       1.69e+24       0.04 e14yr       695.35 Gyr          
+    192   5.34e+29       1.11e+29       8.43e+24 s       455.70 e14yr        
+    224   3.5e+34        7.27e+33       5.53e+29 s       9.42e+28 s          
+    256   2.29e+39       4.76e+38       3.62e+34 s       6.18e+33 s          
+
+[6] BASELINE -- full-group generic cost (b = 256)
+    n = 2^256, sqrt(n) = 2^128 = 3.403e+38
+    generic BSGS/rho baseline ~ 1.5 * sqrt(n) = 5.104e+38 group ops
+    at 63364 ops/s that is 8.055e+33 s = 2.553e+26 years
+    (memory for BSGS at b=256: 2^128 entries -- infeasible;
+     Pollard rho is the practical generic method, O(1) memory)
+
+    'largest feasible b today' (kangaroo, full trap table):
+       one core, one year of the MEASURED rate: b ~ 76.2
+              1 cores, 1 year : b ~ 76.2
+            100 cores, 1 year : b ~ 89.5
+          10000 cores, 1 year : b ~ 102.8
+        1000000 cores, 1 year : b ~ 116.1
+
+[7] BSGS ON THE INTERVAL (counterpoint: cheap ops, sqrt(w) memory)
+   fit log2(BSGS ops) = c + beta*log2(w):  beta = 0.48828 +/- 0.00279  c = 0.8512  R^2 = 0.999804
+   kangaroo/BSGS ops ratio at matched b: 4.35 x
+    b     m=sqrt(w)    BSGS ops       BSGS mem(MB)   kang traps    
+    8     16           29             0.001          48             (0 MB)
+    12    64           102            0.004          192            (0 MB)
+    16    256          374            0.015          768            (0 MB)
+    20    1024         1596           0.060          3072           (0 MB)
+    24    4096         6161           0.238          12288          (1 MB)
+    28    16384        23811          0.953          49152          (3 MB)
+    32    65536        87682          3.812          196608         (11 MB)
+    36    262144       366466         15.250         786432         (46 MB)
+
+[8] DISTINGUISHED-POINT FRONTIER (memory vs ops)
+    b    dplen  traps     mem(MB)      2^ops      rate      
+    12   0      192       0.0112       8.72       12/12
+    12   2      47        0.0027       8.64       12/12
+    12   4      7         0.0004       8.81       12/12
+    12   6      2         0.0001       8.94       12/12
+    12   8      1         0.0001       9.12       12/12
+    12   10     0         0.0000       9.94       0/12
+    12   12     0         0.0000       9.94       0/12
+    16   0      768       0.0447       10.61      12/12
+    16   2      199       0.0116       10.61      12/12
+    16   4      45        0.0026       10.62      12/12
+    16   6      10        0.0006       10.67      12/12
+    16   8      5         0.0003       10.67      12/12
+    16   10     0         0.0000       11.92      0/12
+    16   12     0         0.0000       11.92      0/12
+    20   0      3072      0.1787       12.63      12/12
+    20   2      750       0.0436       12.67      12/12
+    20   4      179       0.0104       12.58      12/12
+    20   6      50        0.0029       12.56      12/12
+    20   8      20        0.0012       12.61      12/12
+    20   10     7         0.0004       12.74      12/12
+    20   12     2         0.0001       12.82      12/12
+    24   0      12288     0.7148       14.58      12/12
+    24   2      3048      0.1773       14.54      12/12
+    24   4      741       0.0431       14.58      12/12
+    24   6      183       0.0106       14.61      12/12
+    24   8      38        0.0022       14.61      12/12
+    24   10     7         0.0004       14.66      12/12
+    24   12     3         0.0002       14.82      12/12
+    28   0      49152     2.8594       16.74      12/12
+    28   2      12174     0.7082       16.86      12/12
+    28   4      3030      0.1763       16.88      12/12
+    28   6      726       0.0422       16.89      12/12
+    28   8      180       0.0105       16.81      12/12
+    28   10     47        0.0027       16.71      12/12
+    28   12     15        0.0009       16.77      12/12
+
+    collapse (zero traps -> impossible):
+      b=12  : dplen >= 10 gives no traps at all (K=2^7.6)
+      b=16  : dplen >= 10 gives no traps at all (K=2^9.6)
+
+wrote analysis.json

@@ -1,0 +1,12 @@
+s= 20 b= 40 nbits= 60 | PH MEASURED mean=     1200396.2 max=  1658998 ok=True
+      PH model on the SAME 12 measured q's:      1291337.7 (rel.err +7.58%)
+      PH model on the single largest q = 2^b-1:      1574631.0  (the measured q's are uniform in [2^(b-1),2^b), so the q-averaged model is the right comparator -- see STEP 7 of logs/analysis.txt)
+s= 40 b= 40 nbits= 80 | PH MEASURED mean=     2713394.7 max=  3470310 ok=True
+      PH model on the SAME 12 measured q's:      2926075.5 (rel.err +7.84%)
+      PH model on the single largest q = 2^b-1:      3146009.0  (the measured q's are uniform in [2^(b-1),2^b), so the q-averaged model is the right comparator -- see STEP 7 of logs/analysis.txt)
+wrote /home/raver1975/lean/factor-scratch/r115/ph-exchange-rate/logs/ph_requested.json
+
+NOTE: the generic BSGS baseline at (20,40) is 2^30.58 group ops and at (40,40)
+      is 2^40.58.  Neither is computable in this harness (2^30.58 ~ 1.6e9 modular
+      additions x 12 seeds), so those cells use the DERIVED-AND-VALIDATED generic
+      model of ph_analyze.py.  Only the PH column above is a direct measurement.

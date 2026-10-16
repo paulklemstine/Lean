@@ -1,0 +1,42 @@
+[
+  {
+    "bits": 16,
+    "nbits": 17,
+    "n": 94933,
+    "ops_mean": 2002.2,
+    "ops_median": 2349.0,
+    "steps_mean": 667.4,
+    "succ": 5,
+    "ntrials": 5
+  },
+  {
+    "bits": 20,
+    "nbits": 21,
+    "n": 1504663,
+    "ops_mean": 2371.2,
+    "ops_median": 2058.0,
+    "steps_mean": 790.4,
+    "succ": 5,
+    "ntrials": 5
+  },
+  {
+    "bits": 24,
+    "nbits": 25,
+    "n": 21805997,
+    "ops_mean": 22983.6,
+    "ops_median": 17532.0,
+    "steps_mean": 7661.2,
+    "succ": 5,
+    "ntrials": 5
+  },
+  {
+    "bits": 28,
+    "nbits": 29,
+    "n": 327598727,
+    "ops_mean": 68928.6,
+    "ops_median": 60606.0,
+    "steps_mean": 22976.2,
+    "succ": 5,
+    "ntrials": 5
+  }
+]

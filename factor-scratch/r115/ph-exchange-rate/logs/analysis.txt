@@ -1,0 +1,243 @@
+==========================================================================================================
+STEP 1.  RUN-TWICE CHECK   (campaign rule: fixed seed, run the whole count twice)
+==========================================================================================================
+  seed = 20261014   seeds/point = 12   parameter points = 22
+  run 1 wall = 222.2 s      run 2 wall = 188.3 s   (wall clock differs; counts do not)
+  every group-op count in run 1 == the corresponding count in run 2 : True
+  all 264 recovered dlogs verified (d*g == h mod n, and d == the planted d): True
+
+==========================================================================================================
+STEP 2.  VALIDATION of the DERIVED (zero-free-parameter) op-count model
+          against 264 measured instances (22 points x 12 seeds)
+==========================================================================================================
+   s    b    nbits |      gen_meas     gen_model    err%      z |       ph_meas      ph_model    err%      z
+  20    4    24.00 |        5719.3        5445.6   -4.79   0.86 |        1652.8        1608.6   -2.68   0.48
+  20    8    28.00 |       20159.7       20448.2    1.43   0.26 |        1616.9        1637.9    1.30   0.23
+  20   12    32.00 |       82702.7       82012.6   -0.83   0.15 |        1756.9        1712.8   -2.51   0.45
+  20   16    36.00 |      305676.2      340525.1   11.40   2.05 |        2155.8        1980.9   -8.11   1.46
+  20   20    40.00 |     1221394.5     1316077.0    7.75   1.39 |        3015.1        2946.6   -2.27   0.41
+  20   24    44.00 |     5936898.7     5443558.8   -8.31   1.49 |        7332.8        6993.8   -4.62   0.83
+   4   20    24.00 |        4755.3        5233.1   10.05   1.81 |        1356.2        1395.3    2.88   0.52
+   8   20    28.00 |       20976.8       21386.5    1.95   0.35 |        1321.8        1457.7   10.29   1.85
+  12   20    32.00 |       88476.8       85174.6   -3.73   0.67 |        1522.2        1534.3    0.80   0.14
+  16   20    36.00 |      333306.7      352463.8    5.75   1.03 |        1750.7        1880.3    7.41   1.33
+  24   20    44.00 |     5686556.2     5565630.8   -2.13   0.38 |        7558.8        7641.2    1.09   0.20
+   4    4     8.00 |          26.5          26.9    1.50   0.27 |          38.2          38.5    0.90   0.16
+   8    8    16.00 |         362.5         347.3   -4.21   0.76 |          97.2          97.2    0.07   0.01
+  12   12    24.00 |        5312.8        5460.5    2.78   0.50 |         259.6         259.9    0.14   0.02
+  16   16    32.00 |       93432.5       89106.9   -4.63   0.83 |         776.9         835.5    7.54   1.36
+  22   22    44.00 |     5269120.6     5216080.0   -1.01   0.18 |        5814.9        5758.7   -0.97   0.17
+  28    8    36.00 |      314035.6      337344.1    7.42   1.33 |       26524.3       24698.7   -6.88   1.24
+  32    8    40.00 |     1417335.5     1360138.5   -4.04   0.73 |       96516.8       98436.6    1.99   0.36
+  36    8    44.00 |     5611196.5     5415795.6   -3.48   0.63 |      404357.8      393359.2   -2.72   0.49
+   8   28    36.00 |      340707.7      347565.3    2.01   0.36 |       21954.4       21874.6   -0.36   0.07
+   8   32    40.00 |     1387562.9     1437414.2    3.59   0.65 |       92472.2       90004.4   -2.67   0.48
+   8   36    44.00 |     5404326.6     5731052.8    6.05   1.09 |      340647.1      358369.4    5.20   0.94
+
+  mean |err| : generic 4.49%   PH 3.34%
+  worst |err|: generic 11.40%   PH 10.29%
+  mean SIGNED err: generic +1.115%   PH +0.263%  (+ = model over-predicts = conservative)
+  predicted 1-sigma of a 12-seed mean is 5.6%; observed |err|/sigma : max 2.05, mean 0.81
+  -> the residual scatter IS the 12-seed sampling noise.  The model has no free
+     parameters and sqrt(n) spans 2^4 .. 2^22 (a factor 2^18) across the grid.
+
+  per-instance RANGE check (giant steps in [1..m], so BSGS in [m+.., 2m+..]):
+   s    b |     gen[min,max]      model range |      ph[min,max]      model range
+  20    4 |     4277     7297 |     3397     6794 |     1292     2036 |     1028     2056
+  20    8 |    14896    28686 |    13701    27402 |     1148     1948 |     1038     2076
+  20   12 |    59422   103321 |    46803    93606 |     1276     2234 |     1070     2140
+  20   16 |   201964   423895 |   214276   428552 |     1655     2543 |     1234     2468
+  20   20 |   852637  1633657 |   810714  1621428 |     2551     3519 |     1816     3632
+  20   24 |  4011305  7749997 |  4071755  8143510 |     4813     9219 |     5001    10002
+   8    8 |      273      479 |      222      444 |       85      107 |       30       60
+  12   12 |     3668     7280 |     3351     6702 |      217      297 |      117      234
+
+  => the model is VALIDATED.  The b >= 40 column below is therefore a MODELLED
+     prediction, labelled as such, and NOT a measurement.
+
+====================================================================================================================
+STEP 3.  THE EXCHANGE TABLE    (units: GROUP OPERATIONS)
+====================================================================================================================
+  n = 2^s * q, q a b-bit prime (nominal b; q is uniform in [2^(b-1), 2^b) and the
+  table is averaged over q), the discrete log d is uniform in [0,n).
+  generic = BSGS on the FULL group of order n      <-- THE BASELINE
+  PH      = BSGS in <q*g> (order 2^s) + BSGS in <2^s*g> (order q) + CRT
+  savings = log2(generic / PH) = bits of ECDLP work bought
+====================================================================================================================
+   s     b   |n|~ |       generic    log2 |            PH    log2 |  savings |      s/2
+  20    40     60 |    1.3883e+09   30.37 |    1.3575e+06   20.37 |    9.998 |    10.00
+  20    60     80 |    1.4216e+12   40.37 |    1.3883e+09   30.37 |   10.000 |    10.00
+  20    80    100 |    1.4557e+15   50.37 |    1.4216e+12   40.37 |   10.000 |    10.00
+  20   100    120 |    1.4906e+18   60.37 |    1.4557e+15   50.37 |   10.000 |    10.00
+  20   120    140 |    1.5264e+21   70.37 |    1.4906e+18   60.37 |   10.000 |    10.00
+  40    40     80 |    1.4216e+12   40.37 |    2.9288e+06   21.48 |   18.889 |    20.00
+  40    60    100 |    1.4557e+15   50.37 |    1.3898e+09   30.37 |   19.998 |    20.00
+  40    80    120 |    1.4906e+18   60.37 |    1.4216e+12   40.37 |   20.000 |    20.00
+  40   100    140 |    1.5264e+21   70.37 |    1.4557e+15   50.37 |   20.000 |    20.00
+  40   120    160 |    1.5630e+24   80.37 |    1.4906e+18   60.37 |   20.000 |    20.00
+  60    40    100 |    1.4557e+15   50.37 |    1.6120e+09   30.59 |   19.784 |    30.00
+  60    60    120 |    1.4906e+18   60.37 |    2.9989e+09   31.48 |   28.889 |    30.00
+  60    80    140 |    1.5264e+21   70.37 |    1.4232e+12   40.37 |   29.998 |    30.00
+  60   100    160 |    1.5630e+24   80.37 |    1.4557e+15   50.37 |   30.000 |    30.00
+  60   120    180 |    1.6006e+27   90.37 |    1.4906e+18   60.37 |   30.000 |    30.00
+  [*] MEASURED directly in this run (both columns).  All other cells: the generic
+      column is 2^((s+b)/2)-scale and NOT computable here (2^30..2^90 ops); it is
+      the validated model above.  The PH column at (20,40) and (40,40) WAS measured
+      directly -- see STEP 7.
+
+  sensitivity over the true size of q (q uniform in [2^(b-1), 2^b)):
+   s     b |             log2(PH)              savings
+  20    40 |     20.09 .. 20.59         9.998 .. 9.998    
+  20    60 |     30.09 .. 30.58        10.000 .. 10.000   
+  20    80 |     40.09 .. 40.58        10.000 .. 10.000   
+  20   100 |     50.09 .. 50.58        10.000 .. 10.000   
+  20   120 |     60.09 .. 60.58        10.000 .. 10.000   
+  40    40 |     21.36 .. 21.58        18.729 .. 19.000   
+  40    60 |     30.09 .. 30.59        19.998 .. 19.999   
+  40    80 |     40.09 .. 40.58        20.000 .. 20.000   
+  40   100 |     50.09 .. 50.58        20.000 .. 20.000   
+  40   120 |     60.09 .. 60.58        20.000 .. 20.000   
+  60    40 |     30.59 .. 30.59        19.500 .. 19.998   
+  60    60 |     31.36 .. 31.58        28.729 .. 29.000   
+  60    80 |     40.09 .. 40.59        29.998 .. 29.999   
+  60   100 |     50.09 .. 50.58        30.000 .. 30.000   
+  60   120 |     60.09 .. 60.58        30.000 .. 30.000   
+
+  WORST-CASE column (adversary's d lands near the top of the interval):
+   s     b |     gen_wc      PH_wc   sav_wc
+  20    40 |      31.00      21.00    9.998
+  20    60 |      41.00      31.00   10.000
+  20    80 |      51.00      41.00   10.000
+  20   100 |      61.00      51.00   10.000
+  20   120 |      71.00      61.00   10.000
+  40    40 |      41.00      22.00   19.000
+  40    60 |      51.00      31.00   19.999
+  40    80 |      61.00      41.00   20.000
+  40   100 |      71.00      51.00   20.000
+  40   120 |      81.00      61.00   20.000
+  60    40 |      51.00      31.00   19.999
+  60    60 |      61.00      32.00   29.000
+  60    80 |      71.00      41.00   29.999
+  60   100 |      81.00      51.00   30.000
+  60   120 |      91.00      61.00   30.000
+
+==========================================================================================================
+STEP 4.  Q1.  At what residual-prime size b does PH stop being worth it?
+==========================================================================================================
+  leading-term crossover set {(s,b): 2^(s/2)+2^(b/2) >= 2^((s+b)/2)} =
+    [(1, 1), (1, 2), (1, 3), (2, 1), (2, 2), (3, 1)]
+  For s,b >= 3 the PH leading term is STRICTLY below the generic one, so PH cannot
+  lose inside the square-root term.  The only loss region is below the O(log n)
+  subgroup-encoding overhead; the measurement pins its boundary:
+     (s,b)=( 4, 4): generic      26.5  PH      38.2  -> PH LOSES by 0.526 bits
+     (s,b)=( 8, 8): generic     362.5  PH      97.2  -> PH WINS by 1.899 bits
+     (s,b)=(12,12): generic    5312.8  PH     259.6  -> PH WINS by 4.355 bits
+  ANSWER: NO such b exists in the ECDSA-relevant regime.  For every s,b >= 8 the
+  saving is positive, and the saving is essentially FLAT in b (it saturates at s/2):
+     s= 20 : b=40:10.00,  b=60:10.00,  b=80:10.00,  b=100:10.00,  b=120:10.00
+     s= 40 : b=40:19.00,  b=60:20.00,  b=80:20.00,  b=100:20.00,  b=120:20.00
+     s= 60 : b=40:20.00,  b=60:29.00,  b=80:30.00,  b=100:30.00,  b=120:30.00
+  The binding constraint is NOT b crossing generic; it is the ABSOLUTE residual cost
+  1.47*2^(b/2), which no amount of small-part knowledge reduces.
+
+==========================================================================================================
+STEP 5.  Q2.  How much of n must the attacker know before the residual work drops
+          below generic by a useful margin?
+==========================================================================================================
+  exact identity from the model (s <= b):
+      PH / generic  ->  2^(-s/2)      and      savings = s/2
+  ONE bit of known factorization buys HALF a bit of ECDLP work.  Exchange rate 2:1.
+
+   D-bit saving  <=>  need BOTH  s >= 2D  and  log2(q) >= 2D
+      saving    1 bits  <=>  s >=    2 bits known  AND  q >= 2 bits
+      saving    2 bits  <=>  s >=    4 bits known  AND  q >= 4 bits
+      saving    4 bits  <=>  s >=    8 bits known  AND  q >= 8 bits
+      saving    8 bits  <=>  s >=   16 bits known  AND  q >= 16 bits
+      saving   10 bits  <=>  s >=   20 bits known  AND  q >= 20 bits
+      saving   20 bits  <=>  s >=   40 bits known  AND  q >= 40 bits
+      saving   30 bits  <=>  s >=   60 bits known  AND  q >= 60 bits
+      saving   40 bits  <=>  s >=   80 bits known  AND  q >= 80 bits
+      saving   60 bits  <=>  s >=  120 bits known  AND  q >= 120 bits
+      saving   80 bits  <=>  s >=  160 bits known  AND  q >= 160 bits
+      saving  100 bits  <=>  s >=  200 bits known  AND  q >= 200 bits
+      saving  120 bits  <=>  s >=  240 bits known  AND  q >= 240 bits
+
+  the residual half 1.47*2^(b/2) is independent of s.  Fix the attacker budget
+  T = 2^t group ops and a group order of N bits; ask how much must be known:
+ log2|G| budget t    max log2 q   min s known    best PH log2
+     128       40          78.9          49.1           40.09
+     128       50          98.9          29.1           50.08
+     128       64         126.9           1.1           64.08
+     128       80           > N 0 (n < budget) generic already
+     128      100           > N 0 (n < budget) generic already
+     128      128           > N 0 (n < budget) generic already
+
+     160       40          78.9          81.1           41.67
+     160       50          98.9          61.1           50.08
+     160       64         126.9          33.1           64.08
+     160       80         158.9           1.1           80.08
+     160      100           > N 0 (n < budget) generic already
+     160      128           > N 0 (n < budget) generic already
+
+     192       40          78.9         113.1           57.08
+     192       50          98.9          93.1           50.25
+     192       64         126.9          65.1           64.08
+     192       80         158.9          33.1           80.08
+     192      100           > N 0 (n < budget) generic already
+     192      128           > N 0 (n < budget) generic already
+
+     256       40          78.9         177.1           89.08
+     256       50          98.9         157.1           79.08
+     256       64         126.9         129.1           65.67
+     256       80         158.9          97.1           80.08
+     256      100         198.9          57.1          100.08
+     256      128         254.9           1.1          128.08
+
+  Reading of the 256-bit rows: to push a 256-bit ECDLP inside a 2^64 group-op
+  budget the residual prime must be <= ~2^127, so the attacker must already know
+  ~129 bits of the factorization of n -- essentially HALF of it -- and the 127-bit
+  residual still costs 2^63.5 ops on its own.  Nothing becomes easy; the square root
+  is merely halved.  With a 2^40 budget the attacker must know ~177 of the 256 bits.
+
+==========================================================================================================
+STEP 6.  BASELINE DISCIPLINE: the standardized curves (generic IS the baseline)
+==========================================================================================================
+                curve / scenario    log2 n   generic_b        PH_b     sav_b  verdict
+            P-256 (n prime, h=1)       256       128.6           -         -  PH INAPPLICABLE (n prime)
+        secp256k1 (n prime, h=1)       256       128.6           -         -  PH INAPPLICABLE (n prime)
+        Ed25519 (h=8, ell prime)       252       126.6       125.1      1.50  no useful gain
+             hypothetical h=2^20       256       128.6       118.6     10.00  10.0 bits saved
+             hypothetical h=2^40       256       128.6       108.6     20.00  20.0 bits saved
+             hypothetical h=2^80       256       128.6        88.6     40.00  40.0 bits saved
+ hypothetical 2^128-smooth order       256       128.6        65.6     63.00  costs 2^66
+  hypothetical 2^80-smooth order       256       128.6        88.6     40.00  costs 2^89
+  -> P-256 and secp256k1 have PRIME group order: there is no small part to know,
+     PH is inapplicable and the generic column is all there is.  Ed25519's public
+     cofactor 8 buys 1.5 bits.  Axis A is live only against an implementer who chose
+     a composite/smooth group order -- a DEPLOYMENT bug, not a factoring result.
+
+==========================================================================================================
+STEP 7.  DIRECT MEASUREMENT of the PH column at the two computable requested cells
+==========================================================================================================
+  (the generic baseline at these cells is 2^30.6 / 2^40.6 group ops: not computable
+   here, so it is the validated model; the PH column below IS a measurement)
+  (s,b) = (20,40), |n| ~ 2^60, 12 seeds
+     PH MEASURED mean = 1200396.2 ops (2^20.195), max = 1658998, min = 920024, all correct = True
+     PH model on the SAME 12 q's = 1291337.7 ops (2^20.300)   rel.err = +7.58%
+     PH model, q averaged over [2^(b-1),2^b) = 1357460.2 ops (2^20.372)
+     PH model, single q = 2^b-1             = 1574631.0 ops (2^20.587)
+     predicted 1-sigma of the 12-seed mean: 76155 ops (6.3%)
+     measured mean is 1.19 sigma from the same-q model expectation.
+     generic baseline = 1.611e+09 ops (2^30.58) [model]  ->  savings = 10.39 bits
+     worst per-seed |model - measured| = 46.39% (the model is an EXPECTATION)
+  (s,b) = (40,40), |n| ~ 2^80, 12 seeds
+     PH MEASURED mean = 2713394.7 ops (2^21.372), max = 3470310, min = 2158229, all correct = True
+     PH model on the SAME 12 q's = 2926075.5 ops (2^21.481)   rel.err = +7.84%
+     PH model, q averaged over [2^(b-1),2^b) = 2928838.2 ops (2^21.482)
+     PH model, single q = 2^b-1             = 3146009.0 ops (2^21.585)
+     predicted 1-sigma of the 12-seed mean: 83251 ops (3.1%)
+     measured mean is 2.55 sigma from the same-q model expectation.
+     generic baseline = 1.649e+12 ops (2^40.58) [model]  ->  savings = 19.21 bits
+     worst per-seed |model - measured| = 36.27% (the model is an EXPECTATION)
+
+wrote /home/raver1975/lean/factor-scratch/r115/ph-exchange-rate/logs/ph_analysis.json

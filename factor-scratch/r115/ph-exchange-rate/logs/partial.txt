@@ -1,0 +1,75 @@
+======================================================================================================================
+CASE A.  n = 2^s * q1 * q2, q1,q2 of b bits.
+         full    = PH on [2^s, q1, q2]      (attacker knows the whole factorisation)
+         partial = solve_partial with f = 2^s  (attacker knows ONLY 2^s)
+         the GENERIC column is the baseline for both ratios.
+======================================================================================================================
+case                       |     |n|~ |       generic            PH |      sav
+A  s=4 q1,q2=16b FULL      | n|~2^ 35.28 |      309562.1         916.7 |    8.400
+A  s=4 q1,q2=16b PARTIAL   | n|~2^ 35.17 |      305091.8       76402.8 |    1.998
+A  s=8 q1,q2=16b FULL      | n|~2^ 38.98 |     1104232.9         926.2 |   10.219
+A  s=8 q1,q2=16b PARTIAL   | n|~2^ 39.02 |     1200935.6       75220.8 |    3.997
+A  s=12 q1,q2=12b FULL     | n|~2^ 35.05 |      290504.8         468.4 |    9.277
+A  s=12 q1,q2=12b PARTIAL  | n|~2^ 35.01 |      298576.8        4882.0 |    5.934
+A  s=4 q1,q2=20b FULL      | n|~2^ 43.14 |     4648736.3        2839.8 |   10.677
+A  s=4 q1,q2=20b PARTIAL   | n|~2^ 42.98 |     4184404.9     1046259.4 |    2.000
+A  s=8 q1,q2=14b FULL      | n|~2^ 35.14 |      277481.1         584.3 |    8.891
+A  s=8 q1,q2=14b PARTIAL   | n|~2^ 35.25 |      318728.4       20070.0 |    3.989
+A  s=12 q1,q2=16b FULL     | n|~2^ 42.93 |     4449665.0         968.8 |   12.165
+A  s=12 q1,q2=16b PARTIAL  | n|~2^ 42.97 |     4503698.2       70619.4 |    5.995
+A  s=4 q1,q2=12b FULL      | n|~2^ 27.16 |       17015.1         347.1 |    5.615
+A  s=4 q1,q2=12b PARTIAL   | n|~2^ 27.17 |       18012.8        4603.4 |    1.968
+A  s=8 q1,q2=12b FULL      | n|~2^ 30.94 |       76787.9         381.8 |    7.652
+A  s=8 q1,q2=12b PARTIAL   | n|~2^ 31.13 |       75788.7        4872.2 |    3.959
+
+  reading: knowing ONLY 2^s (and lumping q1*q2) already buys s/2 bits -- the attacker
+  does NOT need the residual factorisation to get that far.  Splitting the residual
+  into q1,q2 buys an extra ~b/2 bits on top.  So every factor learned is worth half
+  the number of bits it removes from the LARGEST remaining piece.
+
+======================================================================================================================
+CASE B.  n = 2^(s+a) * q, the attacker knows only 2^s (a bits of the 2-power hidden)
+         partial f=2^s   versus   full PH on [2^(s+a), q]
+======================================================================================================================
+case                       |     |n|~ |       generic            PH |      sav
+B  s=8 a=4 b=20 PART(s)    | n|~2^ 31.47 |       86192.6        5517.7 |    3.965
+B  s=8 a=4 b=20 FULL       | n|~2^ 31.46 |       76534.9        1510.2 |    5.663
+B  s=12 a=8 b=16 PART(s)   | n|~2^ 35.51 |      330445.8        5377.9 |    5.941
+B  s=12 a=8 b=16 FULL      | n|~2^ 35.52 |      318930.0        1841.1 |    7.437
+B  s=4 a=8 b=24 PART(s)    | n|~2^ 35.47 |      338090.6       84646.6 |    1.998
+B  s=4 a=8 b=24 FULL       | n|~2^ 35.55 |      339950.2        5926.9 |    5.842
+B  s=16 a=4 b=16 PART(s)   | n|~2^ 35.49 |      333157.6        1806.8 |    7.527
+B  s=16 a=4 b=16 FULL      | n|~2^ 35.47 |      341694.9        1953.4 |    7.451
+B  s=8 a=12 b=12 PART(s)   | n|~2^ 31.59 |       82058.8        5259.5 |    3.964
+B  s=8 a=12 b=12 FULL      | n|~2^ 31.41 |       83248.2        1618.5 |    5.685
+B  s=12 a=4 b=20 PART(s)   | n|~2^ 35.52 |      343139.4        5569.2 |    5.945
+B  s=12 a=4 b=20 FULL      | n|~2^ 35.47 |      305306.1        1757.1 |    7.441
+
+  reading: hiding a bits of the 2-power costs exactly a/2 bits of saving.  The exchange
+  rate itself is unchanged -- you simply know less.  Partial knowledge of the small
+  part IS useful, at exactly the 2:1 rate.
+
+======================================================================================================================
+CASE C.  base independence of the exchange rate:  3^k * q  vs  2^m * q,  m = round(k log2 3)
+======================================================================================================================
+case                       |     |n|~ |       generic            PH |      sav
+C  3^4 * q,  b=20          | n|~2^ 26.04 |       11621.9        1535.8 |    2.920
+C  2^6 * q,  b=20          | n|~2^ 25.75 |       11751.0        1451.5 |    3.017
+C  3^6 * q,  b=16          | n|~2^ 25.10 |        8269.4         490.2 |    4.076
+C  2^10 * q,  b=16         | n|~2^ 25.61 |       11685.2         502.1 |    4.541
+C  3^8 * q,  b=12          | n|~2^ 24.22 |        6981.3         300.3 |    4.539
+C  2^13 * q,  b=12         | n|~2^ 24.60 |        7167.2         306.3 |    4.548
+C  3^5 * q,  b=18          | n|~2^ 25.36 |        9889.8         756.8 |    3.708
+C  2^8 * q,  b=18          | n|~2^ 25.69 |       10681.3         748.8 |    3.834
+C  3^7 * q,  b=12          | n|~2^ 22.61 |        3879.6         250.2 |    3.954
+C  2^11 * q,  b=12         | n|~2^ 22.52 |        3427.5         227.9 |    3.911
+C  3^3 * q,  b=22          | n|~2^ 26.21 |       13160.8        2501.4 |    2.395
+C  2^5 * q,  b=22          | n|~2^ 26.61 |       15445.6        2929.7 |    2.398
+
+  reading: for the same number of bits of n absorbed into the known small part, the
+  saving is the same whether the known factor is 2^m or 3^k (m = k log2 3).  The
+  exchange rate is per BIT of n absorbed, not per prime:
+     1 bit of n absorbed into known factors  ->  factor 2^(1/2) reduction in work.
+  So 'knowing a factor 3^k' is worth exactly the same as knowing 2^(k log2 3).
+
+wrote /home/raver1975/lean/factor-scratch/r115/ph-exchange-rate/logs/ph_partial.json

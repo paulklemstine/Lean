@@ -1,0 +1,96 @@
+note: using toolchain 'leanprover/lean4:v4.28.0' from override set on '/home/raver1975/lean/Catalog'
+note: to remove: elan override unset --path '/home/raver1975/lean/Catalog' | to suppress: ELAN_NO_OVERRIDE_NOTICE=1
+=== POSITIVE CONTROL 1 (tightness at k=1; the bound is attained) ===
+  G = ZMod (2^31-1), B = 4, S = {0,...,B-1}: #(kSums S 1) = 4, bound = 4
+  G = ZMod (2^31-1), B = 8, S = {0,...,B-1}: #(kSums S 1) = 8, bound = 8
+  G = ZMod (2^31-1), B = 16, S = {0,...,B-1}: #(kSums S 1) = 16, bound = 16
+=== POSITIVE CONTROL 2 (full coverage in the vacuous regime) ===
+  G = ZMod 5, S = {1,-1}:
+    k = 1: #(kSums S k) = 2, bound = 2, #G = 5
+    k = 2: #(kSums S k) = 3, bound = 4, #G = 5
+    k = 3: #(kSums S k) = 4, bound = 8, #G = 5
+    k = 4: #(kSums S k) = 5, bound = 16, #G = 5
+
+=== TABLE A: exact kSums in G = ZMod (2^31-1), S = {0,...,B-1} ===
+B	k	B^k		#kSums	interval		B^k/N			draws>=	status
+B=4	k=2	B^k=16	#kSums=7	interval=7 OK	B^k/N=16/2147483647	draws>=134217728	INFORMATIVE
+B=4	k=3	B^k=64	#kSums=10	interval=10 OK	B^k/N=64/2147483647	draws>=33554432	INFORMATIVE
+B=4	k=4	B^k=256	#kSums=13	interval=13 OK	B^k/N=256/2147483647	draws>=8388608	INFORMATIVE
+B=4	k=5	B^k=1024	#kSums=16	interval=16 OK	B^k/N=1024/2147483647	draws>=2097152	INFORMATIVE
+B=4	k=6	B^k=4096	#kSums=19	interval=19 OK	B^k/N=4096/2147483647	draws>=524288	INFORMATIVE
+B=4	k=8	B^k=65536	#kSums=25	interval=25 OK	B^k/N=65536/2147483647	draws>=32768	INFORMATIVE
+B=8	k=2	B^k=64	#kSums=15	interval=15 OK	B^k/N=64/2147483647	draws>=33554432	INFORMATIVE
+B=8	k=3	B^k=512	#kSums=22	interval=22 OK	B^k/N=512/2147483647	draws>=4194304	INFORMATIVE
+B=8	k=4	B^k=4096	#kSums=29	interval=29 OK	B^k/N=4096/2147483647	draws>=524288	INFORMATIVE
+B=8	k=5	B^k=32768	#kSums=36	interval=36 OK	B^k/N=32768/2147483647	draws>=65536	INFORMATIVE
+B=8	k=6	B^k=262144	#kSums=43	interval=43 OK	B^k/N=262144/2147483647	draws>=8192	INFORMATIVE
+B=8	k=8	B^k=16777216	#kSums=57	interval=57 OK	B^k/N=16777216/2147483647	draws>=128	INFORMATIVE
+B=16	k=2	B^k=256	#kSums=31	interval=31 OK	B^k/N=256/2147483647	draws>=8388608	INFORMATIVE
+B=16	k=3	B^k=4096	#kSums=46	interval=46 OK	B^k/N=4096/2147483647	draws>=524288	INFORMATIVE
+B=16	k=4	B^k=65536	#kSums=61	interval=61 OK	B^k/N=65536/2147483647	draws>=32768	INFORMATIVE
+B=16	k=5	B^k=1048576	#kSums=76	interval=76 OK	B^k/N=1048576/2147483647	draws>=2048	INFORMATIVE
+B=16	k=6	B^k=16777216	#kSums=91	interval=91 OK	B^k/N=16777216/2147483647	draws>=128	INFORMATIVE
+B=16	k=8	B^k=4294967296	#kSums=121	interval=121 OK	B^k/N=4294967296/2147483647	draws>=1	VACUOUS    
+B=32	k=2	B^k=1024	#kSums=63	interval=63 OK	B^k/N=1024/2147483647	draws>=2097152	INFORMATIVE
+B=32	k=3	B^k=32768	#kSums=94	interval=94 OK	B^k/N=32768/2147483647	draws>=65536	INFORMATIVE
+B=32	k=4	B^k=1048576	#kSums=125	interval=125 OK	B^k/N=1048576/2147483647	draws>=2048	INFORMATIVE
+B=32	k=5	B^k=33554432	#kSums=156	interval=156 OK	B^k/N=33554432/2147483647	draws>=64	INFORMATIVE
+B=32	k=6	B^k=1073741824	#kSums=187	interval=187 OK	B^k/N=1073741824/2147483647	draws>=2	INFORMATIVE
+B=32	k=8	B^k=1099511627776	#kSums=249	interval=249 OK	B^k/N=1099511627776/2147483647	draws>=1	VACUOUS    
+B=64	k=2	B^k=4096	#kSums=127	interval=127 OK	B^k/N=4096/2147483647	draws>=524288	INFORMATIVE
+B=64	k=3	B^k=262144	#kSums=190	interval=190 OK	B^k/N=262144/2147483647	draws>=8192	INFORMATIVE
+B=64	k=4	B^k=16777216	#kSums=253	interval=253 OK	B^k/N=16777216/2147483647	draws>=128	INFORMATIVE
+B=64	k=5	B^k=1073741824	#kSums=316	interval=316 OK	B^k/N=1073741824/2147483647	draws>=2	INFORMATIVE
+B=64	k=6	B^k=68719476736	#kSums=379	interval=379 OK	B^k/N=68719476736/2147483647	draws>=1	VACUOUS    
+B=64	k=8	B^k=281474976710656	#kSums=505	interval=505 OK	B^k/N=281474976710656/2147483647	draws>=1	VACUOUS    
+
+=== TABLE B: 256-bit deployment (N = secp256k1 order, sqrt N = 2^128) ===
+B=2^8	k=2	log2(B^k)=16	log2(ceil(N/B^k))=239	FLOOR >= RHO  (killed)
+B=2^8	k=3	log2(B^k)=24	log2(ceil(N/B^k))=231	FLOOR >= RHO  (killed)
+B=2^8	k=4	log2(B^k)=32	log2(ceil(N/B^k))=223	FLOOR >= RHO  (killed)
+B=2^8	k=5	log2(B^k)=40	log2(ceil(N/B^k))=215	FLOOR >= RHO  (killed)
+B=2^8	k=6	log2(B^k)=48	log2(ceil(N/B^k))=207	FLOOR >= RHO  (killed)
+B=2^8	k=8	log2(B^k)=64	log2(ceil(N/B^k))=191	FLOOR >= RHO  (killed)
+B=2^8	k=10	log2(B^k)=80	log2(ceil(N/B^k))=175	FLOOR >= RHO  (killed)
+B=2^16	k=2	log2(B^k)=32	log2(ceil(N/B^k))=223	FLOOR >= RHO  (killed)
+B=2^16	k=3	log2(B^k)=48	log2(ceil(N/B^k))=207	FLOOR >= RHO  (killed)
+B=2^16	k=4	log2(B^k)=64	log2(ceil(N/B^k))=191	FLOOR >= RHO  (killed)
+B=2^16	k=5	log2(B^k)=80	log2(ceil(N/B^k))=175	FLOOR >= RHO  (killed)
+B=2^16	k=6	log2(B^k)=96	log2(ceil(N/B^k))=159	FLOOR >= RHO  (killed)
+B=2^16	k=8	log2(B^k)=128	log2(ceil(N/B^k))=127	FLOOR >= RHO  (killed)
+B=2^16	k=10	log2(B^k)=160	log2(ceil(N/B^k))=96	floor < rho   (needs B^k > sqrt N)
+B=2^20	k=2	log2(B^k)=40	log2(ceil(N/B^k))=215	FLOOR >= RHO  (killed)
+B=2^20	k=3	log2(B^k)=60	log2(ceil(N/B^k))=195	FLOOR >= RHO  (killed)
+B=2^20	k=4	log2(B^k)=80	log2(ceil(N/B^k))=175	FLOOR >= RHO  (killed)
+B=2^20	k=5	log2(B^k)=100	log2(ceil(N/B^k))=155	FLOOR >= RHO  (killed)
+B=2^20	k=6	log2(B^k)=120	log2(ceil(N/B^k))=135	FLOOR >= RHO  (killed)
+B=2^20	k=8	log2(B^k)=160	log2(ceil(N/B^k))=96	floor < rho   (needs B^k > sqrt N)
+B=2^20	k=10	log2(B^k)=200	log2(ceil(N/B^k))=56	floor < rho   (needs B^k > sqrt N)
+B=2^24	k=2	log2(B^k)=48	log2(ceil(N/B^k))=207	FLOOR >= RHO  (killed)
+B=2^24	k=3	log2(B^k)=72	log2(ceil(N/B^k))=183	FLOOR >= RHO  (killed)
+B=2^24	k=4	log2(B^k)=96	log2(ceil(N/B^k))=159	FLOOR >= RHO  (killed)
+B=2^24	k=5	log2(B^k)=120	log2(ceil(N/B^k))=135	FLOOR >= RHO  (killed)
+B=2^24	k=6	log2(B^k)=144	log2(ceil(N/B^k))=112	floor < rho   (needs B^k > sqrt N)
+B=2^24	k=8	log2(B^k)=192	log2(ceil(N/B^k))=64	floor < rho   (needs B^k > sqrt N)
+B=2^24	k=10	log2(B^k)=240	log2(ceil(N/B^k))=16	floor < rho   (needs B^k > sqrt N)
+B=2^32	k=2	log2(B^k)=64	log2(ceil(N/B^k))=191	FLOOR >= RHO  (killed)
+B=2^32	k=3	log2(B^k)=96	log2(ceil(N/B^k))=159	FLOOR >= RHO  (killed)
+B=2^32	k=4	log2(B^k)=128	log2(ceil(N/B^k))=127	FLOOR >= RHO  (killed)
+B=2^32	k=5	log2(B^k)=160	log2(ceil(N/B^k))=96	floor < rho   (needs B^k > sqrt N)
+B=2^32	k=6	log2(B^k)=192	log2(ceil(N/B^k))=64	floor < rho   (needs B^k > sqrt N)
+B=2^32	k=8	log2(B^k)=256	log2(ceil(N/B^k))=0	floor < rho   (needs B^k > sqrt N)
+B=2^32	k=10	log2(B^k)=320	log2(ceil(N/B^k))=0	floor < rho   (needs B^k > sqrt N)
+B=2^40	k=2	log2(B^k)=80	log2(ceil(N/B^k))=175	FLOOR >= RHO  (killed)
+B=2^40	k=3	log2(B^k)=120	log2(ceil(N/B^k))=135	FLOOR >= RHO  (killed)
+B=2^40	k=4	log2(B^k)=160	log2(ceil(N/B^k))=96	floor < rho   (needs B^k > sqrt N)
+B=2^40	k=5	log2(B^k)=200	log2(ceil(N/B^k))=56	floor < rho   (needs B^k > sqrt N)
+B=2^40	k=6	log2(B^k)=240	log2(ceil(N/B^k))=16	floor < rho   (needs B^k > sqrt N)
+B=2^40	k=8	log2(B^k)=320	log2(ceil(N/B^k))=0	floor < rho   (needs B^k > sqrt N)
+B=2^40	k=10	log2(B^k)=400	log2(ceil(N/B^k))=0	floor < rho   (needs B^k > sqrt N)
+B=2^64	k=2	log2(B^k)=128	log2(ceil(N/B^k))=127	FLOOR >= RHO  (killed)
+B=2^64	k=3	log2(B^k)=192	log2(ceil(N/B^k))=64	floor < rho   (needs B^k > sqrt N)
+B=2^64	k=4	log2(B^k)=256	log2(ceil(N/B^k))=0	floor < rho   (needs B^k > sqrt N)
+B=2^64	k=5	log2(B^k)=320	log2(ceil(N/B^k))=0	floor < rho   (needs B^k > sqrt N)
+B=2^64	k=6	log2(B^k)=384	log2(ceil(N/B^k))=0	floor < rho   (needs B^k > sqrt N)
+B=2^64	k=8	log2(B^k)=512	log2(ceil(N/B^k))=0	floor < rho   (needs B^k > sqrt N)
+B=2^64	k=10	log2(B^k)=640	log2(ceil(N/B^k))=0	floor < rho   (needs B^k > sqrt N)

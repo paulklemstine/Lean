@@ -1,0 +1,32 @@
+[
+  {
+    "bits": 16,
+    "nbits": 17,
+    "naive_mean": 966.0,
+    "equiv_mean": 93.0,
+    "ratio": 10.387096774193548,
+    "naive_succ": 5,
+    "eq_succ": 0,
+    "n": 75193
+  },
+  {
+    "bits": 20,
+    "nbits": 21,
+    "naive_mean": 5327.4,
+    "equiv_mean": 59.4,
+    "ratio": 89.68686868686868,
+    "naive_succ": 5,
+    "eq_succ": 0,
+    "n": 1539859
+  },
+  {
+    "bits": 24,
+    "nbits": 25,
+    "naive_mean": 20866.2,
+    "equiv_mean": 98.4,
+    "ratio": 212.0548780487805,
+    "naive_succ": 5,
+    "eq_succ": 0,
+    "n": 27493111
+  }
+]
