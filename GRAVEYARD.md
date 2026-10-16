@@ -81,3 +81,23 @@ hypothesis is no longer dead: use `ec_research/hnp_lattice.py`.
 - **Lesson:** Smart's attack is conditionally linear-time: validate valuation
   v_p(t) = 1 (and phi(G) != 0 mod p) per curve; otherwise fall back to BSGS or
   implement canonical lifting (not done here).
+
+## G-009 — RESOLUTION (V-007, 2026-10-16, partial)
+- **What remains dead:** The fixed-Hensel horizontal lift `x = x_0 (mod p^n)`
+  used in `ec_research/smart.py` (`smart_phi_full`) is **not** valid for CM
+  (j=0, `#E=p`) curves: empirical `v_p(t(p*lift(P))) = 2`,
+  `phi(G) ≡ 0 (mod p)`, and the `phi(2G) = 2 phi(G)` homomorphism test
+  fails.  `smart.py` is left untouched; on CM inputs it still raises
+  `u not unit ... (v=2)` and must be treated as fail/bsgs-fallback there.
+- **What works now:** `ec_research/smart_cm.py` randomises the curve lift
+  `a4 = p*alpha`, `a6 = b + p*beta (mod p^3)` (non-canonical, same reduction)
+  and recovers d for 10/10 CM instances, bits 12-16 (p = 2791..60919), with
+  `v_G = v_Q = 1` and verified `d*G == Q` plus BSGS cross-check; 0 bad draws
+  in 10 tries.
+- **Not yet tested / not proved:** canonical CM lifting; p=2,p=3 (excluded
+  throughout); larger p where generation cost dominates; behaviour of bad draws
+  at probability ~1/p (none observed for these 10 small primes).
+- **Exact failing mechanism (root cause):** horizontal Hensel lift lands the
+  lift in `E_2`, so the first nonzero term of the formal-group logarithm is at
+  `p^2`, not `p`; naively dividing by `p` zeroes it, and dividing by `p^2`
+  desynchronises the group law (`phi` no longer homomorphism).

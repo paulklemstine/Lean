@@ -342,3 +342,52 @@ non-canonical randomized curve-lift variations. Whether a uniformly random
 alpha,beta keeps `v = 1` for all p (incl. very small or p with extra ramification)
 was not proved; only tested on the 10 CM instances above. Zero-probability
 bad draws (`phi ≡ 0`) predicted ~1/p and were not observed.
+
+## V-008 — Smart scaling to larger anomalous curves (H-009)
+
+Follow-up to V-007: extend CM and random anomalous bit sizes using
+`ec_research/smart_scale.py` (reproducible runner) and save measured data
+in `ec_research/smart_scale_results.txt`. Every instance verifies
+`d_rec * G == Q` and is cross-checked by BSGS.
+
+**CM (j=0, trace-1, `#E = p`) path (`smart_cm.py`, prec = 3, 1 trial each,
+seed 20261016):**
+
+| bits | p | phi v | Smart (ms) | BSGS (ms) | gen (s) | smart_ok | bsgs_ok |
+|---|---|---|---|---|---|---|---|
+| 12 | 3571 | 1 | 0.836 | 0.127 | 1.91 | Y | Y |
+| 13 | 5419 | 1 | 0.872 | 0.129 | 2.86 | Y | Y |
+| 14 | 13267 | 1 | 0.870 | 0.191 | 12.20 | Y | Y |
+| 15 | 25117 | 1 | 0.816 | 0.273 | 12.55 | Y | Y |
+| 16 | 60919 | 1 | 1.104 | 0.420 | 163.32 | Y | Y |
+| 17 | 102121 | 1 | 1.094 | 0.746 | 39.51 | Y | Y |
+
+Aggregate: 6/6 Smart successes, 6/6 BSGS cross-checks, `vG = vQ = 1` on all,
+0 `phi ≡ 0`, 0 lifts in E_2 (first lift draw accepted in every case).
+
+**Random (non-CM) anomalous path (`smart.py`, prec = 5, 1 trial each,
+seed 20261016):**
+
+| bits | p | valG | Smart (ms) | BSGS (ms) | gen (s) | smart_ok | bsgs_ok |
+|---|---|---|---|---|---|---|---|
+| 16 | 51949 | 1 | 1.519 | 0.366 | 4.59 | Y | Y |
+| 17 | 129277 | 1 | 1.400 | 0.777 | 7.17 | Y | Y |
+| 18 | 233327 | 1 | 1.551 | 0.984 | 151.73 | Y | Y |
+| 19 | 429673 | 1 | 1.468 | 1.315 | 134.16 | Y | Y |
+
+Aggregate: 4/4 Smart successes, 4/4 BSGS cross-checks, valuations 1 on all.
+
+**Speed trend:** Smart wall time stays essentially flat (about 0.8-1.6 ms
+across 12-19 bits), consistent with the polynomial p-adic lift path, while
+BSGS grows with sqrt(p) (0.13 ms at 12 bits to 1.3 ms at 19 bits), with the
+two essentially at parity around 19 bits. A prior H-009 measurement in this
+repository (STATE.md) reports a 20-bit random instance at smart ~2.0 ms vs
+BSGS ~2.6 ms, i.e. the crossover occurs between 19 and 20 bits. Generation
+remains the practical bottleneck (O(p) point counting; 39-163 s at the larger
+sizes above), not the p-adic attack.
+
+**Root-cause note (CM):** No CM instance in this follow-up failed Smart
+recovery and none exhibited `v ≠ 1` or `phi(G) ≡ 0 (mod p)`; all listed
+draws accepted on the first non-degenerate lift. The earlier G-009 failure
+(v = 2, phi == 0) is avoided specifically by the randomised curve lift as in
+V-007.
