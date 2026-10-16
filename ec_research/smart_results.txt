@@ -1,0 +1,1 @@
+{'bits': 16, 'p': 51949, 'a': 11932, 'b': 8260, 'd_true': 1857, 'd_rec': 1857, 'smart_ok': True, 'smart_fail': None, 'smart_time': 0.0015430450439453125, 'bsgs_d': 1857, 'bsgs_ok': True, 'bsgs_time': 0.000370025634765625, 'gen_time': 4.112592697143555, 'vG': 1, 'vQ': 1}
