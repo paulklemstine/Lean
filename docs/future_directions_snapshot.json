@@ -11765,6 +11765,45 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Variation of Shafarevich-Tate groups in Hida families' and formalize its key results. Abstract: Let $\\mathbf{f}$ be a Hida family of cusp forms over a standard (power series) Iwasawa algebra. We determine the pseudo-isomorphism class of the big Shafarevich-Tate group attached to $\\mathbf{f}$ over a suitable imaginary quadratic field by describing all its higher Fitting ideals; this description is given in terms of the universal Kolyvagin system of Howard's big Heegner points. As a second contribution, we study the variation of the structure of the Shafarevich-Tate groups of the classical specializations of $\\mathbf{f}$.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5248",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2610.22226v1",
+    "status": "available",
+    "timestamp": "2026-10-16T05:11:48.326358+00:00",
+    "title": "ArXiv paper: Variation of Shafarevich-Tate groups in Hida families"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Geometric Graph Representations via Compact SAT Encodings' and formalize its key results. Abstract: We present compact SAT encodings and certifying exact solvers for boxicity and cubicity. The boxicity of a graph is the minimum dimension in which it is the intersection graph of axis-aligned boxes; cubicity is defined analogously using unit cubes. Grid-based formulations face a geometric discretization bottleneck, growing rapidly with the target dimension. We avoid this bottleneck by encoding the total order of interval endpoints in each coordinate. For an $n$-vertex graph and target dimension $d$, our boxicity encoding uses $O(n^2d)$ variables and $O(n^3d)$ clauses, both linear in $d$. Requiring the left- and right-endpoint orders to agree yields a cubicity encoding of the same asymptotic size. Satisfying models are decoded into independently checked geometric representations, while unsatisfiable instances used as lower-bound evidence carry mechanically verified DRAT certificates. In a controlled evaluation with 186 trials per encoding on standard and structured graph families, the o",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_5249",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2610.22241v1",
+    "status": "available",
+    "timestamp": "2026-10-16T05:11:51.579240+00:00",
+    "title": "ArXiv paper: Geometric Graph Representations via Compact SAT Encodings"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domain_bridges": [],
     "domains": [
