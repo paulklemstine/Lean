@@ -81,3 +81,6 @@ acceptance, m in {2,3,4,6,8,12,16}, leak 0.25/0.5:
 - 36-bit GLV 100-inst: mean speedup GLV 2.45x vs vanilla (median 2.42x); variance within theory; see VICTORY_LOG.
 - HNP scaling: V-006a/b documented; m boundaries solid; 24-32 bits reported.
 - H-009b canonical lifts: subagent returned no summary; Smart non-CM remains validated at 12/16/20 bits.
+
+## Vector B index calculus (2026-10-16)
+- Naive S2 scan falsified at 16-bit (77k ops vs BSGS 115 ops). Semaev S3 feasibility confirmed (degree-bounded, 0.3% hit rate). L_n(1/3) via polynomial solving remains untested (H-008b).

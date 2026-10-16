@@ -44,12 +44,18 @@ Status legend: [ACTIVE] [EXPLORED] [FALSIFIED] [QUEUED] [VALIDATED]
       Scaling evidence: V-006b (24-32 bits).
 
 ## Vector B — Summation polynomials / index calc
+- [FALSIFIED] H-008a Naive S2 index calculus (scan-based relations) at small tiers.
+    \* 16-bit, B=8..128: hit rates 0–22%, estimated total cost 77k ops vs BSGS 115 ops.
+    \* Semaev S3 (prior): ~0.3% hit rate at B=256, also far below BSGS efficiency.
+    \* Conclusion: naive scanning falsified; S_m polynomial-solving (L_n(1/3)) remains
+      untested and queued.
 - [EXPLORED] H-008 Factor base via small-degree EC points + Semaev S_m degree bound test
   on prime fields (16-bit feasibility only). No speedup claimed.
     \* **Claim (feasibility/threshold):** On prime fields F_p (~16-bit), Semaev S_3 can
       be computed symbolically and stays degree-bounded (<=2 in each x_i) when
       solving P1+P2+P3=O; a low-x factor base and the induced root set can be
       measured; density/hit ratios documented.
+- [QUEUED] H-008b Semaev S_m polynomial-solving (L_n(1/3)) on prime fields.
     \* **Evidence:** `ec_research/semaev.py` (p=65521, a=0, b=17, prime
       n=65353; factor base = points with x in [0,256)):
       V_FB=252, V_FB/n=0.003856; relation hit R=-(P+Q) in FB = 28/10000=0.0028;

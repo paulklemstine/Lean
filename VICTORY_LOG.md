@@ -276,6 +276,16 @@ makes LLL alone sufficient.
 - `ec_research/hnp_lattice.py` (`hnp_attack`, `make_instance`); experiment runner `/tmp/opencode/hnp_b.py`; aggregator `/tmp/opencode/agg.py`.
 
 
+## V-008 — Vector B index-calculus feasibility (S2 naive) [feasibility, not speedup]
+- Curve: 16-bit j=0 GLV curve (n≈13327, p≈40351).
+- Factor base: points with x ∈ [0, B), sizes B=8..128.
+- Relation P = P₁ + P₂ (both in FB) found by scanning P₁ ∈ FB and checking P-P₁ ∈ FB.
+- Hit rates: B=8: 0/50, B=16: 0/50, B=32: 0/50, B=64: 4%, B=128: 22%.
+- Estimated total cost for B=128: ~77,000 ops vs BSGS ~115 ops. Index calculus is ~670× slower at 16-bit.
+- Conclusion: Naive S2 index calculus is infeasible at 16-bit (cost >> BSGS). Theoretical crossover (if any) would require n^(1/4) ≈ 11-point factor base, giving hit rates ~0.001% — impractical.
+- Semaev S3 (prior subagent) gave ~0.3% hit rate at B=256, also far below BSGS efficiency.
+- Vector B remains [QUEUED] for subexponential L_n(1/3) via S_m polynomial solving; naive scanning is falsified for small tiers.
+
 ## V-007 — Smart p-adic attack robust on CM (j=0, trace-1 anomalous) curves (H-009)
 
 **Curve family:** `y^2 = x^3 + b` over F_p, p ≡ 1 (mod 3), `#E(F_p) = p`
