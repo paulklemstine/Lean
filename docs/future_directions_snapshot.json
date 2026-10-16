@@ -2,25 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "18763e0d",
-    "description": "# Round 34 — Attacking the order-free balance: the M-leg is exponent-REDUNDANT, and the `m`-reuse is load-bearing\n\nSeven fresh-frontier channels against the order-free balance that (round 33) pins Harvey's\n`N^{1/5}`. **Zero new methods, zero exponents moved — but two genuine corrections to the\nrecord and to #417/#418, and one transferable screening tool.**\n\n`N^{1/5}` remains an **upper bound**, never a floor. No unconditional superpolynomial\nlower bound for factoring is known in any model. A kill is success.\n\n## Headline 1 — the M-leg is exponent-REDUNDANT (a correction to the round-33 map)\n\nRound 33 concluded `1/5` is pinned by the three-term order-free triangle\n`{r·lg³N vs N^{1/4}r^{(-1/4)}lg³N} + {m·lg²N vs N^{1/2}/(r^{1/2}m)}`. Brute-force LP over the\nthree **N-exponent** terms `{BSGS interior N^{1/2}/(r^{1/2}m), pair family r, baby-step list\nm}` gives minimax exactly `1/5`. The round-34 finding:\n\n> Adding the M-leg `M^{1/2} = (N/r)^{1/4}`, or **deleting it entirely**, leaves the minimax\n> at `1/5` — and it stays at `1/5` even when the M-leg is made **completely free**\n> (constant-factor `M⁰`). The M-leg carries ~25% of the polylog-weighted budget at\n> `N = 2^100` and is **arithmetically inert**.\n\nSo the smoothness-sieve term is a large-looking, zero-leverage term. This is the campaign's\ndiagnosed failure mode with the sign flipped: a term that *looks* load-bearing because it is\nbig is worth exactly nothing. **Correction to #418's \"three co-leaders\"** — the M-leg is a\nco-leader only in polylog weight, not in exponent; the exponent is carried by the interior,\n`r`, and `m` alone.\n\n## Headline 2 — the m-reuse is load-bearing, not slack (experiment refuted the survivor)\n\nThe one channel to survive both refuters was `nonlegendre`: a \"collapse coupling\" that\nremoves the baby-step split to reinterpret the `(a,b)` grid via a product tree with\nseparable exponents (essentially Strassen's `N^{1/4}`, Harvey Prop 2.5 / Remark 2.6). A\nground-truth-verified pipeline (real NTT product trees, remainder-tree multievaluation) was\nbuilt and run:\n\n> The mechanism is a **correct** factoring algorithm, but its dominant input-size exponent\n> is **0.2500**, not `≤ 0.20`. The fitted penalty slope is `0.046–0.052` against the exact\n> closed form `1/20 = 0.0500`, confirming an `N^{1/20}` penalty.\n\nInterpretation: **dropping the baby-step split deletes the `m` term, degrading a 3-term\nbalance to a 2-term one.** The `m`-reuse (the zero-sum trade in `m`) is **load-bearing, not\nslack** — a direct, experiment-backed statement about the record's core reuse mechanism. The\nhunt's fabricated constant (\"256\") table is refuted by the fit.\n\n## Headline 3 — the transferable tool: the \"delete-a-term\" LP screen\n\n> **Screening rule.** In a minimax cost `max{term_1, …, term_k}`, a term is worth optimising\n> **iff deleting it (or making it free) moves the minimax value.** A term that does not move\n> the value is worthless regardless of its weight. Run this LP before spending a round on any\n> term.\n\nThis is the round's most transferable artefact and costs an afternoon. It is in the same\nfamily as the round-33 **slack-constraint lemma** and the **symmetric-readout vacuity lemma**\n— a small set of general screening tools the campaign now carries.\n\n## Other theorem-worthy facts\n\n- **Any extreme of the gcd-reveal family is algebraically solvable.** `q = k(p−1) − 1` gives\n  `kp² − (k+1)p − N = 0`, discriminant `≡ (2kp − (k+1))²` — one integer square root. More\n  generally, in the gcd-reveal family the density-1 extreme is always the algebraically\n  solvable case. (The `eulergap2` cross attempt died here: its surviving extreme is a\n  closed-form quadratic with an exactly-square discriminant.)\n- **General-exponent reveal identity.** `R(E) = d_p(q−1) + d_q(p−1) − 2 d_p d_q`, with\n  `d_p = gcd(E, p−1)`, valid for **all** exponents `E`; it recovers `card_revealing` at\n  `E = N−1`. Verified numerically. This generalises round 33's Euler-gap count from the single\n  exponent `N−1` to arbitrary `E`.\n\n## The next concrete target (untouched)\n\nRound 33 attacked `r` (pair filter; killed on residue-uniformity). Round 34 showed `M` is\nredundant and `m`-reuse is load-bearing. That leaves **the baby-step `m`-leg and the\n`m`-dependent BSGS interior — the only two terms never attacked with a power-of-`N`\nmechanism.** `m` is untouched. (Flagged per Rule 6: the proposed `T = N^{(1/2−δ)/5}` target\nis unverified arithmetic — run the delete-a-term LP before committing a round.)\n\n**Do NOT** spend a round on LLL/flatness over the UMW CRT lattice: the prefactoring kill\nsupersedes it — within that framework the `c=1` branch cannot reach `1/6` at any window size.\n\n## Honest summary\nZero new factoring methods across 32 → 34 rounds — but the failures are now sharp,\nnon-repeating, and each round yields reusable general lemmas (slack-constraint, delete-a-term\nLP, symmetric-readout vacuity) plus machine-checked corrections. The frontier is the\nbaby-step `m`-leg; the formally-open door remains the UMW covering.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4958",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-25T17:57:24.498989+00:00",
-    "title": "FACT round-34 — ATTACKING THE ORDER-FREE BALANCE: the M-leg is EXPONENT-REDUNDANT (adding or DELETING the smoothness term (N/r)^(1/4), even making it completely free, leaves the minimax at exactly 1/5 — a big-looking zero-leverage term; corrects #418's 'three co-leaders'), and the one surviving hypothesis was REFUTED by a ground-truth experiment: dropping the baby-step split deletes the m term, degrading a 3-term balance to 2-term, penalty exactly N^(1/20) (fitted 0.046-0.052 vs 1/20) — so the m-REUSE IS LOAD-BEARING, not slack. New transferable TOOL: the DELETE-A-TERM LP screen (a minimax term is worth optimising iff deleting it moves the value). Plus: any gcd-reveal density-1 extreme is algebraically solvable (square discriminant); general-exponent reveal identity R(E)=d_p(q-1)+d_q(p-1)-2 d_p d_q recovers card_revealing at E=N-1. 7 channels, 7 kills, 0 methods — frontier is now the baby-step m-leg"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "56f975ed",
     "description": "# The Galois/Frobenius side-channel family is a FIFTH primitive — and it is closed three ways (an audit finding: entirely absent from the factoring record)\n\n**Origin:** the round-33 audit measured that **145 of 185 factoring-relevant catalog\nmodules were never read** in 32 prior rounds. This note harvests the largest coherent\nunread block — the **Galois/Frobenius residue-type side-channel family** — and reports\nwhat it contains. The family is a genuine **candidate fifth primitive** alongside the\nrecord's four (congruence-of-squares, order, smoothness/index-calculus, algebraic/CM), and\nit is machine-checked **closed three independent ways**. It is a rigorous *negative*\nresult about a whole route family — and it was sitting unopened on disk the entire time.\n\n`N^{1/5}` remains an **upper bound** (never a floor). A kill is success. All theorem names\nbelow were read from the actual Lean files (Rule 5); the record (`RESEARCH.md`, 9,771\nlines) contains **zero** occurrences of the family — verified by grep.\n\n## The family (the unread modules)\n\n- `Cryptography/NonabelianTypeChannel/{GroupChannel, SplitType, Semiprime, Completeness,\n  Entropy, Fields}.lean` — the **type channel**: the splitting type (factorisation shape)\n  of `p` in a number field, read as the cycle type of Frobenius.\n- `Combinatorics/D12SemiprimeWhichFactorWall.lean`,\n  `Bridges/CyclicCubicWhichFactor.lean` — the **which-factor wall**.\n- `Algebra/{ECMParityFrobenius, ECMParitySymmetric}.lean`,\n  `Novelty/CmEcmOrder*.lean`, `Shared/ECMStage1OrderCompletion.lean` — **CM-ECM order\n  shadows** and ECM stage-1 order completion.\n- `Speculative/AutoResearch/ResidueChannelNonabelianTorsor.lean`,\n  `Bridges/ResidueLeakageTorsorTriviality.lean` — the **Artin-symbol / torsor** channel;\n  conjecture C5′ settled.\n\n## Closure 1 — the abelianization cap (`typeChannel_le_logb_index`)\n\nFor a finite Galois group `S`, derived subgroup `N = [S,S]`, coset readout `c`, and **any**\nsplitting-type readout `T`:\n\n> `mutualInfo S c T ≤ log₂ [S : N] = log₂|G^ab|`.\n\nThe proof is two lines: `mutualInfo ≤ H(c)` (info can't exceed the coarser variable) and\n`H(coset) = log₂[S:N]` (Lagrange). It is airtight and general. Exact prime-level values\n(`Fields.lean`): `S₃ = 1`, `S₄ = 1`, `A₄ = log₂3`, `D₄ = 2`, `V₄ = 2`, `C₄ = 2` bits. So a\nfive-type `S₄` field still cannot push more than **one bit** through a residue channel.\nPerfect groups leak exactly zero (`typeChannel_eq_zero_of_perfect`).\n\n## Closure 2 — the which-factor wall is an EXACT zero (`whichFactor_wall`)\n\nFor the semiprime `N = pq` with factors in an asymmetric box, knowing *which* factor\ncarried which splitting type adds **exactly zero bits** to *every* swap-invariant readout:\n\n> `uEnt (asym n) (whichFactor n) = 1 ∧ mutInfo (asym n) (whichFactor n) k = 0`\n> for every `k` with `k p.swap = k p`.\n\nThe zero is **exact, not a bound** (`mutInfo_eq_zero_of_flip`: a flip-invariance argument,\nnot an estimate). It is non-vacuous: the *ordered* readout does carry information\n(`whichFactor_ordered_full`). So a Frobenius reader cannot learn which factor is which.\n\n## Closure 3 — the Artin/torsor channel prunes nothing (`nonabelian_no_pruning`)\n\nConjecture C5′ asked whether the non-abelian Artin-symbol channel gives a *proper* fibre\n(the first residue-type channel with nonzero pruning). It does not, and the reason is\nsharper than a counting bound:\n\n> In **any** group, for any target `σ` and any candidate `p`, the element\n> `q = p⁻¹σ` compensates. So the fibre projects onto **every** conjugacy class.\n\nHence the Artin channel prunes **exactly zero** candidates, abelianian or not. The\npruning half of C5′ is false.\n\n## What is NOT closed (the honest seams)\n\n1. **The cap bounds the RESIDUE content, not the full type.** `I(coset;T) ≤ log₂[G:G']`;\n   a readout not factoring through the abelianization coset is bounded only by `H(T)`. A\n   higher-rank non-abelian `G` with large `log₂[G:G']` **and** a positive ordered-vs-\n   unordered `I₂` gap is not excluded in principle.\n2. **The wall's hypothesis is symmetry.** Every wall theorem assumes the readout is a\n   function of `N` (or swap-invariant). A readout of an **asymmetric side-input** is\n   untouched by the wall — though nothing yet supplies such a side-input computable from\n   `N`.\n3. **Distributional assumptions** (Rule 6): some semiprime figures rest on Chebotarev-type\n   models that are conjectural, not measured.\n\nAny new method from this family must, as a **conjunction**: supply a readout of `p` that\n(i) does not factor through `G^ab`, (ii) breaks the swap symmetry, and (iii) yields more\nthan `O(1)` bits about which factor is which — all from `N` alone. No such readout is known.\n\n## Significance\n\n- The record's four-primitive census **needs amendment**: a fifth primitive exists (the\n  Galois/Frobenius side channel) and is now **rigorously closed**, with an abelianization\n  cap, an exact which-factor wall, and a no-pruning torsor law. This is a *stronger and\n  more general* barrier than anything the record holds on this family — because the\n  record does not hold anything on it at all.\n- It is also a template for the **145-module audit**: the campaign's largest single failure\n  was not a wrong idea but an **unread theorem**. The lesson generalises — before\n  proposing a route, check whether it is already machine-checked on disk.\n",
     "domain_bridges": [],
@@ -53152,6 +53133,51 @@
     "status": "available",
     "timestamp": "2026-10-15T19:18:28.383573+00:00",
     "title": "Injectivity-Relaxation Trade-off"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.FactoringBarriers.DeleteATerm",
+      "Cryptography.FactoringBarriers.HarveyBalance"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The m-leg is the only live leg of Harvey's balance that has not been attacked. An m^{1-eps} table would give exponent (1-eps)/(5-3eps) < 1/5. Prove or refute a generic-group lower bound for such tables.\n\nIn the generic group model, any structure answering membership in {alpha^0..alpha^{m-1}} with polylog queries requires Omega(m^{1-o(1)}) group operations to build.\n\nFormalize the generic-group model in Lean and reduce to the babyDiscount_value LP; test candidate constructions numerically.\n\nThe m-leg is closed and 1/5 is optimal for every Harvey-shaped BSGS method.\n\nAn explicit sub-1/5 deterministic factoring exponent (1-eps)/(5-3eps).",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5250",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Shoup-style generic counting of collisions combined with the delete-a-term screen.",
+    "research_mode": "team",
+    "source_exp_id": "18763e0d",
+    "status": "available",
+    "timestamp": "2026-10-16T21:41:20.318861+00:00",
+    "title": "Sub-Linear Baby-Step Table Barrier"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Cryptography.AsymmetricExponent.GeneralExponentReveal",
+      "Cryptography.AsymmetricExponent.RevealDensity"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "max_reveal_extreme shows the g = p-1 extreme is solved by one integer square root. Extend to all semiprimes with reveal density above 1 - 1/k.\n\nIf R(N-1) >= (1 - 1/k) phi(N) then N is factored by at most k integer square roots of (j-1)^2 + 4jN, j <= k.\n\nBrute force over semiprimes below 10^6, then formalize using card_revealing_exp.\n\nHigh-density gcd reveals never give new factoring power.\n\nA family of semiprimes with dense reveals but no algebraic shortcut.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5251",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Show density forces (p-1) | j(q-1) for small j and apply extreme_discriminant_square.",
+    "research_mode": "team",
+    "source_exp_id": "18763e0d",
+    "status": "available",
+    "timestamp": "2026-10-16T21:41:21.016133+00:00",
+    "title": "Algebraic Solvability of High Reveal Density"
   },
   {
     "ambition_level": "extension",

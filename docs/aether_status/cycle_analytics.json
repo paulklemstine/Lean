@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-16T09:58:05.081508+00:00",
+  "last_updated": "2026-10-16T21:41:35.913509+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -78185,6 +78185,49 @@
       "theorem_novelty_new": 0,
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-16T09:58:04.787957+00:00",
+      "title": "FACT round-34 \u2014 ATTACKING THE ORDER-FREE BALANCE: the M-leg is EXPONENT-REDUNDANT (adding or DELETIN"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 11512.998945236206,
+      "end_time": 1792186862.4782343,
+      "files_integrated": 4,
+      "job_id": "18763e0d",
+      "outcome_quality": 0.6,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.6,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.445,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.6,
+        "novelty": 0.6,
+        "proof_depth": 0.6,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1792175349.479289,
+      "strategy_count": 0,
+      "theorem_count": 51,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 44,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-16T21:41:35.538639+00:00",
       "title": "FACT round-34 \u2014 ATTACKING THE ORDER-FREE BALANCE: the M-leg is EXPONENT-REDUNDANT (adding or DELETIN"
     }
   ]
