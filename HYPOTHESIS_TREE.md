@@ -44,8 +44,27 @@ Status legend: [ACTIVE] [EXPLORED] [FALSIFIED] [QUEUED] [VALIDATED]
       Scaling evidence: V-006b (24-32 bits).
 
 ## Vector B — Summation polynomials / index calc
-- [QUEUED] H-008 Factor base via small-degree EC points + Semaev S_m degree bound test
-  on prime fields.
+- [EXPLORED] H-008 Factor base via small-degree EC points + Semaev S_m degree bound test
+  on prime fields (16-bit feasibility only). No speedup claimed.
+    \* **Claim (feasibility/threshold):** On prime fields F_p (~16-bit), Semaev S_3 can
+      be computed symbolically and stays degree-bounded (<=2 in each x_i) when
+      solving P1+P2+P3=O; a low-x factor base and the induced root set can be
+      measured; density/hit ratios documented.
+    \* **Evidence:** `ec_research/semaev.py` (p=65521, a=0, b=17, prime
+      n=65353; factor base = points with x in [0,256)):
+      V_FB=252, V_FB/n=0.003856; relation hit R=-(P+Q) in FB = 28/10000=0.0028;
+      S3 trials x1!=x2: 5000, roots always <=2 (0-root:2524, 2-root:2476, none with 1);
+      total roots 4952, avg 0.9904; FB roots=17 (0.0034 of roots); pairs with >=1 FB
+      root=17/5000=0.0034.
+    \* **Verdict:** H-008 feasible at small n as a mechanism (degree bound holds,
+      no degree explosion), but the simple contiguous low-x factor base has
+      ~0.4% density, giving ~0.3% relation/hit rates; this is below anything
+      competitive and is NOT a speedup vs. generic ECDLP (no op-count reduction
+      demonstrated). Status EXPLORDED (not validated for speedup). For index
+      calculus to become competitive would need higher-degree/normalization
+      tricks or different filter, which is out of scope here.
+    \* Code: `ec_research/semaev.py`; data: `ec_research/semaev_results.json`;
+      note: `ec_research/semaev_note.md`.
 
 ## Vector D — p-adic / anomalous
 - [EXPLORED] H-009 Smart's linear attack on anomalous curves (control: huge speedup).

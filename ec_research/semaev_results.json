@@ -1,0 +1,22 @@
+{
+  "p": 65521,
+  "a": 0,
+  "b": 17,
+  "n": 65353,
+  "threshold": 256,
+  "V_FB": 252,
+  "ratio_VFB_over_n": 0.0038559821278288677,
+  "rel_trials": 10000,
+  "rel_hits": 28,
+  "rel_ratio": 0.0028,
+  "s3_trials": 5000,
+  "root_counts": [
+    2524,
+    0,
+    2476
+  ],
+  "total_roots": 4952,
+  "fb_roots": 17,
+  "trials_with_fb_root": 17,
+  "elapsed_sec": 31.168143272399902
+}

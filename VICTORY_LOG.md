@@ -275,3 +275,70 @@ makes LLL alone sufficient.
 ### Code
 - `ec_research/hnp_lattice.py` (`hnp_attack`, `make_instance`); experiment runner `/tmp/opencode/hnp_b.py`; aggregator `/tmp/opencode/agg.py`.
 
+
+## V-007 — Smart p-adic attack robust on CM (j=0, trace-1 anomalous) curves (H-009)
+
+**Curve family:** `y^2 = x^3 + b` over F_p, p ≡ 1 (mod 3), `#E(F_p) = p`
+(trace t = 1, anomalous), with CM by Q(sqrt(-3)) (`j = 0`).
+
+**Root cause of earlier failure (G-009):** the fixed-Hensel horizontal lift
+`x = x_0 (mod p^n)` leaves `p*lift(P)` in filtration E_2 for every tested
+CM curve: `v_p(t(p*lift(P))) = 2`, so the normalised leading term
+`phi(P) = t/p (mod p)` is 0 and uninvertible, and the formal-logarithm
+homomorphism is lost.  Dividing by `p^2` instead returned unit residues but
+failed `phi(2G) = 2*phi(G) (mod p)`.
+
+**Resolution:** randomise the p-adic curve lift itself while keeping the mod-p
+reduction `y^2 = x^3 + b`: take  
+`a4_lift = p*alpha`, `a6_lift = b + p*beta (mod p^3)` with alpha,beta random
+in `F_p`.  This is a *non-canonical* lift of the same reduced curve (the
+equation variation suggested as a workaround for `lift_x` on CM curves), not a
+canonical CM lift.  Standard Hensel y-lifting then gives `v_p(t(p*lift(P))) = 1`
+and `phi(P) != 0 (mod p)` for every trial, restoring the homomorphism
+`phi: E(F_p) -> F_p` and hence `d = phi(Q) * phi(G)^{-1} (mod p)`, verified
+by `d*G == Q` and cross-checked with BSGS.
+
+**Implementation:** `ec_research/smart_cm.py` (separate file; `ec_research/smart.py`
+untouched): pure-Python Hensel root lift modulo `p^3`, two y-branches implicit
+(`±ylift`), randomised `(alpha,beta)` search with `max_tries = 500`
+empirically never needed beyond the first draw (0 `phi ≡ 0`, 0 val!=1, 0
+exceptions across the run).
+
+**Code-level recovery path:** `gen_cm_anomalous` -> `find_nondeg_lift`
+(randomise alpha,beta, Hensel-lift point mod `p^3`, p-adic scalar
+multiplication by p, extract t = -x/y, accept v = 1 and phi != 0) ->
+`d_rec = phiQ * modinv(phiG, p) mod p` -> verify `ec_mul(d_rec, G) == Q`
+-> BSGS baseline.
+
+**Test set (exact):** CM anomalous `#E = p` curves generated deterministically
+(seed `20261016`) for bit sizes 12-16, 2 trials per size (10 instances total):
+
+| bits | trials | p range (actual) | phi(G) val | successes | smart wall time (ms) | BSGS wall time (ms) | gen time (s) |
+|---|---|---|---|---|---|---|---|
+| 12 | 2 | 2791-3571 | 1 (all) | 2/2 | 0.71-0.88 | 0.07-0.13 | 1.79-2.39 |
+| 13 | 2 | 5419-7351 | 1 (all) | 2/2 | 0.84-0.90 | 0.17-0.19 | 3.51-12.97 |
+| 14 | 2 | 13267 (x2) | 1 (all) | 2/2 | 0.88-1.46 | 0.20-0.23 | 11.99-28.00 |
+| 15 | 2 | 25117 (x2) | 1 (all) | 2/2 | 0.81-0.87 | 0.25-0.33 | 16.13-45.66 |
+| 16 | 2 | 42841-60919 | 1 (all) | 2/2 | 1.01-1.11 | 0.42-0.52 | 13.96-50.31 |
+
+Aggregate: 10/10 Smart successes, 0 failures; BSGS cross-check 10/10;
+`v_p(t_G) = v_p(t_Q) = 1` on all instances; 0 `phi(G) ≡ 0` draws; 0 lifts
+in E_2.
+
+**Scalings:** (1) lift recovery `O(log p)` p-adic point scalar multiplication
+(cf. ~1 ms at 12-16 bits vs BSGS `O(sqrt(p))` ~0.1-0.5 ms at these tiny
+sizes — BSGS is faster in wall clock below ~16 bits; Smart's asymptotic win
+needs larger p, but phi is now invertible where the prior version crashed).
+(2) Generation dominates: `O(p)` point counting per (p,b) candidate, hence
+gen times grow roughly linearly in p (1.8 s at 12 bits to ~14-50 s at 16
+bits) and are the practical bottleneck for larger tests, not the lifting.
+
+**Results files:** `ec_research/smart_cm_results.txt`,
+`ec_research/smart_cm_results.json` (full per-instance records incl. p, b,
+d_true, d_rec, alpha, beta, vG, vQ, tries, timings).
+
+**Honesty caveat:** No canonical CM lift was implemented; success comes from
+non-canonical randomized curve-lift variations. Whether a uniformly random
+alpha,beta keeps `v = 1` for all p (incl. very small or p with extra ramification)
+was not proved; only tested on the 10 CM instances above. Zero-probability
+bad draws (`phi ≡ 0`) predicted ~1/p and were not observed.
