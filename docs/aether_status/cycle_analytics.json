@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-17T00:00:05.612088+00:00",
+  "last_updated": "2026-10-17T08:41:01.777272+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -78272,6 +78272,37 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-17T00:00:05.304901+00:00",
       "title": "FACT round-34 (harvest) \u2014 THE GALOIS/FROBENESS SIDE-CHANNEL FAMILY IS A FIFTH PRIMITIVE, AND IT IS C"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Logic",
+      "duration_seconds": 15761.396549463272,
+      "end_time": 1792226440.3958507,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "7ae53527",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1792210678.9993012,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-17T08:41:01.532467+00:00",
+      "title": "FACT round-33 (cont. 2) \u2014 UMW CORRECTION: the counting constraint is alpha >= 1-2beta, NOT alpha+bet"
     }
   ]
 }
