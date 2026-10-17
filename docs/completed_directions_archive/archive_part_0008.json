@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-16T21:41:21Z",
-  "count": 21,
+  "archived_at": "2026-10-16T23:59:50Z",
+  "count": 22,
   "directions": [
     {
       "id": "fd_3552",
@@ -845,6 +845,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 366
+    },
+    {
+      "id": "fd_3981",
+      "title": "FACT round-75 #4 — BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of the barrier-4 converse recorded as DRAFT-WITH-CAVEATS — certified-silence law S_A=1/[μP+(1−P)(1−μ)] supersedes drafted fire-or-silent form (14 algebra failures caught by independent verification); T2 saturation V=log₂W+½ exact on dyadic W∈[2,4096]; Conjecture D factors S(R∘F)=S(R)·S(F) with sup_F=4/3 — residue cap 4/3 governs COST-class actions while position works the SET-class tail: 5.19×>4/3 is class-crossing not cap-breaking; zero arithmetic errors in recheck; named GAPs L4/L7/L8 are the next work",
+      "description": "Round-75 #4 · THEORY deliverable (no new experiment id) · paper 219 · assessment v326.\n\n**What was recorded.** The verified draft of the POSITIONAL/MAGNITUDE stratum of the barrier-4 converse (`ResearchOutput/scripts/2026-08-24-round74/barrier4_positional_converse_draft.md`), independently rechecked per `verify_t1_t2_recheck.json` against the author's own finite checks `exp574b_saturation_check.py`/`exp574b_result.json`. Recorded as DRAFT-WITH-CAVEATS per verifier recommendation — NOT a sealed theorem.\n\n**T1 (fixed-window oracle).** CERTIFIED-SILENCE law S_A = 1/[μ·P_hit + (1−P_hit)(1−μ)] exact for protocol A committed policy (finite-M rational, 0 recheck failures). The DRAFTED fire-or-silent form 1/(1−(1−μ)P_hit) is SUPERSEDED — non-certifying silence wastefully re-scans R; 14 algebra consistency failures caught. Protocol B optimal response S_B = 1/(1+μ−P_hit) ≤ S_A; block-first dominance UNCONDITIONAL for protocol A, RESTRICTED to P_hit ≥ μ for protocol B (exhaustive orders + insertion sweep M∈{16,33,64}; all 12 counterexamples have P<μ). Cap = 1/μ at P_hit=1; NO constant cap exists.\n\n**T2 (adaptive saturation).** V(W) = log₂W + ½ EXACT on every dyadic W ∈ [2,4096] (independent DP reproduction); general-L closed form an upper bound never crossing −½ to L=4096 (deepest undercut −0.499349 @ L=3073); cost-offset bracket corrected to [.415,.5011]; marginal-value identity rewritten as exact NET form cost(k)−cost(k+1)=W/2^(k+2)−1 (250/250 cells) after drafted GROSS form failed 231 cells; census C*=19.5@2^19 / 20.5@2^20, argmin offsets {−2,−1} ≠ k_pin=log₂W — and exp563's economic optimum is a THIRD convention ~1 query above k_opt: three distinct k's must stay distinguished.\n\n**Conjecture D (SET/COST dichotomy).** S(Π)=S(R∘F)=S(R)·S(F), sup_F S(F)=4/3 (θ=1/2), S(R) ≤ min(1/μ_eff, 2^k_bits). Residue cap 4/3 governs COST-class actions; position works the SET-class tail. All four measured anchors feasible under μ ≤ 1/S: 5.19× ≡ (.05,.85), 6.91× ≡ (.05,.9003), 4.35× ≡ (.05,.8106), 29.1× ≡ (.02,.9853); identity check: paper-138 master law at uninformative point ≡ paper-132 formula exactly. 5.19× > 4/3 is CLASS-CROSSING, NOT cap-breaking — barrier map internally consistent.\n\n**Verification census.** Zero arithmetic errors across all numeric claims (stored-value discrepancies: none); ~60% of PROVEN upgraded to VERIFIED where independently recomputed. Named GAPs remain, load-bearing: L4 stratum measure Δ(π,R), L7 extremality of sqrt-descending among N-computable orders (Siegel-type ineffectivity expected), L8 k-naming. These are the formal program's next work.\n\nCount unchanged by experiment (papers-only bump, convention stated in addendum): still 561 experiments (max id 572), papers now 219, assessment v325 → v326.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "68de46a5",
+      "timestamp": "2026-08-24T10:55:32.772786+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 1.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-29T09:05:29.455533+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 365
     }
   ]
 }

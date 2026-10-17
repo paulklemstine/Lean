@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-16T21:41:35.913509+00:00",
+  "last_updated": "2026-10-17T00:00:05.612088+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -78229,6 +78229,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-16T21:41:35.538639+00:00",
       "title": "FACT round-34 \u2014 ATTACKING THE ORDER-FREE BALANCE: the M-leg is EXPONENT-REDUNDANT (adding or DELETIN"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Probability",
+      "duration_seconds": 8306.977613210678,
+      "end_time": 1792195177.8774433,
+      "files_integrated": 4,
+      "job_id": "56f975ed",
+      "outcome_quality": 0.72,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1792186870.89983,
+      "strategy_count": 0,
+      "theorem_count": 53,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 45,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-17T00:00:05.304901+00:00",
+      "title": "FACT round-34 (harvest) \u2014 THE GALOIS/FROBENESS SIDE-CHANNEL FAMILY IS A FIFTH PRIMITIVE, AND IT IS C"
     }
   ]
 }
