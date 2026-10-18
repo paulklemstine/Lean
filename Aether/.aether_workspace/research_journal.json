@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "5be8ecbc",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — NET-93 \"keys own the cliff\" thread\n\nThe four files added in this cycle\n(`Catalog/Novelty/KeysOwnTheCliff.lean`, `KVCliffExponent.lean`,\n`KVBitBudgetSplit.lean`, `KeyBitwidthSafet",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 43,
-      "timestamp": "2026-08-28T14:27:15",
-      "title": "NET-93 KEYS-OWN-THE-CLIFF: 4-bit cache KEYS alone annihilate the model (+35,597%) while 4-bit VALUES"
-    },
-    {
       "cycle_id": "497c96d6",
       "domain": "Physics",
       "key_insight": "# Future directions — after the ECM wall audit\n\n## What this cycle settled\n\nWorking from the stage-1 order-completion theory already in the catalog\n(`Catalog/Shared/ECMStage1OrderCompletion.lean`, `…F",
@@ -2501,6 +2491,16 @@
       "theorem_count": 53,
       "timestamp": "2026-10-17T00:00:04",
       "title": "FACT round-34 (harvest) — THE GALOIS/FROBENESS SIDE-CHANNEL FAMILY IS A FIFTH PRIMITIVE, AND IT IS C"
+    },
+    {
+      "cycle_id": "0ce9bb08",
+      "domain": "Tropical",
+      "key_insight": "# Future directions — UMW `(α,β)`-divisor conjecture after the corrected wall\n\n**Proved this cycle** (`Catalog/Tropical/UMWDivisorWall.lean`, no `sorry`):\nthe corrected counting constraint `α ≥ 1 − 2β",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-10-18T01:00:09",
+      "title": "FACT round-33 (cont. 2) — UMW CORRECTION: the counting constraint is alpha >= 1-2beta, NOT alpha+bet"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-17T00:00:04",
+  "last_updated": "2026-10-18T01:00:09",
   "open_questions": [
     {
       "context": "This file gives a complete, sorry-free proof of that formula, together with the",
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "68de46a5",
-        "quality": 0.72,
-        "theorems": 76,
-        "title": "FACT round-75 #4 — BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/mag"
-      },
-      {
         "cycle_id": "f5ddf1b2",
         "quality": 0.6729149999999999,
         "theorems": 27,
@@ -4009,6 +4003,12 @@
         "quality": 0.55,
         "theorems": 54,
         "title": "FACT round-40 #3 — FOOTPRINT-SCALE: the dial transfers across scale (paper 147)"
+      },
+      {
+        "cycle_id": "0ce9bb08",
+        "quality": 0.62,
+        "theorems": 23,
+        "title": "FACT round-33 (cont. 2) — UMW CORRECTION: the counting constraint is alpha >= 1-"
       }
     ]
   }
