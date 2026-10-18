@@ -21,7 +21,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ef1423f4",
     "description": "# Round 33 — Closing the Order-Free Opening, and a Sharper Frontier for Deterministic Factoring\n\n**Status:** research note / kill record with one confirmed negative and four new\nsource-grounded findings. **No new factoring method was found** — 12 hypotheses, 12\nkilled at an adversarial gate; the single surviving thread is a *negative* result that\ncloses an open channel. That negative is the round's contribution.\n\n**Discipline.** This round is the first to enforce, in the workflow's *structure* rather\nthan as prose advice, the seven rules the prior 32 rounds violated: every hypothesis had\nto (1) open its primary source, (2) name the exact quantity its mechanism acts on, and\n(3) survive two independent refuters (a source-grounding lens and a quantity/cost lens)\nbefore reaching a sympy experiment. A kill at the gate is success — it prevents a\nretraction. Result: **12/12 killed, 0 retractions, 0 phantom citations that survived\nverification.** All quotes below were read from opened sources (arXiv full text via\n`pdftotext`/HTML, or local Lean files), per Rule (5).\n\nThroughout, `N^{1/5}` is an **upper bound** on the deterministic record — not a proven\nfloor. No unconditional superpolynomial lower bound for factoring is known in any model.\n\n---\n\n## 1. Headline (the order-free opening is closed)\n\nThe campaign record's sharpest live question, opened by the January 2026 result\n**arXiv:2601.11131** (Harvey & Hittmeir, *Deterministic methods for finding elements of\nlarge multiplicative order*), was: *with hypothesis-free order-finding, is Harvey's cost\nshape still right — can a large-order element rebalance the trade to beat `N^{1/5}`?*\n\n**Answer (re-derived and experimentally reproduced): no. `1/5` is pinned by an entirely\nORDER-FREE triangle, so the 2026 result is structurally incapable of moving it.**\n\nThe re-derivation (from Harvey, arXiv:2010.05450, Prop 4.2/4.3) locates every place\n`ord_N(alpha)` enters Harvey's algorithm: **exactly one** — the number of spurious\nhash-table hits in Step (4), `n ≈ s·m/D`, the input length of the Alg 4.1 product tree.\nThat quantity has **N-exponent 0** (it is log-carrying). It does **not** enter:\n\n- `r` — the Lehman candidate-pair budget (`{(a,b) : ab ≤ r}`, size `Θ(r lg r)`);\n- `m` — the Bluestein baby-step budget (`Θ(m)` per giant step);\n- `M = ⌈(N/r)^{1/2}⌉` — the smoothness-sieve range in Step (2).\n\nProp 4.3 pins the exponent at `1/5` via the balance `{ r·lg³N vs N^{1/4}r^{-1/4}lg³N }`\n(the pair budget against the Step-(2) smoothness sieve) together with\n`{ m·lg²N vs N^{1/2}/(r^{1/2}m) }` (the baby-step list against the BSGS interior).\n**Both legs are order-free.** The order appears only in the product-tree term, which\n*drops* (from `N^{1/5}lg^{16/5}N` to `lg^{22/5}N`) when order-finding is free — but two\nother terms already sit at `N^{1/5}lg^{16/5}N`, so the `max` is unchanged. Even a\nhypothetical maximal-order `alpha` with the order-finding step **literally free** leaves\nthe total at `N^{1/5}lg^{16/5}N`.\n\n- **Rule (7) verdict: MISMATCH.** Mechanism quantity = N-exponent 0 (polylog hit count);\n  target quantity = N-exponent `1/5`. The gap is `1/5`, so free order-finding cannot\n  reach the exponent at all.\n- **Reproduced:** an analytic script (`partA.py`) regenerates `F(N) = N^{1/5}lg^{16/5}N`\n  exactly from Prop 4.3, and a numerical probe (`partB2.py`, 44-bit semiprime) confirms\n  the hit-rate law. Both run in seconds.\n\nThis **closes** the record's \"OPENING\" (§7-undecuples-XXXIV/XXXV had hoped the opposite)\nand replaces it with a settled negative. The record's own §7-undecuples-XXXIV/XXXV built\na \"r-trade-off floor\" argument that implicitly treated the order as load-bearing; it is\nnot. **This is a correction to the campaign's own prior reasoning, found by adversarial\ngate rather than by a retraction.**\n\n## 2. Large-order element production is already published, and is dominated\n\nGFHP (**arXiv:2512.19076**, Gao–Feng–Hu–Pan, 22 Dec 2025) **Lemma 3.5** already gives a\ndeterministic algorithm: given `(N, δ)` with `N^{1/4}log^8N ≤ δ ≤ N`, return `alpha ∈ Z_N*`\nwith `ord_N(alpha) > δ` (or a factor, or a primality proof) in time\n`O(δ^{1/2}log²N / (log log δ)^{1/2})`. Substituting `δ = N^{1/3}` the enabling sub-problem\n\"*deterministically produce an element of order ≳ N^{1/3}*\" is **already solved** — at cost\n`Õ(N^{1/6})`, which is *below* Harvey's `N^{1/5}` and therefore buys nothing.\n\n- **Rule (7) MISMATCH, stated as a kill:** the order of `alpha` sets `m` (baby-step table\n  size); the N-exponent is set by `r` (candidate-pair count). They are anti-correlated via\n  the balance `m* = N^{1/4}r^{-1/4}`, so improving the order quantity cannot move `r`.\n- **Attribution correction:** `Hit18` is **Hittmeir**, not Harvey.\n- The order term (from GFHP Lemma 3.5, cost `~m^{1/2}`) is **dominated by the baby-step\n  term `O(m)` everywhere** — a new, clean statement of the dominance the record asserted\n  but never quantified against the whole curve.\n\n## 3. The `(a,b)` pair-filter: right quantity, closed on cost\n\nHarvey's Algorithm 4.2 Step 2 enumerates the pair family `P = {(a,b) : 1 ≤ ab ≤ r}`, size\n`Θ(r lg r)` — the `T2 = r lg³N` term of Prop 4.2, the one term **not** divided by `m`. A\ncorrect-quantity filter on this family is the single most concrete derived target in the\nrecord: uniform compression `s` gives `N^{1/5}s^{-3/5}`, and `1/6` needs `s = N^{1/18}`.\n\n**This round confirms, for the first time, that the filter acts on the RIGHT quantity** —\non Harvey's own `(a,b)` family, not on a value-range. It is therefore *not* a repeat of\nthe retracted XLI/XLII category error (which filtered a value-range, not the pairs). It is\nkilled on cost/domination instead, and a new negative falls out: **the good pair is\nresidue-uniform mod small primes**, so congruence sieves (QR-of-`a`, QR-of-`ab`, etc.)\nact on it at the random rate. Two independent, distinct closures — \"right quantity\" and\n\"still closed\" — are now cleanly separated.\n\n## 4. A paper the 634KB record never saw: Rational Base Descent\n\n**arXiv:2605.08846**, *Rational Base Descent: A Deterministic Algorithm for Factoring\nStructured Semiprimes* (Sam Blake, 9 May 2026) is **absent from the entire record** (all\nLean files and the 634KB RESEARCH.md). Opened in full; Theorem 1 quoted verbatim: for\n`N = pq`, writing `Δ = p − ⌊c(a/b)^n⌋`, a split occurs iff `(a/b)^n > q` and\n`|Δ| < (a/b)^n/q`; per-run cost `O(log³N)`.\n\n- **Rule (7) MISMATCH for balanced RSA:** the method acts on the *rational-power structure*\n  of `p` (a Diophantine-approximation condition, essentially never true for a random\n  prime), not on the cardinality of a search index. It is a genuine `O(log³N)` method on\n  its promised *structured* class and the paper itself \"poses no threat to balanced RSA.\"\n  It does not yield a new N-exponent. The correct substitute quantity — a covering law\n  `C(a,b) = t_max·(2J+1)` crossing `q` at a critical base `b* ~ N^{1/4}/√(2 ln N)` — was\n  derived and measured as a characterization of the promise class, not a new method.\n\n## 5. Value-level short-window features (Open Channel #16)\n\nThe file proves blindness for *collision structure* and for *full-period* value sets, and\nmarks *short-window* value-level features as explicitly out of scope. This round tested\nthem. The `gcd`-based route is a **`p − 1` restatement**; the non-`gcd` value-level\nfeatures are a **Rule (7) MISMATCH** (the one pre-registered test that fired refuted one\nof the four banked sub-claims). Net: no factoring information in a short window's values at\n`m ≪ ord`, consistent with the file's collision-structure theorems.\n\n## 6. What this leaves open\n\n- **UMW (arXiv:2511.10851)** survives the quantity lens: its conjecture (sets `S,T`,\n  `|S|=|T|=n^β`, magnitudes `≤ e^{n^α}`, every `i ∈ [n]` divides some `s−t`; `α=β=1/3`\n  best-possible) acts on the **index set** `[n]` — the right quantity — and its\n  *secondary* consequence is exactly the deterministic `1/5 → 1/6`. (Its *flagship*\n  consequence is `3/2 → 4/3` for **polynomial** factorization; integer factoring is the\n  second consequence — a distinction the record's framing blurs.) UMW remains the one\n  formalised conditional route past the `3/2` baby-step/giant-step barrier.\n- **The large-Euler-gap promise class** (`gcd(a^{N−1}−1, N)` reveals a factor in `O(1)`\n  bases when `gcd(p−1,q−1)` is large) is proved and tight but is a structured-promise\n  method; no general route.\n- The precise frontier for a sub-`1/5` deterministic method is now: **break the\n  order-free pair-budget balance `{ r·lg³N vs N^{1/4}r^{-1/4}lg³N }` itself** — a\n  `(a,b)`-family filter with `s = N^{1/18}` (§3) — or a mechanism outside the\n  baby-step/giant-step motif (UMW). Order-finding is *not* a lever.\n\n---\n\n### Method note (a contribution in its own right)\nThe gated pipeline (hunt → refute×2 distinct lenses → sympy experiment) killed 12/12 and\nrecorded **no** retractions and **no** unverifiable citations. The two lenses caught\n*different* failure modes — UMW died on source-grounding but passed quantity;\norderfree/pairfilter/shortwindow passed source but died on quantity — which is the\ndiversity that makes the gate informative. One **calibration bug** was caught in\npost-hoc review: the quantity refuter for `orderfree` reasoned \"refutation failed — the\nnegative is confirmed\" but emitted `killed=true`, over-killing a *confirmed negative*.\nThe gate is not yet self-calibrating; future rounds should assert consistency between a\nrefuter's `killed` flag and its stated reasoning before counting the gate.\n",
     "domain_bridges": [],
     "domains": [
@@ -33,28 +33,9 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-25T17:57:24.506862+00:00",
     "title": "FACT round-33 — THE ORDER-FREE OPENING IS CLOSED: Harvey's 1/5 is pinned by an entirely ORDER-FREE triangle, so the Jan-2026 arXiv:2601.11131 large-order result is structurally incapable of moving it; plus a NEW paper the 634KB record never saw (arXiv:2605.08846 Rational Base Descent), the (a,b) pair-filter CONFIRMED on the right quantity (not a category error) but cost-killed, and an attribution correction — 12/12 hypotheses gated, 0 retractions, 0 phantom citations"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
-    "consumed_by_exp_id": "21f94704",
-    "description": "# FINAL CAMPAIGN REPORT — 33 papers, every factoring family closed, zero methods, a rigorous frontier\n\n**The campaign's complete scientific conclusion.** Rounds 33–44 ran a gated pipeline\n(hunt → refute ×2 distinct lenses → validated experiment → adversarial synthesis) and produced\n**33 papers** (#417–#450, all `approved-direction`) plus 8 commits updating the record. This\nnote consolidates them into the single authoritative account.\n\n## THE HEADLINE, STATED HONESTLY\n> **Zero new factoring methods were found.** The deterministic `N^{1/5}` frontier is\n> **unchanged** (`N^{1/5}` remains an **upper bound**, never a proven floor; no unconditional\n> superpolynomial lower bound for factoring is known in any model). But **every route family is\n> now closed by a theorem or a validated measurement**, the campaign's own record is corrected\n> in place, and one **published external refutation** (He–Sahai, arXiv:2608.06681) was found,\n> verified, and absorbed.\n\n## WHAT WAS CLOSED, AND BY WHAT KIND OF ARGUMENT\n| Family | Verdict | Kind of argument |\n|---|---|---|\n| Deterministic `N^{1/5}` (Lehman–BSGS) | **motif-intrinsic** | 3 independent re-derivations: slack-constraint lemma; delete-a-term/closed-variable; add-a-floor/motif-exhaustion. Faithful model: interior + m-leg are **slack** |\n| UMW divisor-cover (arXiv:2511.10851) | **1-D refuted** | **published theorem** (He–Sahai): false for `α<1/2, β<3/8`, in particular `(1/3,1/3)`; rank-2 remains open |\n| Pythagorean / Berggren | **dead** | **theorem**: non-circular channel is a coordinate gcd; cost floor `Y^0.6232`; branching < entry-growth |\n| Galois/Frobenius side-channels | **closed 3 ways** | abelianization cap, exact which-factor wall, torsor no-pruning (a machine-checked **fifth-primitive ghost**) |\n| Smoothness | **deep + orthogonal** | no per-instance upper bound; the `N^{1/5}` record carries **no smoothness term** |\n| Transcendence (Baker/S-unit) | **closed** | object mismatch — Matveev never sees `N` |\n| Class-group route | **priced by ERH, not Cohen–Lenstra** | family→subfamily transfer **measured false** (`z=−41.4`); `h(−pq)` is output, not cost |\n| Quadratic sieve (QS) | **no-decoupling is a theorem** | column space = split set; complete-cost rule inverts the sieve-only sign |\n| NFS | **as closed as QS** | column set decoupled from `N` (governed by `d`) but **no exploitable excess** |\n\n## THE STANDING FINDINGS (each real, each source-checked)\n1. **The slack-constraint lemma** (general): a falling hypothesis moves an exponent only if\n   its constraint is **active** at the unconstrained optimum (round 33; killed the\n   order-finding \"opening\").\n2. **The complete-cost rule** (general): price the **complete** cost — sieve **plus** GF(2)\n   elimination — not the sieve alone; pricing sieve-only **inverts the sign** of the `Q`-slope\n   (round 43; corrected round 42 and my own #445).\n3. **The inequality-direction rule** (general): a proved ceiling can price the wrong side\n   (`rank+1 ≤ k_success` runs backwards ⇒ a rank ceiling is not a work bound; round 42).\n4. **The vacuity filter** (general): any exponential-in-`|S|`/rank bound must beat the trivial\n   bound (the ECM-point published bound was 7.3×10⁵ orders worse than doing nothing; round 39).\n5. **The generator-population ban**: never pool over instances and report a within-pool SE as\n   a z-score (round 40).\n6. **Symmetric-readout vacuity** (general): for an unordered secret and an order-sensitive\n   label, every public-input readout is blind (round 33/34).\n7. **He–Sahai's published refutation** of the UMW AP door (found, verified, absorbed).\n\n## THE INTEGRITY LEDGER (what the campaign corrected in ITSELF and in the record)\n- The record's **\"density barrier is absolute … for any method\"** was downgraded to\n  **conjectured-absolute** (its necessary ingredient does not exist).\n- The record's **`2-torsion = C₂` for every N** is false for `N≡1 (mod 4)`.\n- The record's **`~1/4` multi-poly column set** was `0.487–0.505` (same as single-poly).\n- The record's **`k_success ≤ Q+1`** is not a theorem; and `rank+1 ≤ k_success` (backwards).\n- **My own posts were corrected**: #445 (oracle prize struck), #446 (`~1/4` wrong), **#449\n  RETRACTED** (posted raw logs before adversarial verification — both numbers struck on\n  unreproducibility and truncation).\n- The campaign's own failures were diagnosed as **attention, not insight** (145 of 185 modules\n  unread; 4 retractions from unread material) — and the fix was enforced structurally.\n\n## THE EXACT OPEN DOORS (the honest frontier)\n1. **UMW rank-2 additive separability** — realize `n^{2/3}` of prime mass as the difference\n   set of two `n^{1/3}`-sets, overdetermined by `n^{1/3}`; no construction found.\n2. **The smooth-value upper bound for structured forms** (`Ψ_F ≤ C·x·∏ρ(d_i u)`) — the\n   smoothness-escape horn's missing ingredient, open in both directions.\n3. **A per-instance class-number bound** for a single `Q(√(−pq))` — the class-group lever,\n   currently unreachable by enumeration.\n\n**The campaign's contribution is a rigorous, self-correcting negative result with a\nprecisely-characterised frontier — not a factoring method.** That is the honest outcome, and\nit is the one the evidence supports.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4967",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-26T09:59:23.239426+00:00",
-    "title": "FACT FINAL — 33-paper campaign: ZERO new factoring methods, but EVERY family closed by theorem or validated measurement, frontier rigorously characterised. Deterministic N^(1/5) motif-intrinsic (3 re-derivations; interior+m-leg slack); UMW 1-D refuted by PUBLISHED He-Sahai arXiv:2608.06681; Pythagorean dead by theorem (channel=coordinate gcd, cost floor Y^0.6232); Galois side-channels closed 3 ways (fifth-primitive ghost); smoothness deep+orthogonal; transcendence closed (Matveev never sees N); class-group priced by ERH not Cohen-Lenstra (family->subfamily z=-41.4); QS no-decoupling a theorem; NFS as closed as QS. 7 general findings (slack-constraint, complete-cost, inequality-direction, vacuity filter, generator-population ban, symmetric-readout vacuity). Record corrected in place AND my own #445/#446 corrected, #449 RETRACTED (raw logs pre-verification). 3 open doors: UMW rank-2, smooth-value upper bound, per-instance class-number bound"
   },
   {
     "ambition_level": "grand_challenge",
@@ -53266,6 +53247,74 @@
     "status": "available",
     "timestamp": "2026-10-18T00:59:54.860614+00:00",
     "title": "Two-Dimensional CRT Progression Grids"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Applications.FactoringFrontier.RankTwoLocalObstruction"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Turn the proved local residue budget into a global two-dimensional sieve upper bound on |A||B| for prime-difference pairs. This would close the UMW rank-2 door in the short-interval regime.\n\nIf A,B ⊂ [1,X] and every a−b (a∈A, b∈B) is a prime > m, then |A||B| ≤ C X^2/(log X)^2 for an absolute C.\n\nExhaustive search for maximal prime-difference pairs in [1,X] for X ≤ 10^4; formalize the local factor via residue_budget.\n\nThe rank-2 additive-separability door cannot be realised with n^{1/3}-sets in short intervals.\n\nA dense prime-difference configuration exists, giving a concrete candidate for the UMW rank-2 construction.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5258",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Selberg upper-bound sieve in two variables, with local densities bounded by residue_budget at each ℓ ≤ m.",
+    "research_mode": "team",
+    "source_exp_id": "21f94704",
+    "status": "available",
+    "timestamp": "2026-10-18T23:48:49.136489+00:00",
+    "title": "Residue-Box Sieve Bound for Rank-2 Prime Covers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Applications.FactoringFrontier.PythagoreanLegChannel",
+      "Bridges.BerggrenTrees.BerggrenPythagoreanCore"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Exact count of triples with a fixed odd leg as (τ(N^2)−1)/2, and uniqueness of the information-free triple. This would complete the quantitative closure of the Berggren route.\n\nFor odd N>1, #{(b,c): b>0, N^2+b^2=c^2} = (τ(N^2)−1)/2, and exactly one of them has gcd(c−b,N)=1.\n\nFormalize the bijection with divisors u<N of N^2; the numerical check up to N=105 already agrees.\n\nA random triple on leg N is informative with probability 1−2/(τ(N^2)−1), yet it is equivalent to factoring.\n\nA parity or degenerate case escapes the bijection.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_5259",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "leg_factor_identity plus Finset.card_bij onto divisors of N^2 below N.",
+    "research_mode": "team",
+    "source_exp_id": "21f94704",
+    "status": "available",
+    "timestamp": "2026-10-18T23:48:49.782138+00:00",
+    "title": "Divisor-Function Count of Pythagorean Leg Triples"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Applications.FactoringFrontier.MultiPolySplitSet",
+      "Shared.QSRelationPoolRandom"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extend the MPQS split-set theorem to the number field sieve: the admissible degree-one primes depend only on f, not on the sieving family.\n\nFor monic irreducible f of degree d and any family (a_i x + b_i) with p ∤ a_i, p divides some value of f(a_i x+b_i) iff f has a root mod p.\n\nProve the unit-shift lemma in ZMod p for general f; compare with Chebotarev densities numerically for d=3.\n\n'NFS is as closed as QS' becomes a theorem about column sets.\n\nSome sieving family enlarges the column set, which would be an exploitable excess.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5260",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Replicate exists_dvd_mpqsValue_iff_isSquare with Polynomial.IsRoot in place of IsSquare.",
+    "research_mode": "team",
+    "source_exp_id": "21f94704",
+    "status": "available",
+    "timestamp": "2026-10-18T23:48:50.595568+00:00",
+    "title": "Polynomial-Independence of the NFS Degree-One Column Set"
   },
   {
     "ambition_level": "extension",

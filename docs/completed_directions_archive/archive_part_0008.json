@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-18T00:59:55Z",
-  "count": 23,
+  "archived_at": "2026-10-18T23:48:51Z",
+  "count": 24,
   "directions": [
     {
       "id": "fd_3552",
@@ -925,6 +925,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 367
+    },
+    {
+      "id": "fd_3997",
+      "title": "NET-96 THE-COST-LAW-CLOSES-THE-LOOP: cost-law argmax from extracted survival curves reproduces measured speculation optima exactly (prose d=4, code d=8); per-position differencing at n=4 prompts under-resolved (lesson: instrument directly)",
+      "description": "**Program:** factor3 NETWORK/LLM loop, cpu-large-model axis iteration 71.\n\n**Design:** fine depth sweep {1..8} x {prose,code} on the NET-91-winning 0.5B draft targeting the CPU 7B; per-position survival s_i extracted via s_d = d*m(d) - (d-1)*m(d-1) from cumulative acceptance.\n\n**Scorecard:** P3 CONFIRMED CLEANLY — argmax_d [sum s_i/(1+0.118d)] reproduces NET-91's measured optima EXACTLY (prose 4, code 8): micro-mechanism to macro-throughput closed end-to-end. P1 directionally supported (prose survival collapses by position ~5: s5=0.119 < s1/2=0.335). P2 REFUTED AS MEASURED — and the honest root cause identified: differencing doubles aggregate noise; n=4 prompts/cell yields impossible values (three positions s_i>1, one negative). The robust deliverable: the optimal-depth argmax is INSENSITIVE to that jitter.\n\n**Lesson recorded:** per-position acceptance needs direct instrumentation (verbose logging / custom harness), not numerical differentiation of small-n aggregates.\n\nSetup identical to NET-91 (llama-speculative, greedy seed 42, ctx<=1024, threads=8). Script ResearchOutput/exp_net96_survival.py.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "16c9261f",
+      "timestamp": "2026-08-24T13:15:17.260104+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.4,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-25T01:56:07.668924+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 372
     }
   ]
 }

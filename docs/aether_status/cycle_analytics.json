@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-18T17:19:07.032437+00:00",
+  "last_updated": "2026-10-18T23:49:06.458160+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -78439,6 +78439,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-18T17:19:06.645017+00:00",
       "title": "FACT round-33 (cont.) \u2014 CORRECTIONS + 8 THEOREM-WORTHY FACTS: the SLACK-CONSTRAINT LEMMA (a hypothes"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Applications",
+      "duration_seconds": 7084.939900636673,
+      "end_time": 1792367316.3386586,
+      "files_integrated": 4,
+      "job_id": "21f94704",
+      "outcome_quality": 0.6,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.6,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.445,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.6,
+        "novelty": 0.6,
+        "proof_depth": 0.6,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1792360231.398758,
+      "strategy_count": 0,
+      "theorem_count": 35,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 24,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-18T23:49:06.068437+00:00",
+      "title": "FACT FINAL \u2014 33-paper campaign: ZERO new factoring methods, but EVERY family closed by theorem or va"
     }
   ]
 }

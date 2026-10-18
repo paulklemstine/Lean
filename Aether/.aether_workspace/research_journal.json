@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "497c96d6",
-      "domain": "Physics",
-      "key_insight": "# Future directions — after the ECM wall audit\n\n## What this cycle settled\n\nWorking from the stage-1 order-completion theory already in the catalog\n(`Catalog/Shared/ECMStage1OrderCompletion.lean`, `…F",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 88,
-      "timestamp": "2026-08-28T14:27:33",
-      "title": "FACT round-74 #6 — ECM-STAGE2-WALL: the recorded destruction wall does not exist under outcome-separ"
-    },
-    {
       "cycle_id": "523b9317",
       "domain": "Probability",
       "key_insight": "# Future directions — band-9 `x² − N` smoothness, after the round-74 replication\n\nThe formal results of this cycle live in `Catalog/Probability/U9DriftIntervals.lean`,\n`U9DriftPooling.lean`, `U9DriftP",
@@ -2501,6 +2491,16 @@
       "theorem_count": 23,
       "timestamp": "2026-10-18T01:00:09",
       "title": "FACT round-33 (cont. 2) — UMW CORRECTION: the counting constraint is alpha >= 1-2beta, NOT alpha+bet"
+    },
+    {
+      "cycle_id": "21f94704",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — after the Factoring Frontier cycle\n\nThis cycle produced four machine-checked results (0 sorries), all in\n`Catalog/Applications/FactoringFrontier/`:\n\n* **MultiPolySplitSet** — the",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-10-18T23:49:05",
+      "title": "FACT FINAL — 33-paper campaign: ZERO new factoring methods, but EVERY family closed by theorem or va"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-18T01:00:09",
+  "last_updated": "2026-10-18T23:49:05",
   "open_questions": [
     {
       "context": "This file gives a complete, sorry-free proof of that formula, together with the",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "242b27e9",
-        "quality": 0.85,
-        "theorems": 55,
-        "title": "Finite-Key Bounds on a Certified Asymptotic Core"
-      },
-      {
         "cycle_id": "ed2d0af8",
         "quality": 0.78,
         "theorems": 61,
@@ -3141,6 +3135,12 @@
         "quality": 0.82,
         "theorems": 431,
         "title": "q-Vandermonde / q-binomial theorem"
+      },
+      {
+        "cycle_id": "21f94704",
+        "quality": 0.6,
+        "theorems": 35,
+        "title": "FACT FINAL — 33-paper campaign: ZERO new factoring methods, but EVERY family clo"
       }
     ],
     "Bridges": [
