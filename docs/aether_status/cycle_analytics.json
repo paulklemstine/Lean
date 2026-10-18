@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-18T01:00:09.891523+00:00",
+  "last_updated": "2026-10-18T14:00:05.769315+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -78377,6 +78377,37 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-18T01:00:09.537530+00:00",
       "title": "FACT round-33 (cont. 2) \u2014 UMW CORRECTION: the counting constraint is alpha >= 1-2beta, NOT alpha+bet"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Cryptography",
+      "duration_seconds": 14006.129740476608,
+      "end_time": 1792331948.2896924,
+      "failed": true,
+      "files_integrated": 0,
+      "job_id": "a40e2530",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_score": 0.0,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1792317942.159952,
+      "strategy_count": 0,
+      "theorem_count": 0,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-18T14:00:05.381624+00:00",
+      "title": "FACT round-33 \u2014 THE ORDER-FREE OPENING IS CLOSED: Harvey's 1/5 is pinned by an entirely ORDER-FREE t"
     }
   ]
 }
