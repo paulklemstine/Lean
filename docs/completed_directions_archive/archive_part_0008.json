@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-18T23:48:51Z",
-  "count": 24,
+  "archived_at": "2026-10-19T15:02:21Z",
+  "count": 25,
   "directions": [
     {
       "id": "fd_3552",
@@ -965,6 +965,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 372
+    },
+    {
+      "id": "fd_3998",
+      "title": "FACT round-77 #2 — K-TAXONOMY (GAP-L8 closed): k_pin / k_opt^cost / k_opt^econ formally defined and never conflated — exact identity econ ≡ census under W ↔ 2(T₀−1), +1.000 resolves paper 219's +~1 note",
+      "description": "## GAP-L8 CLOSED — k-TAXONOMY (round-77 #2, paper 224, theory deliverable)\n\nCloses draft items L8 + O5 of paper 219's roadmap (\"pin exp563's k\\* definition ... paper must name which\"). No new physics run; definitional/taxonomy result.\n\n### Three definitions\n1. **k_pin = ⌈log₂W⌉** — gain-saturation point: marginal gain exactly zero, support fully pinned. Paper 212's \"k\\*=⌈log₂W⌉\" retro-reads as this. NEVER an optimum.\n2. **k_opt^cost = argmin_k[k+(W/2^k+1)/2]** — T2 census total-cost stop. Dyadic W ⇒ tie set {log₂W−2, log₂W−1}, V\\*=log₂W+½ EXACT (W=2..4096); continuous location log₂W−1.5288.\n3. **k_opt^econ(T₀,c_q) = log₂((T₀−1)·ln2/c_q)** — net-economics optimum, queries paid c_q against the MEASURED baseline T₀.\n\n### Exact identity\nE(k;T₀,1)=1+k+(T₀−1)/2^k ≡ V(k; W=2(T₀−1))+½ pointwise ⇒ **k_opt^econ(T₀,1) == k_opt^cost(2(T₀−1))** (identical argmin sets AND locations). Factor-2 bookkeeping: T2 prices residual at half remaining support, exp563 charges full expected scan anchored at measured T̄₀. Unconverted same-number inputs differ by EXACTLY +1.000 query — paper 219's \"+~1\" note confirmed at exactly +1.\n\n### Numerical verification (`gapL8_check.py`, <2 s, ALL PASS)\n- Census offsets {−2,−1} rel log₂W, dyadic V\\*=log₂W+½ exact for all dyadic W ≤ 4096.\n- Identity max abs error < 1e-9; naive same-anchor shift exactly +1 on discrete argmin sets.\n- exp563 stored rows reproduce: balanced T̄₀=1072.425 → pred 9.536549 (=recorded), argmin 10 (=recorded); unbalanced T̄₀=286205.89 → pred 17.597922 (=recorded), argmin 18 (=recorded). Matched-anchor census gives same unique {10}/{18}.\n- Pin never coincides with either optimum: gap ∈ {1,2} for every W ≤ 4096.\n\n### Verdicts on coincidence\nOnly (k_opt^cost, k_opt^econ) ever coincide — after anchor conversion. k_pin NEVER coincides with either; conflating them overstates the work-optimal budget (exp563 balanced: 20 vs 10).\n\n### Naming rule adopted\nBare \"k\\*\" BANNED in future papers; must expand to k_pin / k_opt^cost (with W) / k_opt^econ(T₀,c_q) (with anchor and price). Draft T2 already complies.\n\n### Verification scope (disclosed)\nDefinitional result; verification = own check script ALL PASS + exact reproduction of previously-recorded exp563/T2-census values from stored rows (cross-validates against the existing record). NO separate adversarial verifier run — scope judgment, disclosed.\n\n### Ledger\nPapers-only bump: count UNCHANGED at 564. Assessment v330 → v331. Paper `ResearchOutput/NewMathematics/224_KTaxonomy.md`; artifacts `ResearchOutput/scripts/2026-08-24-round74/gapL8_k_taxonomy.md`, `gapL8_check.py`. Barrier framing: bookkeeping hygiene serving barrier-8 audit trail; residue cap 4/3 untouched; no breakthrough claimed.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "a22e921b",
+      "timestamp": "2026-08-24T13:15:17.261963+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.4,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-25T03:16:02.395650+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 371
     }
   ]
 }

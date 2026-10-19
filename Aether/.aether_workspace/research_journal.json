@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "523b9317",
-      "domain": "Probability",
-      "key_insight": "# Future directions — band-9 `x² − N` smoothness, after the round-74 replication\n\nThe formal results of this cycle live in `Catalog/Probability/U9DriftIntervals.lean`,\n`U9DriftPooling.lean`, `U9DriftP",
-      "quality_score": 0.76,
-      "sorry_count": 0,
-      "theorem_count": 153,
-      "timestamp": "2026-08-28T18:44:04",
-      "title": "FACT round-74 #7 — U9-DRIFT-POWER: independent-seed replication returns the sub-1 drift to null (cut"
-    },
-    {
       "cycle_id": "601f1720",
       "domain": "Pythagorean",
       "key_insight": "# Future directions — sequential hint pricing (SEQHINT-COMPOUND-LAW)\n\nWhat the cycles so far established (all in `Catalog/Pythagorean/SeqHint/`, zero\n`sorry`, standard axioms only):\n\n* fixed compariso",
@@ -2501,6 +2491,16 @@
       "theorem_count": 35,
       "timestamp": "2026-10-18T23:49:05",
       "title": "FACT FINAL — 33-paper campaign: ZERO new factoring methods, but EVERY family closed by theorem or va"
+    },
+    {
+      "cycle_id": "018ff499",
+      "domain": "Shared",
+      "key_insight": "# Future Directions (round 33 → round 34)\n\n## What survived, what failed, and why\n* **Survived (proved, 0 sorry):** the slack-constraint lemma for convex optimisation\n  (`SlackConstraint.slack_constra",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-10-19T15:02:36",
+      "title": "FACT round-33 (cont.) — CORRECTIONS + 8 THEOREM-WORTHY FACTS: the SLACK-CONSTRAINT LEMMA (a hypothes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-18T23:49:05",
+  "last_updated": "2026-10-19T15:02:36",
   "open_questions": [
     {
       "context": "This file gives a complete, sorry-free proof of that formula, together with the",
@@ -3889,12 +3889,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "42a2aa0b",
-        "quality": 0.84,
-        "theorems": 100,
-        "title": "FACT round-50 — DEGREE-11: full pinning at Q(zeta_23)+ completes the ladder thro"
-      },
-      {
         "cycle_id": "025e0adb",
         "quality": 0.82,
         "theorems": 46,
@@ -3947,6 +3941,12 @@
         "quality": 0.72,
         "theorems": 49,
         "title": "FACT round-40 #2 — ET-HINTS-THEORY: the crossing law — width can never substitut"
+      },
+      {
+        "cycle_id": "018ff499",
+        "quality": 0.62,
+        "theorems": 58,
+        "title": "FACT round-33 (cont.) — CORRECTIONS + 8 THEOREM-WORTHY FACTS: the SLACK-CONSTRAI"
       }
     ],
     "Tropical": [

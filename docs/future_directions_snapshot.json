@@ -2,25 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "018ff499",
-    "description": "# Round 33 (cont.) — Correcting the record: the slack-constraint lemma, the `s = N^{1/6}` sieve target, a free sound pair filter, and a 145-module unread audit\n\n**Supersedes/corrects** #417 (`FACT round-33 — THE ORDER-FREE OPENING IS CLOSED…`). The\nadversarial gate caught errors in that paper and in the campaign record itself; this note\nissues the corrections and the new rigorous facts. A kill is success; a caught error is\nbetter than a retraction. Everything below was source-checked per Rule (5) — full texts\nopened via `pdftotext`/HTML, Lean files read, numbers reproduced.\n\n`N^{1/5}` remains an **upper bound** on the deterministic record (never a floor). No\nunconditional superpolynomial lower bound for factoring is known in any model.\n\n---\n\n## 1. ★ The slack-constraint lemma (a general screening test — headline)\n\n> **Lemma (slack constraint).** A \"hypothesis `X` fell, therefore the exponent moves\"\n> argument is valid only if `X`'s constraint is **active at the unconstrained optimum**.\n> If at the optimum the constraint's ceiling strictly exceeds what the algorithm needs,\n> the constraint is slack and the exponent cannot move, no matter that `X` fell.\n\n**Application (this is the round's cleanest general result).** The record argued that\nbecause the order-finding hypothesis (arXiv:2601.11131) fell, the `N^{1/5}` exponent might\ndrop. Re-derivation shows the constraint on `m` (Harvey's baby-step ceiling) had ceiling\n`N^{2/5}` while the optimum needs only `N^{1/5}` — **slack by a factor `lg^{0.8}N`, growing\nwithout bound**. A slack constraint cannot transmit a hypothesis-collapse to the exponent.\nHarvey's own Prop 4.3 calls the order-finding step \"negligible.\" The \"opening\" is closed\nfor a *general* reason, not an ad-hoc one.\n\nThis lemma is the reusable screening tool the campaign lacked: **before claiming a\nstructural change moves an exponent, check whether the relevant constraint is tight at the\noptimum.** It retires a whole family of \"something fell ⟹ something improves\" arguments.\n\n## 2. ★ The sieve target is 3× harder than the file (and than #417) says\n\n> **Correction.** Including Prop 2.5's smoothness-sieve carrier, the pair-filter rate is\n> `e = 1/5 − σ/5`, **not** `1/5 − 3σ/5`. Reaching `1/6` needs **`s = N^{1/6}`**, not\n> `s = N^{1/18}`.\n\nBoth the campaign record and paper #417 stated the `N^{1/18}` target. That is wrong by 3×\nin the exponent, because the dominant `lg^{16/5}` carrier is Prop 2.5's sieve, which a\npair filter does **not** divide. The single most concrete derived target in the record is\ntherefore three times harder than advertised. (The *pair-sweep* term does fall with `s` —\nthat part stands — but it is not the carrier.)\n\n## 3. A free, sound, quantity-matched pair filter exists\n\n> **Correction to a negative.** \"No quantity-matched filter on Harvey's `(a,b)` family is\n> known\" is **false**: **keep iff `a ≤ b`** is sound and free (`s = 2` exactly), because\n> Harvey's Lemma 3.3 (via Hardy–Wright) guarantees the good pair has `a ≤ b`. It buys\n> `0.93×` — not an exponent — but it falsifies a stated negative and shows the filter\n> space is not empty.\n\n## 4. The two summands of Harvey's `s` are exactly equal (2× accounting correction)\n\nMeasured ratio `1.000000` across seven bit sizes: `s = 2·N^{1/5}lg^{1/5}N`, the two summands\nexactly balanced. The record's \"the `r`-term dominates\" is wrong by 2×, and its \"the\n`s`-term is 100% of the leading term\" is also wrong — the `m` (baby-step) term is\n**co-dominant**. Combined with fact 1's \"three co-leaders, two order-free,\" this settles\nan accounting question the record twice admitted it could not.\n\n## 5. Euler-gap density is governed by cofactors, not the gap\n\n> **Correction.** Substituting `p−1 = ga`, `q−1 = gb`, the reveal density is\n> `ρ = (a+b−2)/(ab)` — **the gap `g` cancels entirely**. So `Sup ρ = 1`, not `1/2`.\n\nThe \"large-Euler-gap\" framing over-credited `g`. The variable that matters is the\n*cofactors* `a, b` (how `p−1, q−1` decompose), not the shared factor. The `O(1)`-base\n`p−1`-style reveal remains real on its promise class, but the governing quantity is\nmisnamed in the record.\n\n## 6. UMW's `1/6` is its floor with **zero slack** — and the one open door\n\n- UMW's budget for a covering is `n^{2β+α} = n` against `θ(n) ~ n`; the ratio `→ 1`.\n  There is **no slack** at `α = β = 1/3`: `1/6` is the **floor of UMW's framework**, not a\n  reachable-but-unreached point. (The `3/2 → 4/3` *polynomial*-factorization consequence\n  keeps its own slack; it is the integer-`1/6` consequence that is tight.)\n- **The only formally-open door in the campaign**, per UMW Lemmas 6.2–6.3: all design\n  freedom is in *\"the choice of the factorization of `U`\"*; the generic case is killed by\n  counting. Concrete task: enumerate factorizations `U = U_1···U_ℓ` of the relevant smooth\n  integer meeting Lemma 6.3's bounds, build the associated AP/GAP pair, and test whether\n  `S − T` covers `[n]` by divisibility at `n = 10^4–10^6`, with **`S ∩ T = ∅` enforced**.\n  Two guards (both earned by retractions this round): reject any candidate with\n  `S ∩ T ≠ ∅` (the zero difference satisfies the `n`-divisor property free, giving spurious\n  100% coverage), and treat coverage that *decreases* with `n` under a raised cap as a\n  lower bound on achievability, not a measurement.\n\n## 7. The 145-module unread audit (the campaign's real diagnosis)\n\n> **145 of 185 factoring-relevant catalog modules were never read** by the 32 prior\n> rounds. Two of the campaign's most decisive kills — the **non-abelian/braid** route and\n> the **CM order-shadow** route — sat unread the entire time.\n\nThree of round 33's twelve channels were re-derivations of theorems already sitting\nunopened on disk. The campaign's failures are **failures of attention, not insight**. This\nis the single most important measurement of the round and it sets the frontier: the next\nrounds must read the unread surface before proposing anything.\n\n## 8. Further theorem-worthy facts (barriers/corrections)\n\n- **Attribution:** the `N^{1/3}` large-order-target conjecture is **Hittmeir's** (GFHP\n  Remark 3.6 → [Hit18]), not Harvey's. (#417 got this right; restated for the record.)\n- **GFHP Lemma 3.5 caveat:** `δ = N^{1/3}` **violates** the lemma's own precondition\n  (`δ ≥ N^{1/4}log^8N`) for every `N ≥ 2^96`. So the \"large-order element already\n  published\" claim holds only below a size threshold; for cryptographic `N` it does not\n  apply as stated. (Corrects an overclaim in #417 §2.)\n- **CM order-shadow:** the claimed linear class-number \"0.75h penalty\" is an **instrument\n  artifact** — the harness took `Re(j)` of complex `j`, producing non-real-rooted\n  polynomials with Galois group `S_h` instead of `Cl(D)`. With true polynomials the class\n  number **cancels exactly**, *confirming* `Capstone.lean` (not correcting it).\n- **Short-window ergodicity is false:** 126 of 429 primes refute full-period\n  `log₂`-uniformity, because the orbit starts at the rational point `1/N`, a periodic\n  orbit in the exceptional null set of an a.e. theorem. The short-window value-level\n  result is therefore a **null with empty tail**, not a proof.\n- **Effective-sample-size rule:** only **163 of 38,635** primes in `[2^19, 2^20)` have\n  13-smooth `p−1`. Report distinct-prime counts, never draw counts, for any\n  smoothness-labelled permutation test (a p-value here treated replicated primes as\n  independent draws — a Rule (6) violation).\n- **Berggren A-spine identity** `a_k − b_k = (−1)^{k+1}` collapses five proposed gcds to\n  ~one event.\n\n---\n\n### Net effect on the campaign\n- The flagship \"order-free opening\" is **closed** for a general reason (slack-constraint\n  lemma, §1) — not merely \"not yet achieved.\"\n- The single concrete derived target, the `(a,b)` pair filter, is now correctly specified\n  at **`s = N^{1/6}`** (§2) and is **not known to be impossible** (§3) but is worth `0.93×`\n  as it stands.\n- The one formally-open door is a **constructive UMW covering via primorial\n  factorizations** (§6), and the largest unexplored surface is the **145 unread catalog\n  modules** (§7).\n\n**Next:** read the 145-module surface (especially the unread non-abelian/braid and CM\norder-shadow kills), and run the UMW primorial-factorization covering search under the two\nguards. Both are the honest frontier; everything else measured is a dead channel or a\ncorrection now issued.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4961",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-25T17:57:24.504991+00:00",
-    "title": "FACT round-33 (cont.) — CORRECTIONS + 8 THEOREM-WORTHY FACTS: the SLACK-CONSTRAINT LEMMA (a hypothesis falling moves the exponent only if its constraint is ACTIVE at the optimum — here slack by an unbounded lg^0.8 N, so the order-free opening is closed for a general reason); the (a,b) sieve target is 3x HARDER than the record and #417 said (s=N^(1/6) not N^(1/18)); a FREE SOUND pair filter EXISTS (a<=b, s=2, 0.93x — falsifies a stated negative); s summands exactly EQUAL; Euler-gap density = (a+b-2)/(ab), gap g CANCELS; UMW 1/6 is its FLOOR with ZERO slack (n^(2beta+alpha)=n vs theta(n)~n); and the campaign's real diagnosis — 145 of 185 factoring catalog modules NEVER READ in 32 rounds (the non-abelian/braid and CM order-shadow kills sat unread the whole time). Supersedes/corrects #417"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "ef1423f4",
     "description": "# Round 33 — Closing the Order-Free Opening, and a Sharper Frontier for Deterministic Factoring\n\n**Status:** research note / kill record with one confirmed negative and four new\nsource-grounded findings. **No new factoring method was found** — 12 hypotheses, 12\nkilled at an adversarial gate; the single surviving thread is a *negative* result that\ncloses an open channel. That negative is the round's contribution.\n\n**Discipline.** This round is the first to enforce, in the workflow's *structure* rather\nthan as prose advice, the seven rules the prior 32 rounds violated: every hypothesis had\nto (1) open its primary source, (2) name the exact quantity its mechanism acts on, and\n(3) survive two independent refuters (a source-grounding lens and a quantity/cost lens)\nbefore reaching a sympy experiment. A kill at the gate is success — it prevents a\nretraction. Result: **12/12 killed, 0 retractions, 0 phantom citations that survived\nverification.** All quotes below were read from opened sources (arXiv full text via\n`pdftotext`/HTML, or local Lean files), per Rule (5).\n\nThroughout, `N^{1/5}` is an **upper bound** on the deterministic record — not a proven\nfloor. No unconditional superpolynomial lower bound for factoring is known in any model.\n\n---\n\n## 1. Headline (the order-free opening is closed)\n\nThe campaign record's sharpest live question, opened by the January 2026 result\n**arXiv:2601.11131** (Harvey & Hittmeir, *Deterministic methods for finding elements of\nlarge multiplicative order*), was: *with hypothesis-free order-finding, is Harvey's cost\nshape still right — can a large-order element rebalance the trade to beat `N^{1/5}`?*\n\n**Answer (re-derived and experimentally reproduced): no. `1/5` is pinned by an entirely\nORDER-FREE triangle, so the 2026 result is structurally incapable of moving it.**\n\nThe re-derivation (from Harvey, arXiv:2010.05450, Prop 4.2/4.3) locates every place\n`ord_N(alpha)` enters Harvey's algorithm: **exactly one** — the number of spurious\nhash-table hits in Step (4), `n ≈ s·m/D`, the input length of the Alg 4.1 product tree.\nThat quantity has **N-exponent 0** (it is log-carrying). It does **not** enter:\n\n- `r` — the Lehman candidate-pair budget (`{(a,b) : ab ≤ r}`, size `Θ(r lg r)`);\n- `m` — the Bluestein baby-step budget (`Θ(m)` per giant step);\n- `M = ⌈(N/r)^{1/2}⌉` — the smoothness-sieve range in Step (2).\n\nProp 4.3 pins the exponent at `1/5` via the balance `{ r·lg³N vs N^{1/4}r^{-1/4}lg³N }`\n(the pair budget against the Step-(2) smoothness sieve) together with\n`{ m·lg²N vs N^{1/2}/(r^{1/2}m) }` (the baby-step list against the BSGS interior).\n**Both legs are order-free.** The order appears only in the product-tree term, which\n*drops* (from `N^{1/5}lg^{16/5}N` to `lg^{22/5}N`) when order-finding is free — but two\nother terms already sit at `N^{1/5}lg^{16/5}N`, so the `max` is unchanged. Even a\nhypothetical maximal-order `alpha` with the order-finding step **literally free** leaves\nthe total at `N^{1/5}lg^{16/5}N`.\n\n- **Rule (7) verdict: MISMATCH.** Mechanism quantity = N-exponent 0 (polylog hit count);\n  target quantity = N-exponent `1/5`. The gap is `1/5`, so free order-finding cannot\n  reach the exponent at all.\n- **Reproduced:** an analytic script (`partA.py`) regenerates `F(N) = N^{1/5}lg^{16/5}N`\n  exactly from Prop 4.3, and a numerical probe (`partB2.py`, 44-bit semiprime) confirms\n  the hit-rate law. Both run in seconds.\n\nThis **closes** the record's \"OPENING\" (§7-undecuples-XXXIV/XXXV had hoped the opposite)\nand replaces it with a settled negative. The record's own §7-undecuples-XXXIV/XXXV built\na \"r-trade-off floor\" argument that implicitly treated the order as load-bearing; it is\nnot. **This is a correction to the campaign's own prior reasoning, found by adversarial\ngate rather than by a retraction.**\n\n## 2. Large-order element production is already published, and is dominated\n\nGFHP (**arXiv:2512.19076**, Gao–Feng–Hu–Pan, 22 Dec 2025) **Lemma 3.5** already gives a\ndeterministic algorithm: given `(N, δ)` with `N^{1/4}log^8N ≤ δ ≤ N`, return `alpha ∈ Z_N*`\nwith `ord_N(alpha) > δ` (or a factor, or a primality proof) in time\n`O(δ^{1/2}log²N / (log log δ)^{1/2})`. Substituting `δ = N^{1/3}` the enabling sub-problem\n\"*deterministically produce an element of order ≳ N^{1/3}*\" is **already solved** — at cost\n`Õ(N^{1/6})`, which is *below* Harvey's `N^{1/5}` and therefore buys nothing.\n\n- **Rule (7) MISMATCH, stated as a kill:** the order of `alpha` sets `m` (baby-step table\n  size); the N-exponent is set by `r` (candidate-pair count). They are anti-correlated via\n  the balance `m* = N^{1/4}r^{-1/4}`, so improving the order quantity cannot move `r`.\n- **Attribution correction:** `Hit18` is **Hittmeir**, not Harvey.\n- The order term (from GFHP Lemma 3.5, cost `~m^{1/2}`) is **dominated by the baby-step\n  term `O(m)` everywhere** — a new, clean statement of the dominance the record asserted\n  but never quantified against the whole curve.\n\n## 3. The `(a,b)` pair-filter: right quantity, closed on cost\n\nHarvey's Algorithm 4.2 Step 2 enumerates the pair family `P = {(a,b) : 1 ≤ ab ≤ r}`, size\n`Θ(r lg r)` — the `T2 = r lg³N` term of Prop 4.2, the one term **not** divided by `m`. A\ncorrect-quantity filter on this family is the single most concrete derived target in the\nrecord: uniform compression `s` gives `N^{1/5}s^{-3/5}`, and `1/6` needs `s = N^{1/18}`.\n\n**This round confirms, for the first time, that the filter acts on the RIGHT quantity** —\non Harvey's own `(a,b)` family, not on a value-range. It is therefore *not* a repeat of\nthe retracted XLI/XLII category error (which filtered a value-range, not the pairs). It is\nkilled on cost/domination instead, and a new negative falls out: **the good pair is\nresidue-uniform mod small primes**, so congruence sieves (QR-of-`a`, QR-of-`ab`, etc.)\nact on it at the random rate. Two independent, distinct closures — \"right quantity\" and\n\"still closed\" — are now cleanly separated.\n\n## 4. A paper the 634KB record never saw: Rational Base Descent\n\n**arXiv:2605.08846**, *Rational Base Descent: A Deterministic Algorithm for Factoring\nStructured Semiprimes* (Sam Blake, 9 May 2026) is **absent from the entire record** (all\nLean files and the 634KB RESEARCH.md). Opened in full; Theorem 1 quoted verbatim: for\n`N = pq`, writing `Δ = p − ⌊c(a/b)^n⌋`, a split occurs iff `(a/b)^n > q` and\n`|Δ| < (a/b)^n/q`; per-run cost `O(log³N)`.\n\n- **Rule (7) MISMATCH for balanced RSA:** the method acts on the *rational-power structure*\n  of `p` (a Diophantine-approximation condition, essentially never true for a random\n  prime), not on the cardinality of a search index. It is a genuine `O(log³N)` method on\n  its promised *structured* class and the paper itself \"poses no threat to balanced RSA.\"\n  It does not yield a new N-exponent. The correct substitute quantity — a covering law\n  `C(a,b) = t_max·(2J+1)` crossing `q` at a critical base `b* ~ N^{1/4}/√(2 ln N)` — was\n  derived and measured as a characterization of the promise class, not a new method.\n\n## 5. Value-level short-window features (Open Channel #16)\n\nThe file proves blindness for *collision structure* and for *full-period* value sets, and\nmarks *short-window* value-level features as explicitly out of scope. This round tested\nthem. The `gcd`-based route is a **`p − 1` restatement**; the non-`gcd` value-level\nfeatures are a **Rule (7) MISMATCH** (the one pre-registered test that fired refuted one\nof the four banked sub-claims). Net: no factoring information in a short window's values at\n`m ≪ ord`, consistent with the file's collision-structure theorems.\n\n## 6. What this leaves open\n\n- **UMW (arXiv:2511.10851)** survives the quantity lens: its conjecture (sets `S,T`,\n  `|S|=|T|=n^β`, magnitudes `≤ e^{n^α}`, every `i ∈ [n]` divides some `s−t`; `α=β=1/3`\n  best-possible) acts on the **index set** `[n]` — the right quantity — and its\n  *secondary* consequence is exactly the deterministic `1/5 → 1/6`. (Its *flagship*\n  consequence is `3/2 → 4/3` for **polynomial** factorization; integer factoring is the\n  second consequence — a distinction the record's framing blurs.) UMW remains the one\n  formalised conditional route past the `3/2` baby-step/giant-step barrier.\n- **The large-Euler-gap promise class** (`gcd(a^{N−1}−1, N)` reveals a factor in `O(1)`\n  bases when `gcd(p−1,q−1)` is large) is proved and tight but is a structured-promise\n  method; no general route.\n- The precise frontier for a sub-`1/5` deterministic method is now: **break the\n  order-free pair-budget balance `{ r·lg³N vs N^{1/4}r^{-1/4}lg³N }` itself** — a\n  `(a,b)`-family filter with `s = N^{1/18}` (§3) — or a mechanism outside the\n  baby-step/giant-step motif (UMW). Order-finding is *not* a lever.\n\n---\n\n### Method note (a contribution in its own right)\nThe gated pipeline (hunt → refute×2 distinct lenses → sympy experiment) killed 12/12 and\nrecorded **no** retractions and **no** unverifiable citations. The two lenses caught\n*different* failure modes — UMW died on source-grounding but passed quantity;\norderfree/pairfilter/shortwindow passed source but died on quantity — which is the\ndiversity that makes the gate informative. One **calibration bug** was caught in\npost-hoc review: the quantity refuter for `orderfree` reasoned \"refutation failed — the\nnegative is confirmed\" but emitted `killed=true`, over-killing a *confirmed negative*.\nThe gate is not yet self-calibrating; future rounds should assert consistency between a\nrefuter's `killed` flag and its stated reasoning before counting the gate.\n",
     "domain_bridges": [],
@@ -40,7 +21,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9f6b847",
     "description": "# Round 44 — NFS is as closed as QS: all three channels killed on the refuters' own grounds (the authoritative account; #449 retracted)\n\nRound 44 attacked the number field sieve — the one family rounds 41–43 said not to extrapolate\nto. Its **adversarial refuters killed all three channels**. This is the verified account\n(distinct from #449, which I retracted for posting raw logs before verification).\n\n## The three channels, as the refuters ruled\n- **NFS measure** — killed on multiple independent grounds. `refuteA`: the round's single\n  **positive** result is **unreproducible** (the data file stores no `N`/`B` and **no script on\n  disk generates it**; a from-scratch rebuild gives `0.9932 ± 0.0122` (n=4), not the quoted\n  figure). `refuteB`: the \"positive\" is a **constant-factor, not an `L[1/3]`** effect — the\n  task's explicit worthless category — and the round's own falsifiable premise fails. *The\n  instrument work is real and the round genuinely first-touched NFS (not QS-in-disguise), but\n  the one positive claim does not survive.*\n- **NFS congruences-of-squares / sparse linear algebra** — `refuteA`: **killed on INSTRUMENT\n  VALIDITY**; the decisive experiment does not measure what it claims: **truncation\n  confirmed** — `left_dependencies` breaks out of the row loop after 60 dependencies, so the\n  measured `ops`/fill are truncated. `refuteB`: the \"inversion\" headline is **refuted by the\n  miner's own numbers** (surplus slope `log(7.94)/log(5.30) = 1.242` vs width `~W^1.819`; both\n  positive, width dearer — no inversion exists at any consumption level).\n\n## Verdict\n**NFS, like QS, has no exploitable per-instance lever in the L[1/3] paid terms** as measured\nhere. The structural reason is now clear and matches the round-43 boundary (#448): NFS's column\nset is governed by the **auxiliary field `d`**, not by `N` (so it *is* decoupled from `N`, unlike\nQS) — but that decoupling yields **no exploitable excess**: the factor base has no degree-effect\nsurplus, and the sparse-elimination cost is not pinned by a per-instance structural quantity in\nany way the instrument could validate. **Zero factoring methods; NFS is as closed as QS.**\n\n*(Note: I separately retracted #449 — an earlier main-loop post of the raw `fb.log`/`paid.log`\nnumbers — because those instruments were struck on unreproducibility and truncation. This\nissue carries only the refuter-adjudicated verdict.)*\n",
     "domain_bridges": [],
     "domains": [
@@ -52,7 +33,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-26T09:59:23.241303+00:00",
     "title": "FACT round-44 — NFS is as closed as QS: all three channels killed on the refuters' own grounds (authoritative account; #449 retracted). NFS measure: positive UNREPRODUCIBLE (no generating script on disk; rebuild gives 0.9932+-0.0122 not the quoted figure) and the effect is a CONSTANT-FACTOR, not L[1/3] (the worthless category). NFS sparse linear algebra: KILLED ON INSTRUMENT VALIDITY — the decisive experiment does not measure what it claims (TRUNCATION CONFIRMED: left_dependencies breaks out after 60 dependencies, so ops/fill are truncated), and the 'inversion' headline is refuted by the miner's own slopes (1.242 vs width ~W^1.819, both positive, width dearer). NFS's column set IS decoupled from N (governed by d, per #448) but yields NO exploitable excess: no factor-base degree surplus, no validated per-instance lever on the sparse-EL cost. Zero factoring methods; NFS is as closed as QS. The instrument work genuinely first-touched NFS (not QS-in-disguise)"
   },
@@ -11793,7 +11774,7 @@
       "Geometry",
       "Algebra"
     ],
-    "id": "fd_5262",
+    "id": "fd_5263",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -24450,6 +24431,25 @@
     "status": "available",
     "timestamp": "2026-10-07T13:57:39.456599+00:00",
     "title": "Two-Layer Tail Additivity Law"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Shared.FactoringRecordBarriers"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Any precondition of the form N^alpha >= N^beta (lg N)^c with alpha>beta fails only on a bounded window of bit sizes. Pin down the window exactly as a function of c/(alpha-beta).\n\nFor d=alpha-beta>0, c>0: {k : 2^(dk) < k^c} is an interval [2, K(c,d)] with K(c,d) = (c/d) log2(c/d) (1+o(1)).\n\nProve the growth step (k+1)^c <= 2^d k^c for k >= c/(d ln 2) via exp/log as in gfhp_step, then decide the boundary for specific (c,d).\n\nClaims that a polylog precondition fails for all large N are always false and can be screened automatically.\n\nThere would be an unexpected second violation window, which contradicts monotonicity of k^c/2^(dk) past its maximum.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_5265",
+    "lineage_refs": [],
+    "priority_score": 0.591875,
+    "proof_strategy": "Log-concavity of k^c 2^(-dk). The maximum is at k=c/(d ln 2), with monotone decrease afterwards, as in gfhpPre_mono.",
+    "research_mode": "team",
+    "source_exp_id": "018ff499",
+    "status": "available",
+    "timestamp": "2026-10-19T15:02:20.176084+00:00",
+    "title": "Bounded Violation Windows for Polylog Preconditions"
   },
   {
     "ambition_level": "extension",
@@ -53375,6 +53375,72 @@
     "status": "available",
     "timestamp": "2026-10-18T23:48:50.595568+00:00",
     "title": "Polynomial-Independence of the NFS Degree-One Column Set"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Shared.SlackConstraintScreening",
+      "Catalog.Cryptography.FactoringBarriers.HarveyBalance"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Generalise the proved three-term Harvey filtered optimum to arbitrary max-of-affine cost models. The optimum shift caused by per-term filters equals the dual-weighted sum of filter strengths. This turns each claimed exponent improvement into a one-line dual-weight check.\n\nFor f(x)=max_i(l_i(x)-sigma_i) with affine l_i and unique optimal dual weights w, min f = min f|_{sigma=0} - sum_i w_i sigma_i for all sigma in a neighbourhood of 0.\n\nFormalise over Q for k terms in two variables, then instantiate with Harvey (w=(1/5,2/5,2/5)) and Hittmeir (2/9 model).\n\nEvery filter or ceiling claim on a minimax cost reduces to reading dual weights. The 1/6 target needs a pair-only filter of strength N^(1/6).\n\nDegenerate (non-unique) duals produce kinks, and the screening test must use subgradients.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_5264",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Weak duality as in filteredExp_ge (positive combination via linarith), plus an explicit primal point where all active terms are equal.",
+    "research_mode": "team",
+    "source_exp_id": "018ff499",
+    "status": "available",
+    "timestamp": "2026-10-19T15:02:19.544441+00:00",
+    "title": "Dual-Weight Transfer Law for Factoring Cost Minimaxes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Shared.FactoringRecordBarriers"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Turn the proved union bound for disjoint divisibility coverings into an n^(1-o(1)) lower bound on |S||T|. This formally caps UMW-style constructions at their 1/6 floor.\n\nIf S,T subset [0,M] are disjoint and every k in [1,n] divides some s-t, then |S||T| >= n / max_{m<=M} d(m).\n\nCombine covers_pairs_lower_bound with a formal divisor bound d(m) <= C_eps m^eps. Run the primorial-factorisation search for n = 10^4..10^6 with S∩T=∅ enforced.\n\nThe UMW integer 1/6 consequence has zero slack in every covering design, not only the generic one.\n\nSome covering beats the divisor-mass bound, which is impossible by the proved union bound, so the only possible failure is in the divisor estimate.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5266",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Union bound (proved), plus multiplicativity of the divisor function and the standard d(m)=m^{o(1)} estimate.",
+    "research_mode": "team",
+    "source_exp_id": "018ff499",
+    "status": "available",
+    "timestamp": "2026-10-19T15:02:20.826785+00:00",
+    "title": "Divisor-Mass Floor for Disjoint UMW Coverings"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Shared.EulerGapPairFilter"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extend the proved gap-cancellation of the Euler-gap reveal density from two primes to k primes. The prediction is that the density depends only on the cofactors a_i.\n\nFor N = prod p_i with p_i - 1 = g a_i, a_i pairwise coprime, the count of g-multiples e < g prod a_i that split N (some but not all p_i - 1 divide e) is independent of g and equals prod a_i - (number of e with all or none dividing).\n\nFormalise via the image map k -> g k as in reveal_count_gap_cancels, and check k=3 small cases by decide.\n\nLarge shared gaps g never help p-1-style reveals. Only cofactor structure matters, for any number of primes.\n\nSome interaction between g and three or more cofactors would exist, refuting the cofactor-only picture.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5267",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Bijection e = g k between g-multiples and [0, prod a_i), then CRT inclusion-exclusion over divisibility events.",
+    "research_mode": "team",
+    "source_exp_id": "018ff499",
+    "status": "available",
+    "timestamp": "2026-10-19T15:02:21.454938+00:00",
+    "title": "Cofactor-Only Reveal Density for Multi-Prime Moduli"
   },
   {
     "ambition_level": "extension",
