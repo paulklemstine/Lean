@@ -11747,6 +11747,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Weighted configurations and the nonexistence of arithmetic ball quotient compactifications' and formalize its key results. Abstract: We prove that, for every $n\\ge9$, no ordered GIT quotient of $n$ points on $\\mathbb P^1$ with positive rational weights smaller than one and of total weight two is isomorphic to the Baily--Borel compactification of an arithmetic complex ball quotient. The weights may lie on stability walls, and the lattice may have torsion and ramify along divisors. No compatibility with a prescribed period map is assumed. The proof compares homomorphisms from the tangent bundle to line bundles of negative degree with normal bundles of arithmetic fixed subvarieties. We describe these homomorphisms through coincident marked points and prove vanishing statements for their kernels. The comparison, together with integrality of Chern classes and the invariant theory of finite reflection groups, gives the nonexistence theorem without a Fano assumption on the GIT quotient.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_5261",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
+    "research_mode": "team",
+    "source_exp_id": "2610.23228v1",
+    "status": "available",
+    "timestamp": "2026-10-19T01:53:42.626988+00:00",
+    "title": "ArXiv paper: Weighted configurations and the nonexistence of arithmetic ball quotient compactifications"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domain_bridges": [],
     "domains": [
