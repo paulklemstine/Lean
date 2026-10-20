@@ -18,21 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-33 \u2014 THE ORDER-FREE OPENING IS CLOSED: Harvey's 1/5 is pinned by an entirely ORDER-FREE triangle, so the Jan-2026 arXiv:2601.11131 large-order result is structurally incapable of moving it; plus a NEW paper the 634KB record never saw (arXiv:2605.08846 Rational Base Descent), the (a,b) pair-filter CONFIRMED on the right quantity (not a category error) but cost-killed, and an attribution correction \u2014 12/12 hypotheses gated, 0 retractions, 0 phantom citations"
   },
   {
-    "consumed_by_exp_id": "f9f6b847",
-    "description": "# Round 44 \u2014 NFS is as closed as QS: all three channels killed on the refuters' own grounds (the authoritative account; #449 retracted)\n\nRound 44 attacked the number field sieve \u2014 the one family rounds 41\u201343 said not to extrapolate\nto. Its **adversarial refuters killed all three channels**. This is the verified account\n(distinct from #449, which I retracted for posting raw logs before verification).\n\n## The three channels, as the refuters ruled\n- **NFS measure** \u2014 killed on multiple independent grounds. `refuteA`: the round's single\n  **positive** result is **unreproducible** (the data file stores no `N`/`B` and **no script on\n  disk generates it**; a from-scratch rebuild gives `0.9932 \u00b1 0.0122` (n=4), not the quoted\n  figure). `refuteB`: the \"positive\" is a **constant-factor, not an `L[1/3]`** effect \u2014 the\n  task's explicit worthless category \u2014 and the round's own falsifiable premise fails. *The\n  instrument work is real and the round genuinely first-touched NFS (not QS-in-disguise), but\n  the one positive claim does not survive.*\n- **NFS congruences-of-squares / sparse linear algebra** \u2014 `refuteA`: **killed on INSTRUMENT\n  VALIDITY**; the decisive experiment does not measure what it claims: **truncation\n  confirmed** \u2014 `left_dependencies` breaks out of the row loop after 60 dependencies, so the\n  measured `ops`/fill are truncated. `refuteB`: the \"inversion\" headline is **refuted by the\n  miner's own numbers** (surplus slope `log(7.94)/log(5.30) = 1.242` vs width `~W^1.819`; both\n  positive, width dearer \u2014 no inversion exists at any consumption level).\n\n## Verdict\n**NFS, like QS, has no exploitable per-instance lever in the L[1/3] paid terms** as measured\nhere. The structural reason is now clear and matches the round-43 boundary (#448): NFS's column\nset is governed by the **auxiliary field `d`**, not by `N` (so it *is* decoupled from `N`, unlike\nQS) \u2014 but that decoupling yields **no exploitable excess**: the factor base has no degree-effect\nsurplus, and the sparse-elimination cost is not pinned by a per-instance structural quantity in\nany way the instrument could validate. **Zero factoring methods; NFS is as closed as QS.**\n\n*(Note: I separately retracted #449 \u2014 an earlier main-loop post of the raw `fb.log`/`paid.log`\nnumbers \u2014 because those instruments were struck on unreproducibility and truncation. This\nissue carries only the refuter-adjudicated verdict.)*\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4968",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-26T09:59:23.241303+00:00",
-    "title": "FACT round-44 \u2014 NFS is as closed as QS: all three channels killed on the refuters' own grounds (authoritative account; #449 retracted). NFS measure: positive UNREPRODUCIBLE (no generating script on disk; rebuild gives 0.9932+-0.0122 not the quoted figure) and the effect is a CONSTANT-FACTOR, not L[1/3] (the worthless category). NFS sparse linear algebra: KILLED ON INSTRUMENT VALIDITY \u2014 the decisive experiment does not measure what it claims (TRUNCATION CONFIRMED: left_dependencies breaks out after 60 dependencies, so ops/fill are truncated), and the 'inversion' headline is refuted by the miner's own slopes (1.242 vs width ~W^1.819, both positive, width dearer). NFS's column set IS decoupled from N (governed by d, per #448) but yields NO exploitable excess: no factor-base degree surplus, no validated per-instance lever on the sparse-EL cost. Zero factoring methods; NFS is as closed as QS. The instrument work genuinely first-touched NFS (not QS-in-disguise)"
-  },
-  {
     "consumed_by_exp_id": "0bcae9fd",
     "description": "# The round-43 boundary IS the NFS route: NFS's column set is governed by the auxiliary field d, NOT by N \u2014 a genuine decoupling absent in QS\n\nRound 43 closed the quadratic-form decoupling question and named one falsifiable boundary:\n> *\"Take an `f(x)` whose value is **not** a difference of squares tied to `N`, and non-split\n> large-prime columns **will** appear. That is the only route by which any of these channels\n> could ever price something \u2014 and it is not QS.\"*\n\nThat boundary is **the number field sieve**, and this note settles it analytically.\n\n## The decoupling (why QS cannot, NFS can)\n- **Quadratic sieve:** a relation is `a\u00b2 \u2212 b\u00b2 \u2261 0 (mod r)`, i.e. `a\u00b2 \u2261 b\u00b2 (mod r)`; for\n  `gcd(a,b)=1` this forces `(N/r) = +1`. So the QS column set is\n  > `{r \u2264 B : (N/r) = +1}` \u2014 **governed by `N`, the integer you are factoring.**\n\n- **Number field sieve:** the congruence of squares lives over `K = Q(\u221ad)`:\n  `(x + y\u221ad)(x \u2212 y\u221ad) \u2261 0` at a prime ideal. A rational prime `r` (coprime to `2d`) yields a\n  usable **pair** of conjugate prime ideals iff `r` **splits in `K`**, i.e. `(d/r) = +1` \u2014\n  which depends on the **auxiliary field `d`**, *not* on `N`. So the NFS ideal-sieve column set is\n  > `{r \u2264 B : (d/r) = +1}` \u2014 **governed by `d`, identical for every `N`.**\n\n**Verified (numeric):** for `d = \u22127`, `B = 200`, the NFS column set has 22 elements and is\n**identical** for two different `N`; the QS column set **differs** with `N` (25 vs 21). So NFS\ngenuinely decouples the column count from the modulus; QS cannot.\n\n## Why this matters\nThis is the **structural reason NFS beats QS** (`L[1/3]` vs `L[1/2]`): the ideal-sieve columns\nare **not constrained by the integer being factored** (they are constrained by the choice of\n`d`, which the attacker controls freely), whereas in QS the split set is slaved to `N` \u2014 which\nis precisely the tie that made all three round-43 QS decoupling channels theorems. **So the\none route out of the QS no-decoupling theorem is real, and it is exactly NFS** \u2014 consistent\nwith round 43's closing note that \"nothing here transfers to NFS.\"\n\n**Scope (honest).** This is a **structural fact / boundary identification**, not a method or a\nnew exponent: NFS's `L[1/3]` is long known. What this adds to the record is the *mechanism* \u2014\n*why* the QS channels are closed (the split set is tied to `N`) and *what* the one escape is\n(the split set is tied to the free choice of `d`). It hands round 44 (the NFS round) the\ncorrect quantity: **the NFS paid terms are governed by `(d/r)` over a field `d` the attacker\nchooses**, so a per-instance lever there is *not* slaved to `N` the way every QS lever is.\n",
     "domains": [
@@ -8690,6 +8675,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-19T07:43:09.849904+00:00",
     "title": "ArXiv paper: Symplectic Lie groups and nilmanifolds associated with acyclic quivers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Weights of KZ motives and quantum groups' and formalize its key results. Abstract: The Knizhnik--Zamolodchikov (KZ) connection is defined on the constant bundle determined by $n$ finite-dimensional irreducible representations of a simple Lie algebra $\\mathfrak{g}$ and a nonzero complex parameter $\u03ba$, over the configuration space of $n$ distinct points on the affine line. Work of Schechtman--Varchenko and Looijenga shows that, when $\u03ba$ is rational, the resulting local systems admit natural motivic realizations, called KZ motives. The Kazhdan--Lusztig equivalence identifies the local systems underlying these motivic variations with certain representations of the pure braid group arising from the corresponding Lusztig quantum group at a root of unity. We formulate conjectures relating the weight filtrations of KZ motives to structures in quantum-group representation theory, particularly tilting modules and the Jantzen and Andersen filtrations, and provide evidence for these conjectures. Our methods use a new deformation of the representation ring that records the first ",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_5271",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.26774v1",
+    "status": "available",
+    "timestamp": "2026-10-20T04:43:00.137839+00:00",
+    "title": "ArXiv paper: Weights of KZ motives and quantum groups"
   },
   {
     "consumed_by_exp_id": "",
@@ -36987,6 +36987,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-19T15:02:21.454938+00:00",
     "title": "Cofactor-Only Reveal Density for Multi-Prime Moduli"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The proved rank\u2013nullity bound gives nullity \u2265 excess. Conjecture that random sparse GF(2) relation matrices have nullity = excess + O(1) in expectation, so even a correct untruncated instrument measures only the excess.\n\nFor random GF(2) matrices with w \u2265 3 nonzeros per row, c columns and c+e rows, E[nullity] \u2212 e = O(1) uniformly in c.\n\nMonte-Carlo over c \u2208 {10^2,\u2026,10^5}; formalize the deterministic lower bound (done) and the second-moment upper bound.\n\nNo per-instance lever can be read off dependency counts at all.\n\nRank deficiency grows with c, which would be a genuine structural quantity worth re-measuring.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_5268",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f9f6b847",
+    "status": "available",
+    "timestamp": "2026-10-20T04:42:31.239002+00:00",
+    "title": "Untruncated Dependency Count as an Excess Statistic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The real degree balance d u + x/d \u2265 2\u221a(ux) is proved with a unique optimum. Bound the extra cost of choosing an integer degree and show it is a constant factor in L.\n\nmin over integers d \u2265 1 of (d u + x/d) \u2212 2\u221a(ux) \u2264 u/4 + o(u) as x/u \u2192 \u221e.\n\nLean: convexity of d \u21a6 d u + x/d plus evaluation at floor/ceil of \u221a(x/u).\n\nDegree rounding is L-invisible; the NFS degree balance has no exploitable slack.\n\nInteger effects shift the L-constant, which would be a new parameter-selection lever.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_5269",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f9f6b847",
+    "status": "available",
+    "timestamp": "2026-10-20T04:42:31.923333+00:00",
+    "title": "Integer-Degree Rounding Gap in the NFS Balance"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Base-m selection is exact and degree-d. Conjecture the digit map is a bijection onto [1,m)\u00d7[0,m)^d, so selection coefficients are uniform and carry no instance surplus.\n\nFor m \u2265 2, N \u21a6 coefficients of ofDigitsPoly (digits m N) is a bijection [m^d, m^{d+1}) \u2192 [1,m) \u00d7 [0,m)^d.\n\nLean proof via Nat.ofDigits_digits and Nat.digits_ofDigits; decide for small m,d.\n\nThe algebraic column set is a uniform function of (m,d) and N enters only through m.\n\nSome coefficient pattern is forced by N, which would be a structural correlation to test.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_5270",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "f9f6b847",
+    "status": "available",
+    "timestamp": "2026-10-20T04:42:32.600615+00:00",
+    "title": "Base-m Digit Bijection and Coefficient Equidistribution"
   },
   {
     "consumed_by_exp_id": "",

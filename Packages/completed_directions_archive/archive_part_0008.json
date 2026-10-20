@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-19T15:02:21Z",
-  "count": 25,
+  "archived_at": "2026-10-20T04:42:33Z",
+  "count": 26,
   "directions": [
     {
       "id": "fd_3552",
@@ -1005,6 +1005,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 371
+    },
+    {
+      "id": "fd_3999",
+      "title": "FACT round-77 #1 — GENERATOR-TILT (exp 575): H1 REFUTED DECISIVELY — RSA-style pools read z=0.6356 [0.6150,0.6562] TOP-HEAVY and window-ascending LOSES ~44% (S=0.5578±0.0217); Λ-dominance CONFINED to artificial hard-balance pools; paper-221 L7-a CLOSED",
+      "description": "**Verdict: H1 REFUTED DECISIVELY / MIXED-PARTIAL by literal rules.** Paper 221's named follow-up L7-a (measure the real generator tilt of deployed populations) is CLOSED; the Λ-channel scope question is settled ADVERSARIALLY.\n\n**Setup:** 4 pools × n=600, b=15, fixed seed 20260824, exact-uniform sieve-index prime sampling, touch-count costs verbatim from verifyL7_sim.py, 8-batch bootstrap SEs.\n\n**Per-pool results:**\n\n| pool | window | z_mean [CI95] | win_asc/desc S ± SE | in_win |\n|---|---|---|---|---|\n| HARD_BAL (control) | canonical | 0.4114 [0.3887,0.4341] | 1.5896 ± 0.0538 | 1.000 |\n| RSA_INDEP (deployed-style) | canonical | 0.6356 [0.6150,0.6562] | 0.5578 ± 0.0217 | 1.000 |\n| RATIO4 | adapted r_max=4.5 | 0.0558 [0.0530,0.0586] | 17.345 ± 0.4654 | 0.000 canon |\n| UNIFORM_WIDE | adapted r_max=8.0 | 0.5979 [0.5765,0.6194] | 0.5505 ± 0.0230 | 0.582 canon |\n\n**Three-way control replication:** HARD_BAL z=0.4114 matches analytic 0.414 AND independent verifier BAL_prime 0.4095–0.4148 / S=1.5785±0.029 at shifted bitlen b=11→15 (measured S=1.5896±0.0538). Machinery sound.\n\n**The inversion:** on independent same-bitlen primes the within-window divisor mass is TOP-heavy — ratio concentration near 1 (effective median r≈1.25) pushes min(p,q) HIGH into (√(N/2),√N]. Window-ascending is always well-defined there (in_win=1.000 vs paper-137's 21.6% undefined) yet LOSES ~44% to sqrt-descending. Tilt-only predictor (1−z)/z tracks measured S on all honest windows.\n\n**Consequence (plain):** Λ-dominance is CONFINED TO ARTIFICIAL HARD-BALANCE POOLS; real generator classes tilt ADVERSARially. No deployable reorder-class gain without ENFORCED q<2p balance at key-generation time — no deployed generator enforces it. Paper-221 caveat upgraded from \"tilt unmeasured\" to \"tilt adversarial off-balance\" — final word. Scoped reorder-class fact, no speed prescription.\n\n**Caveats:** RATIO4's 17x = narrow-stratum pinning artifact (needs N-invisible declared-support knowledge), not deployable. b=15 lab scale, scale-free transfer assumed (Mertens/Dickman) not verified; real deployed filters only narrow the ratio band further (worsen the tilt).\n\n**Ledger catches disclosed:** findings.md filename pre-existed → exp575_findings.md written instead; descriptive sign readout added post-smoke with pre-registered decision rules unmodified (in JSON honest_notes); sieve-index sampling replaced randprime rejection loop (identical in law).\n\n**Barrier validation:** factor-local/scan-order frontier row; completes L7-a; reorder-class map now has measured scope boundaries end-to-end; residue cap 4/3 untouched; no breakthrough claimed.\n\nPaper 223 · assessment v329→v330 · count 563→564 · artifacts ResearchOutput/scripts/2026-08-24-round74/exp575_*",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "5260665b",
+      "timestamp": "2026-08-24T13:15:17.263405+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.83,
+      "domain_quality_penalty": 0.5,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-08-26T07:12:58.058396+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 370
     }
   ]
 }

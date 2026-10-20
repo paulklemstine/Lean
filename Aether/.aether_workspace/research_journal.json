@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "601f1720",
-      "domain": "Pythagorean",
-      "key_insight": "# Future directions — sequential hint pricing (SEQHINT-COMPOUND-LAW)\n\nWhat the cycles so far established (all in `Catalog/Pythagorean/SeqHint/`, zero\n`sorry`, standard axioms only):\n\n* fixed compariso",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 125,
-      "timestamp": "2026-08-29T02:13:13",
-      "title": "FACT round-74 #3 — SEQHINT-COMPOUND-LAW: sequential ADAPTIVE hints compound superlinearly (s(12)/s(3"
-    },
-    {
       "cycle_id": "6060f6d0",
       "domain": "Tropical",
       "key_insight": "# Future Directions — after the ORBIT-DIAL-CAP-TEST (Tropical cycle)\n\n## What this cycle settled\n\nFour formal files in `Catalog/Tropical/` (all 0 sorries) turn the experimental report\ninto theorems:",
@@ -2501,6 +2491,16 @@
       "theorem_count": 58,
       "timestamp": "2026-10-19T15:02:36",
       "title": "FACT round-33 (cont.) — CORRECTIONS + 8 THEOREM-WORTHY FACTS: the SLACK-CONSTRAINT LEMMA (a hypothes"
+    },
+    {
+      "cycle_id": "f9f6b847",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — after Round 44 (NFS closure)\n\n## What was established (all machine-checked, 0 sorries)\n\n* **Channel 1 (`NFSClosureConstantFactor.lean`)**: the `L`-exponent constant is unique.",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-10-20T04:42:46",
+      "title": "FACT round-44 — NFS is as closed as QS: all three channels killed on the refuters' own grounds (auth"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-19T15:02:36",
+  "last_updated": "2026-10-20T04:42:46",
   "open_questions": [
     {
       "context": "This file gives a complete, sorry-free proof of that formula, together with the",
@@ -3703,12 +3703,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "fe7714ae",
-        "quality": 0.84,
-        "theorems": 61,
-        "title": "Spherical Cap Power Ceiling for Near-Threshold Correlation Tests"
-      },
-      {
         "cycle_id": "53c2b4c2",
         "quality": 0.82,
         "theorems": 138,
@@ -3761,6 +3755,12 @@
         "quality": 0.62,
         "theorems": 31,
         "title": "FACT round-33 #2 — D5-CONDUCTOR: the quadratic subfield of x5+20x+32 (paper 117)"
+      },
+      {
+        "cycle_id": "f9f6b847",
+        "quality": 0.55,
+        "theorems": 35,
+        "title": "FACT round-44 — NFS is as closed as QS: all three channels killed on the refuter"
       }
     ],
     "Probability": [
