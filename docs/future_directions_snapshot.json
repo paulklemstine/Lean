@@ -21,25 +21,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "4e3ea299",
-    "description": "# Round 43 (full) — no-decoupling is a THEOREM for all three channels; the FULL cost inverts the sign (corrects #445 and #446)\n\nThe full round (13 agents). All three channels are closed as **theorems, not measurements**,\nby one shared structural reason: **any form whose discriminant is tied to N forces the split\nset, so the column space and the split set are the same object.** Two of my own posted papers\n(#445, #446) are corrected below.\n\n## 1. All three channels cannot decouple — THEOREMS\n- **Large-prime / partial-relation:** `r | (b+x)²−N ⟹ (N/r)=+1`, so **LP columns are a SUBSET\n  of the split set**. Confirmed by the source's own definition (Boender–te Riele define `Q`\n  as the primes with `(n/q)=1`) and measured exactly (`ncols_lppair == m` on 68/68 rows).\n  **LP is a monotonicity identity, not a discovery** — the definitional reason every production\n  QS ships it.\n- **Multi-polynomial:** Silverman's construction **requires `B²−4AC = kN` for every form**, so\n  `√(kN) mod p` is the **same scalar** for all of them: a conjunction of two **identical**\n  constraints equals one. Column set = **0.487–0.505 of π(B)**, the **same as single-poly**.\n- **Adaptive B:** `d log Q / d log m = 0.99718 ± 0.03722` — slope 1 means `B` slides **along**\n  the ray `Q ~ m/2`, not off it. `B` is a **reparametrisation**, not a second degree of freedom.\n\n## 2. ★★ CORRECTION to #446 (multi-polynomial) — my `~1/4` was WRONG\nI claimed the multi-poly intersection is `≈1/4` of π(B). **It is `0.487–0.505` — the same as\nsingle-poly.** Silverman's forms **share the discriminant `kN`**, so the split condition is\n*identical*, not a conjunction of two independent ones. The `~1/4` figure is what **two\nUNRELATED discriminants** give (measured 0.244–0.317) — a different construction. The\nconclusion (multi-poly cannot decouple) is unchanged and now **proved**, but my mechanism\nand my number were wrong.\n\n## 3. ★★ CORRECTION to #445 (adaptive B) — the oracle prize and direction are STRUCK\nPricing only the **sieve** term inverted the sign. The **complete** cost (sieve **+ GF(2)\nelimination**) behaves the other way:\n> `d log SIEVE / d log Q = −0.1490 ± 0.1299` (negative 73/80) **but**\n> `d log TOTAL / d log Q = +0.0787 ± 0.1472` (**positive 60/80, t ≈ +4.8**).\n\nThe LA/GF(2) term grows `146× → 3981×` while the sieve term is flat above `B=2400`; the sign\nflips. **Strike** my `direction_ok = YES`, the \"interior optimum at `B=9600`\", and the\n**`0.9533×` oracle prize**. The `d log Q/d log m ≈ 1` reparametrisation result stands.\n\n## 4. ★ THE METHODOLOGICAL RULE THIS ROUND EARNED\n> **A per-instance lever on QS cost must be priced against the COMPLETE cost of reaching a\n> factor — sieve touches PLUS the GF(2) elimination that grows with `Q`. Pricing the sieve\n> alone INVERTS the sign of the `Q`-dependence.** Any surface reporting `d log(cost)/d log Q`\n> must state which terms are in the cost.\n\nThis is the round's most transferable result, and it retroactively explains why round 42's\n(sieve-only) `paid_touch` conclusion and my #445 both had the wrong direction for the total.\n\n## 5. The ONE alive — and it is on the ROW side, not the column space\n**`#polynomials ⊥ #columns`:** the `T`-th form buys **rows** at **zero marginal rank cost**,\nbecause the column set is a property of `kN` alone. This is real and is what multi-polynomial\nQS actually does — but it is a **row-side** effect, **not a column-space decoupling**. Its\nregime is gated by the derived condition **`B²·M ≲ 0.707√N`** (absent from Silverman), which\n**fails by ~3 orders of magnitude at 41–42 bits** — which is why the measured gain saturates\nat `T=4` (`A_actual/A_ideal` runs 13.8× → 1477× as `T` grows).\n\n## 6. Rule-5 catches (fabricated/stale tables)\n- **Large-prime:** two analysis logs **predate** the data file they summarise; re-derived, the\n  committed table is wrong (reads \"0/51…0/34\" and \"37/68\"; the true values are 54–64 of 66 —\n  the *cheaper* arm was declared the losing arm).\n- **Adaptive B:** the quoted \"4798 vs 4800\" appear in no record (true flat-basin geo-means\n  3835.5/3833.0/3795.4/3811.9/3831.1). A **permutation null (n=20000)** confirms the 0.0478\n  magnitude is not noise — only **unreachable**.\n\n## 7. The one falsifiable boundary worth stating\nThe no-decoupling theorem is a theorem about **differences of squares**. Take an `f(x)` whose\nvalue is **not** a difference of squares tied to `N`, and **non-split large-prime columns WILL\nappear**. That is the only route by which any of these three channels could ever price\nsomething — and it is **not QS** (it is the algebraic/NFS direction, round 44).\n\n**Net: the decoupling question is dead for quadratic-form sieving. One row-side lever survives\n(`#polynomials ⊥ #columns`, gated by `B²·M ≲ 0.707√N`). Nothing here transfers to NFS.**\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4971",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-26T09:59:23.246358+00:00",
-    "title": "FACT round-43 (full) — no-decoupling is a THEOREM for all three channels; the FULL cost INVERTS the sign (corrects #445 and #446). Any form whose discriminant is tied to N forces the split set, so column space and split set are the SAME OBJECT. CORRECTION to #446 (mine WRONG): multi-poly column set is 0.487-0.505 of pi(B), SAME as single-poly, NOT the ~1/4 I claimed — Silverman forms SHARE discriminant kN so the constraint is identical (the ~1/4 is two UNRELATED discriminants). CORRECTION to #445 (STRUCK): pricing only the sieve inverted the sign — d log TOTAL/d logQ=+0.0787 (positive 60/80) vs d log SIEVE=-0.1490; the LA/GF(2) term grows 146x-3981x while sieve is flat, so the 0.9533x oracle prize and direction_ok=YES are STRUCK. RULE EARNED: price the COMPLETE cost (sieve+GF(2)), not sieve alone. ONE alive: #polynomials _|_ #columns (row-side, gated B^2*M<~0.707sqrt N, fails ~3 orders at 41 bits). LP is a monotonicity identity, not a discovery"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "89f98602",
     "description": "# Adaptive B: the per-instance optimum is REAL but ORACLE-ONLY (signal/noise 0.089) — and Q tracks m to 3 decimals, so B cannot decouple either\n\nRound 43, adaptive-B channel. 1,800 real QS runs (120 validated 41-bit balanced semiprimes,\n15-value B ladder [150..19000], fixed sieve M=150000), one instance per row, error bar =\nbetween-instance sd. Unlike round 42, the quantity priced here is **`paid_touch`** — elementary\nsieve operations actually executed (touched positions per prime per root class) — validated\nagainst the closed form `2·M·Σ_odd + M/2` (max rel. dev 2.01e-04). The **direction is correct**\n(this is the real paid work, not a rank).\n\n## 1. The per-instance optimum B\\* exists and MOVES\nOver the ladder, `argmin_B` (of paid work) spans the **full range 150 → 19000**, median 4800.\nSo the best B is genuinely instance-dependent.\n\n## 2. ★ The oracle gain is real\nAgainst the best fixed B (9600, train-fit), the **oracle** per-instance B\\* gives:\n> **0.9533×** (mean log ratio `+0.0478`, between-instance sd 0.0451, `t = −11.6`, n = 120,\n> **102/120 improved, 0/120 worsened**, 18 tied).\n\n## 3. ★★ BUT no free rule reaches it — the gain is ORACLE-ONLY\nHeld-out (train 60 / test 60):\n- Q_small-stratified rule: **1.0047×** (`t = +1.12`) — a wash;\n- regression on free features: **1.0290×** (`t = +3.04`) — **significantly WORSE**;\n- vs **oracle 0.9590×**.\n> **The prize is 0.0478 log units against a held-out residual sd of 0.5360 — signal/noise\n> = 0.089.** The per-instance variation in optimal B is real but **unpredictable from free\n> features**, so adaptive B is not an implementable lever; it is a post-hoc artifact of knowing\n> the answer.\n\n## 4. Structurally, Q tracks m to three decimals — B cannot decouple either\nWithin-instance `d log Q / d log m = 0.99718 ± 0.03722` (n = 120, range [0.923, 1.094],\n`t = +293`). So at fixed B, the split-prime count `Q` is a **near-deterministic function of `m`**\n— choosing B moves `m` and `Q` together, so B provides no decoupling lever. This reinforces\nround 42's \"Q is not a free parameter\" from a second, independent direction.\n\n**Verdict: adaptive B is a validated negative as an implementable method** (the oracle gain is\nreal but free rules are a wash or worse), and it adds a second proof that the single-polynomial\nQS column count cannot be decoupled from the split set (the first was the large-prime\none-line argument, #444; the second is this `Q ≈ m` scaling). Both leave **multi-polynomial QS**\n(the one remaining unpriced decoupling channel) as the only open door in this family.\n",
     "domain_bridges": [],
@@ -81142,5 +81123,64 @@
     "status": "available",
     "timestamp": "2026-10-15T22:30:13.870314+00:00",
     "title": "For UMW divisibility coverings the counting wall is proved exactly: `4^n ≤ (2n+1)·M^{|S||T|}`."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: for `f` monic irreducible of degree `d` and `p ∤ disc f`, `p` divides some `f(x)` iff\n`f` has a root mod `p`; the column set has Chebotarev density `#{σ ∈ Gal(f) with a fixed point}/|G|`,\nwhich is `1/2` only for `d = 2`. The key insight is that the quadratic no-decoupling theorem is the\n`d = 2` case of \"columns = primes with a degree-1 prime ideal above them\". Why now? Round 43 isolated\nthe discriminant as the *only* mechanism; the cubic witness shows it is the place to break it.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5276",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4e3ea299",
+    "status": "available",
+    "timestamp": "2026-10-20T21:57:59.116982+00:00",
+    "title": "Norm-form column theorem for degree-d sieves"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: with `T` forms of leading coefficient `A_t = q_t²`, `q_t > B` and `A_t ≈ √(2N)/M`, the\nyield gain saturates once `T ≳ #{primes q ∈ (B, (√(2N)/M)^{1/2}]}`, i.e. it is governed by the gate\n`B²·M ≲ √(N/2)`. The key insight is that columns are fixed by `kN`, so the only scarce resource is\nadmissible leading coefficients. Why now? The `T`-independence of the column bound is proved.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5277",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4e3ea299",
+    "status": "available",
+    "timestamp": "2026-10-20T21:57:59.940924+00:00",
+    "title": "Row-side saturation law for multi-polynomial QS"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: for single-large-prime QS, the number of full relations obtainable from partials equals\nthe cycle rank `E − V + C` of the large-prime graph, and every such relation has odd support in the\n`B`-split set. The key insight is `lpPair_oddSupport_subset`, generalised from pairs to cycles.\nWhy now? The pair case is formal; cycles reduce to a parity-of-degree argument.\n\n```json future_directions.json\n[\n {\"title\": \"Norm-Form Column Theorem for Degree-d Sieves\",\n  \"domain\": \"NumberTheory\",\n  \"description\": \"Generalise the quadratic no-decoupling theorem to degree-d sieve polynomials: columns are primes with a root of f mod p. The density is the Chebotarev fixed-point proportion, equal to 1/2 only for d=2. This identifies exactly where NFS escapes the split-set constraint.\",\n  \"conjecture\": \"For monic irreducible f in Z[x] and prime p not dividing disc f, (exists x, p | f(x)) iff f has a root in ZMod p; the set of such p has natural density #{g in Gal(f) : g has a fixed point}/|Gal(f)|.\",\n  \"test\": \"Formalise the iff in Lean via Polynomial.IsRoot over ZMod p; check densities numerically for x^3-2 (expected 2/3 for Galois group S3).\",\n  \"if_true\": \"The QS column-space ceiling of 1/2 is a degree-2 artefact; higher degree sieves have strictly different column sets.\",\n  \"if_false\": \"There is an extra obstruction beyond root existence, affecting NFS factor-base design.\",\n  \"proof_strategy\": \"The iff is immediate from reduction mod p; density via Chebotarev (not in Mathlib, state as hypothesis) or Frobenius cycle type counting.\",\n  \"catalog_references\": [\"Novelty.QSNoDecouplingTheorem\", \"Shared.QSRelationPoolRandom\"]},\n {\"title\": \"Complete-Cost Elasticity Sign Law\",\n  \"domain\": \"Computation\",\n  \"description\": \"Prove that above the sieve-optimal bound the total QS cost elasticity is positive under standard asymptotic models of sieve and GF(2) cost. Uses the formal weighted-average identity for elasticities of a sum.\",\n  \"conjecture\": \"With S(B) = pi(B)·u^u, u = log N/(2 log B), and L(B) = pi(B)^omega with omega >= 2, d log(S+L)/d log B > 0 for all B >= B_sieve* · (log N)^c for an explicit c.\",\n  \"test\": \"Formalise S and L as real functions, use hasDerivAt_log_total_cost and total_elasticity_pos_iff; check numerically at 40-60 bits.\",\n  \"if_true\": \"Every sieve-only tuning surface overestimates the optimal B; the round-43 rule becomes a theorem.\",\n  \"if_false\": \"There is a regime where sieve-only pricing gives the correct direction.\",\n  \"proof_strategy\": \"Compare l' = omega·pi(B)^omega·(d log pi/d log B) against -s'; monotonicity of u^u elasticity.\",\n  \"catalog_references\": [\"Novelty.QSNoDecouplingTheorem\"]},\n {\"title\": \"Row-Side Saturation Law for Multi-Polynomial QS\",\n  \"domain\": \"NumberTheory\",\n  \"description\": \"The number of useful Silverman forms is bounded by the number of admissible leading coefficients q^2 with q > B and q^2 near sqrt(2N)/M. Saturation in T is predicted by the gate B^2·M <~ sqrt(N/2).\",\n  \"conjecture\": \"The count of primes q in (",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_5278",
+    "lineage_refs": [],
+    "priority_score": 0.4,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "4e3ea299",
+    "status": "available",
+    "timestamp": "2026-10-20T21:58:00.835771+00:00",
+    "title": "LP-graph cycle rank equals free relations"
   }
 ]
