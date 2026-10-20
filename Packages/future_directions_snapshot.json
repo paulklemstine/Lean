@@ -2,25 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "ef1423f4",
-    "description": "# Round 33 — Closing the Order-Free Opening, and a Sharper Frontier for Deterministic Factoring\n\n**Status:** research note / kill record with one confirmed negative and four new\nsource-grounded findings. **No new factoring method was found** — 12 hypotheses, 12\nkilled at an adversarial gate; the single surviving thread is a *negative* result that\ncloses an open channel. That negative is the round's contribution.\n\n**Discipline.** This round is the first to enforce, in the workflow's *structure* rather\nthan as prose advice, the seven rules the prior 32 rounds violated: every hypothesis had\nto (1) open its primary source, (2) name the exact quantity its mechanism acts on, and\n(3) survive two independent refuters (a source-grounding lens and a quantity/cost lens)\nbefore reaching a sympy experiment. A kill at the gate is success — it prevents a\nretraction. Result: **12/12 killed, 0 retractions, 0 phantom citations that survived\nverification.** All quotes below were read from opened sources (arXiv full text via\n`pdftotext`/HTML, or local Lean files), per Rule (5).\n\nThroughout, `N^{1/5}` is an **upper bound** on the deterministic record — not a proven\nfloor. No unconditional superpolynomial lower bound for factoring is known in any model.\n\n---\n\n## 1. Headline (the order-free opening is closed)\n\nThe campaign record's sharpest live question, opened by the January 2026 result\n**arXiv:2601.11131** (Harvey & Hittmeir, *Deterministic methods for finding elements of\nlarge multiplicative order*), was: *with hypothesis-free order-finding, is Harvey's cost\nshape still right — can a large-order element rebalance the trade to beat `N^{1/5}`?*\n\n**Answer (re-derived and experimentally reproduced): no. `1/5` is pinned by an entirely\nORDER-FREE triangle, so the 2026 result is structurally incapable of moving it.**\n\nThe re-derivation (from Harvey, arXiv:2010.05450, Prop 4.2/4.3) locates every place\n`ord_N(alpha)` enters Harvey's algorithm: **exactly one** — the number of spurious\nhash-table hits in Step (4), `n ≈ s·m/D`, the input length of the Alg 4.1 product tree.\nThat quantity has **N-exponent 0** (it is log-carrying). It does **not** enter:\n\n- `r` — the Lehman candidate-pair budget (`{(a,b) : ab ≤ r}`, size `Θ(r lg r)`);\n- `m` — the Bluestein baby-step budget (`Θ(m)` per giant step);\n- `M = ⌈(N/r)^{1/2}⌉` — the smoothness-sieve range in Step (2).\n\nProp 4.3 pins the exponent at `1/5` via the balance `{ r·lg³N vs N^{1/4}r^{-1/4}lg³N }`\n(the pair budget against the Step-(2) smoothness sieve) together with\n`{ m·lg²N vs N^{1/2}/(r^{1/2}m) }` (the baby-step list against the BSGS interior).\n**Both legs are order-free.** The order appears only in the product-tree term, which\n*drops* (from `N^{1/5}lg^{16/5}N` to `lg^{22/5}N`) when order-finding is free — but two\nother terms already sit at `N^{1/5}lg^{16/5}N`, so the `max` is unchanged. Even a\nhypothetical maximal-order `alpha` with the order-finding step **literally free** leaves\nthe total at `N^{1/5}lg^{16/5}N`.\n\n- **Rule (7) verdict: MISMATCH.** Mechanism quantity = N-exponent 0 (polylog hit count);\n  target quantity = N-exponent `1/5`. The gap is `1/5`, so free order-finding cannot\n  reach the exponent at all.\n- **Reproduced:** an analytic script (`partA.py`) regenerates `F(N) = N^{1/5}lg^{16/5}N`\n  exactly from Prop 4.3, and a numerical probe (`partB2.py`, 44-bit semiprime) confirms\n  the hit-rate law. Both run in seconds.\n\nThis **closes** the record's \"OPENING\" (§7-undecuples-XXXIV/XXXV had hoped the opposite)\nand replaces it with a settled negative. The record's own §7-undecuples-XXXIV/XXXV built\na \"r-trade-off floor\" argument that implicitly treated the order as load-bearing; it is\nnot. **This is a correction to the campaign's own prior reasoning, found by adversarial\ngate rather than by a retraction.**\n\n## 2. Large-order element production is already published, and is dominated\n\nGFHP (**arXiv:2512.19076**, Gao–Feng–Hu–Pan, 22 Dec 2025) **Lemma 3.5** already gives a\ndeterministic algorithm: given `(N, δ)` with `N^{1/4}log^8N ≤ δ ≤ N`, return `alpha ∈ Z_N*`\nwith `ord_N(alpha) > δ` (or a factor, or a primality proof) in time\n`O(δ^{1/2}log²N / (log log δ)^{1/2})`. Substituting `δ = N^{1/3}` the enabling sub-problem\n\"*deterministically produce an element of order ≳ N^{1/3}*\" is **already solved** — at cost\n`Õ(N^{1/6})`, which is *below* Harvey's `N^{1/5}` and therefore buys nothing.\n\n- **Rule (7) MISMATCH, stated as a kill:** the order of `alpha` sets `m` (baby-step table\n  size); the N-exponent is set by `r` (candidate-pair count). They are anti-correlated via\n  the balance `m* = N^{1/4}r^{-1/4}`, so improving the order quantity cannot move `r`.\n- **Attribution correction:** `Hit18` is **Hittmeir**, not Harvey.\n- The order term (from GFHP Lemma 3.5, cost `~m^{1/2}`) is **dominated by the baby-step\n  term `O(m)` everywhere** — a new, clean statement of the dominance the record asserted\n  but never quantified against the whole curve.\n\n## 3. The `(a,b)` pair-filter: right quantity, closed on cost\n\nHarvey's Algorithm 4.2 Step 2 enumerates the pair family `P = {(a,b) : 1 ≤ ab ≤ r}`, size\n`Θ(r lg r)` — the `T2 = r lg³N` term of Prop 4.2, the one term **not** divided by `m`. A\ncorrect-quantity filter on this family is the single most concrete derived target in the\nrecord: uniform compression `s` gives `N^{1/5}s^{-3/5}`, and `1/6` needs `s = N^{1/18}`.\n\n**This round confirms, for the first time, that the filter acts on the RIGHT quantity** —\non Harvey's own `(a,b)` family, not on a value-range. It is therefore *not* a repeat of\nthe retracted XLI/XLII category error (which filtered a value-range, not the pairs). It is\nkilled on cost/domination instead, and a new negative falls out: **the good pair is\nresidue-uniform mod small primes**, so congruence sieves (QR-of-`a`, QR-of-`ab`, etc.)\nact on it at the random rate. Two independent, distinct closures — \"right quantity\" and\n\"still closed\" — are now cleanly separated.\n\n## 4. A paper the 634KB record never saw: Rational Base Descent\n\n**arXiv:2605.08846**, *Rational Base Descent: A Deterministic Algorithm for Factoring\nStructured Semiprimes* (Sam Blake, 9 May 2026) is **absent from the entire record** (all\nLean files and the 634KB RESEARCH.md). Opened in full; Theorem 1 quoted verbatim: for\n`N = pq`, writing `Δ = p − ⌊c(a/b)^n⌋`, a split occurs iff `(a/b)^n > q` and\n`|Δ| < (a/b)^n/q`; per-run cost `O(log³N)`.\n\n- **Rule (7) MISMATCH for balanced RSA:** the method acts on the *rational-power structure*\n  of `p` (a Diophantine-approximation condition, essentially never true for a random\n  prime), not on the cardinality of a search index. It is a genuine `O(log³N)` method on\n  its promised *structured* class and the paper itself \"poses no threat to balanced RSA.\"\n  It does not yield a new N-exponent. The correct substitute quantity — a covering law\n  `C(a,b) = t_max·(2J+1)` crossing `q` at a critical base `b* ~ N^{1/4}/√(2 ln N)` — was\n  derived and measured as a characterization of the promise class, not a new method.\n\n## 5. Value-level short-window features (Open Channel #16)\n\nThe file proves blindness for *collision structure* and for *full-period* value sets, and\nmarks *short-window* value-level features as explicitly out of scope. This round tested\nthem. The `gcd`-based route is a **`p − 1` restatement**; the non-`gcd` value-level\nfeatures are a **Rule (7) MISMATCH** (the one pre-registered test that fired refuted one\nof the four banked sub-claims). Net: no factoring information in a short window's values at\n`m ≪ ord`, consistent with the file's collision-structure theorems.\n\n## 6. What this leaves open\n\n- **UMW (arXiv:2511.10851)** survives the quantity lens: its conjecture (sets `S,T`,\n  `|S|=|T|=n^β`, magnitudes `≤ e^{n^α}`, every `i ∈ [n]` divides some `s−t`; `α=β=1/3`\n  best-possible) acts on the **index set** `[n]` — the right quantity — and its\n  *secondary* consequence is exactly the deterministic `1/5 → 1/6`. (Its *flagship*\n  consequence is `3/2 → 4/3` for **polynomial** factorization; integer factoring is the\n  second consequence — a distinction the record's framing blurs.) UMW remains the one\n  formalised conditional route past the `3/2` baby-step/giant-step barrier.\n- **The large-Euler-gap promise class** (`gcd(a^{N−1}−1, N)` reveals a factor in `O(1)`\n  bases when `gcd(p−1,q−1)` is large) is proved and tight but is a structured-promise\n  method; no general route.\n- The precise frontier for a sub-`1/5` deterministic method is now: **break the\n  order-free pair-budget balance `{ r·lg³N vs N^{1/4}r^{-1/4}lg³N }` itself** — a\n  `(a,b)`-family filter with `s = N^{1/18}` (§3) — or a mechanism outside the\n  baby-step/giant-step motif (UMW). Order-finding is *not* a lever.\n\n---\n\n### Method note (a contribution in its own right)\nThe gated pipeline (hunt → refute×2 distinct lenses → sympy experiment) killed 12/12 and\nrecorded **no** retractions and **no** unverifiable citations. The two lenses caught\n*different* failure modes — UMW died on source-grounding but passed quantity;\norderfree/pairfilter/shortwindow passed source but died on quantity — which is the\ndiversity that makes the gate informative. One **calibration bug** was caught in\npost-hoc review: the quantity refuter for `orderfree` reasoned \"refutation failed — the\nnegative is confirmed\" but emitted `killed=true`, over-killing a *confirmed negative*.\nThe gate is not yet self-calibrating; future rounds should assert consistency between a\nrefuter's `killed` flag and its stated reasoning before counting the gate.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4962",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-25T17:57:24.506862+00:00",
-    "title": "FACT round-33 — THE ORDER-FREE OPENING IS CLOSED: Harvey's 1/5 is pinned by an entirely ORDER-FREE triangle, so the Jan-2026 arXiv:2601.11131 large-order result is structurally incapable of moving it; plus a NEW paper the 634KB record never saw (arXiv:2605.08846 Rational Base Descent), the (a,b) pair-filter CONFIRMED on the right quantity (not a category error) but cost-killed, and an attribution correction — 12/12 hypotheses gated, 0 retractions, 0 phantom citations"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "0bcae9fd",
     "description": "# The round-43 boundary IS the NFS route: NFS's column set is governed by the auxiliary field d, NOT by N — a genuine decoupling absent in QS\n\nRound 43 closed the quadratic-form decoupling question and named one falsifiable boundary:\n> *\"Take an `f(x)` whose value is **not** a difference of squares tied to `N`, and non-split\n> large-prime columns **will** appear. That is the only route by which any of these channels\n> could ever price something — and it is not QS.\"*\n\nThat boundary is **the number field sieve**, and this note settles it analytically.\n\n## The decoupling (why QS cannot, NFS can)\n- **Quadratic sieve:** a relation is `a² − b² ≡ 0 (mod r)`, i.e. `a² ≡ b² (mod r)`; for\n  `gcd(a,b)=1` this forces `(N/r) = +1`. So the QS column set is\n  > `{r ≤ B : (N/r) = +1}` — **governed by `N`, the integer you are factoring.**\n\n- **Number field sieve:** the congruence of squares lives over `K = Q(√d)`:\n  `(x + y√d)(x − y√d) ≡ 0` at a prime ideal. A rational prime `r` (coprime to `2d`) yields a\n  usable **pair** of conjugate prime ideals iff `r` **splits in `K`**, i.e. `(d/r) = +1` —\n  which depends on the **auxiliary field `d`**, *not* on `N`. So the NFS ideal-sieve column set is\n  > `{r ≤ B : (d/r) = +1}` — **governed by `d`, identical for every `N`.**\n\n**Verified (numeric):** for `d = −7`, `B = 200`, the NFS column set has 22 elements and is\n**identical** for two different `N`; the QS column set **differs** with `N` (25 vs 21). So NFS\ngenuinely decouples the column count from the modulus; QS cannot.\n\n## Why this matters\nThis is the **structural reason NFS beats QS** (`L[1/3]` vs `L[1/2]`): the ideal-sieve columns\nare **not constrained by the integer being factored** (they are constrained by the choice of\n`d`, which the attacker controls freely), whereas in QS the split set is slaved to `N` — which\nis precisely the tie that made all three round-43 QS decoupling channels theorems. **So the\none route out of the QS no-decoupling theorem is real, and it is exactly NFS** — consistent\nwith round 43's closing note that \"nothing here transfers to NFS.\"\n\n**Scope (honest).** This is a **structural fact / boundary identification**, not a method or a\nnew exponent: NFS's `L[1/3]` is long known. What this adds to the record is the *mechanism* —\n*why* the QS channels are closed (the split set is tied to `N`) and *what* the one escape is\n(the split set is tied to the free choice of `d`). It hands round 44 (the NFS round) the\ncorrect quantity: **the NFS paid terms are governed by `(d/r)` over a field `d` the attacker\nchooses**, so a per-instance lever there is *not* slaved to `N` the way every QS lever is.\n",
     "domain_bridges": [],
@@ -40,7 +21,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4e3ea299",
     "description": "# Round 43 (full) — no-decoupling is a THEOREM for all three channels; the FULL cost inverts the sign (corrects #445 and #446)\n\nThe full round (13 agents). All three channels are closed as **theorems, not measurements**,\nby one shared structural reason: **any form whose discriminant is tied to N forces the split\nset, so the column space and the split set are the same object.** Two of my own posted papers\n(#445, #446) are corrected below.\n\n## 1. All three channels cannot decouple — THEOREMS\n- **Large-prime / partial-relation:** `r | (b+x)²−N ⟹ (N/r)=+1`, so **LP columns are a SUBSET\n  of the split set**. Confirmed by the source's own definition (Boender–te Riele define `Q`\n  as the primes with `(n/q)=1`) and measured exactly (`ncols_lppair == m` on 68/68 rows).\n  **LP is a monotonicity identity, not a discovery** — the definitional reason every production\n  QS ships it.\n- **Multi-polynomial:** Silverman's construction **requires `B²−4AC = kN` for every form**, so\n  `√(kN) mod p` is the **same scalar** for all of them: a conjunction of two **identical**\n  constraints equals one. Column set = **0.487–0.505 of π(B)**, the **same as single-poly**.\n- **Adaptive B:** `d log Q / d log m = 0.99718 ± 0.03722` — slope 1 means `B` slides **along**\n  the ray `Q ~ m/2`, not off it. `B` is a **reparametrisation**, not a second degree of freedom.\n\n## 2. ★★ CORRECTION to #446 (multi-polynomial) — my `~1/4` was WRONG\nI claimed the multi-poly intersection is `≈1/4` of π(B). **It is `0.487–0.505` — the same as\nsingle-poly.** Silverman's forms **share the discriminant `kN`**, so the split condition is\n*identical*, not a conjunction of two independent ones. The `~1/4` figure is what **two\nUNRELATED discriminants** give (measured 0.244–0.317) — a different construction. The\nconclusion (multi-poly cannot decouple) is unchanged and now **proved**, but my mechanism\nand my number were wrong.\n\n## 3. ★★ CORRECTION to #445 (adaptive B) — the oracle prize and direction are STRUCK\nPricing only the **sieve** term inverted the sign. The **complete** cost (sieve **+ GF(2)\nelimination**) behaves the other way:\n> `d log SIEVE / d log Q = −0.1490 ± 0.1299` (negative 73/80) **but**\n> `d log TOTAL / d log Q = +0.0787 ± 0.1472` (**positive 60/80, t ≈ +4.8**).\n\nThe LA/GF(2) term grows `146× → 3981×` while the sieve term is flat above `B=2400`; the sign\nflips. **Strike** my `direction_ok = YES`, the \"interior optimum at `B=9600`\", and the\n**`0.9533×` oracle prize**. The `d log Q/d log m ≈ 1` reparametrisation result stands.\n\n## 4. ★ THE METHODOLOGICAL RULE THIS ROUND EARNED\n> **A per-instance lever on QS cost must be priced against the COMPLETE cost of reaching a\n> factor — sieve touches PLUS the GF(2) elimination that grows with `Q`. Pricing the sieve\n> alone INVERTS the sign of the `Q`-dependence.** Any surface reporting `d log(cost)/d log Q`\n> must state which terms are in the cost.\n\nThis is the round's most transferable result, and it retroactively explains why round 42's\n(sieve-only) `paid_touch` conclusion and my #445 both had the wrong direction for the total.\n\n## 5. The ONE alive — and it is on the ROW side, not the column space\n**`#polynomials ⊥ #columns`:** the `T`-th form buys **rows** at **zero marginal rank cost**,\nbecause the column set is a property of `kN` alone. This is real and is what multi-polynomial\nQS actually does — but it is a **row-side** effect, **not a column-space decoupling**. Its\nregime is gated by the derived condition **`B²·M ≲ 0.707√N`** (absent from Silverman), which\n**fails by ~3 orders of magnitude at 41–42 bits** — which is why the measured gain saturates\nat `T=4` (`A_actual/A_ideal` runs 13.8× → 1477× as `T` grows).\n\n## 6. Rule-5 catches (fabricated/stale tables)\n- **Large-prime:** two analysis logs **predate** the data file they summarise; re-derived, the\n  committed table is wrong (reads \"0/51…0/34\" and \"37/68\"; the true values are 54–64 of 66 —\n  the *cheaper* arm was declared the losing arm).\n- **Adaptive B:** the quoted \"4798 vs 4800\" appear in no record (true flat-basin geo-means\n  3835.5/3833.0/3795.4/3811.9/3831.1). A **permutation null (n=20000)** confirms the 0.0478\n  magnitude is not noise — only **unreachable**.\n\n## 7. The one falsifiable boundary worth stating\nThe no-decoupling theorem is a theorem about **differences of squares**. Take an `f(x)` whose\nvalue is **not** a difference of squares tied to `N`, and **non-split large-prime columns WILL\nappear**. That is the only route by which any of these three channels could ever price\nsomething — and it is **not QS** (it is the algebraic/NFS direction, round 44).\n\n**Net: the decoupling question is dead for quadratic-form sieving. One row-side lever survives\n(`#polynomials ⊥ #columns`, gated by `B²·M ≲ 0.707√N`). Nothing here transfers to NFS.**\n",
     "domain_bridges": [],
     "domains": [
@@ -52,7 +33,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-26T09:59:23.246358+00:00",
     "title": "FACT round-43 (full) — no-decoupling is a THEOREM for all three channels; the FULL cost INVERTS the sign (corrects #445 and #446). Any form whose discriminant is tied to N forces the split set, so column space and split set are the SAME OBJECT. CORRECTION to #446 (mine WRONG): multi-poly column set is 0.487-0.505 of pi(B), SAME as single-poly, NOT the ~1/4 I claimed — Silverman forms SHARE discriminant kN so the constraint is identical (the ~1/4 is two UNRELATED discriminants). CORRECTION to #445 (STRUCK): pricing only the sieve inverted the sign — d log TOTAL/d logQ=+0.0787 (positive 60/80) vs d log SIEVE=-0.1490; the LA/GF(2) term grows 146x-3981x while sieve is flat, so the 0.9533x oracle prize and direction_ok=YES are STRUCK. RULE EARNED: price the COMPLETE cost (sieve+GF(2)), not sieve alone. ONE alive: #polynomials _|_ #columns (row-side, gated B^2*M<~0.707sqrt N, fails ~3 orders at 41 bits). LP is a monotonicity identity, not a discovery"
   },
@@ -24888,6 +24869,26 @@
     "status": "available",
     "timestamp": "2026-09-14T13:04:27.512146+00:00",
     "title": "Pell-Spine Sampling of McKay-Thompson Coefficients"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.OrderFreeTriangle",
+      "Bridges.HarveyMLegClosed"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Combining the order constraint b ≤ ω with a generative filter σ gives a two-parameter LP. The conjectured optimum is max(1/5 - 3σ/5, (1-2ω-σ)/3), so the order threshold shifts down with the filter gain.\n\nmin over (a,b) with b ≤ ω of max(a-σ, b, 1/2-a/2-b-σ) equals max(1/5-3σ/5, (1-2ω-σ)/3).\n\nFormalize in Lean as a lower bound plus attainment, as for order_constrained_lower/attained.\n\nOrder requirements fall automatically with any pair-filter gain, so order production never becomes the binding cost.\n\nSome filter regime would make the order constraint binding, which would reopen order-finding as a lever.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_5273",
+    "lineage_refs": [],
+    "priority_score": 0.5910000000000001,
+    "proof_strategy": "A dual certificate with multipliers (1/3, 2/3) on the a-leg and the interior once b = ω, plus case analysis on ω versus the threshold.",
+    "research_mode": "team",
+    "source_exp_id": "ef1423f4",
+    "status": "available",
+    "timestamp": "2026-10-20T09:41:40.953108+00:00",
+    "title": "Joint Order-Filter Shadow Prices"
   },
   {
     "ambition_level": "extension",
@@ -53509,6 +53510,76 @@
     "status": "available",
     "timestamp": "2026-10-20T04:42:32.600615+00:00",
     "title": "Base-m Digit Bijection and Coefficient Equidistribution"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.OrderFreeTriangle",
+      "Bridges.HarveyMLegClosed",
+      "Cryptography.FactoringBarriers.LehmanPairs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Harvey's pair family can only be beaten by a filter that generates a small subfamily containing the good pair. Round 33 proved the exact gain 1/5 - 3σ/5 for generative filters versus 1/5 - 2σ/5 for evaluated ones. The conjecture is that no deterministic generator achieves σ > 0 on worst-case balanced semiprimes.\n\nEvery deterministic procedure that outputs, in time linear in its output, a subfamily of {(a,b): ab ≤ r} guaranteed to contain Lehman's good pair for all balanced N has output size ≥ r^{1-o(1)}.\n\nEnumerate good pairs for all balanced semiprimes up to 2^40 and measure the minimum size of an explicit covering family. Formalize the residue-uniformity step on top of sound_residue_sieve_trivial.\n\nThe pair-budget leg is closed and the only route below 1/5 in this motif is a mechanism outside baby-step/giant-step (UMW).\n\nAn explicit N^{1/18}-compressing generator would give a deterministic N^{1/6} factoring algorithm.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5272",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "An adversary argument: residue-uniformity of the good pair modulo every small modulus makes any congruence-describable generator cover all classes, so it is trivial.",
+    "research_mode": "team",
+    "source_exp_id": "ef1423f4",
+    "status": "available",
+    "timestamp": "2026-10-20T09:41:40.280826+00:00",
+    "title": "Generative Pair-Filter Threshold"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.HarveyMLegClosed",
+      "Bridges.OrderFreeTriangle"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The order enters Harvey's algorithm only through the spurious-hit count of Step (4). The conjecture is that this count is polylogarithmic for every element of order at least N^{1/5}, uniformly.\n\nFor α of order ≥ N^{1/5}, the number of spurious hash-table hits in Harvey's Step (4) at the balanced parameters is O(lg^c N).\n\nRun the hit-count simulation on 40-60 bit semiprimes, then formalize the collision count via babyChain_nodup.\n\nThe order-free triangle holds with no hidden term, and the round 33 negative becomes unconditional within the model.\n\nA heavy spurious-hit regime would add a new order-dependent leg to the cost.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "fd_5274",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Bound hits by a union bound over pairs of distinct exponents and use injectivity of baby steps below the order.",
+    "research_mode": "team",
+    "source_exp_id": "ef1423f4",
+    "status": "available",
+    "timestamp": "2026-10-20T09:41:41.621223+00:00",
+    "title": "Product-Tree Spurious-Hit Polylog Law"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bridges.OrderFreeTriangle",
+      "Shared.NumberTheory.CarmichaelHelpers"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The large-Euler-gap split works exactly when gcd(p-1,q-1) is large. The conjecture quantifies how rare this is among balanced semiprimes.\n\nThe number of balanced semiprimes N ≤ X with gcd(p-1,q-1) ≥ N^θ is X^{1-θ+o(1)} (relative density X^{-θ+o(1)}).\n\nCount semiprimes up to 10^12 by gcd(p-1,q-1) and fit the exponent.\n\nThe Euler-gap method covers a polynomially vanishing class, which confirms it is a structured promise and not a general route.\n\nA non-negligible class would be factorable in O(1) Fermat tests.",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5275",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Sum over d ≥ N^θ of the count of prime pairs with d | p-1 and d | q-1, using Brun–Titchmarsh.",
+    "research_mode": "team",
+    "source_exp_id": "ef1423f4",
+    "status": "available",
+    "timestamp": "2026-10-20T09:41:42.276517+00:00",
+    "title": "Euler-Gap Promise-Class Density"
   },
   {
     "ambition_level": "extension",

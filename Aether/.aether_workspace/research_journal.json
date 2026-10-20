@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "6060f6d0",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — after the ORBIT-DIAL-CAP-TEST (Tropical cycle)\n\n## What this cycle settled\n\nFour formal files in `Catalog/Tropical/` (all 0 sorries) turn the experimental report\ninto theorems:",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 80,
-      "timestamp": "2026-08-29T02:13:31",
-      "title": "FACT round-74 #2 — ORBIT-DIAL-CAP-TEST: mod-N orbit revealed set carries ZERO per-N factor informati"
-    },
-    {
       "cycle_id": "3596d147",
       "domain": "Bridges",
       "key_insight": "# Future directions — MA-1 effectivity, after the magnitude null\n\nEverything referenced below is in `Catalog/Bridges/`, fully proved, zero sorries, standard\naxioms only (`propext`, `Classical.choice`,",
@@ -2501,6 +2491,16 @@
       "theorem_count": 35,
       "timestamp": "2026-10-20T04:42:46",
       "title": "FACT round-44 — NFS is as closed as QS: all three channels killed on the refuters' own grounds (auth"
+    },
+    {
+      "cycle_id": "ef1423f4",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — after Round 33 (order-free triangle)\n\nRound 33 proved (`Catalog/Bridges/OrderFreeTriangle.lean`) that within Harvey's cost model\nthe order of the baby-step element is only a *con",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-10-20T09:41:57",
+      "title": "FACT round-33 — THE ORDER-FREE OPENING IS CLOSED: Harvey's 1/5 is pinned by an entirely ORDER-FREE t"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-20T04:42:46",
+  "last_updated": "2026-10-20T09:41:57",
   "open_questions": [
     {
       "context": "This file gives a complete, sorry-free proof of that formula, together with the",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "5c4155a3",
-        "quality": 0.70417,
-        "theorems": 42,
-        "title": "as `q⁻¹ · (unit of ℂ⟦X⟧)`.  The"
-      },
-      {
         "cycle_id": "903508ab",
         "quality": 0.82,
         "theorems": 169,
@@ -3203,6 +3197,12 @@
         "quality": 0.6,
         "theorems": 34,
         "title": "FACT round-35 — THE m-LEG IS A CLOSED VARIABLE (kill by theorem, delete-a-term L"
+      },
+      {
+        "cycle_id": "ef1423f4",
+        "quality": 0.6,
+        "theorems": 23,
+        "title": "FACT round-33 — THE ORDER-FREE OPENING IS CLOSED: Harvey's 1/5 is pinned by an e"
       }
     ],
     "Combinatorics": [
