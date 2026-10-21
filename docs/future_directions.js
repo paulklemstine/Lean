@@ -18,21 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "FACT round-43 \u2014 ADAPTIVE B: the per-instance optimum is REAL but ORACLE-ONLY. 1800 real QS runs, 120 validated 41-bit semiprimes, 15-value B ladder [150..19000], fixed M, one instance per row, between-instance sd. Priced on paid_touch (actual sieve operations, validated vs closed form 2M*Sigma_odd+M/2, max rel dev 2e-4) \u2014 direction CORRECT (unlike round 42). (1) argmin B* spans 150..19000, median 4800 \u2014 the best B is instance-dependent. (2) ORACLE gain 0.9533x (+0.0478 log, t=-11.6, 102/120 improved, 0/120 worsened). (3) BUT no free rule reaches it: Q_small-stratified 1.0047x (wash), regression on free features 1.0290x (WORSE), oracle 0.9590x \u2014 signal/noise 0.089 (prize 0.0478 vs held-out residual sd 0.536). Oracle-only, not implementable. (4) Q tracks m: d logQ/d logm = 0.99718+-0.03722 (t=+293) \u2014 a second independent proof Q is not a free parameter. Adaptive B is a validated negative; multi-polynomial QS is the only remaining open decoupling door"
   },
   {
-    "consumed_by_exp_id": "a77f9264",
-    "description": "# The large-prime / partial-relation variant CANNOT decouple the column count from the split set \u2014 a one-line proof (main loop, round 43)\n\nRound 42 named three unpriced channels for evading the QS yield collapse: large-prime /\npartial-relation variants, multi-polynomial QS, and adaptive `B`. This note **fast-kills the\nfirst** with an analytical argument, so the round does not over-invest in it.\n\n## THE CLAIM, and the one-line refutation\nIn a large-prime (LP) / partial-relation variant, a value that is not fully `B`-smooth but is\n`smooth \u00d7 (a single large prime r)` contributes a **partial relation** whose new column is the\nlarge prime `r`. The hope is that this **decouples** the column count from the split set (the\n`r` are \"large,\" supposedly not forced to satisfy the split condition).\n\n**But every such large prime `r` IS a split prime.** Indeed, if `r` divides a polynomial value\n`f(c) = c\u00b2 \u2212 N`, then `N \u2261 c\u00b2 (mod r)`, so\n> **`(N/r) = +1` (Legendre symbol) \u2014 `r` splits at `N`.**\n\nThis is exactly the constraint (`r | f(c) forces (N/r) = +1`, verified 2,215/2,215 in round 42)\nthat made `Q` a non-free parameter. The LP variant therefore **ADDS split-prime columns**; it\ndoes **not** decouple the column count from the split set. Since round 42 measured the **paid\nsieve work to DECREASE in `Q`** (i.e. the paid cost rises as the split set grows), enlarging\nthe split set enlarges **exactly the quantity whose growth hurts**. **The large-prime /\npartial-relation channel is FAST-KILLED as a decoupling mechanism** \u2014 with no search required,\njust the observation that the \"large prime\" is still a split prime.\n\n**Empirical confirmation:** for real `N` and `c` just above `\u221aN` (so `f(c) = c\u00b2\u2212N` is small and\nsmooth), every prime divisor `r` of `f(c)` satisfies `(N/r) = +1` (7/7 checked; e.g.\n`N = 15916539906629`, `c = 3989570`, `f(c) = 128878271`). (The analytical proof above is the\nreal content; the numeric check is a sanity confirmation, not the argument.)\n\n**Scope / what survives:** the LP variant is not *useless* \u2014 it is a standard QS accelerator and\ndoes raise the relation yield per sieve pass. But it does **not** do the specific thing P4's\nsuccessor needed: **decouple the column count from the split set** so the round-42 paid-work\ncollapse can be evaded. As a *decoupling* mechanism it is closed by the one-line split-prime\nargument. The remaining two channels (multi-polynomial QS, adaptive `B`) are unaffected and\nremain open.\n",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4974",
-    "phase": "A",
-    "priority_score": 1000.0,
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-26T09:59:23.251234+00:00",
-    "title": "FACT round-43 (main-loop) \u2014 the LARGE-PRIME/partial-relation variant CANNOT decouple the column count from the split set: a ONE-LINE proof. If r | f(c)=c^2-N then N = c^2 (mod r) so (N/r)=+1 \u2014 every large prime in a partial relation is ITSELF a split prime. So the LP variant ADDS split-prime columns rather than decoupling from them, enlarging exactly the quantity (Q) whose growth HURTS the paid work (round 42: paid work decreases in Q, 2.4x-13.1x). FAST-KILLED as a decoupling mechanism, no search needed. Empirically 7/7 prime divisors of f(c) are split. The LP variant is still a standard QS accelerator (raises relation yield) but does not do what P4's successor needed. The other two channels (multi-polynomial QS, adaptive B) are unaffected and remain open"
-  },
-  {
     "consumed_by_exp_id": "87d60ba3",
     "description": "# Round 42 (full) \u2014 P4 is CLOSED with a sign flip; and the smoothness density is governed by Q, NOT by Dickman (which corrects #439)\n\nThe full round (10 agents, three independent executions, all instruments validated). The\noverturning result: **the paid sieving work is a DECREASING function of `Q`** \u2014 driving Q down\nto buy fewer relations makes factoring **strictly more expensive** (2.4\u00d7\u201313.1\u00d7). And a second\nresult corrects the campaign's own recent positive claim.\n\n## 1. \u2605 P4 is a validated NEGATIVE with a sign flip\nThree executions (`synthetic`, `crtbound`, `realqs`), all with validated instruments, all\nreaching the same structural verdict. The round-41 correlation `corr(Q/\u03c0(B), k_success) = +0.77`\nis **real and controlled, not spurious** \u2014 but it is priced on the wrong term. The **paid** work\n(sieve positions actually examined) is a **decreasing** function of `Q`, monotonically, by\n**2.4\u00d7\u201313.1\u00d7** depending on design. **Driving Q down to buy fewer relations makes factoring\nstrictly more expensive; the optimum is Q as HIGH as the method allows.**\n\n**A general design rule that follows:** at fixed `B`, paid sieve length decreases in `Q`. **Any\nproposal that shrinks the factor base to shrink the linear algebra is moving the wrong term by\nconstruction.** (Magnitude is `B`-dependent and must be labelled a fixed-`B` number.)\n\n## 2. \u2605\u2605 \"Dickman survives measurement\" is BLIND to Q (corrects #439)\nAt **matched `u`**:\n> `corr(log \u03c1, log measured density) = +0.029`  vs  `corr(Q/\u03c0(B), density) = +0.882`.\n\nSo the claim \"the Dickman density assumption survives measurement\" (#439) is **true of `u` but\nBLIND to `Q`**: the density at a given `u` is essentially uncorrelated with `\u03c1`, and strongly\ncorrelated with the split-prime ratio. `\u03c1(u)` predicts the yield given `u`, but `u` alone does\nnot determine the yield across instances \u2014 `Q` does. **The smoothness density is governed by the\nfactor base's split structure, not by `\u03c1(u)` alone.**\n\n## 3. \u2605\u2605 Q is NOT a free parameter\nIn a real single-polynomial QS, `r | f(c)` **forces** `(N/r) = +1`, so **the factor base IS the\nsplit set** (verified: **2,215/2,215** smooth values all split). P4 therefore asks to move a\nquantity the sieve **already fixes** \u2014 it is not a free lever at all. **The CRT premise is also\nclosed twice** (by full enumeration and by the inequality `\u03b8(R) < ln N \u21d2 \u03c0(R)/\u03c0(B) \u2192 0`): no\nfuture round should re-derive it.\n\n## 4. The direction correction (pure linear algebra)\nThe chain \"`k_success \u2264 rank+1 \u2264 Q+1`\" has its first inequality **backwards**: a dependence at\nprefix `k` requires `k > rank`, so **`rank+1 \u2264 k_success`**. The proved `rank_{F\u2082}(M) \u2264 Q(N,B)`\nyields a guaranteed non-trivial null vector after `Q+1` relations and a **lower** bound \u2014 **no\nupper bound on sieving work.** (`k_success \u2264 Q+1` holds 180/180 in the corrected run; an earlier\n\"violation\" was a sieve bug.) And `k_success \u2248 0.78/0.71/0.60\u00b7Q` at `B = 1024/2048/4096` \u2014 the\nrecord's `0.72` is a mid-range value, not a constant.\n\n## 5. \u2605 RULE-5 INTEGRITY CATCH \u2014 two surfaces' TABLES were transcription fabrications\nThe `crtbound` and `synthetic` surfaces' **16-row sample tables are transcriptions over real\ninstances but do NOT match the stored records**: **10 of 16** quoted `(p,q)` rows match **no**\nstored record, one `N` is **digit-transposed**, and some quoted \"ranks\" are the **ceiling `Q+1`**\nrather than the measured rank. **Every AGGREGATE is exact; the TABLES must be regenerated from\nthe per-instance files or dropped.** (This is the record's own recurring failure \u2014 a re-derived\ntable that looks primary but is not \u2014 caught in the act.)\n\n## 6. INSTRUMENTS found wrong and fixed (each caught only by cross-check, never by inspection)\n- **`sympy`'s `Matrix.rank()` AND `DomainMatrix(...,GF(2)).rank()` BOTH silently return the rank\n  over \u211a** (returns `3` on a GF(2)-rank-`2` matrix). This is the trap the main loop hit.\n- A **Tonelli\u2013Shanks** that declared 4,692 random pairs clean while carrying **two** defects.\n- A **gcd step** halving per-relation instead of summing exponents \u2014 a clean-running QS that\n  reported \"no factor\" on every instance.\n- A **log-sieve with no prime-power terms** (recall 0.54), inflating absolute work ~2.1\u00d7.\n- **A mutation test was added:** two deliberately broken routines injected, both caught \u2014 *\"without\n  this, 'validation passed' is unfalsifiable.\"* The validation suite is now **falsifiable**.\n\n## The exact open problem\n**Q is not free.** The live question is **not** \"can we lower Q\" but: *given a fixed `B`, can the\nyield collapse be evaded **without shrinking the column space**?* Candidate channels, none yet\npriced: **large-prime / partial-relation variants** (where column count and smoothness set\ndecouple), **multi-polynomial QS**, and a **per-instance adaptive `B`** (noting that raising `B`\nraises `Q`, so the penalty may or may not be escapable). All sit **outside** the single-polynomial\nregime and none is addressed by this round. **Zero factoring methods, consistent with 32+ prior\nrounds.**\n",
     "domains": [
@@ -15289,6 +15274,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T05:42:59.650295+00:00",
     "title": "Tree-Shaped Dynamic Programming Completeness"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Any adaptive schedule of smoothness bounds ends with column count Q(B_max). The conjecture is that its paid work is at least that of the best static B. This would close the adaptive-B channel.\n\nFor every schedule B_1<=...<=B_k, the required rows are >= Q(B_k)+1, and the total sieve work is >= min_B W_static(B).\n\nSimulate adaptive and static B on 40-bit N and compare the work needed to reach a square.\n\nAll three round-42 channels are closed, and the QS yield collapse is structural.\n\nAdaptive B is a real decoupling lever, and its mechanism must be identified.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_5283",
+    "priority_score": 0.6672307692307694,
+    "research_mode": "team",
+    "source_exp_id": "a77f9264",
+    "status": "available",
+    "timestamp": "2026-10-21T15:27:41.641007+00:00",
+    "title": "Endpoint Domination for Adaptive Factor Bases"
   },
   {
     "consumed_by_exp_id": "",
@@ -37092,6 +37091,50 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-21T00:35:57.672269+00:00",
     "title": "Higher-Degree Column Freedom"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Large primes of partial relations range only over split primes. The birthday-collision rate should therefore use Q(L)-Q(B), about half the prime count, as its denominator. This predicts roughly twice the naive pair rate.\n\nE[#repeated large primes among m partials] ~ m^2 / (2 (Q(L)-Q(B))) for m = o(sqrt(Q(L)-Q(B))).\n\nMeasure repeats against m on 40\u201360 bit semiprimes (round-43 data: 460 repeats among 2319 partials). Formalize the finite birthday bound over admissiblePrimes N L \\ admissiblePrimes N B.\n\nThe LP accelerator's gain is quantified exactly by the split density.\n\nLarge primes are not uniform over the split primes, so smoothness and size bias dominate.",
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5282",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a77f9264",
+    "status": "available",
+    "timestamp": "2026-10-21T15:27:40.935643+00:00",
+    "title": "Split-Restricted Birthday Law for Partial Relations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The split condition is a union of residue classes mod 4N. Partial-relation large primes should be equidistributed over those classes.\n\nFor each split class a mod 4N, #{partials with r = a mod 4N} / #partials -> 2/phi(4N).\n\nHistogram large primes mod 4N for small-N analogues. Formalize the class-union statement as a Finset equality.\n\nLP column statistics are governed by Dirichlet density on the split classes.\n\nSieve-value structure biases large primes within the split classes.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5284",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a77f9264",
+    "status": "available",
+    "timestamp": "2026-10-21T15:27:42.334461+00:00",
+    "title": "Residue-Class Equidistribution of Large Primes mod 4N"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "In the PP variant, partials are edges between split primes (and 1). Every cycle gives a relation whose odd support lies in the small split set. The number of independent relations should equal the cycle rank.\n\n#independent combined relations = |E| - |V| + c(G), and each has odd-exponent support in admissiblePrimes N B.\n\nFormalize the cycle space over F_2 for the graph on split primes. Check the count on sieve data.\n\nMulti-LP variants are exactly row multipliers with column count Q(B).\n\nCycles interact with the small primes nontrivially.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5285",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a77f9264",
+    "status": "available",
+    "timestamp": "2026-10-21T15:27:43.015976+00:00",
+    "title": "Cycle-Rank Relation Count for Double-Large-Prime Graphs"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-21T00:36:14.027962+00:00",
+  "last_updated": "2026-10-21T15:28:00.647330+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -78697,6 +78697,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-21T00:36:13.636640+00:00",
       "title": "FACT round-43 (boundary) \u2014 the boundary IS the NFS route: NFS's column set is governed by the auxili"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Novelty",
+      "duration_seconds": 18368.109024763107,
+      "end_time": 1792596442.9498522,
+      "files_integrated": 4,
+      "job_id": "a77f9264",
+      "outcome_quality": 0.6,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.6,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.445,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.6,
+        "novelty": 0.6,
+        "proof_depth": 0.6,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1792578074.8408275,
+      "strategy_count": 0,
+      "theorem_count": 15,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 15,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-21T15:28:00.172862+00:00",
+      "title": "FACT round-43 (main-loop) \u2014 the LARGE-PRIME/partial-relation variant CANNOT decouple the column coun"
     }
   ]
 }

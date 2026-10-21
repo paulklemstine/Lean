@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "90e1e335",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — after the oracle-realization gap\n\nFive Lean files were produced and are machine-checked without `sorry`:\n\n* `Catalog/Novelty/OracleRealizationGap.lean` — the sensor's statistic r",
-      "quality_score": 0.8,
-      "sorry_count": 0,
-      "theorem_count": 69,
-      "timestamp": "2026-08-29T14:29:54",
-      "title": "FACT round-74 #1 — ORACLE-REALIZATION-GAP: the 0.48-bit oracle sensor is unrealized by every N-compu"
-    },
-    {
       "cycle_id": "062fc32a",
       "domain": "NumberTheory",
       "key_insight": "# Future directions — after the RANDOM-AT-SCALE cycle\n\nThis cycle turned the experimental verdict — \"`x² − N` smoothness is random-level\nat `u = 6–8.5`, `|r − 1| ≤ 0.217`; per-`N` clustering and the Q",
@@ -2501,6 +2491,16 @@
       "theorem_count": 31,
       "timestamp": "2026-10-21T00:36:13",
       "title": "FACT round-43 (boundary) — the boundary IS the NFS route: NFS's column set is governed by the auxili"
+    },
+    {
+      "cycle_id": "a77f9264",
+      "domain": "Novelty",
+      "key_insight": "# Future directions — after round 43 (large primes are split)\n\n## What round 43 established (formally, `Catalog/Novelty/LargePrimeSplitLegendre.lean`)\n* A prime `r ∤ N` that divides `c² − N` has `(N/r",
+      "quality_score": 0.6,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-10-21T15:27:59",
+      "title": "FACT round-43 (main-loop) — the LARGE-PRIME/partial-relation variant CANNOT decouple the column coun"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-21T00:36:13",
+  "last_updated": "2026-10-21T15:27:59",
   "open_questions": [
     {
       "context": "This file gives a complete, sorry-free proof of that formula, together with the",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "cb6515e1",
-        "quality": 0.82,
-        "theorems": 95,
-        "title": "Seven-state strong-connectivity conjecture"
-      },
-      {
         "cycle_id": "85c32d45",
         "quality": 0.72,
         "theorems": 64,
@@ -3637,6 +3631,12 @@
         "quality": 0.66,
         "theorems": 23,
         "title": "FACT round-43 (full) — no-decoupling is a THEOREM for all three channels; the FU"
+      },
+      {
+        "cycle_id": "a77f9264",
+        "quality": 0.6,
+        "theorems": 15,
+        "title": "FACT round-43 (main-loop) — the LARGE-PRIME/partial-relation variant CANNOT deco"
       }
     ],
     "NumberTheory": [
