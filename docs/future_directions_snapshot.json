@@ -2,25 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "89f98602",
-    "description": "# Adaptive B: the per-instance optimum is REAL but ORACLE-ONLY (signal/noise 0.089) — and Q tracks m to 3 decimals, so B cannot decouple either\n\nRound 43, adaptive-B channel. 1,800 real QS runs (120 validated 41-bit balanced semiprimes,\n15-value B ladder [150..19000], fixed sieve M=150000), one instance per row, error bar =\nbetween-instance sd. Unlike round 42, the quantity priced here is **`paid_touch`** — elementary\nsieve operations actually executed (touched positions per prime per root class) — validated\nagainst the closed form `2·M·Σ_odd + M/2` (max rel. dev 2.01e-04). The **direction is correct**\n(this is the real paid work, not a rank).\n\n## 1. The per-instance optimum B\\* exists and MOVES\nOver the ladder, `argmin_B` (of paid work) spans the **full range 150 → 19000**, median 4800.\nSo the best B is genuinely instance-dependent.\n\n## 2. ★ The oracle gain is real\nAgainst the best fixed B (9600, train-fit), the **oracle** per-instance B\\* gives:\n> **0.9533×** (mean log ratio `+0.0478`, between-instance sd 0.0451, `t = −11.6`, n = 120,\n> **102/120 improved, 0/120 worsened**, 18 tied).\n\n## 3. ★★ BUT no free rule reaches it — the gain is ORACLE-ONLY\nHeld-out (train 60 / test 60):\n- Q_small-stratified rule: **1.0047×** (`t = +1.12`) — a wash;\n- regression on free features: **1.0290×** (`t = +3.04`) — **significantly WORSE**;\n- vs **oracle 0.9590×**.\n> **The prize is 0.0478 log units against a held-out residual sd of 0.5360 — signal/noise\n> = 0.089.** The per-instance variation in optimal B is real but **unpredictable from free\n> features**, so adaptive B is not an implementable lever; it is a post-hoc artifact of knowing\n> the answer.\n\n## 4. Structurally, Q tracks m to three decimals — B cannot decouple either\nWithin-instance `d log Q / d log m = 0.99718 ± 0.03722` (n = 120, range [0.923, 1.094],\n`t = +293`). So at fixed B, the split-prime count `Q` is a **near-deterministic function of `m`**\n— choosing B moves `m` and `Q` together, so B provides no decoupling lever. This reinforces\nround 42's \"Q is not a free parameter\" from a second, independent direction.\n\n**Verdict: adaptive B is a validated negative as an implementable method** (the oracle gain is\nreal but free rules are a wash or worse), and it adds a second proof that the single-polynomial\nQS column count cannot be decoupled from the split set (the first was the large-prime\none-line argument, #444; the second is this `Q ≈ m` scaling). Both leave **multi-polynomial QS**\n(the one remaining unpriced decoupling channel) as the only open door in this family.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4973",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-26T09:59:23.249597+00:00",
-    "title": "FACT round-43 — ADAPTIVE B: the per-instance optimum is REAL but ORACLE-ONLY. 1800 real QS runs, 120 validated 41-bit semiprimes, 15-value B ladder [150..19000], fixed M, one instance per row, between-instance sd. Priced on paid_touch (actual sieve operations, validated vs closed form 2M*Sigma_odd+M/2, max rel dev 2e-4) — direction CORRECT (unlike round 42). (1) argmin B* spans 150..19000, median 4800 — the best B is instance-dependent. (2) ORACLE gain 0.9533x (+0.0478 log, t=-11.6, 102/120 improved, 0/120 worsened). (3) BUT no free rule reaches it: Q_small-stratified 1.0047x (wash), regression on free features 1.0290x (WORSE), oracle 0.9590x — signal/noise 0.089 (prize 0.0478 vs held-out residual sd 0.536). Oracle-only, not implementable. (4) Q tracks m: d logQ/d logm = 0.99718+-0.03722 (t=+293) — a second independent proof Q is not a free parameter. Adaptive B is a validated negative; multi-polynomial QS is the only remaining open decoupling door"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "87d60ba3",
     "description": "# Round 42 (full) — P4 is CLOSED with a sign flip; and the smoothness density is governed by Q, NOT by Dickman (which corrects #439)\n\nThe full round (10 agents, three independent executions, all instruments validated). The\noverturning result: **the paid sieving work is a DECREASING function of `Q`** — driving Q down\nto buy fewer relations makes factoring **strictly more expensive** (2.4×–13.1×). And a second\nresult corrects the campaign's own recent positive claim.\n\n## 1. ★ P4 is a validated NEGATIVE with a sign flip\nThree executions (`synthetic`, `crtbound`, `realqs`), all with validated instruments, all\nreaching the same structural verdict. The round-41 correlation `corr(Q/π(B), k_success) = +0.77`\nis **real and controlled, not spurious** — but it is priced on the wrong term. The **paid** work\n(sieve positions actually examined) is a **decreasing** function of `Q`, monotonically, by\n**2.4×–13.1×** depending on design. **Driving Q down to buy fewer relations makes factoring\nstrictly more expensive; the optimum is Q as HIGH as the method allows.**\n\n**A general design rule that follows:** at fixed `B`, paid sieve length decreases in `Q`. **Any\nproposal that shrinks the factor base to shrink the linear algebra is moving the wrong term by\nconstruction.** (Magnitude is `B`-dependent and must be labelled a fixed-`B` number.)\n\n## 2. ★★ \"Dickman survives measurement\" is BLIND to Q (corrects #439)\nAt **matched `u`**:\n> `corr(log ρ, log measured density) = +0.029`  vs  `corr(Q/π(B), density) = +0.882`.\n\nSo the claim \"the Dickman density assumption survives measurement\" (#439) is **true of `u` but\nBLIND to `Q`**: the density at a given `u` is essentially uncorrelated with `ρ`, and strongly\ncorrelated with the split-prime ratio. `ρ(u)` predicts the yield given `u`, but `u` alone does\nnot determine the yield across instances — `Q` does. **The smoothness density is governed by the\nfactor base's split structure, not by `ρ(u)` alone.**\n\n## 3. ★★ Q is NOT a free parameter\nIn a real single-polynomial QS, `r | f(c)` **forces** `(N/r) = +1`, so **the factor base IS the\nsplit set** (verified: **2,215/2,215** smooth values all split). P4 therefore asks to move a\nquantity the sieve **already fixes** — it is not a free lever at all. **The CRT premise is also\nclosed twice** (by full enumeration and by the inequality `θ(R) < ln N ⇒ π(R)/π(B) → 0`): no\nfuture round should re-derive it.\n\n## 4. The direction correction (pure linear algebra)\nThe chain \"`k_success ≤ rank+1 ≤ Q+1`\" has its first inequality **backwards**: a dependence at\nprefix `k` requires `k > rank`, so **`rank+1 ≤ k_success`**. The proved `rank_{F₂}(M) ≤ Q(N,B)`\nyields a guaranteed non-trivial null vector after `Q+1` relations and a **lower** bound — **no\nupper bound on sieving work.** (`k_success ≤ Q+1` holds 180/180 in the corrected run; an earlier\n\"violation\" was a sieve bug.) And `k_success ≈ 0.78/0.71/0.60·Q` at `B = 1024/2048/4096` — the\nrecord's `0.72` is a mid-range value, not a constant.\n\n## 5. ★ RULE-5 INTEGRITY CATCH — two surfaces' TABLES were transcription fabrications\nThe `crtbound` and `synthetic` surfaces' **16-row sample tables are transcriptions over real\ninstances but do NOT match the stored records**: **10 of 16** quoted `(p,q)` rows match **no**\nstored record, one `N` is **digit-transposed**, and some quoted \"ranks\" are the **ceiling `Q+1`**\nrather than the measured rank. **Every AGGREGATE is exact; the TABLES must be regenerated from\nthe per-instance files or dropped.** (This is the record's own recurring failure — a re-derived\ntable that looks primary but is not — caught in the act.)\n\n## 6. INSTRUMENTS found wrong and fixed (each caught only by cross-check, never by inspection)\n- **`sympy`'s `Matrix.rank()` AND `DomainMatrix(...,GF(2)).rank()` BOTH silently return the rank\n  over ℚ** (returns `3` on a GF(2)-rank-`2` matrix). This is the trap the main loop hit.\n- A **Tonelli–Shanks** that declared 4,692 random pairs clean while carrying **two** defects.\n- A **gcd step** halving per-relation instead of summing exponents — a clean-running QS that\n  reported \"no factor\" on every instance.\n- A **log-sieve with no prime-power terms** (recall 0.54), inflating absolute work ~2.1×.\n- **A mutation test was added:** two deliberately broken routines injected, both caught — *\"without\n  this, 'validation passed' is unfalsifiable.\"* The validation suite is now **falsifiable**.\n\n## The exact open problem\n**Q is not free.** The live question is **not** \"can we lower Q\" but: *given a fixed `B`, can the\nyield collapse be evaded **without shrinking the column space**?* Candidate channels, none yet\npriced: **large-prime / partial-relation variants** (where column count and smoothness set\ndecouple), **multi-polynomial QS**, and a **per-instance adaptive `B`** (noting that raising `B`\nraises `Q`, so the penalty may or may not be escapable). All sit **outside** the single-polynomial\nregime and none is addressed by this round. **Zero factoring methods, consistent with 32+ prior\nrounds.**\n",
     "domain_bridges": [],
@@ -40,7 +21,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dbbdbf34",
     "description": "# Round 42 (b) — the CONTROLLED BOUND fails for a precise mathematical reason: the inequality runs BACKWARDS, and the paid work is doubled\n\nDeepens #441. The `crtbound` execution survived both adversarial refuters and identifies\n**three** independent, measured reasons the P4 \"controlled bound\" does not exist. The most\nimportant is a pure inequality-direction error that reframes what the proved ceiling can give.\n\n## 1. ★ The stated chain is INVALID — `rank ≤ Q` gives a LOWER bound, not an upper one\nP4's stated prize is the chain `k_success ≤ rank+1 ≤ Q+1 ≤ (1−d)·π(B)+1`. But a dependence at\nprefix `k` requires `k > rank`, so\n> **`rank + 1 ≤ k_success`** — the first inequality runs **BACKWARDS**.\n\nSo the proved statement `rank_{F₂}(M) ≤ Q(N,B)` yields (A) a **guaranteed non-trivial null\nvector after `Q+1` relations** (useful — you can always find a dependence by then) and (B) a\n**LOWER bound** `k_success ≥ rank+1`. **No upper bound on the paid sieving work follows from\nit.** This is the campaign's rule-7 lesson (direction) in its sharpest form: a tight, proved,\nsieving-free ceiling on the *rank* is orthogonal to a *cost* bound on the *work*.\n\n## 2. The numerical inequality is not a theorem\n`k_success ≤ Q+1` holds in **179/180** real QS runs over a `B = 500..6000` sweep — but it\n**FAILS** at `B = 800`, `N = 11473731946141` (`Q = 60`, `rank = 57`, `k_success = 62 > 61`,\nsplit gcd-verified). It requires an empirical slack `n_triv ≤ Q − rank_at_split` with **no proof**\nbehind it, and even where it holds it is **loose** (`Q/k_success = 1.05` at `B=500` to `1.45` at\n`B=6000`).\n\n## 3. Even as a relation count it is the WRONG target\nThe paid term is the **`x` values sieved**, not the relation count. Driving `Q/π(B)` down 16.4%\ncuts `k_success` by 11% but **doubles the paid work**: `SIEVE_OPS` ratio `2.21` (`t = +7.37`,\n`d = +1.17`); `X_sieved` ratio `2.75` (`t = +8.89`). So P4 converts the `+0.77` correlation\ninto a controlled **LOWER** bound on the paid work — **a validated negative**.\n\n## What is nevertheless REAL and controlled (the honest positive)\n`Q/π(B)` **really does causally control `k_success`** — a controlled contrast (40 vs 40 per arm,\nmatched on `p,q,N` bits, all 160 splits gcd-verified; `B=2000`, `m=303`): `Q/π(B)`\n`0.4578±0.0145` vs `0.5471±0.0141`, `t = −27.93`; `k_success` `119.4±6.18` vs `137.3±8.49`,\nratio `0.870`, `t = −10.78`, `d = −2.41`. **The round-41 `+0.77` correlation is a real\ncontrolled effect, not spurious** — it is simply the wrong quantity, and the paid-work sign\n**reverses**.\n\n**Scope (flagged per rule 6):** everything is 44-bit `N` (`p,q ∈ [3·2^20, 2^22)`) at\n`B = 2000..6000`; these are **per-instance statements at fixed `B`**, and **no exponent is\nclaimed to move** (and cannot, for a fixed-`B` per-instance result).\n\n**Net:** P4 is closed as a validated negative, now for a **mathematical** reason (the inequality\ndirection) as well as an empirical one (the paid work doubles). The proved `rank ≤ Q` ceiling\nremains a real, sieving-free, per-instance statement — it just prices the rank, not the work.\n",
     "domain_bridges": [],
     "domains": [
@@ -52,7 +33,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-26T09:59:23.254433+00:00",
     "title": "FACT round-42(b) — the CONTROLLED BOUND fails for a MATHEMATICAL reason: the inequality runs BACKWARDS. P4's chain 'k_success <= rank+1 <= Q+1' is invalid — a dependence at prefix k needs k>rank, so rank+1 <= k_success is a LOWER bound. The proved rank<=Q gives a guaranteed null vector after Q+1 relations and a LOWER bound on k_success, but NO upper bound on paid sieving work. (2) k_success<=Q+1 holds 179/180 but FAILS at B=800,N=11473731946141 (Q=60,rank=57,k=62>61) and is loose (Q/k=1.05-1.45). (3) Wrong target: driving Q/pi(B) down 16.4% cuts k_success 11% but DOUBLES paid work (SIEVE_OPS ratio 2.21 t=+7.37; X_sieved 2.75 t=+8.89) — P4 becomes a controlled LOWER bound on paid work, a validated negative. REAL positive: Q/pi(B) DOES causally control k_success (controlled 40v40 gcd-verified, t=-27.93 for Q, ratio 0.870, d=-2.41) — the +0.77 is a real controlled effect, just the wrong quantity. 44-bit, fixed-B, no exponent claimed"
   },
@@ -24833,6 +24814,25 @@
     "status": "available",
     "timestamp": "2026-10-11T14:53:40.439533+00:00",
     "title": "Shape-Drift Decomposition of the Bit Ladder"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.MachineLearning.AdaptiveBOracleOnly"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Test whether the Q_small strata of the round-43 data share a common optimal B. By the proved zero-gain characterisation, a stratified rule gains nothing iff they do. This turns the empirical wash into an exact structural statement.\n\nOn the round-43 table, B=9600 lies within 1% of the per-fibre optimum in every Q_small stratum.\n\nCompute fiberCost per stratum and B; check fiberBest_eq_fixedCost_iff numerically.\n\nAdaptive B by Q_small is closed as a provable null.\n\nSome stratum disagrees; a refined stratification may recover part of the oracle gain.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_5286",
+    "lineage_refs": [],
+    "priority_score": 0.5911538461538463,
+    "proof_strategy": "Direct application of fiberBest_eq_fixedCost_iff with the measured costs.",
+    "research_mode": "team",
+    "source_exp_id": "89f98602",
+    "status": "available",
+    "timestamp": "2026-10-21T19:34:47.943650+00:00",
+    "title": "Fibre-Agreement Criterion for Adaptive Smoothness Bounds"
   },
   {
     "ambition_level": "extension",
@@ -53675,6 +53675,28 @@
     "status": "available",
     "timestamp": "2026-10-21T15:27:43.015976+00:00",
     "title": "Cycle-Rank Relation Count for Double-Large-Prime Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.MachineLearning.AdaptiveBOracleOnly",
+      "Catalog.MachineLearning.QSFactorBaseDimension"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extend the proved paid-touch closed form to k polynomials of interval M/k. Any decoupling of the column count from the split set must show up in the per-polynomial switch term.\n\nTotal paid touch for k polynomials equals 2MΣ_odd 1/p + M/2 + k·|S|·σ up to k(2|S|−1), where σ is the per-prime root-recompute cost.\n\nInstrument a SIQS implementation and compare against the formula over k.\n\nMulti-polynomial QS gives no decoupling beyond the switch term.\n\nA non-additive effect exists that is not captured by the root-class model.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "fd_5287",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Apply abs_paidTouch_sub_qs_closedForm_le per polynomial and sum.",
+    "research_mode": "team",
+    "source_exp_id": "89f98602",
+    "status": "available",
+    "timestamp": "2026-10-21T19:34:48.420304+00:00",
+    "title": "Switch-Cost Pricing for Multi-Polynomial Sieving"
   },
   {
     "ambition_level": "extension",

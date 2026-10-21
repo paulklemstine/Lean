@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-21T15:27:43Z",
-  "count": 30,
+  "archived_at": "2026-10-21T19:34:48Z",
+  "count": 31,
   "directions": [
     {
       "id": "fd_3552",
@@ -1207,6 +1207,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 374
+    },
+    {
+      "id": "fd_4007",
+      "title": "FACT round-78 #1 — GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measure framework F1>F2>F3 — r̄-identity universal object (MC err 0.23%), master inequality S ≤ min(1/(Λ·Θ·q̂), 2^k_bits/(Λ·Θ)) PROVEN via majorization; F3 baseline-conditional after verifier (5.365<5.4054 undercut); table error 29.0698→29.3152 at stored P̂=0.9853, feasibility unaffected; converse roadmap EMPTY",
+      "description": "Round-78 #1, theory deliverable (no new physics). GAP-L4 of paper 219's roadmap CLOSED by the positional-stratum measure framework, recorded with fixes applied from an independent adversarial verifier.\n\nFORMULATIONS RANKED F1>F2>F3:\n- F1 (RECOMMENDED): worst-case with explicit bookings Θ=E_πC/K_booked, μ_eff=|R_eff|/M, k_bits, Λ=C_sort/C_desc. Universal object = exact r̄-identity EC_A=P·r̄_R+(1−P)·r̄_C (MC-validated max rel err 0.23%, 8 cells); T1a's certified form emerges exactly at uniform-within-cells (Θ≡1 iff uniform). Master inequality PROVEN unconditional: S_vs_desc ≤ min(1/(Λ·Θ·q̂), 2^{k_bits}/(Λ·Θ)), proof chain = r̄-identity ⇒ majorization C_sort≤C₀ ⇒ Λ-chain. No constant cap; D survives as inequality chain (cost-side 4/3 untouched), loses pathwise product.\n- F2: scale×balance prior — balance IS position (s=r^{−1/2}); canonical kernel b∝r^{−3/2} (= uniform-in-x positional prior, T1a's exact kernel); capture curve P(μ)=μ/(1−R_max^{−1/2}) exact, linear iff canonical; all four anchors demand ultra-balanced populations (required-R 1.04–1.14) → witnesses demoted to generator shape estimators.\n- F3 BASELINE-CONDITIONAL (verifier caught unstated payoff convention): simultaneous-commitment value = certified law EXACTLY only vs full-scan-M baseline; HALVES vs T1a's own C₀=(M+1)/2; same-prior-descending adversary UNDERCUTS certified (5.365<5.4054); corner-is-max-EC brute-force confirmed.\n\nVALUE-universality FALSE off uniform cells: A3 sweep M=64×4000 tilts violation rate .4395 concentrated at HEAD placements (.60/.37/.34 head/mid/tail), max S/S_A=1.54, witness S=62 vs booked 21.3.\n\nWITNESS RE-READS: 5.19 explained structurally — sits in (drafted 5.1948, certified 5.4054) window pinning ρ_R≈0.59 mild adverse loading, not a corner identity; 29.1 AT RESOLUTION LIMIT (P_implied=0.98504, lives in P̂'s 4th decimal).\n\nERRATUM to recorded paper 219 (genuine D-witness-table error caught by L4 verification): row prints (0.02,0.9853)|29.0698 but that value was computed at ROUNDED P=0.985 — certified law at stored P̂=0.9853 gives 29.3152. Rows 5.19/6.91/4.35 still print SUPERSEDED drafted-form values (certified there: 5.4054/7.1567/4.536); prose 4.649 belongs to stale locus (.115,.87). Feasibility conclusions of ALL FOUR anchors UNAFFECTED (μ≤1/S holds regardless).\n\nCONVENTION ADOPTED: state positional-stratum laws as the r̄-identity with bookings (μ_eff, P_eff, ρ_R, ρ_C; Λ) — never bare-(μ,P) closed forms; canonical reporting prior b∝r^{−3/2}; admissibility rule requires raw-P̂ stored and κ_desc reported; baseline named wherever a guarantee is claimed.\n\nROADMAP NOW EMPTY OF OPEN GAPS: T1/T2 verified · D witnessed · L7′ proven-sketch · L8 closed · L4 closed by this framework.\n\nArtifacts: ResearchOutput/scripts/2026-08-24-round74/gapL4_measure.md (post-REVISION), gapL4_check.py/.json, verifyL4_verdict.md, verifyL4_recheck.py/.json. Paper 225, assessment v332 (papers-only bump, count unchanged at 564).",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "9b3c75c4",
+      "timestamp": "2026-08-24T14:04:28.340349+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.4,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-25T04:56:55.458212+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 373
     }
   ]
 }
