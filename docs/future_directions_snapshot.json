@@ -2,25 +2,6 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "0bcae9fd",
-    "description": "# The round-43 boundary IS the NFS route: NFS's column set is governed by the auxiliary field d, NOT by N — a genuine decoupling absent in QS\n\nRound 43 closed the quadratic-form decoupling question and named one falsifiable boundary:\n> *\"Take an `f(x)` whose value is **not** a difference of squares tied to `N`, and non-split\n> large-prime columns **will** appear. That is the only route by which any of these channels\n> could ever price something — and it is not QS.\"*\n\nThat boundary is **the number field sieve**, and this note settles it analytically.\n\n## The decoupling (why QS cannot, NFS can)\n- **Quadratic sieve:** a relation is `a² − b² ≡ 0 (mod r)`, i.e. `a² ≡ b² (mod r)`; for\n  `gcd(a,b)=1` this forces `(N/r) = +1`. So the QS column set is\n  > `{r ≤ B : (N/r) = +1}` — **governed by `N`, the integer you are factoring.**\n\n- **Number field sieve:** the congruence of squares lives over `K = Q(√d)`:\n  `(x + y√d)(x − y√d) ≡ 0` at a prime ideal. A rational prime `r` (coprime to `2d`) yields a\n  usable **pair** of conjugate prime ideals iff `r` **splits in `K`**, i.e. `(d/r) = +1` —\n  which depends on the **auxiliary field `d`**, *not* on `N`. So the NFS ideal-sieve column set is\n  > `{r ≤ B : (d/r) = +1}` — **governed by `d`, identical for every `N`.**\n\n**Verified (numeric):** for `d = −7`, `B = 200`, the NFS column set has 22 elements and is\n**identical** for two different `N`; the QS column set **differs** with `N` (25 vs 21). So NFS\ngenuinely decouples the column count from the modulus; QS cannot.\n\n## Why this matters\nThis is the **structural reason NFS beats QS** (`L[1/3]` vs `L[1/2]`): the ideal-sieve columns\nare **not constrained by the integer being factored** (they are constrained by the choice of\n`d`, which the attacker controls freely), whereas in QS the split set is slaved to `N` — which\nis precisely the tie that made all three round-43 QS decoupling channels theorems. **So the\none route out of the QS no-decoupling theorem is real, and it is exactly NFS** — consistent\nwith round 43's closing note that \"nothing here transfers to NFS.\"\n\n**Scope (honest).** This is a **structural fact / boundary identification**, not a method or a\nnew exponent: NFS's `L[1/3]` is long known. What this adds to the record is the *mechanism* —\n*why* the QS channels are closed (the split set is tied to `N`) and *what* the one escape is\n(the split set is tied to the free choice of `d`). It hands round 44 (the NFS round) the\ncorrect quantity: **the NFS paid terms are governed by `(d/r)` over a field `d` the attacker\nchooses**, so a per-instance lever there is *not* slaved to `N` the way every QS lever is.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_4970",
-    "lineage_refs": [],
-    "priority_score": 1000.0,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "github",
-    "status": "in_progress",
-    "timestamp": "2026-09-26T09:59:23.244622+00:00",
-    "title": "FACT round-43 (boundary) — the boundary IS the NFS route: NFS's column set is governed by the auxiliary field d, NOT by N (a genuine decoupling absent in QS). QS: a^2-b^2=0 mod r forces (N/r)=+1, so the QS column set is governed by N (the number factored). NFS: over K=Q(sqrt d), a rational prime r yields a usable pair of prime ideals iff (d/r)=+1 — depending on the FIELD d, not N. Verified: for d=-7, B=200, the NFS column set (22 elements) is IDENTICAL for two different N, while the QS column set differs (25 vs 21). This is the structural reason NFS beats QS (L[1/3] vs L[1/2]): the ideal-sieve columns are not constrained by the integer being factored, whereas in QS the split set is slaved to N — exactly the tie that made all three round-43 QS decoupling channels theorems. Confirms round 43's 'nothing transfers to NFS'. Hands round 44 the correct quantity: NFS paid terms are governed by (d/r) over a field d the attacker CHOOSES, so a per-instance NFS lever is not slaved to N"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [],
     "consumed_by_exp_id": "89f98602",
     "description": "# Adaptive B: the per-instance optimum is REAL but ORACLE-ONLY (signal/noise 0.089) — and Q tracks m to 3 decimals, so B cannot decouple either\n\nRound 43, adaptive-B channel. 1,800 real QS runs (120 validated 41-bit balanced semiprimes,\n15-value B ladder [150..19000], fixed sieve M=150000), one instance per row, error bar =\nbetween-instance sd. Unlike round 42, the quantity priced here is **`paid_touch`** — elementary\nsieve operations actually executed (touched positions per prime per root class) — validated\nagainst the closed form `2·M·Σ_odd + M/2` (max rel. dev 2.01e-04). The **direction is correct**\n(this is the real paid work, not a rank).\n\n## 1. The per-instance optimum B\\* exists and MOVES\nOver the ladder, `argmin_B` (of paid work) spans the **full range 150 → 19000**, median 4800.\nSo the best B is genuinely instance-dependent.\n\n## 2. ★ The oracle gain is real\nAgainst the best fixed B (9600, train-fit), the **oracle** per-instance B\\* gives:\n> **0.9533×** (mean log ratio `+0.0478`, between-instance sd 0.0451, `t = −11.6`, n = 120,\n> **102/120 improved, 0/120 worsened**, 18 tied).\n\n## 3. ★★ BUT no free rule reaches it — the gain is ORACLE-ONLY\nHeld-out (train 60 / test 60):\n- Q_small-stratified rule: **1.0047×** (`t = +1.12`) — a wash;\n- regression on free features: **1.0290×** (`t = +3.04`) — **significantly WORSE**;\n- vs **oracle 0.9590×**.\n> **The prize is 0.0478 log units against a held-out residual sd of 0.5360 — signal/noise\n> = 0.089.** The per-instance variation in optimal B is real but **unpredictable from free\n> features**, so adaptive B is not an implementable lever; it is a post-hoc artifact of knowing\n> the answer.\n\n## 4. Structurally, Q tracks m to three decimals — B cannot decouple either\nWithin-instance `d log Q / d log m = 0.99718 ± 0.03722` (n = 120, range [0.923, 1.094],\n`t = +293`). So at fixed B, the split-prime count `Q` is a **near-deterministic function of `m`**\n— choosing B moves `m` and `Q` together, so B provides no decoupling lever. This reinforces\nround 42's \"Q is not a free parameter\" from a second, independent direction.\n\n**Verdict: adaptive B is a validated negative as an implementable method** (the oracle gain is\nreal but free rules are a wash or worse), and it adds a second proof that the single-polynomial\nQS column count cannot be decoupled from the split set (the first was the large-prime\none-line argument, #444; the second is this `Q ≈ m` scaling). Both leave **multi-polynomial QS**\n(the one remaining unpriced decoupling channel) as the only open door in this family.\n",
     "domain_bridges": [],
@@ -40,7 +21,7 @@
   {
     "ambition_level": "grand_challenge",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a77f9264",
     "description": "# The large-prime / partial-relation variant CANNOT decouple the column count from the split set — a one-line proof (main loop, round 43)\n\nRound 42 named three unpriced channels for evading the QS yield collapse: large-prime /\npartial-relation variants, multi-polynomial QS, and adaptive `B`. This note **fast-kills the\nfirst** with an analytical argument, so the round does not over-invest in it.\n\n## THE CLAIM, and the one-line refutation\nIn a large-prime (LP) / partial-relation variant, a value that is not fully `B`-smooth but is\n`smooth × (a single large prime r)` contributes a **partial relation** whose new column is the\nlarge prime `r`. The hope is that this **decouples** the column count from the split set (the\n`r` are \"large,\" supposedly not forced to satisfy the split condition).\n\n**But every such large prime `r` IS a split prime.** Indeed, if `r` divides a polynomial value\n`f(c) = c² − N`, then `N ≡ c² (mod r)`, so\n> **`(N/r) = +1` (Legendre symbol) — `r` splits at `N`.**\n\nThis is exactly the constraint (`r | f(c) forces (N/r) = +1`, verified 2,215/2,215 in round 42)\nthat made `Q` a non-free parameter. The LP variant therefore **ADDS split-prime columns**; it\ndoes **not** decouple the column count from the split set. Since round 42 measured the **paid\nsieve work to DECREASE in `Q`** (i.e. the paid cost rises as the split set grows), enlarging\nthe split set enlarges **exactly the quantity whose growth hurts**. **The large-prime /\npartial-relation channel is FAST-KILLED as a decoupling mechanism** — with no search required,\njust the observation that the \"large prime\" is still a split prime.\n\n**Empirical confirmation:** for real `N` and `c` just above `√N` (so `f(c) = c²−N` is small and\nsmooth), every prime divisor `r` of `f(c)` satisfies `(N/r) = +1` (7/7 checked; e.g.\n`N = 15916539906629`, `c = 3989570`, `f(c) = 128878271`). (The analytical proof above is the\nreal content; the numeric check is a sanity confirmation, not the argument.)\n\n**Scope / what survives:** the LP variant is not *useless* — it is a standard QS accelerator and\ndoes raise the relation yield per sieve pass. But it does **not** do the specific thing P4's\nsuccessor needed: **decouple the column count from the split set** so the round-42 paid-work\ncollapse can be evaded. As a *decoupling* mechanism it is closed by the one-line split-prime\nargument. The remaining two channels (multi-polynomial QS, adaptive `B`) are unaffected and\nremain open.\n",
     "domain_bridges": [],
     "domains": [
@@ -52,7 +33,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "github",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-26T09:59:23.251234+00:00",
     "title": "FACT round-43 (main-loop) — the LARGE-PRIME/partial-relation variant CANNOT decouple the column count from the split set: a ONE-LINE proof. If r | f(c)=c^2-N then N = c^2 (mod r) so (N/r)=+1 — every large prime in a partial relation is ITSELF a split prime. So the LP variant ADDS split-prime columns rather than decoupling from them, enlarging exactly the quantity (Q) whose growth HURTS the paid work (round 42: paid work decreases in Q, 2.4x-13.1x). FAST-KILLED as a decoupling mechanism, no search needed. Empirically 7/7 prime divisors of f(c) are split. The LP variant is still a standard QS accelerator (raises relation yield) but does not do what P4's successor needed. The other two channels (multi-polynomial QS, adaptive B) are unaffected and remain open"
   },
@@ -53561,6 +53542,29 @@
     "status": "available",
     "timestamp": "2026-10-20T09:41:42.276517+00:00",
     "title": "Euler-Gap Promise-Class Density"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Logic.NFSFieldGovernedColumns",
+      "Catalog.Physics.NFSClosureDecoupling"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extend the quadratic decoupling theorem to degree-k NFS polynomials: validity modulo N is independent, by CRT, of root counts modulo factor-base primes. This would show the full NFS column structure is attacker-chosen.\n\nFor k ≥ 2, N, m and a finite set S of primes coprime to N, every assignment of root counts realisable by a degree-k polynomial mod each r ∈ S is realised by a monic f of degree k with N ∣ f(m).\n\nFormalise with Polynomial (ZMod r) root counts and Ideal.exists_forall_sub_mem_ideal on coefficient vectors; check k = 3 numerically for small S.\n\nAll NFS column patterns are free parameters for every degree; the QS tie is an artefact of degree 2 with d = N.\n\nSome higher-degree splitting types are coupled to N, giving a new invariant of the NFS route.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5279",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Apply CRT coefficientwise: fix f mod N by f ≡ (X - m)·g, and choose f mod r with the prescribed factorisation; lift via CRT.",
+    "research_mode": "team",
+    "source_exp_id": "0bcae9fd",
+    "status": "available",
+    "timestamp": "2026-10-21T00:35:57.672269+00:00",
+    "title": "Higher-Degree Column Freedom"
   },
   {
     "ambition_level": "extension",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "25df59ed",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — the which-factor wall\n\n## What this cycle settled\n\n1. **The proposed inverse-Lipschitz bound is false.** The constant\n   $c(\\delta) = \\log((1-\\delta)/\\delta)$ is the supremum of",
-      "quality_score": 0.86,
-      "sorry_count": 0,
-      "theorem_count": 48,
-      "timestamp": "2026-08-29T09:04:19",
-      "title": "Which-Factor Wall as a Cross-Population Invariant"
-    },
-    {
       "cycle_id": "90e1e335",
       "domain": "Novelty",
       "key_insight": "# Future Directions — after the oracle-realization gap\n\nFive Lean files were produced and are machine-checked without `sorry`:\n\n* `Catalog/Novelty/OracleRealizationGap.lean` — the sensor's statistic r",
@@ -2501,6 +2491,16 @@
       "theorem_count": 23,
       "timestamp": "2026-10-20T21:58:16",
       "title": "FACT round-43 (full) — no-decoupling is a THEOREM for all three channels; the FULL cost INVERTS the "
+    },
+    {
+      "cycle_id": "0bcae9fd",
+      "domain": "Logic",
+      "key_insight": "# Future directions (round 44: the NFS round)\n\nProved this cycle (`Catalog/Logic/NFSFieldGovernedColumns.lean`): for fixed `N` and root `m`,\nthe quadratic-NFS column pattern on the coprime factor base",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 31,
+      "timestamp": "2026-10-21T00:36:13",
+      "title": "FACT round-43 (boundary) — the boundary IS the NFS route: NFS's column set is governed by the auxili"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-20T21:58:16",
+  "last_updated": "2026-10-21T00:36:13",
   "open_questions": [
     {
       "context": "This file gives a complete, sorry-free proof of that formula, together with the",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "f099f0f6",
-        "quality": 0.85,
-        "theorems": 64,
-        "title": "Moment hierarchy"
-      },
-      {
         "cycle_id": "5223d87b",
         "quality": 0.75,
         "theorems": 94,
@@ -3513,6 +3507,12 @@
         "quality": 0.62,
         "theorems": 38,
         "title": "FACT round-35 (full) — FAITHFUL-MODEL SLACKNESS: Harvey Alg 4.3 Step 2 forces M="
+      },
+      {
+        "cycle_id": "0bcae9fd",
+        "quality": 0.62,
+        "theorems": 31,
+        "title": "FACT round-43 (boundary) — the boundary IS the NFS route: NFS's column set is go"
       }
     ],
     "MachineLearning": [
