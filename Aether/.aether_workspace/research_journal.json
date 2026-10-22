@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "f671dcbf",
-      "domain": "Logic",
-      "key_insight": "# FUTURE DIRECTIONS — after the NET-92 KV-cliff cycle\n\nThis cycle added five self-contained Lean files to `Catalog/Logic/`:\n\n* `KVCliffCrowdingLaw.lean` — the crowding pigeonhole, the `SafeBits` crite",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 50,
-      "timestamp": "2026-08-29T18:30:40",
-      "title": "NET-92 THE-KV-CLIFF: 8-bit KV cache is quality-free (+0.10% worst case) while 4-bit KV annihilates t"
-    },
-    {
       "cycle_id": "3f9d41d2",
       "domain": "Applications",
       "key_insight": "# Future Directions — batch smoothness testing (round-73 #3, exp 561)\n\nDerived from the two research cycles formalised in\n`Catalog/Applications/BatchSmoothnessCorrectness.lean`,\n`Catalog/Applications/",
@@ -2501,6 +2491,16 @@
       "theorem_count": 28,
       "timestamp": "2026-10-21T19:35:02",
       "title": "FACT round-43 — ADAPTIVE B: the per-instance optimum is REAL but ORACLE-ONLY. 1800 real QS runs, 120"
+    },
+    {
+      "cycle_id": "87d60ba3",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — after Round 42 (full)\n\n## What this cycle established (all 0-sorry, Lean 4 / Mathlib, `Catalog/Computation/`)\n* **`QSSplitSetForcing.lean`** — the primes `≤ B` dividing *some* `x",
+      "quality_score": 0.62,
+      "sorry_count": 2,
+      "theorem_count": 500,
+      "timestamp": "2026-10-22T06:06:08",
+      "title": "FACT round-42 (full) — P4 CLOSED with a sign flip; smoothness density governed by Q, NOT Dickman (co"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-21T19:35:02",
+  "last_updated": "2026-10-22T06:06:08",
   "open_questions": [
-    {
-      "context": "This file gives a complete, sorry-free proof of that formula, together with the",
-      "cycle_id": "64406111",
-      "domain": "Geometry",
-      "sorry_count": 1,
-      "timestamp": "2026-08-14T15:14:21"
-    },
     {
       "context": "Main results (all with no `sorry`):; and this file proves, with no `sorry`:",
       "cycle_id": "c94236ec",
@@ -3016,6 +3009,13 @@
       "domain": "Cryptography",
       "sorry_count": 1,
       "timestamp": "2026-10-14T19:41:12"
+    },
+    {
+      "context": "A repaired, sorry-free version of the same results lives in; A repaired, sorry-free version of the same results lives in",
+      "cycle_id": "87d60ba3",
+      "domain": "Computation",
+      "sorry_count": 2,
+      "timestamp": "2026-10-22T06:06:08"
     }
   ],
   "research_threads": {
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "5e9b52ad",
-        "quality": 0.82,
-        "theorems": 48,
-        "title": "Kneser input for many lines"
-      },
-      {
         "cycle_id": "3b9c1eb4",
         "quality": 0.84,
         "theorems": 84,
@@ -3327,6 +3321,12 @@
         "quality": 0.62,
         "theorems": 61,
         "title": "FACT round-39 #4 — PER-N-PREDICTOR: one feature captures two-thirds of the achie"
+      },
+      {
+        "cycle_id": "87d60ba3",
+        "quality": 0.62,
+        "theorems": 500,
+        "title": "FACT round-42 (full) — P4 CLOSED with a sign flip; smoothness density governed b"
       }
     ],
     "Cryptography": [

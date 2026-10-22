@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-21T19:35:02.962153+00:00",
+  "last_updated": "2026-10-22T06:06:10.291613+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -78783,6 +78783,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-21T19:35:02.562612+00:00",
       "title": "FACT round-43 \u2014 ADAPTIVE B: the per-instance optimum is REAL but ORACLE-ONLY. 1800 real QS runs, 120"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Computation",
+      "duration_seconds": 18265.805950641632,
+      "end_time": 1792649113.9968488,
+      "files_integrated": 4,
+      "job_id": "87d60ba3",
+      "outcome_quality": 0.62,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.62,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.454,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.62,
+        "novelty": 0.62,
+        "proof_depth": 0.62,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.62,
+      "sorry_count": 2,
+      "sorry_density": 0.004,
+      "start_time": 1792630848.1908982,
+      "strategy_count": 0,
+      "theorem_count": 500,
+      "theorem_novelty_disproof": 23,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 425,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-22T06:06:09.932425+00:00",
+      "title": "FACT round-42 (full) \u2014 P4 CLOSED with a sign flip; smoothness density governed by Q, NOT Dickman (co"
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-21T19:34:48Z",
-  "count": 31,
+  "archived_at": "2026-10-22T06:05:57Z",
+  "count": 32,
   "directions": [
     {
       "id": "fd_3552",
@@ -1247,6 +1247,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 373
+    },
+    {
+      "id": "fd_4022",
+      "title": "FACT round-79 #2 — HIT-POSITION-STRUCTURE (exp 578): POSITIONAL-STRUCTURE-REAL amended BEYOND-MAGNITUDE — pooled KS D=0.09519 p=6.9e-76 (9565 hits/127 hit-rich Ns, paired control null); stratified check decisive: conditioning on all 8 v-cells RAISES D to 0.10423, 7/8 cells fire, permutation p<0.0005 — real within-N geometry in the smooth locus of j²−N; first positive carrier candidate for the ~39–61% residual",
+      "description": "Paper 228. exp 578. Sources: ResearchOutput/scripts/2026-08-24-round74/exp578_hit_position.py (pre-registration in header BEFORE any data generation) + exp578_stratified_check.py (confound check, rule pre-stated BEFORE running) -> exp578_result.json (+ magnitude_confound_check block), exp578_positions.npz, wall 363 s full / 21.8 s smoke.\n\nVERDICT: POSITIONAL-STRUCTURE-REAL, amended BEYOND-MAGNITUDE-POSITIONAL-STRUCTURE — the FIRST POSITIVE carrier candidate for the ~39-61% unexplained per-N overdispersion (papers 220/222/226/227 thread).\n\nPOPULATION: 128 balanced bitlen-96 semiprimes, FRESH seed 20260828 hash 06931068f8f3ca9b, lineage quartet e8d89a29/9cb9cc80/81acc9b5/a15e2877 REPRODUCED exactly, five-seed family pairwise disjoint; exp569 tester verbatim 150k j-samples/N cut 1e6, every hit position persisted. Overdispersion REPLICATED 4th time: mean 74.95 hits/N, D_raw 6.37, range 29-136.\n\nPRIMARY LEGS (treatment | paired non-hit control): (a) pooled KS u vs U[0,1], 9565 hits / 127 HITRICH Ns: D=0.09519 p=6.9e-76 FIRES | control D=0.00693 p=0.744 null. (b) lag-1..10 autocorr rho=+0.00283 CI [0.00112,0.00475] excludes 0 but below 0.05 bar -> no fire | repaired control -0.00112 null. (c) edge frac 0.2346 p=1.1e-16 vs 0.20 but < 0.25 bar -> no fire | control 0.1935 null.\n\nSTRATIFIED ANSWER (decisive): confound = v=j^2-N monotone => pure decay skews small-u; rule pre-stated before running. All 8 (bitlen(v) x mantissa-octant) cells contain every hit; vs size-matched non-hits per cell: 7/8 fire at p<0.01 (median cell p=1.86e-5), pooled stratified D=0.10423 EXCEEDS unstratified 0.09519, within-cell permutation p<0.0005 (0/2000), stratified-edge z=10.08. Deciles [.162,.123,.109,.097,.091,.091,.090,.084,.081,.072] monotone-declining vs flat control: hits cluster toward small-j ~10x stronger than magnitude predicts => structure fully survives size-conditioning = BEYOND-MAGNITUDE.\n\nCONSEQUENCE: real WITHIN-N positional geometry in the smooth locus of j^2-N opens POLYNOMIAL-SEQUENCE LOCAL STRUCTURE as carrier candidate for the ~39-61% residual. Named follow-ups: (a) functional form of the small-j profile; (b) does j-local clustering predict WHICH N are hit-rich (positional <-> rate link).\n\nLEDGER CATCHES (disclosed): run-1 control-arm leg-b mirrored treatment (acf read hit arrays unconditionally) - repaired from npz BEFORE verdicts, fired nowhere either way; confound-check order on record (pre-stated by coordinator, labeled post-hoc everywhere); legs a/c overlap registered up front.\n\nBarrier framing: scale-smoothness mechanism frontier - opens rather than closes; H0-route also cleanly closed (control nulls). Residue cap untouched; no breakthrough claimed.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "ea4eae2e",
+      "timestamp": "2026-08-24T15:58:32.184828+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.30000000000000004,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-25T05:52:42.948418+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 376
     }
   ]
 }
