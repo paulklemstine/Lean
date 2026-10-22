@@ -54157,15 +54157,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Test bounded charging maps in real libraries."
   },
   {
-    "consumed_by_exp_id": "5cad4feb",
+    "consumed_by_exp_id": "",
     "description": "Strengthen `Computes` with bounds on state dimension, runtime, precision, and fan-in. The current existential encoder/decoder can contain the whole function, so it deliberately says nothing about implementation efficiency.",
     "domains": [],
     "id": "fd_2361",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "28edcf45",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T06:23:51.600241+00:00",
     "title": "Resource-aware realization"
   },
@@ -54302,14 +54301,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Degree formula"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d9ade497",
     "description": "*(Done \u2014 see `qFactorial_product`.)*\n   Introduce `[n]_q! = \u220f_{i=1}^n [i]_q` and prove\n   `[k]_q! \u00b7 [n-k]_q! \u00b7 qBinom n k = [n]_q!` (an identity in `\u2124[q]`, avoiding\n   division).  This is the q-analog of `k!(n-k)!\u00b7C(n,k) = n!`.",
     "domains": [],
     "id": "fd_2519",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "3984694e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:24:38.677615+00:00",
     "title": "q-factorial product formula"
   },
