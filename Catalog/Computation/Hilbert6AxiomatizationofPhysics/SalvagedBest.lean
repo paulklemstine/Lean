@@ -1,3 +1,15 @@
+import Shared.Hilbert6AxiomatizationofPhysics.SalvagedBest
+
+/-!
+# Salvaged fragment (superseded)
+
+The original fragment below did not compile: its supporting definitions were missing.
+A repaired, sorry-free version of the same results lives in
+`Shared/Hilbert6AxiomatizationofPhysics/SalvagedBest.lean` and is imported above. The original text is kept,
+commented out, for reference.
+-/
+
+/-
 theorem cancel_left (a b c d : E)
     (h1 : a ⊕ₑ b = some d) (h2 : a ⊕ₑ c = some d) : b = c := by
   obtain ⟨ f, hf1, hf2 ⟩ := ( ‹EffectAlgebra E›.oplus_assoc a b ( ‹EffectAlgebra E›.ortho d ) d ( ‹EffectAlgebra E›.eone ) ) h1 ( ‹EffectAlgebra E›.oplus_ortho d );
@@ -158,3 +170,4 @@ end EffectAlgebra
    commutative effect algebra is isomorphic to a power set EA 2^n.
 -/
 end UnitInterval
+-/

@@ -1,7 +1,7 @@
 import Mathlib
-import Catalog.Computation.ListHammingBallParity
-import Catalog.Computation.BinaryCodeBounds
-import Catalog.Computation.HammingCodePerfect
+import Computation.ListHammingBallParity
+import Computation.BinaryCodeBounds
+import Computation.HammingCodePerfect
 
 /-!
 # General Hamming codes: a perfect binary code exists in length `n` iff `n + 1` is a power of 2
