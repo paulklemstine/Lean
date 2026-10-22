@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3f9d41d2",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — batch smoothness testing (round-73 #3, exp 561)\n\nDerived from the two research cycles formalised in\n`Catalog/Applications/BatchSmoothnessCorrectness.lean`,\n`Catalog/Applications/",
-      "quality_score": 0.74,
-      "sorry_count": 0,
-      "theorem_count": 55,
-      "timestamp": "2026-08-29T18:30:57",
-      "title": "FACT round-73 #3 — BATCH-AMORTIZATION: batch smoothness-testing wins its phase (+10.4% flat model) b"
-    },
-    {
       "cycle_id": "f5dbb89f",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Fermi occupancy, pigeonhole thresholds, and rare-event geometry\n\nDerived from the verified results in `Catalog/Pythagorean/FermiPigeonhole/`\n(`Model`, `DrakeFirstMoment`, `Contac",
@@ -2501,6 +2491,16 @@
       "theorem_count": 500,
       "timestamp": "2026-10-22T06:06:08",
       "title": "FACT round-42 (full) — P4 CLOSED with a sign flip; smoothness density governed by Q, NOT Dickman (co"
+    },
+    {
+      "cycle_id": "3f929167",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — after the rho local-win boundary cycle\n\nVerified this cycle (Lean, 0 sorries): `Catalog/Novelty/RhoDetectorBoundary.lean`,\n`Catalog/Novelty/RhoAutomorphismCliff.lean`.  Brent < F",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 50,
+      "timestamp": "2026-10-22T16:07:25",
+      "title": "FACT law-boundary — the 'local win' law SURVIVES its strong test and now HAS A BOUNDARY plus a genui"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-22T06:06:08",
+  "last_updated": "2026-10-22T16:07:25",
   "open_questions": [
     {
       "context": "Main results (all with no `sorry`):; and this file proves, with no `sorry`:",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "85c32d45",
-        "quality": 0.72,
-        "theorems": 64,
-        "title": "FACT round-32 #3 — UNIVERSAL-S3-CORRECTED: the law is universal across all S3 fi"
-      },
-      {
         "cycle_id": "ea6702d1",
         "quality": 0.72,
         "theorems": 70,
@@ -3637,6 +3631,12 @@
         "quality": 0.6,
         "theorems": 15,
         "title": "FACT round-43 (main-loop) — the LARGE-PRIME/partial-relation variant CANNOT deco"
+      },
+      {
+        "cycle_id": "3f929167",
+        "quality": 0.62,
+        "theorems": 50,
+        "title": "FACT law-boundary — the 'local win' law SURVIVES its strong test and now HAS A B"
       }
     ],
     "NumberTheory": [

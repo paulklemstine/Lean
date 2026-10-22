@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-22T06:05:57Z",
-  "count": 32,
+  "archived_at": "2026-10-22T16:07:12Z",
+  "count": 33,
   "directions": [
     {
       "id": "fd_3552",
@@ -1287,6 +1287,46 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 376
+    },
+    {
+      "id": "fd_4023",
+      "title": "FACT round-79 #1 — PRODUCT-DIAL-SCALESHIFT (exp 577 + verifyL7b): WINDOW-STRONGER-NOT-SHIFTED — H1 scale-shift REFUTED (no QR window past 400; B*=400 confirms papers-136/139 location), 1/ℓ-weighted dial is the law (48% D-red, saturates by 400, corr .999) — paper-226 SECONDARIES erratum-grade (reciprocity-flip dial-form artifacts, flip 100%-on-condition), its PRIMARY null stands",
+      "description": "Paper 227. exp 577 (+ independent verification verifyL7b). Sources: ResearchOutput/scripts/2026-08-24-round74/exp577_product_dial.py (pre-registration in header BEFORE data generation; post-verification REVISION annotated in-script) -> exp577_result.json + smoke pair + diagnostics; verifyL7b_exp577_check.py -> verifyL7b_result.json.\n\nVERDICT (pre-registered): WINDOW-STRONGER-NOT-SHIFTED — H1 scale-shift REFUTED on all four shift candidates (both legs fail, R2 margins to abs bar -0.132..-0.160); H0 blocked by the disclosed branch (D-red@400 = 33.4% >= 30%).\n\nSWEEP (cumulative QR-count dial vs log-rate): B=400 R2=.3207/D-red 33.43% | 4000 .0241/2.40% | 4e4 .0150/1.68% | 1e5 .0000/0.0% | 1e6 .0277/4.11%. Extension DILUTES: equal-weight counting buries primes informative ~1/l. B* = 400 — paper-136/139 window location CONFIRMED scale-independent.\n\nWEIGHTED DIAL IS THE LAW: W(B)=sum_{QR l<=B} 1/l: W400 R2=.4731/D-red 48.11%, W1e6 .4786/48.51% (z~16.8); corr(W1e6,W400)=0.999 (independent verifier population 0.9991/0.9985) — signal SATURATES BY 400 once harmonically weighted. ADOPTED as canonical scale-smoothness covariate.\n\nVERIFIED THREE-PART DIAGNOSIS OF PAPER 226 (erratum-grade for SECONDARY conclusions): (1) S_prod/S139@400 rows are composite-bottom dials with reciprocity sign flipping iff l=3 mod 4 AND N=3 mod 4 (52.3% of N; conditional flip 100%, 2680/2680, zero violations; unconditional 27.19% predicted=measured to 2nd decimal) — published weakness (.0781/14.22%, .0565/9.07%) is DIAL-FORM ARTIFACT, reproduced under flipped forms (.030/4.11%, .0456/5.46%) while clean C100 Legendre is STRONG (.3728/34.45%) — RETRACTED-AS-ARTIFACT; (2) PRIMARY S_indiv null REPLICATES as true null here too (.0019/0.09%, z=0.72; flip mechanism inapplicable) — consistent null, only secondary retracted; (3) exp576-vs-exp577 S400 discrepancy (0.078 vs 0.32) traced to form difference + estimator spread (C400==recorded S400 on 128/128 rows; C100-clean strong in both populations 34.45%/34.75%) — documented, not a reproducibility failure.\n\nDISPERSION BOOKKEEPING both readings: count@400 = 33.4% of raw (=42.1% of excess-above-Poisson); W1e6 = 48.5% raw (=61.0% excess); residual ~51.4% raw / ~39.0% excess still overdispersed (D_cond>1). Paper 226's '>=86% new structure' shrinks to ~39-58% residual non-QR (dial/reading dependent).\n\nLEDGER CATCHES (adversarial BOTH directions): first-draft '(signs cancel)' orthogonality claim RETRACTED by verification (r(flipP100,C400)=0.058 stands FOR THE FLIPPED FORM via label-swap clarification); verifier addendum 'removing l=2 rescues formA' REJECTED empirically (.0322/4.34% without l=2); l=2 even-modulus Jacobi crash caught in smoke; first-draft T1 bound mismatch + missing-/n correlation self-caught pre-ledger; pre-reg header error annotated in-script; smoke n=16 spuriously fired H1 — marked NON-EVIDENTIARY. Lineage: four master-seed hashes reproduced/asserted pairwise disjoint.\n\nBarrier validation: closes paper 226's named follow-up under fixed bars; canonical-covariate upgrade count->weighted; papers 136/139 stand at their own scale with location vindicated and form upgraded; residue cap 4/3 untouched; no complexity claim; no breakthrough claimed.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "2111d025",
+      "timestamp": "2026-08-24T15:58:32.186714+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.78,
+      "domain_quality_penalty": 0.30000000000000004,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-25T07:12:02.551666+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 375
     }
   ]
 }
