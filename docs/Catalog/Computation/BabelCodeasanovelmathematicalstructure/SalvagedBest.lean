@@ -1,3 +1,15 @@
+import Shared.BabelCodeasanovelmathematicalstructure.SalvagedBest
+
+/-!
+# Salvaged fragment (superseded)
+
+The original fragment below did not compile: its supporting definitions were missing.
+A repaired, sorry-free version of the same results lives in
+`Shared/BabelCodeasanovelmathematicalstructure/SalvagedBest.lean` and is imported above. The original text is kept,
+commented out, for reference.
+-/
+
+/-
 theorem plotkin_bound {A L d : ℕ} (hA : 1 ≤ A) (hd : 1 ≤ d)
     (hPlotkin : L * (A - 1) < d * A)
     (C : Finset (Volume A L)) (hC : IsBabelCode C d) :
@@ -136,4 +148,5 @@ end BabelCode
    forms a lattice. The meet is intersection (with adjusted distance), the join
    requires recomputing minimum distance. *Testable*: enumerate all BabelCodes
    over {0,1}^3 and verify the lattice axioms.
+-/
 -/

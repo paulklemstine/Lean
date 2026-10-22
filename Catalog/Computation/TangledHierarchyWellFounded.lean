@@ -24,7 +24,7 @@ and is *unique*, whatever the polarities are; conservativity follows.
 * `omegaDen`: an infinite, nowhere-positive tangle of unbounded finite height,
   determined and conservative.
 -/
-import Catalog.Computation.TangledHierarchyConservativity
+import Computation.TangledHierarchyConservativity
 
 namespace TangledHierarchy
 

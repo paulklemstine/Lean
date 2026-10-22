@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Computation.ListHammingBallParity
-import Catalog.Computation.BinaryCodeBounds
+import Computation.ListHammingBallParity
+import Computation.BinaryCodeBounds
 
 /-!
 # The [7,4,3] Hamming code is perfect, and `A(7,3) = 16`

@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Computation.UnionClosedAdjoinTop
+import Computation.UnionClosedAdjoinTop
 
 /-!
 # Cycle 3: a sharp local degree bound for union-closed families

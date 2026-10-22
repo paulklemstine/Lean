@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Computation.UnionClosedAdjoinTop
+import Computation.UnionClosedAdjoinTop
 
 /-!
 # Cycle 4: chains, and a computable certificate for abundance

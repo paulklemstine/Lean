@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Computation.UnionClosedAdjoinTop
+import Computation.UnionClosedAdjoinTop
 
 /-!
 # Cycle 2: averaging, density, and the invariants preserved by adjoining the top

@@ -16,7 +16,7 @@ This file measures what a loop *does* cost, namely **indeterminacy**.
   *nothing* to the old theory.  The cost of tangling is exponential in
   semantics and zero in syntax.
 -/
-import Catalog.Computation.TangledHierarchyConservativity
+import Computation.TangledHierarchyConservativity
 
 namespace TangledHierarchy
 

@@ -24,7 +24,7 @@ The model is built level by level: on each level one takes the least fixed point
 of the revision operator relative to the already-constructed lower levels
 (Knaster–Tarski), and the levels are glued by a stability argument.
 -/
-import Catalog.Computation.TangledHierarchyConservativity
+import Computation.TangledHierarchyConservativity
 
 namespace TangledHierarchy
 

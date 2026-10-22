@@ -1,6 +1,4 @@
 import Mathlib
-import Shared.Logic.One_plus_exp_pos
-import Shared.NeuralCoding.Softplus
 import Shared.NeuralCoding.LogisticSigmoid
 
 /-! # CatalogBuild.Shared.Softplus_convex

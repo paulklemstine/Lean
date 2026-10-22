@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Shared.InformationTheory.SymbolicDynamics
+import Shared.InformationTheory.SymbolicDynamics
 
 /-!
 # Horseshoe-Computation Bridge: Entropy, Oracles, and Complexity

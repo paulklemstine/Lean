@@ -1,6 +1,6 @@
-import Catalog.Computation.ListHammingBallParity
-import Catalog.Computation.HammingCodePerfect
-import Catalog.Computation.HammingCodesGeneral
+import Computation.ListHammingBallParity
+import Computation.HammingCodePerfect
+import Computation.HammingCodesGeneral
 
 /-!
 # Cycle 7 — The extremal function `A(n,d)` and the extension/puncturing involution

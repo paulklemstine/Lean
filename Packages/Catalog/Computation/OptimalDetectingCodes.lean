@@ -1,6 +1,6 @@
 import Mathlib
-import Catalog.Computation.ListHammingBallParity
-import Catalog.Computation.BinaryCodeBounds
+import Computation.ListHammingBallParity
+import Computation.BinaryCodeBounds
 
 /-!
 # Classification of the optimal single-error-detecting codes

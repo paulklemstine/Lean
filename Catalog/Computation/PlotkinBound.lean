@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Computation.ListHammingBallParity
+import Computation.ListHammingBallParity
 
 /-!
 # The Plotkin bound over `List Bool`

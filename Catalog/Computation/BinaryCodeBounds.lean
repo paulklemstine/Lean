@@ -1,5 +1,5 @@
 import Mathlib
-import Catalog.Computation.ListHammingBallParity
+import Computation.ListHammingBallParity
 
 /-!
 # Linear structure, the Singleton and Gilbert–Varshamov bounds, and perfect codes
