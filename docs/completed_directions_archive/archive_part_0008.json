@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-23T01:43:27Z",
-  "count": 34,
+  "archived_at": "2026-10-23T12:08:15Z",
+  "count": 35,
   "directions": [
     {
       "id": "fd_3552",
@@ -1367,6 +1367,44 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 378
+    },
+    {
+      "id": "fd_2519",
+      "title": "q-factorial product formula",
+      "description": "*(Done — see `qFactorial_product`.)*\n   Introduce `[n]_q! = ∏_{i=1}^n [i]_q` and prove\n   `[k]_q! · [n-k]_q! · qBinom n k = [n]_q!` (an identity in `ℤ[q]`, avoiding\n   division).  This is the q-analog of `k!(n-k)!·C(n,k) = n!`.",
+      "source_exp_id": "3984694e",
+      "source_path": "resplit_migration",
+      "domains": [],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.4,
+      "status": "completed",
+      "consumed_by_exp_id": "d9ade497",
+      "timestamp": "2026-08-21T06:24:38.677615+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.7,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 2,
+      "last_attempt_time": "2026-10-22T20:08:44.019604+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

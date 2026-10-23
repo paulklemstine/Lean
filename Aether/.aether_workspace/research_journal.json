@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "841548e6",
-      "domain": "Tropical",
-      "key_insight": "# Future Directions — the Euler Brick Tree\n\nThis cycle built the dynamic layer over the catalog's static perfect-cuboid\ngeometry: a brick generator over the Berggren tree, the descent/structure\ntheore",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 354,
-      "timestamp": "2026-09-15T10:12:50",
-      "title": "The Euler Brick Tree — Berggren Descent and the Perfect Cuboid"
-    },
-    {
       "cycle_id": "6f1658d7",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — the Berggren tree as a congruent number laboratory\n\nThis cycle established the bridge: the squarefree parts of the areas of the Berggren\ntree's nodes are *exactly* the congruent",
@@ -499,19 +489,19 @@
       "theorem_count": 72,
       "timestamp": "2026-10-23T01:43:39",
       "title": "Necessity of Uniform Per-Layer Budgets"
+    },
+    {
+      "cycle_id": "d9ade497",
+      "domain": "Applications",
+      "key_insight": "# Future directions (derived from `Catalog/Applications/QBinomialQFactorial.lean`)\n\nThis cycle proved the division-free q-factorial product formula\n`[k]_q!·[n-k]_q!·⟦n,k⟧_q = [n]_q!` over any commutat",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-10-23T12:08:27",
+      "title": "q-factorial product formula"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "68de46a5",
-      "domain": "Tropical",
-      "key_insight": "# Future directions — barrier-4 positional/magnitude converse\n\nThis cycle turned the recorded DRAFT-WITH-CAVEATS strata into four compiling, sorry-free Lean\nfiles:\n\n* `Catalog/Tropical/Barrier4FixedWi",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-08-29T21:45:38",
-      "title": "FACT round-75 #4 — BARRIER4-POSITIONAL-CONVERSE draft (VERIFIED): positional/magnitude stratum of th"
-    },
     {
       "cycle_id": "c9c85c67",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 72,
       "timestamp": "2026-10-23T01:43:39",
       "title": "Necessity of Uniform Per-Layer Budgets"
+    },
+    {
+      "cycle_id": "d9ade497",
+      "domain": "Applications",
+      "key_insight": "# Future directions (derived from `Catalog/Applications/QBinomialQFactorial.lean`)\n\nThis cycle proved the division-free q-factorial product formula\n`[k]_q!·[n-k]_q!·⟦n,k⟧_q = [n]_q!` over any commutat",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-10-23T12:08:27",
+      "title": "q-factorial product formula"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ccd8891f",
-      "domain": "Bridges",
-      "name": "units_zmod_eight",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "85c32d45",
-      "domain": "Novelty",
-      "name": "for",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "85c32d45",
-      "domain": "Novelty",
-      "name": "cubic_factor",
-      "quality": 0.72
-    },
     {
       "cycle_id": "85c32d45",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "chain_eq_push_chainK",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "d9ade497",
+      "domain": "Applications",
+      "name": "qInt_zero",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "d9ade497",
+      "domain": "Applications",
+      "name": "qFactorial_zero",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "d9ade497",
+      "domain": "Applications",
+      "name": "qFactorial_succ",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-10-23T01:43:39",
+  "last_updated": "2026-10-23T12:08:27",
   "open_questions": [
     {
       "context": "Main results (all with no `sorry`):; and this file proves, with no `sorry`:",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "9b3c75c4",
-        "quality": 0.82,
-        "theorems": 93,
-        "title": "FACT round-78 #1 — GAP-L4-MEASURE + paper-219 ERRATUM: positional-stratum measur"
-      },
-      {
         "cycle_id": "3f9d41d2",
         "quality": 0.74,
         "theorems": 55,
@@ -3141,6 +3135,12 @@
         "quality": 0.72,
         "theorems": 72,
         "title": "Necessity of Uniform Per-Layer Budgets"
+      },
+      {
+        "cycle_id": "d9ade497",
+        "quality": 0.7,
+        "theorems": 29,
+        "title": "q-factorial product formula"
       }
     ],
     "Bridges": [

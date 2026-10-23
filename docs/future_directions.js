@@ -7203,7 +7203,7 @@ window.FUTURE_DIRECTIONS = [
       "Combinatorics",
       "Geometry"
     ],
-    "id": "fd_5299",
+    "id": "fd_5300",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2610.31607v1",
@@ -15051,6 +15051,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-07T13:57:40.084919+00:00",
     "title": "Accuracy-Knee Margin Law for Diffuse Layers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The coefficient sequence of [n]_q! is palindromic and unimodal, being a product of the palindromic unimodal factors [i]_q.\n\nFor all n and i \u2264 C(n,2), coeff([n]_q!, i) = coeff([n]_q!, C(n,2)-i), and the coefficients increase up to \u230aC(n,2)/2\u230b.\n\nProve palindromicity via Polynomial.reverse and multiplicativity; test unimodality for n \u2264 12 by computation.\n\nGives an inversion-statistic symmetry and unimodality for permutations.\n\nProducts of symmetric unimodal sequences would fail to be unimodal, contradicting a classical lemma.",
+    "domains": [],
+    "id": "fd_5303",
+    "priority_score": 0.5928260869565218,
+    "research_mode": "team",
+    "source_exp_id": "d9ade497",
+    "status": "available",
+    "timestamp": "2026-10-23T12:08:15.553129+00:00",
+    "title": "Symmetric Unimodality of Mahonian Rows"
   },
   {
     "consumed_by_exp_id": "",
@@ -35820,6 +35832,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Derive Kummer's theorem on p-adic valuations of binomial coefficients from the cyclotomic carry factorisation of Gaussian binomials. Evaluating at q = 1 turns each carry factor Phi_{p^a} into a factor p and every other factor into 1.\n\nFor prime p and k \u2264 n, padicValNat p (n.choose k) = #{a \u2265 1 : p^a \u2264 n \u2227 p^a \u2264 k % p^a + (n-k) % p^a}.\n\nApply padicValInt to choose_eq_prod_cyclotomic_eval_one and use eval_one_cyclotomic_prime_pow / eval_one_cyclotomic_not_prime_pow; check small cases by decide.\n\nGives a q-deformation proof of Kummer's theorem inside the catalog.\n\nThere would be an error in the evaluations Phi_d(1), which is impossible, so failure would point to an indexing error.",
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_5301",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d9ade497",
+    "status": "available",
+    "timestamp": "2026-10-23T12:08:14.328909+00:00",
+    "title": "Kummer Valuation via Cyclotomic Carries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend qBinom_cyclotomic to q-multinomial coefficients. The exponent of Phi_d is the number of carries in the base-d last digit when adding the k_i.\n\nFor \u2211 k_i = n, \u220f[k_i]_q! divides [n]_q! in \u2124[q], and the quotient is \u220f_{d=2}^n Phi_d^{\u230an/d\u230b - \u2211\u230ak_i/d\u230b}, where each exponent is \u2264 r-1.\n\nFormalise in Lean by induction on r using qFactorial_cyclotomic_le.\n\nGives integrality and a factorisation of q-multinomials without division.\n\nThe floor-sum exponent bound would fail for some r, so carries would need a refinement.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5302",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "d9ade497",
+    "status": "available",
+    "timestamp": "2026-10-23T12:08:14.943550+00:00",
+    "title": "Cyclotomic Factorisation of q-Multinomials"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -47831,14 +47872,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "C1 \u2014 The clip level co-scales with the exclusive coordinate magnitude"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ac8ac1e3",
     "description": "Landau-type constant\n\n**Statement.** `#{m \u2264 N : m = antiFib a + antiFib b} ~ K \u00b7 N / \u221a(log N)` for an explicit\nLandau\u2013Ramanujan-type constant `K`.\n\n**The key insight is** the proved equivalence \"representable \u27fa `8m - 14` is a sum of two\nsquares\": the counting problem transfers verbatim to the classical Landau problem on an\narithmetic progression, so the density is *not* `0` in the crude sense but decays like\n`1/\u221alog N`.  Our proved `2/9` lower bound on the non-representable set is the first\nquantitative step in this direction.\n\n**Why now?** The reduction is formalised; the remaining input is the Landau\u2013Selberg\u2013Delange\nasymptotic, which is the natural next analytic target for Mathlib's Dirichlet-series API.\n\n**Falsifiable:** the ratio `#{representable m \u2264 N}\u00b7\u221a(log N)/N` should stabilise; if it\ndrifts to `0` or `\u221e`, the conjecture is wrong.\n\n---",
     "domains": [],
     "id": "fd_3380",
+    "phase": "A",
     "priority_score": 0.4384285714285714,
     "research_mode": "team",
     "source_exp_id": "86a70a4b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:29:54.425187+00:00",
     "title": "C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a"
   },
@@ -54371,19 +54413,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:24:38.198982+00:00",
     "title": "Degree formula"
-  },
-  {
-    "consumed_by_exp_id": "d9ade497",
-    "description": "*(Done \u2014 see `qFactorial_product`.)*\n   Introduce `[n]_q! = \u220f_{i=1}^n [i]_q` and prove\n   `[k]_q! \u00b7 [n-k]_q! \u00b7 qBinom n k = [n]_q!` (an identity in `\u2124[q]`, avoiding\n   division).  This is the q-analog of `k!(n-k)!\u00b7C(n,k) = n!`.",
-    "domains": [],
-    "id": "fd_2519",
-    "phase": "A",
-    "priority_score": 0.4,
-    "research_mode": "team",
-    "source_exp_id": "3984694e",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:24:38.677615+00:00",
-    "title": "q-factorial product formula"
   },
   {
     "consumed_by_exp_id": "",

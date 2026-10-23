@@ -9767,7 +9767,7 @@
       "Combinatorics",
       "Geometry"
     ],
-    "id": "fd_5299",
+    "id": "fd_5300",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Analyze the paper's main theorem and construct a formal Lean 4 proof.",
@@ -21505,6 +21505,25 @@
     "status": "available",
     "timestamp": "2026-10-07T13:57:40.084919+00:00",
     "title": "Accuracy-Knee Margin Law for Diffuse Layers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Applications.QBinomialQFactorial"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The coefficient sequence of [n]_q! is palindromic and unimodal, being a product of the palindromic unimodal factors [i]_q.\n\nFor all n and i ≤ C(n,2), coeff([n]_q!, i) = coeff([n]_q!, C(n,2)-i), and the coefficients increase up to ⌊C(n,2)/2⌋.\n\nProve palindromicity via Polynomial.reverse and multiplicativity; test unimodality for n ≤ 12 by computation.\n\nGives an inversion-statistic symmetry and unimodality for permutations.\n\nProducts of symmetric unimodal sequences would fail to be unimodal, contradicting a classical lemma.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_5303",
+    "lineage_refs": [],
+    "priority_score": 0.5928260869565218,
+    "proof_strategy": "Show that symmetric unimodal sequences with nonnegative entries are closed under convolution, then induct on n.",
+    "research_mode": "team",
+    "source_exp_id": "d9ade497",
+    "status": "available",
+    "timestamp": "2026-10-23T12:08:15.553129+00:00",
+    "title": "Symmetric Unimodality of Mahonian Rows"
   },
   {
     "ambition_level": "extension",
@@ -51920,6 +51939,50 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Applications.QBinomialQFactorial",
+      "Applications.QBinomialPolynomiality"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Derive Kummer's theorem on p-adic valuations of binomial coefficients from the cyclotomic carry factorisation of Gaussian binomials. Evaluating at q = 1 turns each carry factor Phi_{p^a} into a factor p and every other factor into 1.\n\nFor prime p and k ≤ n, padicValNat p (n.choose k) = #{a ≥ 1 : p^a ≤ n ∧ p^a ≤ k % p^a + (n-k) % p^a}.\n\nApply padicValInt to choose_eq_prod_cyclotomic_eval_one and use eval_one_cyclotomic_prime_pow / eval_one_cyclotomic_not_prime_pow; check small cases by decide.\n\nGives a q-deformation proof of Kummer's theorem inside the catalog.\n\nThere would be an error in the evaluations Phi_d(1), which is impossible, so failure would point to an indexing error.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Logic"
+    ],
+    "id": "fd_5301",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Split the carry product into prime-power and non-prime-power d, evaluate, then count.",
+    "research_mode": "team",
+    "source_exp_id": "d9ade497",
+    "status": "available",
+    "timestamp": "2026-10-23T12:08:14.328909+00:00",
+    "title": "Kummer Valuation via Cyclotomic Carries"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Applications.QBinomialQFactorial"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Extend qBinom_cyclotomic to q-multinomial coefficients. The exponent of Phi_d is the number of carries in the base-d last digit when adding the k_i.\n\nFor ∑ k_i = n, ∏[k_i]_q! divides [n]_q! in ℤ[q], and the quotient is ∏_{d=2}^n Phi_d^{⌊n/d⌋ - ∑⌊k_i/d⌋}, where each exponent is ≤ r-1.\n\nFormalise in Lean by induction on r using qFactorial_cyclotomic_le.\n\nGives integrality and a factorisation of q-multinomials without division.\n\nThe floor-sum exponent bound would fail for some r, so carries would need a refinement.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5302",
+    "lineage_refs": [],
+    "priority_score": 0.55,
+    "proof_strategy": "Multiply the factorial factorisations and use Nat.add_div repeatedly.",
+    "research_mode": "team",
+    "source_exp_id": "d9ade497",
+    "status": "available",
+    "timestamp": "2026-10-23T12:08:14.943550+00:00",
+    "title": "Cyclotomic Factorisation of q-Multinomials"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : ℝ → ℝ` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k → ℝ` and `p q : ℝ`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r ≤ k` needs no convexity, no differentiability, and no\nsign pattern — only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
@@ -68188,7 +68251,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ac8ac1e3",
     "description": "Landau-type constant\n\n**Statement.** `#{m ≤ N : m = antiFib a + antiFib b} ~ K · N / √(log N)` for an explicit\nLandau–Ramanujan-type constant `K`.\n\n**The key insight is** the proved equivalence \"representable ⟺ `8m - 14` is a sum of two\nsquares\": the counting problem transfers verbatim to the classical Landau problem on an\narithmetic progression, so the density is *not* `0` in the crude sense but decays like\n`1/√log N`.  Our proved `2/9` lower bound on the non-representable set is the first\nquantitative step in this direction.\n\n**Why now?** The reduction is formalised; the remaining input is the Landau–Selberg–Delange\nasymptotic, which is the natural next analytic target for Mathlib's Dirichlet-series API.\n\n**Falsifiable:** the ratio `#{representable m ≤ N}·√(log N)/N` should stabilise; if it\ndrifts to `0` or `∞`, the conjecture is wrong.\n\n---",
     "domain_bridges": [],
     "domains": [],
@@ -68198,7 +68261,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "86a70a4b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T06:29:54.425187+00:00",
     "title": "C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a"
   },
@@ -77236,23 +77299,6 @@
     "status": "available",
     "timestamp": "2026-08-21T06:24:38.198982+00:00",
     "title": "Degree formula"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d9ade497",
-    "description": "*(Done — see `qFactorial_product`.)*\n   Introduce `[n]_q! = ∏_{i=1}^n [i]_q` and prove\n   `[k]_q! · [n-k]_q! · qBinom n k = [n]_q!` (an identity in `ℤ[q]`, avoiding\n   division).  This is the q-analog of `k!(n-k)!·C(n,k) = n!`.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_2519",
-    "lineage_refs": [],
-    "priority_score": 0.4,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "3984694e",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:24:38.677615+00:00",
-    "title": "q-factorial product formula"
   },
   {
     "ambition_level": "extension",
