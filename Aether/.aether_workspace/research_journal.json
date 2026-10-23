@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "caf9cc55",
-      "domain": "Probability",
-      "key_insight": "# Future Directions — after the Collatz–Berggren bridge\n\n## What cycle 1 settled\n\nThe moonshot hypothesis (\"the inverse Collatz tree and the Berggren tree are two\nrealisations of the same ternary dyna",
-      "quality_score": 0.81,
-      "sorry_count": 0,
-      "theorem_count": 108,
-      "timestamp": "2026-09-14T18:35:57",
-      "title": "The Collatz-Berggren Bridge — Transferring the Lorentz Invariant to the Inverse Collatz Tree"
-    },
-    {
       "cycle_id": "841548e6",
       "domain": "Tropical",
       "key_insight": "# Future Directions — the Euler Brick Tree\n\nThis cycle built the dynamic layer over the catalog's static perfect-cuboid\ngeometry: a brick generator over the Berggren tree, the descent/structure\ntheore",
@@ -499,19 +489,19 @@
       "theorem_count": 53,
       "timestamp": "2026-10-17T00:00:04",
       "title": "FACT round-34 (harvest) — THE GALOIS/FROBENESS SIDE-CHANNEL FAMILY IS A FIFTH PRIMITIVE, AND IT IS C"
+    },
+    {
+      "cycle_id": "6e53757e",
+      "domain": "Applications",
+      "key_insight": "# Future directions: probe-local per-layer budgets\n\nThis cycle established the following, all in `Catalog/Applications/NET59ProbeBudgets/`:\n\n* A per-layer budget is sound **iff** it dominates the wors",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-10-23T01:43:39",
+      "title": "Necessity of Uniform Per-Layer Budgets"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "f5dbb89f",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Fermi occupancy, pigeonhole thresholds, and rare-event geometry\n\nDerived from the verified results in `Catalog/Pythagorean/FermiPigeonhole/`\n(`Model`, `DrakeFirstMoment`, `Contac",
-      "quality_score": 0.78,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-08-29T21:45:25",
-      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
-    },
     {
       "cycle_id": "68de46a5",
       "domain": "Tropical",
@@ -2501,27 +2491,19 @@
       "theorem_count": 50,
       "timestamp": "2026-10-22T16:07:25",
       "title": "FACT law-boundary — the 'local win' law SURVIVES its strong test and now HAS A BOUNDARY plus a genui"
+    },
+    {
+      "cycle_id": "6e53757e",
+      "domain": "Applications",
+      "key_insight": "# Future directions: probe-local per-layer budgets\n\nThis cycle established the following, all in `Catalog/Applications/NET59ProbeBudgets/`:\n\n* A per-layer budget is sound **iff** it dominates the wors",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 72,
+      "timestamp": "2026-10-23T01:43:39",
+      "title": "Necessity of Uniform Per-Layer Budgets"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "293082f5",
-      "domain": "Geometry",
-      "name": "neg_logb_le_hintValue",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "ccd8891f",
-      "domain": "Bridges",
-      "name": "claim_refuted_by_primes",
-      "quality": 0.75
-    },
-    {
-      "cycle_id": "ccd8891f",
-      "domain": "Bridges",
-      "name": "not_vietaInjective_zmod_eight",
-      "quality": 0.75
-    },
     {
       "cycle_id": "ccd8891f",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "mutualInfo_comp_both_le",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "6e53757e",
+      "domain": "Applications",
+      "name": "push_dirac",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "6e53757e",
+      "domain": "Applications",
+      "name": "push_push",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "6e53757e",
+      "domain": "Applications",
+      "name": "chain_eq_push_chainK",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-22T16:07:25",
+  "last_updated": "2026-10-23T01:43:39",
   "open_questions": [
     {
       "context": "Main results (all with no `sorry`):; and this file proves, with no `sorry`:",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "ed2d0af8",
-        "quality": 0.78,
-        "theorems": 61,
-        "title": "The Category Theory of Jokes: Universal Properties of Humor"
-      },
-      {
         "cycle_id": "9b3c75c4",
         "quality": 0.82,
         "theorems": 93,
@@ -3141,6 +3135,12 @@
         "quality": 0.6,
         "theorems": 35,
         "title": "FACT FINAL — 33-paper campaign: ZERO new factoring methods, but EVERY family clo"
+      },
+      {
+        "cycle_id": "6e53757e",
+        "quality": 0.72,
+        "theorems": 72,
+        "title": "Necessity of Uniform Per-Layer Budgets"
       }
     ],
     "Bridges": [

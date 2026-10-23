@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-22T20:08:02.888938+00:00",
+  "last_updated": "2026-10-23T01:43:40.238050+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -78884,6 +78884,7 @@
       "outcome_quality": 0.0,
       "phase": "A_only",
       "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.0,
       "phase_b_skip_reason": "low_quality",
       "phase_b_skipped": true,
       "prompt_version": "v19c",
@@ -78899,6 +78900,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-22T20:08:02.531586+00:00",
       "title": "Resource-aware realization"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Applications",
+      "duration_seconds": 8530.13144493103,
+      "end_time": 1792719792.3752527,
+      "files_integrated": 4,
+      "job_id": "6e53757e",
+      "outcome_quality": 0.72,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.72,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.499,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.72,
+        "novelty": 0.72,
+        "proof_depth": 0.72,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1792711262.2438078,
+      "strategy_count": 0,
+      "theorem_count": 72,
+      "theorem_novelty_disproof": 2,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 47,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-23T01:43:39.762557+00:00",
+      "title": "Necessity of Uniform Per-Layer Budgets"
     }
   ]
 }

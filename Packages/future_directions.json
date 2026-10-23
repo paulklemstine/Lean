@@ -171675,7 +171675,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Algebra.SumDiffSplit",
         "Algebra.SumDiffUniform",
@@ -171683,7 +171683,7 @@
       ],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "0d17dff1",
       "decomposed_from_job": "",
       "decomposition_depth": 0,
       "depth_estimate": 3,
@@ -171693,7 +171693,7 @@
       "domains": [],
       "github_issue": 0,
       "id": "fd_4922",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-10-23T01:45:33.017066+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -171708,7 +171708,7 @@
       "source": "",
       "source_exp_id": "900e5fcb",
       "source_path": "/home/runner/work/Lean/Lean/Aether/.aether_workspace/projects/900e5fcb",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-09-21T22:52:19.012942+00:00",
       "title": "Discriminant Locus as the Source of the Hint Value"
@@ -178154,7 +178154,7 @@
       "depth_estimate": 3,
       "description": "Investigate the ArXiv paper 'A uniform lower bound for the Zhang-Kawazumi invariant and applications to the Bogomolov conjecture' and formalize its key results. Abstract: We prove that the Zhang-Kawazumi invariant $\\varphi(X)$ of a compact and connected Riemann surface $X$ of genus $g\\ge 2$ is strictly larger than \\[\\frac{g(g+2)-(2g+1)H_g}{g-1},\\] where $H_g=\\sum_{k=1}^g \\frac{1}{k}$ denotes the $g$-th harmonic number. If $X$ is hyperelliptic, we give the stronger bound $\\varphi(X)>\\frac{g}{2}(H_g-1)$. The proof relies on a new expression of $\\varphi(X)$ in terms of a quadratic form on the space of smooth Hermitian matrix-valued functions on $X$, evaluated at certain projector matrices. As an arithmetic application, we deduce new lower bounds for the self-intersection number $ω_a^2$ of the admissible adelic metrized canonical bundle $ω_a$ of a smooth projective curve of genus $g\\ge 2$ over a number field and hence new uniform height bounds in the Bogomolov conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.2,
+      "domain_quality_penalty": 0.30000000000000004,
       "domains": [
         "Geometry",
         "Algebra"
@@ -188712,7 +188712,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle 1494cb60 (Q=0.820), which proved 431 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove\n   `⟦m+n, k⟧_q = ∑_j q^{(m-j)(k-j)} ⟦m,j⟧_q ⟦n,k-j⟧_q`, the q-Vandermonde\n   convolution, and the q-binomial theorem\n   `∏_{i=0}^{n-1}(1 + q^i x) = ∑_k q^{k(k-1)/2} ⟦n,k⟧_q x^k`.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Applications"
       ],

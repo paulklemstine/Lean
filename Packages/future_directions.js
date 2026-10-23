@@ -14196,6 +14196,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Sound per-layer budgets can be computed from spanning probes, with a multiplicative constant equal to the l1 norm of the coefficients expressing Dirac states via probes. For eta-interior probes on a k-state space we conjecture the optimal constant is (1+(k-2)eta)/(1-k*eta), attained by shrunk simplex vertices. This fixes the cost of certifying with realistic, full-support inputs.\n\nFor |alpha| = k and probes with all coordinates >= eta (0 <= eta < 1/k), min over spanning probe families and coefficients c of max_a sum_i |c a i| equals (1 + (k-2) eta) / (1 - k eta).\n\nFormalize the min-max over coefficient matrices for k = 2, 3 in Lean (k = 2 gives 1/(1-2 eta)); upper bound via the shrunk-vertex design and designBudget_sound, lower bound via an l1/l-infinity duality argument.\n\nGives a closed-form price for certifying layers with full-support held-out inputs, blowing up as probes approach the barycentre.\n\nNon-vertex designs beat the inscribed simplex, so optimal probe design is a genuinely non-symmetric polytope problem.",
+    "domains": [],
+    "id": "fd_5295",
+    "priority_score": 0.5936301369863014,
+    "research_mode": "team",
+    "source_exp_id": "6e53757e",
+    "status": "available",
+    "timestamp": "2026-10-23T01:43:24.594319+00:00",
+    "title": "Optimal Amplification of Interior Probe Designs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Every entry and every increment of the reported table is a multiple of four. If the sweep grid has spacing g, the reported knee is the grid ceiling of the true knee, and increments are forced into g\u00b7\u2115. This would show that much of the table's apparent structure is an artefact of the measurement design.\n\nIf a sweep grid is g\u00b7\u2115 then every reported doubling increment lies in g\u00b7\u2115, and the reported factor of a domain differs from its true factor by at most g/k*.\n\nCombine gridKnee from Combinatorics.KneeInvariance with the dilation bracket and prove both statements.\n\nThe '+0 / +4 / +8' pattern carries less information than claimed, and finer grids are required for factor claims.\n\nThe quantisation is a property of the model, not of the sweep, and is itself the interesting phenomenon.",
     "domains": [],
     "id": "fd_3968",
@@ -14241,19 +14253,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-30T06:41:27.856319+00:00",
     "title": "Positional Cliff Location in Prose Acceptance Profiles"
-  },
-  {
-    "consumed_by_exp_id": "6e53757e",
-    "description": "Depth-additive damage bounds hold under a per-layer perturbation bound that is uniform over upstream states, and fail under any bound certified at a single state. The conjecture upgrades this from a counterexample to a dichotomy for arbitrary budget functionals.\n\nFor every per-layer budget functional B that depends only on the behaviour of a layer at finitely many prescribed upstream states, there is a stack on which the joint damage exceeds the sum of the budgets.\n\nGeneralise the witness family to interpolate any finite set of probe states, and prove that a masking suffix can always be inserted after the probes.\n\nServing policies must certify worst-case per-layer behaviour; held-out-window measurements can never be turned into a sound budget.\n\nSome finite probe set suffices, and the design question becomes which probes, opening a concrete experimental programme.",
-    "domains": [],
-    "id": "fd_4546",
-    "phase": "A",
-    "priority_score": 0.5935074626865673,
-    "research_mode": "team",
-    "source_exp_id": "a75b3939",
-    "status": "in_progress",
-    "timestamp": "2026-09-02T09:39:09.391037+00:00",
-    "title": "Necessity of Uniform Per-Layer Budgets"
   },
   {
     "consumed_by_exp_id": "",
@@ -15432,14 +15431,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Second Parameter for a Two-Sided Dial Budget"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d17dff1",
     "description": "The product view collapses exactly the pairs related by swapping the factors, whose fixed locus is the discriminant s^2 = 4N, i.e. d = 0. Conjecture: the entire hint value of a battery is carried by how its labels distinguish the two branches of the double cover (s,d) -> (s, d^2), so labels invariant under d -> -d have hint value zero except for the contribution of the ramification locus d = 0.\n\nIf the labels satisfy L x = L y whenever residueView x and residueView y agree in the first coordinate and are negatives in the second, then hintValue L P Q equals the hint value of the restricted battery supported on the ramification locus d = 0.\n\nFormalise the branch-swap action on the population, prove that swap-invariant labels factor through (s, d^2), and compare with the product view using SumDiffSplit.prodOf_neg_snd.\n\nThe hint value becomes a ramification invariant: it measures branch information of a degree-two cover, connecting the battery programme to the arithmetic of the conic s^2 - d^2 = 4N.\n\nSwap-invariant labels can still carry hint value, meaning the product view loses more than the branch, and the extra loss would be a new phenomenon to isolate.",
     "domains": [],
     "id": "fd_4922",
+    "phase": "A",
     "priority_score": 0.5920588235294119,
     "research_mode": "team",
     "source_exp_id": "900e5fcb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-21T22:52:19.012942+00:00",
     "title": "Discriminant Locus as the Source of the Hint Value"
   },
@@ -35745,6 +35745,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-22T16:07:11.719980+00:00",
     "title": "Squared Cycle-Length Lower Bound for Coprime-Exponent Rho Maps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Joint pruning damage is bounded by intact-trajectory point costs with factor one, but by pruned-trajectory hybrid costs only after context-shift corrections. We conjecture the exact weights are the odd numbers 2(n-1-j)+1, generalising the depth-two factor 3. This quantifies how much epistasis an experimenter pays for measuring on the wrong trajectory.\n\nFor stacks of depth n, hybridCost F P mu <= sum_j (2(n-1-j)+1) * tv(push f_j x_j, push p_j x_j), where x_j is the intact upstream state, and the coefficients are tight.\n\nProve by induction using tv_push_context_shift in Lean; test tightness on explicit Fin 2 stacks built from flipK and constant channels.\n\nPruned-trajectory audits overcount early layers quadratically in depth, explaining why early-layer pruning looks disproportionately harmful.\n\nContext-shift losses saturate, and the factor is bounded independently of depth.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5296",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6e53757e",
+    "status": "available",
+    "timestamp": "2026-10-23T01:43:25.253795+00:00",
+    "title": "Epistatic Factor Law Along Pruned Trajectories"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The finite-alpha dichotomy says probes must span. On infinite state spaces spanning is impossible for finite sets, so we conjecture no finite probe set supports a sound calibrated budget, with weak-* density as the exact criterion. This is the regime of real networks.\n\nFor Markov kernels on an infinite standard Borel space, a set S of probe laws supports a sound, calibrated, S-local budget iff span(S) is weak-* dense in the bounded signed measures; in particular no finite S does.\n\nFormalize with Mathlib's MeasureTheory.Measure and Kernel; prove the finite-S impossibility by constructing two kernels agreeing on S but differing on a set of positive mass.\n\nCertification of continuous-state models must be uniform (worst-case) or infinite-probe; finite benchmarks can never certify.\n\nSome regularity class of channels (e.g. Lipschitz kernels) admits finite certifying probe sets, giving a concrete benchmark-design target.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5297",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6e53757e",
+    "status": "available",
+    "timestamp": "2026-10-23T01:43:25.909572+00:00",
+    "title": "Finite-Probe Impossibility on Infinite State Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Windows smaller than the state count never certify, and spanning windows certify with amplification set by the coefficient l1 norm. For random Dirichlet windows we conjecture logarithmic amplification at m = k and constant amplification from m = 2k. This sets the oversampling rule for held-out certification.\n\nFor m i.i.d. Dirichlet(1,...,1) window inputs on k states, the optimal l1 extrapolation amplification A_m satisfies E[log A_k] = Theta(log k) and A_{2k} = O(1) with high probability.\n\nMonte Carlo over k up to 200 with exact rational linear programs for A_m; formalize the deterministic reduction (A_m equals an l1 operator norm) in Lean.\n\nHeld-out-window certification needs only constant-factor oversampling, making window_extrapolation practical.\n\nAmplification grows with k even under oversampling, so held-out certification is intrinsically dimension-cursed.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_5298",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "6e53757e",
+    "status": "available",
+    "timestamp": "2026-10-23T01:43:26.560611+00:00",
+    "title": "Oversampling Threshold for Random Held-Out Windows"
   },
   {
     "consumed_by_exp_id": "",
