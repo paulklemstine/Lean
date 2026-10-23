@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6f1658d7",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — the Berggren tree as a congruent number laboratory\n\nThis cycle established the bridge: the squarefree parts of the areas of the Berggren\ntree's nodes are *exactly* the congruent",
-      "quality_score": 0.88,
-      "sorry_count": 0,
-      "theorem_count": 76,
-      "timestamp": "2026-09-15T18:59:37",
-      "title": "The Congruent Number Laboratory — The Berggren Tree's Area Function and the Birch–Swinnerton-Dyer Fr"
-    },
-    {
       "cycle_id": "173bd3d0",
       "domain": "Cryptography",
       "key_insight": "# Future directions\n\nThe verified core of this cycle is the identification\n\n  `I(residue class ; splitting type) = I(abelianization coset ; splitting type)\n     = H(T) - H(T | coset)`,\n\nthe cap `I ≤ l",
@@ -499,19 +489,19 @@
       "theorem_count": 29,
       "timestamp": "2026-10-23T12:08:27",
       "title": "q-factorial product formula"
+    },
+    {
+      "cycle_id": "0d17dff1",
+      "domain": "Logic",
+      "key_insight": "# Future directions: branch value, conic value, and the double cover \\((s,d)\\mapsto(s,d^2)\\)\n\nWhat happened in this cycle (all proved in `Catalog/Logic/BranchRamification.lean` and\n`Catalog/Logic/Bran",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-10-23T20:32:36",
+      "title": "Discriminant Locus as the Source of the Hint Value"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "c9c85c67",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — after the exp 555 formalisation\n\nThis cycle turned the three experimental findings of exp 555 into theorems:\n\n1. **Trial-division class (`α = 1`).**  In the finite sampling model",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 64,
-      "timestamp": "2026-08-30T00:21:52",
-      "title": "FACT round-72 #5 — MODULAR-DYNAMICS: projected Berggren tree is collision-free but trial-division-sl"
-    },
     {
       "cycle_id": "9b32ba78",
       "domain": "Cryptography",
@@ -2501,27 +2491,19 @@
       "theorem_count": 29,
       "timestamp": "2026-10-23T12:08:27",
       "title": "q-factorial product formula"
+    },
+    {
+      "cycle_id": "0d17dff1",
+      "domain": "Logic",
+      "key_insight": "# Future directions: branch value, conic value, and the double cover \\((s,d)\\mapsto(s,d^2)\\)\n\nWhat happened in this cycle (all proved in `Catalog/Logic/BranchRamification.lean` and\n`Catalog/Logic/Bran",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-10-23T20:32:36",
+      "title": "Discriminant Locus as the Source of the Hint Value"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "85c32d45",
-      "domain": "Novelty",
-      "name": "disc_factor",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "b6553c28",
-      "domain": "Physics",
-      "name": "minmax_eq_iff",
-      "quality": 0.8
-    },
-    {
-      "cycle_id": "b6553c28",
-      "domain": "Physics",
-      "name": "uEnt_unordered",
-      "quality": 0.8
-    },
     {
       "cycle_id": "4b5f9882",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "qFactorial_succ",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "0d17dff1",
+      "domain": "Logic",
+      "name": "psi_self",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "0d17dff1",
+      "domain": "Logic",
+      "name": "psi_zero_left",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "0d17dff1",
+      "domain": "Logic",
+      "name": "cnt_pr_pure",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-23T12:08:27",
+  "last_updated": "2026-10-23T20:32:36",
   "open_questions": [
     {
       "context": "Main results (all with no `sorry`):; and this file proves, with no `sorry`:",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "5223d87b",
-        "quality": 0.75,
-        "theorems": 94,
-        "title": "FACT round-78 #2 — QR-VS-OVERDISPERSION (exp 576): NEW-STRUCTURE-MAP-ENTRY — sma"
-      },
-      {
         "cycle_id": "c2e74b6a",
         "quality": 0.88,
         "theorems": 114,
@@ -3513,6 +3507,12 @@
         "quality": 0.62,
         "theorems": 31,
         "title": "FACT round-43 (boundary) — the boundary IS the NFS route: NFS's column set is go"
+      },
+      {
+        "cycle_id": "0d17dff1",
+        "quality": 0.72,
+        "theorems": 78,
+        "title": "Discriminant Locus as the Source of the Hint Value"
       }
     ],
     "MachineLearning": [

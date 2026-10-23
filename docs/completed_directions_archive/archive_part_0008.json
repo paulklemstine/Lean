@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-23T12:08:15Z",
-  "count": 35,
+  "archived_at": "2026-10-23T20:32:25Z",
+  "count": 36,
   "directions": [
     {
       "id": "fd_3552",
@@ -1405,6 +1405,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_4025",
+      "title": "FACT round-80 #1 — PROFILE-FORM (exp 579): positional layer gets a LAW — small-j hit profile = POWER LAW T(x)≈0.0295·(1+x)^−1.104 (b boot95 [0.991,1.218], Akaike weight 0.987; ΔAICc exp +9.2 / logistic +11.5 degenerate / linear +16.9) — harmonic decline whose bulk IS the Dickman gradient; beyond-Dickman residual PEAKED not monotone: ±20% concave mid-window hump max 1.23 @ x≈0.67 between end deficits 0.80/0.90 (quadratic dAICc 50.5, c-CI [−0.62,−0.14], vertex 0.59 interior), invariant across all three r-brackets; paper-228 follow-up (a) closed",
+      "description": "Round-80 #1, exp 579, paper 229. Pure re-analysis of exp578_positions.npz (128 bitlen-96 semiprimes seed 20260828, 9594 hits); no new physics. Pre-registered V1/V2 rules fired cleanly: V1 power-law winner (Akaike w 0.9866, cluster bootstrap over Ns 2000 reps seed 20260831); V2 residual R=T/M PEAKED — mixture-Dickman absorbs nearly all raw decline (M falls 3.64x vs T 3.25x), concave mid-window excess ±20%, small-j wall region OVER-predicts ~20%; baseline fragility gate passes all three offset-r brackets; control flat. Ledger: smoke bootstrap-broadcast bug fixed pre-full (FULL clean 10.2 s); ship-order/partial-completion check NEGATIVE (no such field in JSON, completion evidenced by boot_fits_ok=2000 x4). Joint consequence with round-80 #2 (#378): positional entry now law-complete (papers 228/229), layers SEPARATE. Files: ResearchOutput/scripts/2026-08-24-round74/exp579_{profile_form.py,result.json,findings.md}; paper ResearchOutput/NewMathematics/229_ProfileForm.md.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "a08d5a50",
+      "timestamp": "2026-08-24T16:57:03.774720+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.86,
+      "domain_quality_penalty": 0.30000000000000004,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-25T09:03:37.997123+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 377
     }
   ]
 }

@@ -15473,19 +15473,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Second Parameter for a Two-Sided Dial Budget"
   },
   {
-    "consumed_by_exp_id": "0d17dff1",
-    "description": "The product view collapses exactly the pairs related by swapping the factors, whose fixed locus is the discriminant s^2 = 4N, i.e. d = 0. Conjecture: the entire hint value of a battery is carried by how its labels distinguish the two branches of the double cover (s,d) -> (s, d^2), so labels invariant under d -> -d have hint value zero except for the contribution of the ramification locus d = 0.\n\nIf the labels satisfy L x = L y whenever residueView x and residueView y agree in the first coordinate and are negatives in the second, then hintValue L P Q equals the hint value of the restricted battery supported on the ramification locus d = 0.\n\nFormalise the branch-swap action on the population, prove that swap-invariant labels factor through (s, d^2), and compare with the product view using SumDiffSplit.prodOf_neg_snd.\n\nThe hint value becomes a ramification invariant: it measures branch information of a degree-two cover, connecting the battery programme to the arithmetic of the conic s^2 - d^2 = 4N.\n\nSwap-invariant labels can still carry hint value, meaning the product view loses more than the branch, and the extra loss would be a new phenomenon to isolate.",
-    "domains": [],
-    "id": "fd_4922",
-    "phase": "A",
-    "priority_score": 0.5920588235294119,
-    "research_mode": "team",
-    "source_exp_id": "900e5fcb",
-    "status": "in_progress",
-    "timestamp": "2026-09-21T22:52:19.012942+00:00",
-    "title": "Discriminant Locus as the Source of the Hint Value"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The measured rate variable has ~99% ties, so the empirical Spearman coefficient uses mid-ranks. We conjecture that the plateau survives ties with the floor replaced by the between-class fragmentation constant. This turns the 0.89% smooth rate from a nuisance parameter into a predictor of the plateau height.\n\nFor a rank map scrambled inside k tie-classes of sizes m_1,\u2026,m_k summing to n, the mid-rank Spearman coefficient equals 1 - 2\u2211 m_i\u00b3/(n\u00b3-n) + O(1/n\u00b2), independently of the within-class arrangement.\n\nExtend sqDisp_seg_eq to unequal segment lengths, define the mid-rank statistic, and prove the identity; validate against exhaustive enumeration for n \u2264 10.\n\nThe plateau height becomes computable from the smooth-rate histogram alone, giving a parameter-free prediction for the next bitlen.\n\nThe tie structure contributes a genuinely new term, and the reported coefficient is not comparable across bit lengths.",
     "domains": [],
@@ -35861,6 +35848,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "On the uniform factor battery over F_q the branch value of the gap label should equal the split fraction (q-1)/q exactly. That would make the proved bound branchValue_le_split_fraction sharp on a natural family. The proof should be a fibre count: every unramified cover fibre has two equally weighted sheets.\n\nFor q odd and F a field with q elements, branchValue (fun v => v.2 - v.1) unifP unifQ = (q-1)/q.\n\nFormalise using SumDiffUniform.unifP/unifQ; compute H(residueView) = log q^2 and H(branchView) via the count of (s, e) with e a square.\n\nThe branch value of the uniform battery is a closed-form ramification invariant equal to the unramified mass.\n\nEven on the uniform battery the gap label cannot extract a full split bit, and some other structure must explain the shortfall.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_5304",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "0d17dff1",
+    "status": "available",
+    "timestamp": "2026-10-23T20:32:24.545555+00:00",
+    "title": "Uniform-Battery Branch Law"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -47976,14 +47978,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Deficit Quantisation for Multiplicative Label Channels"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "913b120b",
     "description": "*For all `r, s` with `r + s \u2264 |X|` the spectrum satisfies `t_{r+s} \u2265 t_r\u00b7(t_s \u2212 r)`, and more\nprecisely `t_{r+s} \u2265 t_r \u00b7 (number of orbits of injective `s`-tuples avoiding a fixed injective\n`r`-tuple)`.*\n\nThe key insight is that `descFactorial_injOrbits_one_le` is the case `r = 0` of a relative\nstatement: cutting an injective `(r+s)`-tuple into its first `r` and last `s` coordinates gives a\nfibration of the top fibre at level `r+s` over the top fibre at level `r`, whose fibres are the\norbits of the stabiliser on injective `s`-tuples in the complement.\n\nWhy now? The maps `dropOrbit` and `shrinkOrbit` already realize the \"forget coordinates\"\ndirection, and the orbit\u2013stabiliser theorem used in `descFactorial_dvd_card_of_kTransitive`\nsupplies the relative count; only the bookkeeping between the two is missing.",
     "domains": [],
     "id": "fd_1592",
+    "phase": "A",
     "priority_score": 0.4378333333333333,
     "research_mode": "team",
     "source_exp_id": "60572a3f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-19T09:49:54.571634+00:00",
     "title": "Conjecture M (a full multiplicative hierarchy)"
   },
