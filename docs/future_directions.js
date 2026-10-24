@@ -14091,6 +14091,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Determine the exact asymptotic of the counting function of sums of two anti-Fibonacci numbers. Via the proved bijection with odd sums of two squares, the constant should be twice the Landau\u2013Ramanujan constant. This would complete the analytic picture whose density-zero part is now proved.\n\n#{m \u2264 N : \u2203 a b, m = antiFib a + antiFib b} ~ 2b \u00b7 N / sqrt(log N), b = 0.764223653...\n\nNumerically: the ratio R(N)\u00b7sqrt(log N)/N rises slowly (1.4897 at N=1e7) toward 1.5284. Formally: prove Selberg\u2013Delange for the indicator of sums of two squares in Lean.\n\nGives an explicit Landau-type constant K = 2b for the anti-Fibonacci additive problem.\n\nThere would be a hidden bias between the 2-adic part and the odd part of sums of two squares, contradicting Landau's theorem.",
+    "domains": [],
+    "id": "fd_5305",
+    "priority_score": 0.5942187500000001,
+    "research_mode": "team",
+    "source_exp_id": "ac8ac1e3",
+    "status": "available",
+    "timestamp": "2026-10-24T07:14:38.484500+00:00",
+    "title": "Landau\u2013Ramanujan Constant for Anti-Fibonacci Sums"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Floor and ceiling certification are mirror statements costing the corresponding rapidity margins. Because the band [0.55,0.85] is far from symmetric in rapidity, the two gates of the band have wildly different costs at the readings actually observed, making the band effectively one-sided.\n\nAt every recorded rung, the sample size needed to certify the ceiling 0.85 is at least an order of magnitude smaller than that needed to certify the floor 0.55, so the band decision is determined by the floor gate alone.\n\nInstantiate floor_certified_iff and ceiling_certified_iff at each recorded rung and compare the two reqSamples values as explicit rational bounds.\n\nBand membership as reported is a one-sided test and should be reported as such, with the ceiling clause dropped.\n\nSome rung is ceiling-limited, which would be the first evidence of an upper obstruction of the kind the tie and Gram ceilings predict.",
     "domains": [],
     "id": "fd_4517",
@@ -14705,14 +14717,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Alternation Count as the Ladder Stopping Rule"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab10a7d3",
     "description": "Recast the fade in the correlation-angle coordinate arccos, where the measured ladder's 116 rebound is compatible with a concavity hypothesis that raw-correlation antitonicity fails. Conjecture that angular deceleration forces convergence of the angle and forbids re-entry into the 0.55 spherical cap. This replaces a falsified monotone model by a testable curvature model.\n\nIf theta_n = arccos(rho_n) satisfies theta_{n+2} - 2 theta_{n+1} + theta_n <= 0 for n >= 3 then theta_n converges and lim theta_n >= arccos(0.488), so rho_n < 0.55 for all n >= 3.\n\nFormalise angular deceleration and apply the plateau localisation theorem to theta; numerically check the derived rebound bound against the measured 112/116/120 rungs.\n\nBand loss at U108 is permanent for the angular model class and the rebound is quantitatively bounded.\n\nThe fade has no monotone description in either natural coordinate, so the plateau reading is unsupported.",
     "domains": [],
     "id": "fd_4456",
+    "phase": "A",
     "priority_score": 0.5931927710843374,
     "research_mode": "team",
     "source_exp_id": "ed4056bf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-01T05:09:07.845499+00:00",
     "title": "Angular Curvature Obstruction to Band Re-entry"
   },
@@ -14799,6 +14812,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-22T16:07:12.349758+00:00",
     "title": "Compressed State-Space Birthday Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The representable integers are not equidistributed modulo 9: classes 1 and 7 are empty (proved), and class 4, where 9 divides 4m-7, is depleted by a 3-adic factor 3/4. Conjecture explicit limiting proportions in every residue class, given by products of local factors.\n\nFor every M, r: R(N; r mod M) / R(N) \u2192 \u03b4(r,M), an explicit product of local densities; in particular \u03b4(4,9) = 1/9 and \u03b4(r,9) = 4/27 for r \u2208 {0,2,3,5,6,8}.\n\nEnumeration to 1e6 gives 0.1206 for class 4 and 0.1465 for each generic class (ratio 0.823, slowly decreasing toward 0.75 is predicted); formally, compute the local factors as exact rational CRT counts in Lean.\n\nThe fine structure of the sumset is fixed entirely by local (p-adic) data.\n\nThere would be a non-local, global bias in sums of two squares on progressions.",
+    "domains": [],
+    "id": "fd_5307",
+    "priority_score": 0.5931481481481482,
+    "research_mode": "team",
+    "source_exp_id": "ac8ac1e3",
+    "status": "available",
+    "timestamp": "2026-10-24T07:14:39.986560+00:00",
+    "title": "Residue-Class Densities of Anti-Fibonacci Sums"
   },
   {
     "consumed_by_exp_id": "",
@@ -35863,6 +35888,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Upgrade the proved density-zero sieve to the sharp order N/sqrt(log N) by letting the sieving set grow with N. The CRT period count is already exact; what is missing is Mertens' product over primes 3 mod 4 and a remainder estimate.\n\nThere is C > 0 with #{m < N : IsAntiFibSum m} \u2264 C \u00b7 N / sqrt(log N) for all N \u2265 3.\n\nFormalise Mertens' product for p \u2261 3 mod 4 and combine it with AntiFib.card_rep_le using a z(N)-dependent sieving set.\n\nGives the sharp upper-bound half of the Landau-type law by elementary sieve methods.\n\nThe sieve main term would not be sharp for this set. That would conflict with Landau's theorem via the proved bijection, so a failure would point to an error in the reduction.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5306",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ac8ac1e3",
+    "status": "available",
+    "timestamp": "2026-10-24T07:14:39.232742+00:00",
+    "title": "Mertens-Type Sieve Upper Bound for Anti-Fibonacci Sums"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The density-zero proof used only a Fermat-type criterion and the divergence of prime reciprocals in an arithmetic progression of inert primes. Conjecture that the same pipeline works for every sumset f(N)+f(N) of an integer-valued quadratic f.\n\nFor every integer-valued quadratic f with positive leading coefficient, the set f(\u2115)+f(\u2115) has natural density 0.\n\nInstantiate PrimeRecipAP.not_summable_recipAP for the inert residue classes of the associated binary form, and adapt card_good_period.\n\nGives a uniform density-zero theorem for quadratic sumsets that bridges binary quadratic forms with sieve theory.\n\nSome quadratic sumset would have positive density. Completing the square makes this impossible, so a failure would expose an error in the general reduction.",
+    "domains": [
+      "Pythagorean",
+      "NumberTheory"
+    ],
+    "id": "fd_5308",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "ac8ac1e3",
+    "status": "available",
+    "timestamp": "2026-10-24T07:14:40.678450+00:00",
+    "title": "Density-Zero Pipeline for Quadratic Sumsets"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -47872,19 +47927,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:29:23.148234+00:00",
     "title": "C1 \u2014 The clip level co-scales with the exclusive coordinate magnitude"
-  },
-  {
-    "consumed_by_exp_id": "ac8ac1e3",
-    "description": "Landau-type constant\n\n**Statement.** `#{m \u2264 N : m = antiFib a + antiFib b} ~ K \u00b7 N / \u221a(log N)` for an explicit\nLandau\u2013Ramanujan-type constant `K`.\n\n**The key insight is** the proved equivalence \"representable \u27fa `8m - 14` is a sum of two\nsquares\": the counting problem transfers verbatim to the classical Landau problem on an\narithmetic progression, so the density is *not* `0` in the crude sense but decays like\n`1/\u221alog N`.  Our proved `2/9` lower bound on the non-representable set is the first\nquantitative step in this direction.\n\n**Why now?** The reduction is formalised; the remaining input is the Landau\u2013Selberg\u2013Delange\nasymptotic, which is the natural next analytic target for Mathlib's Dirichlet-series API.\n\n**Falsifiable:** the ratio `#{representable m \u2264 N}\u00b7\u221a(log N)/N` should stabilise; if it\ndrifts to `0` or `\u221e`, the conjecture is wrong.\n\n---",
-    "domains": [],
-    "id": "fd_3380",
-    "phase": "A",
-    "priority_score": 0.4384285714285714,
-    "research_mode": "team",
-    "source_exp_id": "86a70a4b",
-    "status": "in_progress",
-    "timestamp": "2026-08-21T06:29:54.425187+00:00",
-    "title": "C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-23T20:32:25Z",
-  "count": 36,
+  "archived_at": "2026-10-24T07:14:41Z",
+  "count": 37,
   "directions": [
     {
       "id": "fd_3552",
@@ -1445,6 +1445,44 @@
       "decomposition_depth": 0,
       "source": "github_injection",
       "github_issue": 377
+    },
+    {
+      "id": "fd_3380",
+      "title": "C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a",
+      "description": "Landau-type constant\n\n**Statement.** `#{m ≤ N : m = antiFib a + antiFib b} ~ K · N / √(log N)` for an explicit\nLandau–Ramanujan-type constant `K`.\n\n**The key insight is** the proved equivalence \"representable ⟺ `8m - 14` is a sum of two\nsquares\": the counting problem transfers verbatim to the classical Landau problem on an\narithmetic progression, so the density is *not* `0` in the crude sense but decays like\n`1/√log N`.  Our proved `2/9` lower bound on the non-representable set is the first\nquantitative step in this direction.\n\n**Why now?** The reduction is formalised; the remaining input is the Landau–Selberg–Delange\nasymptotic, which is the natural next analytic target for Mathlib's Dirichlet-series API.\n\n**Falsifiable:** the ratio `#{representable m ≤ N}·√(log N)/N` should stabilise; if it\ndrifts to `0` or `∞`, the conjecture is wrong.\n\n---",
+      "source_exp_id": "86a70a4b",
+      "source_path": "resplit_migration",
+      "domains": [],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.4384285714285714,
+      "status": "completed",
+      "consumed_by_exp_id": "ac8ac1e3",
+      "timestamp": "2026-08-21T06:29:54.425187+00:00",
+      "catalog_references": [],
+      "ambition_level": "extension",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 0.0,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-10-23T12:09:13.812820+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "",
+      "github_issue": 0
     }
   ]
 }

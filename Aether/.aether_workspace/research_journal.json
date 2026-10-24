@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "173bd3d0",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\nThe verified core of this cycle is the identification\n\n  `I(residue class ; splitting type) = I(abelianization coset ; splitting type)\n     = H(T) - H(T | coset)`,\n\nthe cap `I ≤ l",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 198,
-      "timestamp": "2026-09-16T05:12:41",
-      "title": "FACT round-24 #1 — NONABELIAN-TYPE-CHANNEL: the type channel is exactly its abelianization content ("
-    },
-    {
       "cycle_id": "903508ab",
       "domain": "Bridges",
       "key_insight": "# Future directions — after the abelianization law at degree five\n\nThis cycle closed the degree-five type channel of the Frobenius field `F₂₀ = AGL(1,5)`\n(`Catalog/Bridges/QuinticTypeChannelF20.lean`,",
@@ -499,19 +489,19 @@
       "theorem_count": 78,
       "timestamp": "2026-10-23T20:32:36",
       "title": "Discriminant Locus as the Source of the Hint Value"
+    },
+    {
+      "cycle_id": "ac8ac1e3",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — sums of two anti-Fibonacci numbers (cycle v19c, C4)\n\n## What this cycle established (all in Lean, no `sorry`)\n* `AntiFib.isAntiFibSum_iff_int`: `m = antiFib a + antiFib b` ⟺ `8m",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-10-24T07:14:53",
+      "title": "C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9b32ba78",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions — the surreal order topology\n\nThe cycle just completed established, for the order topology on `Surreal` (all statements\nformalised, zero `sorry`):\n\n1. `Surreal` is densely ordered,",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 80,
-      "timestamp": "2026-08-30T06:41:19",
-      "title": "Local character at every point"
-    },
     {
       "cycle_id": "342e465c",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 78,
       "timestamp": "2026-10-23T20:32:36",
       "title": "Discriminant Locus as the Source of the Hint Value"
+    },
+    {
+      "cycle_id": "ac8ac1e3",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — sums of two anti-Fibonacci numbers (cycle v19c, C4)\n\n## What this cycle established (all in Lean, no `sorry`)\n* `AntiFib.isAntiFibSum_iff_int`: `m = antiFib a + antiFib b` ⟺ `8m",
+      "quality_score": 0.72,
+      "sorry_count": 0,
+      "theorem_count": 38,
+      "timestamp": "2026-10-24T07:14:53",
+      "title": "C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "4b5f9882",
-      "domain": "Algebra",
-      "name": "two_dvd_six",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "4b5f9882",
-      "domain": "Algebra",
-      "name": "lb_one",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "4b5f9882",
-      "domain": "Algebra",
-      "name": "lb_two",
-      "quality": 0.72
-    },
     {
       "cycle_id": "ea6702d1",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Logic",
       "name": "cnt_pr_pure",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "ac8ac1e3",
+      "domain": "Computation",
+      "name": "locOK_of_isAntiFibSum",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ac8ac1e3",
+      "domain": "Computation",
+      "name": "good_of_isAntiFibSum",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "ac8ac1e3",
+      "domain": "Computation",
+      "name": "card_filter_range_mul",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-23T20:32:36",
+  "last_updated": "2026-10-24T07:14:53",
   "open_questions": [
     {
       "context": "Main results (all with no `sorry`):; and this file proves, with no `sorry`:",
@@ -3269,12 +3269,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "3b9c1eb4",
-        "quality": 0.84,
-        "theorems": 84,
-        "title": "FACT round-86 #1 — U065-FEATURE-MECHANISM (exp 588b FINAL): MIXED-PARTIAL — hump"
-      },
-      {
         "cycle_id": "00fe96df",
         "quality": 0.82,
         "theorems": 92,
@@ -3327,6 +3321,12 @@
         "quality": 0.62,
         "theorems": 500,
         "title": "FACT round-42 (full) — P4 CLOSED with a sign flip; smoothness density governed b"
+      },
+      {
+        "cycle_id": "ac8ac1e3",
+        "quality": 0.72,
+        "theorems": 38,
+        "title": "C4. Positive density of integers that are sums of two anti-Fibonacci numbers, wi"
       }
     ],
     "Cryptography": [
