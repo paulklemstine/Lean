@@ -20330,7 +20330,7 @@
       "MachineLearning.ZeroFitDialWeighted56",
       "MachineLearning.ZeroFitDialWeightedSharpness"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "111c0bf3",
     "description": "The dial's ceiling can be driven to 1 by flattening its block profile, so the observed 0.669 must be charged to the response side. Conjecture that the attainable correlation factorises as a product of the two tie-attenuation factors, making the dial and response headrooms additive on the log scale and pinning the observed +0.045 advantage.\n\nFor tie profiles L (predictor) and M (response) on the same n observations, the maximal attainable Spearman rho satisfies rho^2 <= spearmanSq L * spearmanSq M + O(1/n^2), with equality for aligned profiles.\n\nFormalise the two-sided tie correction of Spearman's rho and prove the product bound by Cauchy-Schwarz on the rank vectors; check numerically against the recorded pooled reading.\n\nThe H2 accounting closes: the 0.045 advantage is predicted from the response tie profile alone.\n\nPredictor and response attenuation interact non-multiplicatively and the headroom argument must be replaced by a joint-profile bound.",
     "domain_bridges": [],
     "domains": [],
@@ -20340,7 +20340,7 @@
     "proof_strategy": "Express both corrections as quadratic forms in rank increments and apply Cauchy-Schwarz, controlling the discrete correction by the proved sandwich.",
     "research_mode": "team",
     "source_exp_id": "b20378a3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-01T18:32:48.984393+00:00",
     "title": "Headroom Conservation Under Response Rebalancing"
   },
