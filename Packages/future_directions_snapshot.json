@@ -19968,6 +19968,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Catalog.Novelty.TDialU108Angular",
+      "Catalog.Physics.TDialU108BandLoss"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "On the measured rungs each parity sub-ladder is strictly decreasing and angularly concave (proved as parity_subladders_monotone_concave). If this persists, the 116 rebound is a parity artefact rather than a reversal of the fade, and the next odd rung is pinned to a narrow interval.\n\nThe odd sub-ladder stays decreasing and angularly concave at bitlen 124: rho_7 < 0.4847 and arccos(rho_7) <= 2*arccos(0.4847) - arccos(0.488), so that rho_7 lies in roughly [0.4814, 0.4847).\n\nMeasure the 124 rung; certify the interval endpoints in Lean with the arccos mean-value sandwich.\n\nThe 116 rebound is explained by an 8-bit periodic component, and parity-wise plateau theorems apply.\n\nSome parity class is non-monotone, so the rebound is a genuine non-monotone feature of the fade.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_5310",
+    "lineage_refs": [],
+    "priority_score": 0.5941666666666667,
+    "proof_strategy": "Direct numerical certification via arccos_sub_ge / arccos_sub_le with rational square-root bounds.",
+    "research_mode": "team",
+    "source_exp_id": "ab10a7d3",
+    "status": "available",
+    "timestamp": "2026-10-24T18:46:15.813904+00:00",
+    "title": "Even-Odd Sub-Ladder Persistence"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "MachineLearning.ZeroFitDialRadixWeighting",
       "MachineLearning.ZeroFitDialUnif52"
     ],
@@ -20283,6 +20303,25 @@
     "status": "available",
     "timestamp": "2026-09-01T10:07:50.560642+00:00",
     "title": "Sign of the Dominant Excess as Sweep Discriminant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Novelty.TDialU108Angular"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The concave continuation of the 112/116 rungs forces cap re-entry; it is proved by bitlen 132. The chord bound suggests re-entry already at 128 by a margin of about 5e-4 in rho, which needs second-order arccos bounds.\n\nAny rho with rho_4 = 0.4621, rho_5 = 0.4847 and arccos(rho) concave on windows 4..6 satisfies rho_8 > 0.55.\n\nProve a second-order Taylor sandwich for arccos on [0.46, 0.56] and redo concave_rebound_forces_reentry with k = 4.\n\nThe re-entry index is sharp: the linear angular continuation attains it.\n\nA concave continuation can avoid the cap through 128, and 132 is the sharp index.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_5311",
+    "lineage_refs": [],
+    "priority_score": 0.5934848484848486,
+    "proof_strategy": "Use the convexity of 1/sqrt(1-x^2) on [0,1) to tighten the mean-value bounds by a midpoint (trapezoid) estimate.",
+    "research_mode": "team",
+    "source_exp_id": "ab10a7d3",
+    "status": "available",
+    "timestamp": "2026-10-24T18:46:16.366474+00:00",
+    "title": "Sharp Re-entry Index for Concave Angular Continuations"
   },
   {
     "ambition_level": "extension",
@@ -20950,26 +20989,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Catalog.Physics.TDialU108Deepening",
-      "Catalog.Physics.TDialU108BandLoss"
-    ],
-    "consumed_by_exp_id": "ab10a7d3",
-    "description": "Recast the fade in the correlation-angle coordinate arccos, where the measured ladder's 116 rebound is compatible with a concavity hypothesis that raw-correlation antitonicity fails. Conjecture that angular deceleration forces convergence of the angle and forbids re-entry into the 0.55 spherical cap. This replaces a falsified monotone model by a testable curvature model.\n\nIf theta_n = arccos(rho_n) satisfies theta_{n+2} - 2 theta_{n+1} + theta_n <= 0 for n >= 3 then theta_n converges and lim theta_n >= arccos(0.488), so rho_n < 0.55 for all n >= 3.\n\nFormalise angular deceleration and apply the plateau localisation theorem to theta; numerically check the derived rebound bound against the measured 112/116/120 rungs.\n\nBand loss at U108 is permanent for the angular model class and the rebound is quantitatively bounded.\n\nThe fade has no monotone description in either natural coordinate, so the plateau reading is unsupported.",
-    "domain_bridges": [],
-    "domains": [],
-    "id": "fd_4456",
-    "lineage_refs": [],
-    "priority_score": 0.5931927710843374,
-    "proof_strategy": "Use corr_angle_triangle to justify the angle metric, then run plateau_of_geometric_deceleration on theta with a ratio derived from the second difference.",
-    "research_mode": "team",
-    "source_exp_id": "ed4056bf",
-    "status": "in_progress",
-    "timestamp": "2026-09-01T05:09:07.845499+00:00",
-    "title": "Angular Curvature Obstruction to Band Re-entry"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Catalog.Combinatorics.BKeyMixedZoneConventionStability",
       "Catalog.Combinatorics.BKeyMixedZoneGradualDecline"
     ],
@@ -21184,6 +21203,26 @@
     "status": "available",
     "timestamp": "2026-09-01T10:07:47.975933+00:00",
     "title": "Beatty Interleaving and the Return-Time Multiplier"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Catalog.Novelty.TDialU108Angular",
+      "Catalog.Physics.TDialU108BandLoss"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Model the angle as a concave nondecreasing trend plus an alternating residual of bounded size. This explains the certified sign alternation of second differences and lets the plateau theorem act on the trend. It replaces the pointwise curvature models that this cycle refuted.\n\nThere exist T concave nondecreasing and eps <= 0.03 with |arccos(rho_n) - T_n| <= eps for n = 0..6, and every such T has its limit within 2*eps of the plateau window of u108_angle_plateau_window.\n\nSolve the LP for the minimal eps over concave nondecreasing T on the seven rungs; formalise the plateau-with-error theorem in Lean.\n\nThe fade has a well-defined trend plateau and the band-loss claim is recovered with a quantified error.\n\nThe residual is not small relative to the trend; the ladder is noise-dominated and no plateau reading is supported.",
+    "domain_bridges": [],
+    "domains": [],
+    "id": "fd_5309",
+    "lineage_refs": [],
+    "priority_score": 0.5930769230769232,
+    "proof_strategy": "Perturb angle_tail_bound: an eps-perturbation of a geometrically decelerating sequence shifts the tail bound by at most 2*eps.",
+    "research_mode": "team",
+    "source_exp_id": "ab10a7d3",
+    "status": "available",
+    "timestamp": "2026-10-24T18:46:15.267128+00:00",
+    "title": "Trend-Plus-Parity-Residual Decomposition of the T-Dial Ladder"
   },
   {
     "ambition_level": "extension",

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "342e465c",
-      "domain": "Shared",
-      "key_insight": "# Future directions — NET-91 thread (CPU speculative decoding)\n\nFour cycles of the loop are formalised in\n\n* `Catalog/Shared/SpeculativeDecodingCostDominance.lean` — block model, cost dominance,\n  dep",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 97,
-      "timestamp": "2026-08-30T06:41:36",
-      "title": "NET-91 THE-CHEAP-DRAFT-WINS-AND-CODE-DRAFTS-DEEP: speculative decoding of a 7B LLM entirely on CPU p"
-    },
-    {
       "cycle_id": "17477782",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Cantor truth space, golden-mean subshift\n\nDerived from twelve completed research cycles in `Catalog/MachineLearning/`, all building on\nthe first-disagreement ultrametric of `Shar",
@@ -2501,6 +2491,16 @@
       "theorem_count": 38,
       "timestamp": "2026-10-24T07:14:53",
       "title": "C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a"
+    },
+    {
+      "cycle_id": "ab10a7d3",
+      "domain": "Novelty",
+      "key_insight": "# Future directions after the angular-curvature cycle (U108 thread)\n\n## What this cycle settled (Analyst / Critic summary)\n\n* **True, and proved:** the angular deceleration conjecture as stated. If ar",
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "theorem_count": 27,
+      "timestamp": "2026-10-24T18:46:29",
+      "title": "Angular Curvature Obstruction to Band Re-entry"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-24T07:14:53",
+  "last_updated": "2026-10-24T18:46:29",
   "open_questions": [
     {
       "context": "Main results (all with no `sorry`):; and this file proves, with no `sorry`:",
@@ -3579,12 +3579,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "ea6702d1",
-        "quality": 0.72,
-        "theorems": 70,
-        "title": "FACT round-34 #2 — SEPTIC-FRONTIER: the framework extends beyond degree 6 (paper"
-      },
-      {
         "cycle_id": "9aae3e9c",
         "quality": 0.72,
         "theorems": 43,
@@ -3637,6 +3631,12 @@
         "quality": 0.62,
         "theorems": 50,
         "title": "FACT law-boundary — the 'local win' law SURVIVES its strong test and now HAS A B"
+      },
+      {
+        "cycle_id": "ab10a7d3",
+        "quality": 0.68,
+        "theorems": 27,
+        "title": "Angular Curvature Obstruction to Band Re-entry"
       }
     ],
     "NumberTheory": [

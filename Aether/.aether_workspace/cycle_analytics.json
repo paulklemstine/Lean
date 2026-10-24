@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-24T07:14:54.607244+00:00",
+  "last_updated": "2026-10-24T18:46:30.134253+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -79072,6 +79072,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-24T07:14:54.175705+00:00",
       "title": "C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Novelty",
+      "duration_seconds": 10219.405580282211,
+      "end_time": 1792867558.567538,
+      "files_integrated": 4,
+      "job_id": "ab10a7d3",
+      "outcome_quality": 0.68,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.68,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.481,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.68,
+        "novelty": 0.68,
+        "proof_depth": 0.68,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.68,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1792857339.1619577,
+      "strategy_count": 0,
+      "theorem_count": 27,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 25,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-24T18:46:29.772197+00:00",
+      "title": "Angular Curvature Obstruction to Band Re-entry"
     }
   ]
 }
