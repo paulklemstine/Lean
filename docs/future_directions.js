@@ -7893,6 +7893,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 913b120b (Q=0.720) proved 53 theorems in Bridges but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: *For all `r, s` with `r + s \u2264 |X|` the spectrum satisfies `t_{r+s} \u2265 t_r\u00b7(t_s \u2212 r)`, and more\nprecisely `t_{r+s} \u2265 t_r \u00b7 (number of orbits of injective `s`-tuples avoiding a fixed injective\n`r`-tuple)",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "sorry_fill_913b120b_9d8e1c4f",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "913b120b",
+    "status": "available",
+    "timestamp": "2026-10-24T21:16:53.051492+00:00",
+    "title": "Close Proofs: Conjecture M (a full multiplicative hierarchy)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
     "domains": [
       "Probability",
@@ -15378,14 +15392,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multivariate Contrast Ceiling for Vector-Valued Carriers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8bbf297d",
     "description": "The comb loses exactly one connector cell per interface, so the loss of a product construction is proportional to the number of direction changes. The conjecture is that every snake can be normalised to have few direction changes at cost O(n), making record search in high dimension a search over turn-minimal snakes only.\n\nEvery snake of length L in Q_n can be transformed into a snake of length at least L - O(n) whose comb decomposition has O(L/n) direction changes.\n\nFormalize a 'turn count' for snakes in the product setting (number of s where combRow changes) and prove the comb attains the minimum; test the normalisation on the known records for n <= 7 by search.\n\nRecord searches can be restricted to a normal form, a large practical reduction of the search space.\n\nDirection changes are essential to long snakes, so product methods will always lose a constant fraction.",
     "domains": [],
     "id": "fd_4771",
+    "phase": "A",
     "priority_score": 0.5921910112359552,
     "research_mode": "team",
     "source_exp_id": "01cb7b4b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-10T04:56:52.413349+00:00",
     "title": "Turn-Minimal Normal Form for Record Snakes"
   },
@@ -35942,6 +35957,49 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Express each fibre of the restriction fibration through fixed-point counts of the stabiliser. Summed over orbits, this gives back the Burnside moment formula for t_{r+s}. It would turn the exact Conjecture M into a statement about character values.\n\nFor finite G and injective u : Fin r \u2192 X, relCount G u s * |Stab u| = \u03a3_{h \u2208 Stab u} (fix(h) \u2212 r)^{(s)}.\n\nFormalize with MulAction.sum_card_fixedBy_eq_card_orbits_mul_card_group applied to Stab(u) acting on avoiding injective tuples; check numerically on D_n and C_n.\n\nt_{r+s}|G| = \u03a3_g fix(g)^{(r+s)} follows by summing fibres, which links the catalog moment identities to the fibration.\n\nThe subgroup action on avoiding tuples would not be the right model for the fibre, which would contradict extendOrbit_bijective; so this is expected to be true.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5312",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "913b120b",
+    "status": "available",
+    "timestamp": "2026-10-24T21:16:42.291331+00:00",
+    "title": "Burnside Formula for Relative Stabiliser Orbits"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Characterise when t_{r+s} = t_r (|X|\u2212r)^{(s)}. The upper bound comes from a surjection of avoiding tuples onto relative orbits, so equality should mean semiregular stabiliser actions.\n\nFor s \u2265 1 and r+s \u2264 |X|: t_{r+s} = t_r\u00b7(|X|\u2212r)^{(s)} iff for every injective u : Fin r \u2192 X, every non-identity g with g\u2022u = u moves every injective s-tuple avoiding u.\n\nEnumerate all transitive groups of degree \u2264 8 and compare both sides; formalize via Nat.card_eq_of_bijective on the map in relCount_le.\n\nGives an orbit-count criterion for sharply (r+s)-transitive-type behaviour.\n\nA counterexample would show that the stabilisers can collapse fibres in a way that cancels out over the sum, which is impossible termwise; so a failure would point to an error in the statement.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5313",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "913b120b",
+    "status": "available",
+    "timestamp": "2026-10-24T21:16:42.750424+00:00",
+    "title": "Equality Case of the Upper Orbit Sandwich"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the exact fibration formula and the hierarchy to oligomorphic permutation groups on infinite sets. This connects orbit-count growth in model theory to the finite spectrum results.\n\nFor an oligomorphic action, t_{r+s} = \u03a3_{[u]} #(Stab(u) \\ Inj_s(X \u2216 u)) and t_{r+1} \u2265 t_r (t_1 \u2212 r) for all r.\n\nGeneralize InjOrbit counting to [Finite (orbitRel.Quotient G (Fin r \u2192 X))] hypotheses and rebuild the Lean proofs without Finite X.\n\nGives combinatorial lower bounds for orbit growth of homogeneous structures, starting from the orbit count on points.\n\nFiniteness of X would be essential to the counting, which would indicate that the bijection extendOrbit_bijective alone is not enough.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_5314",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "913b120b",
+    "status": "available",
+    "timestamp": "2026-10-24T21:16:43.220008+00:00",
+    "title": "Oligomorphic Extension of the Restriction Fibration"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -48042,19 +48100,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-22T11:36:10.473260+00:00",
     "title": "Deficit Quantisation for Multiplicative Label Channels"
-  },
-  {
-    "consumed_by_exp_id": "913b120b",
-    "description": "*For all `r, s` with `r + s \u2264 |X|` the spectrum satisfies `t_{r+s} \u2265 t_r\u00b7(t_s \u2212 r)`, and more\nprecisely `t_{r+s} \u2265 t_r \u00b7 (number of orbits of injective `s`-tuples avoiding a fixed injective\n`r`-tuple)`.*\n\nThe key insight is that `descFactorial_injOrbits_one_le` is the case `r = 0` of a relative\nstatement: cutting an injective `(r+s)`-tuple into its first `r` and last `s` coordinates gives a\nfibration of the top fibre at level `r+s` over the top fibre at level `r`, whose fibres are the\norbits of the stabiliser on injective `s`-tuples in the complement.\n\nWhy now? The maps `dropOrbit` and `shrinkOrbit` already realize the \"forget coordinates\"\ndirection, and the orbit\u2013stabiliser theorem used in `descFactorial_dvd_card_of_kTransitive`\nsupplies the relative count; only the bookkeeping between the two is missing.",
-    "domains": [],
-    "id": "fd_1592",
-    "phase": "A",
-    "priority_score": 0.4378333333333333,
-    "research_mode": "team",
-    "source_exp_id": "60572a3f",
-    "status": "in_progress",
-    "timestamp": "2026-08-19T09:49:54.571634+00:00",
-    "title": "Conjecture M (a full multiplicative hierarchy)"
   },
   {
     "consumed_by_exp_id": "",

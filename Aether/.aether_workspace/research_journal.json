@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "903508ab",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — after the abelianization law at degree five\n\nThis cycle closed the degree-five type channel of the Frobenius field `F₂₀ = AGL(1,5)`\n(`Catalog/Bridges/QuinticTypeChannelF20.lean`,",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 169,
-      "timestamp": "2026-09-16T14:58:07",
-      "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, F₂₀ and the first C₄"
-    },
-    {
       "cycle_id": "9c40082c",
       "domain": "Cryptography",
       "key_insight": "# FUTURE DIRECTIONS — after BERGGREN-3ADIC (tree position of the N-node)\n\n## What this cycle established (formally, 0 sorries)\n\n1. **Skeleton = trace.**  For every coprime `(m,n)`, `N = m² − n²` satis",
@@ -499,19 +489,19 @@
       "theorem_count": 38,
       "timestamp": "2026-10-24T07:14:53",
       "title": "C4. Positive density of integers that are sums of two anti-Fibonacci numbers, with a"
+    },
+    {
+      "cycle_id": "913b120b",
+      "domain": "Bridges",
+      "key_insight": "# Future directions after Conjecture M (multiplicative hierarchy)\n\n## What this cycle established (all proved in Lean, 0 sorries)\n\nFiles: `Catalog/Bridges/MultiplicativeHierarchyCore.lean`, `…Fibratio",
+      "quality_score": 0.72,
+      "sorry_count": 2,
+      "theorem_count": 53,
+      "timestamp": "2026-10-24T21:16:52",
+      "title": "Conjecture M (a full multiplicative hierarchy)"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "17477782",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Cantor truth space, golden-mean subshift\n\nDerived from twelve completed research cycles in `Catalog/MachineLearning/`, all building on\nthe first-disagreement ultrametric of `Shar",
-      "quality_score": 0.9,
-      "sorry_count": 0,
-      "theorem_count": 22,
-      "timestamp": "2026-08-30T12:55:11",
-      "title": "Completeness / compactness"
-    },
     {
       "cycle_id": "b50cc5ce",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 27,
       "timestamp": "2026-10-24T18:46:29",
       "title": "Angular Curvature Obstruction to Band Re-entry"
+    },
+    {
+      "cycle_id": "913b120b",
+      "domain": "Bridges",
+      "key_insight": "# Future directions after Conjecture M (multiplicative hierarchy)\n\n## What this cycle established (all proved in Lean, 0 sorries)\n\nFiles: `Catalog/Bridges/MultiplicativeHierarchyCore.lean`, `…Fibratio",
+      "quality_score": 0.72,
+      "sorry_count": 2,
+      "theorem_count": 53,
+      "timestamp": "2026-10-24T21:16:52",
+      "title": "Conjecture M (a full multiplicative hierarchy)"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "ea6702d1",
-      "domain": "Novelty",
-      "name": "condEnt_eq_uEnt_pair_sub",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "ea6702d1",
-      "domain": "Novelty",
-      "name": "mutInfo_eq_add_sub_pair",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "ea6702d1",
-      "domain": "Novelty",
-      "name": "uEnt_pair_swap",
-      "quality": 0.72
-    },
     {
       "cycle_id": "827b1ae9",
       "domain": "Algebra",
@@ -2803,17 +2785,28 @@
       "domain": "Computation",
       "name": "card_filter_range_mul",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "913b120b",
+      "domain": "Bridges",
+      "name": "orbitPattern_eq_idPattern_iff",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "913b120b",
+      "domain": "Bridges",
+      "name": "injOrbits_eq_tInj",
+      "quality": 0.72
+    },
+    {
+      "cycle_id": "913b120b",
+      "domain": "Bridges",
+      "name": "injOrbits_add_eq_sum_relCount",
+      "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-24T18:46:29",
+  "last_updated": "2026-10-24T21:16:52",
   "open_questions": [
-    {
-      "context": "Main results (all with no `sorry`):; and this file proves, with no `sorry`:",
-      "cycle_id": "c94236ec",
-      "domain": "Novelty",
-      "sorry_count": 2,
-      "timestamp": "2026-08-15T03:13:13"
-    },
     {
       "context": "assumptions.  No `sorry` below.; curves without integral points and uniqueness would fail.  No `sorry` occurs below.; `ℓ ∤ N` (as does layer 2) and `ℓ ≥ 5` (`3` divides `ψ₃` identically).  No `sorry` ",
       "cycle_id": "43f9870f",
@@ -3016,6 +3009,13 @@
       "domain": "Computation",
       "sorry_count": 2,
       "timestamp": "2026-10-22T06:06:08"
+    },
+    {
+      "context": "No `sorry`, no `native_decide`, no new axioms.; No `sorry`, no `native_decide`, no new axioms.",
+      "cycle_id": "913b120b",
+      "domain": "Bridges",
+      "sorry_count": 2,
+      "timestamp": "2026-10-24T21:16:52"
     }
   ],
   "research_threads": {
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "903508ab",
-        "quality": 0.82,
-        "theorems": 169,
-        "title": "FACT round-24 #3 — QUINTIC-TYPE-CHANNEL: the abelianization law at degree five, "
-      },
-      {
         "cycle_id": "c73f4ca7",
         "quality": 0.85,
         "theorems": 57,
@@ -3203,6 +3197,12 @@
         "quality": 0.6,
         "theorems": 23,
         "title": "FACT round-33 — THE ORDER-FREE OPENING IS CLOSED: Harvey's 1/5 is pinned by an e"
+      },
+      {
+        "cycle_id": "913b120b",
+        "quality": 0.72,
+        "theorems": 53,
+        "title": "Conjecture M (a full multiplicative hierarchy)"
       }
     ],
     "Combinatorics": [
