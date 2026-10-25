@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-24T21:16:53.967107+00:00",
+  "last_updated": "2026-10-25T12:18:06.683754+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -79158,6 +79158,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-24T21:16:53.697402+00:00",
       "title": "Conjecture M (a full multiplicative hierarchy)"
+    },
+    {
+      "adversarial_delta": 0.0,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Logic",
+      "duration_seconds": 19535.697506189346,
+      "end_time": 1792930659.7703376,
+      "files_integrated": 4,
+      "job_id": "111c0bf3",
+      "outcome_quality": 0.62,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.62,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.0,
+        "applications": 0.5,
+        "artifact_richness": 0.0,
+        "catalog_anchoring": 0.5,
+        "composite": 0.454,
+        "cross_domain": 0.5,
+        "grade": "partial",
+        "importance": 0.62,
+        "novelty": 0.62,
+        "proof_depth": 0.62,
+        "usefulness": 0.5
+      },
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1792911124.0728314,
+      "strategy_count": 0,
+      "theorem_count": 46,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 46,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-25T12:18:06.302688+00:00",
+      "title": "Headroom Conservation Under Response Rebalancing"
     }
   ]
 }

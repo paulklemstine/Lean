@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b50cc5ce",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions\n\nDerived from the Stage-3 analysis and Stage-4 adversarial review of this cycle.\n\n## What this cycle established (formally, 0 sorries)\n\nFive Lean files in `Catalog/Combinatorics/`",
-      "quality_score": 0.85,
-      "sorry_count": 0,
-      "theorem_count": 21,
-      "timestamp": "2026-08-30T12:55:28",
-      "title": "Test curvature only after identifiability"
-    },
-    {
       "cycle_id": "b63aa142",
       "domain": "Algebra",
       "key_insight": "# Future directions — after the Euler two-squares cycles\n\n## What is now established (all `sorry`-free, in `Catalog/Algebra/EulerTwoSquares*.lean`)\n\n1. **Extraction is unconditional, and needs no norm",
@@ -2501,6 +2491,16 @@
       "theorem_count": 53,
       "timestamp": "2026-10-24T21:16:52",
       "title": "Conjecture M (a full multiplicative hierarchy)"
+    },
+    {
+      "cycle_id": "111c0bf3",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — tie-profile headroom for Spearman's rho\n\n*Status: final for this cycle. Both Lean files build with no `sorry` and only the standard axioms\n(`propext`, `Classical.choice`, `Quot.s",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 46,
+      "timestamp": "2026-10-25T12:18:05",
+      "title": "Headroom Conservation Under Response Rebalancing"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-24T21:16:52",
+  "last_updated": "2026-10-25T12:18:05",
   "open_questions": [
     {
       "context": "assumptions.  No `sorry` below.; curves without integral points and uniqueness would fail.  No `sorry` occurs below.; `ℓ ∤ N` (as does layer 2) and `ℓ ≥ 5` (`3` divides `ψ₃` identically).  No `sorry` ",
@@ -3455,12 +3455,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "c2e74b6a",
-        "quality": 0.88,
-        "theorems": 114,
-        "title": "Finite model property with an explicit bound"
-      },
-      {
         "cycle_id": "b58ee289",
         "quality": 0.86,
         "theorems": 124,
@@ -3513,6 +3507,12 @@
         "quality": 0.72,
         "theorems": 78,
         "title": "Discriminant Locus as the Source of the Hint Value"
+      },
+      {
+        "cycle_id": "111c0bf3",
+        "quality": 0.62,
+        "theorems": 46,
+        "title": "Headroom Conservation Under Response Rebalancing"
       }
     ],
     "MachineLearning": [

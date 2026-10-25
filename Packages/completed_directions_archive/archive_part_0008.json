@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-24T21:16:43Z",
-  "count": 39,
+  "archived_at": "2026-10-25T12:17:54Z",
+  "count": 40,
   "directions": [
     {
       "id": "fd_3552",
@@ -1561,6 +1561,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_4037",
+      "title": "FACT round-81 #1 — HUMP-MECHANISM (exp 581): MIXED-INCONCLUSIVE by letter, STRUCTURALLY DECISIVE — no decomposition family met the HUMP bars (pooled fitted-peak boot95-lo 1.0094 vs bar 1.05; raw max still bin 33), but composition carriers die arithmetically: observed LPF masses [0,0,.0007,.9993] — 99.93% of hits share ONE band (>1e4) so H1a single-band-carrier is impossible; inside it concavity replicates in ALL THREE descriptive LPF terciles (c=-0.18/-0.25/-0.44), pooled vertex x=0.5901 == exp579's independent 0.5896 (raw max bin33 exact); k100 conditioning does NOT remove the excess (t2/t3 flat ±2% vs pooled +4.8%); controls clean everywhere; sole-survivor channel = H0 window/polynomial geometry of j²−N itself; named probe: direct j-grid/v-size sensitivity (bin-width permutation, u-grid shift); REGENERATION PASS sha256 55729f1c99c0b5d2 byte-exact 9594/9594 hits + full controls + grids + lineage quartet + master hash",
+      "description": "Round-81 #1 · exp 581 · paper 231 · closes paper-229's named residual question (what carries the ±20% concave mid-window hump in R=T/M?).\n\n**Verdict**: MIXED-INCONCLUSIVE by pre-registration letter (zero families fired: fitted-peak boot95 p2.5 must exceed 1.05, achieved 1.0094–1.0275 despite raw max 1.2227 @bin33); bars kept verbatim, no post-hoc rule change.\n\n**Regeneration pass (first-class result)**: pipeline re-executed from recorded seeds; canonical-int64 sha256 55729f1c99c0b5d2 regenerated == stored npz; hits byte-exact 9594/9594 across all 128 Ns; FULL capped control arrays + grids byte-exact; lineage quartet e8d89a29/9cb9cc80/81acc9b5/a15e2877 reproduced pairwise-disjoint; master hash 06931068f8f3ca9b matched. All numbers below ran on verified-identical data.\n\n**Structural one-sidedness**:\n- Observed LPF masses [0, 0, 0.0007, 0.9993] (counts [0,0,7,9587]) vs mixture-Dickman prediction [0,0,0.0013,0.9987] — 99.93% of hits in ONE band (>1e4): any single-band carrier story dies ARITHMETICALLY (only one eligible stratum at LOW_MASS_MIN=200). Mass reallocation negligible (6e-4 gap).\n- Inside the band: dominant-band-only c=-0.299 vertex 0.590; descriptive LPF terciles (cuts 350983/671941, ~3196 hits each, medians 198k/511k/831k) c=-0.18/-0.25/-0.44 — concave in ALL THREE.\n- k100 terciles (cuts {2,3}): t1 concave (c=-0.13, vx .41); t2/t3 mildly convex but amplitude ±2% vs pooled +4.8% — combo conditioning does not absorb the excess.\n- Controls clean everywhere (pooled c=-0.105 CI straddles 0, peak fit 1.005).\n- Anchors PASS: R_first .8371 vs .8007±.08; R_peak 1.2227@bin33 vs 1.2257@bin33 EXACT; R_last .8935 vs .8957; pooled vertex 0.5901 vs exp579's independent 0.5896.\n\n**Consequence**: the hump lives INSIDE every resolvable stratum at a stable vertex — not completing-prime size, not small-prime combination structure, not Dickman band-mass reallocation. Sole surviving registered channel: **H0 window/polynomial geometry of j²−N itself interacting with v-sizes**. Named next probe (pre-stated): direct j-grid/v-size sensitivity analysis — bin-width permutation, u-grid shift — to close H0 affirmatively or watch it fragment.\n\n**Ledger catches (both disclosed)**: run-1 G1 \"failure\" = comparator bug (paired slices compared vs stored full arrays; hits were ALWAYS byte-exact per run-1 log evidence); run-2 KeyError 350983 = LN-dict lookup on an observed sub-band edge → arbitrary-edge ln cache + resume-from-persisted-regen (16.5 s completion; sampling never re-run after its single persisted 953 s pass). Smoke also caught a factorer early-exit bug pre-full; Dickman table refined to h=1/8192 (err 3.07e-05).\n\nDeviations disclosed: k100-tercile baseline = pooled positional profile (per-tercile Dickman needs Buchstab machinery, out of scope); sub-band split DESCRIPTIVE ONLY, never verdict-bearing; single seed/bitlen inherited from exp578.\n\nBarrier framing: structural (not power-limited) elimination prevents a wrong turn on paper-228's opened frontier; residue cap untouched; no complexity claim; no breakthrough claimed. Completes paper-229's characterization thread 228→229→231.\n\nFiles: ResearchOutput/scripts/2026-08-24-round74/exp581_* ; paper ResearchOutput/NewMathematics/231_HumpMechanism.md",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "733effba",
+      "timestamp": "2026-08-24T19:01:09.724421+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.82,
+      "domain_quality_penalty": 0.2,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-25T10:53:05.073231+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 379
     }
   ]
 }
