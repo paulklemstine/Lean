@@ -15379,19 +15379,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Multivariate Contrast Ceiling for Vector-Valued Carriers"
   },
   {
-    "consumed_by_exp_id": "8bbf297d",
-    "description": "The comb loses exactly one connector cell per interface, so the loss of a product construction is proportional to the number of direction changes. The conjecture is that every snake can be normalised to have few direction changes at cost O(n), making record search in high dimension a search over turn-minimal snakes only.\n\nEvery snake of length L in Q_n can be transformed into a snake of length at least L - O(n) whose comb decomposition has O(L/n) direction changes.\n\nFormalize a 'turn count' for snakes in the product setting (number of s where combRow changes) and prove the comb attains the minimum; test the normalisation on the known records for n <= 7 by search.\n\nRecord searches can be restricted to a normal form, a large practical reduction of the search space.\n\nDirection changes are essential to long snakes, so product methods will always lose a constant fraction.",
-    "domains": [],
-    "id": "fd_4771",
-    "phase": "A",
-    "priority_score": 0.5921910112359552,
-    "research_mode": "team",
-    "source_exp_id": "01cb7b4b",
-    "status": "in_progress",
-    "timestamp": "2026-09-10T04:56:52.413349+00:00",
-    "title": "Turn-Minimal Normal Form for Record Snakes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Over a fixed smallest coordinate x the Markoff Vieta dynamics is linear, given by an SL2(Z) matrix of trace 3x. For x = 1 and x = 2 these are the golden and silver dynamics, and the x = 2 branch coincides exactly with the Berggren silver spine. The conjecture is that every Markoff fibre is realized by a Berggren-type Pythagorean spine.\n\nFor every x that is the smallest entry of some Markoff triple, the trace-3x element of SL2(Z) governing the fibre is realized by a product of Berggren generators acting on a Pythagorean spine.\n\nFormalize orbits of markoffFiberMat x and compare with evalPair products; begin with x = 5 (trace 15).\n\nThe failed global transfer is replaced by a complete fibrewise dictionary between Pythagorean spines and Markoff branches.\n\nThe x = 1, 2 coincidences are sporadic, isolating exactly which quadratic units are shared by the two trees.",
     "domains": [],
@@ -48307,14 +48294,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "C2. The knee is at `k = \u2308log_p m\u2309` \u2014 a formal \"design rule\""
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a25bbb00",
     "description": "**Conjecture.** Suppose an oracle names \\(k\\) nested windows \\(w_1 < \\dots < w_k\\) with cumulative reliabilities \\(\\alpha_1 < \\dots < \\alpha_k\\). Under stipulated pricing, speedup \\(s\\) is reachable iff \\(\\sum_i (\\alpha_i - \\alpha_{i-1})\\,\\cdot\\) (mean slot of block \\(i\\)) is at most \\(1/(3s)\\). This is a polyhedral gate whose single-window case is `crossing_law`.\nThe key insight is that the displacement law extends to step posteriors: the cost of an order is a sum of the block-weight jumps times the index sums of the upper sets.\nWhy now? `displacement_law` and `exchange_sum_le` already give the single-step case.",
     "domains": [],
     "id": "fd_5223",
+    "phase": "A",
     "priority_score": 0.4364444444444444,
     "research_mode": "team",
     "source_exp_id": "5cdba14c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-10-13T21:32:17.143668+00:00",
     "title": "Multi-window crossing law"
   },
@@ -48633,6 +48621,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:22:50.577034+00:00",
     "title": "Develop L\u00f6b conditions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "**The normal-form conjecture holds at zero cost in the coordinate-split setting.** Relabelling\n  coordinates is an automorphism, so the snake loses no length. For every `a`, some `a`-set of\n  row coordinates gives at most `aL/n` direction changes (`exists_turnsIn_le`,\n  `turn_normal_form_two_sided`). For `a = 1` this is `L/n = O(L/n)`, with loss 0 instead of the\n  conjectured `O(n)`.",
+    "domains": [],
+    "id": "fd_5318",
+    "priority_score": 0.43049999999999994,
+    "research_mode": "team",
+    "source_exp_id": "8bbf297d",
+    "status": "available",
+    "timestamp": "2026-10-25T19:17:01.810396+00:00",
+    "title": "The normal-form conjecture holds at zero cost in the coordinate-split setting."
   },
   {
     "consumed_by_exp_id": "",

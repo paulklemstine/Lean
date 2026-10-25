@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b63aa142",
-      "domain": "Algebra",
-      "key_insight": "# Future directions — after the Euler two-squares cycles\n\n## What is now established (all `sorry`-free, in `Catalog/Algebra/EulerTwoSquares*.lean`)\n\n1. **Extraction is unconditional, and needs no norm",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 74,
-      "timestamp": "2026-08-30T17:30:44",
-      "title": "FACT round-72 #1 — EULER-LOSES: two-squares route measured — algebra exact, class 25%, cost 5.7x Fer"
-    },
-    {
       "cycle_id": "9c1e5dc4",
       "domain": "Probability",
       "key_insight": "# Future directions — after the U116 rebound / floor cycle\n\nFive cycles of the loop were run.  The fifth settled — negatively — the estimator question that\nthe fourth had opened: `Probability.TDialBlo",
@@ -2501,6 +2491,16 @@
       "theorem_count": 46,
       "timestamp": "2026-10-25T12:18:05",
       "title": "Headroom Conservation Under Response Rebalancing"
+    },
+    {
+      "cycle_id": "8bbf297d",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: Turn-Minimal Normal Forms for Snakes\n\n## What this cycle settled (all in `Catalog/Geometry/`, 0 sorries)\n- **The comb minimises turns, and is the only minimiser.** A row sequence",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-10-25T19:17:11",
+      "title": "Turn-Minimal Normal Form for Record Snakes"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.72
     }
   ],
-  "last_updated": "2026-10-25T12:18:05",
+  "last_updated": "2026-10-25T19:17:11",
   "open_questions": [
     {
       "context": "assumptions.  No `sorry` below.; curves without integral points and uniqueness would fail.  No `sorry` occurs below.; `ℓ ∤ N` (as does layer 2) and `ℓ ≥ 5` (`3` divides `ψ₃` identically).  No `sorry` ",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "d588a53d",
-        "quality": 0.82,
-        "theorems": 135,
-        "title": "The Pythagorean Hydra — Natural Independence for the Berggren Tree"
-      },
-      {
         "cycle_id": "175408d6",
         "quality": 0.87,
         "theorems": 46,
@@ -3451,6 +3445,12 @@
         "quality": 0.8,
         "theorems": 135,
         "title": "FACT round-35 (cont.) — CLOSING THE GALOIS-TABLE GAP: AGL(1,8) (order 56, G^ab=C"
+      },
+      {
+        "cycle_id": "8bbf297d",
+        "quality": 0.62,
+        "theorems": 78,
+        "title": "Turn-Minimal Normal Form for Record Snakes"
       }
     ],
     "Logic": [
