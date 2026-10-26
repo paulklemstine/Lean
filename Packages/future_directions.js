@@ -53630,14 +53630,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Let `f` be `L`-Lipschitz on `[0,1]\u207f`. Building a partition of"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f70e67a",
     "description": "Mathlib's `MulAction.isMultiplyPretransitive_of_le'` plus\n`nat_le_enatCard_of_embedding` (proved here) already give the one-step\ncomparison of transitivity; only the counting half is missing.",
     "domains": [],
     "id": "fd_1777",
+    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "6a8ae4e1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-21T03:16:46.044737+00:00",
     "title": "Mathlib's `MulAction.isMultiplyPretransitive_of_le'` plus"
   },
