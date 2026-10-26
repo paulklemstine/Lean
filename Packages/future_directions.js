@@ -47782,7 +47782,7 @@ window.FUTURE_DIRECTIONS = [
     "description": "**Conjecture:** two domains have equal knees at *all* gates iff their demand\nmultisets have equal upper-tail counting functions, and equal knees on a gate\n*window* of width `w` iff the counting functions agree on the corresponding\ncount band.  Hence \"MATH-READS-AS-PROSE\" is testable with a single tail\nhistogram, without any sweep.\n*The key insight is* that the knee is an order statistic, so agreement of knees\non an interval of gates is exactly agreement of the inverse distribution\nfunction on the corresponding interval of ranks.\n*Why now?* It converts a 6-point sweep per cell into one histogram per corpus,\nmaking the 7B cell and the non-English domains affordable.",
     "domains": [],
     "id": "fd_3869",
-    "phase": "A",
+    "phase": "B",
     "priority_score": 0.43887499999999996,
     "research_mode": "team",
     "source_exp_id": "86b92df3",
