@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "078881d5",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — from the completed quintic row\n\nThis cycle formalized the type/coset channel of a finite group and closed the transitive\nquintic row in exact closed form, plus two results the ex",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 5,
-      "timestamp": "2026-09-17T09:42:36",
-      "title": "FACT round-24 #5 — D₅-QUINTIC: the quintic row complete (paper 84)"
-    },
-    {
       "cycle_id": "aa0d333b",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — after the S₅ / A₅ quintic endpoints\n\n## What the four cycles closed\n\n1. **Endpoints** (`Catalog/MachineLearning/QuinticTypeChannelS5A5.lean`): exact splitting\n   entropies `H(T)",
@@ -499,19 +489,19 @@
       "theorem_count": 43,
       "timestamp": "2026-10-26T05:01:53",
       "title": "D2 — Knee stability is equivalent to tail-exchangeability"
+    },
+    {
+      "cycle_id": "e7c5ae9f",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Kernel of the Sign Invariant\n\n## What this cycle established (all in `Catalog/Geometry/DualityMoves/`, 0 sorries)\n\n* **Sign formula**: `ε = (-1)^{#(-√Q fixed points)}` for every",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-10-26T11:01:22",
+      "title": "Kernel of the Sign Invariant and Double-Minus Moves"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "181f9c07",
-      "domain": "Algebra",
-      "key_insight": "# Future Directions — F4: from `2^d − 1` towards `d + c`\n\nThis cycle produced a complete, sorry-free formal framework for forbidden Boolean-lattice\nsubposets (`Catalog/Algebra/BooleanLatticeChainBound",
-      "quality_score": 0.72,
-      "sorry_count": 0,
-      "theorem_count": 90,
-      "timestamp": "2026-08-30T23:31:39",
-      "title": "F4. Sharpening the chain upper bound from $2^d - 1$ to $O(d)$"
-    },
     {
       "cycle_id": "be2e1d6c",
       "domain": "Bridges",
@@ -2501,27 +2491,19 @@
       "theorem_count": 43,
       "timestamp": "2026-10-26T05:01:53",
       "title": "D2 — Knee stability is equivalent to tail-exchangeability"
+    },
+    {
+      "cycle_id": "e7c5ae9f",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Kernel of the Sign Invariant\n\n## What this cycle established (all in `Catalog/Geometry/DualityMoves/`, 0 sorries)\n\n* **Sign formula**: `ε = (-1)^{#(-√Q fixed points)}` for every",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-10-26T11:01:22",
+      "title": "Kernel of the Sign Invariant and Double-Minus Moves"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "9aae3e9c",
-      "domain": "Novelty",
-      "name": "card_filter_comp_of_uniform",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "9aae3e9c",
-      "domain": "Novelty",
-      "name": "card_of_uniform",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "9aae3e9c",
-      "domain": "Novelty",
-      "name": "uEnt_comp_of_uniform",
-      "quality": 0.72
-    },
     {
       "cycle_id": "f81db42e",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "NumberTheory",
       "name": "exists_tail_le",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "e7c5ae9f",
+      "domain": "Geometry",
+      "name": "dual_injective",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "e7c5ae9f",
+      "domain": "Geometry",
+      "name": "dual_dual",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "e7c5ae9f",
+      "domain": "Geometry",
+      "name": "dual_neg",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-10-26T05:01:53",
+  "last_updated": "2026-10-26T11:01:22",
   "open_questions": [
     {
       "context": "assumptions.  No `sorry` below.; curves without integral points and uniqueness would fail.  No `sorry` occurs below.; `ℓ ∤ N` (as does layer 2) and `ℓ ≥ 5` (`3` divides `ψ₃` identically).  No `sorry` ",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "175408d6",
-        "quality": 0.87,
-        "theorems": 46,
-        "title": "The Bonferroni machinery"
-      },
-      {
         "cycle_id": "22ca7429",
         "quality": 0.86,
         "theorems": 62,
@@ -3451,6 +3445,12 @@
         "quality": 0.62,
         "theorems": 78,
         "title": "Turn-Minimal Normal Form for Record Snakes"
+      },
+      {
+        "cycle_id": "e7c5ae9f",
+        "quality": 0.7,
+        "theorems": 82,
+        "title": "Kernel of the Sign Invariant and Double-Minus Moves"
       }
     ],
     "Logic": [
