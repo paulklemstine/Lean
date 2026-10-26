@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "9c40082c",
-      "domain": "Cryptography",
-      "key_insight": "# FUTURE DIRECTIONS — after BERGGREN-3ADIC (tree position of the N-node)\n\n## What this cycle established (formally, 0 sorries)\n\n1. **Skeleton = trace.**  For every coprime `(m,n)`, `N = m² − n²` satis",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 98,
-      "timestamp": "2026-09-17T00:02:09",
-      "title": "FACT round-24 #2 — BERGGREN-3ADIC: the tree position of the N-node is adically sealed (paper 81)"
-    },
-    {
       "cycle_id": "078881d5",
       "domain": "MachineLearning",
       "key_insight": "# Future directions — from the completed quintic row\n\nThis cycle formalized the type/coset channel of a finite group and closed the transitive\nquintic row in exact closed form, plus two results the ex",
@@ -499,19 +489,19 @@
       "theorem_count": 53,
       "timestamp": "2026-10-24T21:16:52",
       "title": "Conjecture M (a full multiplicative hierarchy)"
+    },
+    {
+      "cycle_id": "424ad706",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — knee/tail duality (D2 follow-ups)\n\n## What this cycle established (all in `Catalog/NumberTheory/KneeTail.lean`, 0 sorries)\n* Galois connection `knee D g ≤ t ↔ tail D t ≤ g`; the",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-10-26T05:01:53",
+      "title": "D2 — Knee stability is equivalent to tail-exchangeability"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "9c1e5dc4",
-      "domain": "Probability",
-      "key_insight": "# Future directions — after the U116 rebound / floor cycle\n\nFive cycles of the loop were run.  The fifth settled — negatively — the estimator question that\nthe fourth had opened: `Probability.TDialBlo",
-      "quality_score": 0.84,
-      "sorry_count": 0,
-      "theorem_count": 101,
-      "timestamp": "2026-08-30T23:31:23",
-      "title": "FACT round-71 #2 — TDIAL-U116: the fade REBOUNDS, floor forming near 0.46–0.49 (paper 200)"
-    },
     {
       "cycle_id": "181f9c07",
       "domain": "Algebra",
@@ -2501,27 +2491,19 @@
       "theorem_count": 78,
       "timestamp": "2026-10-25T19:17:11",
       "title": "Turn-Minimal Normal Form for Record Snakes"
+    },
+    {
+      "cycle_id": "424ad706",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — knee/tail duality (D2 follow-ups)\n\n## What this cycle established (all in `Catalog/NumberTheory/KneeTail.lean`, 0 sorries)\n* Galois connection `knee D g ≤ t ↔ tail D t ≤ g`; the",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-10-26T05:01:53",
+      "title": "D2 — Knee stability is equivalent to tail-exchangeability"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "827b1ae9",
-      "domain": "Algebra",
-      "name": "pinEnt_three",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "827b1ae9",
-      "domain": "Algebra",
-      "name": "pinEnt_four",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "827b1ae9",
-      "domain": "Algebra",
-      "name": "pinEnt_five",
-      "quality": 0.72
-    },
     {
       "cycle_id": "9aae3e9c",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Bridges",
       "name": "injOrbits_add_eq_sum_relCount",
       "quality": 0.72
+    },
+    {
+      "cycle_id": "424ad706",
+      "domain": "NumberTheory",
+      "name": "tail_eq_zero_of_forall_le",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "424ad706",
+      "domain": "NumberTheory",
+      "name": "tail_sup_eq_zero",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "424ad706",
+      "domain": "NumberTheory",
+      "name": "exists_tail_le",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-10-25T19:17:11",
+  "last_updated": "2026-10-26T05:01:53",
   "open_questions": [
     {
       "context": "assumptions.  No `sorry` below.; curves without integral points and uniqueness would fail.  No `sorry` occurs below.; `ℓ ∤ N` (as does layer 2) and `ℓ ≥ 5` (`3` divides `ψ₃` identically).  No `sorry` ",
@@ -3641,12 +3641,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "a08d5a50",
-        "quality": 0.86,
-        "theorems": 119,
-        "title": "FACT round-80 #1 — PROFILE-FORM (exp 579): positional layer gets a LAW — small-j"
-      },
-      {
         "cycle_id": "7b6f9981",
         "quality": 0.79,
         "theorems": 94,
@@ -3699,6 +3693,12 @@
         "quality": 0.75,
         "theorems": 77,
         "title": "FACT round-29 #1 — AUDIT-EXTENSION: six keystones, zero drift (paper 103)"
+      },
+      {
+        "cycle_id": "424ad706",
+        "quality": 0.7,
+        "theorems": 43,
+        "title": "D2 — Knee stability is equivalent to tail-exchangeability"
       }
     ],
     "Physics": [

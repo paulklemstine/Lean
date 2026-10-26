@@ -7213,6 +7213,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Proximity Theorem and FPT Algorithm for Minimum Group-labeled Matroid Bases' and formalize its key results. Abstract: Let $M$ be a matroid, let $\\ell:E(M)\\to G$ be a labeling of its elements by an abelian group, and let $F\\subseteq G$ be finite. A base is $F$-avoiding if the label sum of its elements is not in $F$. We prove that, for arbitrary costs, a min-cost $F$-avoiding base can be obtained from any min-cost base using at most $|F|$ exchanges. This resolves the weighted proximity conjecture by H\u00f6rsch, Imolay, Mizutani, Oki, and Schwarcz. Our main technical tool is to replace the assumption of Schrijver--Seymour Conjecture in Liu and Xu's earlier work with Kemperman--Scherk Theorem. The proximity theorem combined with approaches in earlier work gives an FPT algorithm that finds a min-cost $F$-avoiding base parameterized by $|G|$. We additionally give an FPT algorithm parameterized by $|F|$, answering a question of H\u00f6rsch et al.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_5322",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.32798v1",
+    "status": "available",
+    "timestamp": "2026-10-26T05:02:04.795140+00:00",
+    "title": "ArXiv paper: Proximity Theorem and FPT Algorithm for Minimum Group-labeled Matroid Bases"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -14165,6 +14180,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-09-01T18:32:48.553171+00:00",
     "title": "Radix Crossover for the Weighted Zero-Fit Edge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Tails add under pooling, so knee profiles of pooled corpora are conjugates of sums of conjugates. Window agreement should be preserved under pooling with a common corpus only after band shifting.\n\nIf knees of D and D' agree on [a, a+w) then knees of D+E and D'+E agree on gates where tail E keeps the shifted band inside [a, a+w).\n\nSearch for counterexamples among small multisets; formalise with tail_add and knee_window_iff_clamp.\n\nShard-level histograms compose to corpus-level knee certificates.\n\nWindow agreement is not compositional and must be re-tested after pooling.",
+    "domains": [],
+    "id": "fd_5321",
+    "priority_score": 0.5940909090909092,
+    "research_mode": "team",
+    "source_exp_id": "424ad706",
+    "status": "available",
+    "timestamp": "2026-10-26T05:01:42.569990+00:00",
+    "title": "Pooled Corpus Knee Profiles via Conjugate Addition"
   },
   {
     "consumed_by_exp_id": "",
@@ -35975,6 +36002,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The minimal mutual gate shift between two knee profiles equals the sup-distance between upper-tail counting functions. One-sided versions are proved; the remaining step is minimisation over k and identification with the conjugate-partition l-infinity metric.\n\nmin{k : \u2200 g, knee D' (g+k) \u2264 knee D g \u2227 knee D (g+k) \u2264 knee D' g} = sup_t |tail D t - tail D' t|\n\nDerive from tail_dist_le_iff_knee_sandwich in Lean by Nat.find on both sides; check numerically on random multisets.\n\nA single scalar per corpus pair bounds every knee discrepancy at every gate.\n\nKnee comparisons need a genuinely gate-dependent metric.",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_5319",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "424ad706",
+    "status": "available",
+    "timestamp": "2026-10-26T05:01:41.701025+00:00",
+    "title": "Gate-Shift Metric as Kolmogorov Distance"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend knee/tail duality to real-weighted demands with real gates. The window theorem should hold with clamping of weighted tails.\n\nFor weighted tail T(t) = \u03a3_{d>t} w_d and knee K(\u03b3) = inf{t : T(t) \u2264 \u03b3}: K agrees on [a,b) iff clamp_[a,b](T) agree.\n\nFormalise with Finsupp weights over \u211d\u22650 and reprove knee_le_iff using right-continuity.\n\nToken-weighted corpora can be compared with one weighted histogram.\n\nRight-continuity issues require one-sided knee variants.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5320",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "424ad706",
+    "status": "available",
+    "timestamp": "2026-10-26T05:01:42.145027+00:00",
+    "title": "Weighted Knee Galois Connection"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -47776,19 +47832,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:29:41.402435+00:00",
     "title": "C2. Adaptive grids collapse the bracket: bisection to a two-seed knee of width 1"
-  },
-  {
-    "consumed_by_exp_id": "424ad706",
-    "description": "**Conjecture:** two domains have equal knees at *all* gates iff their demand\nmultisets have equal upper-tail counting functions, and equal knees on a gate\n*window* of width `w` iff the counting functions agree on the corresponding\ncount band.  Hence \"MATH-READS-AS-PROSE\" is testable with a single tail\nhistogram, without any sweep.\n*The key insight is* that the knee is an order statistic, so agreement of knees\non an interval of gates is exactly agreement of the inverse distribution\nfunction on the corresponding interval of ranks.\n*Why now?* It converts a 6-point sweep per cell into one histogram per corpus,\nmaking the 7B cell and the non-English domains affordable.",
-    "domains": [],
-    "id": "fd_3869",
-    "phase": "B",
-    "priority_score": 0.43887499999999996,
-    "research_mode": "team",
-    "source_exp_id": "86b92df3",
-    "status": "in_progress",
-    "timestamp": "2026-08-23T18:49:22.805817+00:00",
-    "title": "D2 \u2014 Knee stability is equivalent to tail-exchangeability"
   },
   {
     "consumed_by_exp_id": "",
