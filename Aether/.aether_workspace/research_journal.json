@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "aa0d333b",
-      "domain": "MachineLearning",
-      "key_insight": "# Future directions — after the S₅ / A₅ quintic endpoints\n\n## What the four cycles closed\n\n1. **Endpoints** (`Catalog/MachineLearning/QuinticTypeChannelS5A5.lean`): exact splitting\n   entropies `H(T)",
-      "quality_score": 0.83,
-      "sorry_count": 0,
-      "theorem_count": 145,
-      "timestamp": "2026-09-17T14:30:18",
-      "title": "FACT round-24 #4 — S₅/A₅ QUINTIC ENDPOINTS: the largest entropy collapses, the perfect group seals ("
-    },
-    {
       "cycle_id": "c73f4ca7",
       "domain": "Bridges",
       "key_insight": "# Future directions — QUBIT-TRADE3 / the fungibility ramp on real semiprimes\n\nFour research cycles were run in this session.\n\n* **Cycle 1** formalized the two horns of the measured dichotomy on the co",
@@ -499,29 +489,19 @@
       "theorem_count": 82,
       "timestamp": "2026-10-26T11:01:22",
       "title": "Kernel of the Sign Invariant and Double-Minus Moves"
+    },
+    {
+      "cycle_id": "cb604c62",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions (from the Separator-Coordinate Escape cycle)\n\n## What this cycle established (Lean, 0 sorries)\n* **Escape theorem (`c = 2`)**: snakes of lengths `L`, `K` in `Q_m`, `Q_n` give a sna",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 41,
+      "timestamp": "2026-10-27T18:16:36",
+      "title": "Separator-Coordinate Escape Theorem"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "00e162eb",
-      "domain": "Novelty",
-      "key_insight": "# Future directions — ascent-cost economics after cycles 1–3\n\nThree cycles are complete and fully formalised (0 sorries) in\n`Catalog/Novelty/AscentCostLaw.lean`, `Catalog/Novelty/AscentCostExponent.le",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 52,
-      "timestamp": "2026-08-31T13:51:42",
-      "title": "FACT round-70 #3 — ASCENT-COST: exact branch-oracle economics; effective branching refuted; master-l"
-    },
-    {
-      "cycle_id": "898d17cb",
-      "domain": "Physics",
-      "key_insight": "# Future directions — PTX starvation floor programme\n\nThree research cycles are recorded in `Catalog/Physics/PTXStarvationFloor.lean`,\n`PTXStarvationSpectrum.lean`, `PTXStarvationJitter.lean` and\n`PTX",
-      "quality_score": 0.82,
-      "sorry_count": 0,
-      "theorem_count": 84,
-      "timestamp": "2026-08-31T13:51:59",
-      "title": "The floor is sharp"
-    },
     {
       "cycle_id": "e8ef44c2",
       "domain": "NumberTheory",
@@ -2501,27 +2481,29 @@
       "theorem_count": 48,
       "timestamp": "2026-10-27T06:13:44",
       "title": "Multi-window crossing law"
+    },
+    {
+      "cycle_id": "6f70e67a",
+      "domain": "Geometry",
+      "key_insight": "# Future directions\n\nThese follow from `Catalog/Geometry/MultipleTransitivityCounting.lean`, where the one-step\ncomparison of multiple transitivity and its counting form were proved without `sorry`.\nE",
+      "quality_score": 0.55,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-10-27T18:16:15",
+      "title": "Mathlib's `MulAction.isMultiplyPretransitive_of_le'` plus"
+    },
+    {
+      "cycle_id": "cb604c62",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions (from the Separator-Coordinate Escape cycle)\n\n## What this cycle established (Lean, 0 sorries)\n* **Escape theorem (`c = 2`)**: snakes of lengths `L`, `K` in `Q_m`, `Q_n` give a sna",
+      "quality_score": 0.7,
+      "sorry_count": 0,
+      "theorem_count": 41,
+      "timestamp": "2026-10-27T18:16:36",
+      "title": "Separator-Coordinate Escape Theorem"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "f81db42e",
-      "domain": "Combinatorics",
-      "name": "two_root_relations",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "f81db42e",
-      "domain": "Combinatorics",
-      "name": "third_root",
-      "quality": 0.72
-    },
-    {
-      "cycle_id": "f81db42e",
-      "domain": "Combinatorics",
-      "name": "disc_eq_sq",
-      "quality": 0.72
-    },
     {
       "cycle_id": "602d68e3",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "dual_neg",
       "quality": 0.7
+    },
+    {
+      "cycle_id": "cb604c62",
+      "domain": "Tropical",
+      "name": "IsSnake",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "cb604c62",
+      "domain": "Tropical",
+      "name": "IsSnake",
+      "quality": 0.7
+    },
+    {
+      "cycle_id": "cb604c62",
+      "domain": "Tropical",
+      "name": "lift_gridSnake",
+      "quality": 0.7
     }
   ],
-  "last_updated": "2026-10-27T06:13:44",
+  "last_updated": "2026-10-27T18:16:36",
   "open_questions": [
     {
       "context": "assumptions.  No `sorry` below.; curves without integral points and uniqueness would fail.  No `sorry` occurs below.; `ℓ ∤ N` (as does layer 2) and `ℓ ≥ 5` (`3` divides `ψ₃` identically).  No `sorry` ",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "22ca7429",
-        "quality": 0.86,
-        "theorems": 62,
-        "title": "Rigidity gap for shallow product coins"
-      },
-      {
         "cycle_id": "9b10b60b",
         "quality": 0.79,
         "theorems": 46,
@@ -3451,6 +3445,12 @@
         "quality": 0.7,
         "theorems": 82,
         "title": "Kernel of the Sign Invariant and Double-Minus Moves"
+      },
+      {
+        "cycle_id": "6f70e67a",
+        "quality": 0.55,
+        "theorems": 13,
+        "title": "Mathlib's `MulAction.isMultiplyPretransitive_of_le'` plus"
       }
     ],
     "Logic": [
@@ -3951,12 +3951,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "f5ddf1b2",
-        "quality": 0.6729149999999999,
-        "theorems": 27,
-        "title": "The dichotomy, the local homeomorphism property and the semicontinuity"
-      },
-      {
         "cycle_id": "98caf022",
         "quality": 0.82,
         "theorems": 88,
@@ -4009,6 +4003,12 @@
         "quality": 0.62,
         "theorems": 23,
         "title": "FACT round-33 (cont. 2) — UMW CORRECTION: the counting constraint is alpha >= 1-"
+      },
+      {
+        "cycle_id": "cb604c62",
+        "quality": 0.7,
+        "theorems": 41,
+        "title": "Separator-Coordinate Escape Theorem"
       }
     ]
   }

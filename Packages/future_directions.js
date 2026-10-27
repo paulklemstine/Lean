@@ -15457,15 +15457,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantitative Stability of the Maximally Entangled Orbit"
   },
   {
-    "consumed_by_exp_id": "cb604c62",
+    "consumed_by_exp_id": "",
     "description": "Because the 3/4 cap is caused by 4-cycles of the metric product, adding a bounded number of fresh coordinates should destroy exactly those 4-cycles. The conjecture asserts that with c extra coordinates one recovers the full multiplicative main term (L+1)(K+1) - o(LK). This is the only surviving route to the original conjecture.\n\nThere is an absolute c such that for all snakes of lengths L in Q_m and K in Q_n there is a snake in Q_{m+n+c} of length at least (1-o(1))(L+1)(K+1).\n\nDefine vertices Sum.elim (p i) (q j) augmented by a separator bit b(i,j) in Fin c -> Bool and re-run the two verification lemmas (step and chord) in the style of isSnake_comb; test small cases (L=K=4) by exhaustive search over separator patterns.\n\nThe original conjecture holds after a bounded dimension shift, turning isolated records into systematic higher-dimensional lower bounds.\n\nThe obstruction is not local to 4-cycles but genuinely metric, and product constructions are permanently capped below the multiplicative main term.",
     "domains": [],
     "id": "fd_4769",
-    "phase": "A",
     "priority_score": 0.5921428571428572,
     "research_mode": "team",
     "source_exp_id": "01cb7b4b",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-09-10T04:56:51.324954+00:00",
     "title": "Separator-Coordinate Escape Theorem"
   },
@@ -53719,15 +53718,14 @@ window.FUTURE_DIRECTIONS = [
     "title": "Let `f` be `L`-Lipschitz on `[0,1]\u207f`. Building a partition of"
   },
   {
-    "consumed_by_exp_id": "6f70e67a",
+    "consumed_by_exp_id": "",
     "description": "Mathlib's `MulAction.isMultiplyPretransitive_of_le'` plus\n`nat_le_enatCard_of_embedding` (proved here) already give the one-step\ncomparison of transitivity; only the counting half is missing.",
     "domains": [],
     "id": "fd_1777",
-    "phase": "A",
     "priority_score": 0.4,
     "research_mode": "team",
     "source_exp_id": "6a8ae4e1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-08-21T03:16:46.044737+00:00",
     "title": "Mathlib's `MulAction.isMultiplyPretransitive_of_le'` plus"
   },
