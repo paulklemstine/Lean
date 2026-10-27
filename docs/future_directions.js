@@ -14710,19 +14710,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Second-Order Expansion of the Rescaled Shell Thickness"
   },
   {
-    "consumed_by_exp_id": "91f8aecf",
-    "description": "The complementation bijection is witness-preserving, so it should transport not only solvability but every modular counting class. The conjecture is that P to its complement is a parsimonious self-reduction, making the mod-2 assembly count a complementation invariant while the exact count stays #P-hard.\n\nFor every framed puzzle P, the assembly counts of P and of its complement are equal, and the map P to compPuzzle P is a polynomial-time parsimonious self-reduction of the assembly counting problem.\n\nCombine assemblyEquiv with the piece-count encoding of the catalog reduction and formalise a counting-reduction predicate; check the mod-2 invariance on enumerated small instances.\n\nModular counting for jigsaw assembly inherits all hardness of modular SAT counting, with complementation as a free symmetry of the instance space.\n\nThe encoding, not the mathematics, breaks parsimony, indicating that piece multiplicities carry counting information.",
-    "domains": [],
-    "id": "fd_4018",
-    "phase": "A",
-    "priority_score": 0.5932142857142858,
-    "research_mode": "team",
-    "source_exp_id": "a331ba56",
-    "status": "in_progress",
-    "timestamp": "2026-08-24T15:57:54.028272+00:00",
-    "title": "Parity-Preserving Self-Reduction for Assembly Counting"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The pin overcharge is proved to lie in [1/2, 5/4). Its running average over widths 2..N oscillates rather than converging: 0.87985 at N = 10^3, 0.93621 at N = 10^5, and 0.87497 at N = 2^18. The conjecture is that this is exact log-periodicity, with mean value 7/8 along dyadic N.\n\nThe average of census W (kPin W) - min_k census W k over 2 <= W <= N converges to 7/8 along N = 2^m, and in general converges to a nonconstant continuous log-periodic function of log2 N.\n\nUse the closed form 2 - 3W/2^(k+3) on the gap-2 locus and 1/2 on the dyadic locus to evaluate the block sums exactly, then take the Ces\u00e0ro limit along and between powers of two.\n\nAmortised audit corrections for pin-based budgets are computable in closed form and depend only on the mantissa of the width.\n\nThe mean converges, and a single amortised correction constant suffices.",
     "domains": [],
@@ -15717,6 +15704,18 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-19T15:02:20.176084+00:00",
     "title": "Bounded Violation Windows for Polylog Preconditions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Labelled physical counting equals the abstract count times the product of piece-multiplicity factorials, so parsimony fails exactly through repeated shapes. An injective-shape encoding would make physical counting parsimonious.\n\nThere is a polynomial-size encoding of framed puzzles into physical piece sets with pairwise distinct shapes, such that labelled assemblies are in bijection with abstract assemblies.\n\nAssign distinct edge-profile words to clause and socket pieces in Lean and prove the shape map injective, then apply prod_factorial_eq_one_iff.\n\nPhysical jigsaw counting is #P-complete under parsimonious reductions.\n\nSome multiplicity is forced (e.g. by bounded edge alphabets), so physical counting only inherits hardness up to a factorial normalisation.",
+    "domains": [],
+    "id": "fd_5332",
+    "priority_score": 0.5918253968253969,
+    "research_mode": "team",
+    "source_exp_id": "91f8aecf",
+    "status": "available",
+    "timestamp": "2026-10-27T00:56:48.474659+00:00",
+    "title": "Multiplicity-Free Physical Encodings"
   },
   {
     "consumed_by_exp_id": "",
@@ -36016,6 +36015,49 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-10-26T05:01:42.145027+00:00",
     "title": "Weighted Knee Galois Connection"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The mod-2 assembly count equals the parity of the number of clause subsets whose literal inputs are consistent and pin every socket. This follows from the proved signless inclusion\u2013exclusion formula once falsifier sets are shown to be affine subcubes. It would give a combinatorial certificate for odd counts.\n\nFor every framed puzzle P on n sockets, count P \u2261 #{S \u2286 clauses(P) : the literals of S are consistent and mention all n sockets} (mod 2).\n\nProve falsifierCount P S \u2208 {0, 2^(n - |vars S|)} in Lean, then combine with count_cast_zmod_two; check on puzzlesN 2 and puzzlesN 3 by decide.\n\nOdd assembly counts acquire a short combinatorial witness family, and the \u2295P-hardness of jigsaw parity becomes an explicit statement about clause covers.\n\nSome falsifier set is not an affine subcube, which would mean the clause-piece semantics is not purely conjunctive.",
+    "domains": [
+      "Combinatorics",
+      "Geometry"
+    ],
+    "id": "fd_5329",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "91f8aecf",
+    "status": "available",
+    "timestamp": "2026-10-27T00:56:47.161497+00:00",
+    "title": "Affine-Subcube Parity Criterion for Assembly Counts"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The mask-symmetry group divides the count; the gap is the 2-adic valuation of the orbit count. We conjecture this gap is usually zero on small sockets.\n\nv\u2082(count P) = log\u2082 |maskSymm P| + v\u2082(#(assemblies P / maskSymm P)), and for n \u2264 4 the second term vanishes for more than half of the two-clause puzzles.\n\nEnumerate puzzlesN 2..4, compute orbit counts and valuations, and certify the first identity in Lean from card_dvd_card_of_stable.\n\nMask symmetries are the dominant source of 2-adic structure in assembly counts.\n\nHidden non-translation symmetries (e.g. socket permutations) contribute 2-adic factors, motivating the full hyperoctahedral stabiliser.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5330",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "91f8aecf",
+    "status": "available",
+    "timestamp": "2026-10-27T00:56:47.599053+00:00",
+    "title": "Maximal 2-Adic Certificate from Mask Symmetries"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The signed-permutation action on puzzles is a proved monoid action preserving count and mask-symmetry order. Burnside's lemma should count orbits of the bounded instance families.\n\nThe number of orbits of (ZMod 2)^n \u22ca S_n on two-clause puzzles over n sockets equals (1/(2^n n!)) \u03a3_g |Fix(g)|, with an explicit signed-cycle-type formula.\n\nPromote SignedPerm to a Group instance, apply MulAction Burnside in Lean, and compare with enumeration for n = 2, 3.\n\nCount statistics over all instances reduce to orbit representatives, an exponential saving for experiments.\n\nThe action on the list-based instance space is not closed on the bounded family (ordering of literals), requiring a multiset model.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_5331",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "91f8aecf",
+    "status": "available",
+    "timestamp": "2026-10-27T00:56:48.070504+00:00",
+    "title": "Hyperoctahedral Orbit Census of Framed Puzzles"
   },
   {
     "consumed_by_exp_id": "",

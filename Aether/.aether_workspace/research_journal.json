@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "be2e1d6c",
-      "domain": "Bridges",
-      "key_insight": "# Future directions — after the Two-Tree Closure\n\nThe work of this cycle closes the \"energy-ascent\" question at four strengths and, in\ndoing so, isolates exactly what a reopening probe would have to l",
-      "quality_score": 0.87,
-      "sorry_count": 0,
-      "theorem_count": 172,
-      "timestamp": "2026-08-31T05:36:07",
-      "title": "FACT rounds 70–71 SYNTHESIS — THE TWO-TREE CLOSURE: Pythagorean trees sealed at four strengths; exac"
-    },
-    {
       "cycle_id": "ecb169bf",
       "domain": "Bridges",
       "key_insight": "# Future Directions — after the tree-sieve / multi-target verdicts\n\nThe formalized cycle established six things, all with sorry-free Lean proofs in\n`Catalog/Bridges/`:\n\n1. **Invalid as stated.** An id",
@@ -2501,6 +2491,16 @@
       "theorem_count": 82,
       "timestamp": "2026-10-26T11:01:22",
       "title": "Kernel of the Sign Invariant and Double-Minus Moves"
+    },
+    {
+      "cycle_id": "91f8aecf",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Parsimonious Self-Reduction for Jigsaw Assembly Counting\n\n## What this cycle established (Lean, 0 sorries)\n\n* Complementation is one element of a parsimonious action of the whole",
+      "quality_score": 0.62,
+      "sorry_count": 0,
+      "theorem_count": 149,
+      "timestamp": "2026-10-27T00:56:59",
+      "title": "Parity-Preserving Self-Reduction for Assembly Counting"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7
     }
   ],
-  "last_updated": "2026-10-26T11:01:22",
+  "last_updated": "2026-10-27T00:56:59",
   "open_questions": [
     {
       "context": "assumptions.  No `sorry` below.; curves without integral points and uniqueness would fail.  No `sorry` occurs below.; `ℓ ∤ N` (as does layer 2) and `ℓ ≥ 5` (`3` divides `ψ₃` identically).  No `sorry` ",
@@ -3021,12 +3021,6 @@
   "research_threads": {
     "Algebra": [
       {
-        "cycle_id": "0c24f2ff",
-        "quality": 0.82,
-        "theorems": 102,
-        "title": "Moment Fingerprint Classification"
-      },
-      {
         "cycle_id": "cc3115b2",
         "quality": 0.85,
         "theorems": 103,
@@ -3079,6 +3073,12 @@
         "quality": 0.62,
         "theorems": 56,
         "title": "CAPSTONE — the deterministic N^(1/5) barrier is a property of the baby-step/gian"
+      },
+      {
+        "cycle_id": "91f8aecf",
+        "quality": 0.62,
+        "theorems": 149,
+        "title": "Parity-Preserving Self-Reduction for Assembly Counting"
       }
     ],
     "Applications": [
