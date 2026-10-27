@@ -1,7 +1,7 @@
 {
   "part": "8",
-  "archived_at": "2026-10-27T00:56:48Z",
-  "count": 44,
+  "archived_at": "2026-10-27T06:13:33Z",
+  "count": 45,
   "directions": [
     {
       "id": "fd_3552",
@@ -1761,6 +1761,46 @@
       "decomposition_depth": 0,
       "source": "",
       "github_issue": 0
+    },
+    {
+      "id": "fd_4043",
+      "title": "FACT round-82 #2 — SHAPE-TEST-NONPARAM (exp 583): H0_CHANNEL_CLOSES — LRT stat=100.6 df=3 p=1.17e-21 perm 0/400: real non-linearity but STEEP MONOTONE DECLINE; PAPER-229 ERRATUM: peaked residual = baseline leakage, power law stands",
+      "description": "exp 583 · round-82 #2 · paper 233 · assessment v339→v340 · count 571→572.\n\n**VERDICT: H0_CHANNEL_CLOSES** (registered rule) with the decisive decomposition. Paper 232's named follow-up (binning-independent shape test): pure reanalysis of exp581_regen_positions.npz (128 strata, hits 9594 / controls 512000, windows [jlo,jhi] jhi/jlo=3). ZERO binning: raw hit-indicator stratum-conditional case-control logistic, 128 profiled intercepts; free natural cubic spline df5 (knots .25/.5/.75) vs LINEAR-x; LRT on full design + permutation calibration (within-stratum label shuffles B=400, capped 200-ctl/stratum design); bootstrap 150 reps.\n\nResults:\n- Free-vs-linear LRT stat=100.574 df=3, asym p=1.17e-21; permutation 0/400 exceedances => p≤0.0025 floor at B=400 (registered <0.001 unmeetable at this B; direction strongly confirms real non-linear structure)\n- BUT interior max x*=0.020 CI[0.020,0.020] — pinned LEFT EDGE in all 150 reps; [0.4,0.8] bar FAILS\n- Peak/end rate-ratio 2.54 CI[2.243,2.798] — steep small-x decline, exactly Dickman-type, not a hump\n- Control arm null (perm p=0.856; big-design asym p=0.035 marginal, passes via perm criterion)\n- Deciles strictly declining [1554…694]; the +1.6% blip near u*≈0.55–0.65 is exp582's vertex ghost — baseline-relative ripple, not a mode\n\n**ERRATUM-GRADE CORRECTION TO RECORDED PAPER 229**: RESIDUAL-PEAKED-MID-WINDOW retracted as BASELINE-CURVATURE LEAKAGE — the mid-window excess lived in the mixture-Dickman denominator's own curvature, not in position shape. Paper 229's POWER-LAW headline T(x)≈0.0295·(1+x)^−1.104 STANDS and is STRENGTHENED (re-found binning-free). Any revival must be a baseline-mis-specification claim, never a positional mode. Absolute-shape channel CLOSES; sole remaining open item on this thread = rate-layer N-covariate.\n\nCoordinator fuse disclosure: minimal skeleton under ~15-min fuse — monotone-I-spline/isotonic and Dickman-offset legs SKIPPED (documented in skipped_legs), H1's beats-monotone clause UNTESTED; two run legs suffice for the registered comparison since the location clause fails independently.\n\nLedger: x-convention verified pre-script from ctl linear-uniformity; perm/boot on capped designs with observed stats from full design (disclosed); design-matrix scale surprise (obs rows 521,594; control rows 1,024,000) handled within budget; wall 273.4 s; seeds P/B/S 20260902/03/04.\n\nBarrier framing: scale-smoothness mechanism frontier — clean closure preventing both a wrong positional-mode hunt and a wrong closure of the true power law; residue cap untouched.",
+      "source_exp_id": "github",
+      "source_path": "github",
+      "domains": [
+        "Novelty"
+      ],
+      "proof_strategy": "",
+      "research_mode": "team",
+      "depth_estimate": 3,
+      "priority_score": 0.9,
+      "status": "completed",
+      "consumed_by_exp_id": "0dec095c",
+      "timestamp": "2026-08-24T19:46:36.815634+00:00",
+      "catalog_references": [],
+      "ambition_level": "grand_challenge",
+      "lineage_refs": [],
+      "domain_bridges": [],
+      "arc_id": "",
+      "arc_position": 0,
+      "outcome_quality": 0.72,
+      "domain_quality_penalty": 0.2,
+      "prune_reason": "",
+      "pruned_at": "",
+      "attempt_count": 1,
+      "last_attempt_time": "2026-08-25T14:07:35.662867+00:00",
+      "quarantined_until": "",
+      "last_reviewed_at": "",
+      "cleanup_review_count": 0,
+      "lean_theorem_stub": "",
+      "thread_id": "",
+      "category": "",
+      "parent_direction": "",
+      "decomposed_from_job": "",
+      "decomposition_depth": 0,
+      "source": "github_injection",
+      "github_issue": 381
     }
   ]
 }

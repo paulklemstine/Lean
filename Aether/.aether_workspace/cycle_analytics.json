@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-10-27T00:56:59.908402+00:00",
+  "last_updated": "2026-10-27T06:13:46.057301+00:00",
   "records": [
     {
       "adversarial_agreement": "agree",
@@ -79373,6 +79373,50 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-10-27T00:56:59.640167+00:00",
       "title": "Parity-Preserving Self-Reduction for Assembly Counting"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2269,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Combinatorics",
+      "duration_seconds": 18995.357805252075,
+      "end_time": 1793081596.0376558,
+      "files_integrated": 4,
+      "job_id": "a25bbb00",
+      "outcome_quality": 0.627125,
+      "phase": "complete",
+      "phase_a_prompt_version": "v19c",
+      "phase_a_quality_score": 0.6502776659959759,
+      "phase_b_prompt_version": "v1.1",
+      "phase_b_skipped": false,
+      "prompt_version": "v19c",
+      "quality_breakdown": {
+        "actionability": 0.66,
+        "applications": 0.89,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8669,
+        "cross_domain": 0.95,
+        "grade": "world_class",
+        "importance": 0.9267,
+        "novelty": 0.9429,
+        "proof_depth": 0.9197,
+        "usefulness": 0.9349
+      },
+      "quality_score": 0.627125,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1793062600.6798506,
+      "strategy_count": 0,
+      "theorem_count": 48,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 44,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-10-27T06:13:45.577396+00:00",
+      "title": "Multi-window crossing law"
     }
   ]
 }

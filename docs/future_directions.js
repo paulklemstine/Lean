@@ -7228,6 +7228,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'From skew Combinatorial Nullstellensatz to sharp Ax-Katz congruences and zero counts' and formalize its key results. Abstract: We give a unified account of zero counting in finite-field polynomial rings with commuting variables twisted by a common automorphism. A decomposition into fixed-field slices connects skew evaluation with ordinary polynomial evaluation. First, we derive a slice coefficient formula from the skew Combinatorial Nullstellensatz and use it to deduce skew Chevalley-Warning, including the sufficient condition $n>h\\sum_i d_i$. Next, classical Ax-Katz gives the corrected integer congruence $Q^{\\max\\{0,\\lceil(n-h\\sum_i d_i)/D\\rceil\\}}\\mid N+(M-1)\u03b4$. We construct homogeneous examples proving optimality for every positive degree table and every number of variables. We also establish a sharp lower bound with a prescribed zero, an input-sensitive coefficient-filtration refinement, and transfers of known bounds for nonlinear zero sets. Detailed calculations explain the origin correction, incomplete norm blocks, and the distinction between characteristic-$p$ summation and higher integer divisibility. ",
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "fd_5336",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.35739v1",
+    "status": "available",
+    "timestamp": "2026-10-27T06:14:04.004369+00:00",
+    "title": "ArXiv paper: From skew Combinatorial Nullstellensatz to sharp Ax-Katz congruences and zero counts"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -15442,14 +15457,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantitative Stability of the Maximally Entangled Orbit"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb604c62",
     "description": "Because the 3/4 cap is caused by 4-cycles of the metric product, adding a bounded number of fresh coordinates should destroy exactly those 4-cycles. The conjecture asserts that with c extra coordinates one recovers the full multiplicative main term (L+1)(K+1) - o(LK). This is the only surviving route to the original conjecture.\n\nThere is an absolute c such that for all snakes of lengths L in Q_m and K in Q_n there is a snake in Q_{m+n+c} of length at least (1-o(1))(L+1)(K+1).\n\nDefine vertices Sum.elim (p i) (q j) augmented by a separator bit b(i,j) in Fin c -> Bool and re-run the two verification lemmas (step and chord) in the style of isSnake_comb; test small cases (L=K=4) by exhaustive search over separator patterns.\n\nThe original conjecture holds after a bounded dimension shift, turning isolated records into systematic higher-dimensional lower bounds.\n\nThe obstruction is not local to 4-cycles but genuinely metric, and product constructions are permanently capped below the multiplicative main term.",
     "domains": [],
     "id": "fd_4769",
+    "phase": "A",
     "priority_score": 0.5921428571428572,
     "research_mode": "team",
     "source_exp_id": "01cb7b4b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-09-10T04:56:51.324954+00:00",
     "title": "Separator-Coordinate Escape Theorem"
   },
@@ -36061,6 +36077,50 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For non-calibrated step posteriors the Bayes searcher reorders blocks by density. Conjecture: the Bayes speedup equals the continuum speedup of the concave rearrangement of the reliability curve. This would make the multi-window law hold for all hints, not only calibrated ones.\n\nFor any step posterior with blocks B and masses \u0394A, optCost = M\u00b7\u03a6(sorted profile) + 1/2, where blocks are sorted by decreasing density.\n\nBrute-force all M! orders for M \u2264 8 with random block masses; formalize by composing a block-permutation with committed_optimal_of_antitone.\n\nThe crossing gate becomes AUC(concave rearrangement) \u2265 1 \u2212 1/(3s) for every hint.\n\nBayes search over step posteriors has non-block-structured optima, contradicting layer-cake intuition.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_5333",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a25bbb00",
+    "status": "available",
+    "timestamp": "2026-10-27T06:13:31.809657+00:00",
+    "title": "Concave-Majorant Bayes Gate"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Adding a calibrated window to a calibrated menu never lowers the priced speedup. The local chord identity is proved; the missing piece is that calibration (decreasing densities) means concavity of the reliability curve.\n\nIf the refined profile has nonincreasing block densities, then \u03a6(refined) \u2264 \u03a6(original), with equality iff the new point lies on the chord.\n\nFormalize concavity of piecewise-linear curves with decreasing slopes, then combine with refinement_identity.\n\nMore calibrated information is always worth paying for under stipulated pricing.\n\nThere exist calibrated refinements that hurt, signalling a flaw in the stipulated price model.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "fd_5334",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a25bbb00",
+    "status": "available",
+    "timestamp": "2026-10-27T06:13:32.490958+00:00",
+    "title": "Refinement Monotonicity for Calibrated Oracles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Because \u03a6 = 1 \u2212 AUC, choosing k windows is trapezoid approximation of \u222bF for the oracle's reliability curve F. Conjecture: the optimal k-window speedup converges to the full-information speedup at rate \u0398(1/k\u00b2) for smooth strictly concave F.\n\nFor C\u00b2 strictly concave F with F(0)=0, F(1)=1: inf over k-window menus of (\u03a6_k \u2212 (1 \u2212 \u222bF)) = \u0398(k\u207b\u00b2).\n\nNumerically optimize window placements for F(x)=1\u2212(1\u2212x)\u00b2, k \u2264 50; formalize the upper bound via the trapezoid-rule error estimate.\n\nGives a quantitative price of coarse oracle reports.\n\nWindow menus are either much better or worse than quadrature intuition suggests.",
+    "domains": [
+      "Geometry",
+      "MachineLearning"
+    ],
+    "id": "fd_5335",
+    "priority_score": 0.55,
+    "research_mode": "team",
+    "source_exp_id": "a25bbb00",
+    "status": "available",
+    "timestamp": "2026-10-27T06:13:33.158358+00:00",
+    "title": "Trapezoid-Rate Law for k-Window Menus"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "**Conjecture.**  Let `f : \u211d \u2192 \u211d` be continuous and piecewise linear with exactly `r`\nkinks.  Then the minimal `k` for which there exist `a b c : Fin k \u2192 \u211d` and `p q : \u211d`\nwith `reluNet a b c p q = f` is exactly `r`.\n\n*The key insight is* that `reluNet_kink_witness` already converts a nonvanishing\ndiscrete second difference into a *distinct* unit whenever the test windows are\ndisjoint, so the lower bound `r \u2264 k` needs no convexity, no differentiability, and no\nsign pattern \u2014 only separation of the kinks; the matching upper bound is the telescoping\nconstruction used in `intervalStep_eq_four_relu`.\n\n*Why now?*  This cycle proved the two smallest instances (`r = 2` for the scalar\nclipped update, `r = 4` for the interval update) with the same mechanism, and\n`descent_step_relu_width_dichotomy` shows the width is a genuine invariant of the\ntropical minimizer geometry rather than an artifact of the formula.\n\n---",
     "domains": [
       "Geometry",
@@ -48389,19 +48449,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-08-21T06:29:20.813547+00:00",
     "title": "C2. The knee is at `k = \u2308log_p m\u2309` \u2014 a formal \"design rule\""
-  },
-  {
-    "consumed_by_exp_id": "a25bbb00",
-    "description": "**Conjecture.** Suppose an oracle names \\(k\\) nested windows \\(w_1 < \\dots < w_k\\) with cumulative reliabilities \\(\\alpha_1 < \\dots < \\alpha_k\\). Under stipulated pricing, speedup \\(s\\) is reachable iff \\(\\sum_i (\\alpha_i - \\alpha_{i-1})\\,\\cdot\\) (mean slot of block \\(i\\)) is at most \\(1/(3s)\\). This is a polyhedral gate whose single-window case is `crossing_law`.\nThe key insight is that the displacement law extends to step posteriors: the cost of an order is a sum of the block-weight jumps times the index sums of the upper sets.\nWhy now? `displacement_law` and `exchange_sum_le` already give the single-step case.",
-    "domains": [],
-    "id": "fd_5223",
-    "phase": "A",
-    "priority_score": 0.4364444444444444,
-    "research_mode": "team",
-    "source_exp_id": "5cdba14c",
-    "status": "in_progress",
-    "timestamp": "2026-10-13T21:32:17.143668+00:00",
-    "title": "Multi-window crossing law"
   },
   {
     "consumed_by_exp_id": "",
