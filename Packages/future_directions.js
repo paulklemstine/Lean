@@ -7258,6 +7258,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Hodge--Riemann relations for nef bundles' and formalize its key results. Abstract: We introduce the $(m,p,q)$-Lefschetz property for $(1,1)$-type endomorphisms of Hodge--Lefschetz modules, providing a framework for studying nef $(1,1)$-classes and characteristic classes of nef vector bundles on compact K\u00e4hler manifolds. Under a Hall--Rado type condition on nef twisted vector bundles, we prove Hodge--Riemann relations for products of top Chern classes and, in suitable bidegrees, for products of derived Schur classes. For products of nef $(1,1)$-classes, we show furthermore that the Hall--Rado type condition is equivalent to simultaneous Hodge--Riemann relations. Our proofs build on the purity theorem and descent lemma of Cattani, Kaplan, and Schmid. We extend the descent lemma to Schur classes of nef vector bundles. We also establish formal analogs for projective bundle modules over Hodge--Lefschetz modules, with applications to tautological classes and descent on matroid Chow rings.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_5338",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.37650v1",
+    "status": "available",
+    "timestamp": "2026-10-28T07:34:12.206845+00:00",
+    "title": "ArXiv paper: Hodge--Riemann relations for nef bundles"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
