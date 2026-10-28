@@ -7243,6 +7243,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Near-quadratic sum-product estimates in fixed number fields' and formalize its key results. Abstract: Let $K$ be a fixed number field. We prove a quantitative expansion theorem for mixed sumsets $A+B$, assuming only that $A$ is covered by relatively few cosets of a multiplicative group of small finite valuation rank. The constants are independent of the generators, their heights, and their prime ideal supports. As a consequence, if $A\\subset K^\\times$, $|A|=N\\ge 3$, and each element has nonzero valuation at at most $k$ finite places, then every $B\\subset K$ with $|B|=N$ satisfies $$ \\max\\{|A+B|,|AA|\\} \\ge N^2\\exp\\left[-C_K\\left((k+1)\\log(\\log N+2)+\\sqrt{(k+1)\\log N}\\right)\\right]. $$ This is $N^{2-o(1)}$ for $k=o(\\log N/\\log\\log N)$. We also obtain a trade-off between the additive and multiplicative deficits, estimates for iterated linear sumsets, and a transfer theorem for product constructions $A=PG$ in terms of the multiplicative deficit of $P$. The proof recovers local scales from an exact sum and bounds the remaining conditional entropy by the overlap of entropy measures on fixed ",
+    "domains": [
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "fd_5337",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.36930v1",
+    "status": "available",
+    "timestamp": "2026-10-28T01:40:56.496943+00:00",
+    "title": "ArXiv paper: Near-quadratic sum-product estimates in fixed number fields"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
