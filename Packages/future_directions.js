@@ -7273,6 +7273,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'An Adian-Rabin theorem for quantum automorphism groups of graphs' and formalize its key results. Abstract: Given a graph $G$, does it have quantum symmetries, or in other words, is the algebra of the quantum automorphism group non-commutative? In the world of ordinary groups, determining whether a finitely presented group is commutative is undecidable. This is an immediate consequence of the Adian-Rabin theorem, which shows that many natural properties of finitely presented groups are undecidable. In this paper, we prove an Adian-Rabin theorem for quantum automorphism groups of graphs, showing that many natural properties of the quantum automorphism group of a graph (including having quantum symmetries) are undecidable. We also show that it's undecidable to determine if the discrete quantum automorphism group is non-trivial. Our methods are based on solution groups of linear system nonlocal games, and we also prove an Adian-Rabin theorem in this context.",
+    "domains": [
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "fd_5339",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.40590v1",
+    "status": "available",
+    "timestamp": "2026-10-30T07:24:37.548397+00:00",
+    "title": "ArXiv paper: An Adian-Rabin theorem for quantum automorphism groups of graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'On the Quantum Chromatic Gap II' and formalize its key results. Abstract: We confirm a conjecture of the first author [SODA'26] on a strong form of pseudo-telepathy for Khot's $d$-to-$1$ games: for every $d\\geq 4$, every $\u03b5>0$, and every $k\\in\\mathbb N$, there is a $d$-to-$1$ label-cover game of classical value less than $\u03b5$ that admits a perfect quantum strategy using finite-dimensional shared entanglement with measurement contexts of radius at least $k$. As a consequence, there exist graphs whose quantum chromatic number $\u03c7_q$ is $3$ and whose classical chromatic number $\u03c7$ is arbitrarily large. This is the first improvement on the quantum chromatic gap since the work of Brassard, Cleve, and Tapp [Phys. Rev. Lett.'99], which produced graphs for which $\u03c7$ grows exponentially in $\u03c7_q$. To prove the conjecture, we proceed as follows. We start with a ``stretched'' version of the Mermin--Peres magic square, obtained by spacing out its equations and linking them with additional long equation wires. This operation increases the radius of the initial measurement c",
+    "domains": [
+      "Combinatorics",
+      "Physics"
+    ],
+    "id": "fd_5340",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2610.40571v1",
+    "status": "available",
+    "timestamp": "2026-10-30T07:24:40.714511+00:00",
+    "title": "ArXiv paper: On the Quantum Chromatic Gap II"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
