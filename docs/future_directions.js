@@ -7303,6 +7303,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Investigate the ArXiv paper 'Transfer of Weisfeiler-Leman equivalence under graph operations' and formalize its key results. Abstract: The Weisfeiler-Leman algorithms WL(k) for $k\\ge1$ form a hierarchy of increasingly powerful tests for graph isomorphism. We study how the equivalence relations they induce on graphs transfer through a graph operation $\u03a6$: for a given $k$, what level of WL-equivalence between graphs $H_1$ and $H_2$ guarantees WL(k)-equivalence of graphs $\u03a6(H_1)$ and $\u03a6(H_2)$? We call the least such level the transfer parameter $\u03c4_\u03a6(k)$ and determine it exactly for the line graph operation $\u03a6= L$: $\u03c4_L(k)=2k+1$ for $k\\ge2$, while $\u03c4_L(1)=1$. We also extend these results to the $(r,S)$-line graphs, which generalize the line graph from edges to $r$-cliques by connecting two cliques when their intersection size lies in a prescribed set $S$. For these operations we prove that $\u03c4_{r,S}(1)=r-1$ for every $S$ and, for certain choices of $S$, that $\u03c4_{r,S}(k)=rk+r-1$ for $k\\ge r$, and we bound the transfer parameter in the remaining range. Our upper bounds on transfer parameters follow from a treewidth analysis ",
+    "domains": [
+      "Combinatorics",
+      "Computation"
+    ],
+    "id": "fd_5341",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2611.05366v1",
+    "status": "available",
+    "timestamp": "2026-11-04T12:20:48.718888+00:00",
+    "title": "ArXiv paper: Transfer of Weisfeiler-Leman equivalence under graph operations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "NumberTheory",
@@ -14545,14 +14560,15 @@ window.FUTURE_DIRECTIONS = [
     "title": "Celestial Density of the Berggren Boundary"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ebf957e",
     "description": "Extend the exact equational transfer to an order transfer. With the natural partial order in which nullity is incomparable, guarded expressions should preserve and reflect inequalities and have connected image, yielding an intermediate value theorem whose only failure mode is a jump through nullity.\n\nFor guarded e\u2081 e\u2082, (\u2200x, transEval e\u2081 x \u2264 transEval e\u2082 x) \u2194 (\u2200x, realEval e\u2081 x \u2264 realEval e\u2082 x); moreover the image of a connected domain under a guarded expression is connected, and the image of an unguarded expression is disconnected exactly when it meets null.\n\nDefine the partial order on Transreal, prove the finite fragment is an order embedding, and derive the connectivity statements from the clopen nullity fibre.\n\nGenuinely analytic theorems, not only identities, transfer through the finite fragment.\n\nThe transfer principle is intrinsically equational and the exceptional constructors obstruct order-theoretic reasoning.",
     "domains": [],
     "id": "fd_3836",
+    "phase": "A",
     "priority_score": 0.5933870967741937,
     "research_mode": "team",
     "source_exp_id": "04d3a29d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-08-23T11:35:57.656963+00:00",
     "title": "Order Transfer and the Transreal Intermediate Value Theorem"
   },
